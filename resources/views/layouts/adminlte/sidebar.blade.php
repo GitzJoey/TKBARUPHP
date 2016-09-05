@@ -147,8 +147,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i>&nbsp;User</a></li>
-                    <li><a href="#"><i class="fa fa-umbrella fa-fw"></i>&nbsp;Store</a></li>
+                    <li><a href="{{ route('db.admin.user') }}"><i class="fa fa-user fa-fw"></i>&nbsp;User</a></li>
+                    <li><a href="{{ route('db.admin.roles') }}"><i class="fa fa-umbrella fa-fw"></i>&nbsp;Store</a></li>
                     <li><a href="#"><i class="fa fa-minus-square fa-fw"></i>&nbsp;Settings</a></li>
                     <li class="treeview">
                         <a href="#"><i class="fa fa-cog fa-fw"></i><span>&nbsp;SMS Service</span>

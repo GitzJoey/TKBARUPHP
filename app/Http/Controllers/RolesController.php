@@ -11,5 +11,9 @@ use App\Role;
 
 class RolesController extends Controller
 {
-
+    public function index()
+    {
+        $role = Role::get();
+        return view('roles.index')->with('role', $role);
+    }
 }
