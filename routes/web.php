@@ -37,3 +37,8 @@ Route::post('/dashboard/admin/roles/create', 'RolesController@store');
 Route::get('/dashboard/admin/roles/edit/{id}', 'RolesController@edit');
 Route::patch('/dashboard/admin/roles/edit/{id}', 'RolesController@update');
 Route::delete('/dashboard/admin/roles/edit/{id}', 'RolesController@delete');
+
+Route::get('/dashboard/admin/settings', 'SettingsController@index')->name('db.admin.settings');
+Route::get('/dashboard/admin/settings/edit/{id}', 'SettingsController@edit');
+Route::patch('/dashboard/admin/settings/edit/{id}', 'SettingsController@update');
+
