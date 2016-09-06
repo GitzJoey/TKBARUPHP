@@ -90,6 +90,14 @@ Route::get('/dashboard/master/warehouse/edit/{id}', 'WarehouseController@edit');
 Route::patch('/dashboard/master/warehouse/edit/{id}', 'WarehouseController@update');
 Route::delete('/dashboard/master/warehouse/edit/{id}', 'WarehouseController@delete');
 
+Route::get('/dashboard/master/bank', 'BankController@index')->name('db.master.bank');
+Route::get('/dashboard/master/bank/show/{id}', 'BankController@show');
+Route::get('/dashboard/master/bank/create', 'BankController@create');
+Route::post('/dashboard/master/bank/create', 'BankController@store');
+Route::get('/dashboard/master/bank/edit/{id}', 'BankController@edit');
+Route::patch('/dashboard/master/bank/edit/{id}', 'BankController@update');
+Route::delete('/dashboard/master/bank/edit/{id}', 'BankController@delete');
+
 Route::get('/dashboard/master/trucks', 'TrucksController@index')->name('db.master.trucks');
 Route::get('/dashboard/master/trucks/show/{id}', 'TrucksController@show');
 Route::get('/dashboard/master/trucks/create', 'TrucksController@create');

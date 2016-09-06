@@ -1,19 +1,13 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Create User')
+@section('title', 'User Management')
+
+@section('page_title')
+    <span class="fa fa-user fa-fw"></span>&nbsp;User
+@endsection
+@section('page_title_desc', '')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Create New User</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
-
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -25,42 +19,50 @@
         </div>
     @endif
 
-    {!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Create User</h3>
+        </div>
+        <form class="form-horizontal" action="{{ route('db.admin.user.create') }}" method="post">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input id="inputName" name="name" type="text" class="form-control" placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputRoles" class="col-sm-2 control-label">Roles</label>
+                    <div class="col-sm-10">
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPasswordConfirmation" class="col-sm-2 control-label">Retype Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword" name="password_confirmation" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputButton" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <a href="{{ route('db.admin.user') }}" class="btn btn-default">Cancel</a>
+                        <button class="btn btn-default" type="submit">Submit</button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Email:</strong>
-                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Password:</strong>
-                {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Confirm Password:</strong>
-                {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Role:</strong>
-                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+        </form>
     </div>
-    {!! Form::close() !!}
 @endsection

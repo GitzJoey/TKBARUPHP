@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <div class="box">
+    <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">User Lists</h3>
         </div>
@@ -43,10 +43,10 @@
                                 @endif
                             </td>
                             <td class="text-center" width="20%">
-                                <a class="btn btn-sm btn-info" href="{{ route('db.admin.user.show', $user->id) }}"><span class="fa fa-info fa-fw"></span></a>
-                                <a class="btn btn-sm btn-primary" href="{{ route('db.admin.user.edit', $user->id) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $user->id) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.admin.user.edit', $user->id) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.user.delete', $user->id], 'style'=>'display:inline'])  !!}
-                                    <button type="submit" class="btn btn-sm btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                    <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                                 {!! Form::close() !!}
                             </td>
                         </tr>
@@ -65,5 +65,4 @@
             </ul>
         </div>
     </div>
-    {{--{!! $data->render() !!}--}}
 @endsection

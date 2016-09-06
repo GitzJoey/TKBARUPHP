@@ -17,7 +17,7 @@
 @section('page_title_desc', '')
 
 @section('content')
-    <div class="box">
+    <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">{{ $user->name }}</h3>
         </div>
