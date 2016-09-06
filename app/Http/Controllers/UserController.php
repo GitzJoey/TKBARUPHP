@@ -22,4 +22,10 @@ class UserController extends Controller
         $user = User::get();
         return view('user.index')->with('user', $user);
     }
+
+    public function show($id)
+    {
+        $user = User::whereId($id);
+        return view('user.show')->with('user', $user);
+    }
 }

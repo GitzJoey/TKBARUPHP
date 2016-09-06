@@ -17,9 +17,10 @@ class SettingsTableSeeder extends Seeder
     {
         $settings = [
             [
-                'name' => 'r_admin',
-                'display_name' => 'Administrator',
-                'description' => 'Super User'
+                'category' => '',
+                'skey' => '',
+                'svalue' => '',
+                'description' => ''
             ]
         ];
         foreach ($settings as $key => $value) {

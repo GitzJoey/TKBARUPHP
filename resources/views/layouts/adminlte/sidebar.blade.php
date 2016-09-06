@@ -66,8 +66,8 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('db.warehouse.inflow') }}"><i class="fa fa-mail-forward fa-rotate-90 fa-fw"></i>&nbsp;Inflow</a></li>
-                    <li><a href="{{ route('db.customer.outflow') }}"><i class="fa fa-mail-reply fa-rotate-90 fa-fw"></i>&nbsp;Outflow</a></li>
-                    <li><a href="{{ route('db.customer.stockopname') }}"><i class="fa fa-database"></i>&nbsp;Stock Opname</a></li>
+                    <li><a href="{{ route('db.warehouse.outflow') }}"><i class="fa fa-mail-reply fa-rotate-90 fa-fw"></i>&nbsp;Outflow</a></li>
+                    <li><a href="{{ route('db.warehouse.stockopname') }}"><i class="fa fa-database"></i>&nbsp;Stock Opname</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -114,7 +114,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('db.master.customer') }}"><i class="fa fa-smile-o fa-fw"></i>&nbsp;Customer</a></li>
                     <li><a href="{{ route('db.master.supplier') }}"><i class="fa fa-building-o fa-fw"></i>&nbsp;Supplier</a></li>
-                    <li><a href="{{ route('db.master.products') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;Products</a></li>
+                    <li><a href="{{ route('db.master.product') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;Product</a></li>
                     <li><a href="{{ route('db.master.warehouse') }}"><i class="fa fa-wrench fa-fw"></i>&nbsp;Warehouse</a></li>
                     <li class="treeview">
                         <a href="{{ route('db.master.trucks') }}">
@@ -148,7 +148,9 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('db.admin.user') }}"><i class="fa fa-user fa-fw"></i>&nbsp;User</a></li>
-                    <li><a href="{{ route('db.admin.roles') }}"><i class="fa fa-umbrella fa-fw"></i>&nbsp;Store</a></li>
+                    <li><a href="{{ route('db.admin.roles') }}"><i class="fa fa-key fa-fw"></i>&nbsp;Roles</a></li>
+                    <li><a href="{{ route('db.admin.store') }}"><i class="fa fa-umbrella fa-fw"></i>&nbsp;Store</a></li>
+                    <li><a href="{{ route('db.admin.unit') }}"><i class="glyphicon glyphicon-flash"></i>&nbsp;Unit</a></li>
                     <li><a href="{{ route('db.admin.settings') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;Settings</a></li>
                     <li class="treeview">
                         <a href="#"><i class="fa fa-cog fa-fw"></i><span>&nbsp;SMS Service</span>
