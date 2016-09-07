@@ -408,3 +408,21 @@ Edi Santoso
 
 [linkedin](https://id.linkedin.com/in/cyberid41)
 
+# kontributor
+sandi permana soebagio
+
+$ composer install
+
+$ gulp --prod
+
+$ php artisan key:generate
+
+$ php artisan migrate
+
+$ php artisan db:seed
+
+$ php artisan serve
+
+
+
+
