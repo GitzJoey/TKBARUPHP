@@ -39,12 +39,12 @@ Route::patch('/dashboard/admin/roles/edit/{id}', 'RolesController@update');
 Route::delete('/dashboard/admin/roles/edit/{id}', 'RolesController@delete');
 
 Route::get('/dashboard/admin/store', 'StoreController@index')->name('db.admin.store');
-Route::get('/dashboard/admin/store/show/{id}', 'StoreController@show');
-Route::get('/dashboard/admin/store/create', 'StoreController@create');
+Route::get('/dashboard/admin/store/show/{id}', 'StoreController@show')->name('db.admin.store.show');
+Route::get('/dashboard/admin/store/create', 'StoreController@create')->name('db.admin.store.create');
 Route::post('/dashboard/admin/store/create', 'StoreController@store');
-Route::get('/dashboard/admin/store/edit/{id}', 'StoreController@edit');
+Route::get('/dashboard/admin/store/edit/{id}', 'StoreController@edit')->name('db.admin.store.edit');
 Route::patch('/dashboard/admin/store/edit/{id}', 'StoreController@update');
-Route::delete('/dashboard/admin/store/edit/{id}', 'StoreController@delete');
+Route::delete('/dashboard/admin/store/edit/{id}', 'StoreController@delete')->name('db.admin.store.delete');
 
 Route::get('/dashboard/admin/unit', 'UnitController@index')->name('db.admin.unit');
 Route::get('/dashboard/admin/unit/show/{id}', 'UnitController@show');
