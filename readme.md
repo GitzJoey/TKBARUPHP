@@ -425,4 +425,14 @@ $ php artisan serve
 
 
 
+membuat truck
+$ php artisan make:migration create_truck_table
+
+mengeksekusi file migrate untuk membuat table yg baru saja di buat
+$ php artisan migrate
+
+
+
+
+
 
