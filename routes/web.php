@@ -22,6 +22,9 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/dashboard', 'DashboardController@index');
 
+Route::get('/dashboard/po/create', 'PurchaseOrderController@create')->name('db.po.create');
+Route::post('/dashboard/po/create', 'PurchaseOrderController@store');
+
 Route::get('/dashboard/admin/user', 'UserController@index')->name('db.admin.user');
 Route::get('/dashboard/admin/user/show/{id}', 'UserController@show')->name('db.admin.user.show');
 Route::get('/dashboard/admin/user/create', 'UserController@create')->name('db.admin.user.create');
