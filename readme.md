@@ -398,17 +398,6 @@ Route::get('give-me-token', function () {
 **NB :** token ini hanya untuk sementara, sebisa mungkin gunakan url yang sulit untuk ditebak.
 
 # kontributor
-Edi Santoso
-
-[email]([mailto:edicyber@gmail.com)
-
-[@cyberid41](https://github.com/cyberid41)
-
-[facebook](https://facebook.com/cyberid41)
-
-[linkedin](https://id.linkedin.com/in/cyberid41)
-
-# kontributor
 sandi permana soebagio
 
 $ composer install

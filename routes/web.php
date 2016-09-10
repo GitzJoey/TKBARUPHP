@@ -98,21 +98,21 @@ Route::get('/dashboard/master/bank/edit/{id}', 'BankController@edit');
 Route::patch('/dashboard/master/bank/edit/{id}', 'BankController@update');
 Route::delete('/dashboard/master/bank/edit/{id}', 'BankController@delete');
 
-Route::get('/dashboard/master/trucks', 'TrucksController@index')->name('db.master.trucks');
-Route::get('/dashboard/master/trucks/show/{id}', 'TrucksController@show');
-Route::get('/dashboard/master/trucks/create', 'TrucksController@create');
-Route::post('/dashboard/master/trucks/create', 'TrucksController@store');
-Route::get('/dashboard/master/trucks/edit/{id}', 'TrucksController@edit');
-Route::patch('/dashboard/master/trucks/edit/{id}', 'TrucksController@update');
-Route::delete('/dashboard/master/trucks/edit/{id}', 'TrucksController@delete');
+Route::get('/dashboard/master/truck', 'TruckController@index')->name('db.master.truck');
+Route::get('/dashboard/master/truck/show/{id}', 'TruckController@show')->name('db.master.truck.show');
+Route::get('/dashboard/master/truck/create', 'TruckController@create')->name('db.master.truck.create');
+Route::post('/dashboard/master/truck/create', 'TruckController@store')->name('db.master.truck.store');
+Route::get('/dashboard/master/truck/edit/{id}', 'TruckController@edit')->name('db.master.truck.edit');
+Route::patch('/dashboard/master/truck/edit/{id}', 'TruckController@update')->name('db.master.truck.update');
+Route::delete('/dashboard/master/truck/edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
 
-Route::get('/dashboard/master/trucks/maintenance', 'TrucksMaintenanceController@index')->name('db.master.trucks.maintenance');
-Route::get('/dashboard/master/trucks/maintenance/show/{id}', 'TrucksMaintenanceController@show');
-Route::get('/dashboard/master/trucks/maintenance/create', 'TrucksMaintenanceController@create');
-Route::post('/dashboard/master/trucks/maintenance/create', 'TrucksMaintenanceController@store');
-Route::get('/dashboard/master/trucks/maintenance/edit/{id}', 'TrucksMaintenanceController@edit');
-Route::patch('/dashboard/master/trucks/maintenance/edit/{id}', 'TrucksMaintenanceController@update');
-Route::delete('/dashboard/master/trucks/maintenance/edit/{id}', 'TrucksMaintenanceController@delete');
+Route::get('/dashboard/master/truck/maintenance', 'TruckMaintenanceController@index')->name('db.master.truck.maintenance');
+Route::get('/dashboard/master/truck/maintenance/show/{id}', 'TruckMaintenanceController@show');
+Route::get('/dashboard/master/truck/maintenance/create', 'TruckMaintenanceController@create');
+Route::post('/dashboard/master/truck/maintenance/create', 'TruckMaintenanceController@store');
+Route::get('/dashboard/master/truck/maintenance/edit/{id}', 'TruckMaintenanceController@edit');
+Route::patch('/dashboard/master/truck/maintenance/edit/{id}', 'TruckMaintenanceController@update');
+Route::delete('/dashboard/master/truck/maintenance/edit/{id}', 'TruckMaintenanceController@delete');
 
 Route::get('/dashboard/master/vendor/trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
 Route::get('/dashboard/master/vendor/trucking/show/{id}', 'VendorTruckingController@show');
