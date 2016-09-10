@@ -47,12 +47,12 @@ Route::patch('/dashboard/admin/store/edit/{id}', 'StoreController@update');
 Route::delete('/dashboard/admin/store/edit/{id}', 'StoreController@delete')->name('db.admin.store.delete');
 
 Route::get('/dashboard/admin/unit', 'UnitController@index')->name('db.admin.unit');
-Route::get('/dashboard/admin/unit/show/{id}', 'UnitController@show');
-Route::get('/dashboard/admin/unit/create', 'UnitController@create');
+Route::get('/dashboard/admin/unit/show/{id}', 'UnitController@show')->name('db.admin.unit.show');
+Route::get('/dashboard/admin/unit/create', 'UnitController@create')->name('db.admin.unit.create');
 Route::post('/dashboard/admin/unit/create', 'UnitController@store');
-Route::get('/dashboard/admin/unit/edit/{id}', 'UnitController@edit');
+Route::get('/dashboard/admin/unit/edit/{id}', 'UnitController@edit')->name('db.admin.unit.edit');
 Route::patch('/dashboard/admin/unit/edit/{id}', 'UnitController@update');
-Route::delete('/dashboard/admin/unit/edit/{id}', 'UnitController@delete');
+Route::delete('/dashboard/admin/unit/edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
 
 Route::get('/dashboard/admin/settings', 'SettingsController@index')->name('db.admin.settings');
 Route::get('/dashboard/admin/settings/edit/{id}', 'SettingsController@edit');

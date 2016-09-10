@@ -26,7 +26,6 @@ class CreateStoreTable extends Migration
             $table->string('remarks');
             $table->timestamps();
         });
-
     }
 
     public function down()
