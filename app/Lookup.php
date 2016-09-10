@@ -10,12 +10,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class Lookup extends Model
 {
     protected $table = 'status';
 
     protected $fillable = [
-        'category', 'code', 'description'
+        'code', 'description', 'category'
     ];
 
 }

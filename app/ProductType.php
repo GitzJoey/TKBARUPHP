@@ -3,19 +3,18 @@
  * Created by PhpStorm.
  * User: Sugito
  * Date: 9/10/2016
- * Time: 11:06 AM
+ * Time: 1:40 PM
  */
 
 namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
-class PhoneProvider extends Model
+class ProductType extends Model
 {
-    protected $table = "phone_provider";
+    protected $table = 'product_type';
 
     protected $fillable = [
-        'name', 'short_name', 'prefix', 'status', 'remarks'
+        'name', 'short_code', 'description', 'status'
     ];
-
 }

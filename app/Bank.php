@@ -15,7 +15,7 @@ class Bank extends Model
     protected $table = 'bank';
 
     protected $fillable = [
-        'name', 'branch', 'status', 'remarks'
+        'name', 'short_name', 'branch', 'branch_code', 'status', 'remarks'
     ];
 
 }

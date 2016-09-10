@@ -12,5 +12,20 @@ use \Illuminate\Database\Eloquent\Model;
 
 class Items extends Model
 {
+    protected $table = 'items';
 
+    protected $fillable = [
+        'quantity',
+    ];
+
+    //Many to One
+    public function product()
+    {
+        return $this->belongsTo('product', 'product_id');
+    }
+
+    public function unit_code()
+    {
+
+    }
 }
