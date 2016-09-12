@@ -35,7 +35,7 @@ class StoreController extends Controller
         return view('store.create');
     }
 
-    public function store($data)
+    public function store(Request $data)
     {
         Store::create([
             'store_name'    => $data['store_name'],
@@ -43,10 +43,12 @@ class StoreController extends Controller
             'phone_num'     => $data['phone_num'],
             'fax_num'       => $data['fax_num'],
             'tax_id'        => $data['tax_id'],
-            'status'        => $data['status'],
-            'is_default'    => $data['is_default'],
+            'status'        => '',//$data['status'],
+            'is_default'    => 1,//$data['is_default'],
             'remarks'       => $data['remarks']
         ]);
+
+        return redirect(route('db.admin.store'));
     }
 
     private function changeIsDefault()

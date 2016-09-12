@@ -29,7 +29,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-truck fa-fw"></i>&nbsp;PO New</a></li>
+                    <li><a href="{{ route('db.po.create') }}"><i class="fa fa-truck fa-fw"></i>&nbsp;PO New</a></li>
                     <li><a href="#"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;PO Revise</a></li>
                     <li><a href="#"><i class="fa fa-calculator fa-fw"></i>&nbsp;PO Payment</a></li>
                 </ul>

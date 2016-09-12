@@ -8,7 +8,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.custom.css') }}">
     @yield('custom_css')
 </head>
 

@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "admin-lte": "^2.3.6",
+    "awesome-bootstrap-checkbox": "^1.0.0-alpha.4",
     "bootstrap": "^3.3.7",
     "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",

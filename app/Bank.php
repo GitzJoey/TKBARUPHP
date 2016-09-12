@@ -10,6 +10,11 @@ namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Bank
+ *
+ * @mixin \Eloquent
+ */
 class Bank extends Model
 {
     protected $table = 'bank';

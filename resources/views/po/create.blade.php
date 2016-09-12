@@ -19,12 +19,13 @@
                         <div class="form-group">
                             <label for="inputSupplierType" class="col-sm-3 control-label">Type</label>
                             <div class="col-sm-9">
-                                <div class="radio-inline">
-                                    <label><input type="radio" name="optradio"><span class="control-label-normal">Registered</span></label>
-                                </div>
-                                <div class="radio-inline">
-                                    <label><input type="radio" name="optradio"><span class="control-label-normal">Unregistered</span></label>
-                                </div>
+                                <select class="form-control">
+                                    <option>option 1</option>
+                                    <option>option 2</option>
+                                    <option>option 3</option>
+                                    <option>option 4</option>
+                                    <option>option 5</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
