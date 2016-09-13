@@ -1,19 +1,13 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Edit User')
+@section('title', 'Truck Management')
+
+@section('page_title')
+    <span class="fa fa-user fa-fw"></span>&nbsp;Truck
+@endsection
+@section('page_title_desc', '')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edit New User</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
-
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -25,42 +19,50 @@
         </div>
     @endif
 
-    {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Edit Truck</h3>
+        </div>
+        {!! Form::model($truck, ['method' => 'PATCH','route' => ['db.master.truck.edit', $truck->id], 'class' => 'form-horizontal']) !!}
+        <div class="box-body">
             <div class="form-group">
-                <strong>Name:</strong>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+                <label for="inputPlateNumber" class="col-sm-2 control-label">Plate Number</label>
+                <div class="col-sm-10">
+                    <input id="inputPlateNumber" name="plate_number" type="text" class="form-control" value="{{ $truck->plate_number }}" placeholder="Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputInspectionDate" class="col-sm-2 control-label">Inspection Date</label>
+                <div class="col-sm-10">
+                    <textarea id="inputInspectionDate" class="form-control" rows="5" name="inspection_date">{{ $truck->inspection_date }}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputDriver" class="col-sm-2 control-label">Driver</label>
+                <div class="col-sm-10">
+                    <input id="inputDriver" name="driver" type="text" class="form-control" value="{{ $truck->driver }} "placeholder="driver">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputStatus" class="col-sm-2 control-label">Status</label>
+                <div class="col-sm-10">
+                    <input id="inputStatus" name="status" type="text" class="form-control" value="{{ $truck->status }}" placeholder="status"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputRemarks" class="col-sm-2 control-label">Remarks</label>
+                <div class="col-sm-10">
+                    <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $truck->remarks }}" placeholder="Remarks">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputButton" class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    <a href="{{ route('db.master.truck') }}" class="btn btn-default">Cancel</a>
+                    <button class="btn btn-default" type="submit">Submit</button>
+                </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Email:</strong>
-                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Password:</strong>
-                {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Confirm Password:</strong>
-                {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Role:</strong>
-                {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+        {!! Form::close() !!}
     </div>
-    {!! Form::close() !!}
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'User Management')
+@section('title', 'Truck Management')
 
 @section('custom_css')
     <style type="text/css">
@@ -12,54 +12,70 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;User
+    <span class="fa fa-truck fa-fw"></span>&nbsp;Truck
 @endsection
 @section('page_title_desc', '')
 
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ $user->name }}</h3>
+            <h3 class="box-title">{{ $truck->plate_number }}</h3>
         </div>
         <div class="box-body">
             <form class="form-horizontal">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="inputId" class="col-sm-2 control-label">ID</label>
+                        <label for="inputId" class="col-sm-2 control-label">Id</label>
                         <div class="col-sm-10">
-                            <label id="inputId" class="control-label">
-                                <span class="control-label-normal">{{ $user->id }}</span>
+                            <label id="id" class="control-label">
+                                <span class="control-label-normal">{{ $truck->id }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">Name</label>
+                        <label for="inputPlateNumber" class="col-sm-2 control-label">Plate Number</label>
                         <div class="col-sm-10">
-                            <label id="inputId" class="control-label">
-                                <span class="control-label-normal">{{ $user->name }}</span>
+                            <label id="plateNumber" class="control-label">
+                                <span class="control-label-normal">{{ $truck->plate_number }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                        <label for="inputInspectionDate" class="col-sm-2 control-label">inspectionDate</label>
                         <div class="col-sm-10">
-                            <label id="inputEmail" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $user->email }}</span>
+                            <label id="inspectionDate" class="control-label">
+                                <span class="control-label-normal">{{ $truck->inspection_date }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputRoles" class="col-sm-2 control-label">Roles</label>
+                        <label for="inputDriver" class="col-sm-2 control-label">Driver</label>
                         <div class="col-sm-10">
-                            <label id="inputEmail" class="control-label control-label-normal">
-                                <span class="control-label-normal"></span>
+                            <label id="driver" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $truck->driver }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatus" class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-10">
+                            <label id="status" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $truck->status }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks" class="col-sm-2 control-label">Remarks</label>
+                        <div class="col-sm-10">
+                            <label id="remarks" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $truck->remarks }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
-                            <a href="{{ route('db.admin.user') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('db.master.truck') }}" class="btn btn-default">Back</a>
                         </div>
                     </div>
                 </div>

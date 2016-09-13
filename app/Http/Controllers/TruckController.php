@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers;
 
+use \DateTime;
+use Illuminate\Http\Request;
 use App\Truck;
 
 class TruckController extends Controller
@@ -34,19 +36,19 @@ class TruckController extends Controller
         return view('truck.create');
     }
 
-    public function truck($data)
+    public function store(Request $data)
     {
-        Store::create([
-            'truck_id'    => $data['truck_id'],
+        $date = DateTime::createFromFormat('Y-m-d', $data['inspection_date']);
+        $usableDate = $date->format('Y-m-d H:i:s');
+
+        Truck::create([
             'plate_number' => $data['plate_number'],
-            'kir_date'     => $data['kir_date'],
-            'driver'       => $data['driver'],
-            'remarks'        => $data['remarks'],
-            'created_by'        => $data['created_by'],
-            'created_date'    => $data['created_date'],
-            'updated_by'       => $data['updated_by'],
-            'updated_date'       => $data['updated_date']
+            'inspection_date' => $usableDate,
+            'driver'     => $data['driver'],
+            'status'       => $data['status'],
+            'remarks'        => $data['remarks']
         ]);
+        return redirect(route('db.master.truck'));
     }
 
     private function changeIsDefault()

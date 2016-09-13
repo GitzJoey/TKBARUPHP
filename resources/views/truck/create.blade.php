@@ -1,9 +1,9 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'User Management')
+@section('title', 'Truck Management')
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;User
+    <span class="fa fa-truck fa-fw"></span>&nbsp;Truck
 @endsection
 @section('page_title_desc', '')
 
@@ -21,38 +21,39 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Create User</h3>
+            <h3 class="box-title">Create Truck</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.master.truck.create') }}" method="post">
+            {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                    <label for="inputName" class="col-sm-2 control-label">plate_number</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="name" type="text" class="form-control" placeholder="Name">
+                        <input id="plate_number" name="plate_number" type="text" class="form-control" placeholder="plate_number">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                    <label for="inputEmail" class="col-sm-2 control-label">inspection_date</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
+                        <input type="text" class="form-control" id="inspection_date" name="inspection_date" placeholder="inspection_date">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputRoles" class="col-sm-2 control-label">Roles</label>
+                    <label for="inputRoles" class="col-sm-2 control-label">driver</label>
                     <div class="col-sm-10">
-
+                        <input id="driver" name="driver" type="text" class="form-control" placeholder="driver">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                    <label for="inputPassword" class="col-sm-2 control-label">status</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+                        <input type="text" class="form-control" id="status" name="status" placeholder="status">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPasswordConfirmation" class="col-sm-2 control-label">Retype Password</label>
+                    <label for="inputPasswordConfirmation" class="col-sm-2 control-label">remarks</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword" name="password_confirmation" placeholder="Password">
+                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="remarks">
                     </div>
                 </div>
                 <div class="form-group">
