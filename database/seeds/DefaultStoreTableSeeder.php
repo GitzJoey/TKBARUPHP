@@ -15,14 +15,14 @@ class DefaultStoreTableSeeder extends Seeder
     {
         $store = [
             [
-                'store_name'        => 'Toko Baru',
-                'store_address'     => 'Jln Raya Utara No 67 Wangon',
-                'phone_num'         => '0281 - 531270',
-                'fax_num'           => '0281 - 583358',
-                'tax_id'            => '0000000000',
-                'status'            => '',
-                'is_default'        => 1,
-                'remarks'           => ''
+                'name'          => 'Toko Baru',
+                'address'       => 'Jln Raya Utara No 67 Wangon',
+                'phone_num'     => '0281 - 531270',
+                'fax_num'       => '0281 - 583358',
+                'tax_id'        => '0000000000',
+                'status'        => 'STATUS.Active',
+                'is_default'    => 1,
+                'remarks'       => ''
             ]
         ];
         foreach ($store as $key => $value) {

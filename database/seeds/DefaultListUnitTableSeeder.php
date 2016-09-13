@@ -15,10 +15,28 @@ class DefaultUnitTableSeeder extends Seeder
     {
         $unit = [
             [
-                'unit_name' => 'Kilogram',
-                'symbol' => 'Kg',
-
-
+                'name'      => 'Kilogram',
+                'symbol'    => 'Kg',
+                'status'    => 'STATUS.Active',
+                'remarks'   => ''
+            ],
+            [
+                'name'      => 'Drum',
+                'symbol'    => 'Dr',
+                'status'    => 'STATUS.Active',
+                'remarks'   => ''
+            ],
+            [
+                'name'      => 'Tonne',
+                'symbol'    => 'Tn',
+                'status'    => 'STATUS.Active',
+                'remarks'   => ''
+            ],
+            [
+                'name'      => 'Zak',
+                'symbol'    => 'z',
+                'status'    => 'STATUS.Active',
+                'remarks'   => ''
             ],
         ];
         foreach ($unit as $key => $value) {

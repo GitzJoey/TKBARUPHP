@@ -23,8 +23,6 @@ Class CreateProductUnitTable extends Migration
             $table->decimal('conversion_value');
             $table->string('remarks');
             $table->timestamps();
-
-            $table->foreign('product_id')->references('id')->on('product');
         });
 
     }

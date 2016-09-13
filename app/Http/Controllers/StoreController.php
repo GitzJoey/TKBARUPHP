@@ -37,9 +37,16 @@ class StoreController extends Controller
 
     public function store(Request $data)
     {
+        $this->validate($data,[
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone_num' => 'required|string|max:255',
+            'tax_id' => 'required|string|max:255',
+        ]);
+
         Store::create([
-            'store_name'    => $data['store_name'],
-            'store_address' => $data['store_address'],
+            'name'          => $data['name'],
+            'address'       => $data['address'],
             'phone_num'     => $data['phone_num'],
             'fax_num'       => $data['fax_num'],
             'tax_id'        => $data['tax_id'],

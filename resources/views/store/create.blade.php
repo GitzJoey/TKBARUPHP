@@ -29,13 +29,13 @@
                 <div class="form-group">
                     <label for="inputStoreName" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
-                        <input id="inputStoreName" name="store_name" type="text" class="form-control" placeholder="Name">
+                        <input id="inputStoreName" name="name" type="text" class="form-control" placeholder="Name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress" class="col-sm-2 control-label">Address</label>
                     <div class="col-sm-10">
-                        <textarea id="inputAddress" class="form-control" rows="5" name="store_address"></textarea>
+                        <textarea id="inputAddress" class="form-control" rows="5" name="address"></textarea>
                     </div>
                 </div>
                 <div class="form-group">

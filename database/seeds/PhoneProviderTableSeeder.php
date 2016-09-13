@@ -17,25 +17,32 @@ class PhoneProviderTableSeeder extends Seeder
             [
                 'name' => 'Telkomsel',
                 'short_name' => 'T-SEL',
-                'status' => '',
+                'status' => 'STATUS.Active',
                 'remarks' => ''
             ],
             [
                 'name' => 'XL',
                 'short_name' => 'XL',
-                'status' => '',
+                'status' => 'STATUS.Active',
                 'remarks' => ''
             ],
             [
                 'name' => 'Indosat',
                 'short_name' => 'ISAT',
-                'status' => '',
+                'status' => 'STATUS.Active',
                 'remarks' => ''
             ],
             [
                 'name' => 'Tri',
                 'short_name' => '3',
-                'status' => '',
+                'status' => 'STATUS.Active',
+                'remarks' => ''
+            ],
+            [
+                'name' => 'Telkom',
+                'short_name' => 'TLKM
+                ',
+                'status' => 'STATUS.Active',
                 'remarks' => ''
             ],
         ];

@@ -119,14 +119,14 @@
                     <li><a href="{{ route('db.master.bank') }}"><i class="fa fa-bank fa-fw"></i>&nbsp;Bank</a></li>
                     <li class="treeview">
                         <a href="{{ route('db.master.truck') }}">
-                            <i class="fa fa-truck fa-flip-horizontal fa-fw"></i>&nbsp;Trucks
+                            <i class="fa fa-truck fa-flip-horizontal fa-fw"></i>&nbsp;Truck
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
+                            <li><a href="{{ route('db.master.truck') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;Truck</a></li>
                             <li><a href="{{ route('db.master.truck.maintenance') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;Maintenance</a></li>
-                            <li><a href="{{ route('db.master.truck') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;Trucks</a></li>
                         </ul>
                     </li>
                     <li class="treeview">

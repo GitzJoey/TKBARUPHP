@@ -28,19 +28,19 @@
             <div class="form-group">
                 <label for="inputStoreName" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
-                    <input id="inputStoreName" name="store_name" type="text" class="form-control" value="{{ $store->store_name }}" placeholder="Name">
+                    <input id="inputStoreName" name="store_name" type="text" class="form-control" value="{{ $store->name }}" placeholder="Name">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputAddress" class="col-sm-2 control-label">Address</label>
                 <div class="col-sm-10">
-                    <textarea id="inputAddress" class="form-control" rows="5" name="store_address">{{ $store->store_address }}</textarea>
+                    <textarea id="inputAddress" class="form-control" rows="5" name="store_address">{{ $store->address }}</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputPhone" class="col-sm-2 control-label">Phone</label>
                 <div class="col-sm-10">
-                    <input id="inputPhone" name="phone_num" type="text" class="form-control" value="{{ $store->phone_num }} "placeholder="Phone">
+                    <input id="inputPhone" name="phone_num" type="text" class="form-control" value="{{ $store->phone_num }}" placeholder="Phone">
                 </div>
             </div>
             <div class="form-group">
