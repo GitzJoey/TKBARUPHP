@@ -25,22 +25,25 @@
         </div>
         {!! Form::model($store, ['method' => 'PATCH','route' => ['db.admin.store.edit', $store->id], 'class' => 'form-horizontal']) !!}
         <div class="box-body">
-            <div class="form-group">
+            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 <label for="inputStoreName" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                     <input id="inputStoreName" name="store_name" type="text" class="form-control" value="{{ $store->name }}" placeholder="Name">
+                    <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
                 <label for="inputAddress" class="col-sm-2 control-label">Address</label>
                 <div class="col-sm-10">
                     <textarea id="inputAddress" class="form-control" rows="5" name="store_address">{{ $store->address }}</textarea>
+                    <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group {{ $errors->has('phone_num') ? 'has-error' : '' }}">
                 <label for="inputPhone" class="col-sm-2 control-label">Phone</label>
                 <div class="col-sm-10">
                     <input id="inputPhone" name="phone_num" type="text" class="form-control" value="{{ $store->phone_num }}" placeholder="Phone">
+                    <span class="help-block">{{ $errors->has('phone_num') ? $errors->first('phone_num') : '' }}</span>
                 </div>
             </div>
             <div class="form-group">
@@ -55,16 +58,18 @@
                     <input id="inputTax" name="tax_id" type="text" class="form-control" value="{{ $store->tax_id }}" placeholder="Tax ID"/>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                 <label for="inputStatus" class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-10">
-
+                    {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                    <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group {{ $errors->has('is_default') ? 'has-error' : '' }}">
                 <label for="inputIsDefault" class="col-sm-2 control-label">Default</label>
                 <div class="col-sm-10">
-                    &nbsp;
+                    {{ Form::select('is_default', $yesnoDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                    <span class="help-block">{{ $errors->has('is_default') ? $errors->first('is_default') : '' }}</span>&nbsp;
                 </div>
             </div>
             <div class="form-group">

@@ -21,7 +21,7 @@ class DefaultStoreTableSeeder extends Seeder
                 'fax_num'       => '0281 - 583358',
                 'tax_id'        => '0000000000',
                 'status'        => 'STATUS.Active',
-                'is_default'    => 1,
+                'is_default'    => 'YESNOSELECT.Yes',
                 'remarks'       => ''
             ]
         ];

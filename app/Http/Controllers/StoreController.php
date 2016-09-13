@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Store;
+use App\Lookup;
 
 class StoreController extends Controller
 {
@@ -32,7 +33,10 @@ class StoreController extends Controller
 
     public function create()
     {
-        return view('store.create');
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
+
+        return view('store.create', compact('statusDDL', 'yesnoDDL'));
     }
 
     public function store(Request $data)
@@ -42,6 +46,8 @@ class StoreController extends Controller
             'address' => 'required|string|max:255',
             'phone_num' => 'required|string|max:255',
             'tax_id' => 'required|string|max:255',
+            'status' => 'required',
+            'is_default' => 'required'
         ]);
 
         Store::create([
@@ -50,8 +56,8 @@ class StoreController extends Controller
             'phone_num'     => $data['phone_num'],
             'fax_num'       => $data['fax_num'],
             'tax_id'        => $data['tax_id'],
-            'status'        => '',//$data['status'],
-            'is_default'    => 1,//$data['is_default'],
+            'status'        => $data['status'],
+            'is_default'    => $data['is_default'],
             'remarks'       => $data['remarks']
         ]);
 
@@ -66,7 +72,11 @@ class StoreController extends Controller
     public function edit($id)
     {
         $store = Store::find($id);
-        return view('store.edit')->with('store', $store);
+
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
+
+        return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL'));
     }
 
     public function update($id, Request $req)

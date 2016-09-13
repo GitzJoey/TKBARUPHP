@@ -27,7 +27,7 @@
                         <label for="inputName" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-10">
                             <label id="inputId" class="control-label">
-                                <span class="control-label-normal">{{ $store->store_name }}</span>
+                                <span class="control-label-normal">{{ $store->name }}</span>
                             </label>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                         <label for="inputAddress" class="col-sm-2 control-label">Address</label>
                         <div class="col-sm-10">
                             <label id="inputAddress" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $store->store_address }}</span>
+                                <span class="control-label-normal">{{ $store->address }}</span>
                             </label>
                         </div>
                     </div>

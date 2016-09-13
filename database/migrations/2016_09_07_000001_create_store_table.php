@@ -22,7 +22,7 @@ class CreateStoreTable extends Migration
             $table->string('fax_num');
             $table->string('tax_id');
             $table->string('status');
-            $table->boolean('is_default');
+            $table->string('is_default');
             $table->string('remarks');
             $table->timestamps();
         });

@@ -37,8 +37,8 @@
                     @foreach ($store as $key => $store)
                         <tr>
                             <td class="text-center">{{ $store->id }}</td>
-                            <td>{{ $store->store_name }}</td>
-                            <td>{{ $store->store_address }}</td>
+                            <td>{{ $store->name }}</td>
+                            <td>{{ $store->address }}</td>
                             <td>{{ $store->phone_num }}</td>
                             <td>{{ $store->tax_id }}</td>
                             <td>{{ $store->is_default }}</td>

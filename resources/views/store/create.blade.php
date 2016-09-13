@@ -59,16 +59,18 @@
                         <input id="inputTax" name="tax_id" type="text" class="form-control" placeholder="Tax ID">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">Status</label>
                     <div class="col-sm-10">
-
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('is_default') ? 'has-error' : '' }}">
                     <label for="inputIsDefault" class="col-sm-2 control-label">Default</label>
                     <div class="col-sm-10">
-
+                        {{ Form::select('is_default', $yesnoDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        <span class="help-block">{{ $errors->has('is_default') ? $errors->first('is_default') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
