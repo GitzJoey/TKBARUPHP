@@ -14,6 +14,7 @@ class SettingsTableSeeder extends Seeder
 {
     public function run()
     {
+        /*
         $settings = [
             [
                 'category' => '',
@@ -25,5 +26,6 @@ class SettingsTableSeeder extends Seeder
         foreach ($settings as $key => $value) {
             Settings::create($value);
         }
+        */
     }
 }

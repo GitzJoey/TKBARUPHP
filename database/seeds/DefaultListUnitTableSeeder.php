@@ -9,7 +9,7 @@
 use \Illuminate\Database\Seeder;
 use App\Unit;
 
-class DefaultUnitTableSeeder extends Seeder
+class DefaultListUnitTableSeeder extends Seeder
 {
     public function run()
     {

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lookup extends Model
 {
-    protected $table = 'status';
+    protected $table = 'lookup';
 
     protected $fillable = [
         'code', 'description', 'category'

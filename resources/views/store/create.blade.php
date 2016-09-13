@@ -26,22 +26,25 @@
         <form class="form-horizontal" action="{{ route('db.admin.store.create') }}" method="post">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputStoreName" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                         <input id="inputStoreName" name="name" type="text" class="form-control" placeholder="Name">
+                        <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
                     <label for="inputAddress" class="col-sm-2 control-label">Address</label>
                     <div class="col-sm-10">
                         <textarea id="inputAddress" class="form-control" rows="5" name="address"></textarea>
+                        <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('phone_num') ? 'has-error' : '' }}">
                     <label for="inputPhone" class="col-sm-2 control-label">Phone</label>
                     <div class="col-sm-10">
                         <input id="inputPhone" name="phone_num" type="text" class="form-control" placeholder="Phone">
+                        <span class="help-block">{{ $errors->has('phone_num') ? $errors->first('phone_num') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
