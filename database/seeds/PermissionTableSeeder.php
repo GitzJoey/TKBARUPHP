@@ -12,7 +12,6 @@ use App\Permission;
 
 class PermissionTableSeeder extends Seeder
 {
-
     public function run()
     {
         $permission = [

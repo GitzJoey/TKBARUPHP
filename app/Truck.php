@@ -15,6 +15,6 @@ class Truck extends Model
     protected $table = 'truck';
 
     protected $fillable = [
-        'truck_id', 'plate_number', 'kir_date', 'driver', 'remarks', 'created_by', 'created_date', 'updated_by', 'updated_date'
+        'plate_number', 'inspection_date', 'driver', 'status', 'remarks'
     ];
 }

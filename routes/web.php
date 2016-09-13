@@ -22,6 +22,9 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/dashboard', 'DashboardController@index');
 
+Route::get('/dashboard/po/create', 'PurchaseOrderController@create')->name('db.po.create');
+Route::post('/dashboard/po/create', 'PurchaseOrderController@store');
+
 Route::get('/dashboard/admin/user', 'UserController@index')->name('db.admin.user');
 Route::get('/dashboard/admin/user/show/{id}', 'UserController@show')->name('db.admin.user.show');
 Route::get('/dashboard/admin/user/create', 'UserController@create')->name('db.admin.user.create');
@@ -47,12 +50,12 @@ Route::patch('/dashboard/admin/store/edit/{id}', 'StoreController@update');
 Route::delete('/dashboard/admin/store/edit/{id}', 'StoreController@delete')->name('db.admin.store.delete');
 
 Route::get('/dashboard/admin/unit', 'UnitController@index')->name('db.admin.unit');
-Route::get('/dashboard/admin/unit/show/{id}', 'UnitController@show');
-Route::get('/dashboard/admin/unit/create', 'UnitController@create');
+Route::get('/dashboard/admin/unit/show/{id}', 'UnitController@show')->name('db.admin.unit.show');
+Route::get('/dashboard/admin/unit/create', 'UnitController@create')->name('db.admin.unit.create');
 Route::post('/dashboard/admin/unit/create', 'UnitController@store');
-Route::get('/dashboard/admin/unit/edit/{id}', 'UnitController@edit');
+Route::get('/dashboard/admin/unit/edit/{id}', 'UnitController@edit')->name('db.admin.unit.edit');
 Route::patch('/dashboard/admin/unit/edit/{id}', 'UnitController@update');
-Route::delete('/dashboard/admin/unit/edit/{id}', 'UnitController@delete');
+Route::delete('/dashboard/admin/unit/edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
 
 Route::get('/dashboard/admin/settings', 'SettingsController@index')->name('db.admin.settings');
 Route::get('/dashboard/admin/settings/edit/{id}', 'SettingsController@edit');

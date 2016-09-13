@@ -12,7 +12,6 @@ use \App\Settings;
 
 class SettingsTableSeeder extends Seeder
 {
-
     public function run()
     {
         $settings = [

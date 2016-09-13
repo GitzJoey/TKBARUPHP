@@ -16,5 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
         $this->call(DefaultStoreTableSeeder::class);
+        $this->call(DefaultListUnitTableSeeder::class);
+        $this->call(PhoneProviderTableSeeder::class);
+        $this->call(CreateLookupTableSeeder::class);
     }
 }

@@ -26,7 +26,7 @@ elixir(function(mix) {
         'ionicons/dist/css/ionicons.min.css',
         'admin-lte/dist/css/AdminLTE.min.css',
         'admin-lte/dist/css/skins/_all-skins.min.css',
-        'icheck/skins/square/blue.css'
+        'icheck/skins/square/blue.css',
     ], 'public/adminlte/css/adminlte.css', 'node_modules')
         .scripts([
             'jquery/dist/jquery.min.js',

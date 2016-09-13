@@ -2,15 +2,6 @@
 
 @section('title', 'Store Management')
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
-@endsection
-
 @section('page_title')
     <span class="fa fa-user fa-fw"></span>&nbsp;Store
 @endsection
