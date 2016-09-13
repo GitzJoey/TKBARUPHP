@@ -10,6 +10,11 @@ namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\PurchaseOrder
+ *
+ * @mixin \Eloquent
+ */
 class PurchaseOrder extends Model
 {
 

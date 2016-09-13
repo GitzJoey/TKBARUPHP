@@ -10,6 +10,11 @@ namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\PhoneNumber
+ *
+ * @mixin \Eloquent
+ */
 class PhoneNumber extends Model
 {
 

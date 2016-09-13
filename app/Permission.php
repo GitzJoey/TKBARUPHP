@@ -27,8 +27,12 @@ use Zizaco\Entrust\EntrustPermission;
  * @method static \Illuminate\Database\Query\Builder|\App\Permission whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Permission whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Role $role
  */
 class Permission extends EntrustPermission
 {
-
+    public function role()
+    {
+        return $this->belongsTo('\App\Role');
+    }
 }

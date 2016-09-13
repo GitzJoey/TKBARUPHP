@@ -10,6 +10,11 @@ namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\PriceLevel
+ *
+ * @mixin \Eloquent
+ */
 class PriceLevel extends Model
 {
 

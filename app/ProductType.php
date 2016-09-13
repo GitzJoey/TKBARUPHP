@@ -10,6 +10,11 @@ namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\ProductType
+ *
+ * @mixin \Eloquent
+ */
 class ProductType extends Model
 {
     protected $table = 'product_type';

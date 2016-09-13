@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
+use \App\Profile;
+
 /**
  * App\User
  *
@@ -27,6 +29,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Profile $profile
  */
 class User extends Authenticatable
 {
@@ -53,6 +56,6 @@ class User extends Authenticatable
     ];
 
     public function profile() {
-        return $this->hasOne('Profile');
+        return $this->hasOne('\App\Profile');
     }
 }

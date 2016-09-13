@@ -10,6 +10,11 @@ namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Items
+ *
+ * @mixin \Eloquent
+ */
 class Items extends Model
 {
     protected $table = 'items';
@@ -19,6 +24,7 @@ class Items extends Model
     ];
 
     //Many to One
+    /*
     public function product()
     {
         return $this->belongsTo('product', 'product_id');
@@ -28,4 +34,5 @@ class Items extends Model
     {
 
     }
+    */
 }

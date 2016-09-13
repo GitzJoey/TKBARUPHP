@@ -10,6 +10,11 @@ namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Supplier
+ *
+ * @mixin \Eloquent
+ */
 class Supplier extends Model
 {
     protected $table = 'supplier';

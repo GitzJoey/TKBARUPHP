@@ -10,6 +10,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Truck
+ *
+ * @mixin \Eloquent
+ */
 class Truck extends Model
 {
     protected $table = 'truck';

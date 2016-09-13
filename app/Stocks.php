@@ -10,6 +10,11 @@ namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Stocks
+ *
+ * @mixin \Eloquent
+ */
 class Stocks extends Model
 {
 

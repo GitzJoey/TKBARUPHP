@@ -35,5 +35,4 @@ class Role extends EntrustRole
     {
         $this->hasMany('App\Permission');
     }
-
 }
