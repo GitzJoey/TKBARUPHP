@@ -30,6 +30,12 @@ use \App\Profile;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Profile $profile
+ * @property integer $store_id
+ * @property integer $role_id
+ * @property integer $profile_id
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRoleId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereProfileId($value)
  */
 class User extends Authenticatable
 {
@@ -57,5 +63,15 @@ class User extends Authenticatable
 
     public function profile() {
         return $this->hasOne('\App\Profile');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('Store', 'store_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('Role', 'role_id');
     }
 }

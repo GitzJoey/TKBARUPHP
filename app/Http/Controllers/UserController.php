@@ -36,11 +36,20 @@ class UserController extends Controller
 
     public function store($data)
     {
-        User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
+        if ($this->validateInput($data)) {
+            $usr = new User();
+            $usr->name = $data['name'];
+            $usr->email = $data['email'];
+            $usr->password = bcrypt($data['password']);
+
+            $usr->profile->first_name = $data['first_name'];
+            $usr->store_id = 1;
+            $usr->role_id = 1;
+
+            $usr->save();
+        }
+
+        return redirect(route('db.admin.user'));
     }
 
     private function validateInput(array $data)

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.8 on 2016-09-13.
+ * Generated for Laravel 5.3.6 on 2016-09-14.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -256,6 +256,7 @@ namespace {
         /**
          * Get or check the current application environment.
          *
+         * @param mixed
          * @return string|bool 
          * @static 
          */
@@ -2487,6 +2488,7 @@ namespace {
         /**
          * Queue a cookie to send with the next response.
          *
+         * @param mixed
          * @return void 
          * @static 
          */
@@ -3625,7 +3627,7 @@ namespace {
          *
          * @param int $count
          * @param callable $callback
-         * @param string $column
+         * @param string $alias
          * @return bool 
          * @static 
          */
@@ -5629,17 +5631,6 @@ namespace {
         }
         
         /**
-         * Determine if the given path is readable.
-         *
-         * @param string $path
-         * @return bool 
-         * @static 
-         */
-        public static function isReadable($path){
-            return \Illuminate\Filesystem\Filesystem::isReadable($path);
-        }
-        
-        /**
          * Determine if the given path is writable.
          *
          * @param string $path
@@ -7633,9 +7624,9 @@ namespace {
         }
         
         /**
-         * Get the default channel driver name.
+         * Get the default channel driver names.
          *
-         * @return string 
+         * @return array 
          * @static 
          */
         public static function getDefaultDriver(){
@@ -7643,9 +7634,9 @@ namespace {
         }
         
         /**
-         * Get the default channel driver name.
+         * Get the default channel driver names.
          *
-         * @return string 
+         * @return array 
          * @static 
          */
         public static function deliversVia(){
@@ -7653,14 +7644,14 @@ namespace {
         }
         
         /**
-         * Set the default channel driver name.
+         * Set the default channel driver names.
          *
-         * @param string $channel
+         * @param array|string $channels
          * @return void 
          * @static 
          */
-        public static function deliverVia($channel){
-            \Illuminate\Notifications\ChannelManager::deliverVia($channel);
+        public static function deliverVia($channels){
+            \Illuminate\Notifications\ChannelManager::deliverVia($channels);
         }
         
         /**
@@ -8291,6 +8282,7 @@ namespace {
         /**
          * Determine if the current request URI matches a pattern.
          *
+         * @param mixed  string
          * @return bool 
          * @static 
          */
@@ -8301,6 +8293,7 @@ namespace {
         /**
          * Determine if the current request URL and query string matches a pattern.
          *
+         * @param mixed  string
          * @return bool 
          * @static 
          */
@@ -10508,6 +10501,7 @@ namespace {
         /**
          * Alias for the "currentRouteNamed" method.
          *
+         * @param mixed  string
          * @return bool 
          * @static 
          */
@@ -10539,6 +10533,7 @@ namespace {
         /**
          * Alias for the "currentRouteUses" method.
          *
+         * @param mixed  string
          * @return bool 
          * @static 
          */
@@ -11843,7 +11838,7 @@ namespace {
         }
         
         /**
-         * Generate the URL to an application asset.
+         * Generate a URL to an application asset.
          *
          * @param string $path
          * @param bool|null $secure
@@ -11855,7 +11850,7 @@ namespace {
         }
         
         /**
-         * Generate the URL to an asset from a custom root domain such as CDN, etc.
+         * Generate a URL to an asset from a custom root domain such as CDN, etc.
          *
          * @param string $root
          * @param string $path
@@ -11868,7 +11863,7 @@ namespace {
         }
         
         /**
-         * Generate the URL to a secure asset.
+         * Generate a URL to a secure asset.
          *
          * @param string $path
          * @return string 
@@ -12461,7 +12456,7 @@ namespace {
         /**
          * Add new loop to the stack.
          *
-         * @param \Countable|array $data
+         * @param array|\Countable $data
          * @return void 
          * @static 
          */

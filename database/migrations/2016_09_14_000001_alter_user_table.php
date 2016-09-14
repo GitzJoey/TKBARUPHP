@@ -31,6 +31,10 @@ Class AlterUserTable extends Migration
                 $table->unsignedBigInteger('profile_id');
             });
         }
+
+        DB::statement("ALTER TABLE users CHANGE COLUMN profile_id profile_id BIGINT(20) UNSIGNED NOT NULL AFTER id");
+        DB::statement("ALTER TABLE users CHANGE COLUMN role_id role_id BIGINT(20) UNSIGNED NOT NULL AFTER id");
+        DB::statement("ALTER TABLE users CHANGE COLUMN store_id store_id BIGINT(20) UNSIGNED NOT NULL AFTER id");
     }
 
     public function down()

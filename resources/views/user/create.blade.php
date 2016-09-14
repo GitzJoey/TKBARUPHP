@@ -55,6 +55,13 @@
                         <input type="password" class="form-control" id="inputPassword" name="password_confirmation" placeholder="Password">
                     </div>
                 </div>
+                <hr>
+                <div class="form-group">
+                    <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputFirstName" name="first_name" placeholder="First Name">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
