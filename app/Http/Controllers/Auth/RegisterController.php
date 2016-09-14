@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Profile;
+
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -76,6 +78,10 @@ class RegisterController extends Controller
 
         $usr->store_id = 1;
         $usr->role_id = 1;
+
+        $profile = new Profile;
+
+        $usr->profile->save($profile);
 
         $usr->save();
 
