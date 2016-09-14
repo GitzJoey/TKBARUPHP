@@ -19,6 +19,7 @@ Class CreateProfileTable extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('address')->nullable();
+            $table->string('ic_num')->nullable();
             $table->timestamps();
         });
     }

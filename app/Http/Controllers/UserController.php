@@ -8,7 +8,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\User;
+use App\Role;
+use App\Store;
+use App\Profile;
 
 class UserController extends Controller
 {
@@ -31,35 +36,65 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create');
+        $rolesDDL = Role::get()->pluck('display_name', 'name');
+        $storeDDL = Store::get()->pluck('name', 'id');
+        return view('user.create', compact('rolesDDL', 'storeDDL'));
     }
 
-    public function store($data)
+    public function store(Request $data)
     {
-        if ($this->validateInput($data)) {
-            $usr = new User();
-            $usr->name = $data['name'];
-            $usr->email = $data['email'];
-            $usr->password = bcrypt($data['password']);
-            $usr->store_id = 1;
-            $usr->role_id = 1;
+        $this->validate($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'roles' => 'required',
+            'store' => 'required',
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'address' => 'required|max:255',
+        ]);
 
-            $usr->save();
+        $usr = new User();
+        $usr->name = $data['name'];
+        $usr->email = $data['email'];
+        $usr->password = bcrypt($data['password']);
+        $usr->store_id = 1;
+        $usr->role_id = 1;
 
-            $profile = new Profile;
+        $usr->save();
 
-            $usr->profile->save($profile);
-        }
+        $profile = new Profile;
+        $profile->first_name = $data['first_name'];
+
+        $usr->profile->save($profile);
 
         return redirect(route('db.admin.user'));
     }
 
-    private function validateInput(array $data)
+    public function edit($id)
     {
-        return Validator::make($data, [
+        $user = User::find($id);
+
+        $rolesDDL = Role::get()->pluck('display_name', 'name');
+        $storeDDL = Store::get()->pluck('name', 'id');
+
+        return view('user.edit', compact('user', 'storeDDL', 'rolesDDL'));
+    }
+
+    public function update($id, Request $req)
+    {
+        $this->validate($req, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'roles' => 'required',
+            'store' => 'required',
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'address' => 'required|max:255',
         ]);
+
+        User::find($id)->update($req->all());
+        return redirect(route('db.admin.user'));
     }
 }
