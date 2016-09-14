@@ -24,7 +24,11 @@ Auth::routes();
 Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 {
     Route::bind('id', function($id) {
-       return Hashids::decode($id)[0];
+        if (!is_numeric($id)) {
+            return Hashids::decode($id)[0];
+        } else {
+            return $id;
+        }
     });
 
     Route::get('/home', 'HomeController@index');
