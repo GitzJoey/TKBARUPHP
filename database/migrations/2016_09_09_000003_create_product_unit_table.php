@@ -16,12 +16,12 @@ Class CreateProductUnitTable extends Migration
     {
         Schema::create('product_unit', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('store_id');
-            $table->bigInteger('unit_id');
-            $table->boolean('is_base');
-            $table->decimal('conversion_value');
-            $table->string('remarks');
+            $table->unsignedBigInteger('product_id')->default(0);
+            $table->unsignedBigInteger('store_id')->default(0);
+            $table->bigInteger('unit_id')->default(0);
+            $table->boolean('is_base')->nullable();
+            $table->decimal('conversion_value')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
 

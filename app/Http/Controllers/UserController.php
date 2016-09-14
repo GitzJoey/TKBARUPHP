@@ -41,12 +41,14 @@ class UserController extends Controller
             $usr->name = $data['name'];
             $usr->email = $data['email'];
             $usr->password = bcrypt($data['password']);
-
-            $usr->profile->first_name = $data['first_name'];
             $usr->store_id = 1;
             $usr->role_id = 1;
 
             $usr->save();
+
+            $profile = new Profile;
+
+            $usr->profile->save($profile);
         }
 
         return redirect(route('db.admin.user'));

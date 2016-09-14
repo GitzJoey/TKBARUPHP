@@ -16,10 +16,10 @@ Class CreatePhoneProviderTable extends Migration
     {
         Schema::create('phone_provider', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('short_name');
-            $table->string('status');
-            $table->string('remarks');
+            $table->string('name')->nullable();
+            $table->string('short_name')->nullable();
+            $table->string('status')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

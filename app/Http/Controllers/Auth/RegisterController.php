@@ -79,11 +79,11 @@ class RegisterController extends Controller
         $usr->store_id = 1;
         $usr->role_id = 1;
 
-        $profile = new Profile;
-
-        $usr->profile->save($profile);
-
         $usr->save();
+
+        $profile = new Profile;
+        $profile->first_name = $data['name'];
+        $usr->profile()->save($profile);
 
         return $usr;
     }

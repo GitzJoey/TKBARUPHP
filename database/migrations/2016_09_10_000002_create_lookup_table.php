@@ -15,11 +15,11 @@ Class CreateLookupTable extends Migration
     public function up()
     {
         Schema::create('lookup', function (Blueprint $table) {
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->primary('code');
             $table->unique('code');
-            $table->string('description');
-            $table->string('category');
+            $table->string('description')->nullable();
+            $table->string('category')->nullable();
             $table->timestamps();
         });
     }

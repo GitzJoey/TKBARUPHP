@@ -15,12 +15,12 @@ Class CreateSettingsTable extends Migration
     public function up()
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->string('skey');
+            $table->string('skey')->nullable();
             $table->primary('skey');
             $table->unique('skey');
-            $table->string('category');
-            $table->string('value');
-            $table->string('description');
+            $table->string('category')->nullable();
+            $table->string('value')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

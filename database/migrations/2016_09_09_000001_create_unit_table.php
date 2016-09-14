@@ -16,10 +16,10 @@ class CreateUnitTable extends Migration
     {
         Schema::create('unit', function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('symbol');
-            $table->string('status');
-            $table->string('remarks');
+            $table->string('name')->nullable();
+            $table->string('symbol')->nullable();
+            $table->string('status')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }
