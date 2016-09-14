@@ -10,7 +10,8 @@
         "zizaco/entrust": "5.2.x-dev",
         "barryvdh/laravel-ide-helper": "v2.2.1",
         "doctrine/dbal": "2.6.x-dev",
-        "laravelcollective/html": "5.3.x-dev"
+        "laravelcollective/html": "5.3.x-dev",
+        "mcamara/laravel-localization": "1.1.7"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
