@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.6 on 2016-09-14.
+ * Generated for Laravel 5.3.8 on 2016-09-14.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -256,7 +256,6 @@ namespace {
         /**
          * Get or check the current application environment.
          *
-         * @param mixed
          * @return string|bool 
          * @static 
          */
@@ -2488,7 +2487,6 @@ namespace {
         /**
          * Queue a cookie to send with the next response.
          *
-         * @param mixed
          * @return void 
          * @static 
          */
@@ -3627,7 +3625,7 @@ namespace {
          *
          * @param int $count
          * @param callable $callback
-         * @param string $alias
+         * @param string $column
          * @return bool 
          * @static 
          */
@@ -5631,6 +5629,17 @@ namespace {
         }
         
         /**
+         * Determine if the given path is readable.
+         *
+         * @param string $path
+         * @return bool 
+         * @static 
+         */
+        public static function isReadable($path){
+            return \Illuminate\Filesystem\Filesystem::isReadable($path);
+        }
+        
+        /**
          * Determine if the given path is writable.
          *
          * @param string $path
@@ -6543,6 +6552,128 @@ namespace {
     }
 
 
+    class Hashids extends \Vinkla\Hashids\Facades\Hashids{
+        
+        /**
+         * Get the factory instance.
+         *
+         * @return \Vinkla\Hashids\HashidsFactory 
+         * @static 
+         */
+        public static function getFactory(){
+            return \Vinkla\Hashids\HashidsManager::getFactory();
+        }
+        
+        /**
+         * Get a connection instance.
+         *
+         * @param string $name
+         * @return object 
+         * @static 
+         */
+        public static function connection($name = null){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::connection($name);
+        }
+        
+        /**
+         * Reconnect to the given connection.
+         *
+         * @param string $name
+         * @return object 
+         * @static 
+         */
+        public static function reconnect($name = null){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::reconnect($name);
+        }
+        
+        /**
+         * Disconnect from the given connection.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function disconnect($name = null){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            \Vinkla\Hashids\HashidsManager::disconnect($name);
+        }
+        
+        /**
+         * Get the configuration for a connection.
+         *
+         * @param string $name
+         * @throws \InvalidArgumentException
+         * @return array 
+         * @static 
+         */
+        public static function getConnectionConfig($name){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::getConnectionConfig($name);
+        }
+        
+        /**
+         * Get the default connection name.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultConnection(){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::getDefaultConnection();
+        }
+        
+        /**
+         * Set the default connection name.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function setDefaultConnection($name){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            \Vinkla\Hashids\HashidsManager::setDefaultConnection($name);
+        }
+        
+        /**
+         * Register an extension connection resolver.
+         *
+         * @param string $name
+         * @param callable $resolver
+         * @return void 
+         * @static 
+         */
+        public static function extend($name, $resolver){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            \Vinkla\Hashids\HashidsManager::extend($name, $resolver);
+        }
+        
+        /**
+         * Return all of the created connections.
+         *
+         * @return object[] 
+         * @static 
+         */
+        public static function getConnections(){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::getConnections();
+        }
+        
+        /**
+         * Get the config instance.
+         *
+         * @return \Illuminate\Contracts\Config\Repository 
+         * @static 
+         */
+        public static function getConfig(){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::getConfig();
+        }
+        
+    }
+
+
     class Html extends \Collective\Html\HtmlFacade{
         
         /**
@@ -7141,6 +7272,273 @@ namespace {
     }
 
 
+    class LaravelLocalization extends \Mcamara\LaravelLocalization\Facades\LaravelLocalization{
+        
+        /**
+         * Set and return current locale
+         *
+         * @param string $locale Locale to set the App to (optional)
+         * @return string Returns locale (if route has any) or null (if route does not have a locale)
+         * @static 
+         */
+        public static function setLocale($locale = null){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::setLocale($locale);
+        }
+        
+        /**
+         * Set and return supported locales
+         *
+         * @param array $locales Locales that the App supports
+         * @static 
+         */
+        public static function setSupportedLocales($locales){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::setSupportedLocales($locales);
+        }
+        
+        /**
+         * Returns an URL adapted to $locale or current locale
+         *
+         * @param string $url URL to adapt. If not passed, the current url would be taken.
+         * @param string|boolean $locale Locale to adapt, false to remove locale
+         * @throws UnsupportedLocaleException
+         * @return string URL translated
+         * @static 
+         */
+        public static function localizeURL($url = null, $locale = null){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::localizeURL($url, $locale);
+        }
+        
+        /**
+         * Returns an URL adapted to $locale
+         *
+         * @throws SupportedLocalesNotDefined
+         * @throws UnsupportedLocaleException
+         * @param string|boolean $locale Locale to adapt, false to remove locale
+         * @param string|false $url URL to adapt in the current language. If not passed, the current url would be taken.
+         * @param array $attributes Attributes to add to the route, if empty, the system would try to extract them from the url.
+         * @return string|false URL translated, False if url does not exist
+         * @static 
+         */
+        public static function getLocalizedURL($locale = null, $url = null, $attributes = array()){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getLocalizedURL($locale, $url, $attributes);
+        }
+        
+        /**
+         * Returns an URL adapted to the route name and the locale given
+         *
+         * @throws SupportedLocalesNotDefined
+         * @throws UnsupportedLocaleException
+         * @param string|boolean $locale Locale to adapt
+         * @param string $transKeyName Translation key name of the url to adapt
+         * @param array $attributes Attributes for the route (only needed if transKeyName needs them)
+         * @return string|false URL translated
+         * @static 
+         */
+        public static function getURLFromRouteNameTranslated($locale, $transKeyName, $attributes = array()){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getURLFromRouteNameTranslated($locale, $transKeyName, $attributes);
+        }
+        
+        /**
+         * It returns an URL without locale (if it has it)
+         * Convenience function wrapping getLocalizedURL(false)
+         *
+         * @param string|false $url URL to clean, if false, current url would be taken
+         * @return string URL with no locale in path
+         * @static 
+         */
+        public static function getNonLocalizedURL($url = null){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getNonLocalizedURL($url);
+        }
+        
+        /**
+         * Returns default locale
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultLocale(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getDefaultLocale();
+        }
+        
+        /**
+         * Return an array of all supported Locales
+         *
+         * @throws SupportedLocalesNotDefined
+         * @return array 
+         * @static 
+         */
+        public static function getSupportedLocales(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getSupportedLocales();
+        }
+        
+        /**
+         * Returns current locale name
+         *
+         * @return string current locale name
+         * @static 
+         */
+        public static function getCurrentLocaleName(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleName();
+        }
+        
+        /**
+         * Returns current locale native name
+         *
+         * @return string current locale native name
+         * @static 
+         */
+        public static function getCurrentLocaleNative(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleNative();
+        }
+        
+        /**
+         * Returns current locale direction
+         *
+         * @return string current locale direction
+         * @static 
+         */
+        public static function getCurrentLocaleDirection(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleDirection();
+        }
+        
+        /**
+         * Returns current locale script
+         *
+         * @return string current locale script
+         * @static 
+         */
+        public static function getCurrentLocaleScript(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleScript();
+        }
+        
+        /**
+         * Returns current language's native reading
+         *
+         * @return string current language's native reading
+         * @static 
+         */
+        public static function getCurrentLocaleNativeReading(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleNativeReading();
+        }
+        
+        /**
+         * Returns current language
+         *
+         * @return string current language
+         * @static 
+         */
+        public static function getCurrentLocale(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocale();
+        }
+        
+        /**
+         * Returns current regional
+         *
+         * @return string current regional
+         * @static 
+         */
+        public static function getCurrentLocaleRegional(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleRegional();
+        }
+        
+        /**
+         * Returns supported languages language key
+         *
+         * @return array keys of supported languages
+         * @static 
+         */
+        public static function getSupportedLanguagesKeys(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getSupportedLanguagesKeys();
+        }
+        
+        /**
+         * Check if Locale exists on the supported locales array
+         *
+         * @param string|boolean $locale string|bool Locale to be checked
+         * @throws SupportedLocalesNotDefined
+         * @return boolean is the locale supported?
+         * @static 
+         */
+        public static function checkLocaleInSupportedLocales($locale){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::checkLocaleInSupportedLocales($locale);
+        }
+        
+        /**
+         * Set current route name
+         *
+         * @param string $routeName current route name
+         * @static 
+         */
+        public static function setRouteName($routeName){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::setRouteName($routeName);
+        }
+        
+        /**
+         * Translate routes and save them to the translated routes array (used in the localize route filter)
+         *
+         * @param string $routeName Key of the translated string
+         * @return string Translated string
+         * @static 
+         */
+        public static function transRoute($routeName){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::transRoute($routeName);
+        }
+        
+        /**
+         * Returns the translation key for a given path
+         *
+         * @param string $path Path to get the key translated
+         * @return string|false Key for translation, false if not exist
+         * @static 
+         */
+        public static function getRouteNameFromAPath($path){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getRouteNameFromAPath($path);
+        }
+        
+        /**
+         * Returns the config repository for this instance
+         *
+         * @return \Mcamara\LaravelLocalization\Repository Configuration repository
+         * @static 
+         */
+        public static function getConfigRepository(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::getConfigRepository();
+        }
+        
+        /**
+         * Returns the translation key for a given path
+         *
+         * @return boolean Returns value of hideDefaultLocaleInURL in config.
+         * @static 
+         */
+        public static function hideDefaultLocaleInURL(){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::hideDefaultLocaleInURL();
+        }
+        
+        /**
+         * Create an url from the uri
+         *
+         * @param string $uri Uri
+         * @return string Url for the given uri
+         * @static 
+         */
+        public static function createUrlFromUri($uri){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::createUrlFromUri($uri);
+        }
+        
+        /**
+         * Sets the base url for the site
+         *
+         * @param string $url Base url for the site
+         * @static 
+         */
+        public static function setBaseUrl($url){
+            return \Mcamara\LaravelLocalization\LaravelLocalization::setBaseUrl($url);
+        }
+        
+    }
+
+
     class Log extends \Illuminate\Support\Facades\Log{
         
         /**
@@ -7624,9 +8022,9 @@ namespace {
         }
         
         /**
-         * Get the default channel driver names.
+         * Get the default channel driver name.
          *
-         * @return array 
+         * @return string 
          * @static 
          */
         public static function getDefaultDriver(){
@@ -7634,9 +8032,9 @@ namespace {
         }
         
         /**
-         * Get the default channel driver names.
+         * Get the default channel driver name.
          *
-         * @return array 
+         * @return string 
          * @static 
          */
         public static function deliversVia(){
@@ -7644,14 +8042,14 @@ namespace {
         }
         
         /**
-         * Set the default channel driver names.
+         * Set the default channel driver name.
          *
-         * @param array|string $channels
+         * @param string $channel
          * @return void 
          * @static 
          */
-        public static function deliverVia($channels){
-            \Illuminate\Notifications\ChannelManager::deliverVia($channels);
+        public static function deliverVia($channel){
+            \Illuminate\Notifications\ChannelManager::deliverVia($channel);
         }
         
         /**
@@ -8282,7 +8680,6 @@ namespace {
         /**
          * Determine if the current request URI matches a pattern.
          *
-         * @param mixed  string
          * @return bool 
          * @static 
          */
@@ -8293,7 +8690,6 @@ namespace {
         /**
          * Determine if the current request URL and query string matches a pattern.
          *
-         * @param mixed  string
          * @return bool 
          * @static 
          */
@@ -10501,7 +10897,6 @@ namespace {
         /**
          * Alias for the "currentRouteNamed" method.
          *
-         * @param mixed  string
          * @return bool 
          * @static 
          */
@@ -10533,7 +10928,6 @@ namespace {
         /**
          * Alias for the "currentRouteUses" method.
          *
-         * @param mixed  string
          * @return bool 
          * @static 
          */
@@ -11838,7 +12232,7 @@ namespace {
         }
         
         /**
-         * Generate a URL to an application asset.
+         * Generate the URL to an application asset.
          *
          * @param string $path
          * @param bool|null $secure
@@ -11850,7 +12244,7 @@ namespace {
         }
         
         /**
-         * Generate a URL to an asset from a custom root domain such as CDN, etc.
+         * Generate the URL to an asset from a custom root domain such as CDN, etc.
          *
          * @param string $root
          * @param string $path
@@ -11863,7 +12257,7 @@ namespace {
         }
         
         /**
-         * Generate a URL to a secure asset.
+         * Generate the URL to a secure asset.
          *
          * @param string $path
          * @return string 
@@ -12456,7 +12850,7 @@ namespace {
         /**
          * Add new loop to the stack.
          *
-         * @param array|\Countable $data
+         * @param \Countable|array $data
          * @return void 
          * @static 
          */

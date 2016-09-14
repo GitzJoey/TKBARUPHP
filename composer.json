@@ -11,7 +11,8 @@
         "barryvdh/laravel-ide-helper": "v2.2.1",
         "doctrine/dbal": "2.6.x-dev",
         "laravelcollective/html": "5.3.x-dev",
-        "mcamara/laravel-localization": "1.1.7"
+        "mcamara/laravel-localization": "1.1.7",
+        "vinkla/hashids": "2.4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

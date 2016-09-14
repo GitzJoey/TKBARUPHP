@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Vinkla\Hashids\Facades\Hashids;
 
 use \App\Profile;
 
@@ -36,6 +37,8 @@ use \App\Profile;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereRoleId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereProfileId($value)
+ * @property-read \App\Store $store
+ * @property-read \App\Role $role
  */
 class User extends Authenticatable
 {
@@ -61,17 +64,21 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
+
     public function profile() {
         return $this->hasOne('\App\Profile', 'id');
     }
 
     public function store()
     {
-        return $this->belongsTo('Store', 'store_id');
+        return $this->belongsTo('\App\Store', 'store_id');
     }
 
     public function role()
     {
-        return $this->belongsTo('Role', 'role_id');
+        return $this->belongsTo('\App\Role', 'role_id');
     }
 }

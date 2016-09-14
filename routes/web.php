@@ -12,6 +12,7 @@
 */
 
 use \Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Vinkla\Hashids\Facades\Hashids;
 
 Route::get('/', function () {
     //return view('welcome');
@@ -22,6 +23,10 @@ Auth::routes();
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 {
+    Route::bind('id', function($id) {
+       return Hashids::decode($id)[0];
+    });
+
     Route::get('/home', 'HomeController@index');
 
     Route::get('/dashboard', 'DashboardController@index');

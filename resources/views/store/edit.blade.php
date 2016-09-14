@@ -23,7 +23,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Edit Store</h3>
         </div>
-        {!! Form::model($store, ['method' => 'PATCH','route' => ['db.admin.store.edit', $store->id], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($store, ['method' => 'PATCH','route' => ['db.admin.store.edit', $store->hId()], 'class' => 'form-horizontal']) !!}
         <div class="box-body">
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 <label for="inputStoreName" class="col-sm-2 control-label">Name</label>

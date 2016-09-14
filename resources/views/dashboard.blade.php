@@ -4,5 +4,6 @@
 
 @section('content')
     @lang('dashboard.test1')
+    Hashids : {{ $hid }}
 @endsection
 

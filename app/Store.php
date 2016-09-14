@@ -9,6 +9,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * App\Store
@@ -45,4 +46,7 @@ class Store extends Model
         'name', 'address', 'phone_num', 'fax_num', 'tax_id', 'status', 'is_default', 'remarks'
     ];
 
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
 }

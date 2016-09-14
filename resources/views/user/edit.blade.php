@@ -24,7 +24,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Edit User</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.admin.user.edit', $user->id) }}" method="post" accept-charset="UTF-8">
+        <form class="form-horizontal" action="{{ route('db.admin.user.edit', $user->hId()) }}" method="post" accept-charset="UTF-8">
             <input name="_method" type="hidden" value="PATCH"/>
             {{ csrf_field() }}
             <div class="box-body">

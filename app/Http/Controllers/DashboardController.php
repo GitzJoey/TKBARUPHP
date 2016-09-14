@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Vinkla\Hashids\Facades\Hashids;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('dashboard');
+        $hid = Hashids::encode(3);
+        return view('dashboard')->with('hid', $hid);
     }
 }
