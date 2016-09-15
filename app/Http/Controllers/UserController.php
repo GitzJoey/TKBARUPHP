@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 
 use App\User;
 use App\Role;
@@ -67,6 +68,8 @@ class UserController extends Controller
         $profile->first_name = $data['first_name'];
 
         $usr->profile->save($profile);
+
+        Session::flash('success', 'New User Created');
 
         return redirect(route('db.admin.user'));
     }

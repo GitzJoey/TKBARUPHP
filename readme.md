@@ -13,11 +13,11 @@ based with the best practice that every people in the world is using.
 This project is porting from Java version, you can find the Java version [here!](https://github.com/gitzjoey/tkbarujava/)
 
 # Requirements
-* PHP >= 5.5.9
-* Composer 
-* NodeJS/NPM
-* Git
-* Mysql
+* [Latest PHP 5](http://php.net)
+* [Composer](http://getcomposer.org) 
+* [NodeJS/NPM](http://nodejs.org)
+* [Git](http://git-scm.com)
+* [Mysql](http://mysql.com)
 
 # Installation
 Clone repository
@@ -56,6 +56,11 @@ Do Migration and Seeder
 ```
 $ php artisan migrate 
 $ php artisan db:seed
+```
+
+If something seem not right maybe try to dump-autoload and redo the process
+```
+$ composer dump-autoload
 ```
 
 # Features Suggestion

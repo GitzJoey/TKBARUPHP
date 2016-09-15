@@ -1,20 +1,23 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Role')
+@section('title')
+    @lang('role.index.title')
+@endsection
+
+@section('page_title')
+    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('role.index.page_title')
+@endsection
+@section('page_title_desc')
+    @lang('role.index.page_title_desc')
+@endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Role Management</h2>
-            </div>
-            <div class="pull-right">
-                @permission('role-create')
-                <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
-                @endpermission
-            </div>
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
         </div>
-    </div>
+    @endif
+
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
