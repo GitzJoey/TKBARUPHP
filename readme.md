@@ -10,7 +10,7 @@ bank, payment, payroll, accounting, etc.
 The Goal is to become the most up to date POS system using the most up to date technology and
 based with the best practice that every people in the world is using. 
 
-This project is porting from Java version, you can find the Java version [here!](https://bitbucket.org/gitzjoey/tkbaru/)
+This project is porting from Java version, you can find the Java version [here!](https://github.com/gitzjoey/tkbarujava/)
 
 # Requirements
 * PHP >= 5.5.9
@@ -36,12 +36,12 @@ composer update
 ```
 
 Do NPM Install
-```
+...
 npm install
 ...
 
-Generate css/js
-```
+Do Gulp
+...
 gulp --production
 ...
 
