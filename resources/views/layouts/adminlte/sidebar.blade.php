@@ -93,6 +93,17 @@
                 </ul>
             </li>
             <li class="treeview">
+                <a href="#"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i><span>&nbsp;Truck</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('db.master.truck.maintenance') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;Maintenance</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i><span>&nbsp;Report</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -117,18 +128,7 @@
                     <li><a href="{{ route('db.master.product') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;Product</a></li>
                     <li><a href="{{ route('db.master.warehouse') }}"><i class="fa fa-wrench fa-fw"></i>&nbsp;Warehouse</a></li>
                     <li><a href="{{ route('db.master.bank') }}"><i class="fa fa-bank fa-fw"></i>&nbsp;Bank</a></li>
-                    <li class="treeview">
-                        <a href="{{ route('db.master.truck') }}">
-                            <i class="fa fa-truck fa-flip-horizontal fa-fw"></i>&nbsp;Truck
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{ route('db.master.truck') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;Truck</a></li>
-                            <li><a href="{{ route('db.master.truck.maintenance') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;Maintenance</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="{{ route('db.master.truck') }}"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i>&nbsp;Truck</a></li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-vine fa-flip-horizontal fa-fw"></i>&nbsp;Vendors
