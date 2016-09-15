@@ -1,6 +1,6 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Truck Management')
+@section('title', 'phoneProvider Management')
 
 @section('page_title')
     <span class="fa fa-truck fa-fw"></span>&nbsp;Truck
@@ -23,7 +23,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Create Truck</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.truck.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.master.phoneProvider.create') }}" method="post">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
