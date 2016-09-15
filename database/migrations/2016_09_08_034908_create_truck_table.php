@@ -19,7 +19,7 @@ class CreateTruckTable extends Migration
             $table->unique('plate_number');
             $table->date('inspection_date');
             $table->string('driver');
-            $table->tring('status');
+            $table->string('status');
             $table->string('remarks');
             $table->timestamps();
         });
