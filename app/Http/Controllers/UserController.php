@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use Validator;
 
 use App\User;
 use App\Role;
@@ -44,7 +45,7 @@ class UserController extends Controller
 
     public function store(Request $data)
     {
-        $this->validate($data, [
+        $validator = Validator::make($data->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
@@ -55,23 +56,27 @@ class UserController extends Controller
             'address' => 'required|max:255',
         ]);
 
-        $usr = new User();
-        $usr->name = $data['name'];
-        $usr->email = $data['email'];
-        $usr->password = bcrypt($data['password']);
-        $usr->store_id = 1;
-        $usr->role_id = 1;
+        if ($validator->fails()) {
+            return redirect(route('db.admin.user.create'))->withInput()->withErrors($validator);
+        } else {
+            $usr = new User();
+            $usr->name = $data['name'];
+            $usr->email = $data['email'];
+            $usr->password = bcrypt($data['password']);
+            $usr->store_id = 1;
+            $usr->role_id = 1;
 
-        $usr->save();
+            $usr->save();
 
-        $profile = new Profile;
-        $profile->first_name = $data['first_name'];
+            $profile = new Profile;
+            $profile->first_name = $data['first_name'];
 
-        $usr->profile->save($profile);
+            $usr->profile()->save($profile);
 
-        Session::flash('success', 'New User Created');
+            Session::flash('success', 'New User Created');
 
-        return redirect(route('db.admin.user'));
+            return redirect(route('db.admin.user'));
+        }
     }
 
     public function edit($id)

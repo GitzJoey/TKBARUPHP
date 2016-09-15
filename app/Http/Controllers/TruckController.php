@@ -8,8 +8,10 @@
 
 namespace App\Http\Controllers;
 
-use \DateTime;
+use DateTime;
 use Illuminate\Http\Request;
+use Validator;
+
 use App\Truck;
 use App\Lookup;
 
@@ -41,26 +43,29 @@ class TruckController extends Controller
 
     public function store(Request $data)
     {
-        $this->validate($data,[
+        $validator = Validator::make($data->all(),[
             'plate_number' => 'required|string|max:255',
             'inspection_date' => 'required|string|max:255',
             'driver' => 'required|string|max:255',
             'status' => 'required',
             'remarks' => 'required|string|max:255',
-
         ]);
 
-        $date = DateTime::createFromFormat('Y-m-d', $data['inspection_date']);
-        $usableDate = $date->format('Y-m-d H:i:s');
+        if ($validator->fails()) {
+            return redirect(route('db.master.truck.create'))->withInput()->withErrors($validator);
+        } else {
+            $date = DateTime::createFromFormat('Y-m-d', $data['inspection_date']);
+            $usableDate = $date->format('Y-m-d H:i:s');
 
-        Truck::create([
-            'plate_number' => $data['plate_number'],
-            'inspection_date' => $usableDate,
-            'driver'     => $data['driver'],
-            'status'       => $data['status'],
-            'remarks'        => $data['remarks']
-        ]);
-        return redirect(route('db.master.truck'));
+            Truck::create([
+                'plate_number' => $data['plate_number'],
+                'inspection_date' => $usableDate,
+                'driver'     => $data['driver'],
+                'status'       => $data['status'],
+                'remarks'        => $data['remarks']
+            ]);
+            return redirect(route('db.master.truck'));
+        }
     }
 
     private function changeIsDefault()

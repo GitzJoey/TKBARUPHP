@@ -15,12 +15,12 @@ class CreateTruckTable extends Migration
     {
         Schema::create('truck', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('plate_number');
+            $table->string('plate_number')->nullable();
             $table->unique('plate_number');
-            $table->date('inspection_date');
-            $table->string('driver');
-            $table->string('status');
-            $table->string('remarks');
+            $table->date('inspection_date')->nullable();
+            $table->string('driver')->nullable();
+            $table->string('status')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }
