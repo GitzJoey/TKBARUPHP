@@ -16,5 +16,10 @@ return [
     'index.table.header.status' => 'status',
     'index.table.header.remarks' => 'Remarks',
     'index.button.new_truck' => 'New Truck',
+    'plate_number' => 'Plate Number',
+    'inspection_date' => 'Inspection Date',
+    'driver' => 'Driver',
+    'status' => 'Status',
+    'remarks' => 'Remarks',
 
 ];

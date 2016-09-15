@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPlateNumber" class="col-sm-2 control-label">Plate Number</label>
+                        <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.plate_number')</label>
                         <div class="col-sm-10">
                             <label id="plateNumber" class="control-label">
                                 <span class="control-label-normal">{{ $truck->plate_number }}</span>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputInspectionDate" class="col-sm-2 control-label">inspectionDate</label>
+                        <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truck.inspection_date')</label>
                         <div class="col-sm-10">
                             <label id="inspectionDate" class="control-label">
                                 <span class="control-label-normal">{{ $truck->inspection_date }}</span>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputDriver" class="col-sm-2 control-label">Driver</label>
+                        <label for="inputDriver" class="col-sm-2 control-label">@lang('truck.driver')</label>
                         <div class="col-sm-10">
                             <label id="driver" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $truck->driver }}</span>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputStatus" class="col-sm-2 control-label">Status</label>
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.status')</label>
                         <div class="col-sm-10">
                             <label id="status" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $truck->status }}</span>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputRemarks" class="col-sm-2 control-label">Remarks</label>
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.remarks')</label>
                         <div class="col-sm-10">
                             <label id="remarks" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $truck->remarks }}</span>

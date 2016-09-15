@@ -27,32 +27,32 @@
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">plate_number</label>
+                    <label for="inputName" class="col-sm-2 control-label">@lang('truck.plate_number')</label>
                     <div class="col-sm-10">
                         <input id="plate_number" name="plate_number" type="text" class="form-control" placeholder="plate_number">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">inspection_date</label>
+                    <label for="inputEmail" class="col-sm-2 control-label">@lang('truck.inspection_date')</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inspection_date" name="inspection_date" placeholder="inspection_date">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputRoles" class="col-sm-2 control-label">driver</label>
+                    <label for="inputRoles" class="col-sm-2 control-label">@lang('truck.driver')</label>
                     <div class="col-sm-10">
                         <input id="driver" name="driver" type="text" class="form-control" placeholder="driver">
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <label for="inputStatus" class="col-sm-2 control-label">Status</label>
+                    <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.status')</label>
                     <div class="col-sm-10">
                         {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPasswordConfirmation" class="col-sm-2 control-label">remarks</label>
+                    <label for="inputPasswordConfirmation" class="col-sm-2 control-label">@lang('truck.remarks')</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="remarks" name="remarks" placeholder="remarks">
                     </div>

@@ -26,32 +26,32 @@
         {!! Form::model($truck, ['method' => 'PATCH','route' => ['db.master.truck.edit', $truck->id], 'class' => 'form-horizontal']) !!}
         <div class="box-body">
             <div class="form-group">
-                <label for="inputPlateNumber" class="col-sm-2 control-label">Plate Number</label>
+                <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.plate_number')</label>
                 <div class="col-sm-10">
                     <input id="inputPlateNumber" name="plate_number" type="text" class="form-control" value="{{ $truck->plate_number }}" placeholder="Name">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputInspectionDate" class="col-sm-2 control-label">Inspection Date</label>
+                <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truck.inspection_date')</label>
                 <div class="col-sm-10">
                     <textarea id="inputInspectionDate" class="form-control" rows="5" name="inspection_date">{{ $truck->inspection_date }}</textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputDriver" class="col-sm-2 control-label">Driver</label>
+                <label for="inputDriver" class="col-sm-2 control-label">@lang('truck.driver')</label>
                 <div class="col-sm-10">
                     <input id="inputDriver" name="driver" type="text" class="form-control" value="{{ $truck->driver }} "placeholder="driver">
                 </div>
             </div>
             <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                <label for="inputStatus" class="col-sm-2 control-label">Status</label>
+                <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.status')</label>
                 <div class="col-sm-10">
                     {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
                     <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputRemarks" class="col-sm-2 control-label">Remarks</label>
+                <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.remarks')</label>
                 <div class="col-sm-10">
                     <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $truck->remarks }}" placeholder="Remarks">
                 </div>

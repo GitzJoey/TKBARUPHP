@@ -13,9 +13,14 @@ return [
     'index.table.header.title' => 'Daftar Truck',
     'index.table.header.plate_number' => 'Plat Nomer',
     'index.table.header.inspection_date' => 'Tanggal Inspeksi',
-    'index.table.header.driver' => 'Sopir',
+    'index.table.header.driver' => 'Pengemudi',
     'index.table.header.status' => 'Status',
     'index.table.header.remarks' => 'Tandai Ulang',
     'index.button.new_truck' => 'Truk Baru',
+    'plate_number' => 'Plat Nomor',
+    'inspection_date' => 'Tanggal Inspeksi',
+    'driver' => 'Pengemudi',
+    'status' => 'Status',
+    'remarks' => 'Tandai Ulang',
     
 ];
