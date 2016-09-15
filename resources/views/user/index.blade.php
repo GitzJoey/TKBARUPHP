@@ -1,11 +1,15 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'User Management')
+@section('title')
+    @lang('user.index.title')
+@endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;User
+    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.index.page_title')
 @endsection
-@section('page_title_desc', '')
+@section('page_title_desc')
+    @lang('user.index.page_title_desc')
+@endsection
 
 @section('content')
     @if ($message = Session::get('success'))
@@ -16,7 +20,7 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">User Lists</h3>
+            <h3 class="box-title">@lang('user.index.table.header.title')</h3>
         </div>
         <div class="box-body">
             <table class="table table-bordered">
@@ -43,9 +47,9 @@
                                 @endif
                             </td>
                             <td class="text-center" width="20%">
-                                <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $user->id) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $user->Hid()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.admin.user.edit', $user->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.user.delete', $user->hId], 'style'=>'display:inline'])  !!}
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.user.delete', $user->hId()], 'style'=>'display:inline'])  !!}
                                     <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                                 {!! Form::close() !!}
                             </td>
