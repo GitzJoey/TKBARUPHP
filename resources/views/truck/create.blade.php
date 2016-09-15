@@ -44,10 +44,11 @@
                         <input id="driver" name="driver" type="text" class="form-control" placeholder="driver">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputPassword" class="col-sm-2 control-label">status</label>
+                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                    <label for="inputStatus" class="col-sm-2 control-label">Status</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="status" name="status" placeholder="status">
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">

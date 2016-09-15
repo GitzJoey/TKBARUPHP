@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use \DateTime;
 use Illuminate\Http\Request;
 use App\Truck;
+use App\Lookup;
 
 class TruckController extends Controller
 {
@@ -33,11 +34,22 @@ class TruckController extends Controller
 
     public function create()
     {
-        return view('truck.create');
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+
+        return view('truck.create', compact('statusDDL'));
     }
 
     public function store(Request $data)
     {
+        $this->validate($data,[
+            'plate_number' => 'required|string|max:255',
+            'inspection_date' => 'required|string|max:255',
+            'driver' => 'required|string|max:255',
+            'status' => 'required',
+            'remarks' => 'required|string|max:255',
+
+        ]);
+
         $date = DateTime::createFromFormat('Y-m-d', $data['inspection_date']);
         $usableDate = $date->format('Y-m-d H:i:s');
 
@@ -59,7 +71,10 @@ class TruckController extends Controller
     public function edit($id)
     {
         $truck = Truck::find($id);
-        return view('truck.edit')->with('truck', $truck);
+
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+
+        return view('truck.edit', compact('truck', 'statusDDL'));
     }
 
     public function update($id, Request $req)

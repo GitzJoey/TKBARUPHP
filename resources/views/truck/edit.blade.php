@@ -43,10 +43,11 @@
                     <input id="inputDriver" name="driver" type="text" class="form-control" value="{{ $truck->driver }} "placeholder="driver">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                 <label for="inputStatus" class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-10">
-                    <input id="inputStatus" name="status" type="text" class="form-control" value="{{ $truck->status }}" placeholder="status"/>
+                    {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                    <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                 </div>
             </div>
             <div class="form-group">
