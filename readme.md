@@ -36,14 +36,14 @@ composer update
 ```
 
 Do NPM Install
-...
+```
 npm install
-...
+```
 
 Do Gulp
-...
+```
 gulp --production
-...
+```
 
 Rename the .env.example to .env and change setting accordingly.
  
