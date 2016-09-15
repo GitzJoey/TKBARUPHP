@@ -16,18 +16,18 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Truck Lists</h3>
+            <h3 class="box-title">@lang('truck.index.table.header.title')</h3>
         </div>
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th class="text-center">#</th>
-                    <th class="text-center">plate number</th>
-                    <th class="text-center">inspection date</th>
-                    <th class="text-center">driver</th>
-                    <th class="text-center">status</th>
-                    <th class="text-center">remarks</th>
+                    <th class="text-center">@lang('truck.index.table.header.plate_number')</th>
+                    <th class="text-center">@lang('truck.index.table.header.inspection_date')</th>
+                    <th class="text-center">@lang('truck.index.table.header.driver')</th>
+                    <th class="text-center">@lang('truck.index.table.header.status')</th>
+                    <th class="text-center">@lang('truck.index.table.header.remarks')</th>
                     <th class="text-center">&nbsp;</th>
                 </tr>
                 </thead>
@@ -55,7 +55,7 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.master.truck.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;New truck</a>
+            <a class="btn btn-success" href="{{ route('db.master.truck.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('truck.index.button.new_truck')</a>
             <ul class="pagination pagination-sm no-margin pull-right">
                 <li><a href="#">&laquo;</a></li>
                 <li><a href="#">1</a></li>
