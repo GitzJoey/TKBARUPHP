@@ -24,6 +24,6 @@ Class CreateUserDetailTable extends Migration
 
     public function down()
     {
-        Schema::drop('profiles');
+        Schema::drop('user_detail');
     }
 }

@@ -51,7 +51,7 @@ return [
     'item.adm_role' => 'Peran',
     'item.adm_unit' => 'Satuan',
     'item.adm_settings' => 'Pengaturan',
-    'item.adm_phoneprovider' => 'Provider Telp',
+    'item.adm_phone_provider' => 'Provider Telp',
     'item.adm_sms' => 'SMS Service',
     'item.adm_sms_in' => 'SMS Inbox',
     'item.adm_sms_out' => 'SMS Out',
