@@ -34,7 +34,7 @@ class Unit extends Model
     protected $table = 'unit';
 
     protected $fillable = [
-        'name', 'short_name', 'status', 'remarks',
+        'name', 'symbol', 'status', 'remarks',
     ];
 
 }

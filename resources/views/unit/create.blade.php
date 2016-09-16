@@ -27,27 +27,28 @@
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                    <label for="inputName" class="col-sm-2 control-label">@lang('phoneProvider.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="unit_name" type="text" class="form-control" placeholder="Name">
+                        <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('phoneProvider.name')">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputSymbol" class="col-sm-2 control-label">Symbol</label>
+                    <label for="inputSymbol" class="col-sm-2 control-label">@lang('phoneProvider.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputSymbol" name="phone_num" type="text" class="form-control" placeholder="Phone">
+                        <input id="inputSymbol" name="symbol" type="text" class="form-control" placeholder="@lang('phoneProvider.name')">
+                    </div>
+                </div>
+                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                    <label for="inputStatus" class="col-sm-2 control-label">@lang('phoneProvider.status')</label>
+                    <div class="col-sm-10">
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputStatus" class="col-sm-2 control-label">Status</label>
+                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('phoneProvider.name')</label>
                     <div class="col-sm-10">
-
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputRemarks" class="col-sm-2 control-label">Remarks</label>
-                    <div class="col-sm-10">
-                        <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="Remarks">
+                        <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('phoneProvider.name')">
                     </div>
                 </div>
                 <div class="form-group">
