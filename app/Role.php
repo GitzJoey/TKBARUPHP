@@ -9,6 +9,7 @@
 namespace App;
 
 use Zizaco\Entrust\EntrustRole;
+use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * App\Role
@@ -33,5 +34,9 @@ class Role extends EntrustRole
 {
     public function permissionList() {
         return $this->belongsToMany('\App\Permission', 'permission_role', 'role_id', 'permission_id');
+    }
+
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
     }
 }

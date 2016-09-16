@@ -9,7 +9,7 @@
 return [
     'submit_button'                     => 'Submit',
     'cancel_button'                     => 'Cancel',
-    'add_button'                        => 'Add',
+    'create_new_button'                 => 'Create New',
     'search_button'                     => 'Search',
     'login_button'                      => 'Login',
     'logout_button'                     => 'Logout',

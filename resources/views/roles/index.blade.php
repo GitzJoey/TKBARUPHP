@@ -18,37 +18,51 @@
         </div>
     @endif
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Role Lists</h3>
         </div>
-    @endif
-
-    <table class="table table-bordered">
-        <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th width="280px">Action</th>
-        </tr>
-        @foreach ($roles as $key => $role)
-            <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $role->display_name }}</td>
-                <td>{{ $role->description }}</td>
-                <td>
-                    <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
-                    @permission('role-edit')
-                    <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
-                    @endpermission
-                    @permission('role-delete')
-                    {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
-                    @endpermission
-                </td>
-            </tr>
-        @endforeach
-    </table>
-    {!! $roles->render() !!}
+        <div class="box-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Permission</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($rolelist as $key => $role)
+                    <tr>
+                        <td>{{ $role->name }}</td>
+                        <td>{{ $role->description }}</td>
+                        <td>
+                            @foreach($role->permissionList as $key -> $p)
+                                t
+                            @endforeach
+                        </td>
+                        <td class="text-center" width="20%">
+                            <a class="btn btn-xs btn-info" href="{{ route('db.admin.role.show', $role->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.admin.role.edit', $role->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.role.delete', $role->hId()], 'style'=>'display:inline'])  !!}
+                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                            {!! Form::close() !!}
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <a class="btn btn-success" href="{{ route('db.admin.role.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
 @endsection

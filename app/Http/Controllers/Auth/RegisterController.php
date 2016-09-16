@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Role;
 use App\Profile;
 
 use Validator;
@@ -77,9 +78,10 @@ class RegisterController extends Controller
         $usr->password = bcrypt($data['password']);
 
         $usr->store_id = 1;
-        $usr->role_id = 1;
 
         $usr->save();
+
+        $usr->role()->attach(Role::where('name', '=', 'r_user')->get());
 
         $profile = new Profile;
         $profile->first_name = $data['name'];

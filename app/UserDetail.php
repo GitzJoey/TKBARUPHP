@@ -20,7 +20,7 @@ class UserDetail extends Model
     protected $table = 'user_detail';
 
     protected $fillable = [
-        'role_id', 'status', 'allow_login'
+        'type', 'allow_login'
     ];
 
 }

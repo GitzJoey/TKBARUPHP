@@ -15,6 +15,6 @@ class RolesController extends Controller
     {
         $role = Role::get();
 
-        return view('roles.index')->with('role', $role);
+        return view('roles.index')->with('rolelist', $role);
     }
 }

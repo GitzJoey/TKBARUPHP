@@ -9,7 +9,7 @@
 return [
     'submit_button'                     => 'Simpan',
     'cancel_button'                     => 'Batal',
-    'add_button'                        => 'Tambah',
+    'create_new_button'                 => 'Tambah Baru',
     'search_button'                     => 'Cari',
     'login_button'                      => 'Masuk',
     'logout_button'                     => 'Keluar',
