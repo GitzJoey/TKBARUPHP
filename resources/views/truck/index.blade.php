@@ -32,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($truck as $key => $truck)
+                @foreach ($trucklist as $key => $truck)
                     <tr>
                         <td class="text-center">{{ $truck->id }}</td>
                         <td class="text-center">{{ $truck->plate_number }}</td>
@@ -56,13 +56,7 @@
         </div>
         <div class="box-footer clearfix">
             <a class="btn btn-success" href="{{ route('db.master.truck.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('truck.index.button.new_truck')</a>
-            <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-            </ul>
+            {!! $trucklist->render() !!}
         </div>
     </div>
 @endsection

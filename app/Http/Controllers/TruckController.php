@@ -24,8 +24,8 @@ class TruckController extends Controller
 
     public function index()
     {
-        $truck = Truck::paginate(10);
-        return view('truck.index')->with('truck', $truck);
+        $trucklist = Truck::paginate(10);
+        return view('truck.index', compact('trucklist'));
     }
 
     public function show($id)

@@ -38,9 +38,11 @@
                         <td>{{ $role->name }}</td>
                         <td>{{ $role->description }}</td>
                         <td>
-                            @foreach($role->permissionList as $key -> $p)
-                                t
-                            @endforeach
+                            <select multiple class="form-control" readonly>
+                                @foreach($role->permissionList as $key => $p)
+                                    <option>{{ $p->display_name }}</option>
+                                @endforeach
+                            </select>
                         </td>
                         <td class="text-center" width="20%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.admin.role.show', $role->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
@@ -56,13 +58,7 @@
         </div>
         <div class="box-footer clearfix">
             <a class="btn btn-success" href="{{ route('db.admin.role.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
-            <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-            </ul>
+            {!! $rolelist->render() !!}
         </div>
     </div>
 @endsection

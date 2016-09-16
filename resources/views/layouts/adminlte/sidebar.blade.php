@@ -1,27 +1,18 @@
 <aside class="main-sidebar">
     <section class="sidebar">
+        <!--
         <div class="user-panel">
             <div class="pull-left image">
                 <img src="{{ asset('images/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ Auth::user()->name }}</p>
+                <p>{{ Auth::user()->store->name }}</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Type :  </a>
             </div>
         </div>
-
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
-
+        -->
         <ul class="sidebar-menu">
-            <li class="header">MENU</li>
+            <li class="header">&nbsp;</li>
             @if(Entrust::can('po.po-create') OR
                 Entrust::can('po.po-revise') OR
                 Entrust::can('po.po-payment'))
@@ -36,10 +27,10 @@
                             <li><a href="{{ route('db.po.create') }}"><i class="fa fa-truck fa-fw"></i>&nbsp;@lang('menu.item.po_new')</a></li>
                         @endif
                         @if(Entrust::can('po.po-revise'))
-                            <li><a href="#"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po.revise')</a></li>
+                            <li><a href="#"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_revise')</a></li>
                         @endif
                         @if(Entrust::can('po.po-payment'))
-                            <li><a href="#"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po.payment')</a></li>
+                            <li><a href="#"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a></li>
                         @endif
                     </ul>
                 </li>
@@ -91,7 +82,7 @@
                             Entrust::can('price.pricelevel-create') OR
                             Entrust::can('price.pricelevel-edit') OR
                             Entrust::can('price.pricelevel-delete'))
-                            <li><a href="#"><i class="fa  fa-table fa-fw"></i>&nbsp;@lang('menu.item.price_level')</a></li>
+                            <li><a href="#"><i class="fa  fa-table fa-fw"></i>&nbsp;@lang('menu.item.price_pricelevel')</a></li>
                         @endif
                     </ul>
                 </li>
@@ -130,7 +121,7 @@
                         @if(Entrust::can('bank.upload'))
                             <li><a href="#"><i class="fa fa-cloud-upload fa-fw"></i>&nbsp;@lang('menu.item.bank_upload')</a></li>
                         @endif
-                        @if(Entrust::can('bank.consolidate')))
+                        @if(Entrust::can('bank.consolidate'))
                             <li><a href="#"><i class="fa fa-compress fa-fw"></i>&nbsp;@lang('menu.item.bank_consolidate')</a></li>
                         @endif
                     </ul>
@@ -148,7 +139,7 @@
                         @if(Entrust::can('customer.confirmation'))
                             <li><a href="{{ route('db.customer.confirmation') }}"><i class="fa fa-check fa-fw"></i>&nbsp;@lang('menu.item.customer_confirm')</a></li>
                         @endif
-                        @if(Entrust::can('bcustomer.approval'))
+                        @if(Entrust::can('customer.approval'))
                             <li><a href="{{ route('db.customer.approval') }}"><i class="fa fa-bell-o"></i>&nbsp;@lang('menu.item.customer_approval')</a></li>
                         @endif
                     </ul>
@@ -358,6 +349,16 @@
                     </ul>
                 </li>
             @endif
+            <li class="header">&nbsp;</li>
         </ul>
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+        </form>
     </section>
 </aside>

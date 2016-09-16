@@ -42,4 +42,19 @@ class Product extends Model
     protected $fillable = [
         'type', 'name', 'short_code', 'description', 'image_path', 'status', 'remarks'
     ];
+
+    public function store()
+    {
+        return $this->belongsTo('\App\Store', 'store_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo('\App\ProductType', 'product_type_id');
+    }
+
+    public function productUnitList()
+    {
+        return $this->hasMany('\App\ProductUnit');
+    }
 }

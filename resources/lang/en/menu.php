@@ -11,7 +11,7 @@ return [
     'item.po_revise' => 'Revise PO',
     'item.po_payment' => 'PO Payment',
     'item.so' => 'Sales Order',
-    'item.so_salesorder' => 'Sales Order',
+    'item.so_new' => 'Sales Order',
     'item.so_revise' => 'Revise SO',
     'item.so_payment' => 'SO Payment',
     'item.so_copy' => 'SO Copy',

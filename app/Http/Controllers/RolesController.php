@@ -13,8 +13,61 @@ class RolesController extends Controller
 {
     public function index()
     {
-        $role = Role::get();
+        $rolelist = Role::paginate(10);
 
-        return view('roles.index')->with('rolelist', $role);
+        return view('roles.index', compact('rolelist'));
+    }
+
+    public function show($id)
+    {
+        $role = Role::find($id);
+        return view('roles.show', compact('role'));
+    }
+
+    public function create()
+    {
+        return view('roles.create');
+    }
+
+    public function store(Request $data)
+    {
+        $validator = Validator::make($data->all(), [
+            'name' => 'required|max:255',
+            'display_name' => 'required|max:255',
+            'description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('db.admin.roles.create'))->withInput()->withErrors($validator);
+        } else {
+            Role::create([
+                'name' => $data['name'],
+                'display_name' => $data['display_name'],
+                'description' => $data['description'],
+            ]);
+
+            Session::flash('success', 'New User Created');
+
+            return redirect(route('db.admin.role'));
+        }
+    }
+
+    public function edit($id)
+    {
+        $role = Role::find($id);
+
+        return view('roles.edit', compact('role'));
+    }
+
+    public function update($id, Request $req)
+    {
+        $this->validate($req, [
+            'name' => 'required|max:255',
+            'display_name' => 'required|max:255',
+            'description' => 'required',
+        ]);
+
+        Role::find($id)->update($req->all());
+        return redirect(route('db.admin.role'));
     }
 }
