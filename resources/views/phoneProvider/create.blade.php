@@ -23,25 +23,25 @@
         <div class="box-header with-border">
             <h3 class="box-title">Create Truck</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.phoneProvider.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.admin.phoneProvider.create') }}" method="post">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">@lang('phoneProvider.plate_number')</label>
+                    <label for="inputName" class="col-sm-2 control-label">@lang('phoneProvider.name')</label>
                     <div class="col-sm-10">
-                        <input id="plate_number" name="plate_number" type="text" class="form-control" placeholder="plate_number">
+                        <input id="name" name="name" type="text" class="form-control" placeholder="@lang('phoneProvider.name')">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">@lang('phoneProvider.inspection_date')</label>
+                    <label for="inputEmail" class="col-sm-2 control-label">@lang('phoneProvider.short_name')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inspection_date" name="inspection_date" placeholder="inspection_date">
+                        <input type="text" class="form-control" id="short_name" name="short_name" placeholder="@lang('phoneProvider.short_name')">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputRoles" class="col-sm-2 control-label">@lang('phoneProvider.driver')</label>
+                    <label for="inputRoles" class="col-sm-2 control-label">@lang('phoneProvider.prefix')</label>
                     <div class="col-sm-10">
-                        <input id="driver" name="driver" type="text" class="form-control" placeholder="driver">
+                        <input id="prefix" name="prefix" type="text" class="form-control" placeholder="@lang('phoneProvider.prefix')">
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
@@ -54,13 +54,13 @@
                 <div class="form-group">
                     <label for="inputPasswordConfirmation" class="col-sm-2 control-label">@lang('phoneProvider.remarks')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="remarks">
+                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('phoneProvider.remarks')">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.master.truck') }}" class="btn btn-default">Cancel</a>
+                        <a href="{{ route('db.admin.phoneProvider') }}" class="btn btn-default">Cancel</a>
                         <button class="btn btn-default" type="submit">Submit</button>
                     </div>
                 </div>

@@ -18,6 +18,7 @@ Class CreatePhoneProviderTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('short_name')->nullable();
+            $table->string('prefix')->nullable();
             $table->string('status')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();

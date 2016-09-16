@@ -43,20 +43,20 @@ class PhoneProviderController extends Controller
         $this->validate($data, [
             'name'    => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
-            'driver'          => 'required|string|max:255',
+            'prefix'          => 'required|string|max:255',
             'status'          => 'required',
             'remarks'         => 'required|string|max:255',
 
         ]);
 
-        Truck::create([
+        PhoneProvider::create([
             'name'    => $data['name'],
             'short_name' => $data['short_name'],
             'prefix'          => $data['prefix'],
             'status'          => $data['status'],
             'remarks'         => $data['remarks']
         ]);
-        return redirect(route('db.master.phoneProvider'));
+        return redirect(route('db.admin.phoneProvider'));
     }
 
     private function changeIsDefault()
@@ -76,12 +76,12 @@ class PhoneProviderController extends Controller
     public function update($id, Request $req)
     {
         PhoneProvider::find($id)->update($req->all());
-        return redirect(route('db.master.PhoneProvider'));
+        return redirect(route('db.admin.phoneProvider'));
     }
 
     public function delete($id)
     {
         PhoneProvider::find($id)->delete();
-        return redirect(route('db.master.PhoneProvider'));
+        return redirect(route('db.admin.phoneProvider'));
     }
 }
