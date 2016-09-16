@@ -41,7 +41,7 @@
                             <td class="text-center" width="20%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.admin.unit.show', $unit->id) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.admin.unit.edit', $unit->id) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.unit.delete', $store->id], 'style'=>'display:inline'])  !!}
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.unit.delete', $unit->id], 'style'=>'display:inline'])  !!}
                                     <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                                 {!! Form::close() !!}
                             </td>
