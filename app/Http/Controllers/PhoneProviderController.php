@@ -11,6 +11,7 @@ use \DateTime;
 use Illuminate\Http\Request;
 use App\PhoneProvider;
 use App\Lookup;
+use Validator;
 
 class PhoneProviderController extends Controller
 {
@@ -40,7 +41,7 @@ class PhoneProviderController extends Controller
 
     public function store(Request $data)
     {
-        $this->validate($data, [
+        $validator = Validator::make($data->all(),[
             'name'    => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
             'prefix'          => 'required|string|max:255',
@@ -49,14 +50,19 @@ class PhoneProviderController extends Controller
 
         ]);
 
-        PhoneProvider::create([
-            'name'    => $data['name'],
-            'short_name' => $data['short_name'],
-            'prefix'          => $data['prefix'],
-            'status'          => $data['status'],
-            'remarks'         => $data['remarks']
-        ]);
-        return redirect(route('db.admin.phoneProvider'));
+        if ($validator->fails()) {
+            return redirect(route('db.admin.phoneProvider.create'))->withInput()->withErrors($validator);
+        } else {
+
+            PhoneProvider::create([
+                'name'       => $data['name'],
+                'short_name' => $data['short_name'],
+                'prefix'     => $data['prefix'],
+                'status'     => $data['status'],
+                'remarks'    => $data['remarks']
+            ]);
+            return redirect(route('db.admin.phoneProvider'));
+        }
     }
 
     private function changeIsDefault()
