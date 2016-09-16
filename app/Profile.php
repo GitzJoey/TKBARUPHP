@@ -34,7 +34,7 @@ class Profile extends Model
     protected $table = 'profiles';
 
     protected $fillable = [
-        'first_name', 'last_name', 'address'
+        'first_name', 'last_name', 'address', 'ic_num', 'image_filename',
     ];
 
     public function user()

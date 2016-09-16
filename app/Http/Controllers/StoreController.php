@@ -22,7 +22,7 @@ class StoreController extends Controller
     public function index()
     {
         $store = Store::paginate(10);
-        return view('store.index')->with('store', $store);
+        return view('store.index', compact('store'));
     }
 
     public function show($id)
@@ -47,8 +47,12 @@ class StoreController extends Controller
             'phone_num' => 'required|string|max:255',
             'tax_id' => 'required|string|max:255',
             'status' => 'required',
-            'is_default' => 'required'
+            'is_default' => 'required',
+            'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
+        $data->image_path->move(public_path('images'), $imageName);
 
         Store::create([
             'name'          => $data['name'],
@@ -58,6 +62,7 @@ class StoreController extends Controller
             'tax_id'        => $data['tax_id'],
             'status'        => $data['status'],
             'is_default'    => $data['is_default'],
+            'image_filename'=> $imageName,
             'remarks'       => $data['remarks']
         ]);
 

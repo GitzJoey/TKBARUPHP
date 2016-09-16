@@ -32,6 +32,16 @@
                     <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                 </div>
             </div>
+            <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
+                <label for="inputStoreImage" class="col-sm-2 control-label">&nbsp;</label>
+                <div class="col-sm-10">
+                    @if(!empty($store->image_filename))
+                        <img src="{{ asset('images/'.$store->image_filename) }}" class="img-responsive img-circle" style="max-width: 150px; max-height: 150px;"/>
+                    @endif
+                    <input id="inputStoreImage" name="image_path" type="file" class="form-control" value="{{ old('image_path') }}">
+                    <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
+                </div>
+            </div>
             <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
                 <label for="inputAddress" class="col-sm-2 control-label">Address</label>
                 <div class="col-sm-10">

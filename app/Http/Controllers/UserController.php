@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::paginate(10);
-        return view('user.index')->with('user', $user);
+        return view('user.index', compact('user'));
     }
 
     public function show($id)
@@ -54,11 +54,15 @@ class UserController extends Controller
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'address' => 'required|max:255',
+            'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.admin.user.create'))->withInput()->withErrors($validator);
         } else {
+            $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
+            $data->image_path->move(public_path('images'), $imageName);
+
             $usr = new User();
             $usr->name = $data['name'];
             $usr->email = $data['email'];
@@ -70,6 +74,7 @@ class UserController extends Controller
 
             $profile = new Profile;
             $profile->first_name = $data['first_name'];
+            $profile->image_filename = $imageName;
 
             $usr->profile()->save($profile);
 

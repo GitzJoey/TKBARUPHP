@@ -6,7 +6,7 @@
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Role : {{ Auth::user()->role[0]->display_name }}</a>
+                <a href="#"><i class="fa fa-circle text-success"></i> Type :  </a>
             </div>
         </div>
 

@@ -34,22 +34,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($user as $key => $user)
+                    @foreach ($user as $key => $item)
                         <tr>
-                            <td class="text-center">{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td class="text-center">{{ $item->id }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->email }}</td>
                             <td>
-                                @if(!empty($user->roles))
-                                    @foreach($user->roles as $v)
-                                        <label class="label label-success">{{ $v->display_name }}</label>
+                                @if(!empty($item->roles))
+                                    @foreach($item->roles as $v)
+                                       {{ $v->display_name }}
                                     @endforeach
                                 @endif
                             </td>
                             <td class="text-center" width="20%">
-                                <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $user->Hid()) }}"><span class="fa fa-info fa-fw"></span></a>
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.admin.user.edit', $user->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.user.delete', $user->hId()], 'style'=>'display:inline'])  !!}
+                                <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $item->Hid()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.admin.user.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.user.delete', $item->hId()], 'style'=>'display:inline'])  !!}
                                     <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                                 {!! Form::close() !!}
                             </td>
@@ -60,13 +60,7 @@
         </div>
         <div class="box-footer clearfix">
             <a class="btn btn-success" href="{{ route('db.admin.user.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;New User</a>
-            <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-            </ul>
+            {!! $user->render() !!}
         </div>
     </div>
 @endsection

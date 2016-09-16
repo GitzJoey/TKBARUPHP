@@ -20,6 +20,7 @@ Class CreateProfileTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('address')->nullable();
             $table->string('ic_num')->nullable();
+            $table->string('image_filename')->nullable();
             $table->timestamps();
         });
     }

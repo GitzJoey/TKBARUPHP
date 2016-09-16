@@ -23,6 +23,7 @@ class CreateStoreTable extends Migration
             $table->string('tax_id')->nullable();
             $table->string('status')->nullable();
             $table->string('is_default')->nullable();
+            $table->string('image_filename')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();
         });
