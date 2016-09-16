@@ -154,6 +154,7 @@
                     <li><a href="{{ route('db.admin.store') }}"><i class="fa fa-umbrella fa-fw"></i>&nbsp;Store</a></li>
                     <li><a href="{{ route('db.admin.unit') }}"><i class="glyphicon glyphicon-flash"></i>&nbsp;Unit</a></li>
                     <li><a href="{{ route('db.admin.settings') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;Settings</a></li>
+                    <li><a href="{{ route('db.admin.phoneProvider') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;Phone Provider</a></li>
                     <li class="treeview">
                         <a href="#"><i class="fa fa-cog fa-fw"></i><span>&nbsp;SMS Service</span>
                             <span class="pull-right-container">
