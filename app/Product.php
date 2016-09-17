@@ -35,6 +35,12 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Product whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Product whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $store_id
+ * @property integer $product_type_id
+ * @property-read \App\Store $store
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ProductUnit[] $productUnitList
+ * @method static \Illuminate\Database\Query\Builder|\App\Product whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Product whereProductTypeId($value)
  */
 class Product extends Model
 {

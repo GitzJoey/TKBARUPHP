@@ -78,10 +78,6 @@ class RegisterController extends Controller
 
         $usr->role()->attach(Role::where('name', '=', 'r_user')->get());
 
-        $profile = new Profile;
-        $profile->first_name = $data['name'];
-        $usr->profile()->save($profile);
-
         $userdetail = new UserDetail;
         $userdetail->type = Lookup::whereCode('USERTYPE.U')->first()->code;
         $usr->userDetail()->save($userdetail);

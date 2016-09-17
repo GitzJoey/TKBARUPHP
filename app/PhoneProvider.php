@@ -28,6 +28,8 @@ use \Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $prefix
+ * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider wherePrefix($value)
  */
 class PhoneProvider extends Model
 {

@@ -54,9 +54,6 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
             'roles' => 'required',
             'store' => 'required',
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'address' => 'required|max:255',
             'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -74,12 +71,6 @@ class UserController extends Controller
             $usr->role_id = 1;
 
             $usr->save();
-
-            $profile = new Profile;
-            $profile->first_name = $data['first_name'];
-            $profile->image_filename = $imageName;
-
-            $usr->profile()->save($profile);
 
             Session::flash('success', 'New User Created');
 

@@ -40,6 +40,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereProfileId($value)
  * @property-read \App\Store $store
  * @property-read \App\Role $role
+ * @property-read \App\UserDetail $userDetail
  */
 class User extends Authenticatable
 {

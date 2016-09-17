@@ -29,6 +29,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $user_id
+ * @property string $ic_num
+ * @property string $image_filename
+ * @method static \Illuminate\Database\Query\Builder|\App\Profile whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Profile whereIcNum($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Profile whereImageFilename($value)
  */
 class Profile extends Model
 {

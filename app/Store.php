@@ -37,6 +37,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Store whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Store whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $image_filename
+ * @method static \Illuminate\Database\Query\Builder|\App\Store whereImageFilename($value)
  */
 class Store extends Model
 {
