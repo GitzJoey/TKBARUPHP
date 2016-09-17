@@ -68,23 +68,23 @@ class UnitController extends Controller
 
     public function edit($id)
     {
-        $truck = Unit::find($id);
+        $unit = Unit::find($id);
 
-        $statusDDL = Unit::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('truck.edit', compact('truck', 'statusDDL'));
+        return view('unit.edit', compact('unit', 'statusDDL'));
     }
 
     public function update($id, Request $req)
     {
-        Truck::find($id)->update($req->all());
-        return redirect(route('db.master.truck'));
+        Unit::find($id)->update($req->all());
+        return redirect(route('db.admin.unit'));
     }
 
     public function delete($id)
     {
-        Truck::find($id)->delete();
-        return redirect(route('db.master.truck'));
+        Unit::find($id)->delete();
+        return redirect(route('db.admin.unit'));
     }
 
 }
