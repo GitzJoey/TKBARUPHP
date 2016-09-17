@@ -67,4 +67,4 @@ $ composer dump-autoload
 Fell free to add any feature suggestion by creating new **Issues**, and we can start discussing it
 
 # Contributing
-Start contributing by joining the team
+Start contributing by joining the team :)
