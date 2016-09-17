@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Unit;
 use Validator;
 use Illuminate\Http\Request;
+use App\Lookup;
 
 class UnitController extends Controller
 {
@@ -31,7 +32,10 @@ class UnitController extends Controller
     }
 
     public function create() {
-        return view('unit.create');
+
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+
+        return view('unit.create', compact('statusDDL'));
     }
 
     public function store(Request $data) {
@@ -55,6 +59,32 @@ class UnitController extends Controller
 
             return redirect(route('db.admin.unit'));
         }
+    }
+
+    private function changeIsDefault()
+    {
+
+    }
+
+    public function edit($id)
+    {
+        $truck = Unit::find($id);
+
+        $statusDDL = Unit::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+
+        return view('truck.edit', compact('truck', 'statusDDL'));
+    }
+
+    public function update($id, Request $req)
+    {
+        Truck::find($id)->update($req->all());
+        return redirect(route('db.master.truck'));
+    }
+
+    public function delete($id)
+    {
+        Truck::find($id)->delete();
+        return redirect(route('db.master.truck'));
     }
 
 }
