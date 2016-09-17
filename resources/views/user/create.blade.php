@@ -1,11 +1,15 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'User Management')
+@section('title')
+    @lang('user.create.title')
+@endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;User
+    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.create.page_title')
 @endsection
-@section('page_title_desc', '')
+@section('page_title_desc')
+
+@endsection
 
 @section('content')
     @if (count($errors) > 0)
@@ -21,7 +25,7 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Create User</h3>
+            <h3 class="box-title">@lang('user.create')</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.admin.user.create') }}" method="post">
             {{ csrf_field() }}
@@ -97,11 +101,18 @@
                         <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                     </div>
                 </div>
+                <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
+                    <label for="inputICNum" class="col-sm-2 control-label">IC number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputICNum" name="ic_num" placeholder="IC Number">
+                        <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.admin.user') }}" class="btn btn-default">Cancel</a>
-                        <button class="btn btn-default" type="submit">Submit</button>
+                        <a href="{{ route('db.admin.user') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                     </div>
                 </div>
             </div>

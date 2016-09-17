@@ -1,19 +1,17 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Edit Roles')
+@section('title')
+    @lang('role.edit.title')
+@endsection
+
+@section('page_title')
+    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('role.edit.page_title')
+@endsection
+@section('page_title_desc')
+    @lang('role.edit.page_title_desc')
+@endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edit Role</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
-
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -25,35 +23,49 @@
         </div>
     @endif
 
-    {!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@lang('role.edit.title')</h3>
+        </div>
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name:</strong>
-                {!! Form::text('display_name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
+        {!! Form::model($role, ['method' => 'PATCH','route' => ['db.admin.role.edit', $role->hId()], 'class' => 'form-horizontal']) !!}
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">@lang('role.name')</label>
+                    <div class="col-sm-10">
+                        <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('role.name')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDisplayName" class="col-sm-2 control-label">@lang('role.display_name')</label>
+                    <div class="col-sm-10">
+                        <input id="inputDisplayName" name="display_name" type="text" class="form-control" placeholder="@lang('role.display_name')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDescription" class="col-sm-2 control-label">@lang('role.description')</label>
+                    <div class="col-sm-10">
+                        <input id="inputDescription" name="display_name" type="text" class="form-control" placeholder="@lang('role.description')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPermission" class="col-sm-2 control-label">@lang('role.permission')</label>
+                    <div class="col-sm-10">
+                        <select multiple class="form-control" data-height="20">
+                            @foreach($permission as $key => $p)
+                                <option value="{{ $p->id }}">{{ $p->display_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputButton" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <a href="{{ route('db.admin.roles') }}" class="btn btn-default">Cancel</a>
+                        <button class="btn btn-default" type="submit">Submit</button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Description:</strong>
-                {!! Form::textarea('description', null, array('placeholder' => 'Description','class' => 'form-control','style'=>'height:100px')) !!}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Permission:</strong>
-                <br/>
-                @foreach($permission as $value)
-                    <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                        {{ $value->display_name }}</label>
-                    <br/>
-                @endforeach
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+        {!! Form::close() !!}
     </div>
-    {!! Form::close() !!}
 @endsection

@@ -7,6 +7,7 @@
  */
 
 namespace App\Http\Controllers;
+use App\Permission;
 use App\Role;
 
 class RolesController extends Controller
@@ -26,7 +27,8 @@ class RolesController extends Controller
 
     public function create()
     {
-        return view('roles.create');
+        $permission = Permission::get();
+        return view('roles.create', compact('permission'));
     }
 
     public function store(Request $data)
@@ -55,8 +57,9 @@ class RolesController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
+        $permission = Permission::get();
 
-        return view('roles.edit', compact('role'));
+        return view('roles.edit', compact('role', 'permission'));
     }
 
     public function update($id, Request $req)
