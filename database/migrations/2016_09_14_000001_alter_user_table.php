@@ -20,20 +20,6 @@ Class AlterUserTable extends Migration
             });
         }
 
-        if(Schema::hasTable('users') && !Schema::hasColumn('users', 'profile_id')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->unsignedBigInteger('profile_id')->default(0);
-            });
-        }
-
-        if(Schema::hasTable('users') && !Schema::hasColumn('users', 'user_detail_id')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->unsignedBigInteger('user_detail_id')->default(0);
-            });
-        }
-
-        DB::statement("ALTER TABLE users CHANGE COLUMN user_detail_id user_detail_id BIGINT(20) UNSIGNED DEFAULT '0' AFTER id");
-        DB::statement("ALTER TABLE users CHANGE COLUMN profile_id profile_id BIGINT(20) UNSIGNED DEFAULT '0' AFTER id");
         DB::statement("ALTER TABLE users CHANGE COLUMN store_id store_id BIGINT(20) UNSIGNED DEFAULT '0' AFTER id");
     }
 

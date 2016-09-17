@@ -9,6 +9,7 @@
 namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
+use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * App\Product
@@ -42,6 +43,10 @@ class Product extends Model
     protected $fillable = [
         'type', 'name', 'short_code', 'description', 'image_path', 'status', 'remarks'
     ];
+
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
 
     public function store()
     {

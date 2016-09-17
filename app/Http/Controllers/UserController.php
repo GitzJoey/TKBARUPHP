@@ -16,6 +16,7 @@ use App\User;
 use App\Role;
 use App\Store;
 use App\Profile;
+use App\Lookup;
 
 class UserController extends Controller
 {
@@ -40,7 +41,9 @@ class UserController extends Controller
     {
         $rolesDDL = Role::get()->pluck('display_name', 'name');
         $storeDDL = Store::get()->pluck('name', 'id');
-        return view('user.create', compact('rolesDDL', 'storeDDL'));
+        $usertypeDDL = Lookup::whereCategory('USERTYPE')->pluck('description', 'code');
+
+        return view('user.create', compact('rolesDDL', 'storeDDL', 'usertypeDDL'));
     }
 
     public function store(Request $data)
@@ -108,6 +111,14 @@ class UserController extends Controller
         ]);
 
         User::find($id)->update($req->all());
+        return redirect(route('db.admin.user'));
+    }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+        $user->userDetail()->update(['allow_login' => 0]);
+
         return redirect(route('db.admin.user'));
     }
 }

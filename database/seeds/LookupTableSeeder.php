@@ -190,6 +190,21 @@ class CreateLookupTableSeeder extends Seeder
                 'description' => 'Oil Change',
                 'category' => 'TRUCKMTCTYPE',
             ],
+            [
+                'code' => 'USERTYPE.A',
+                'description' => 'Admin',
+                'category' => 'USERTYPE',
+            ],
+            [
+                'code' => 'USERTYPE.O',
+                'description' => 'Owner',
+                'category' => 'USERTYPE',
+            ],
+            [
+                'code' => 'USERTYPE.U',
+                'description' => 'User',
+                'category' => 'USERTYPE',
+            ],
         ];
         foreach ($lookup as $key => $value) {
             Lookup::create($value);

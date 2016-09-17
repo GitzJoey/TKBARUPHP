@@ -99,12 +99,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::delete('/dashboard/master/supplier/edit/{id}', 'SupplierController@delete');
 
     Route::get('/dashboard/master/product', 'ProductController@index')->name('db.master.product');
-    Route::get('/dashboard/master/product/show/{id}', 'ProductController@show');
-    Route::get('/dashboard/master/product/create', 'ProductController@create');
+    Route::get('/dashboard/master/product/show/{id}', 'ProductController@show')->name('db.master.product.show');
+    Route::get('/dashboard/master/product/create', 'ProductController@create')->name('db.master.product.create');
     Route::post('/dashboard/master/product/create', 'ProductController@store');
-    Route::get('/dashboard/master/product/edit/{id}', 'ProductController@edit');
+    Route::get('/dashboard/master/product/edit/{id}', 'ProductController@edit')->name('db.master.product.edit');
     Route::patch('/dashboard/master/product/edit/{id}', 'ProductController@update');
-    Route::delete('/dashboard/master/product/edit/{id}', 'ProductController@delete');
+    Route::delete('/dashboard/master/product/edit/{id}', 'ProductController@delete')->name('db.master.product.delete');
 
     Route::get('/dashboard/master/warehouse', 'WarehouseController@index')->name('db.master.warehouse');
     Route::get('/dashboard/master/warehouse/show/{id}', 'WarehouseController@show');

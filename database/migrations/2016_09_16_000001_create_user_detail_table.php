@@ -16,6 +16,7 @@ Class CreateUserDetailTable extends Migration
     {
         Schema::create('user_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->default(0);
             $table->string('type')->nullable();
             $table->boolean('allow_login')->nullable();
             $table->timestamps();

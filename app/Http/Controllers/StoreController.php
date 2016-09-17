@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+
 use App\Store;
 use App\Lookup;
 
@@ -52,7 +54,11 @@ class StoreController extends Controller
         ]);
 
         $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
-        $data->image_path->move(public_path('images'), $imageName);
+        $path = public_path('images') . '/' . $imageName;
+
+        error_log($path);
+
+        Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
 
         Store::create([
             'name'          => $data['name'],

@@ -8,8 +8,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Store

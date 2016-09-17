@@ -28,6 +28,40 @@
                     </ul>
                 </li>
 
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ asset('images/blank.png') }}" class="user-image" alt="User Image">
+                        <span class="hidden-xs">{{ Auth::user()->store->name }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header">
+                            <img src="{{ asset('images/blank.png') }}" class="img-circle" alt="User Image">
+                            <p>
+                                {{ Auth::user()->store->name }}
+                                <small>{{ Auth::user()->store->address }}</small><br/>
+                                <small>{{ Auth::user()->store->tax_id }}</small>
+                            </p>
+                        </li>
+                        <li class="user-body">
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <a href="#">{{ Auth::user()->name }}<br><small>Owner</small></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="/logout" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>
+                                <form id="logout-form" action="{{ url('/logout') }}" method="POST">{{ csrf_field() }}</form>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <!--
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
@@ -74,6 +108,7 @@
                         <li class="footer"><a href="#">View all</a></li>
                     </ul>
                 </li>
+
                 <li class="dropdown tasks-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-flag-o"></i>
@@ -103,44 +138,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('images/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Alexander Pierce</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="user-header">
-                            <img src="{{ asset('images/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
-
-                            <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
-                            </p>
-                        </li>
-                        <li class="user-body">
-                            <div class="row">
-                                <div class="col-xs-4 text-center">
-                                    <a href="#">Followers</a>
-                                </div>
-                                <div class="col-xs-4 text-center">
-                                    <a href="#">Sales</a>
-                                </div>
-                                <div class="col-xs-4 text-center">
-                                    <a href="#">Friends</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="/logout" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>
-                                <form id="logout-form" action="{{ url('/logout') }}" method="POST">{{ csrf_field() }}</form>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                -->
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>

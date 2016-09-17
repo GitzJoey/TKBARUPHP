@@ -183,6 +183,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+
     ],
 
     /*
@@ -216,6 +218,7 @@ return [
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Log' => Illuminate\Support\Facades\Log::class,

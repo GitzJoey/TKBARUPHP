@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Role;
 use App\Profile;
+use App\UserDetail;
+use App\Lookup;
 
 use Validator;
 use App\Http\Controllers\Controller;
@@ -65,13 +67,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        /*
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-        */
         $usr = new User;
         $usr->name = $data['name'];
         $usr->email = $data['email'];
@@ -86,6 +81,10 @@ class RegisterController extends Controller
         $profile = new Profile;
         $profile->first_name = $data['name'];
         $usr->profile()->save($profile);
+
+        $userdetail = new UserDetail;
+        $userdetail->type = Lookup::whereCode('USERTYPE.U')->first()->code;
+        $usr->userDetail()->save($userdetail);
 
         return $usr;
     }
