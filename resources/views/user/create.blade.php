@@ -83,7 +83,9 @@
                 <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
                     <label for="inputAllowLogin" class="col-sm-2 control-label">@lang('user.field.allow_login')</label>
                     <div class="col-sm-10">
-                        <input type="checkbox" name="allow_login" style="margin-top: 10px;">
+                        <label>
+                            <input type="checkbox" name="allow_login">
+                        </label>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">

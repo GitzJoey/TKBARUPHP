@@ -45,13 +45,13 @@
                         <li class="user-body">
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <a href="#">{{ Auth::user()->name }}<br><small>Owner</small></a>
+                                    <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}">{{ Auth::user()->name }}<br><small>Owner</small></a>
                                 </div>
                             </div>
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <a href="/logout" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>

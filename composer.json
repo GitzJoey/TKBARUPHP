@@ -9,11 +9,16 @@
         "laravel/framework": "5.3.*",
         "zizaco/entrust": "5.2.x-dev",
         "barryvdh/laravel-ide-helper": "v2.2.1",
-        "doctrine/dbal": "2.6.x-dev",
-        "laravelcollective/html": "5.3.x-dev",
+        "doctrine/dbal": "2.5.5",
+        "laravelcollective/html": "5.3.*",
         "mcamara/laravel-localization": "1.1.7",
         "vinkla/hashids": "2.4.0",
-        "intervention/image": "2.3.8"
+        "intervention/image": "2.3.8",
+        "rap2hpoutre/laravel-log-viewer": "v0.7.0",
+        "hootlex/laravel-moderation": "v1.0.7",
+        "davejamesmiller/laravel-breadcrumbs": "3.0.1",
+        "themsaid/laravel-langman": "v1.3.3",
+        "barryvdh/laravel-translation-manager": "v0.2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

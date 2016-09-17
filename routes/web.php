@@ -30,6 +30,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
             return $id;
         }
     });
+    Route::get('/dashboard/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('db.logs');
 
     Route::get('/home', 'HomeController@index');
 
@@ -45,6 +46,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/admin/user/edit/{id}', 'UserController@edit')->name('db.admin.user.edit');
     Route::patch('/dashboard/admin/user/edit/{id}', 'UserController@update');
     Route::delete('/dashboard/admin/user/edit/{id}', 'UserController@delete')->name('db.admin.user.delete');
+
+    Route::get('/dashboard/user/profile/{id}', 'UserController@profile')->name('db.user.profile.show');
 
     Route::get('/dashboard/admin/roles', 'RolesController@index')->name('db.admin.roles');
     Route::get('/dashboard/admin/roles/show/{id}', 'RolesController@show')->name('db.admin.role.show');;

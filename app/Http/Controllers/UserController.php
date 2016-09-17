@@ -37,6 +37,12 @@ class UserController extends Controller
         return view('user.show', compact('user'));
     }
 
+    public function profile($id)
+    {
+        $user = User::find($id);
+        return view('user.profile', compact('user'));
+    }
+
     public function create()
     {
         $rolesDDL = Role::get()->pluck('display_name', 'name');

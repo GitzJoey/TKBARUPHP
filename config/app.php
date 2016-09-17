@@ -184,7 +184,8 @@ return [
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        Themsaid\Langman\LangmanServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
     ],
 
     /*
