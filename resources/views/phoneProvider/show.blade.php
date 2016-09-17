@@ -12,14 +12,14 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;Truck
+    <span class="fa fa-truck fa-fw"></span>&nbsp;Phone Provider
 @endsection
 @section('page_title_desc', '')
 
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ $truck->plate_number }}</h3>
+            <h3 class="box-title">{{ $phoneProvider->plate_number }}</h3>
         </div>
         <div class="box-body">
             <form class="form-horizontal">
@@ -28,7 +28,7 @@
                         <label for="inputId" class="col-sm-2 control-label">Id</label>
                         <div class="col-sm-10">
                             <label id="id" class="control-label">
-                                <span class="control-label-normal">{{ $truck->id }}</span>
+                                <span class="control-label-normal">{{ $phoneProvider->id }}</span>
                             </label>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.plate_number')</label>
                         <div class="col-sm-10">
                             <label id="plateNumber" class="control-label">
-                                <span class="control-label-normal">{{ $truck->plate_number }}</span>
+                                <span class="control-label-normal">{{ $phoneProvider->plate_number }}</span>
                             </label>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truck.inspection_date')</label>
                         <div class="col-sm-10">
                             <label id="inspectionDate" class="control-label">
-                                <span class="control-label-normal">{{ $truck->inspection_date }}</span>
+                                <span class="control-label-normal">{{ $phoneProvider->inspection_date }}</span>
                             </label>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <label for="inputDriver" class="col-sm-2 control-label">@lang('truck.driver')</label>
                         <div class="col-sm-10">
                             <label id="driver" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $truck->driver }}</span>
+                                <span class="control-label-normal">{{ $phoneProvider->driver }}</span>
                             </label>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.status')</label>
                         <div class="col-sm-10">
                             <label id="status" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $truck->status }}</span>
+                                <span class="control-label-normal">{{ $phoneProvider->status }}</span>
                             </label>
                         </div>
                     </div>
@@ -68,14 +68,14 @@
                         <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.remarks')</label>
                         <div class="col-sm-10">
                             <label id="remarks" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $truck->remarks }}</span>
+                                <span class="control-label-normal">{{ $phoneProvider->remarks }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
-                            <a href="{{ route('db.master.truck') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('db.admin.phoneProvider') }}" class="btn btn-default">Back</a>
                         </div>
                     </div>
                 </div>

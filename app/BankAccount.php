@@ -16,5 +16,4 @@ class BankAccount extends Model
     protected $fillable = [
         'account_number', 'status', 'remarks'
     ];
-
 }

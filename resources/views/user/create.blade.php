@@ -1,11 +1,15 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'User Management')
+@section('title')
+    @lang('user.create.title')
+@endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;User
+    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.create.page_title')
 @endsection
-@section('page_title_desc', '')
+@section('page_title_desc')
+
+@endsection
 
 @section('content')
     @if (count($errors) > 0)
@@ -21,7 +25,7 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Create User</h3>
+            <h3 class="box-title">@lang('user.create')</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.admin.user.create') }}" method="post">
             {{ csrf_field() }}
