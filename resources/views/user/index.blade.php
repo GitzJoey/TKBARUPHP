@@ -26,17 +26,18 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center">#</th>
                         <th class="text-center">Name</th>
                         <th class="text-center">Email</th>
                         <th class="text-center">Roles</th>
+                        <th class="text-center">Store</th>
+                        <th class="text-center">Type</th>
+                        <th class="text-center">Allow Login</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($user as $key => $item)
                         <tr>
-                            <td class="text-center">{{ $item->id }}</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->email }}</td>
                             <td>
@@ -44,6 +45,15 @@
                                     @foreach($item->roles as $v)
                                        {{ $v->display_name }}
                                     @endforeach
+                                @endif
+                            </td>
+                            <td>{{ $item->store->name }}</td>
+                            <td>@lang('lookup.' . $item->userDetail->type)</td>
+                            <td class="text-center">
+                                @if($item->userDetail->allow_login)
+                                    <span class="fa fa-check-square-o fa-fw"></span>
+                                @else
+                                    <span class="fa fa-square-o fa-fw"></span>
                                 @endif
                             </td>
                             <td class="text-center" width="20%">

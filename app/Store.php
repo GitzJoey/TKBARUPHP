@@ -8,6 +8,8 @@
 
 namespace App;
 
+use App\User;
+
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,5 +52,10 @@ class Store extends Model
 
     public function hId() {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function user()
+    {
+        return $this->hasMany('\App\User', 'store_id');
     }
 }

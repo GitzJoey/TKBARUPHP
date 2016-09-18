@@ -44,7 +44,7 @@ return [
     'item.master_bank' => 'Bank',
     'item.master_truck' => 'Truck',
     'item.master_vendor' => 'Penyedia',
-    'item.mstr_vendor_trucking' => 'Angkutan',
+    'item.master_vendor_trucking' => 'Angkutan',
     'item.adm' => 'Admin Menu',
     'item.adm_user' => 'Pengguna',
     'item.adm_store' => 'Toko',

@@ -12,4 +12,5 @@
 @endsection
 
 @section('content')
+    Profile
 @endsection

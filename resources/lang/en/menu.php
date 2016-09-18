@@ -44,7 +44,7 @@ return [
     'item.master_bank' => 'Bank',
     'item.master_truck' => 'Truck',
     'item.master_vendor' => 'Vendor',
-    'item.mstr_vendor_trucking' => 'Trucking',
+    'item.master_vendor_trucking' => 'Trucking',
     'item.adm' => 'Admin Menu',
     'item.adm_user' => 'User',
     'item.adm_store' => 'Store',

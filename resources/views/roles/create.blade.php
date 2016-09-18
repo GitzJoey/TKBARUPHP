@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label for="inputPermission" class="col-sm-2 control-label">@lang('role.permission')</label>
                     <div class="col-sm-10">
-                        <select multiple class="form-control" data-height="20">
+                        <select multiple class="form-control" size="25">
                             @foreach($permission as $key => $p)
                                 <option value="{{ $p->id }}">{{ $p->display_name }}</option>
                             @endforeach

@@ -3,7 +3,7 @@
 @section('title', 'Store Management')
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;Store
+    <span class="fa fa-umbrella fa-fw"></span>&nbsp;Store
 @endsection
 @section('page_title_desc', '')
 
