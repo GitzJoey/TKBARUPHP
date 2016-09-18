@@ -1,9 +1,9 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'User Management')
+@section('title', 'product Management')
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;User
+    <span class="fa fa-product fa-fw"></span>&nbsp;Truck
 @endsection
 @section('page_title_desc', '')
 
@@ -21,100 +21,74 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Create User</h3>
+            <h3 class="box-title">Create Truck</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.admin.user.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.master.product.create') }}" method="post">
             {{ csrf_field() }}
             <div class="box-body">
-                <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                <div class="form-group">
+                    <label for="inputStoreId" class="col-sm-2 control-label">@lang('product.store_id')</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="name" type="text" class="form-control" placeholder="Name">
-                        <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
+                        <input id="store_id" name="store_id" type="text" class="form-control" placeholder="@lang('product.store_id')">
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                <div class="form-group">
+                    <label for="inputProductTypeId" class="col-sm-2 control-label">@lang('product.product_type_id')</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" value="{{ old('email') }}">
-                        <span class="help-block">{{ $errors->has('email') ? $errors->first('email') : '' }}</span>
+                        <input type="text" class="form-control" id="product_type_id" name="product_type_id" placeholder="@lang('product.product_type_id')">
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('store') ? 'has-error' : '' }}">
-                    <label for="inputStore" class="col-sm-2 control-label">Store</label>
+                <div class="form-group">
+                    <label for="inputType" class="col-sm-2 control-label">@lang('product.type')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('store', $storeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
-                        <span class="help-block">{{ $errors->has('store') ? $errors->first('store') : '' }}</span>
+                        <input id="type" name="type" type="text" class="form-control" placeholder="@lang('product.type')">
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
-                    <label for="inputRoles" class="col-sm-2 control-label">Roles</label>
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">@lang('product.name')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('roles', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
-                        <span class="help-block">{{ $errors->has('roles') ? $errors->first('roles') : '' }}</span>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="@lang('product.name')">
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                <div class="form-group">
+                    <label for="inputShortCode" class="col-sm-2 control-label">@lang('product.short_code')</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
-                        <span class="help-block">{{ $errors->has('password') ? $errors->first('password') : '' }}</span>
+                        <input type="text" class="form-control" id="short_code" name="short_code" placeholder="@lang('product.short_code')">
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                    <label for="inputPasswordConfirmation" class="col-sm-2 control-label">Retype Password</label>
+                <div class="form-group">
+                    <label for="inputDescription" class="col-sm-2 control-label">@lang('product.description')</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword" name="password_confirmation" placeholder="Password">
-                        <span class="help-block">{{ $errors->has('password_confirmation') ? $errors->first('password_confirmation') : '' }}</span>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="@lang('product.description')">
                     </div>
                 </div>
-                <hr>
-                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                    <label for="inputUserType" class="col-sm-2 control-label">User Type</label>
+                <div class="form-group">
+                    <label for="inputImagePath" class="col-sm-2 control-label">@lang('product.image_path')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('type', $usertypeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
-                        <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
+                        <input type="text" class="form-control" id="image_path" name="image_path" placeholder="@lang('product.image_path')">
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
-                    <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                    <label for="inputStatus" class="col-sm-2 control-label">@lang('product.status')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputFirstName" name="first_name" placeholder="First Name">
-                        <span class="help-block">{{ $errors->has('first_name') ? $errors->first('first_name') : '' }}</span>
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
-                    <label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
+                <div class="form-group">
+                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('product.remarks')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputFirstName" name="last_name" placeholder="Last Name">
-                        <span class="help-block">{{ $errors->has('last_name') ? $errors->first('last_name') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
-                    <label for="inputUserImage" class="col-sm-2 control-label">&nbsp;</label>
-                    <div class="col-sm-10">
-                        <input id="inputUserImage" name="image_path" type="file" class="form-control">
-                        <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <label for="inputAddress" class="col-sm-2 control-label">Address</label>
-                    <div class="col-sm-10">
-                        <textarea id="inputAddress" class="form-control" rows="5" name="address"></textarea>
-                        <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('ic_num') ? 'has-error' : '' }}">
-                    <label for="inputICNum" class="col-sm-2 control-label">IC Number</label>
-                    <div class="col-sm-10">
-                        <input id="inputICNum" name="ic_num" type="text" class="form-control">
-                        <span class="help-block">{{ $errors->has('ic_num') ? $errors->first('ic_num') : '' }}</span>
+                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('product.remarks')">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
+<<<<<<< HEAD
                         <a href="{{ route('db.admin.user') }}" class="btn btn-default">Cancel</a>
+=======
+                        <a href="{{ route('db.master.product') }}" class="btn btn-default">Cancel</a>
+>>>>>>> origin/master
                         <button class="btn btn-default" type="submit">Submit</button>
                     </div>
                 </div>

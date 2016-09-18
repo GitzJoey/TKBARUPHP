@@ -1,19 +1,26 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: GitzJoey
- * Date: 9/18/2016
- * Time: 4:43 AM
+ * User: sansan
+ * Date: 9/15/2016
+ * Time: 11:07 AM
  */
 return [
-    'index.title' => 'Product Management',
-    'index.page_title' => 'Product',
+    'index.title' => 'Phone Provider Management',
+    'index.page_title' => 'Phone Provider',
     'index.page_title_desc' => '',
-    'index.header.title' => 'Daftar Produk',
-    'index.table.header.type' => 'Tipe',
-    'index.table.header.name' => 'Nama',
-    'index.table.header.short_code' => 'Kode',
-    'index.table.header.description' => 'Deskripsi',
+    'index.table.header.title' => 'Daftar Phone Provider',
+    'index.table.header.name' => 'Full Name',
+    'index.table.header.short_name' => 'Short Name',
+    'index.table.header.prefix' => 'Previx',
     'index.table.header.status' => 'Status',
-    'index.table.header.remarks' => 'Keterangan',
+    'index.table.header.remarks' => 'Remarks',
+    'index.button.new_phone_provider' => 'New Phone Provider',
+    'name' => 'Full Name',
+    'short_name' => 'Short Name',
+    'prefix' => 'Prefix',
+    'status' => 'Status',
+    'remarks' => 'Remarks',
+
+
 ];

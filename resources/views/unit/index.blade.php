@@ -3,7 +3,7 @@
 @section('title', 'Unit Management')
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;Unit
+    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('unit.index.page_title')
 @endsection
 @section('page_title_desc', '')
 
@@ -16,18 +16,18 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Unit Lists</h3>
+            <h3 class="box-title">@lang('unit.index.title')</h3>
         </div>
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Symbol</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Remarks</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">@lang('unit.index.table.header.name')</th>
+                        <th class="text-center">@lang('unit.index.table.header.symbol')</th>
+                        <th class="text-center">@lang('unit.index.table.header.status')</th>
+                        <th class="text-center">@lang('unit.index.table.header.remarks')</th>
+                        <th class="text-center">@lang('unit.index.table.header.action')</th>
                     </tr>
                 </thead>
                 <tbody>

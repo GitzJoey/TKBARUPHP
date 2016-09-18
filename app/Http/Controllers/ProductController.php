@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\ProductType;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 
+use App\Http\Requests;
 use App\Product;
+use App\Lookup;
+use Validator;
 
 class ProductController extends Controller
 {
@@ -17,21 +18,80 @@ class ProductController extends Controller
 
     public function index()
     {
-        $prodlist = Product::paginate(10);
-        return view('product.index', compact('prodlist'));
+        $product = Product::paginate(10);
+        return view('product.index')->with('product', $product);
     }
 
     public function show($id)
     {
-        $prod = Product::find($id);
-        return view('product.show')->with('prod', $prod);
+        $product = Product::find($id);
+        return view('product.show')->with('product', $product);
     }
 
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $prodTypeDDL = ProductType::get()->pluck('name', 'id');
 
-        return view('product.create', compact('statusDDL', 'prodTypeDDL'));
+        return view('product.create', compact('statusDDL'));
+    }
+
+    public function store(Request $data)
+    {
+        $validator = Validator::make($data->all(), [
+            'store_id' => 'required|string|max:255',
+            'product_type_id' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'short_code' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'image_path' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'remarks' => 'required|string|max:255',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
+        } else {
+
+            Product::create([
+                'store_id' => $data['store_id'],
+                'product_type_id' => $data['product_type_id'],
+                'type' => $data['type'],
+                'name' => $data['name'],
+                'short_code' => $data['short_code'],
+                'description' => $data['description'],
+                'image_path' => $data['image_path'],
+                'status' => $data['status'],
+                'remarks' => $data['remarks']
+            ]);
+            return redirect(route('db.master.product'));
+        }
+    }
+
+    private function changeIsDefault()
+    {
+
+    }
+
+    public function edit($id)
+    {
+        $product = Product::find($id);
+
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+
+        return view('product.edit', compact('product', 'statusDDL'));
+    }
+
+    public function update($id, Request $req)
+    {
+        Product::find($id)->update($req->all());
+        return redirect(route('db.master.product'));
+    }
+
+    public function delete($id)
+    {
+        Product::find($id)->delete();
+        return redirect(route('db.master.product'));
     }
 }
