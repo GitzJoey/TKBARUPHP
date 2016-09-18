@@ -21,18 +21,18 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Edit Store</h3>
+            <h3 class="box-title">@lang('unit.edit.header')</h3>
         </div>
         {!! Form::model($unit, ['method' => 'PATCH','route' => ['db.admin.unit.edit', $unit->id], 'class' => 'form-horizontal']) !!}
         <div class="box-body">
             <div class="form-group">
-                <label for="inputUnitName" class="col-sm-2 control-label">Name</label>
+                <label for="inputUnitName" class="col-sm-2 control-label">@lang('unit.name')</label>
                 <div class="col-sm-10">
-                    <input id="inputUnitName" name="unit_name" type="text" class="form-control" value="{{ $unit->unit_name }}" placeholder="Name">
+                    <input id="inputUnitName" name="unit_name" type="text" class="form-control" value="{{ $unit->name }}" placeholder="Name">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputSymbol" class="col-sm-2 control-label">Symbol</label>
+                <label for="inputSymbol" class="col-sm-2 control-label">@lang('unit.symbol')</label>
                 <div class="col-sm-10">
                     <textarea id="inputSymbol" class="form-control" rows="5" name="store_address">{{ $unit->symbol }}</textarea>
                 </div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputRemarks" class="col-sm-2 control-label">Remarks</label>
+                <label for="inputRemarks" class="col-sm-2 control-label">@lang('unit.remarks')</label>
                 <div class="col-sm-10">
                     <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $unit->remarks }}" placeholder="Remarks">
                 </div>
