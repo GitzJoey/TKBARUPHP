@@ -9,7 +9,7 @@
 namespace App;
 
 use \Illuminate\Database\Eloquent\Model;
-
+use Vinkla\Hashids\Facades\Hashids;
 /**
  * App\Bank
  *
@@ -23,4 +23,7 @@ class Bank extends Model
         'name', 'short_name', 'branch', 'branch_code', 'status', 'remarks'
     ];
 
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
 }

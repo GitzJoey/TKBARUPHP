@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9a97422e0b853ca63632f55430cba576",
-    "content-hash": "3907700ee34f309e85c2141a846fb4e9",
+    "hash": "ad2bb2de433e40ed7afdaa817066b149",
+    "content-hash": "59beb292ca4a15bd8e2ddd94472fd82d",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -72,55 +72,6 @@
                 "sublime"
             ],
             "time": "2016-07-04 11:52:48"
-        },
-        {
-            "name": "barryvdh/laravel-translation-manager",
-            "version": "v0.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/barryvdh/laravel-translation-manager.git",
-                "reference": "4e70c9810278424e9477f0b1a7f02cce60a27746"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-translation-manager/zipball/4e70c9810278424e9477f0b1a7f02cce60a27746",
-                "reference": "4e70c9810278424e9477f0b1a7f02cce60a27746",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x",
-                "illuminate/translation": "5.0.x|5.1.x|5.2.x|5.3.x",
-                "php": ">=5.4.0",
-                "symfony/finder": "~2.3|~3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Barryvdh\\TranslationManager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Manage Laravel Translations",
-            "keywords": [
-                "laravel",
-                "translations",
-                "translator"
-            ],
-            "time": "2016-08-17 09:28:00"
         },
         {
             "name": "barryvdh/reflection-docblock",

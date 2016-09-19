@@ -1,0 +1,92 @@
+@extends('layouts.adminlte.master')
+
+@section('title')
+    @lang('bank.show.title')
+@endsection
+
+@section('custom_css')
+    <style type="text/css">
+        .control-label-normal {
+            font-weight: 400;
+            display:inline-block;
+        }
+    </style>
+@endsection
+
+@section('page_title')
+    <span class="fa fa-bank fa-fw"></span>&nbsp;@lang('bank.show.page_title')
+@endsection
+
+@section('page_title_desc')
+    @lang('bank.show.page_title_desc')
+@endsection
+
+@section('content')
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ $bank->name }}</h3>
+        </div>
+        <div class="box-body">
+            <form class="form-horizontal">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-2 control-label">@lang('bank.name')</label>
+                        <div class="col-sm-10">
+                            <label id="name" class="control-label">
+                                <span class="control-label-normal">{{ $bank->name }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputShortName" class="col-sm-2 control-label">@lang('bank.short_name')</label>
+                        <div class="col-sm-10">
+                            <label id="shortName" class="control-label">
+                                <span class="control-label-normal">{{ $bank->short_name }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBranch" class="col-sm-2 control-label">@lang('bank.branch')</label>
+                        <div class="col-sm-10">
+                            <label id="branch" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $bank->branch }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBranchCode" class="col-sm-2 control-label">@lang('bank.branch_code')</label>
+                        <div class="col-sm-10">
+                            <label id="branchCode" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $bank->branch_code }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('bank.status')</label>
+                        <div class="col-sm-10">
+                            <label id="status" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $bank->status }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('bank.remarks')</label>
+                        <div class="col-sm-10">
+                            <label id="remarks" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $bank->remarks }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputButton" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="{{ route('db.master.bank') }}" class="btn btn-default">Back</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
