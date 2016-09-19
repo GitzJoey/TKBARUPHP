@@ -1,11 +1,15 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'truck Management')
+@section('title')
+    @lang('truck.index.title')
+@endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;Truck
+    <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('truck.index.page_title')
 @endsection
-@section('page_title_desc', '')
+@section('page_title_desc')
+    @lang('truck.index.page_title_desc')
+@endsection
 
 @section('content')
     @if ($message = Session::get('success'))
@@ -28,7 +32,7 @@
                     <th class="text-center">@lang('truck.index.table.header.driver')</th>
                     <th class="text-center">@lang('truck.index.table.header.status')</th>
                     <th class="text-center">@lang('truck.index.table.header.remarks')</th>
-                    <th class="text-center">&nbsp;</th>
+                    <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,15 +42,17 @@
                         <td class="text-center">{{ $truck->plate_number }}</td>
                         <td class="text-center">{{ $truck->inspection_date }}</td>
                         <td>{{ $truck->driver }}</td>
-                        <td>{{ $truck->status }}</td>
+                        <td>@lang('lookup.' . $truck->status)</td>
                         <td>{{ $truck->remarks }}</td>
-
-
                         <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.master.truck.show', $truck->id) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.truck.edit', $truck->id) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                            <a class="btn btn-xs btn-info" href="{{ route('db.master.truck.show', $truck->id) }}"><span
+                                        class="fa fa-info fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary"
+                               href="{{ route('db.master.truck.edit', $truck->id) }}"><span
+                                        class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.truck.delete', $truck->id], 'style'=>'display:inline'])  !!}
-                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span>
+                            </button>
                             {!! Form::close() !!}
                         </td>
                     </tr>
@@ -55,7 +61,8 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.master.truck.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('truck.index.button.new_truck')</a>
+            <a class="btn btn-success" href="{{ route('db.master.truck.create') }}"><span
+                        class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.index.new_truck')</a>
             {!! $trucklist->render() !!}
         </div>
     </div>
