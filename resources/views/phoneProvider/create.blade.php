@@ -3,7 +3,7 @@
 @section('title', 'phoneProvider Management')
 
 @section('page_title')
-    <span class="fa fa-phoneProvider fa-fw"></span>&nbsp;Truck
+    <span class="fa-volume-control-phone"></span>&nbsp;Truck
 @endsection
 @section('page_title_desc', '')
 

@@ -328,7 +328,7 @@
                             Entrust::can('admin.phoneprovider-create') OR
                             Entrust::can('admin.phoneprovider-edit') OR
                             Entrust::can('admin.phoneprovider-delete'))
-                            <li><a href="{{ route('db.admin.phoneProvider') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;@lang('menu.item.adm_phone_provider')</a></li>
+                            <li><a href="{{ route('db.admin.phoneProvider') }}"><i class="glyphicon glyphicon-phone"></i>&nbsp;@lang('menu.item.adm_phone_provider')</a></li>
                         @endif
                         @if(Entrust::can('admin.smsservice-list') OR
                             Entrust::can('admin.smsservice-modem') OR

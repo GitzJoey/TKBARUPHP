@@ -22,11 +22,10 @@ return [
     'make_copy_button' => 'Make Copy',
     'send_button' => 'Send',
     'reject_button' => 'Reject',
-    'index.new_truck' => 'New Truck',
     'create.save' => 'Save',
     'create.cancel' => 'Cancel',
     'edit.save' => 'Save',
     'edit.cancel' => 'Cancel',
-    'show.cancel' => 'Cancel',
+    'show.cancel' => 'Back',
 
 ];

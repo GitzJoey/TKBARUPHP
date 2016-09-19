@@ -14,7 +14,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('truck.show.page_title')
+    <span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;@lang('truck.show.page_title')
 @endsection
 @section('page_title_desc')
     @lang('truck.show.page_title_desc')
@@ -28,14 +28,6 @@
         <div class="box-body">
             <form class="form-horizontal">
                 <div class="box-body">
-                    <div class="form-group">
-                        <label for="inputId" class="col-sm-2 control-label">@lang('truck.show.header.title')</label>
-                        <div class="col-sm-10">
-                            <label id="id" class="control-label">
-                                <span class="control-label-normal">{{ $truck->id }}</span>
-                            </label>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.plate_number')</label>
                         <div class="col-sm-10">
@@ -64,7 +56,7 @@
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.status')</label>
                         <div class="col-sm-10">
                             <label id="status" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $truck->status }}</span>
+                                <span class="control-label-normal">@lang('lookup.' . $truck->status)</span>
                             </label>
                         </div>
                     </div>

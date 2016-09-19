@@ -11,7 +11,7 @@ return [
     'index.page_title_desc' => '',
     'index.table.header.title' => 'Truck Lists',
     'index.table.header.plate_number' => 'Plate Number',
-    'index.table.header.inspection_date' => 'inspection_date',
+    'index.table.header.inspection_date' => 'Inspection Date',
     'index.table.header.driver' => 'driver',
     'index.table.header.status' => 'status',
     'index.table.header.remarks' => 'Remarks',

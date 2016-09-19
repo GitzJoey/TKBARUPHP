@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('truck.index.page_title')
+    <span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;@lang('truck.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('truck.index.page_title_desc')
@@ -26,7 +26,6 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="text-center">#</th>
                     <th class="text-center">@lang('truck.index.table.header.plate_number')</th>
                     <th class="text-center">@lang('truck.index.table.header.inspection_date')</th>
                     <th class="text-center">@lang('truck.index.table.header.driver')</th>
@@ -38,7 +37,6 @@
                 <tbody>
                 @foreach ($trucklist as $key => $truck)
                     <tr>
-                        <td class="text-center">{{ $truck->id }}</td>
                         <td class="text-center">{{ $truck->plate_number }}</td>
                         <td class="text-center">{{ $truck->inspection_date }}</td>
                         <td>{{ $truck->driver }}</td>
@@ -62,7 +60,7 @@
         </div>
         <div class="box-footer clearfix">
             <a class="btn btn-success" href="{{ route('db.master.truck.create') }}"><span
-                        class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.index.new_truck')</a>
+                        class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $trucklist->render() !!}
         </div>
     </div>

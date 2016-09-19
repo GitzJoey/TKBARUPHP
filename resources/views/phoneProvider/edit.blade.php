@@ -3,7 +3,7 @@
 @section('title', 'Truck Management')
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;Truck
+    <span class="fa-volume-control-phone"></span>&nbsp;Truck
 @endsection
 @section('page_title_desc', '')
 
