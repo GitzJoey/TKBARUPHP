@@ -19,7 +19,6 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $hid = Hashids::encode(3);
-        return view('dashboard')->with('hid', $hid);
+        return view('dashboard');
     }
 }

@@ -7,7 +7,7 @@
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
-                <a><i class="fa fa-circle text-success"></i> Type :  </a>
+                <a><i class="fa fa-circle text-success"></i> Type : @lang('lookup.'.Auth::user()->userDetail->type)</a>
             </div>
         </div>
 
@@ -289,7 +289,7 @@
                 Entrust::can('admin.smsservice-list') OR
                 Entrust::can('admin.smsservice-modem') OR
                 Entrust::can('admin.smsservice-send'))
-                <li class="active treeview">
+                <li class="treeview">
                     <a href="#"><i class="glyphicon glyphicon-cog"></i><span>&nbsp;@lang('menu.item.adm')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
