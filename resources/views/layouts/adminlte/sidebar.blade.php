@@ -7,7 +7,7 @@
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
-                <a><i class="fa fa-circle text-success"></i> Type :  </a>
+                <a><i class="fa fa-circle text-success"></i> Type : @lang('lookup.'.Auth::user()->userDetail->type)</a>
             </div>
         </div>
 
@@ -156,7 +156,7 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ route('db.master.truck.maintenance') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.truck_maintenance')</a></li>
+                        <li><a href="{{ route('db.truck.maintenance') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.truck_maintenance')</a></li>
                     </ul>
                 </li>
             @endif
@@ -289,7 +289,7 @@
                 Entrust::can('admin.smsservice-list') OR
                 Entrust::can('admin.smsservice-modem') OR
                 Entrust::can('admin.smsservice-send'))
-                <li class="active treeview">
+                <li class="treeview">
                     <a href="#"><i class="glyphicon glyphicon-cog"></i><span>&nbsp;@lang('menu.item.adm')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -328,7 +328,7 @@
                             Entrust::can('admin.phoneprovider-create') OR
                             Entrust::can('admin.phoneprovider-edit') OR
                             Entrust::can('admin.phoneprovider-delete'))
-                            <li><a href="{{ route('db.admin.phoneProvider') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;@lang('menu.item.adm_phone_provider')</a></li>
+                            <li><a href="{{ route('db.admin.phoneProvider') }}"><i class="glyphicon glyphicon-phone"></i>&nbsp;@lang('menu.item.adm_phone_provider')</a></li>
                         @endif
                         @if(Entrust::can('admin.smsservice-list') OR
                             Entrust::can('admin.smsservice-modem') OR

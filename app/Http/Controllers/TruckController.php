@@ -84,8 +84,20 @@ class TruckController extends Controller
 
     public function update($id, Request $req)
     {
-        Truck::find($id)->update($req->all());
-        return redirect(route('db.master.truck'));
+        $validator = Validator::make($req->all(),[
+            'plate_number' => 'required|string|max:255',
+            'inspection_date' => 'required|string|max:255',
+            'driver' => 'required|string|max:255',
+            'status' => 'required',
+            'remarks' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('db.master.truck.create'))->withInput()->withErrors($validator);
+        } else {
+            Truck::find($id)->update($req->all());
+            return redirect(route('db.master.truck'));
+        }
     }
 
     public function delete($id)

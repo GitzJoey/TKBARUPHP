@@ -7,3 +7,9 @@
  * Time: 11:28 AM
  */
 
+return [
+    'SESSION' => [
+        'LOGINCONTEXT' => 'LoginContextSession',
+        'SOLIST' => 'SalesOrderList',
+    ],
+];

@@ -20,13 +20,12 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('store.index.table.header.title')</h3>
+            <h3 class="box-title">@lang('store.index.header.title')</h3>
         </div>
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center">#</th>
                         <th class="text-center">@lang('store.index.table.header.name')</th>
                         <th class="text-center">@lang('store.index.table.header.address')</th>
                         <th class="text-center">@lang('store.index.table.header.phone')</th>
@@ -40,13 +39,12 @@
                 <tbody>
                     @foreach ($store as $key => $item)
                         <tr>
-                            <td class="text-center">{{ $item->id }}</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->address }}</td>
                             <td>{{ $item->phone_num }}</td>
                             <td>{{ $item->tax_id }}</td>
-                            <td>@lang('lookup.' . $item->is_default )</td>
-                            <td>@lang('lookup.' . $item->status)</td>
+                            <td class="text-center">@lang('lookup.' . $item->is_default )</td>
+                            <td class="text-center">@lang('lookup.' . $item->status)</td>
                             <td>{{ $item->remarks }}</td>
                             <td class="text-center" width="20%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.admin.store.show', $item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
@@ -61,7 +59,7 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.admin.store.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;New Store</a>
+            <a class="btn btn-success" href="{{ route('db.admin.store.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $store->render() !!}
         </div>
     </div>

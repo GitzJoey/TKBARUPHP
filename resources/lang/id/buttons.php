@@ -22,7 +22,6 @@ return [
     'make_copy_button' => 'Buat Duplikat',
     'send_button' => 'Kirim',
     'reject_button' => 'Tolak',
-    'index.new_truck' => 'Truk Baru',
     'create.save' => 'Simpan',
     'create.cancel' => 'Kembali',
     'edit.save' => 'Simpan',

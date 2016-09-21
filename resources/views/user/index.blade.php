@@ -20,18 +20,18 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('user.index.table.header.title')</h3>
+            <h3 class="box-title">@lang('user.index.header.title')</h3>
         </div>
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Roles</th>
-                        <th class="text-center">Store</th>
-                        <th class="text-center">Type</th>
-                        <th class="text-center">Allow Login</th>
+                        <th class="text-center">@lang('user.index.table.header.name')</th>
+                        <th class="text-center">@lang('user.index.table.header.email')</th>
+                        <th class="text-center">@lang('user.index.table.header.roles')</th>
+                        <th class="text-center">@lang('user.index.table.header.store')</th>
+                        <th class="text-center">@lang('user.index.table.header.type')</th>
+                        <th class="text-center">@lang('user.index.table.header.allow_login')</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -69,7 +69,7 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.admin.user.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;New User</a>
+            <a class="btn btn-success" href="{{ route('db.admin.user.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $user->render() !!}
         </div>
     </div>

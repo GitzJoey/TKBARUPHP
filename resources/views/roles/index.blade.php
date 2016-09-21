@@ -20,15 +20,15 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Role Lists</h3>
+            <h3 class="box-title">@lang('role.index.header.title')</h3>
         </div>
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Description</th>
-                    <th class="text-center">Permission</th>
+                    <th class="text-center">@lang('role.index.table.header.name')</th>
+                    <th class="text-center">@lang('role.index.table.header.description')</th>
+                    <th class="text-center">@lang('role.index.table.header.permission')</th>
                     <th class="text-center">Action</th>
                 </tr>
                 </thead>
@@ -48,7 +48,7 @@
                             <a class="btn btn-xs btn-info" href="{{ route('db.admin.role.show', $role->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.admin.role.edit', $role->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.role.delete', $role->hId()], 'style'=>'display:inline'])  !!}
-                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                             {!! Form::close() !!}
                         </td>
                     </tr>

@@ -1,14 +1,14 @@
 @extends('layouts.adminlte.master')
 
 @section('title')
-    @lang('bank.edit.title')
+    @lang('warehouse.edit.title')
 @endsection
 
 @section('page_title')
-    <span class="fa fa-bank fa-fw"></span>&nbsp;@lang('bank.edit.page_title')
+    <span class="fa fa-bank fa-fw"></span>&nbsp;@lang('warehouse.edit.page_title')
 @endsection
 @section('page_title_desc')
-    @lang('bank.edit.page_title_desc')
+    @lang('warehouse.edit.page_title_desc')
 @endsection
 
 @section('content')
@@ -25,32 +25,26 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('bank.edit.header.title')</h3>
+            <h3 class="box-title">@lang('warehouse.edit.header.title')</h3>
         </div>
-        {!! Form::model($bank, ['method' => 'PATCH','route' => ['db.master.bank.edit', $bank->hId()], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($warehouse, ['method' => 'PATCH','route' => ['db.master.warehouse.edit', $warehouse->hId()], 'class' => 'form-horizontal']) !!}
         <div class="box-body">
             <div class="form-group">
-                <label for="inputName" class="col-sm-2 control-label">@lang('bank.field.name')</label>
+                <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>
                 <div class="col-sm-10">
-                    <input id="inputName" name="name" type="text" class="form-control" value="{{ $bank->name }}" placeholder="Name">
+                    <input id="inputName" name="name" type="text" class="form-control" value="{{ $warehouse->name }}" placeholder="Name">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputShortName" class="col-sm-2 control-label">@lang('bank.field.short_name')</label>
+                <label for="inputAddress" class="col-sm-2 control-label">@lang('warehouse.field.address')</label>
                 <div class="col-sm-10">
-                    <input id="inputShortName" name="short_name" type="text" class="form-control" value="{{ $bank->short_name }}" placeholder="Short Name">
+                    <input id="inputAddress" name="address" type="text" class="form-control" value="{{ $warehouse->address }}" placeholder="Address">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputBranch" class="col-sm-2 control-label">@lang('bank.field.branch')</label>
+                <label for="inputPhoneNum" class="col-sm-2 control-label">@lang('warehouse.field.phone_num')</label>
                 <div class="col-sm-10">
-                    <input id="inputBranch" name="branch" type="text" class="form-control" value="{{ $bank->branch }}" placeholder="Branch">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputBranchCode" class="col-sm-2 control-label">@lang('bank.field.branch_code')</label>
-                <div class="col-sm-10">
-                    <input id="inputBranch" name="branch_code" type="text" class="form-control" value="{{ $bank->branch_code }}" placeholder="Branch Code">
+                    <input id="inputPhoneNum" name="phone_num" type="text" class="form-control" value="{{ $warehouse->phone_num}}" placeholder="Phone Number">
                 </div>
             </div>
             <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
@@ -63,7 +57,7 @@
             <div class="form-group">
                 <label for="inputRemarks" class="col-sm-2 control-label">@lang('bank.field.remarks')</label>
                 <div class="col-sm-10">
-                    <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $bank->remarks }}" placeholder="Remarks">
+                    <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $warehouse->remarks }}" placeholder="Remarks">
                 </div>
             </div>
         </div>

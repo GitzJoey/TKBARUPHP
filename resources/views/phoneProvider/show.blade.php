@@ -12,7 +12,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;Phone Provider
+    <span class="fa-volume-control-phone"></span>&nbsp;Phone Provider
 @endsection
 @section('page_title_desc', '')
 

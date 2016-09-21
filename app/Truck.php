@@ -38,4 +38,9 @@ class Truck extends Model
     protected $fillable = [
         'plate_number', 'inspection_date', 'driver', 'status', 'remarks'
     ];
+
+    public function maintenanceList()
+    {
+        return $this->hasMany('\App\TruckMaintenance');
+    }
 }
