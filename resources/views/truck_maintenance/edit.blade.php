@@ -32,12 +32,12 @@
                 <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.plate_number')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('plate_number', $trucklist, $truck->truck_id, array('class' => 'form-control', 'disabled'=>'', 'style'=>"width: 100%;")) }}
+                        {{ Form::select('plate_number', $trucklist, $truck->truck_id, array('class' => 'form-control', 'disabled'=>'')) }}
                         <span class="help-block">{{ $errors->has('plate_number') ? $errors->first('plate_number') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('maintenance_type') ? 'has-error' : '' }}">
-                    <label class="col-sm-2 control-label">@lang('truck_maintenance.maintenance_type')</label>
+                    <label class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_type')</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="maintenance_type">
                             <option value>@lang('lookup.PLEASE_SELECT')</option>
@@ -53,16 +53,16 @@
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('cost') ? 'has-error' : '' }}">
-                    <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck_maintenance.cost')</label>
+                    <label for="inputCost" class="col-sm-2 control-label">@lang('truckmtc.field.cost')</label>
                     <div class="col-sm-10">
-                        <input name="cost" type="text" class="form-control" value="{{ (old('cost'))?old('cost'):$truck->cost }}" placeholder="@lang('truck_maintenance.cost')">
+                        <input name="cost" type="text" class="form-control" value="{{ (old('cost'))?old('cost'):$truck->cost }}" placeholder="@lang('truckmtc.field.cost')">
                         <span class="help-block">{{ $errors->has('cost') ? $errors->first('cost') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('odometer') ? 'has-error' : '' }}">
-                    <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truck_maintenance.odometer')</label>
+                    <label for="inputOdometer" class="col-sm-2 control-label">@lang('truckmtc.field.odometer')</label>
                     <div class="col-sm-10">
-                        <input class="form-control" placeholder="@lang('truck_maintenance.odometer')" name="odometer" value="{{(old('odometer'))?old('odometer'):$truck->odometer }}">
+                        <input class="form-control" placeholder="@lang('truckmtc.field.odometer')" name="odometer" value="{{(old('odometer'))?old('odometer'):$truck->odometer }}">
                         <span class="help-block">{{ $errors->has('odometer') ? $errors->first('odometer') : '' }}</span>
                     </div>
                 </div>
