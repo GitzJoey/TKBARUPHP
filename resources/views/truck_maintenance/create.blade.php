@@ -1,11 +1,15 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Truck Management')
+@section('title')
+    @lang('truckmtc.create.title')
+@endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;Truck
+    <span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;@lang('truckmtc.create.page_title')
 @endsection
-@section('page_title_desc', '')
+@section('page_title_desc')
+    @lang('truckmtc.create.page_title_desc')
+@endsection
 
 @section('custom_css')
   <!-- Select2 -->
@@ -35,7 +39,7 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('truck_maintenance.button.header.create')</h3>
+            <h3 class="box-title">@lang('create.header.title')</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.master.truck.maintenance.create') }}" method="post">
             {{ csrf_field() }}
