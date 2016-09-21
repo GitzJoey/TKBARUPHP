@@ -38,7 +38,7 @@
                 @foreach ($trucklist as $key => $truck)
                     <tr>
                         <td class="text-center">{{ $truck->truck->plate_number }}</td>
-                        <td class="text-center">{{ $truck->maintenance_type }}</td>
+                        <td class="text-center">@lang('lookup.'.$truck->maintenance_type)</td>
                         <td>{{ $truck->cost }}</td>
                         <td>{{ $truck->odometer }}</td>
                         <td>{{ $truck->remarks }}</td>

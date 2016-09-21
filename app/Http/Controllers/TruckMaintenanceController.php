@@ -25,10 +25,10 @@ class TruckMaintenanceController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
+        $mtctypeDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
 		$trucklist = Truck::get()->pluck('plate_number', 'id');
 
-        return view('truck_maintenance.create', compact('statusDDL','trucklist'));
+        return view('truck_maintenance.create', compact('mtctypeDDL','trucklist'));
     }
 
     public function store(Request $data)
@@ -42,12 +42,12 @@ class TruckMaintenanceController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('db.master.truck.maintenance.create'))->withInput()->withErrors($validator);
+            return redirect(route('db.truck.maintenance.create'))->withInput()->withErrors($validator);
         } else {
             $data['truck_id'] = $data->plate_number;
             unset($data['plate_number']);
             TruckMaintenance::create($data->all());
-            return redirect(route('db.master.truck.maintenance'));
+            return redirect(route('db.truck.maintenance'));
         }
     }
 
@@ -69,11 +69,11 @@ class TruckMaintenanceController extends Controller
             'remarks'          => 'required',
         ]);
         if ($validator->fails()) {
-            return redirect(route('db.master.truck.maintenance.edit', ['id' => $id]))->withInput()->withErrors($validator);
+            return redirect(route('db.truck.maintenance.edit', ['id' => $id]))->withInput()->withErrors($validator);
         } else {
             unset($req['plate_number']);
             TruckMaintenance::find($id)->update($req->all());
-            return redirect(route('db.master.truck.maintenance'));
+            return redirect(route('db.truck.maintenance'));
         }
     }
 }
