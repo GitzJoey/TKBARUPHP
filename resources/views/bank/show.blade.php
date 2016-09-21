@@ -24,13 +24,13 @@
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ $bank->name }}</h3>
+            <h3 class="box-title">@lang('bank.show.header.title') : {{ $bank->name }}</h3>
         </div>
         <div class="box-body">
             <form class="form-horizontal">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">@lang('bank.name')</label>
+                        <label for="inputName" class="col-sm-2 control-label">@lang('bank.field.name')</label>
                         <div class="col-sm-10">
                             <label id="name" class="control-label">
                                 <span class="control-label-normal">{{ $bank->name }}</span>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputShortName" class="col-sm-2 control-label">@lang('bank.short_name')</label>
+                        <label for="inputShortName" class="col-sm-2 control-label">@lang('bank.field.short_name')</label>
                         <div class="col-sm-10">
                             <label id="shortName" class="control-label">
                                 <span class="control-label-normal">{{ $bank->short_name }}</span>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputBranch" class="col-sm-2 control-label">@lang('bank.branch')</label>
+                        <label for="inputBranch" class="col-sm-2 control-label">@lang('bank.field.branch')</label>
                         <div class="col-sm-10">
                             <label id="branch" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $bank->branch }}</span>
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputBranchCode" class="col-sm-2 control-label">@lang('bank.branch_code')</label>
+                        <label for="inputBranchCode" class="col-sm-2 control-label">@lang('bank.field.branch_code')</label>
                         <div class="col-sm-10">
                             <label id="branchCode" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $bank->branch_code }}</span>
@@ -62,29 +62,29 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputStatus" class="col-sm-2 control-label">@lang('bank.status')</label>
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('bank.field.status')</label>
                         <div class="col-sm-10">
                             <label id="status" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $bank->status }}</span>
+                                <span class="control-label-normal">@lang('lookup.'.$bank->status)</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('bank.remarks')</label>
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('bank.field.remarks')</label>
                         <div class="col-sm-10">
                             <label id="remarks" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $bank->remarks }}</span>
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="box-footer">
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
-                            <a href="{{ route('db.master.bank') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('db.master.bank') }}" class="btn btn-default">@lang('buttons.back_button')</a>
                         </div>
                     </div>
-                </div>
-                <div class="box-footer">
                 </div>
             </form>
         </div>
