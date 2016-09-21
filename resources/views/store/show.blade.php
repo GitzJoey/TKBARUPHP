@@ -14,7 +14,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('store.show.page_title')
+    <span class="fa fa-umbrella fa-fw"></span>&nbsp;@lang('store.show.page_title')
 @endsection
 @section('page_title_desc')
     @lang('store.show.page_title_desc')
@@ -92,14 +92,14 @@
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="box-footer">
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
                             <a href="{{ route('db.admin.store') }}" class="btn btn-default">@lang('buttons.back_button')</a>
                         </div>
                     </div>
-                </div>
-                <div class="box-footer">
                 </div>
             </form>
         </div>
