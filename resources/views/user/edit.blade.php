@@ -1,12 +1,15 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'User Management')
-@section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;User
+@section('title')
+    @lang('user.edit.title')
 @endsection
-@section('page_title_desc', '')
 
-@section('title', 'Edit User')
+@section('page_title')
+    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.edit.page_title')
+@endsection
+@section('page_title_desc')
+    @lang('user.edit.page_title_desc')
+@endsection
 
 @section('content')
     @if (count($errors) > 0)
@@ -22,7 +25,7 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Edit User</h3>
+            <h3 class="box-title">@lang('user.edit.header.title')</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.admin.user.edit', $user->hId()) }}" method="post" accept-charset="UTF-8">
             <input name="_method" type="hidden" value="PATCH"/>

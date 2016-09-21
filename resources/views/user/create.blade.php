@@ -25,7 +25,7 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('user.create')</h3>
+            <h3 class="box-title">@lang('user.create.header.title')</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.admin.user.create') }}" method="post">
             {{ csrf_field() }}
@@ -126,7 +126,7 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.admin.user') }}" class="btn btn-default">Cancel</a>
+                        <a href="{{ route('db.admin.user') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
                         <button class="btn btn-default" type="submit">Submit</button>
                     </div>
                 </div>
