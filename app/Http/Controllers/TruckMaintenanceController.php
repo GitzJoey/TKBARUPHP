@@ -56,8 +56,8 @@ class TruckMaintenanceController extends Controller
         $truck = TruckMaintenance::find($id);
         $trucklist = Truck::get()->pluck('plate_number', 'id');
 
-        $statusDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
-        return view('truck_maintenance.edit', compact('truck','trucklist', 'statusDDL'));
+        $mtctypeDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
+        return view('truck_maintenance.edit', compact('truck','trucklist', 'mtctypeDDL'));
     }
 
     public function update($id, Request $req)
