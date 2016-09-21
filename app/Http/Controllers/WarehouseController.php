@@ -7,9 +7,13 @@
  */
 namespace App\Http\Controllers;
 
+use Validator;
+use Illuminate\Http\Request;
+
+use App\Lookup;
 use App\Warehouse;
 
-class UserController extends Controller
+class WarehouseController extends Controller
 {
     public function __construct()
     {
@@ -53,11 +57,6 @@ class UserController extends Controller
         ]);
 
         return redirect(route('db.master.warehouse'));
-    }
-
-    private function changeIsDefault()
-    {
-
     }
 
     public function edit($id)
