@@ -39,7 +39,6 @@
                         <td>{{ $truck->odometer }}</td>
                         <td>{{ $truck->remarks }}</td>
 
-
                         <td class="text-center" width="20%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.master.truck.maintenance.edit', $truck->id) }}"><span class="fa fa-pencil fa-fw"></span></a>
                         </td>

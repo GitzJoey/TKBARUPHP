@@ -12,8 +12,6 @@ use App\TruckMaintenance;
 
 class TruckMaintenanceController extends Controller
 {
-	private $folder = 'truck_maintenance';
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -22,7 +20,7 @@ class TruckMaintenanceController extends Controller
     public function index()
     {
 		$trucklist = TruckMaintenance::paginate(10);
-        return view($this->folder.'.index', compact('trucklist'));
+        return view('truck_maintenance.index', compact('trucklist'));
     }
 
     public function create()
@@ -30,7 +28,7 @@ class TruckMaintenanceController extends Controller
         $statusDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
 		$trucklist = Truck::get()->pluck('plate_number', 'id');
 
-        return view($this->folder.'.create', compact('statusDDL','trucklist'));
+        return view('truck_maintenance.create', compact('statusDDL','trucklist'));
     }
 
     public function store(Request $data)
@@ -59,7 +57,7 @@ class TruckMaintenanceController extends Controller
         $trucklist = Truck::get()->pluck('plate_number', 'id');
 
         $statusDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
-        return view($this->folder.'.edit', compact('truck','trucklist', 'statusDDL'));
+        return view('truck_maintenance.edit', compact('truck','trucklist', 'statusDDL'));
     }
 
     public function update($id, Request $req)

@@ -133,13 +133,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/master/truck/edit/{id}', 'TruckController@update');
     Route::delete('/dashboard/master/truck/edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
 
-    Route::get('/dashboard/master/truck/maintenance', 'TruckMaintenanceController@index')->name('db.master.truck.maintenance');
-    Route::get('/dashboard/master/truck/maintenance/show/{id}', 'TruckMaintenanceController@show');
-    Route::get('/dashboard/master/truck/maintenance/create', 'TruckMaintenanceController@create');
-    Route::post('/dashboard/master/truck/maintenance/create', 'TruckMaintenanceController@store');
-    Route::get('/dashboard/master/truck/maintenance/edit/{id}', 'TruckMaintenanceController@edit');
-    Route::patch('/dashboard/master/truck/maintenance/edit/{id}', 'TruckMaintenanceController@update');
-    Route::delete('/dashboard/master/truck/maintenance/edit/{id}', 'TruckMaintenanceController@delete');
+    Route::get('/dashboard/truck/maintenance', 'TruckMaintenanceController@index')->name('db.truck.maintenance');
+    Route::get('/dashboard/truck/maintenance/show/{id}', 'TruckMaintenanceController@show')->name('db.truck.maintenance.show');
+    Route::get('/dashboard/truck/maintenance/create', 'TruckMaintenanceController@create')->name('db.truck.maintenance.create');
+    Route::post('/dashboard/truck/maintenance/create', 'TruckMaintenanceController@store');
+    Route::get('/dashboard/truck/maintenance/edit/{id}', 'TruckMaintenanceController@edit')->name('db.truck.maintenance.edit');
+    Route::patch('/dashboard/truck/maintenance/edit/{id}', 'TruckMaintenanceController@update');
 
     Route::get('/dashboard/master/vendor/trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
     Route::get('/dashboard/master/vendor/trucking/show/{id}', 'VendorTruckingController@show');
