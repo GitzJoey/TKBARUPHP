@@ -13,7 +13,7 @@ class CreateCustomerTable extends Migration
      */
     public function up()
     {
-        //
+        /*
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
@@ -25,6 +25,7 @@ class CreateCustomerTable extends Migration
             $table->nullableTimestamps('payment_due_date');
             $table->timestamps();
         });
+        */
     }
 
     /**
@@ -34,7 +35,8 @@ class CreateCustomerTable extends Migration
      */
     public function down()
     {
-        //
+        /*
         Schema::drop('customers');
+        */
     }
 }

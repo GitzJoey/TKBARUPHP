@@ -14,18 +14,18 @@ class SettingsTableSeeder extends Seeder
 {
     public function run()
     {
-        /*
         $settings = [
             [
-                'category' => '',
-                'skey' => '',
-                'svalue' => '',
-                'description' => ''
+                'user_id' => 0,
+                'category' => 'DUMMY',
+                'skey' => 'DUMMY.setting_dummy',
+                'value' => '1',
+                'description' => 'Dummy Settings'
             ]
         ];
         foreach ($settings as $key => $value) {
             Settings::create($value);
         }
-        */
+
     }
 }

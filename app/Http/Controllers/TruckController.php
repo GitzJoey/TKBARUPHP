@@ -9,8 +9,8 @@
 namespace App\Http\Controllers;
 
 use DateTime;
-use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Http\Request;
 
 use App\Truck;
 use App\Lookup;

@@ -82,7 +82,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::delete('/dashboard/admin/phoneProvider/edit/{id}', 'PhoneProviderController@delete')->name('db.admin.phoneProvider.delete');
 
     Route::get('/dashboard/admin/settings', 'SettingsController@index')->name('db.admin.settings');
-    Route::get('/dashboard/admin/settings/edit/{id}', 'SettingsController@edit');
+    Route::get('/dashboard/admin/settings/edit/{id}', 'SettingsController@edit')->name('db.admin.settings.edit');
     Route::patch('/dashboard/admin/settings/edit/{id}', 'SettingsController@update');
 
     Route::get('/dashboard/master/customer', 'CustomerController@index')->name('db.master.customer');

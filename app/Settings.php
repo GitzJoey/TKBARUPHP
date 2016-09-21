@@ -8,6 +8,7 @@
 
 namespace App;
 
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -33,8 +34,17 @@ class Settings extends Model
 
     protected $fillable = [
         'category',
-        'key',
+        'skey',
         'value',
         'description'
     ];
+
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
+
+    public function user()
+    {
+        $this->belongsTo('\App\User');
+    }
 }

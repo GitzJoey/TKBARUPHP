@@ -2,9 +2,6 @@
 
 namespace App;
 
-use \App\Profile;
-use \App\UserDetail;
-
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Notifications\Notifiable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
@@ -86,5 +83,10 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsToMany('\App\Role', 'role_user', 'user_id', 'role_id');
+    }
+
+    public function settings()
+    {
+        return $this->hasMany('\App\Settings');
     }
 }
