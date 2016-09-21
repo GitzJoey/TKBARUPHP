@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string $image_filename
  * @method static \Illuminate\Database\Query\Builder|\App\Store whereImageFilename($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $user
  */
 class Store extends Model
 {

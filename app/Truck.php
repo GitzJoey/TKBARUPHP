@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Truck whereRemarks($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Truck whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Truck whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\TruckMaintenance[] $maintenanceList
  */
 class Truck extends Model
 {

@@ -56,5 +56,8 @@
                 </tbody>
             </table>
         </div>
+        <div class="box-footer clearfix">
+            {!! $data->render() !!}
+        </div>
     </div>
 @endsection

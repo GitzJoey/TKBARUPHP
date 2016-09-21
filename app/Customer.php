@@ -9,6 +9,7 @@ use \Illuminate\Database\Eloquent\Model;
  * App\Customer
  *
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Profile[] $profile
  */
 class Customer extends Model
 {

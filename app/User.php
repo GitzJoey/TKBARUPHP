@@ -38,6 +38,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property-read \App\Store $store
  * @property-read \App\Role $role
  * @property-read \App\UserDetail $userDetail
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Settings[] $settings
  */
 class User extends Authenticatable
 {

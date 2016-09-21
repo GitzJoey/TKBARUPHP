@@ -27,6 +27,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Settings whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Settings whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $id
+ * @property integer $user_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Settings whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Settings whereUserId($value)
  */
 class Settings extends Model
 {
