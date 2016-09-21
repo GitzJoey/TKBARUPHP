@@ -21,7 +21,7 @@ class TruckMaintenanceController extends Controller
     public function index()
     {
 		$trucklist = TruckMaintenance::paginate(10);
-        return view($this->folder.'.index2', compact('trucklist'));
+        return view($this->folder.'.index', compact('trucklist'));
     }
 
     public function create()
