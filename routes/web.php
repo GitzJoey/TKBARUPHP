@@ -141,12 +141,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/truck/maintenance/edit/{id}', 'TruckMaintenanceController@update');
 
     Route::get('/dashboard/master/vendor/trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
-    Route::get('/dashboard/master/vendor/trucking/show/{id}', 'VendorTruckingController@show');
-    Route::get('/dashboard/master/vendor/trucking/create', 'VendorTruckingController@create');
+    Route::get('/dashboard/master/vendor/trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
+    Route::get('/dashboard/master/vendor/trucking/create', 'VendorTruckingController@create')->name('db.master.vendor.trucking.create');
     Route::post('/dashboard/master/vendor/trucking/create', 'VendorTruckingController@store');
-    Route::get('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@edit');
+    Route::get('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@edit')->name('db.master.vendor.trucking.edit');
     Route::patch('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@update');
-    Route::delete('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@delete');
+    Route::delete('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@delete')->name('db.master.vendor.trucking.delete');
 
     Route::get('/dashboard/customer/confirmation', 'CustomerController@confirmation')->name('db.customer.confirmation');
     Route::get('/dashboard/customer/confirmation/{id}', 'CustomerController@confirmation');

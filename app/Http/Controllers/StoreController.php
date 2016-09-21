@@ -56,8 +56,6 @@ class StoreController extends Controller
         $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
         $path = public_path('images') . '/' . $imageName;
 
-        error_log($path);
-
         Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
 
         Store::create([

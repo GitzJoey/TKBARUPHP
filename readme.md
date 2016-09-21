@@ -7,10 +7,11 @@ This project initially to create a simple POS (Point of Sales) that catering the
 like buy, sell, stock, report. But it still open to extend the capabilities like, linking to
 bank, payment, payroll, accounting, etc.
 
-The Goal is to become the most up to date POS system using the most up to date technology and
-based with the best practice that every people in the world is using. 
-
 This project is porting from Java version, you can find the Java version [here!](https://github.com/gitzjoey/tkbarujava/)
+
+# The Goal
+The Goal is to become the ***most up to date*** POS system using the most up to date technology and
+based with the best practice that every people in the world is using. 
 
 # Requirements
 * [Latest PHP 5](http://php.net)
@@ -22,27 +23,27 @@ This project is porting from Java version, you can find the Java version [here!]
 # Installation
 Clone repository
 ```
-git clone https://github.com/gitzjoey/tkbaruphp.git
+$ git clone https://github.com/gitzjoey/tkbaruphp.git
 ```
 
 Do composer install/update
 
 ```
-composer install
+$ composer install
 
 or
 
-composer update
+$ composer update
 ```
 
 Do NPM Install
 ```
-npm install
+$ npm install
 ```
 
 Do Gulp
 ```
-gulp --production
+$ gulp --production
 ```
 
 Rename the .env.example to .env and change setting accordingly.
