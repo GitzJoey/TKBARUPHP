@@ -201,6 +201,26 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Delete Product'
             ],
             [
+                'name' => 'master.product.producttype-list',
+                'display_name' => 'Display Product Type Listing',
+                'description' => 'See only Listing Of Product Type'
+            ],
+            [
+                'name' => 'master.product.producttype-create',
+                'display_name' => 'Create Product Type',
+                'description' => 'Create New Product Type'
+            ],
+            [
+                'name' => 'master.product.producttype-edit',
+                'display_name' => 'Edit Product Type',
+                'description' => 'Edit Product Type'
+            ],
+            [
+                'name' => 'master.product.producttype-delete',
+                'display_name' => 'Delete Product Type',
+                'description' => 'Delete Product Type'
+            ],
+            [
                 'name' => 'master.warehouse-list',
                 'display_name' => 'Display Warehouse Listing',
                 'description' => 'See only Listing Of Warehouse'

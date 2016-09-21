@@ -186,6 +186,10 @@
                 Entrust::can('master.product-create') OR
                 Entrust::can('master.product-edit') OR
                 Entrust::can('master.product-delete') OR
+                Entrust::can('master.product.producttype-list') OR
+                Entrust::can('master.product.producttype-create') OR
+                Entrust::can('master.product.producttype-edit') OR
+                Entrust::can('master.product.producttype-delete') OR
                 Entrust::can('master.warehouse-list') OR
                 Entrust::can('master.warehouse-create') OR
                 Entrust::can('master.warehouse-edit') OR
@@ -224,8 +228,23 @@
                         @if(Entrust::can('master.product-list') OR
                             Entrust::can('master.product-create') OR
                             Entrust::can('master.product-edit') OR
-                            Entrust::can('master.product-delete'))
-                            <li><a href="{{ route('db.master.product') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.master_product')</a></li>
+                            Entrust::can('master.product-delete') OR
+                            Entrust::can('master.product.producttype-list') OR
+                            Entrust::can('master.product.producttype-create') OR
+                            Entrust::can('master.product.producttype-edit') OR
+                            Entrust::can('master.product.producttype-delete'))
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.master_product')
+                                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="{{ route('db.master.product') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.master_product')</a></li>
+                                    <li><a href="{{ route('db.master.product.producttype') }}"><i class="fa fa-bed fa-fw"></i>&nbsp;@lang('menu.item.master_producttype')</a></li>
+                                </ul>
+                            </li>
                         @endif
                         @if(Entrust::can('master.warehouse-list') OR
                             Entrust::can('master.warehouse-create') OR
