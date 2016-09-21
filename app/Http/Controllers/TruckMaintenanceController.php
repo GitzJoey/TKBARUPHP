@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Validator;
-
 use App\Http\Requests;
-use App\TruckMaintenance;
+use Illuminate\Http\Request;
+
 use App\Truck;
 use App\Lookup;
+use App\TruckMaintenance;
 
 class TruckMaintenanceController extends Controller
 {
 	private $folder = 'truck_maintenance';
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -64,7 +65,6 @@ class TruckMaintenanceController extends Controller
     public function update($id, Request $req)
     {
         $validator = Validator::make($req->all(),[
-            // 'plate_number'      => 'required',
             'maintenance_type' => 'required',
             'cost'             => 'required|numeric',
             'odometer'         => 'required|numeric',
@@ -73,7 +73,6 @@ class TruckMaintenanceController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.master.truck.maintenance.edit', ['id' => $id]))->withInput()->withErrors($validator);
         } else {
-            // $req['truck_id'] = $req->plate_number;
             unset($req['plate_number']);
             TruckMaintenance::find($id)->update($req->all());
             return redirect(route('db.master.truck.maintenance'));
