@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-umbrella fa-fw"></span>&nbsp;@lang('product_type.create.page_title')
+    <span class="fa fa-cube fa-fw"></span>&nbsp;@lang('product_type.create.page_title')
 @endsection
 @section('page_title_desc')
     @lang('product_type.create.page_title_desc')
@@ -40,7 +40,7 @@
                 <div class="form-group {{ $errors->has('short_code') ? 'has-error' : '' }}">
                     <label for="inputShortCode" class="col-sm-2 control-label">@lang('product_type.field.short_code')</label>
                     <div class="col-sm-10">
-                        <input id="inputShortCode" name="short_code" type="text" class="form-control" value="{{ old('short_code) }}" placeholder="Short Code">
+                        <input id="inputShortCode" name="short_code" type="text" class="form-control" value="{{ old('short_code') }}" placeholder="Short Code">
                         <span class="help-block">{{ $errors->has('short_code') ? $errors->first('short_code') : '' }}</span>
                     </div>
                 </div>

@@ -40,6 +40,7 @@ return [
     'item.master_customer' => 'Customer',
     'item.master_supplier' => 'Supplier',
     'item.master_product' => 'Product',
+    'item.master_producttype' => 'Product Type',
     'item.master_warehouse' => 'Warehouse',
     'item.master_bank' => 'Bank',
     'item.master_truck' => 'Truck',

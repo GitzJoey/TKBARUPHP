@@ -8,8 +8,10 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 
+use App\Lookup;
 use App\ProductType;
 
 class ProductTypeController extends Controller

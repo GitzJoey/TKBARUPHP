@@ -112,7 +112,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/master/producttype', 'ProductTypeController@index')->name('db.master.producttype');
     Route::get('/dashboard/master/producttype/show/{id}', 'ProductTypeController@show')->name('db.master.producttype.show');
     Route::get('/dashboard/master/producttype/create', 'ProductTypeController@create')->name('db.master.producttype.create');
-    Route::post('/dashboard/master/producttype/create', 'ProducTypetController@store');
+    Route::post('/dashboard/master/producttype/create', 'ProductTypeController@store');
     Route::get('/dashboard/master/producttype/edit/{id}', 'ProductTypeController@edit')->name('db.master.producttype.edit');
     Route::patch('/dashboard/master/producttype/edit/{id}', 'ProductTypeController@update');
     Route::delete('/dashboard/master/producttype/edit/{id}', 'ProductTypeController@delete')->name('db.master.producttype.delete');

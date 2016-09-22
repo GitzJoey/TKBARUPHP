@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-umbrella fa-fw"></span>&nbsp;@lang('product_type.index.page_title')
+    <span class="fa fa-cube fa-fw"></span>&nbsp;@lang('product_type.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('product_type.index.page_title_desc')
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($store as $key => $item)
+                    @foreach ($prodtype as $key => $item)
                         <tr>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->short_code }}</td>
@@ -54,7 +54,7 @@
         </div>
         <div class="box-footer clearfix">
             <a class="btn btn-success" href="{{ route('db.master.producttype.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
-            {!! $store->render() !!}
+            {!! $prodtype->render() !!}
         </div>
     </div>
 @endsection

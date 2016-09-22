@@ -242,7 +242,7 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li><a href="{{ route('db.master.product') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.master_product')</a></li>
-                                    <li><a href="{{ route('db.master.product.producttype') }}"><i class="fa fa-bed fa-fw"></i>&nbsp;@lang('menu.item.master_producttype')</a></li>
+                                    <li><a href="{{ route('db.master.producttype') }}"><i class="fa fa-cube fa-fw"></i>&nbsp;@lang('menu.item.master_producttype')</a></li>
                                 </ul>
                             </li>
                         @endif
