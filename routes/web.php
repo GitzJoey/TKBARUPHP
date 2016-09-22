@@ -167,5 +167,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/warehouse/inflow', 'WarehouseController@inflow')->name('db.warehouse.inflow');
     Route::get('/dashboard/warehouse/outflow', 'WarehouseController@inflow')->name('db.warehouse.outflow');
     Route::get('/dashboard/warehouse/stockopname', 'WarehouseController@stockopname')->name('db.warehouse.stockopname');
+
+    Route::get('/dashboard/price/price_level', 'PriceLevelController@index')->name('db.price.price_level');
+    Route::get('/dashboard/price/price_level/show/{id}', 'PriceLevelController@show')->name('db.price.price_level.show');
+    Route::get('/dashboard/price/price_level/create', 'PriceLevelController@create')->name('db.price.price_level.create');
+    Route::post('/dashboard/price/price_level/create', 'PriceLevelController@store');
+    Route::get('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@edit')->name('db.price.price_level.edit');
+    Route::patch('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@update');
+    Route::delete('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
 });
 

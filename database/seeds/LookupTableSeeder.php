@@ -205,6 +205,16 @@ class CreateLookupTableSeeder extends Seeder
                 'description' => 'User',
                 'category' => 'USERTYPE',
             ],
+            [
+                'code' => 'PRICELEVELTYPE.inc',
+                'description' => 'Increment Value',
+                'category' => 'PRICELEVELTYPE',
+            ],
+            [
+                'code' => 'PRICELEVELTYPE.pct',
+                'description' => 'Percentage Value',
+                'category' => 'PRICELEVELTYPE',
+            ],
         ];
         foreach ($lookup as $key => $value) {
             Lookup::create($value);

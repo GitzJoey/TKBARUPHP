@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Http\Requests;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Product;
 use App\Lookup;
-use Validator;
+use App\Product;
 
 class ProductController extends Controller
 {

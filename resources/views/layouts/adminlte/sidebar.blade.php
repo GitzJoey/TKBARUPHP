@@ -82,7 +82,7 @@
                             Entrust::can('price.pricelevel-create') OR
                             Entrust::can('price.pricelevel-edit') OR
                             Entrust::can('price.pricelevel-delete'))
-                            <li><a href="#"><i class="fa  fa-table fa-fw"></i>&nbsp;@lang('menu.item.price_pricelevel')</a></li>
+                            <li><a href="{{ route('db.price.price_level') }}"><i class="fa  fa-table fa-fw"></i>&nbsp;@lang('menu.item.price_pricelevel')</a></li>
                         @endif
                     </ul>
                 </li>

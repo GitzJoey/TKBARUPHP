@@ -8,6 +8,7 @@
 
 namespace App;
 
+use Vinkla\Hashids\Facades\Hashids;
 use \Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,5 +18,13 @@ use \Illuminate\Database\Eloquent\Model;
  */
 class PriceLevel extends Model
 {
+    protected $table = 'price_level';
 
+    protected $fillable = [
+        'type', 'weight', 'name', 'description', 'increment_value', 'percentage_value', 'status',
+    ];
+
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
 }
