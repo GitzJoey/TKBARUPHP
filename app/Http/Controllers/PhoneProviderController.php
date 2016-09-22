@@ -41,12 +41,12 @@ class PhoneProviderController extends Controller
 
     public function store(Request $data)
     {
-        $validator = Validator::make($data->all(),[
-            'name'    => 'required|string|max:255',
+        $validator = Validator::make($data->all(), [
+            'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
-            'prefix'          => 'required|string|max:255',
-            'status'          => 'required',
-            'remarks'         => 'required|string|max:255',
+            'prefix' => 'required|string|max:255',
+            'status' => 'required',
+            'remarks' => 'required|string|max:255',
 
         ]);
 
@@ -55,11 +55,11 @@ class PhoneProviderController extends Controller
         } else {
 
             PhoneProvider::create([
-                'name'       => $data['name'],
+                'name' => $data['name'],
                 'short_name' => $data['short_name'],
-                'prefix'     => $data['prefix'],
-                'status'     => $data['status'],
-                'remarks'    => $data['remarks']
+                'prefix' => $data['prefix'],
+                'status' => $data['status'],
+                'remarks' => $data['remarks']
             ]);
             return redirect(route('db.admin.phoneProvider'));
         }
@@ -72,7 +72,7 @@ class PhoneProviderController extends Controller
 
     public function edit($id)
     {
-        $phoneProvider= PhoneProvider::find($id);
+        $phoneProvider = PhoneProvider::find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
@@ -81,8 +81,22 @@ class PhoneProviderController extends Controller
 
     public function update($id, Request $req)
     {
-        PhoneProvider::find($id)->update($req->all());
-        return redirect(route('db.admin.phoneProvider'));
+        $validator = Validator::make($req->all(), [
+            'name' => 'required|string|max:255',
+            'short_name' => 'required|string|max:255',
+            'prefix' => 'required|string|max:255',
+            'status' => 'required',
+            'remarks' => 'required|string|max:255',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('db.admin.phoneProvider.edit'))->withInput()->withErrors($validator);
+        } else {
+
+            PhoneProvider::find($id)->update($req->all());
+            return redirect(route('db.admin.phoneProvider'));
+        }
     }
 
     public function delete($id)

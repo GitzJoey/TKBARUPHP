@@ -93,7 +93,7 @@ class TruckController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('db.master.truck.create'))->withInput()->withErrors($validator);
+            return redirect(route('db.master.truck.edit'))->withInput()->withErrors($validator);
         } else {
             Truck::find($id)->update($req->all());
             return redirect(route('db.master.truck'));
