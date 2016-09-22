@@ -8,6 +8,7 @@
 
 namespace App;
 
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -37,4 +38,7 @@ class Unit extends Model
         'name', 'symbol', 'status', 'remarks',
     ];
 
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
 }

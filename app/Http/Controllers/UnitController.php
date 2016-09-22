@@ -20,9 +20,9 @@ class UnitController extends Controller
     }
 
     public function index() {
-        $unit = Unit::paginate(10);
+        $unitlist = Unit::paginate(10);
 
-        return view('unit.index')->with('unit', $unit);
+        return view('unit.index')->with('unitlist', $unitlist);
     }
 
     public function show($id) {
@@ -59,11 +59,6 @@ class UnitController extends Controller
 
             return redirect(route('db.admin.unit'));
         }
-    }
-
-    private function changeIsDefault()
-    {
-
     }
 
     public function edit($id)
