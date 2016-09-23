@@ -15,35 +15,40 @@ use App\Lookup;
 
 class UnitController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-    public function index() {
+    public function index()
+    {
         $unitlist = Unit::paginate(10);
 
         return view('unit.index')->with('unitlist', $unitlist);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $unit = Unit::find($id);
 
         return view('unit.show', compact('unit'));
     }
 
-    public function create() {
+    public function create()
+    {
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
         return view('unit.create', compact('statusDDL'));
     }
 
-    public function store(Request $data) {
+    public function store(Request $data)
+    {
         $validator = Validator::make($data->all(), [
-            'name'       => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'symbol' => 'required|string|max:255',
-            'status'     => 'required|string|max:255',
-            'remarks'    => 'required',
+            'status' => 'required|string|max:255',
+            'remarks' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -51,10 +56,10 @@ class UnitController extends Controller
         } else {
 
             Unit::create([
-                'name'       => $data['name'],
+                'name' => $data['name'],
                 'symbol' => $data['symbol'],
-                'status'     => $data['status'],
-                'remarks'    => $data['remarks'],
+                'status' => $data['status'],
+                'remarks' => $data['remarks'],
             ]);
 
             return redirect(route('db.admin.unit'));
@@ -72,8 +77,20 @@ class UnitController extends Controller
 
     public function update($id, Request $req)
     {
-        Unit::find($id)->update($req->all());
-        return redirect(route('db.admin.unit'));
+        $validator = Validator::make($req->all(), [
+            'name' => 'required|string|max:255',
+            'symbol' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'remarks' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('db.admin.unit.edit'))->withInput()->withErrors($validator);
+        } else {
+            Unit::find($id)->update($req->all());
+            return redirect(route('db.admin.unit'));
+
+        }
     }
 
     public function delete($id)

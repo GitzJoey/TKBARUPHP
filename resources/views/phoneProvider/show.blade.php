@@ -1,6 +1,8 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Truck Management')
+@section('title')
+    @lang('phoneProvider.show.title')
+@endsection
 
 @section('custom_css')
     <style type="text/css">
@@ -12,9 +14,11 @@
 @endsection
 
 @section('page_title')
-    <span class="fa-volume-control-phone"></span>&nbsp;Phone Provider
+    <span class="fa-volume-control-phone"></span>&nbsp;@lang('phoneProvider.show.page_title')
 @endsection
-@section('page_title_desc', '')
+@section('page_title_desc')
+    @lang('phoneProvider.show.page_title_desc')
+@endsection
 
 @section('content')
     <div class="box box-info">
@@ -60,7 +64,7 @@
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.status')</label>
                         <div class="col-sm-10">
                             <label id="status" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $phoneProvider->status }}</span>
+                                <span class="control-label-normal">@lang('lookup.'.$unit->status)</span>
                             </label>
                         </div>
                     </div>
