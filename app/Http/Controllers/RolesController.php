@@ -66,10 +66,10 @@ class RolesController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $selectedpermission = $role->permissionList->pluck('id');
+        $selected = $role->permissionList->pluck('id')->toArray();
         $permission = Permission::get()->pluck('display_name', 'id');
 
-        return view('roles.edit', compact('role', 'permission', 'selectedpermission'));
+        return view('roles.edit', compact('role', 'permission', 'selected'));
     }
 
     public function update($id, Request $req)

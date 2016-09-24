@@ -45,13 +45,13 @@
                 <div class="form-group">
                     <label for="inputDescription" class="col-sm-2 control-label">@lang('role.field.description')</label>
                     <div class="col-sm-10">
-                        <input id="inputDescription" name="display_name" type="text" class="form-control" value="{{ $role->description }}" placeholder="@lang('role.field.description')">
+                        <input id="inputDescription" name="description" type="text" class="form-control" value="{{ $role->description }}" placeholder="@lang('role.field.description')">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPermission" class="col-sm-2 control-label">@lang('role.field.permission')</label>
                     <div class="col-sm-10">
-                        {{! Form::select('permission[]', $permission, $selectedpermission, array('multiple', 'size' => 25, 'class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('permission[]', $permission, $selected, array('multiple', 'size' => 25, 'class' => 'form-control', 'placeholder' => 'Please Select')) }}
                     </div>
                 </div>
             </div>
