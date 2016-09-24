@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('role.index.page_title')
+    <span class="fa fa-key fa-fw"></span>&nbsp;@lang('role.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('role.index.page_title_desc')
@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('role.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.admin.role.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.admin.roles.create') }}" method="post">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
@@ -45,13 +45,13 @@
                 <div class="form-group">
                     <label for="inputDescription" class="col-sm-2 control-label">@lang('role.field.description')</label>
                     <div class="col-sm-10">
-                        <input id="inputDescription" name="display_name" type="text" class="form-control" placeholder="@lang('role.field.description')">
+                        <input id="inputDescription" name="description" type="text" class="form-control" placeholder="@lang('role.field.description')">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPermission" class="col-sm-2 control-label">@lang('role.field.permission')</label>
                     <div class="col-sm-10">
-                        <select multiple class="form-control" size="25">
+                        <select multiple name="permission[]" class="form-control" size="25">
                             @foreach($permission as $key => $p)
                                 <option value="{{ $p->id }}">{{ $p->display_name }}</option>
                             @endforeach

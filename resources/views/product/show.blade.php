@@ -100,14 +100,14 @@
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="box-footer">
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
                             <a href="{{ route('db.master.product') }}" class="btn btn-default">Back</a>
                         </div>
                     </div>
-                </div>
-                <div class="box-footer">
                 </div>
             </form>
         </div>

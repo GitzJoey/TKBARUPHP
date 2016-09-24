@@ -50,12 +50,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/user/profile/{id}', 'UserController@profile')->name('db.user.profile.show');
 
     Route::get('/dashboard/admin/roles', 'RolesController@index')->name('db.admin.roles');
-    Route::get('/dashboard/admin/roles/show/{id}', 'RolesController@show')->name('db.admin.role.show');;
-    Route::get('/dashboard/admin/roles/create', 'RolesController@create')->name('db.admin.role.create');
+    Route::get('/dashboard/admin/roles/show/{id}', 'RolesController@show')->name('db.admin.roles.show');;
+    Route::get('/dashboard/admin/roles/create', 'RolesController@create')->name('db.admin.roles.create');
     Route::post('/dashboard/admin/roles/create', 'RolesController@store');
-    Route::get('/dashboard/admin/roles/edit/{id}', 'RolesController@edit')->name('db.admin.role.edit');
+    Route::get('/dashboard/admin/roles/edit/{id}', 'RolesController@edit')->name('db.admin.roles.edit');
     Route::patch('/dashboard/admin/roles/edit/{id}', 'RolesController@update');
-    Route::delete('/dashboard/admin/roles/edit/{id}', 'RolesController@delete')->name('db.admin.role.delete');
+    Route::delete('/dashboard/admin/roles/edit/{id}', 'RolesController@delete')->name('db.admin.roles.delete');
 
     Route::get('/dashboard/admin/store', 'StoreController@index')->name('db.admin.store');
     Route::get('/dashboard/admin/store/show/{id}', 'StoreController@show')->name('db.admin.store.show');

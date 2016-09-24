@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('role.index.page_title')
+    <span class="fa fa-key fa-fw"></span>&nbsp;@lang('role.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('role.index.page_title_desc')
@@ -45,9 +45,9 @@
                             </select>
                         </td>
                         <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.admin.role.show', $role->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.admin.role.edit', $role->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.role.delete', $role->hId()], 'style'=>'display:inline'])  !!}
+                            <a class="btn btn-xs btn-info" href="{{ route('db.admin.roles.show', $role->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.admin.roles.edit', $role->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.roles.delete', $role->hId()], 'style'=>'display:inline'])  !!}
                                 <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                             {!! Form::close() !!}
                         </td>
@@ -57,7 +57,7 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.admin.role.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
+            <a class="btn btn-success" href="{{ route('db.admin.roles.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $rolelist->render() !!}
         </div>
     </div>
