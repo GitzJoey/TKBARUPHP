@@ -23,7 +23,7 @@
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('unit.show.header.title') : {{ $unit->unit_name }}</h3>
+            <h3 class="box-title">@lang('unit.show.header.title') : {{ $unit->name }}</h3>
         </div>
         <div class="box-body">
             <form class="form-horizontal">
@@ -32,7 +32,7 @@
                         <label for="inputName" class="col-sm-2 control-label">@lang('unit.field.name')</label>
                         <div class="col-sm-10">
                             <label id="inputName" class="control-label">
-                                <span class="control-label-normal">{{ $unit->unit_name }}</span>
+                                <span class="control-label-normal">{{ $unit->name }}</span>
                             </label>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('unit.field.status')</label>
                         <div class="col-sm-10">
-                            <label>
+                            <label class="control-label control-label-normal">
                                 <span class="control-label-normal">@lang('lookup.'.$unit->status)</span>
                             </label>
                         </div>
@@ -60,14 +60,14 @@
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="box-footer">
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
-                            <a href="{{ route('db.admin.unit') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('db.admin.unit') }}" class="btn btn-default">@lang('buttons.back_button')</a>
                         </div>
                     </div>
-                </div>
-                <div class="box-footer">
                 </div>
             </form>
         </div>

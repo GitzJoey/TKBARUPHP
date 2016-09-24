@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-bank fa-fw"></span>&nbsp;@lang('warehouse.index.page_title')
+    <span class="fa fa-wrench fa-fw"></span>&nbsp;@lang('warehouse.index.page_title')
 @endsection
 
 @section('page_title_desc')
