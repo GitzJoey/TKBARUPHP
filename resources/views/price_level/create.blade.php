@@ -92,7 +92,7 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.admin.store') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                        <a href="{{ route('db.price.price_level') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
                         <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                     </div>
                 </div>
