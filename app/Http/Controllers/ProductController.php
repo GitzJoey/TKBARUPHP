@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Http\Requests;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Product;
 use App\Lookup;
-use Validator;
+use App\Product;
+use App\ProductType;
 
 class ProductController extends Controller
 {
@@ -31,8 +32,9 @@ class ProductController extends Controller
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $prodtypeDdL = ProductType::get()->pluck('name', 'id');
 
-        return view('product.create', compact('statusDDL'));
+        return view('product.create', compact('statusDDL', 'prodtypeDdL'));
     }
 
     public function store(Request $data)
@@ -49,17 +51,17 @@ class ProductController extends Controller
             return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
         } else {
 
-            Product::create([
-                'store_id' => $data['store_id'],
-                'product_type_id' => $data['product_type_id'],
-                'type' => $data['type'],
-                'name' => $data['name'],
-                'short_code' => $data['short_code'],
-                'description' => $data['description'],
-                'image_path' => $data['image_path'],
-                'status' => $data['status'],
-                'remarks' => $data['remarks']
-            ]);
+            $product = new Product;
+
+            $product->product_type_id = $data['type'];
+            $product->name = $data['name'];
+            $product->short_code = $data['short_code'];
+            $product->description = $data['description'];
+            $product->status = $data['status'];
+            $product->remarks = $data['remarks'];
+
+            $product->save();
+
             return redirect(route('db.master.product'));
         }
     }

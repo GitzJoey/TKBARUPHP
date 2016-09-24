@@ -27,4 +27,9 @@ class ProductType extends Model
     public function hId() {
         return HashIds::encode($this->attributes['id']);
     }
+
+    public function product()
+    {
+        return $this->hasMany('\App\Product');
+    }
 }

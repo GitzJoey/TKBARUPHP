@@ -33,7 +33,7 @@
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="inputType" class="col-sm-2 control-label">@lang('product.field.type')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputType" name="type" placeholder="@lang('product.field.type')">
+                        {{ Form::select('type', $prodtypeDdL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
                         <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
