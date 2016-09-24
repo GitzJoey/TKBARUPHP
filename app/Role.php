@@ -33,11 +33,15 @@ use Vinkla\Hashids\Facades\Hashids;
  */
 class Role extends EntrustRole
 {
-    public function permissionList() {
-        return $this->belongsToMany('\App\Permission', 'permission_role', 'role_id', 'permission_id');
-    }
+    protected $fillable = [
+      'name', 'display_name', 'description'
+    ];
 
     public function hId() {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function permissionList() {
+        return $this->belongsToMany('\App\Permission', 'permission_role', 'role_id', 'permission_id');
     }
 }

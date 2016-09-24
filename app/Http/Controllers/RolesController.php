@@ -80,7 +80,17 @@ class RolesController extends Controller
             'description' => 'required',
         ]);
 
-        Role::find($id)->update($req->all());
+        $role = Role::whereId($id);
+        $pl = Permission::whereIn('id', $req['permission'])->get();
+
+        $role->permissionList()->sync($pl);
+
+        $role->update([
+            'name' => $req['name'],
+            'display_name' => $req['display_name'],
+            'description' => $req['description'],
+        ]);
+
         return redirect(route('db.admin.roles'));
     }
 
