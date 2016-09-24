@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::paginate(10);
-        return view('product.index')->with('product', $product);
+        return view('product.index')->with('productlist', $product);
     }
 
     public function show($id)
@@ -38,16 +38,11 @@ class ProductController extends Controller
     public function store(Request $data)
     {
         $validator = Validator::make($data->all(), [
-            'store_id' => 'required|string|max:255',
-            'product_type_id' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'short_code' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'image_path' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-            'remarks' => 'required|string|max:255',
-
         ]);
 
         if ($validator->fails()) {
@@ -67,11 +62,6 @@ class ProductController extends Controller
             ]);
             return redirect(route('db.master.product'));
         }
-    }
-
-    private function changeIsDefault()
-    {
-
     }
 
     public function edit($id)
