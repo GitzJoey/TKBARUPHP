@@ -1,6 +1,15 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Truck Management')
+@section('title')
+    @lang('product.show.index.title')
+@endsection
+
+@section('page_title')
+    <span class="fa fa-cubes fa-fw"></span>&nbsp;@lang('product.show.page_title')
+@endsection
+@section('page_title_desc')
+    @lang('product.show.page_title_desc')
+@endsection
 
 @section('custom_css')
     <style type="text/css">
@@ -11,11 +20,6 @@
     </style>
 @endsection
 
-@section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;Phone Provider
-@endsection
-@section('page_title_desc', '')
-
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
@@ -25,26 +29,18 @@
             <form class="form-horizontal">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="inputId" class="col-sm-2 control-label">Id</label>
+                        <label for="inputType" class="col-sm-2 control-label">@lang('product.field.type')</label>
                         <div class="col-sm-10">
-                            <label id="id" class="control-label">
-                                <span class="control-label-normal">{{ $product->id }}</span>
+                            <label id="inputType" class="control-label">
+                                <span class="control-label-normal">{{ $product->type->name }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.store_id')</label>
+                        <label for="inputName" class="col-sm-2 control-label">@lang('product.field.name')</label>
                         <div class="col-sm-10">
-                            <label id="plateNumber" class="control-label">
-                                <span class="control-label-normal">{{ $product->store_id }}</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truck.product_type_id')</label>
-                        <div class="col-sm-10">
-                            <label id="inspectionDate" class="control-label">
-                                <span class="control-label-normal">{{ $product->product_type_id }}</span>
+                            <label id="inputName" class="control-label">
+                                <span class="control-label-normal">{{ $product->name }}</span>
                             </label>
                         </div>
                     </div>

@@ -61,7 +61,7 @@ class Product extends Model
 
     public function type()
     {
-        return $this->belongsTo('\App\ProductType', 'product_type_id');
+        return $this->belongsTo('\App\ProductType');
     }
 
     public function productUnitList()

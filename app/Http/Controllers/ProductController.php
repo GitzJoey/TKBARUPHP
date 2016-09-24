@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Lookup;
 use App\Product;
+use App\ProductType;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::paginate(10);
-        return view('product.index')->with('product', $product);
+        return view('product.index')->with('productlist', $product);
     }
 
     public function show($id)
@@ -31,47 +32,38 @@ class ProductController extends Controller
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $prodtypeDdL = ProductType::get()->pluck('name', 'id');
 
-        return view('product.create', compact('statusDDL'));
+        return view('product.create', compact('statusDDL', 'prodtypeDdL'));
     }
 
     public function store(Request $data)
     {
         $validator = Validator::make($data->all(), [
-            'store_id' => 'required|string|max:255',
-            'product_type_id' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'short_code' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'image_path' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-            'remarks' => 'required|string|max:255',
-
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
         } else {
 
-            Product::create([
-                'store_id' => $data['store_id'],
-                'product_type_id' => $data['product_type_id'],
-                'type' => $data['type'],
-                'name' => $data['name'],
-                'short_code' => $data['short_code'],
-                'description' => $data['description'],
-                'image_path' => $data['image_path'],
-                'status' => $data['status'],
-                'remarks' => $data['remarks']
-            ]);
+            $product = new Product;
+
+            $product->product_type_id = $data['type'];
+            $product->name = $data['name'];
+            $product->short_code = $data['short_code'];
+            $product->description = $data['description'];
+            $product->status = $data['status'];
+            $product->remarks = $data['remarks'];
+
+            $product->save();
+
             return redirect(route('db.master.product'));
         }
-    }
-
-    private function changeIsDefault()
-    {
-
     }
 
     public function edit($id)

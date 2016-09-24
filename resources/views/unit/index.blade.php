@@ -36,7 +36,7 @@
                 <tbody>
                     @foreach ($unitlist as $key => $unit)
                         <tr>
-                            <td>{{ $unit->unit_name }}</td>
+                            <td>{{ $unit->name }}</td>
                             <td>{{ $unit->symbol }}</td>
                             <td>@lang('lookup.'.$unit->status)</td>
                             <td>{{ $unit->remarks }}</td>
@@ -53,7 +53,7 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.admin.unit.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;New Unit</a>
+            <a class="btn btn-success" href="{{ route('db.admin.unit.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $unitlist->render() !!}
         </div>
     </div>
