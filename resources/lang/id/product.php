@@ -34,4 +34,8 @@ return [
     'field.description' => 'Keterangan',
     'field.status' => 'Status',
     'field.remarks' => 'Catatan',
+    'field.unit' => 'Satuan',
+    'create.table.header.unit' => 'Satuan',
+    'create.table.header.is_base' => 'Satuan Dasar',
+    'create.table.header.conversion_value' => 'Nilai',
 ];

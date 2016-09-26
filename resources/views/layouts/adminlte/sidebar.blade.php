@@ -119,7 +119,7 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('bank.upload'))
-                            <li><a href="#"><i class="fa fa-cloud-upload fa-fw"></i>&nbsp;@lang('menu.item.bank_upload')</a></li>
+                            <li><a href="{{ route('db.bank.upload') }}"><i class="fa fa-cloud-upload fa-fw"></i>&nbsp;@lang('menu.item.bank_upload')</a></li>
                         @endif
                         @if(Entrust::can('bank.consolidate'))
                             <li><a href="#"><i class="fa fa-compress fa-fw"></i>&nbsp;@lang('menu.item.bank_consolidate')</a></li>

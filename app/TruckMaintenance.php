@@ -32,7 +32,7 @@ class TruckMaintenance extends Model
     protected $table = 'truck_maintenance';
 
     protected $fillable = [
-        'truck_id', 'maintenance_type', 'cost', 'odometer', 'remarks'
+        'store_id', 'truck_id', 'maintenance_type', 'cost', 'odometer', 'remarks'
     ];
 
     public function hId() {

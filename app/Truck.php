@@ -37,7 +37,7 @@ class Truck extends Model
     protected $table = 'truck';
 
     protected $fillable = [
-        'plate_number', 'inspection_date', 'driver', 'status', 'remarks'
+        'store_id', 'plate_number', 'inspection_date', 'driver', 'status', 'remarks'
     ];
 
     public function maintenanceList()

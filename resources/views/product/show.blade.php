@@ -23,7 +23,7 @@
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ $product->plate_number }}</h3>
+            <h3 class="box-title">@lang('product.show.header.title') : {{ $product->name }}</h3>
         </div>
         <div class="box-body">
             <form class="form-horizontal">
@@ -45,55 +45,31 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputDriver" class="col-sm-2 control-label">@lang('truck.type')</label>
+                        <label for="inputShortCode" class="col-sm-2 control-label">@lang('product.field.short_code')</label>
                         <div class="col-sm-10">
-                            <label id="driver" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $product->type }}</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.name')</label>
-                        <div class="col-sm-10">
-                            <label id="status" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $product->name }}</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.short_code')</label>
-                        <div class="col-sm-10">
-                            <label id="remarks" class="control-label control-label-normal">
+                            <label id="inputShortCode" class="control-label">
                                 <span class="control-label-normal">{{ $product->short_code }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.description')</label>
+                        <label for="inputDescription" class="col-sm-2 control-label">@lang('product.field.description')</label>
                         <div class="col-sm-10">
-                            <label id="remarks" class="control-label control-label-normal">
+                            <label id="inputDescription" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $product->description }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.image_path')</label>
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('product.field.status')</label>
                         <div class="col-sm-10">
-                            <label id="remarks" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $product->image_path }}</span>
+                            <label id="status" class="control-label control-label-normal">
+                                <span class="control-label-normal">@lang('lookup.'.$product->status)</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.status')</label>
-                        <div class="col-sm-10">
-                            <label id="remarks" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $product->status }}</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.remarks')</label>
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('product.field.remarks')</label>
                         <div class="col-sm-10">
                             <label id="remarks" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $product->remarks }}</span>

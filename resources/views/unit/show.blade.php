@@ -45,6 +45,23 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputProductUnit" class="col-sm-2 control-label">@lang('product.field.unit')</label>
+                        <div class="col-sm-10">
+                            <table class="table table-responsive table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>@lang('product.create.table.header.unit')</th>
+                                    <th>@lang('product.create.table.header.is_base')</th>
+                                    <th>@lang('product.create.table.header.conversion_value')</th>
+                                    <th width="10%">&nbsp;</th>
+                                </tr>
+                                </thead>
+                            </table>
+                            <a class="btn btn-xs btn-default">@lang('buttons.create_new_button')</a>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('unit.field.status')</label>
                         <div class="col-sm-10">
                             <label class="control-label control-label-normal">

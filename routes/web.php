@@ -133,6 +133,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/master/bank/edit/{id}', 'BankController@update');
     Route::delete('/dashboard/master/bank/edit/{id}', 'BankController@delete')->name('db.master.bank.delete');;
 
+    Route::get('/dashboard/master/bank/upload', 'BankController@upload')->name('db.bank.upload');
+    Route::post('/dashboard/master/bank/upload/{id}', 'BankController@store');
+
     Route::get('/dashboard/master/truck', 'TruckController@index')->name('db.master.truck');
     Route::get('/dashboard/master/truck/show/{id}', 'TruckController@show')->name('db.master.truck.show');
     Route::get('/dashboard/master/truck/create', 'TruckController@create')->name('db.master.truck.create');

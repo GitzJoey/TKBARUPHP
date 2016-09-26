@@ -37,7 +37,7 @@ class Warehouse extends Model
     protected $table = 'warehouse';
 
     protected $fillable = [
-        'name', 'address', 'phone_num', 'status', 'remarks'
+        'store_id', 'name', 'address', 'phone_num', 'status', 'remarks'
     ];
 
     public function hId() {

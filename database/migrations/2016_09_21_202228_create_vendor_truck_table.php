@@ -15,6 +15,7 @@ class CreateVendorTruckTable extends Migration
     {
         Schema::create('vendor_trucking', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('store_id')->default(0);
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->string('tax_id')->nullable();

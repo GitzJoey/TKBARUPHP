@@ -8,8 +8,9 @@
 
 namespace App;
 
-use \Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
+use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Product
@@ -47,7 +48,7 @@ class Product extends Model
     protected $table = 'product';
 
     protected $fillable = [
-        'type', 'name', 'short_code', 'description', 'image_path', 'status', 'remarks'
+        'store_id', 'type', 'name', 'short_code', 'description', 'image_path', 'status', 'remarks'
     ];
 
     public function hId() {
@@ -61,7 +62,7 @@ class Product extends Model
 
     public function type()
     {
-        return $this->belongsTo('\App\ProductType');
+        return $this->belongsTo('\App\ProductType', 'product_type_id');
     }
 
     public function productUnitList()

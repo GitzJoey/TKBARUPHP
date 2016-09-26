@@ -10,6 +10,7 @@ namespace App;
 
 use Vinkla\Hashids\Facades\Hashids;
 use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\ProductType
@@ -21,7 +22,7 @@ class ProductType extends Model
     protected $table = 'product_type';
 
     protected $fillable = [
-        'name', 'short_code', 'description', 'status'
+        'store_id', 'name', 'short_code', 'description', 'status'
     ];
 
     public function hId() {
@@ -30,6 +31,6 @@ class ProductType extends Model
 
     public function product()
     {
-        return $this->hasMany('\App\Product');
+        return $this->hasMany('\App\Product', 'product_type_id');
     }
 }

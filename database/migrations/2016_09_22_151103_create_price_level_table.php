@@ -15,6 +15,7 @@ class CreatePriceLevelTable extends Migration
     {
         Schema::create('price_level', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('store_id')->default(0);
             $table->string('type')->nullable();
             $table->integer('weight')->default(0);
             $table->string('name')->nullable();

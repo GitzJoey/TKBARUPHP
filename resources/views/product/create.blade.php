@@ -11,6 +11,14 @@
     @lang('product.create.page_title_desc')
 @endsection
 
+@section('custom_css')
+    <style type="text/css">
+        table thead {
+            background-color: lightgray;
+        }
+    </style>
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -40,7 +48,7 @@
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputName" class="col-sm-2 control-label">@lang('product.field.name')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" name="name" placeholder="@lang('product.field.name')">
+                        <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }} " placeholder="@lang('product.field.name')">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
@@ -54,15 +62,32 @@
                 <div class="form-group {{ $errors->has('short_code') ? 'has-error' : '' }}">
                     <label for="inputShortCode" class="col-sm-2 control-label">@lang('product.field.short_code')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputShortCode" name="short_code" placeholder="@lang('product.field.short_code')">
+                        <input type="text" class="form-control" id="inputShortCode" name="short_code" value="{{ old('short_code') }}" placeholder="@lang('product.field.short_code')">
                         <span class="help-block">{{ $errors->has('short_code') ? $errors->first('short_code') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                     <label for="inputDescription" class="col-sm-2 control-label">@lang('product.field.description')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputDescription" name="description" placeholder="@lang('product.field.description')">
+                        <input type="text" class="form-control" id="inputDescription" name="description" value="{{ old('description') }}" placeholder="@lang('product.field.description')">
                         <span class="help-block">{{ $errors->has('description') ? $errors->first('description') : '' }}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputProductUnit" class="col-sm-2 control-label">@lang('product.field.unit')</label>
+                    <div class="col-sm-10">
+                        <table class="table table-responsive table-bordered">
+                            <thead>
+                            <tr>
+                                <th>@lang('product.create.table.header.unit')</th>
+                                <th>@lang('product.create.table.header.is_base')</th>
+                                <th>@lang('product.create.table.header.conversion_value')</th>
+                                <th width="10%">&nbsp;</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <a class="btn btn-xs btn-default">@lang('buttons.create_new_button')</a>
+                        <hr>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
@@ -75,7 +100,7 @@
                 <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
                     <label for="inputRemarks" class="col-sm-2 control-label">@lang('product.field.remarks')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('product.field.remarks')">
+                        <input type="text" class="form-control" id="remarks" name="remarks" value="{{ old('remarks') }}" placeholder="@lang('product.field.remarks')">
                         <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
                     </div>
                 </div>

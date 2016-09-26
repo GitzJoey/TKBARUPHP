@@ -68,9 +68,10 @@ class BankController extends Controller
         }
     }
 
-    private function changeIsDefault()
+    public function upload()
     {
-
+        $bankDDL = Bank::get()->pluck('name', 'id');
+        return view('bank.upload', compact('bankDDL'));
     }
 
     public function edit($id)

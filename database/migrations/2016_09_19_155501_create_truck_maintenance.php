@@ -15,6 +15,7 @@ class CreateTruckMaintenance extends Migration
     {
         Schema::create('truck_maintenance', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('truck_id')->default(0);
             $table->string('maintenance_type')->nullable();
             $table->bigInteger('cost')->default(0);

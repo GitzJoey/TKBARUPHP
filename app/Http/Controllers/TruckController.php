@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use DateTime;
 use Validator;
 use Illuminate\Http\Request;
@@ -58,6 +59,7 @@ class TruckController extends Controller
             $usableDate = $date->format('Y-m-d H:i:s');
 
             Truck::create([
+                'store_id' => Auth::user()->store->id,
                 'plate_number' => $data['plate_number'],
                 'inspection_date' => $usableDate,
                 'driver'     => $data['driver'],
@@ -66,11 +68,6 @@ class TruckController extends Controller
             ]);
             return redirect(route('db.master.truck'));
         }
-    }
-
-    private function changeIsDefault()
-    {
-
     }
 
     public function edit($id)

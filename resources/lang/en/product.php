@@ -34,4 +34,8 @@ return [
     'field.description' => 'Description',
     'field.status' => 'Status',
     'field.remarks' => 'Remarks',
+    'field.unit' => 'Unit',
+    'create.table.header.unit' => 'Unit',
+    'create.table.header.is_base' => 'Base Unit',
+    'create.table.header.conversion_value' => 'Conversion Value',
 ];

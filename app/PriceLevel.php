@@ -21,7 +21,7 @@ class PriceLevel extends Model
     protected $table = 'price_level';
 
     protected $fillable = [
-        'type', 'weight', 'name', 'description', 'increment_value', 'percentage_value', 'status',
+        'store_id', 'type', 'weight', 'name', 'description', 'increment_value', 'percentage_value', 'status',
     ];
 
     public function hId() {

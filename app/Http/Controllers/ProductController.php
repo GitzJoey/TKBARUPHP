@@ -20,6 +20,7 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::paginate(10);
+
         return view('product.index')->with('productlist', $product);
     }
 
@@ -38,6 +39,17 @@ class ProductController extends Controller
     }
 
     public function store(Request $data)
+    {
+        if(Input::get('store')) {
+            $this->dbStore($data);
+        } elseif(Input::get('addunit')) {
+            $this->addUnit($data);
+        } elseif (Input::get('deleteunit')) {
+            $this->deleteUnit($data);
+        }
+    }
+
+    private function dbStore(Request $data)
     {
         $validator = Validator::make($data->all(), [
             'type' => 'required|string|max:255',
@@ -66,13 +78,25 @@ class ProductController extends Controller
         }
     }
 
+    private function addUnit(Request $data)
+    {
+        
+    }
+
+    private function deleteUnit(Request $data)
+    {
+
+    }
+
     public function edit($id)
     {
         $product = Product::find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $prodtypeDdL = ProductType::get()->pluck('name', 'id');
+        $selected = $product->type->id;
 
-        return view('product.edit', compact('product', 'statusDDL'));
+        return view('product.edit', compact('product', 'statusDDL', 'prodtypeDdL', 'selected'));
     }
 
     public function update($id, Request $req)

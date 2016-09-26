@@ -38,7 +38,7 @@
                 <tbody>
                 @foreach ($productlist as $key => $product)
                     <tr>
-                        <td></td>
+                        <td>{{ $product->type->name }}</td>
                         <td>{{ $product->name }}</td>
                         <td class="text-center">{{ $product->short_code }}</td>
                         <td>{{ $product->description }}</td>

@@ -16,7 +16,7 @@ class VendorTrucking extends Model
     protected $table = 'vendor_trucking';
 
     protected $fillable = [
-        'name', 'address', 'tax_id', 'status', 'remarks'
+        'store_id', 'name', 'address', 'tax_id', 'status', 'remarks'
     ];
 
     public function hId() {
