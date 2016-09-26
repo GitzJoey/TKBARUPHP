@@ -22,6 +22,7 @@ class CustomerController extends Controller
         $customer = Customer::paginate(10);
         return view('customer.index')->with('customer', $customer);
     }
+
     public function show($id)
     {
         $customer = Customer::find($id);

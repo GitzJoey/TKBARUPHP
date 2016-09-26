@@ -109,6 +109,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/master/product/edit/{id}', 'ProductController@update');
     Route::delete('/dashboard/master/product/edit/{id}', 'ProductController@delete')->name('db.master.product.delete');
 
+    Route::post('/dashboard/master/product/create/add/unit/{product}', 'ProductController@addUnit');
+    Route::post('/dashboard/master/product/create/remove/unit/{product}', 'ProductController@removeUnit');
+    Route::post('/dashboard/master/product/edit/{id}/add/unit/{product}', 'ProductController@editAddUnit');
+    Route::post('/dashboard/master/product/edit/{id}/remove/unit/{product}', 'ProductController@editRemoveUnit');
+
     Route::get('/dashboard/master/producttype', 'ProductTypeController@index')->name('db.master.producttype');
     Route::get('/dashboard/master/producttype/show/{id}', 'ProductTypeController@show')->name('db.master.producttype.show');
     Route::get('/dashboard/master/producttype/create', 'ProductTypeController@create')->name('db.master.producttype.create');
@@ -178,5 +183,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@edit')->name('db.price.price_level.edit');
     Route::patch('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@update');
     Route::delete('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
+
+    Route::get('/dashboard/po/create', 'PurchaseOrderController@create')->name('db.po.create');
+    Route::post('/dashboard/po/create', 'PurchaseOrderController@create');
+
+    Route::get('/dashboard/report/trx', 'ReportController@report_trx')->name('db.report.transaction');
+    Route::get('/dashboard/report/mon', 'ReportController@report_mon')->name('db.report.monitoring');
+    Route::get('/dashboard/report/tax', 'ReportController@report_tax')->name('db.report.tax');
+    Route::get('/dashboard/report/master', 'ReportController@report_master')->name('db.report.master');
+    Route::get('/dashboard/report/admin', 'ReportController@report_admin')->name('db.report.admin');
 });
 

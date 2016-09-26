@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -65,6 +66,7 @@ class ProductController extends Controller
 
             $product = new Product;
 
+            $product->store_id = Auth::user()->store->id;
             $product->product_type_id = $data['type'];
             $product->name = $data['name'];
             $product->short_code = $data['short_code'];
@@ -80,7 +82,7 @@ class ProductController extends Controller
 
     private function addUnit(Request $data)
     {
-        
+
     }
 
     private function deleteUnit(Request $data)

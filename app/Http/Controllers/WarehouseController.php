@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers;
 
+use Auth;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -49,6 +50,7 @@ class WarehouseController extends Controller
         ]);
 
         Warehouse::create([
+            'store_id'      => Auth::user()->store->id,
             'name'          => $data['name'],
             'address'       => $data['address'],
             'phone_num'     => $data['phone_num'],

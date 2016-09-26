@@ -28,6 +28,7 @@ elixir(function(mix) {
         'admin-lte/dist/css/skins/_all-skins.min.css',
         'icheck/skins/square/blue.css',
     ], 'public/adminlte/css/adminlte.css', 'node_modules')
+        .copy('resources/assets/css/adminlte.custom.css', 'public/adminlte/css')
         .scripts([
             'jquery/dist/jquery.min.js',
             'bootstrap/dist/js/bootstrap.min.js',

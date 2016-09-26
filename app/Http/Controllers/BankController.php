@@ -8,11 +8,13 @@
 
 namespace App\Http\Controllers;
 
-use \DateTime;
-use App\Bank;
-use Illuminate\Http\Request;
-use App\Lookup;
+use Auth;
+use DateTime;
 use Validator;
+use Illuminate\Http\Request;
+
+use App\Bank;
+use App\Lookup;
 
 class BankController extends Controller
 {
@@ -57,6 +59,7 @@ class BankController extends Controller
         } else {
 
             Bank::create([
+                'store_id'      => Auth::user()->store->id,
                 'name'       	=> $data['name'],
                 'short_name' 	=> $data['short_name'],
                 'branch'	 	=> $data['branch'],

@@ -167,11 +167,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-connectdevelop fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttrx')</a></li>
-                    <li><a href="#"><i class="fa fa-eye fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmntr')</a></li>
-                    <li><a href="#"><i class="fa fa-institution fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttax')</a></li>
-                    <li><a href="#"><i class="fa fa-file-text-o fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmaster')</a></li>
-                    <li><a href="#"><i class="fa fa-file-text-o fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptadmin')</a></li>
+                    <li><a href="{{ route('db.report.transaction') }}"><i class="fa fa-connectdevelop fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttrx')</a></li>
+                    <li><a href="{{ route('db.report.monitoring') }}"><i class="fa fa-eye fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmntr')</a></li>
+                    <li><a href="{{ route('db.report.tax') }}"><i class="fa fa-institution fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttax')</a></li>
+                    <li><a href="{{ route('db.report.master') }}"><i class="fa fa-file-text-o fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmaster')</a></li>
+                    <li><a href="{{ route('db.report.admin') }}"><i class="glyphicon glyphicon-cog"></i>&nbsp;@lang('menu.item.rpt_rptadmin')</a></li>
                 </ul>
             </li>
             @if(Entrust::can('master.customer-list') OR

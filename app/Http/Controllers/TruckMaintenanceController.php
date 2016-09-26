@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -35,18 +36,23 @@ class TruckMaintenanceController extends Controller
     {
         $validator = Validator::make($data->all(),[
             'plate_number'      => 'required',
-            'maintenance_type' => 'required',
-            'cost'             => 'required|numeric',
-            'odometer'         => 'required|numeric',
-            'remarks'          => 'required',
+            'maintenance_type'  => 'required',
+            'cost'              => 'required|numeric',
+            'odometer'          => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.truck.maintenance.create'))->withInput()->withErrors($validator);
         } else {
-            $data['truck_id'] = $data->plate_number;
-            unset($data['plate_number']);
-            TruckMaintenance::create($data->all());
+            TruckMaintenance::create([
+                'store_id'          => Auth::user()->store->id,
+                'truck_id'          => $data['plate_number'],
+                'maintenance_type'  => $data['maintenance_type'],
+                'cost'              => $data['cost'],
+                'odometer'          => $data['odometer'],
+                'remarks'           => $data['remarks'],
+            ]);
+
             return redirect(route('db.truck.maintenance'));
         }
     }

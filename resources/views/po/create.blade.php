@@ -1,19 +1,23 @@
 @extends('layouts.adminlte.master')
 
-@section('title', 'Purchase Order')
+@section('title')
+    @lang('po.create')
+@endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;New Purchase Order
+    <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('po.create.page_title')New Purchase Order
 @endsection
-@section('page_title_desc', '')
+@section('page_title_desc')
+    @lang('po.create.page_title_desc')
+@endsection
 
 @section('content')
-    <form class="form-horizontal" action="{{ route('db.admin.user.create') }}" method="post">
+    <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post">
         <div class="row">
             <div class="col-md-7">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Supplier</h3>
+                        <h3 class="box-title">@lang('db.po.create.box.supplier')</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
