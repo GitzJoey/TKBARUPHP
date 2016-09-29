@@ -11,7 +11,7 @@ return [
 	'payment_due_date' 					=> 'Payment Due Date',
 
     'index.title' 						=> 'Manajemen Pelanggan',
-    'index.page_title' 					=> 'Pelanggan'
+    'index.page_title' 					=> 'Pelanggan',
     'index.table.header.name' 			=> 'Nama',
 	'index.table.header.address' 		=> 'Alamat',
 	'index.table.header.city' 			=> 'Kota',

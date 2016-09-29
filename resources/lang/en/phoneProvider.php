@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sansan
- * Date: 9/15/2016
- * Time: 11:07 AM
- */
+<?php 
+
 return [
     'index.title' => 'Phone Provider Manajemen',
     'index.page_title' => 'Phone Provider',
@@ -33,6 +28,6 @@ return [
     'field.prefix' => 'Prefix',
     'field.status' => 'Status',
     'field.remarks' => 'Remarks',
-
-
+    'short_name' => '',
+    'remarks' => '',
 ];

@@ -23,7 +23,7 @@ class PhoneProviderController extends Controller
     public function index()
     {
         $phoneProvider = PhoneProvider::paginate(10);
-        return view('phoneProvider.index')->with('phoneProvider', $phoneProvider);
+        return view('phoneProvider.index')->with('phoneProviderList', $phoneProvider);
     }
 
     public function show($id)

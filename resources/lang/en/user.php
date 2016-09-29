@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Sugito
- * Date: 9/15/2016
- * Time: 8:07 AM
- */
+<?php 
 
 return [
     'index.title' => 'User Management',
@@ -37,4 +31,9 @@ return [
     'field.retype_password' => 'Retype Password',
     'field.user_type' => 'User Type',
     'field.allow_login' => 'Allow Login',
+    'profile' => [
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+    ],
 ];

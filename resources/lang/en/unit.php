@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: nevermore
- * Date: 9/18/2016
- * Time: 12:48 AM
- */
+<?php 
 
 return [
     'index.title' => 'Unit Management',

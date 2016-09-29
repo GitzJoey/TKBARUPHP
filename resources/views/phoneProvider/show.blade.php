@@ -14,7 +14,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa-volume-control-phone"></span>&nbsp;@lang('phoneProvider.show.page_title')
+    <span class="glyphicon glyphicon-phone"></span>&nbsp;@lang('phoneProvider.show.page_title')
 @endsection
 @section('page_title_desc')
     @lang('phoneProvider.show.page_title_desc')
@@ -23,67 +23,59 @@
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ $phoneProvider->plate_number }}</h3>
+            <h3 class="box-title">@lang('phoneProvider.show.header.title') : {{ $phoneProvider->name }}</h3>
         </div>
         <div class="box-body">
             <form class="form-horizontal">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="inputId" class="col-sm-2 control-label">Id</label>
+                        <label for="inputName" class="col-sm-2 control-label">@lang('phoneProvider.field.name')</label>
                         <div class="col-sm-10">
-                            <label id="id" class="control-label">
-                                <span class="control-label-normal">{{ $phoneProvider->id }}</span>
+                            <label id="inputName" class="control-label">
+                                <span class="control-label-normal">{{ $phoneProvider->name }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.plate_number')</label>
+                        <label for="inputShortName" class="col-sm-2 control-label">@lang('phoneProvider.field.short_name')</label>
                         <div class="col-sm-10">
-                            <label id="plateNumber" class="control-label">
-                                <span class="control-label-normal">{{ $phoneProvider->plate_number }}</span>
+                            <label id="inputShortName" class="control-label">
+                                <span class="control-label-normal">{{ $phoneProvider->short_name }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truck.inspection_date')</label>
+                        <label for="inputPrefix" class="col-sm-2 control-label">@lang('phoneProvider.field.prefix')</label>
                         <div class="col-sm-10">
-                            <label id="inspectionDate" class="control-label">
-                                <span class="control-label-normal">{{ $phoneProvider->inspection_date }}</span>
+                            <label id="inputPrefix" class="control-label">
+                                <span class="control-label-normal">{{ $phoneProvider->prefix }}</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputDriver" class="col-sm-2 control-label">@lang('truck.driver')</label>
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('phoneProvider.field.status')</label>
                         <div class="col-sm-10">
-                            <label id="driver" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $phoneProvider->driver }}</span>
+                            <label id="inputStatus" class="control-label control-label-normal">
+                                <span class="control-label-normal">@lang('lookup.'.$phoneProvider->status)</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.status')</label>
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('phoneProvider.field.remarks')</label>
                         <div class="col-sm-10">
-                            <label id="status" class="control-label control-label-normal">
-                                <span class="control-label-normal">@lang('lookup.'.$unit->status)</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.remarks')</label>
-                        <div class="col-sm-10">
-                            <label id="remarks" class="control-label control-label-normal">
+                            <label id="inputRemarks" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $phoneProvider->remarks }}</span>
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="box-footer">
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
-                            <a href="{{ route('db.admin.phoneProvider') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('db.admin.phoneProvider') }}" class="btn btn-default">@lang('buttons.back_button')</a>
                         </div>
                     </div>
-                </div>
-                <div class="box-footer">
                 </div>
             </form>
         </div>

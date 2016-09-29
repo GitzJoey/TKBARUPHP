@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sansan
- * Date: 9/15/2016
- * Time: 11:07 AM
- */
+<?php 
+
 return [
     'index.title' => 'Truck Management',
     'index.page_title' => 'Truck',

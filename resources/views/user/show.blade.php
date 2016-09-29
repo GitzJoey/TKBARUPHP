@@ -48,7 +48,7 @@
                         <label for="inputRoles" class="col-sm-2 control-label">@lang('user.field.roles')</label>
                         <div class="col-sm-10">
                             <label id="inputEmail" class="control-label control-label-normal">
-                                <span class="control-label-normal"></span>
+                                <span class="control-label-normal">{{ $user->role()->first()->display_name }}</span>
                             </label>
                         </div>
                     </div>

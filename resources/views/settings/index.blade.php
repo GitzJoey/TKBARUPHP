@@ -48,7 +48,7 @@
                             <td>{{ $item->skey }}</td>
                             <td>{{ $item->value }}</td>
                             <td>{{ $item->description }}</td>
-                            <td>
+                            <td class="text-center">
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.admin.settings.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>

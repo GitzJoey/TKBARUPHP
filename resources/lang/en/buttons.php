@@ -27,5 +27,4 @@ return [
     'edit.save' => 'Save',
     'edit.cancel' => 'Cancel',
     'show.cancel' => 'Back',
-
 ];

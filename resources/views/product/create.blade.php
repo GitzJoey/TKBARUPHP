@@ -35,7 +35,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('product.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.product.create') }}" enctype="multipart/form-data" method="post">
+        <form id="productForm" class="form-horizontal" action="{{ route('db.master.product.create') }}" enctype="multipart/form-data" method="post">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
@@ -55,7 +55,7 @@
                 <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
                     <label for="inputImagePath" class="col-sm-2 control-label">&nbsp;</label>
                     <div class="col-sm-10">
-                        <input type="file" class="form-control" id="inputImagePath" name="image_path" placeholder="@lang('product.image_path')">
+                        <input type="file" class="form-control" id="inputImagePath" name="image_path">
                         <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                             </tr>
                             </thead>
                         </table>
-                        <a class="btn btn-xs btn-default">@lang('buttons.create_new_button')</a>
+                        <button id="addUnitButton" type="submit" class="btn btn-xs btn-default">@lang('buttons.create_new_button')</button>
                         <hr>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
                         <a href="{{ route('db.master.product') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                        <button id="submitButton" class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                     </div>
                 </div>
             </div>

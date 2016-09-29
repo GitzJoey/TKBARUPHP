@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sansan
- * Date: 9/15/2016
- * Time: 11:07 AM
- */
+<?php 
+
 return [
     'index.title' => 'Management Produk',
     'index.page_title' => 'Produk',
@@ -38,4 +33,28 @@ return [
     'create.table.header.unit' => 'Satuan',
     'create.table.header.is_base' => 'Satuan Dasar',
     'create.table.header.conversion_value' => 'Nilai',
+    'create' => [
+        'header' => [
+            'title' => '',
+        ],
+    ],
+    'image_path' => '',
+    'edit' => [
+        'header' => [
+            'title' => '',
+        ],
+    ],
+    'index' => [
+        'header' => [
+            'title' => '',
+        ],
+    ],
+    'show' => [
+        'index' => [
+            'title' => '',
+        ],
+        'header' => [
+            'title' => '',
+        ],
+    ],
 ];

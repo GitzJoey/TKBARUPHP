@@ -1,7 +1,7 @@
 @extends('layouts.adminlte.master')
 
 @section('title')
-    @lang('product.show.index.title')
+    @lang('product.show.title')
 @endsection
 
 @section('page_title')

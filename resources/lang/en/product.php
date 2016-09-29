@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sansan
- * Date: 9/15/2016
- * Time: 11:07 AM
- */
+<?php 
+
 return [
     'index.title' => 'Product Management',
     'index.page_title' => 'Product',
@@ -38,4 +33,35 @@ return [
     'create.table.header.unit' => 'Unit',
     'create.table.header.is_base' => 'Base Unit',
     'create.table.header.conversion_value' => 'Conversion Value',
+    'show' => [
+        'index' => [
+            'title' => '',
+        ],
+        'table' => [
+            'header' => [
+                'title' => '',
+            ],
+        ],
+    ],
+    'index' => [
+        'table' => [
+            'header' => [
+                'title' => '',
+            ],
+        ],
+    ],
+    'create' => [
+        'table' => [
+            'header' => [
+                'title' => '',
+            ],
+        ],
+    ],
+    'edit' => [
+        'table' => [
+            'header' => [
+                'title' => '',
+            ],
+        ],
+    ],
 ];

@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa-volume-control-phone"></span>&nbsp;Truck
+    <span class="glyphicon glyphicon-phone"></span>&nbsp;@lang('phoneProvider.create.page_title')
 @endsection
 @section('page_title_desc')
     @lang('unit.create.page_title_desc')
@@ -59,9 +59,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputPasswordConfirmation" class="col-sm-2 control-label">@lang('phoneProvider.field.remarks')</label>
+                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('phoneProvider.field.remarks')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('phoneProvider.remarks')">
+                        <input type="text" class="form-control" id="inputRemarks" name="remarks" placeholder="@lang('phoneProvider.remarks')">
                         <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
                     </div>
                 </div>

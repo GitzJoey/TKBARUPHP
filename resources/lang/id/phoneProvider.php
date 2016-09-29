@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sansan
- * Date: 9/15/2016
- * Time: 11:08 AM
- */
+<?php 
 
 return [
     'index.title' => 'Phone Provider Manajemen',
@@ -34,6 +28,6 @@ return [
     'field.prefix' => 'Prefix',
     'field.status' => 'Status',
     'field.remarks' => 'Tandai Ulang',
-
-
+    'short_name' => '',
+    'remarks' => '',
 ];

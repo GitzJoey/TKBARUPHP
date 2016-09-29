@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sansan
- * Date: 9/15/2016
- * Time: 11:08 AM
- */
+<?php 
 
 return [
     'index.title' => 'Manejemen Truk',
@@ -28,9 +22,9 @@ return [
     'index.table.header.driver' => 'Pengemudi',
     'index.table.header.status' => 'Status',
     'index.table.header.remarks' => 'Keterangan',
-    'plate_number' => 'Plat Nomor',
-    'inspection_date' => 'Tanggal Inspeksi',
-    'driver' => 'Pengemudi',
-    'status' => 'Status',
-    'remarks' => 'Tandai Ulang',
+    'field.plate_number' => 'Plat Nomor',
+    'field.inspection_date' => 'Tanggal Inspeksi',
+    'field.driver' => 'Pengemudi',
+    'field.status' => 'Status',
+    'field.remarks' => 'Tandai Ulang',
 ];
