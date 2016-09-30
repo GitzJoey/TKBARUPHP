@@ -35,8 +35,9 @@ class ProductController extends Controller
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
+        $product = new Product();
 
-        return view('product.create', compact('statusDDL', 'prodtypeDdL'));
+        return view('product.create', compact('product', 'statusDDL', 'prodtypeDdL'));
     }
 
     public function store(Request $data)
@@ -80,9 +81,10 @@ class ProductController extends Controller
         }
     }
 
-    private function addUnit(Request $data)
+    private function addUnit(Product $data)
     {
-
+        error_log($data);
+        return redirect(route('db.master.product.create'));
     }
 
     private function deleteUnit(Request $data)

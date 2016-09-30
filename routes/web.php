@@ -123,7 +123,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/master/product/edit/{id}', 'ProductController@update');
     Route::delete('/dashboard/master/product/edit/{id}', 'ProductController@delete')->name('db.master.product.delete');
 
-    Route::post('/dashboard/master/product/create/add/unit/{product}', 'ProductController@addUnit');
+    Route::post('/dashboard/master/product/create/add/unit/{product}', 'ProductController@addUnit')->name('db.master.product.create.addunit');
+    Route::model('product', 'Product');
     Route::post('/dashboard/master/product/create/remove/unit/{product}', 'ProductController@removeUnit');
     Route::post('/dashboard/master/product/edit/{id}/add/unit/{product}', 'ProductController@editAddUnit');
     Route::post('/dashboard/master/product/edit/{id}/remove/unit/{product}', 'ProductController@editRemoveUnit');

@@ -52,7 +52,7 @@ class Product extends Model
     ];
 
     public function hId() {
-        return HashIds::encode($this->attributes['id']);
+        return isnull(HashIds::encode($this->attributes['id'])) ? 0 : HashIds::encode($this->attributes['id']);
     }
 
     public function store()

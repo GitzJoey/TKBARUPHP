@@ -35,7 +35,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('product.create.header.title')</h3>
         </div>
-        <form id="productForm" class="form-horizontal" action="{{ route('db.master.product.create') }}" enctype="multipart/form-data" method="post">
+        <form id="productForm" class="form-horizontal" action="{{ route('db.master.product.create.addunit', $product) }}" enctype="multipart/form-data" method="post">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
