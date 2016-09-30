@@ -7,6 +7,8 @@
  * Time: 12:22 AM
  */
 
+namespace App;
+
 use \Illuminate\Database\Eloquent\Model;
 
 class BankAccount extends Model
@@ -14,6 +16,16 @@ class BankAccount extends Model
     protected $table = 'bank_account';
 
     protected $fillable = [
-        'account_number', 'status', 'remarks'
+        'bank_id','account_number', 'status', 'remarks'
     ];
+
+    public function supplier()
+    {
+    	return $this->belongsToMany('App\Supplier', 'supplier_bank_account');
+    }
+
+    public function bank()
+    {
+    	return $this->belongsTo('App\Bank');
+    }
 }

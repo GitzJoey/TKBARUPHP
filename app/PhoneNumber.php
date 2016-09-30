@@ -17,5 +17,12 @@ use \Illuminate\Database\Eloquent\Model;
  */
 class PhoneNumber extends Model
 {
+	protected $table = 'phone';
 
+	protected $fillable = ['phone_provider_id', 'number', 'status', 'remarks'];
+
+    public function provider()
+    {
+    	return $this->belongsTo('App\PhoneProvider', 'phone_provider_id');
+    }
 }

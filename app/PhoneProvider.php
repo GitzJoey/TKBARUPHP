@@ -38,5 +38,4 @@ class PhoneProvider extends Model
     protected $fillable = [
         'name', 'short_name', 'prefix', 'status', 'remarks'
     ];
-
 }
