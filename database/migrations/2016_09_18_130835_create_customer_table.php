@@ -13,19 +13,7 @@ class CreateCustomerTable extends Migration
      */
     public function up()
     {
-        /*
-        Schema::create('customers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 100);
-            $table->text('address');
-            $table->string('city', 100);
-            $table->string('phone', 50);
-            $table->text('remarks');
-            $table->string('tax_id', 100);
-            $table->nullableTimestamps('payment_due_date');
-            $table->timestamps();
-        });
-        */
+
     }
 
     /**
@@ -35,8 +23,6 @@ class CreateCustomerTable extends Migration
      */
     public function down()
     {
-        /*
-        Schema::drop('customers');
-        */
+
     }
 }

@@ -19,7 +19,11 @@ class CreateBankAccountTable extends Migration
             $table->string('account_number')->unique();
             $table->string('remarks')->nullable();
             $table->string('status')->nullable();
+            $table->bigIncrements('created_by')->default(0);
+            $table->bigIncrements('updated_by')->default(0);
+            $table->bigIncrements('deleted_by')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

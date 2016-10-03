@@ -19,7 +19,11 @@ class CreatePhoneTable extends Migration
             $table->string('number')->unique();
             $table->string('status');
             $table->string('remarks')->nullable();
+            $table->bigIncrements('created_by')->default(0);
+            $table->bigIncrements('updated_by')->default(0);
+            $table->bigIncrements('deleted_by')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

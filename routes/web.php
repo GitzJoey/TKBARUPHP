@@ -118,16 +118,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/master/product', 'ProductController@index')->name('db.master.product');
     Route::get('/dashboard/master/product/show/{id}', 'ProductController@show')->name('db.master.product.show');
     Route::get('/dashboard/master/product/create', 'ProductController@create')->name('db.master.product.create');
-    Route::post('/dashboard/master/product/create', 'ProductController@store');
+    Route::post('/dashboard/master/product/create/{id}/add/unit', 'ProductController@addunit')->name('db.master.product.create.unit');
+    Route::post('/dashboard/master/product/create/{id}', 'ProductController@store')->name('db.master.product.store');
     Route::get('/dashboard/master/product/edit/{id}', 'ProductController@edit')->name('db.master.product.edit');
     Route::patch('/dashboard/master/product/edit/{id}', 'ProductController@update');
     Route::delete('/dashboard/master/product/edit/{id}', 'ProductController@delete')->name('db.master.product.delete');
-
-    Route::post('/dashboard/master/product/create/add/unit/{product}', 'ProductController@addUnit')->name('db.master.product.create.addunit');
-    Route::model('product', 'Product');
-    Route::post('/dashboard/master/product/create/remove/unit/{product}', 'ProductController@removeUnit');
-    Route::post('/dashboard/master/product/edit/{id}/add/unit/{product}', 'ProductController@editAddUnit');
-    Route::post('/dashboard/master/product/edit/{id}/remove/unit/{product}', 'ProductController@editRemoveUnit');
 
     Route::get('/dashboard/master/producttype', 'ProductTypeController@index')->name('db.master.producttype');
     Route::get('/dashboard/master/producttype/show/{id}', 'ProductTypeController@show')->name('db.master.producttype.show');

@@ -25,7 +25,11 @@ class CreateStoreTable extends Migration
             $table->string('is_default')->nullable();
             $table->string('image_filename')->nullable();
             $table->string('remarks')->nullable();
+            $table->bigIncrements('created_by')->default(0);
+            $table->bigIncrements('updated_by')->default(0);
+            $table->bigIncrements('deleted_by')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

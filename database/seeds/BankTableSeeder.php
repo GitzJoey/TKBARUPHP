@@ -15,27 +15,27 @@ class BankTableSeeder extends Seeder
         $banks = [
         	[
         		'name' => 'Mandiri',
-        		'short_name' => 'mandiri',
+        		'short_name' => 'Mandiri',
         		'branch' => 'Jakarta',
         		'branch_code' => 'M0321',
         		'status' => 'STATUS.Active',
-        		'remarks' => ''
+        		'remarks' => 'Bank Mandiri'
         	],
         	[
         		'name' => 'BCA',
-        		'short_name' => 'bca',
+        		'short_name' => 'BCA',
         		'branch' => 'Jakarta',
         		'branch_code' => 'B0235',
         		'status' => 'STATUS.Active',
-        		'remarks' => ''
+        		'remarks' => 'Bank Central Asia'
         	],
         	[
         		'name' => 'Permata',
-        		'short_name' => 'permata',
+        		'short_name' => 'PRMT',
         		'branch' => 'Jakarta',
         		'branch_code' => 'P0232',
         		'status' => 'STATUS.Active',
-        		'remarks' => ''
+        		'remarks' => 'Bank Permata'
         	]
         ];
         foreach ($banks as $key => $value) {

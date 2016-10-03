@@ -23,7 +23,11 @@ class CreatePriceLevelTable extends Migration
             $table->integer('increment_value')->nullable();
             $table->integer('percentage_value')->nullable();
             $table->string('status')->nullable();
+            $table->bigIncrements('created_by')->default(0);
+            $table->bigIncrements('updated_by')->default(0);
+            $table->bigIncrements('deleted_by')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

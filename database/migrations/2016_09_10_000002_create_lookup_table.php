@@ -20,7 +20,6 @@ Class CreateLookupTable extends Migration
             $table->unique('code');
             $table->string('description')->nullable();
             $table->string('category')->nullable();
-            $table->timestamps();
         });
     }
 
