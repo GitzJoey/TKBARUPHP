@@ -15,7 +15,10 @@ class CreateSupplierPicTable extends Migration
     {
         Schema::create('supplier_profile', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('supplier_id');
+            $table->integer('supplier_id')->unsigned();
+            $table->foreign('supplier_id')
+              ->references('id')->on('supplier')
+              ->onDelete('cascade');
             $table->integer('profile_id');
         });
     }

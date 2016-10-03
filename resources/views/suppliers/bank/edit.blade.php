@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-umbrella fa-fw"></span>&nbsp;@lang('supplier.edit.field.heading.bank')
+    <span class="fa fa-file-text-o fa-fw"></span>&nbsp;@lang('supplier.edit.field.heading.bank')
 @endsection
 @section('page_title_desc')
     @lang('supplier.index.page_title_desc')

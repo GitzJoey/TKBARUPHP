@@ -13,9 +13,9 @@ class CreateProfilePhoneNumberTable extends Migration
      */
     public function up()
     {
-        Schema::create('pic_phone_number', function (Blueprint $table) {
+        Schema::create('profile_phone_number', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('profile_id');
+            $table->integer('profile_id')->onDelete('cascade');
             $table->integer('phone_number_id');
         });
     }

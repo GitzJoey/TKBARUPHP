@@ -12,6 +12,7 @@ return [
     'index.table.header.tax_id' => 'Tax id',
     'index.table.header.status' => 'Status',
     'index.table.header.remarks' => 'Remarks',
+    'create.title' => 'Create Supplier',
     'button.title' => 'New Supplier',
     'edit.title' => 'Edit Supplier',
     'edit.page' => 'Edit Supplier',
@@ -51,9 +52,7 @@ return [
 
     'edit.field.setting.due-day' => 'Payment Due Day',
     'edit.field.heading.bank' => 'Edit Bank Account',
-    'create.phone.title' => 'Add Phone',
     'create.phone.page_title' => 'Phone',
-    'create.header.title' => 'Add Phone',
     'create.field.phone.provider' => 'Provider',
     'create.field.phone.number' => 'Number',
     'create.field.phone.remarks' => 'Remarks',

@@ -15,8 +15,8 @@ class CreateSupplierProdTable extends Migration
     {
         Schema::create('supplier_prod', function (Blueprint $table){
             $table->increments('id');
-            $table->integer('product_id');
             $table->integer('supplier_id');
+            $table->integer('product_id');
         });
     }
 
