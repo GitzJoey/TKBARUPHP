@@ -10,6 +10,7 @@ return [
     'submit_button' => 'Submit',
     'cancel_button' => 'Cancel',
     'create_new_button' => 'Create New',
+    'remove_button' => 'Remove',
     'search_button' => 'Search',
     'login_button' => 'Login',
     'logout_button' => 'Logout',

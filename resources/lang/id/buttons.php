@@ -10,6 +10,7 @@ return [
     'submit_button' => 'Simpan',
     'cancel_button' => 'Batal',
     'create_new_button' => 'Tambah Baru',
+    'remove_button' => 'Buang',
     'search_button' => 'Cari',
     'login_button' => 'Masuk',
     'logout_button' => 'Keluar',

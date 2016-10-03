@@ -32,6 +32,7 @@ elixir(function(mix) {
         .scripts([
             'jquery/dist/jquery.min.js',
             'bootstrap/dist/js/bootstrap.min.js',
+            'angular/angular.min.js',
             'admin-lte/dist/js/app.min.js',
             'icheck/icheck.min.js'
         ], 'public/adminlte/js/app.js', 'node_modules')
