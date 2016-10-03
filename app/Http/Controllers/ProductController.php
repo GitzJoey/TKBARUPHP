@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\ProductUnit;
 use Auth;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
+use App\Unit;
 use App\Lookup;
 use App\Product;
 use App\ProductType;
@@ -35,22 +37,12 @@ class ProductController extends Controller
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
+        $unitDDL = Unit::whereStatus('STATUS.active')->get()->pluck('unit_name', 'id');
 
-        return view('product.create', compact('statusDDL', 'prodtypeDdL'));
+        return view('product.create', compact('statusDDL', 'prodtypeDdL', 'unitDDL'));
     }
 
     public function store(Request $data)
-    {
-        if(Input::get('store')) {
-            $this->dbStore($data);
-        } elseif(Input::get('addunit')) {
-            $this->addUnit($data);
-        } elseif (Input::get('deleteunit')) {
-            $this->deleteUnit($data);
-        }
-    }
-
-    private function dbStore(Request $data)
     {
         $validator = Validator::make($data->all(), [
             'type' => 'required|string|max:255',
@@ -76,18 +68,20 @@ class ProductController extends Controller
 
             $product->save();
 
+            //$produnit = array();
+
+            for($i=0; $i<count($data['unit_id']); $i++) {
+                $punit = new ProductUnit();
+                $punit->unit_id = $data['unit_id'][$i];
+                $punit->is_base = (bool)$data['is_base'][$i];
+                $punit->conversion_value = $data['conversion_value'][$i];
+                $punit->remarks = $data['remarks'][$i];
+
+                $product->productUnitList()->save($punit);
+            }
+
             return redirect(route('db.master.product'));
         }
-    }
-
-    private function addUnit(Request $data)
-    {
-
-    }
-
-    private function deleteUnit(Request $data)
-    {
-
     }
 
     public function edit($id)

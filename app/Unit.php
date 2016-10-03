@@ -41,4 +41,12 @@ class Unit extends Model
     public function hId() {
         return HashIds::encode($this->attributes['id']);
     }
+
+    public function getUnitNameAttribute() {
+        return $this->attributes['name'] . ' ('. $this->attributes['symbol'] .')';
+    }
+
+    public function productunit() {
+        $this->hasMany('\App\ProductUnit', 'unit_id');
+    }
 }

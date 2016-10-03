@@ -76,18 +76,47 @@
                 <div class="form-group">
                     <label for="inputProductUnit" class="col-sm-2 control-label">@lang('product.field.unit')</label>
                     <div class="col-sm-10">
-                        <table class="table table-responsive table-bordered">
-                            <thead>
-                            <tr>
-                                <th>@lang('product.create.table.header.unit')</th>
-                                <th>@lang('product.create.table.header.is_base')</th>
-                                <th>@lang('product.create.table.header.conversion_value')</th>
-                                <th width="10%">&nbsp;</th>
-                            </tr>
-                            </thead>
-                        </table>
-                        <button id="addUnitButton" type="submit" class="btn btn-xs btn-default">@lang('buttons.create_new_button')</button>
-                        <hr>
+                        <div ng-app="addUnitModule" ng-controller="addUnit">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th class="text-center"><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                                    <th>@lang('product.create.table.header.unit')</th>
+                                    <th class="text-center">@lang('product.create.table.header.is_base')</th>
+                                    <th>@lang('product.create.table.header.conversion_value')</th>
+                                    <th>@lang('product.create.table.header.remarks')</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="unit in units">
+                                        <td class="text-center">
+                                            <input type="checkbox" ng-model="unit.selected" ng-click="checkSelectAll()"/>
+                                        </td>
+                                        <td>
+                                            {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'ng-model' => 'unit.unit_id')) }}
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" ng-model="unit.is_base" ng-click="checkOnlyOneIsBase($index)" name="is_base[]"/>
+                                            <input type="hidden" ng-model="unit.is_base_val" name="is_base[]"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="unit.conversion_value" name="conversion_value[]"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="unit.remarks" name="remarks[]"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4">
+                                            <button type="button" class="btn btn-xs btn-danger" ng-hide="!units.length" ng-click="remove()">@lang('buttons.remove_button')</button>
+                                            <button type="button" class="btn btn-xs btn-primary" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
@@ -114,4 +143,72 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        var app = angular.module("addUnitModule", []);
+        app.controller("addUnit", ['$scope', function($scope) {
+            $scope.units = [{
+                'unit_id': '',
+                'is_base': false,
+                'is_base_val': false,
+                'conversion_value':'',
+                'remarks': ''
+            }];
+
+            $scope.addNew = function(unit) {
+                $scope.units.push({
+                    'unit_id': '',
+                    'is_base': false,
+                    'is_base_val': false,
+                    'conversion_value': '',
+                    'remarks': ''
+                });
+            };
+
+            $scope.remove = function() {
+                var newDataList=[];
+                $scope.selectedAll = false;
+                angular.forEach($scope.units, function(selected){
+                    if(!selected.selected){
+                        newDataList.push(selected);
+                    }
+                });
+                $scope.units = newDataList;
+            };
+
+            $scope.checkAll = function() {
+                if ($scope.selectedAll) {
+                    $scope.selectedAll = true;
+                } else {
+                    $scope.selectedAll = false;
+                }
+
+                angular.forEach($scope.units, function(unit) {
+                    unit.selected = $scope.selectedAll;
+                });
+            };
+
+            $scope.checkSelectAll = function() {
+                angular.forEach($scope.units, function(unit) {
+                    if (unit.selected == false) {
+                        $scope.selectedAll = false;
+                    }
+                });
+            };
+
+            $scope.checkOnlyOneIsBase = function($index) {
+                for (var i=0; i<$scope.units.length; i++) {
+                    if ($index == i) {
+                        $scope.units[i].conversion_value = 1;
+                        $scope.units[i].is_base_val = true;
+                    } else {
+                        $scope.units[i].is_base = false;
+                        $scope.units[i].is_base_val = false;
+                    }
+                }
+            };
+        }]);
+    </script>
 @endsection
