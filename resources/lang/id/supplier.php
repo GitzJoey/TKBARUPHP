@@ -18,6 +18,7 @@ return [
     'index.table.header.tax_id' => 'No. NPWP',
     'index.table.header.status' => 'Status',
     'index.table.header.remarks' => 'Catatan',
+    'create.title' => 'Buat Penjual',
     'button.title' => 'Penjual Baru',
     'status.true' => 'Tersedia',
     'status.false' => 'Tidak Tersedia',
