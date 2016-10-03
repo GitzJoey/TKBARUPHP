@@ -21,9 +21,9 @@ class CreateTruckMaintenance extends Migration
             $table->bigInteger('cost')->default(0);
             $table->bigInteger('odometer')->default(0);
             $table->string('remarks')->nullable();
-            $table->bigIncrements('created_by')->default(0);
-            $table->bigIncrements('updated_by')->default(0);
-            $table->bigIncrements('deleted_by')->default(0);
+            $table->unsignedBigInteger('created_by')->default(0);
+            $table->unsignedBigInteger('updated_by')->default(0);
+            $table->unsignedBigInteger('deleted_by')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
