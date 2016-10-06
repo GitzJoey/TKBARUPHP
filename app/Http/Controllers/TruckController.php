@@ -59,12 +59,12 @@ class TruckController extends Controller
             $usableDate = $date->format('Y-m-d H:i:s');
 
             Truck::create([
-                'store_id' => Auth::user()->store->id,
-                'plate_number' => $data['plate_number'],
-                'inspection_date' => $usableDate,
-                'driver'     => $data['driver'],
-                'status'       => $data['status'],
-                'remarks'        => $data['remarks']
+                'store_id'          => Auth::user()->getStore->id,
+                'plate_number'      => $data['plate_number'],
+                'inspection_date'   => $usableDate,
+                'driver'            => $data['driver'],
+                'status'            => $data['status'],
+                'remarks'           => $data['remarks']
             ]);
             return redirect(route('db.master.truck'));
         }

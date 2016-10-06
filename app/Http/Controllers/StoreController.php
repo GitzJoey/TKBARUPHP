@@ -53,10 +53,14 @@ class StoreController extends Controller
             'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
-        $path = public_path('images') . '/' . $imageName;
+        $imageName = '';
 
-        Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
+        if (!empty($data->image_path)) {
+            $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
+            $path = public_path('images') . '/' . $imageName;
+
+            Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
+        }
 
         Store::create([
             'name'          => $data['name'],
@@ -67,7 +71,7 @@ class StoreController extends Controller
             'status'        => $data['status'],
             'is_default'    => $data['is_default'],
             'image_filename'=> $imageName,
-            'remarks'       => $data['remarks']
+            'remarks'       => empty($data['remarks']) ? '' : $data['remarks']
         ]);
 
         return redirect(route('db.admin.store'));
