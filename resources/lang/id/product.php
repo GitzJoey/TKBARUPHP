@@ -12,7 +12,7 @@ return [
     'create.title' => 'Management Produk',
     'create.page_title' => 'Produk',
     'create.page_title_desc' => '',
-    'create.table.header.title' => 'Tambah Produk',
+    'create.header.title' => 'Tambah Produk',
     'edit.title' => 'Management Produk',
     'edit.page_title' => 'Produk',
     'edit.page_title_desc' => '',
