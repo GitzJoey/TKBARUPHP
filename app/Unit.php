@@ -11,6 +11,8 @@ namespace App;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 
+use App\ProductUnit;
+
 /**
  * App\Unit
  *
@@ -55,7 +57,7 @@ class Unit extends Model
         return $this->attributes['name'] . ' ('. $this->attributes['symbol'] .')';
     }
 
-    public function productunit() {
-        $this->hasMany('\App\ProductUnit', 'unit_id');
+    public function getProductUnit() {
+        return $this->hasMany('\App\ProductUnit', 'unit_id');
     }
 }

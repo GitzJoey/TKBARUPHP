@@ -51,8 +51,11 @@ class ProductUnit extends Model
         'product_id', 'unit_id', 'is_base', 'conversion_value', 'remarks'
     ];
 
-    public function unit() {
-        $this->belongsTo('\App\Unit', 'unit_id');
+    public function getProduct() {
+        $this->belongsTo('\App\Product');
     }
 
+    public function getUnit() {
+        return $this->belongsTo('\App\Unit', 'unit_id');
+    }
 }

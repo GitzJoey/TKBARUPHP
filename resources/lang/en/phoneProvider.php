@@ -20,7 +20,7 @@ return [
     'index.table.header.title' => 'Phone Provider List',
     'index.table.header.name' => 'Full Name',
     'index.table.header.short_name' => 'Short Name',
-    'index.table.header.prefix' => 'Previx',
+    'index.table.header.prefix' => 'Prefix',
     'index.table.header.status' => 'Status',
     'index.table.header.remarks' => 'Remarks',
     'field.name' => 'Full Name',

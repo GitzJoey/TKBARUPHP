@@ -63,7 +63,7 @@ class Store extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function user()
+    public function getUser()
     {
         return $this->hasMany('\App\User', 'store_id');
     }

@@ -53,7 +53,7 @@ class BankAccount extends Model
     	return $this->belongsToMany('App\Supplier', 'supplier_bank_account');
     }
 
-    public function bank()
+    public function getBank()
     {
     	return $this->belongsTo('App\Bank');
     }

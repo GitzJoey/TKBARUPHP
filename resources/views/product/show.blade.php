@@ -61,6 +61,31 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputProductUnit" class="col-sm-2 control-label">@lang('product.field.unit')</label>
+                        <div class="col-sm-10">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>@lang('product.show.table.header.unit')</th>
+                                    <th class="text-center">@lang('product.show.table.header.is_base')</th>
+                                    <th>@lang('product.show.table.header.conversion_value')</th>
+                                    <th>@lang('product.show.table.header.remarks')</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($product->productUnitList as $produnit)
+                                        <tr>
+                                            <td>{{  $produnit->getUnit()->first()->name }}</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('product.field.status')</label>
                         <div class="col-sm-10">
                             <label id="status" class="control-label control-label-normal">

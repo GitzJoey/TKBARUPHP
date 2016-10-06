@@ -54,7 +54,7 @@ class VendorTrucking extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function bankAccount()
+    public function getBankAccount()
     {
         $this->hasMany('\App\BankAccount');
     }

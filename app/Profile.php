@@ -54,17 +54,17 @@ class Profile extends Model
         'first_name', 'last_name', 'address', 'ic_num', 'image_filename',
     ];
 
-    public function user()
+    public function getUser()
     {
         return $this->belongsTo('\App\User');
     }
 
-    public function phone()
+    public function getPhoneNumber()
     {
         return $this->belongsToMany('App\PhoneNumber', 'profile_phone_number', 'profile_id', 'phone_number_id');
     }
 
-    public function supplier()
+    public function getSupplier()
     {
     	return $this->belongsToMany('App\Supplier', 'supplier_profile', 'supplier_id', 'profile_id');
     }

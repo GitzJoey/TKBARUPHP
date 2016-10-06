@@ -58,16 +58,16 @@ class Supplier extends Model
         'supplier_name', 'supplier_address', 'supplier_city', 'phone_number', 'fax_num', 'tax_id', 'status', 'remarks',
     ];
 
-    public function pic()
+    public function getProfile()
     {
         return $this->belongsToMany('App\Profile', 'supplier_profile', 'supplier_id', 'profile_id');
     }
-    public function bank()
+    public function getBank()
     {
     	return $this->belongsToMany('App\BankAccount', 'supplier_bank_account');
     }
 
-    public function products()
+    public function getProducts()
     {
         return $this->belongsToMany('App\Product', 'supplier_prod');
     }

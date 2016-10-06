@@ -21,7 +21,7 @@ class SupplierBank extends Model
     	return $query->where('supplier_id', $id);
     }
 
-    public function bank()
+    public function getBank()
     {
     	return $this->belongsTo('App\Bank');
     }

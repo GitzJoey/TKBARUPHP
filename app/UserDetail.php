@@ -44,7 +44,7 @@ class UserDetail extends Model
         'type', 'allow_login'
     ];
 
-    public function user()
+    public function getUser()
     {
         return $this->belongsTo('\App\User');
     }

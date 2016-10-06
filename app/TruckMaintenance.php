@@ -49,7 +49,7 @@ class TruckMaintenance extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function truck() {
+    public function getTruck() {
         return $this->belongsTo('\App\Truck');
     }
 }

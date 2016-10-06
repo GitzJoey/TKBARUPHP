@@ -49,7 +49,7 @@ class Settings extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function user()
+    public function getUser()
     {
         $this->belongsTo('\App\User');
     }

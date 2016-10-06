@@ -30,6 +30,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+
         return view('product.show')->with('product', $product);
     }
 
@@ -67,8 +68,6 @@ class ProductController extends Controller
             $product->remarks = $data['remarks'];
 
             $product->save();
-
-            //$produnit = array();
 
             for($i=0; $i<count($data['unit_id']); $i++) {
                 $punit = new ProductUnit();
