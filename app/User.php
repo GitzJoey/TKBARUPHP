@@ -76,18 +76,15 @@ class User extends Authenticatable
         return $this->hasOne('\App\UserDetail');
     }
 
-    public function getStore()
-    {
+    public function getStore() {
         return $this->belongsTo('\App\Store', 'store_id');
     }
 
-    public function role()
-    {
+    public function role() {
         return $this->belongsToMany('\App\Role', 'role_user', 'user_id', 'role_id');
     }
 
-    public function getSettings()
-    {
+    public function getSettings() {
         return $this->hasMany('\App\Settings');
     }
 }

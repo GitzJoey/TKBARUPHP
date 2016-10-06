@@ -65,8 +65,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data) {
         $usr = new User;
         $usr->name = $data['name'];
         $usr->email = $data['email'];
@@ -78,9 +77,9 @@ class RegisterController extends Controller
 
         $usr->role()->attach(Role::where('name', '=', 'r_user')->get());
 
-        $userdetail = new UserDetail;
+        $userdetail = new UserDetail();
         $userdetail->type = Lookup::whereCode('USERTYPE.U')->first()->code;
-        $usr->userDetail()->save($userdetail);
+        $usr->getUserDetail()->save($userdetail);
 
         return $usr;
     }
