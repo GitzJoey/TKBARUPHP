@@ -24,7 +24,7 @@ class RolesTableSeeder extends Seeder
         $role_admin->save();
 
         $permission = Permission::get();
-        $role_admin->permissionList()->attach($permission);
+        $role_admin->getPermission()->attach($permission);
 
         $role_user = new Role;
         $role_user->name = 'r_user';
@@ -34,7 +34,7 @@ class RolesTableSeeder extends Seeder
         $role_user->save();
 
         $permission = Permission::get();
-        $role_user->permissionList()->attach($permission);
+        $role_user->getPermission()->attach($permission);
 
     }
 }
