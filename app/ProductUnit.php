@@ -52,10 +52,10 @@ class ProductUnit extends Model
     ];
 
     public function getProduct() {
-        $this->belongsTo('\App\Product');
+        $this->belongsTo('App\Product');
     }
 
     public function getUnit() {
-        return $this->belongsTo('\App\Unit', 'unit_id');
+        return $this->belongsTo('App\Unit', 'unit_id');
     }
 }

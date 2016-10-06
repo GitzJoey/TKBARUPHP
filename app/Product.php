@@ -65,16 +65,16 @@ class Product extends Model
 
     public function getStore()
     {
-        return $this->belongsTo('\App\Store', 'store_id');
+        return $this->belongsTo('App\Store', 'store_id');
     }
 
     public function getType()
     {
-        return $this->belongsTo('\App\ProductType', 'product_type_id');
+        return $this->belongsTo('App\ProductType', 'product_type_id');
     }
 
     public function getProductUnit()
     {
-        return $this->hasMany('\App\ProductUnit');
+        return $this->hasMany('App\ProductUnit');
     }
 }

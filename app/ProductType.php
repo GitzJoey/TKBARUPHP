@@ -56,6 +56,6 @@ class ProductType extends Model
 
     public function getProduct()
     {
-        return $this->hasMany('\App\Product', 'product_type_id');
+        return $this->hasMany('App\Product', 'product_type_id');
     }
 }

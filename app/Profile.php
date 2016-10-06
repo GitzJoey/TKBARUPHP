@@ -56,7 +56,7 @@ class Profile extends Model
 
     public function getUser()
     {
-        return $this->belongsTo('\App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function getPhoneNumber()

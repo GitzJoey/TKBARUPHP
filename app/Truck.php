@@ -52,6 +52,6 @@ class Truck extends Model
 
     public function getTruckMaintenance()
     {
-        return $this->hasMany('\App\TruckMaintenance');
+        return $this->hasMany('App\TruckMaintenance');
     }
 }

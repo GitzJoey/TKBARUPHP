@@ -33,6 +33,6 @@ class Permission extends EntrustPermission
 {
     public function role()
     {
-        $this->belongsToMany('\App\Role', 'permission_role', 'permission_id', 'role_id');
+        $this->belongsToMany('App\Role', 'permission_role', 'permission_id', 'role_id');
     }
 }

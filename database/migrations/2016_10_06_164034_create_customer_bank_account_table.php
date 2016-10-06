@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSupplierProfileTable extends Migration
+class CreateCustomerBankAccountTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSupplierProfileTable extends Migration
      */
     public function up()
     {
-        Schema::create('supplier_profile', function (Blueprint $table) {
+        Schema::create('customer_bank_account', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('supplier_id');
-            $table->unsignedBigInteger('profile_id');
+            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('bank_account_id');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateSupplierProfileTable extends Migration
      */
     public function down()
     {
-        Schema::drop('supplier_profile');
+        Schema::drop('customer_bank_account');
     }
 }

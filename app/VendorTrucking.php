@@ -56,6 +56,6 @@ class VendorTrucking extends Model
 
     public function getBankAccount()
     {
-        $this->hasMany('\App\BankAccount');
+        $this->hasMany('App\BankAccount');
     }
 }

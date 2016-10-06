@@ -65,6 +65,6 @@ class Store extends Model
 
     public function getUser()
     {
-        return $this->hasMany('\App\User', 'store_id');
+        return $this->hasMany('App\User', 'store_id');
     }
 }

@@ -58,6 +58,6 @@ class Unit extends Model
     }
 
     public function getProductUnit() {
-        return $this->hasMany('\App\ProductUnit', 'unit_id');
+        return $this->hasMany('App\ProductUnit', 'unit_id');
     }
 }

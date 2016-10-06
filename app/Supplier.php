@@ -55,12 +55,12 @@ class Supplier extends Model
     protected $table = 'supplier';
 
     protected $fillable = [
-        'supplier_name', 'supplier_address', 'supplier_city', 'phone_number', 'fax_num', 'tax_id', 'status', 'remarks',
+        'name', 'address', 'city', 'phone_number', 'fax_num', 'tax_id', 'payment_due_day', 'status', 'remarks',
     ];
 
     public function getProfile()
     {
-        return $this->belongsToMany('App\Profile', 'supplier_profile', 'supplier_id', 'profile_id');
+        return $this->belongsToMany('App\Profile', 'supplier_pic', 'supplier_id', 'profile_id');
     }
     public function getBank()
     {

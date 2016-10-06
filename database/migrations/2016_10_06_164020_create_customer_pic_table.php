@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfilePhoneNumberTable extends Migration
+class CreateCustomerPicTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateProfilePhoneNumberTable extends Migration
      */
     public function up()
     {
-        Schema::create('profile_phone_number', function (Blueprint $table) {
+        Schema::create('customer_pic', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('profile_id');
-            $table->unsignedBigInteger('phone_number_id');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateProfilePhoneNumberTable extends Migration
      */
     public function down()
     {
-        Schema::drop('profile_phone_number');
+        Schema::drop('customer_pic');
     }
 }

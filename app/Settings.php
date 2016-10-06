@@ -51,6 +51,6 @@ class Settings extends Model
 
     public function getUser()
     {
-        $this->belongsTo('\App\User');
+        $this->belongsTo('App\User');
     }
 }

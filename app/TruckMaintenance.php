@@ -50,6 +50,6 @@ class TruckMaintenance extends Model
     }
 
     public function getTruck() {
-        return $this->belongsTo('\App\Truck');
+        return $this->belongsTo('App\Truck');
     }
 }

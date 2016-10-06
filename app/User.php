@@ -69,22 +69,22 @@ class User extends Authenticatable
     }
 
     public function getProfile() {
-        return $this->hasOne('\App\Profile');
+        return $this->hasOne('App\Profile');
     }
 
     public function getUserDetail() {
-        return $this->hasOne('\App\UserDetail');
+        return $this->hasOne('App\UserDetail');
     }
 
     public function getStore() {
-        return $this->belongsTo('\App\Store', 'store_id');
+        return $this->belongsTo('App\Store', 'store_id');
     }
 
     public function role() {
-        return $this->belongsToMany('\App\Role', 'role_user', 'user_id', 'role_id');
+        return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
     }
 
     public function getSettings() {
-        return $this->hasMany('\App\Settings');
+        return $this->hasMany('App\Settings');
     }
 }
