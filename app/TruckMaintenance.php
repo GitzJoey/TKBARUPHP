@@ -26,6 +26,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $store_id
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereDeletedAt($value)
  */
 class TruckMaintenance extends Model
 {

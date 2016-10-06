@@ -42,6 +42,14 @@ use Illuminate\Database\Eloquent\Builder;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\ProductUnit[] $productUnitList
  * @method static \Illuminate\Database\Query\Builder|\App\Product whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Product whereProductTypeId($value)
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Product whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Product whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Product whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Product whereDeletedAt($value)
  */
 class Product extends Model
 {

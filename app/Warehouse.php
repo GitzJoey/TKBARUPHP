@@ -31,6 +31,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $store_id
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereDeletedAt($value)
  */
 class Warehouse extends Model
 {

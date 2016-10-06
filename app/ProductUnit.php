@@ -34,6 +34,14 @@ use App\Unit;
  * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereDeletedAt($value)
  */
 class ProductUnit extends Model
 {

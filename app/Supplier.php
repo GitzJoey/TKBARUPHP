@@ -14,6 +14,41 @@ use \Illuminate\Database\Eloquent\Model;
  * App\Supplier
  *
  * @mixin \Eloquent
+ * @property integer $id
+ * @property string $name
+ * @property string $address
+ * @property string $city
+ * @property string $phone_number
+ * @property string $fax_num
+ * @property string $tax_id
+ * @property string $remarks
+ * @property string $status
+ * @property integer $payment_due_day
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Profile[] $pic
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\BankAccount[] $bank
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Product[] $products
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereCity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereFaxNum($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereTaxId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier wherePaymentDueDay($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Supplier whereDeletedAt($value)
  */
 class Supplier extends Model
 {

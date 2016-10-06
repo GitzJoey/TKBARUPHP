@@ -14,9 +14,9 @@ class CreateSupplierBankAccountTable extends Migration
     public function up()
     {
         Schema::create('supplier_bank_account', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('supplier_id');
-            $table->integer('bank_account_id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('supplier_id');
+            $table->unsignedBigInteger('bank_account_id');
         });
     }
 

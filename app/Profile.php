@@ -35,6 +35,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereIcNum($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereImageFilename($value)
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\PhoneNumber[] $phone
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Supplier[] $supplier
+ * @method static \Illuminate\Database\Query\Builder|\App\Profile whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Profile whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Profile whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Profile whereDeletedAt($value)
  */
 class Profile extends Model
 {

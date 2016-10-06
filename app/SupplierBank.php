@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\SupplierBank
+ *
+ * @property-read \App\Bank $bank
+ * @method static \Illuminate\Database\Query\Builder|\App\SupplierBank supplier($id)
+ * @mixin \Eloquent
+ */
 class SupplierBank extends Model
 {
     protected $table = 'supplier_bank';

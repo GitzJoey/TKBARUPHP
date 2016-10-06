@@ -30,6 +30,14 @@ use \Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string $prefix
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider wherePrefix($value)
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereDeletedAt($value)
  */
 class PhoneProvider extends Model
 {

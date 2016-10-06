@@ -29,6 +29,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Unit whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Unit whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @property-read mixed $unit_name
+ * @method static \Illuminate\Database\Query\Builder|\App\Unit whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Unit whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Unit whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Unit whereDeletedAt($value)
  */
 class Unit extends Model
 {

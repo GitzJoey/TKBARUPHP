@@ -27,6 +27,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereAllowLogin($value)
  * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereUpdatedAt($value)
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereDeletedAt($value)
  */
 class UserDetail extends Model
 {

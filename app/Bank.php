@@ -32,6 +32,14 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Bank whereRemarks($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Bank whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Bank whereUpdatedAt($value)
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Bank whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Bank whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Bank whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Bank whereDeletedAt($value)
  */
 class Bank extends Model
 {

@@ -42,6 +42,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $image_filename
  * @method static \Illuminate\Database\Query\Builder|\App\Store whereImageFilename($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $user
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Store whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Store whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Store whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Store whereDeletedAt($value)
  */
 class Store extends Model
 {
