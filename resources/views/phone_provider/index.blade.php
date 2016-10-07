@@ -31,7 +31,7 @@
                     <th class="text-center">@lang('phone_provider.index.table.header.prefix')</th>
                     <th class="text-center">@lang('phone_provider.index.table.header.status')</th>
                     <th class="text-center">@lang('phone_provider.index.table.header.remarks')</th>
-                    <th class="text-center">&nbsp;</th>
+                    <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 </thead>
                 <tbody>

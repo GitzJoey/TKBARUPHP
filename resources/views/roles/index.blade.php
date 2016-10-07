@@ -29,7 +29,7 @@
                     <th class="text-center">@lang('role.index.table.header.name')</th>
                     <th class="text-center">@lang('role.index.table.header.description')</th>
                     <th class="text-center">@lang('role.index.table.header.permission')</th>
-                    <th class="text-center">Action</th>
+                    <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                         <td>{{ $role->description }}</td>
                         <td>
                             <select multiple class="form-control" readonly>
-                                @foreach($role->permissionList as $key => $p)
+                                @foreach($role->getPermission as $key => $p)
                                     <option>{{ $p->display_name }}</option>
                                 @endforeach
                             </select>

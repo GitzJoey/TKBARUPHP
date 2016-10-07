@@ -14,7 +14,7 @@
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -65,7 +65,7 @@
                 <div class="form-group">
                     <label for="inputDescription" class="col-sm-2 control-label">@lang('price_level.field.description')</label>
                     <div class="col-sm-10">
-                        <input id="inputDescription" name="description" type="text" class="form-control" value="{{ old('description') }}" placeholder="Fax">
+                        <input id="inputDescription" name="description" type="text" class="form-control" value="{{ old('description') }}" placeholder="Description">
                     </div>
                 </div>
                 <div class="form-group">

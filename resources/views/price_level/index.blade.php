@@ -32,7 +32,7 @@
                         <th class="text-center">@lang('price_level.index.table.header.description')</th>
                         <th class="text-center">@lang('price_level.index.table.header.value')</th>
                         <th class="text-center">@lang('price_level.index.table.header.status')</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
                 <tbody>

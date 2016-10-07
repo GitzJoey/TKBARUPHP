@@ -30,7 +30,7 @@
                         <th class="text-center">@lang('unit.index.table.header.symbol')</th>
                         <th class="text-center">@lang('unit.index.table.header.status')</th>
                         <th class="text-center">@lang('unit.index.table.header.remarks')</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
                 <tbody>

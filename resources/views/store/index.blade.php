@@ -33,7 +33,7 @@
                         <th class="text-center">@lang('store.index.table.header.default')</th>
                         <th class="text-center">@lang('store.index.table.header.status')</th>
                         <th class="text-center">@lang('store.index.table.header.remarks')</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
                 <tbody>

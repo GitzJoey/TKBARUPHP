@@ -31,17 +31,17 @@
                     <th class="text-center">@lang('settings.index.table.header.skey')</th>
                     <th class="text-center">@lang('settings.index.table.header.value')</th>
                     <th class="text-center">@lang('settings.index.table.header.description')</th>
-                    <th class="text-center">Action</th>
+                    <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $key => $item)
                         <tr>
                             <td>
-                                @if(is_null($item->user()))
+                                @if(is_null($item->getUser()))
                                     Default
                                 @else
-                                    $item->user()->name
+                                    $item->getUser()->name
                                 @endif
                             </td>
                             <td>{{ $item->category }}</td>

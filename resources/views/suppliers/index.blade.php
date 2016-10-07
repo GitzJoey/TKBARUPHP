@@ -35,7 +35,7 @@
                         <th class="text-center">@lang('supplier.index.table.header.tax_id')</th>
                         <th class="text-center">@lang('supplier.index.table.header.status')</th>
                         <th class="text-center">@lang('supplier.index.table.header.remarks')</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
                 <tbody>

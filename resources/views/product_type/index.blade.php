@@ -30,7 +30,7 @@
                         <th class="text-center">@lang('product_type.index.table.header.short_code')</th>
                         <th class="text-center">@lang('product_type.index.table.header.description')</th>
                         <th class="text-center">@lang('product_type.index.table.header.status')</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
                 <tbody>

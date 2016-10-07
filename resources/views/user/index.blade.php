@@ -32,7 +32,7 @@
                         <th class="text-center">@lang('user.index.table.header.store')</th>
                         <th class="text-center">@lang('user.index.table.header.type')</th>
                         <th class="text-center">@lang('user.index.table.header.allow_login')</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,10 +47,10 @@
                                     @endforeach
                                 @endif
                             </td>
-                            <td>{{ $item->store->name }}</td>
-                            <td>@lang('lookup.' . $item->userDetail->type)</td>
+                            <td>{{ $item->getStore->name }}</td>
+                            <td>@lang('lookup.' . $item->getUserDetail->type)</td>
                             <td class="text-center">
-                                @if($item->userDetail->allow_login)
+                                @if($item->getUserDetail->allow_login)
                                     <span class="fa fa-check-square-o fa-fw"></span>
                                 @else
                                     <span class="fa fa-square-o fa-fw"></span>

@@ -6,7 +6,6 @@
  * Time: 8:09 AM
  */
 return [
-    'PLEASE_SELECT' => 'Please Select',
     'STATUS.Active' => 'Active',
     'STATUS.Inactive' => 'Inactive',
     'YESNOSELECT.Yes' => 'Yes',

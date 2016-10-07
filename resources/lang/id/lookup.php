@@ -6,7 +6,6 @@
  * Time: 8:09 AM
  */
 return [
-    'PLEASE_SELECT' => 'Silahkan Pilih',
     'STATUS.Active' => 'Aktif',
     'STATUS.Inactive' => 'Inaktif',
     'YESNOSELECT.Yes' => 'Ya',
