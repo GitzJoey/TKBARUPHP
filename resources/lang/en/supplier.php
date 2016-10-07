@@ -1,4 +1,5 @@
 <?php 
+
 return [
     'index.title' => 'Supplier Management',
     'index.page_title' => 'Supplier',
@@ -27,7 +28,6 @@ return [
     'edit.field.phone' => 'Phone',
     'edit.field.tax' => 'Tax id',
     'edit.field.remarks' => 'Remarks',
-
     'edit.field.pic.first-name' => 'First Name',
     'edit.field.pic.last-name' => 'Last Name',
     'edit.field.pic.address' => 'Address',
@@ -44,16 +44,26 @@ return [
     'edit.pic.page_title' => 'Pic',
     'edit.pic.header.title' => 'Edit Pic',
     'edit.phone.title' => 'Edit Phone',
-    
     'edit.field.product.type' => 'Type',
     'edit.field.product.code' => 'Code',
     'edit.field.product.name' => 'Name',
     'edit.field.product.description' => 'Decription',
-
     'edit.field.setting.due-day' => 'Payment Due Day',
     'edit.field.heading.bank' => 'Edit Bank Account',
     'create.phone.page_title' => 'Phone',
     'create.field.phone.provider' => 'Provider',
     'create.field.phone.number' => 'Number',
     'create.field.phone.remarks' => 'Remarks',
+    'status' => [
+        'true' => '',
+        'false' => '',
+    ],
+    'create' => [
+        'phone' => [
+            'title' => '',
+        ],
+        'header' => [
+            'title' => '',
+        ],
+    ],
 ];

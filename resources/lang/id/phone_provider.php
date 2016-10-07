@@ -2,61 +2,51 @@
 
 return [
     'create' => [
-        'title' => 'Bank',
-        'page_title' => 'Bank',
+        'title' => 'Provider Telepon',
+        'page_title' => 'Provider Telepon',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Tambah Bank',
+            'title' => 'Tambah Provider Telepon',
         ],
     ],
     'field' => [
         'name' => 'Nama',
         'short_name' => 'Singkatan',
-        'branch' => 'Cabang',
-        'branch_code' => 'Kode Cabang',
+        'prefix' => 'Prefix',
         'status' => 'Status',
         'remarks' => 'Keterangan',
     ],
     'edit' => [
-        'title' => 'Bank',
-        'page_title' => 'Bank',
+        'title' => 'Provider Telepon',
+        'page_title' => 'Provider Telepon',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Ubah Bank',
+            'title' => 'Ubah Provider Telepon',
         ],
     ],
     'index' => [
-        'title' => 'Bank',
-        'page_title' => 'Bank',
+        'title' => 'Provider Telepon',
+        'page_title' => 'Provider Telepon',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Daftar Bank',
+            'title' => 'Daftar Provider Telepon',
         ],
         'table' => [
             'header' => [
                 'name' => 'Nama',
                 'short_name' => 'Singkatan',
-                'branch' => 'Cabang',
-                'branch_code' => 'Kode Cabang',
+                'prefix' => 'Prefix',
                 'status' => 'Status',
                 'remarks' => 'Keterangan',
             ],
         ],
     ],
     'show' => [
-        'title' => 'Bank',
-        'page_title' => 'Bank',
+        'title' => 'Provider Telepon',
+        'page_title' => 'Provider Telepon',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Tampilan Bank',
-        ],
-    ],
-    'upload' => [
-        'title' => 'Bank',
-        'page_title' => 'Bank',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => 'Upload Bank',
+            'title' => 'Tampilan Provider Telepon',
         ],
     ],
 ];

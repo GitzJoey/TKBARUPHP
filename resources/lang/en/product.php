@@ -1,66 +1,78 @@
 <?php 
 
 return [
-    'index.title' => 'Product Management',
-    'index.page_title' => 'Product',
-    'index.page_title_desc' => '',
-    'index.header.title' => 'Product Lists',
-    'show.title' => 'Product Management',
-    'show.page_title' => 'Product',
-    'show.page_title_desc' => '',
-    'show.header.title' => 'Product',
-    'create.title' => 'Product Management',
-    'create.page_title' => 'Product',
-    'create.page_title_desc' => '',
-    'create.header.title' => 'Create Product',
-    'edit.title' => 'Product Management',
-    'edit.page_title' => 'Product',
-    'edit.page_title_desc' => '',
-    'edit.header.title' => 'Edit Product',
-    'index.table.header.type' => 'Type',
-    'index.table.header.name' => 'Name',
-    'index.table.header.short_code' => 'Short Code',
-    'index.table.header.description' => 'Description',
-    'index.table.header.status' => 'Status',
-    'index.table.header.remarks' => 'Remarks',
-    'field.type' => 'Type',
-    'field.name' => 'Name',
-    'field.short_code' => 'Short Code',
-    'field.description' => 'Description',
-    'field.status' => 'Status',
-    'field.remarks' => 'Remarks',
-    'field.unit' => 'Unit',
-    'create.table.header.unit' => 'Unit',
-    'create.table.header.is_base' => 'Base Unit',
-    'create.table.header.conversion_value' => 'Conversion Value',
-    'show' => [
-        'index' => [
-            'title' => '',
+    'create' => [
+        'title' => 'Product',
+        'page_title' => 'Product',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Create Product',
         ],
         'table' => [
             'header' => [
-                'title' => '',
+                'unit' => 'Unit',
+                'is_base' => 'Base Unit',
+                'conversion_value' => 'Conversion Value',
+                'remarks' => 'Remarks',
+            ],
+        ],
+    ],
+    'field' => [
+        'type' => 'Type',
+        'name' => 'Name',
+        'short_code' => 'Short Code',
+        'description' => 'Description',
+        'unit' => 'Unit',
+        'status' => 'Status',
+        'remarks' => 'Remarks',
+    ],
+    'edit' => [
+        'title' => 'Product',
+        'page_title' => 'Product',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Edit Product',
+        ],
+        'table' => [
+            'header' => [
+                'unit' => 'Unit',
+                'is_base' => 'Base Unit',
+                'conversion_value' => 'Conversion Value',
+                'remarks' => 'Remarks',
             ],
         ],
     ],
     'index' => [
+        'title' => 'Product',
+        'page_title' => 'Product',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Product Lists',
+        ],
         'table' => [
             'header' => [
-                'title' => '',
+                'type' => 'Type',
+                'name' => 'Name',
+                'short_code' => 'Short Code',
+                'description' => 'Description',
+                'status' => 'Status',
+                'remarks' => 'Remarks',
             ],
         ],
     ],
-    'create' => [
-        'table' => [
-            'header' => [
-                'title' => '',
-            ],
+    'show' => [
+        'title' => 'Product',
+        'page_title' => 'Product',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Show Product',
         ],
-    ],
-    'edit' => [
         'table' => [
             'header' => [
-                'title' => '',
+                'unit' => 'Unit',
+                'is_base' => 'Base Unit',
+                'conversion_value' => 'Conversion Value',
+                'remarks' => 'Remarks',
             ],
         ],
     ],

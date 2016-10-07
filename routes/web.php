@@ -73,13 +73,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/admin/unit/edit/{id}', 'UnitController@update');
     Route::delete('/dashboard/admin/unit/edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
 
-    Route::get('/dashboard/admin/phoneProvider', 'PhoneProviderController@index')->name('db.admin.phoneProvider');
-    Route::get('/dashboard/admin/phoneProvider/show/{id}', 'PhoneProviderController@show')->name('db.admin.phoneProvider.show');
-    Route::get('/dashboard/admin/phoneProvider/create', 'PhoneProviderController@create')->name('db.admin.phoneProvider.create');
-    Route::post('/dashboard/admin/phoneProvider/create', 'PhoneProviderController@store');
-    Route::get('/dashboard/admin/phoneProvider/edit/{id}', 'PhoneProviderController@edit')->name('db.admin.phoneProvider.edit');
-    Route::patch('/dashboard/admin/phoneProvider/edit/{id}', 'PhoneProviderController@update');
-    Route::delete('/dashboard/admin/phoneProvider/edit/{id}', 'PhoneProviderController@delete')->name('db.admin.phoneProvider.delete');
+    Route::get('/dashboard/admin/phone/provider', 'PhoneProviderController@index')->name('db.admin.phone_provider');
+    Route::get('/dashboard/admin/phone/provider/show/{id}', 'PhoneProviderController@show')->name('db.admin.phone_provider.show');
+    Route::get('/dashboard/admin/phone/provider/create', 'PhoneProviderController@create')->name('db.admin.phone_provider.create');
+    Route::post('/dashboard/admin/phone/provider/create', 'PhoneProviderController@store');
+    Route::get('/dashboard/admin/phone/provider/edit/{id}', 'PhoneProviderController@edit')->name('db.admin.phone_provider.edit');
+    Route::patch('/dashboard/admin/phone/provider/edit/{id}', 'PhoneProviderController@update');
+    Route::delete('/dashboard/admin/phone/provider/edit/{id}', 'PhoneProviderController@delete')->name('db.admin.phone_provider.delete');
 
     Route::get('/dashboard/admin/settings', 'SettingsController@index')->name('db.admin.settings');
     Route::get('/dashboard/admin/settings/edit/{id}', 'SettingsController@edit')->name('db.admin.settings.edit');

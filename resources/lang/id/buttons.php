@@ -1,16 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Sugito
- * Date: 9/15/2016
- * Time: 8:26 AM
- */
+<?php 
 
 return [
     'submit_button' => 'Simpan',
     'cancel_button' => 'Batal',
     'create_new_button' => 'Tambah Baru',
-    'remove_button' => 'Buang',
+    'remove_button' => 'Hapus',
     'search_button' => 'Cari',
     'login_button' => 'Masuk',
     'logout_button' => 'Keluar',
@@ -23,10 +17,15 @@ return [
     'make_copy_button' => 'Buat Duplikat',
     'send_button' => 'Kirim',
     'reject_button' => 'Tolak',
-    'create.save' => 'Simpan',
-    'create.cancel' => 'Kembali',
-    'edit.save' => 'Simpan',
-    'edit.cancel' => 'Kembali',
-    'show.cancel' => 'Kembali',
-
+    'create' => [
+        'cancel' => '',
+        'save' => '',
+    ],
+    'edit' => [
+        'save' => '',
+        'cancel' => '',
+    ],
+    'show' => [
+        'cancel' => '',
+    ],
 ];

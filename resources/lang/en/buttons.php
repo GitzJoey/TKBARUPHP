@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Sugito
- * Date: 9/15/2016
- * Time: 8:26 AM
- */
+<?php 
 
 return [
     'submit_button' => 'Submit',
@@ -23,9 +17,15 @@ return [
     'make_copy_button' => 'Make Copy',
     'send_button' => 'Send',
     'reject_button' => 'Reject',
-    'create.save' => 'Save',
-    'create.cancel' => 'Cancel',
-    'edit.save' => 'Save',
-    'edit.cancel' => 'Cancel',
-    'show.cancel' => 'Back',
+    'create' => [
+        'cancel' => '',
+        'save' => '',
+    ],
+    'edit' => [
+        'save' => '',
+        'cancel' => '',
+    ],
+    'show' => [
+        'cancel' => '',
+    ],
 ];

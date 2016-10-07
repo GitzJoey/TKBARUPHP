@@ -23,20 +23,20 @@ class PhoneProviderController extends Controller
     public function index()
     {
         $phoneProvider = PhoneProvider::paginate(10);
-        return view('phoneProvider.index')->with('phoneProviderList', $phoneProvider);
+        return view('phone_provider.index')->with('phoneProviderList', $phoneProvider);
     }
 
     public function show($id)
     {
         $phoneProvider = PhoneProvider::find($id);
-        return view('phoneProvider.show')->with('phoneProvider', $phoneProvider);
+        return view('phone_provider.show')->with('phoneProvider', $phoneProvider);
     }
 
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('phoneProvider.create', compact('statusDDL'));
+        return view('phone_provider.create', compact('statusDDL'));
     }
 
     public function store(Request $data)
@@ -51,7 +51,7 @@ class PhoneProviderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('db.admin.phoneProvider.create'))->withInput()->withErrors($validator);
+            return redirect(route('db.admin.phone_provider.create'))->withInput()->withErrors($validator);
         } else {
 
             PhoneProvider::create([
@@ -65,18 +65,13 @@ class PhoneProviderController extends Controller
         }
     }
 
-    private function changeIsDefault()
-    {
-
-    }
-
     public function edit($id)
     {
         $phoneProvider = PhoneProvider::find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('phoneProvider.edit', compact('phoneProvider', 'statusDDL'));
+        return view('phone_provider.edit', compact('phoneProvider', 'statusDDL'));
     }
 
     public function update($id, Request $req)
@@ -95,13 +90,13 @@ class PhoneProviderController extends Controller
         } else {
 
             PhoneProvider::find($id)->update($req->all());
-            return redirect(route('db.admin.phoneProvider'));
+            return redirect(route('db.admin.phone_provider'));
         }
     }
 
     public function delete($id)
     {
         PhoneProvider::find($id)->delete();
-        return redirect(route('db.admin.phoneProvider'));
+        return redirect(route('db.admin.phone_provider'));
     }
 }

@@ -26,7 +26,7 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('bank.create.page_title')</h3>
+            <h3 class="box-title">@lang('bank.create.header.title')</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.master.bank.create') }}" method="post">
             {{ csrf_field() }}
