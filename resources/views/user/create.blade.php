@@ -8,7 +8,7 @@
     <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.create.page_title')
 @endsection
 @section('page_title_desc')
-
+    @lang('user.create.page_title_desc')
 @endsection
 
 @section('content')
