@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('supplier.create.title')</h3>
         </div>
-        <div role="tabpanel">
+        <div role="tabpanel" class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab-1" data-toggle="tab">@lang('supplier.edit.page.tab-data')</a></li>
                 <li><a href="#tab-2" data-toggle="tab">@lang('supplier.edit.page.tab-pic')</a></li>

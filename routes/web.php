@@ -86,12 +86,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/admin/settings/edit/{id}', 'SettingsController@update');
 
     Route::get('/dashboard/master/customer', 'CustomerController@index')->name('db.master.customer');
-    Route::get('/dashboard/master/customer/show/{id}', 'CustomerController@show');
-    Route::get('/dashboard/master/customer/create', 'CustomerController@create');
+    Route::get('/dashboard/master/customer/show/{id}', 'CustomerController@show')->name('db.master.customer.show');
+    Route::get('/dashboard/master/customer/create', 'CustomerController@create')->name('db.master.customer.create');
     Route::post('/dashboard/master/customer/create', 'CustomerController@store');
-    Route::get('/dashboard/master/customer/edit/{id}', 'CustomerController@edit');
+    Route::get('/dashboard/master/customer/edit/{id}', 'CustomerController@edit')->name('db.master.customer.edit');
     Route::patch('/dashboard/master/customer/edit/{id}', 'CustomerController@update');
-    Route::delete('/dashboard/master/customer/edit/{id}', 'CustomerController@delete');
+    Route::delete('/dashboard/master/customer/edit/{id}', 'CustomerController@delete')->name('db.master.customer.delete');
 
     Route::get('/dashboard/master/supplier', 'SupplierController@index')->name('db.master.supplier');
     Route::get('/dashboard/master/supplier/show/{id}', 'SupplierController@show')->name('db.master.supplier.show');

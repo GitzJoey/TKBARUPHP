@@ -3,6 +3,7 @@
 
 namespace App;
 
+use Vinkla\Hashids\Facades\Hashids;
 use \Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,18 +14,23 @@ use \Illuminate\Database\Eloquent\Model;
  */
 class Customer extends Model
 {
-    protected $table = 'customers';
+    protected $table = 'customer';
+
 	protected $fillable = [
         'name', 'address', 'city', 'phone', 'remarks', 'tax_id', 'payment_due_day'
     ];
 
-    public function profile()
-    {
-        return $this->hasMany('\App\Profile', 'phone_number', 'phone');
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
     }
 
-    public function bank()
+    public function getProfiles()
     {
-        // return $this->hasMany('\App\Bank');
+        return $this->belongsToMany('App\Profile', 'customer_pic', 'supplier_id', 'profile_id');
+    }
+
+    public function getBankAccount()
+    {
+        return $this->belongsToMany('App\BankAccount', 'customer_bank_account', 'supplier_id', 'bank_account_id');
     }
 }

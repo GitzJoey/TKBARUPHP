@@ -1,11 +1,10 @@
 <?php
-//PetengDedet
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use Validator;
+use App\Http\Requests;
+use Illuminate\Http\Request;
 
 use App\Lookup;
 use App\Customer;
@@ -31,13 +30,11 @@ class CustomerController extends Controller
 
     public function create()
     {
-
         return view('customer.create');
     }
 
     public function store(Request $data)
     {
-
         $validator = Validator::make($data->all(), [
             'name'              => 'required|string|max:255',
             'address'           => 'required|string',
@@ -45,7 +42,6 @@ class CustomerController extends Controller
             'phone'             => 'required|regex:/[0-9]{9}/',
             'tax_id'            => 'required|string|max:255',
             'remarks'           => 'required|string|max:255'
-
         ]);
 
         if ($validator->fails()) {
