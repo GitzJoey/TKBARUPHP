@@ -84,18 +84,49 @@ class ProductController extends Controller
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
-        $selected = $product->type->id;
+        $unitDDL = Unit::whereStatus('STATUS.active')->get()->pluck('unit_name', 'id');
 
-        return view('product.edit', compact('product', 'statusDDL', 'prodtypeDdL', 'selected'));
+        $selected = $product->getType->id;
+
+        return view('product.edit', compact('product', 'statusDDL', 'prodtypeDdL', 'selected', 'unitDDL'));
     }
 
-    public function update($id, Request $req) {
-        Product::find($id)->update($req->all());
+    public function update($id, Request $data) {
+        $product = Product::find($id);
+
+        $product->getProductUnit()->delete();
+
+        $pu = array();
+        for($i=0; $i<count($data['unit_id']); $i++) {
+            $punit = new ProductUnit();
+            $punit->unit_id = $data['unit_id'][$i];
+            $punit->is_base = (bool)$data['is_base'][$i];
+            $punit->conversion_value = $data['conversion_value'][$i];
+            $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
+
+            array_push($pu, $punit);
+        }
+
+        $product->getProductUnit()->saveMany($pu);
+
+        $product->update([
+            'product_type_id' => $data['type'],
+            'name' => $data['name'],
+            'short_code' => $data['short_code'],
+            'description' => $data['description'],
+            'status' => $data['status'],
+            'remarks' => $data['remarks']
+        ]);
+
         return redirect(route('db.master.product'));
     }
 
     public function delete($id) {
-        Product::find($id)->delete();
+        $product = Product::find($id);
+
+        $product->getProductUnit()->delete();
+        $product->delete();
+
         return redirect(route('db.master.product'));
     }
 }
