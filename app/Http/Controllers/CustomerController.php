@@ -6,6 +6,7 @@ use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
+use App\Bank;
 use App\Lookup;
 use App\Customer;
 
@@ -30,7 +31,10 @@ class CustomerController extends Controller
 
     public function create()
     {
-        return view('customer.create');
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $bankDDL = Bank::whereStatus('STATUS.active')->get()->pluck('bank_full_name', 'id');
+
+        return view('customer.create', compact('statusDDL', 'bankDDL'));
     }
 
     public function store(Request $data)

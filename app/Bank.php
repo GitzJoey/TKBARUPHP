@@ -8,8 +8,9 @@
 
 namespace App;
 
-use \Illuminate\Database\Eloquent\Model;
 use Vinkla\Hashids\Facades\Hashids;
+use \Illuminate\Database\Eloquent\Model;
+
 /**
  * App\Bank
  *
@@ -51,5 +52,9 @@ class Bank extends Model
 
     public function hId() {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function getBankFullNameAttribute() {
+        return $this->attributes['name'] . ' ' . '(' .$this->attributes['short_name']. ')';
     }
 }

@@ -103,6 +103,41 @@
                                             </tr>
                                         </tfoot>
                                     </table>
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label for="inputBank" class="col-sm-2 control-label">@lang('customer.field.bank')</label>
+                                                <div class="col-sm-10">
+                                                    {{ Form::select('bank', $bankDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputBankAccount" class="col-sm-2 control-label">@lang('customer.field.bank_account')</label>
+                                                <div class="col-sm-10">
+                                                    <input id="inputBankAccount" name="bank_account" type="text" class="form-control" placeholder="@lang('customer.field.bank_account')">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputStatus" class="col-sm-2 control-label">@lang('customer.field.status')</label>
+                                                <div class="col-sm-10">
+                                                    {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputRemarks" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
+                                                <div class="col-sm-10">
+                                                    <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('customer.field.remarks')">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputBankButtons" class="col-sm-2 control-label">&nbsp;</label>
+                                                <div class="col-sm-10">
+                                                    <button class="btn btn-xs btn-default" type="button">@lang('buttons.cancel_button')</button>
+                                                    <button class="btn btn-xs btn-default" type="button">@lang('buttons.create_new_button')</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane" id="tab_settings">
                                     <div class="form-group">
