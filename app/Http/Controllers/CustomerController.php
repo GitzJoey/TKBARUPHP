@@ -32,7 +32,7 @@ class CustomerController extends Controller
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $bankDDL = Bank::whereStatus('STATUS.active')->get()->pluck('bank_full_name', 'id');
+        $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
 
         return view('customer.create', compact('statusDDL', 'bankDDL'));
     }

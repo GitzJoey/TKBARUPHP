@@ -45,7 +45,7 @@ class BankAccount extends Model
     protected $table = 'bank_account';
 
     protected $fillable = [
-        'bank_id','account_number', 'status', 'remarks'
+        'bank_id','account_number', 'remarks'
     ];
 
     public function supplier()

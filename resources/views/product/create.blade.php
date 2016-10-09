@@ -171,7 +171,7 @@
                 var newDataList=[];
                 $scope.selectedAll = false;
                 angular.forEach($scope.units, function(selected){
-                    if(!selected.selected){
+                    if(!selected.selected) {
                         newDataList.push(selected);
                     }
                 });
