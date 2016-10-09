@@ -1,10 +1,7 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: GitzJoey
- * Date: 9/15/2016
- * Time: 12:49 AM
- */
+<?php 
 
 return [
+    'title' => 'Dashboard',
+    'page_title' => 'Dashboard',
+    'page_title_desc' => '',
 ];

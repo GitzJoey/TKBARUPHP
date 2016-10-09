@@ -79,7 +79,90 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab_pic">
-                                    ...
+                                    <div ng-app="addCustomerProfileModule" ng-controller="addProfile">
+                                        <div class="box-group" id="accordion">
+                                            <div class="panel box box-default">
+                                                <div class="box-header with-border">
+                                                    <h4 class="box-title">
+                                                        <a class="collapsed" aria-expanded="false" href="#collapseOne" data-toggle="collapse" data-parent="#accordion">
+                                                            @lang('customer.create.tab.header.profile_lists')
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div class="panel-collapse collapse" id="collapseOne" aria-expanded="false">
+                                                    <div class="box-body">
+                                                        <div class="row">
+                                                            <div ng-repeat="profile in profiles">
+                                                                <div class="col-md-3">
+                                                                    <div class="box-body box-profile">
+                                                                        <img class="profile-user-img img-responsive img-circle" alt="User profile picture" src="{{ asset('images/blank.png') }}">
+
+                                                                        <h3 class="profile-username text-center">@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}</h3>
+
+                                                                        <p class="text-muted text-center">@{{ profile.designation }}</p>
+
+                                                                        <ul class="list-group list-group-unbordered">
+                                                                            <li class="list-group-item">
+                                                                                <b>@lang('customer.field.ic_num')</b> <a class="pull-right">@{{ profile.ic_num }}</a>
+                                                                            </li>
+                                                                            <li class="list-group-item">
+                                                                                <b>@lang('customer.field.address')</b> <a class="pull-right">@{{ profile.address }}</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                        <button class="btn btn-danger btn-block" data="$index" ng-click="removeSelected($index)"><b>@lang('buttons.remove_button')</b></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel box box-default">
+                                                <div class="box-header with-border">
+                                                    <h4 class="box-title">
+                                                        <a class="collapsed" aria-expanded="false" href="#collapseTwo" data-toggle="collapse" data-parent="#accordion">
+                                                            @lang('customer.create.tab.header.profile_inputs')
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div class="panel-collapse collapse" id="collapseTwo" aria-expanded="false" style="height: 0px;">
+                                                    <div class="box-body">
+                                                        <div class="form-group">
+                                                            <label for="inputFirstName" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
+                                                            <div class="col-sm-10">
+                                                                <input id="inputFirstName" type="text" class="form-control" ng-model="inputProfile.first_name" placeholder="@lang('customer.field.first_name')">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputLastName" class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
+                                                            <div class="col-sm-10">
+                                                                <input id="inputLastName" type="text" class="form-control" ng-model="inputProfile.last_name" placeholder="@lang('customer.field.last_name')">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
+                                                            <div class="col-sm-10">
+                                                                <input id="inputAddress" type="text" class="form-control" ng-model="inputProfile.address" placeholder="@lang('customer.field.address')">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputICNum" class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
+                                                            <div class="col-sm-10">
+                                                                <input id="inputICNum" type="text" class="form-control" ng-model="inputProfile.ic_num" placeholder="@lang('customer.field.ic_num')">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputProfileButtons" class="col-sm-2 control-label">&nbsp;</label>
+                                                            <div class="col-sm-10">
+                                                                <button class="btn btn-xs btn-default" type="button" ng-click="resetInput()">@lang('buttons.reset_button')</button>
+                                                                <button class="btn btn-xs btn-default" type="button" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane" id="tab_bank_account">
                                     <div ng-app="addCustomerBankModule" ng-controller="addBank">
@@ -174,9 +257,9 @@
                                 </div>
                                 <div class="tab-pane" id="tab_settings">
                                     <div class="form-group">
-                                        <label for="inputPaymentDueDate" class="col-sm-2 control-label">@lang('customer.field.payment_due_date')</label>
+                                        <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
                                         <div class="col-sm-10">
-                                            <input id="inputPaymentDueDate" name="payment_due_date" type="text" class="form-control">
+                                            <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -217,6 +300,31 @@
             $scope.resetInput = function() {
                 $scope.inputBank = {};
             }
+        }]);
+
+        var app = angular.module("addCustomerProfileModule", []);
+        app.controller("addProfile", ['$scope', function($scope) {
+            $scope.profiles = [{
+                'first_name': '',
+                'last_name': '',
+                'address': '',
+                'ic_num': '',
+                'image_filename': ''
+            }];
+
+            $scope.addNew = function() {
+                $scope.banks.profiles({
+                    'first_name': '',
+                    'last_name': '',
+                    'address': '',
+                    'ic_num': '',
+                    'image_filename': ''
+                });
+            };
+
+            $scope.removeSelected = function(idx) {
+                $scope.profiles.splice(idx, 1);
+            };
         }]);
     </script>
 @endsection

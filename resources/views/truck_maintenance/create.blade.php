@@ -33,7 +33,7 @@
                 <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.plate_number')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('plate_number', $trucklist, old('plate_number'), array('class' => 'form-control', 'placeholder' => trans('lookup.PLEASE_SELECT'))) }}
+                        {{ Form::select('plate_number', $trucklist, old('plate_number'), array('class' => 'form-control', 'placeholder' => trans('labels.PLEASE_SELECT'))) }}
                         <span class="help-block">{{ $errors->has('plate_number') ? $errors->first('plate_number') : '' }}</span>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_type')</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="maintenance_type">
-                            <option value>@lang('lookup.PLEASE_SELECT')</option>
+                            <option value>@lang('labels.PLEASE_SELECT')</option>
                             @foreach($mtctypeDDL as $t)
                                 <option value="{{$t}}" {{(old('maintenance_type')==$t)?'selected':''}}>@lang('lookup.'.$t)</option>
                             @endforeach

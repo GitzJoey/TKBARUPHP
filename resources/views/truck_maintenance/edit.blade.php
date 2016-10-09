@@ -40,7 +40,7 @@
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_type')</label>
                     <div class="col-sm-10">
                         <select class="form-control" name="maintenance_type">
-                            <option value>@lang('lookup.PLEASE_SELECT')</option>
+                            <option value>@lang('labels.PLEASE_SELECT')</option>
                             @foreach($mtctypeDDL as $t)
                                 @if(old('maintenance_type'))
                                     <option value="{{$t}}" {{(old('maintenance_type')==$t)?'selected':''}}>@lang('lookup.'.$t)</option>

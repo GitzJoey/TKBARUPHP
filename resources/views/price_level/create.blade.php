@@ -41,7 +41,7 @@
                     <label for="inputWeight" class="col-sm-2 control-label">@lang('price_level.field.weight')</label>
                     <div class="col-sm-10">
                         <select name="weight" class="form-control">
-                            <option value="">@lang('lookup.PLEASE_SELECT')</option>
+                            <option value="">@lang('labels.PLEASE_SELECT')</option>
                             @for($x =1; $x <= 10; $x++)
                                 @if($x == 1)
                                     <option value="{{ $x }}">{{ $x }} - Lowest</option>
