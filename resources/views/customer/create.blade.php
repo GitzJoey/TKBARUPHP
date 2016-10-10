@@ -67,15 +67,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputRemarks" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
-                                            <div class="col-sm-10">
-                                                <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('customer.field.remarks')">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="inputTaxId" class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
                                             <div class="col-sm-10">
                                                 <input id="inputTaxId" name="tax_id" type="text" class="form-control" placeholder="@lang('customer.field.tax_id')">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputRemarks" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('customer.field.remarks')">
                                             </div>
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                                                             <div class="form-group">
                                                                 <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
                                                                 <div class="col-sm-10">
-                                                                    <input id="inputAddress" type="text" name="address[]" class="form-control" ng-model="profile.address" placeholder="@lang('customer.field.address')">
+                                                                    <input id="inputAddress" type="text" name="profile_address[]" class="form-control" ng-model="profile.address" placeholder="@lang('customer.field.address')">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -136,13 +136,13 @@
                                                                         <tbody>
                                                                             <tr ng-repeat="ph in profile.phone_number">
                                                                                 <td>
-                                                                                    <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" ng-model="profile.phone_number.provider"
-                                                                                            ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL">
+                                                                                    <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" ng-model="ph.provider"
+                                                                                            ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
                                                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="profile.phone_number.number"></td>
-                                                                                <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="profile.phone_number.remarks"></td>
+                                                                                <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number"></td>
+                                                                                <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="ph.remarks"></td>
                                                                                 <td class="text-center">
                                                                                     <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
                                                                                         <span class="fa fa-close fa-fw"></span>
@@ -199,7 +199,7 @@
                                                                     </td>
                                                                     <td>
                                                                         @{{ bank.remarks }}
-                                                                        <input type="hidden" name="remarks[]" value="@{{ bank.remarks }}">
+                                                                        <input type="hidden" name="bank_remarks[]" value="@{{ bank.remarks }}">
                                                                     </td>
                                                                     <td class="text-center">
                                                                         <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>

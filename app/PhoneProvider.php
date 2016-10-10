@@ -51,4 +51,9 @@ class PhoneProvider extends Model
     public function hId() {
         return HashIds::encode($this->attributes['id']);
     }
+
+    public function getPhoneNumber()
+    {
+        $this->hasMany('App\PhoneNumber');
+    }
 }

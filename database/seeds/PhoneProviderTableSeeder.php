@@ -40,8 +40,7 @@ class PhoneProviderTableSeeder extends Seeder
             ],
             [
                 'name' => 'Telkom',
-                'short_name' => 'TLKM
-                ',
+                'short_name' => 'TLKM',
                 'status' => 'STATUS.Active',
                 'remarks' => ''
             ],

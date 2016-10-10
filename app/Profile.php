@@ -61,11 +61,17 @@ class Profile extends Model
 
     public function getPhoneNumber()
     {
-        return $this->belongsToMany('App\PhoneNumber', 'profile_phone_number', 'profile_id', 'phone_number_id');
+        return $this->hasMany('App\PhoneNumber');
     }
 
     public function getSupplier()
     {
     	return $this->belongsToMany('App\Supplier', 'supplier_profile', 'supplier_id', 'profile_id');
     }
+    /*
+    public function getCustomer()
+    {
+        return $this->belongsToMany('App\Customer', 'customer_pic', 'customer_id', 'profile_id');
+    }
+    */
 }

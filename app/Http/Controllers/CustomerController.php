@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BankAccount;
+use App\PhoneNumber;
 use App\PhoneProvider;
 use App\Profile;
 use Validator;
@@ -44,51 +45,57 @@ class CustomerController extends Controller
     public function store(Request $data)
     {
         $validator = Validator::make($data->all(), [
+            /*
             'name'              => 'required|string|max:255',
             'address'           => 'required|string',
             'city'              => 'required|string|max:255',
             'phone'             => 'required|regex:/[0-9]{9}/',
             'tax_id'            => 'required|string|max:255',
             'remarks'           => 'required|string|max:255'
+            */
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
         } else {
             $customer = new Customer();
-            $customer->save([
-                'name'              => $data['name'],
-                'address'           => $data['address'],
-                'city'              => $data['city'],
-                'phone'             => $data['phone'],
-                'tax_id'            => $data['tax_id'],
-                'remarks'           => $data['remarks'],
-                'payment_due_day'   => $data['payment_due_day']
-            ]);
+            $customer->name             = $data['name'];
+            $customer->address          = $data['address'];
+            $customer->city             = $data['city'];
+            $customer->phone_number     = $data['phone'];
+            $customer->tax_id           = $data['tax_id'];
+            $customer->remarks          = $data['remarks'];
+            $customer->payment_due_day  = is_int($data['payment_due_day']) ? $data['payment_due_day']:0;
 
-            $bankaccount = array();
+            $customer->save();
+
             for($i=0; $i<count($data['bank']); $i++) {
                 $ba = new BankAccount();
                 $ba->bank_id = $data["bank"][$i];
                 $ba->account_number = $data["account_number"][$i];
-                $ba->remarks = $data["remarks"][$i];
+                $ba->remarks = $data["bank_remarks"][$i];
 
-                array_push($bankaccount, $ba);
+                $customer->getBankAccount()->save($ba);
             }
 
-            $profile = array();
             for($i=0; $i<count($data['bank']); $i++) {
                 $pa = new Profile();
                 $pa->first_name = $data["first_name"][$i];
                 $pa->last_name = $data["last_name"][$i];
-                $pa->address = $data["address"][$i];
+                $pa->address = $data["profile_address"][$i];
                 $pa->ic_num = $data["ic_num"][$i];
 
-                array_push($profile, $pa);
-            }
+                $customer->getProfiles()->save($pa);
 
-            $customer->getBankAccount()->saveMany($bankaccount);
-            $customer->getProfiles()->saveMany($profile);
+                for ($j=0; $j<count($data['profile_'.$i.'_phone_provider']); $j++) {
+                    $ph = new PhoneNumber();
+                    $ph->phone_provider_id = $data['profile_'.$i.'_phone_provider'][$j];
+                    $ph->number = $data['profile_'.$i.'_phone_number'][$j];
+                    $ph->remarks = $data['profile_'.$i.'_remarks'][$j];
+
+                    $pa->getPhoneNumber()->save($ph);
+                }
+            }
 
             return redirect(route('db.master.customer'));
         }
