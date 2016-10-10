@@ -54,7 +54,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputCity" class="col-sm-2 control-label">@lang('customer.filed.city')</label>
+                                        <label for="inputCity" class="col-sm-2 control-label">@lang('customer.field.city')</label>
                                         <div class="col-sm-10">
                                             <input id="inputCity" name="city" type="text" class="form-control" placeholder="@lang('customer.field.city')">
                                         </div>

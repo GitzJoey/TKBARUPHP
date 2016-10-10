@@ -14,10 +14,15 @@ return [
             'bank_account' => '',
             'settings' => '',
             'header' => [
-                'profile_lists' => '',
-                'profile_inputs' => '',
                 'bank_lists' => '',
                 'bank_inputs' => '',
+            ],
+        ],
+        'table_phone' => [
+            'header' => [
+                'provider' => '',
+                'number' => '',
+                'remarks' => '',
             ],
         ],
         'table' => [
@@ -37,9 +42,10 @@ return [
         'phone' => '',
         'remarks' => '',
         'tax_id' => '',
-        'ic_num' => '',
         'first_name' => '',
         'last_name' => '',
+        'ic_num' => '',
+        'phone_number' => '',
         'bank' => '',
         'bank_account' => '',
         'payment_due_day' => '',

@@ -85,12 +85,12 @@
                                                 <button class="btn btn-xs btn-default" type="button" ng-click="addNewProfile()">@lang('buttons.create_new_button')</button>
                                             </div>
                                             <div class="col-md-11">
-                                                <div ng-repeat="profile in profiles">
+                                                <div ng-repeat="profile in profiles" ng-init="profileIndex = $index">
                                                     <div class="box box-widget">
                                                         <div class="box-header with-border">
                                                             <div class="user-block">
                                                                 <strong>Person In Charge @{{ $index + 1 }}</strong><br/>
-                                                                &nbsp;&nbsp;&nbsp;@{{ inputProfile.first_name }}&nbsp;@{{ inputProfile.last_name }}
+                                                                &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
                                                             </div>
                                                             <div class="box-tools">
                                                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -137,13 +137,26 @@
                                                                             <tr ng-repeat="ph in profile.phone_number">
                                                                                 <td>
                                                                                     <select class="form-control" ng-model="profile.phone_number.provider"
-                                                                                            ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL"></select>
+                                                                                            ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL">
+                                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                    </select>
                                                                                 </td>
                                                                                 <td><input type="text" class="form-control" ng-model="profile.phone_number.number"></td>
                                                                                 <td><input type="text" class="form-control" ng-model="profile.phone_number.remarks"></td>
-                                                                                <td><button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedProfile($index)"><span class="fa fa-close fa-fw"></span></button></td>
+                                                                                <td>
+                                                                                    <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
+                                                                                        <span class="fa fa-close fa-fw"></span>
+                                                                                    </button>
+                                                                                </td>
                                                                             </tr>
                                                                         </tbody>
+                                                                        <tfoot>
+                                                                            <tr>
+                                                                                <td colspan="4">
+                                                                                    <button type="button" class="btn btn-xs btn-default" ng-click="addNewPhone($index)">@lang('buttons.create_new_button')</button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tfoot>
                                                                     </table>
                                                                 </div>
                                                             </div>
@@ -308,6 +321,18 @@
 
             $scope.removeSelectedProfile = function(idx) {
                 $scope.profiles.splice(idx, 1);
+            };
+
+            $scope.addNewPhone = function(parentIndex) {
+                $scope.profiles[parentIndex].phone_number.push({
+                    'provider': '',
+                    'number': '',
+                    'remarks': ''
+                });
+            };
+
+            $scope.removeSelectedPhone = function(parentIndex, idx) {
+                $scope.profiles[parentIndex].phone_number.splice(idx, 1);
             };
         }]);
     </script>
