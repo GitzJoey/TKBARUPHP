@@ -34,6 +34,13 @@ return [
                 ],
             ],
         ],
+        'table_bank' => [
+            'header' => [
+                'bank' => '',
+                'account_number' => '',
+                'remarks' => '',
+            ],
+        ],
     ],
     'field' => [
         'name' => '',

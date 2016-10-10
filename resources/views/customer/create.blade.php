@@ -130,20 +130,20 @@
                                                                                 <th>@lang('customer.create.table_phone.header.provider')</th>
                                                                                 <th>@lang('customer.create.table_phone.header.number')</th>
                                                                                 <th>@lang('customer.create.table_phone.header.remarks')</th>
-                                                                                <th>@lang('labels.ACTION')</th>
+                                                                                <th class="text-center">@lang('labels.ACTION')</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr ng-repeat="ph in profile.phone_number">
                                                                                 <td>
-                                                                                    <select class="form-control" ng-model="profile.phone_number.provider"
+                                                                                    <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" ng-model="profile.phone_number.provider"
                                                                                             ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL">
                                                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td><input type="text" class="form-control" ng-model="profile.phone_number.number"></td>
-                                                                                <td><input type="text" class="form-control" ng-model="profile.phone_number.remarks"></td>
-                                                                                <td>
+                                                                                <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="profile.phone_number.number"></td>
+                                                                                <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="profile.phone_number.remarks"></td>
+                                                                                <td class="text-center">
                                                                                     <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
                                                                                         <span class="fa fa-close fa-fw"></span>
                                                                                     </button>
@@ -181,9 +181,9 @@
                                                         <table class="table table-bordered">
                                                             <thead>
                                                             <tr>
-                                                                <th class="text-center">@lang('customer.create.table.bank.header.bank')</th>
-                                                                <th class="text-center">@lang('customer.create.table.bank.header.account_number')</th>
-                                                                <th class="text-center">@lang('customer.create.table.bank.header.remarks')</th>
+                                                                <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
+                                                                <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
+                                                                <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
                                                                 <th class="text-center">@lang('labels.ACTION')</th>
                                                             </tr>
                                                             </thead>

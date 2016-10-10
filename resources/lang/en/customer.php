@@ -2,27 +2,34 @@
 
 return [
     'create' => [
-        'title' => '',
-        'page_title' => '',
+        'title' => 'Customer',
+        'page_title' => 'Customer',
         'page_title_desc' => '',
         'header' => [
-            'title' => '',
+            'title' => 'Create Customer',
         ],
         'tab' => [
-            'customer' => '',
+            'customer' => 'Customer Data',
             'pic' => 'Person In Charge',
             'bank_account' => 'Bank Account',
-            'settings' => '',
+            'settings' => 'Settings',
             'header' => [
-                'bank_lists' => '',
-                'bank_inputs' => '',
+                'bank_lists' => 'Bank Account Lists',
+                'bank_inputs' => 'Create New Bank Account',
             ],
         ],
         'table_phone' => [
             'header' => [
-                'provider' => '',
-                'number' => '',
-                'remarks' => '',
+                'provider' => 'Provider',
+                'number' => 'Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table_bank' => [
+            'header' => [
+                'bank' => 'Bank',
+                'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
             ],
         ],
         'table' => [
@@ -36,19 +43,19 @@ return [
         ],
     ],
     'field' => [
-        'name' => '',
-        'address' => '',
-        'city' => '',
-        'phone' => '',
-        'remarks' => '',
-        'tax_id' => '',
-        'first_name' => '',
-        'last_name' => '',
-        'ic_num' => '',
-        'phone_number' => '',
-        'bank' => '',
-        'bank_account' => '',
-        'payment_due_day' => '',
+        'name' => 'Name',
+        'address' => 'Address',
+        'city' => 'City',
+        'phone' => 'Phone',
+        'remarks' => 'Remarks',
+        'tax_id' => 'Tax ID',
+        'first_name' => 'First Name',
+        'last_name' => 'Last Name',
+        'ic_num' => 'IC Number',
+        'phone_number' => 'Phone Number',
+        'bank' => 'Bank',
+        'bank_account' => 'Bank Account',
+        'payment_due_day' => 'Payment Due Day',
     ],
     'edit' => [
         'title' => '',
