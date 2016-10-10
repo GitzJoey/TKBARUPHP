@@ -43,9 +43,9 @@
                         <td>@lang('lookup.'.$phoneProvider->status)</td>
                         <td>{{ $phoneProvider->remarks }}</td>
                         <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.admin.phone_provider.show', $phoneProvider->id) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.admin.phone_provider.edit', $phoneProvider->id) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.phone_provider.delete', $phoneProvider->id], 'style'=>'display:inline'])  !!}
+                            <a class="btn btn-xs btn-info" href="{{ route('db.admin.phone_provider.show', $phoneProvider->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.admin.phone_provider.edit', $phoneProvider->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.phone_provider.delete', $phoneProvider->hId()], 'style'=>'display:inline'])  !!}
                                 <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                             {!! Form::close() !!}
                         </td>

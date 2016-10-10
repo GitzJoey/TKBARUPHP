@@ -79,16 +79,14 @@ class PhoneProviderController extends Controller
         $validator = Validator::make($req->all(), [
             'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
-            'prefix' => 'required|string|max:255',
             'status' => 'required',
-            'remarks' => 'required|string|max:255',
-
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.admin.phoneProvider.edit'))->withInput()->withErrors($validator);
-        } else {
+        $pp = PhoneProvider::find($id);
 
+        if ($validator->fails()) {
+            return redirect(route('db.admin.phone_provider.edit', $pp->hId()))->withInput()->withErrors($validator);
+        } else {
             PhoneProvider::find($id)->update($req->all());
             return redirect(route('db.admin.phone_provider'));
         }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\BankAccount;
+use App\PhoneProvider;
+use App\Profile;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -33,8 +36,9 @@ class CustomerController extends Controller
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+        $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
 
-        return view('customer.create', compact('statusDDL', 'bankDDL'));
+        return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL'));
     }
 
     public function store(Request $data)
@@ -51,16 +55,41 @@ class CustomerController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
         } else {
-
-            Customer::create([
+            $customer = new Customer();
+            $customer->save([
                 'name'              => $data['name'],
                 'address'           => $data['address'],
                 'city'              => $data['city'],
                 'phone'             => $data['phone'],
                 'tax_id'            => $data['tax_id'],
                 'remarks'           => $data['remarks'],
-                'payment_due_date'  => $data['payment_due_date']
+                'payment_due_day'   => $data['payment_due_day']
             ]);
+
+            $bankaccount = array();
+            for($i=0; $i<count($data['bank']); $i++) {
+                $ba = new BankAccount();
+                $ba->bank_id = $data["bank"][$i];
+                $ba->account_number = $data["account_number"][$i];
+                $ba->remarks = $data["remarks"][$i];
+
+                array_push($bankaccount, $ba);
+            }
+
+            $profile = array();
+            for($i=0; $i<count($data['bank']); $i++) {
+                $pa = new Profile();
+                $pa->first_name = $data["first_name"][$i];
+                $pa->last_name = $data["last_name"][$i];
+                $pa->address = $data["address"][$i];
+                $pa->ic_num = $data["ic_num"][$i];
+
+                array_push($profile, $pa);
+            }
+
+            $customer->getBankAccount()->saveMany($bankaccount);
+            $customer->getProfiles()->saveMany($profile);
+
             return redirect(route('db.master.customer'));
         }
     }

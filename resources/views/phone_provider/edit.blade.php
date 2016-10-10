@@ -28,7 +28,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('phone_provider.edit.header.title')</h3>
         </div>
-        {!! Form::model($phoneProvider, ['method' => 'PATCH','route' => ['db.admin.phone_provider.edit', $phoneProvider->id], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($phoneProvider, ['method' => 'PATCH','route' => ['db.admin.phone_provider.edit', $phoneProvider->hId()], 'class' => 'form-horizontal']) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('phone_provider.field.name')</label>
@@ -61,7 +61,7 @@
                 <div class="form-group">
                     <label for="inputRemarks" class="col-sm-2 control-label">@lang('phone_provider.field.remarks')</label>
                     <div class="col-sm-10">
-                        <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $phoneProvider->remarks }}" placeholder="@lang('phone_provider.field.status')">
+                        <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $phoneProvider->remarks }}" placeholder="@lang('phone_provider.field.remarks')">
                         <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>&nbsp;
                     </div>
                 </div>
