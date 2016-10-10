@@ -44,9 +44,6 @@ return [
         'bank_account' => '',
         'payment_due_day' => '',
     ],
-    'filed' => [
-        'city' => '',
-    ],
     'edit' => [
         'title' => '',
         'page_title' => '',

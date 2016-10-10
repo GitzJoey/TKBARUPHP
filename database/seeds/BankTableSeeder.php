@@ -14,7 +14,7 @@ class BankTableSeeder extends Seeder
     {
         $banks = [
         	[
-        		'name' => 'Mandiri',
+        		'name' => 'Bank Mandiri',
         		'short_name' => 'Mandiri',
         		'branch' => 'Jakarta',
         		'branch_code' => 'M0321',
@@ -22,7 +22,7 @@ class BankTableSeeder extends Seeder
         		'remarks' => 'Bank Mandiri'
         	],
         	[
-        		'name' => 'BCA',
+        		'name' => 'Bank BCA',
         		'short_name' => 'BCA',
         		'branch' => 'Jakarta',
         		'branch_code' => 'B0235',
@@ -30,7 +30,7 @@ class BankTableSeeder extends Seeder
         		'remarks' => 'Bank Central Asia'
         	],
         	[
-        		'name' => 'Permata',
+        		'name' => 'Bank Permata',
         		'short_name' => 'PRMT',
         		'branch' => 'Jakarta',
         		'branch_code' => 'P0232',
