@@ -190,8 +190,10 @@
                                                             <tbody>
                                                                 <tr ng-repeat="bank in banks">
                                                                     <td>
-                                                                        @{{ bank.bank_name }}
-                                                                        <input type="hidden" name="bank[]" value="@{{ bank.id }}">
+                                                                        <span ng-repeat="b in bankDDL | filter:{'id': bank.bank_id }:true">
+                                                                            @{{ b.name }}&nbsp;(@{{ b.short_name }})
+                                                                        </span>
+                                                                        <input type="hidden" name="bank[]" value="@{{ bank.bank_id }}">
                                                                     </td>
                                                                     <td>
                                                                         @{{ bank.account_number }}
@@ -289,8 +291,7 @@
 
             $scope.addNewBank = function() {
                 $scope.banks.push({
-                    'id': $scope.inputBank.bank.id,
-                    'bank_name': $scope.inputBank.bank.name + ' (' + $scope.inputBank.bank.short_name + ')',
+                    'bank_id': $scope.inputBank.bank.id,
                     'account_number': $scope.inputBank.bank_account,
                     'remarks': $scope.inputBank.remarks
                 });

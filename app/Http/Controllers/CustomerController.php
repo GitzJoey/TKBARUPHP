@@ -104,6 +104,7 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customer::findOrFail($id);
+
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
@@ -111,9 +112,32 @@ class CustomerController extends Controller
         return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL'));
     }
 
-    public function update($id, Request $req)
+    public function update($id, Request $data)
     {
-        Customer::findOrFail($id)->update($req->all());
+        $customer = Customer::find($id);
+        /*
+        $newba = array();
+        for($i=0; $i<count($data['bank']); $i++) {
+            $ba = new BankAccount();
+            $ba->bank_id = $data["bank"][$i];
+            $ba->account_number = $data["account_number"][$i];
+            $ba->remarks = $data["bank_remarks"][$i];
+
+            array_push($newba, $ba);
+        }
+
+        $customer->getBankAccount()->sync($newba);
+        */
+        $customer->name             = $data['name'];
+        $customer->address          = $data['address'];
+        $customer->city             = $data['city'];
+        $customer->phone_number     = $data['phone'];
+        $customer->tax_id           = $data['tax_id'];
+        $customer->remarks          = $data['remarks'];
+        $customer->payment_due_day  = is_int($data['payment_due_day']) ? $data['payment_due_day']:0;
+
+        $customer->save();
+
         return redirect(route('db.master.customer'));
     }
 

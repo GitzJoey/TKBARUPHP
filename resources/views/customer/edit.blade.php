@@ -190,8 +190,10 @@
                                                             <tbody>
                                                             <tr ng-repeat="bank in banks">
                                                                 <td>
-                                                                    @{{ bank.bank_name }}
-                                                                    <input type="hidden" name="bank[]" value="@{{ bank.id }}">
+                                                                    <div ng-repeat="b in bankDDL | filter:{'id': bank.bank_id }:true">
+                                                                        @{{ b.name }}&nbsp;(@{{ b.short_name }})
+                                                                    </div>
+                                                                    <input type="hidden" name="bank[]" value="@{{ bank.bank_id }}">
                                                                 </td>
                                                                 <td>
                                                                     @{{ bank.account_number }}
@@ -282,14 +284,14 @@
     <script type="application/javascript">
         var app = angular.module("customerModule", []);
         app.controller("customerController", ['$scope', function($scope) {
-            $scope.banks = JSON.parse('{!! htmlspecialchars_decode($customer->getBankAccount) !!}');
-            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getBankProfile)) ? '{}':htmlspecialchars_decode($customer->getBankProfile) !!}');
+            $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getBankAccount)) ? '[]':htmlspecialchars_decode($customer->getBankAccount) !!}');
+            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getBankProfile)) ? '[]':htmlspecialchars_decode($customer->getBankProfile) !!}');
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
 
             $scope.addNewBank = function() {
                 $scope.banks.push({
-                    'id': $scope.inputBank.bank.id,
+                    'bank_id': $scope.inputBank.bank.id,
                     'bank_name': $scope.inputBank.bank.name + ' (' + $scope.inputBank.bank.short_name + ')',
                     'account_number': $scope.inputBank.bank_account,
                     'remarks': $scope.inputBank.remarks
