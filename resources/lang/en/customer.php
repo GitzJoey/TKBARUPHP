@@ -35,9 +35,9 @@ return [
         'table' => [
             'bank' => [
                 'header' => [
-                    'bank' => '',
-                    'account_number' => '',
-                    'remarks' => '',
+                    'bank' => 'Bank',
+                    'account_number' => 'Account Number',
+                    'remarks' => 'Remarks',
                 ],
             ],
         ],
@@ -57,75 +57,20 @@ return [
         'bank_account' => 'Bank Account',
         'payment_due_day' => 'Payment Due Day',
     ],
-    'edit' => [
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => '',
-        ],
-        'tab' => [
-            'customer' => '',
-            'pic' => '',
-            'bank_account' => '',
-            'settings' => '',
-            'header' => [
-                'profile_lists' => '',
-                'profile_inputs' => '',
-                'bank_lists' => '',
-                'bank_inputs' => '',
-            ],
-        ],
-        'table' => [
-            'bank' => [
-                'header' => [
-                    'bank' => '',
-                    'account_number' => '',
-                    'remarks' => '',
-                ],
-            ],
-        ],
-    ],
     'index' => [
-        'title' => '',
-        'page_title' => '',
+        'title' => 'Customer',
+        'page_title' => 'Customer',
         'page_title_desc' => '',
         'header' => [
-            'title' => '',
+            'title' => 'Customer Lists',
         ],
         'table' => [
             'header' => [
-                'name' => '',
-                'address' => '',
-                'tax_id' => '',
-                'phone' => '',
-                'remarks' => '',
-            ],
-        ],
-    ],
-    'show' => [
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => '',
-        ],
-        'tab' => [
-            'customer' => '',
-            'pic' => '',
-            'bank_account' => '',
-            'settings' => '',
-            'header' => [
-                'profile_lists' => '',
-            ],
-        ],
-        'table' => [
-            'bank' => [
-                'header' => [
-                    'bank' => '',
-                    'account_number' => '',
-                    'remarks' => '',
-                ],
+                'name' => 'Name',
+                'address' => 'Address',
+                'tax_id' => 'Tax ID',
+                'phone' => 'Phone',
+                'remarks' => 'Remarks',
             ],
         ],
     ],
