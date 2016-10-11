@@ -27,162 +27,163 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('customer.edit.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.customer.edit') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.master.customer.create') }}" method="post">
             {{ csrf_field() }}
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="nav-tabs-custom">
-                            <ul class="nav nav-tabs">
-                                <li><a href="#tab_customer" data-toggle="tab">@lang('customer.edit.tab.customer')</a></li>
-                                <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')</a></li>
-                                <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.edit.tab.bank_account')</a></li>
-                                <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab_customer">
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">@lang('customer.field.name')</label>
-                                        <div class="col-sm-10">
-                                            <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('customer.field.name')">
+            <div ng-app="customerModule" ng-controller="customerController">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li><a href="#tab_customer" data-toggle="tab">@lang('customer.edit.tab.customer')</a></li>
+                                    <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')</a></li>
+                                    <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.edit.tab.bank_account')</a></li>
+                                    <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_customer">
+                                        <div class="form-group">
+                                            <label for="inputName" class="col-sm-2 control-label">@lang('customer.field.name')</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputName" name="name" type="text" class="form-control" value="{{ $customer->name }}" placeholder="@lang('customer.field.name')">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
+                                            <div class="col-sm-10">
+                                                <textarea name="address" id="inputAddress" class="form-control" rows="4">{{ $customer->address }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputCity" class="col-sm-2 control-label">@lang('customer.field.city')</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputCity" name="city" type="text" class="form-control" value="{{ $customer->city }}" placeholder="@lang('customer.field.city')">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPhone" class="col-sm-2 control-label">@lang('customer.field.phone')</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputPhone" name="phone" type="tel" class="form-control" value="{{ $customer->phone }}" placeholder="@lang('customer.field.phone')">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputTaxId" class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputTaxId" name="tax_id" type="text" class="form-control" value="{{ $customer->tax_id }}" placeholder="@lang('customer.field.tax_id')">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputRemarks" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $customer->remarks }}" placeholder="@lang('customer.field.remarks')">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
-                                        <div class="col-sm-10">
-                                            <textarea name="address" id="inputAddress" class="form-control" rows="4"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputCity" class="col-sm-2 control-label">@lang('customer.field.city')</label>
-                                        <div class="col-sm-10">
-                                            <input id="inputCity" name="city" type="text" class="form-control" placeholder="@lang('customer.field.city')">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPhone" class="col-sm-2 control-label">@lang('customer.field.phone')</label>
-                                        <div class="col-sm-10">
-                                            <input id="inputPhone" name="phone" type="tel" class="form-control" placeholder="@lang('customer.field.phone')">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
-                                        <div class="col-sm-10">
-                                            <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('customer.field.remarks')">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputTaxId" class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
-                                        <div class="col-sm-10">
-                                            <input id="inputTaxId" name="tax_id" type="text" class="form-control" placeholder="@lang('customer.field.tax_id')">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane" id="tab_pic">
-                                    <div ng-app="addCustomerProfileModule" ng-controller="addProfile">
-                                        <div class="box-group" id="accordion">
-                                            <div class="panel box box-default">
-                                                <div class="box-header with-border">
-                                                    <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseOne" data-toggle="collapse" data-parent="#accordion">
-                                                            @lang('customer.edit.tab.header.profile_lists')
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="panel-collapse collapse" id="collapseOne" aria-expanded="false">
-                                                    <div class="box-body">
-                                                        <div class="row">
-                                                            <div ng-repeat="profile in profiles">
-                                                                <div class="col-md-3">
-                                                                    <div class="box-body box-profile">
-                                                                        <img class="profile-user-img img-responsive img-circle" alt="User profile picture" src="{{ asset('images/blank.png') }}">
-
-                                                                        <h3 class="profile-username text-center">@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}</h3>
-
-                                                                        <p class="text-muted text-center">@{{ profile.designation }}</p>
-
-                                                                        <ul class="list-group list-group-unbordered">
-                                                                            <li class="list-group-item">
-                                                                                <b>@lang('customer.field.ic_num')</b> <a class="pull-right">@{{ profile.ic_num }}</a>
-                                                                            </li>
-                                                                            <li class="list-group-item">
-                                                                                <b>@lang('customer.field.address')</b> <a class="pull-right">@{{ profile.address }}</a>
-                                                                            </li>
-                                                                        </ul>
-                                                                        <button class="btn btn-danger btn-block" data="$index" ng-click="removeSelected($index)"><b>@lang('buttons.remove_button')</b></button>
-                                                                    </div>
+                                    <div class="tab-pane" id="tab_pic">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <button class="btn btn-xs btn-default" type="button" ng-click="addNewProfile()">@lang('buttons.create_new_button')</button>
+                                            </div>
+                                            <div class="col-md-11">
+                                                <div ng-repeat="profile in profiles" ng-init="profileIndex = $index">
+                                                    <div class="box box-widget">
+                                                        <div class="box-header with-border">
+                                                            <div class="user-block">
+                                                                <strong>Person In Charge @{{ $index + 1 }}</strong><br/>
+                                                                &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
+                                                            </div>
+                                                            <div class="box-tools">
+                                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="box-body">
+                                                            <div class="form-group">
+                                                                <label for="inputFirstName" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
+                                                                <div class="col-sm-10">
+                                                                    <input id="inputFirstName" type="text" name="first_name[]" class="form-control" ng-model="profile.first_name" placeholder="@lang('customer.field.first_name')">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputLastName" class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
+                                                                <div class="col-sm-10">
+                                                                    <input id="inputLastName" type="text" name="last_name[]" class="form-control" ng-model="profile.last_name" placeholder="@lang('customer.field.last_name')">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
+                                                                <div class="col-sm-10">
+                                                                    <input id="inputAddress" type="text" name="profile_address[]" class="form-control" ng-model="profile.address" placeholder="@lang('customer.field.address')">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputICNum" class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
+                                                                <div class="col-sm-10">
+                                                                    <input id="inputICNum" type="text" name="ic_num[]" class="form-control" ng-model="profile.ic_num" placeholder="@lang('customer.field.ic_num')">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputPhoneNumber" class="col-sm-2 control-label">@lang('customer.field.phone_number')</label>
+                                                                <div class="col-sm-10">
+                                                                    <table class="table table-bordered">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th>@lang('customer.edit.table_phone.header.provider')</th>
+                                                                            <th>@lang('customer.edit.table_phone.header.number')</th>
+                                                                            <th>@lang('customer.edit.table_phone.header.remarks')</th>
+                                                                            <th class="text-center">@lang('labels.ACTION')</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr ng-repeat="ph in profile.phone_number">
+                                                                            <td>
+                                                                                <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" ng-model="ph.provider"
+                                                                                        ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
+                                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number"></td>
+                                                                            <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="ph.remarks"></td>
+                                                                            <td class="text-center">
+                                                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
+                                                                                    <span class="fa fa-close fa-fw"></span>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                        <tfoot>
+                                                                        <tr>
+                                                                            <td colspan="4">
+                                                                                <button type="button" class="btn btn-xs btn-default" ng-click="addNewPhone($index)">@lang('buttons.create_new_button')</button>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tfoot>
+                                                                    </table>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="panel box box-default">
-                                                <div class="box-header with-border">
-                                                    <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseTwo" data-toggle="collapse" data-parent="#accordion">
-                                                            @lang('customer.edit.tab.header.profile_inputs')
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="panel-collapse collapse" id="collapseTwo" aria-expanded="false" style="height: 0px;">
-                                                    <div class="box-body">
-                                                        <div class="form-group">
-                                                            <label for="inputFirstName" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
-                                                            <div class="col-sm-10">
-                                                                <input id="inputFirstName" type="text" class="form-control" ng-model="inputProfile.first_name" placeholder="@lang('customer.field.first_name')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputLastName" class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
-                                                            <div class="col-sm-10">
-                                                                <input id="inputLastName" type="text" class="form-control" ng-model="inputProfile.last_name" placeholder="@lang('customer.field.last_name')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
-                                                            <div class="col-sm-10">
-                                                                <input id="inputAddress" type="text" class="form-control" ng-model="inputProfile.address" placeholder="@lang('customer.field.address')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputICNum" class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
-                                                            <div class="col-sm-10">
-                                                                <input id="inputICNum" type="text" class="form-control" ng-model="inputProfile.ic_num" placeholder="@lang('customer.field.ic_num')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputProfileButtons" class="col-sm-2 control-label">&nbsp;</label>
-                                                            <div class="col-sm-10">
-                                                                <button class="btn btn-xs btn-default" type="button" ng-click="resetInput()">@lang('buttons.reset_button')</button>
-                                                                <button class="btn btn-xs btn-default" type="button" ng-click="addNew()">@lang('buttons.create_new_button')</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane" id="tab_bank_account">
-                                    <div ng-app="addCustomerBankModule" ng-controller="addBank">
-                                        <div class="box-group" id="accordion">
+                                    <div class="tab-pane" id="tab_bank_account">
+                                        <div class="box-group" id="accordion_bankaccount">
                                             <div class="panel box box-default">
                                                 <div class="box-header with-border">
                                                     <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseOne" data-toggle="collapse" data-parent="#accordion">
+                                                        <a class="collapsed" aria-expanded="false" href="#collapseBankAccountLists" data-toggle="collapse" data-parent="#accordion_bankaccount">
                                                             @lang('customer.edit.tab.header.bank_lists')
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <div class="panel-collapse collapse" id="collapseOne" aria-expanded="false">
+                                                <div class="panel-collapse collapse" id="collapseBankAccountLists" aria-expanded="false">
                                                     <div class="box-body">
                                                         <table class="table table-bordered">
                                                             <thead>
                                                             <tr>
-                                                                <th class="text-center">@lang('customer.edit.table.bank.header.bank')</th>
-                                                                <th class="text-center">@lang('customer.edit.table.bank.header.account_number')</th>
-                                                                <th class="text-center">@lang('customer.edit.table.bank.header.remarks')</th>
+                                                                <th class="text-center">@lang('customer.edit.table_bank.header.bank')</th>
+                                                                <th class="text-center">@lang('customer.edit.table_bank.header.account_number')</th>
+                                                                <th class="text-center">@lang('customer.edit.table_bank.header.remarks')</th>
                                                                 <th class="text-center">@lang('labels.ACTION')</th>
                                                             </tr>
                                                             </thead>
@@ -198,10 +199,10 @@
                                                                 </td>
                                                                 <td>
                                                                     @{{ bank.remarks }}
-                                                                    <input type="hidden" name="remarks[]" value="@{{ bank.remarks }}">
+                                                                    <input type="hidden" name="bank_remarks[]" value="@{{ bank.remarks }}">
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelected($index)"><span class="fa fa-close fa-fw"></span></button>
+                                                                    <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
                                                                 </td>
                                                             </tr>
                                                             </tbody>
@@ -212,21 +213,20 @@
                                             <div class="panel box box-default">
                                                 <div class="box-header with-border">
                                                     <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseTwo" data-toggle="collapse" data-parent="#accordion">
+                                                        <a class="collapsed" aria-expanded="false" href="#collapseBankAccountInputs" data-toggle="collapse" data-parent="#accordion_bankaccount">
                                                             @lang('customer.edit.tab.header.bank_inputs')
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <div class="panel-collapse collapse" id="collapseTwo" aria-expanded="false" style="height: 0px;">
+                                                <div class="panel-collapse collapse" id="collapseBankAccountInputs" aria-expanded="false">
                                                     <div class="box-body">
                                                         <div class="form-group">
                                                             <label for="inputBank" class="col-sm-2 control-label">@lang('customer.field.bank')</label>
                                                             <div class="col-sm-10">
-                                                                <select id="inputBank" class="form-control" ng-model="inputBank.id">
+                                                                <select id="inputBank" class="form-control"
+                                                                        ng-model="inputBank.bank"
+                                                                        ng-options="b.name + ' (' + b.short_name + ')' for b in bankDDL">
                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                    @foreach($bankDDL as $bank)
-                                                                        <option value="{{ $bank->id }}">{{ $bank->bank_full_name }}</option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -245,8 +245,8 @@
                                                         <div class="form-group">
                                                             <label for="inputBankButtons" class="col-sm-2 control-label">&nbsp;</label>
                                                             <div class="col-sm-10">
-                                                                <button class="btn btn-xs btn-default" type="button" ng-click="resetInput()">@lang('buttons.reset_button')</button>
-                                                                <button class="btn btn-xs btn-default" type="button" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                                                                <button class="btn btn-xs btn-default" type="button" ng-click="resetInputBank()">@lang('buttons.reset_button')</button>
+                                                                <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -254,23 +254,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane" id="tab_settings">
-                                    <div class="form-group">
-                                        <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
-                                        <div class="col-sm-10">
-                                            <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control">
+                                    <div class="tab-pane" id="tab_settings">
+                                        <div class="form-group">
+                                            <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" value="{{ $customer->payment_due_day }}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-2">
-                        <a href="{{ route('db.master.customer') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-2">
+                            <a href="{{ route('db.master.customer') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -280,50 +280,59 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("addCustomerBankModule", []);
-        app.controller("addBank", ['$scope', function($scope) {
-            $scope.banks = [];
+        var app = angular.module("customerModule", []);
+        app.controller("customerController", ['$scope', function($scope) {
+            $scope.banks = JSON.parse('{!! htmlspecialchars_decode($customer->getBankAccount) !!}');
+            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getBankProfile)) ? '{}':htmlspecialchars_decode($customer->getBankProfile) !!}');
+            $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
+            $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
 
-            $scope.addNew = function() {
+            $scope.addNewBank = function() {
                 $scope.banks.push({
-                    'id': $scope.inputBank.id,
-                    'bank_name': $('#inputBank option:selected').text(),
+                    'id': $scope.inputBank.bank.id,
+                    'bank_name': $scope.inputBank.bank.name + ' (' + $scope.inputBank.bank.short_name + ')',
                     'account_number': $scope.inputBank.bank_account,
                     'remarks': $scope.inputBank.remarks
                 });
             };
 
-            $scope.removeSelected = function(idx) {
+            $scope.removeSelectedBank = function(idx) {
                 $scope.banks.splice(idx, 1);
             };
 
-            $scope.resetInput = function() {
+            $scope.resetInputBank = function() {
                 $scope.inputBank = {};
-            }
-        }]);
+            };
 
-        var app = angular.module("addCustomerProfileModule", []);
-        app.controller("addProfile", ['$scope', function($scope) {
-            $scope.profiles = [{
-                'first_name': '',
-                'last_name': '',
-                'address': '',
-                'ic_num': '',
-                'image_filename': ''
-            }];
-
-            $scope.addNew = function() {
-                $scope.banks.profiles({
+            $scope.addNewProfile = function() {
+                $scope.profiles.push({
                     'first_name': '',
                     'last_name': '',
                     'address': '',
                     'ic_num': '',
-                    'image_filename': ''
+                    'image_filename': '',
+                    'phone_number':[{
+                        'provider': '',
+                        'number': '',
+                        'remarks': ''
+                    }]
                 });
             };
 
-            $scope.removeSelected = function(idx) {
+            $scope.removeSelectedProfile = function(idx) {
                 $scope.profiles.splice(idx, 1);
+            };
+
+            $scope.addNewPhone = function(parentIndex) {
+                $scope.profiles[parentIndex].phone_number.push({
+                    'provider': '',
+                    'number': '',
+                    'remarks': ''
+                });
+            };
+
+            $scope.removeSelectedPhone = function(parentIndex, idx) {
+                $scope.profiles[parentIndex].phone_number.splice(idx, 1);
             };
         }]);
     </script>

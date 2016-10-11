@@ -104,8 +104,11 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customer::findOrFail($id);
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+        $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
 
-        return view('customer.edit', compact('customer'));
+        return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL'));
     }
 
     public function update($id, Request $req)

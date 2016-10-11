@@ -74,4 +74,36 @@ return [
             ],
         ],
     ],
+    'edit' => [
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => '',
+        ],
+        'tab' => [
+            'customer' => '',
+            'pic' => '',
+            'bank_account' => '',
+            'settings' => '',
+            'header' => [
+                'bank_lists' => '',
+                'bank_inputs' => '',
+            ],
+        ],
+        'table_phone' => [
+            'header' => [
+                'provider' => '',
+                'number' => '',
+                'remarks' => '',
+            ],
+        ],
+        'table_bank' => [
+            'header' => [
+                'bank' => '',
+                'account_number' => '',
+                'remarks' => '',
+            ],
+        ],
+    ],
 ];

@@ -74,4 +74,36 @@ return [
             ],
         ],
     ],
+    'edit' => [
+        'title' => 'Customer',
+        'page_title' => 'Customer',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Edit Customer',
+        ],
+        'tab' => [
+            'customer' => 'Customer Data',
+            'pic' => 'Person In Charge',
+            'bank_account' => 'Bank Account',
+            'settings' => 'Settings',
+            'header' => [
+                'bank_lists' => 'Bank Account Lists',
+                'bank_inputs' => 'Create New Bank Account',
+            ],
+        ],
+        'table_phone' => [
+            'header' => [
+                'provider' => 'Provider',
+                'number' => 'Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table_bank' => [
+            'header' => [
+                'bank' => 'Bank',
+                'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+    ],
 ];
