@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('customer.edit.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.customer.create') }}" method="post">
+        {!! Form::model($customer, ['method' => 'PATCH','route' => ['db.master.customer.edit', $customer->hId()], 'class' => 'form-horizontal']) !!}
             {{ csrf_field() }}
             <div ng-app="customerModule" ng-controller="customerController">
                 <div class="box-body">
@@ -276,7 +276,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        {!! Form::close() !!}
     </div>
 @endsection
 

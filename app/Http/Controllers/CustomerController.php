@@ -114,8 +114,14 @@ class CustomerController extends Controller
 
     public function update($id, Request $data)
     {
-        $customer = Customer::find($id);
-        /*
+        $customer = Customer::findOrFail($id);
+
+        if (!$customer) {
+            return redirect(route('db.master.customer'));
+        }
+
+        $customer->getBankAccount()->detach();
+
         $newba = array();
         for($i=0; $i<count($data['bank']); $i++) {
             $ba = new BankAccount();
@@ -126,8 +132,8 @@ class CustomerController extends Controller
             array_push($newba, $ba);
         }
 
-        $customer->getBankAccount()->sync($newba);
-        */
+        $customer->getBankAccount()->attach($newba);
+
         $customer->name             = $data['name'];
         $customer->address          = $data['address'];
         $customer->city             = $data['city'];
