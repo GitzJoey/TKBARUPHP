@@ -60,6 +60,6 @@ class Bank extends Model
 
     public function getBankAccount()
     {
-        return $this->hasMany('App\BankAccount');
+        return $this->hasMany('App\BankAccount', 'bank_id');
     }
 }

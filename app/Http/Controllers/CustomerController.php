@@ -83,7 +83,7 @@ class CustomerController extends Controller
                 $customer->getBankAccount()->save($ba);
             }
 
-            for($i=0; $i<count($data['bank']); $i++) {
+            for($i=0; $i<count($data['first_name']); $i++) {
                 $pa = new Profile();
                 $pa->first_name = $data["first_name"][$i];
                 $pa->last_name = $data["last_name"][$i];
@@ -138,7 +138,7 @@ class CustomerController extends Controller
 
         $customer->getProfiles()->detach();
 
-        for($i=0; $i<count($data['bank']); $i++) {
+        for($i=0; $i<count($data['first_name']); $i++) {
             $pa = new Profile();
             $pa->first_name = $data["first_name"][$i];
             $pa->last_name = $data["last_name"][$i];

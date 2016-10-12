@@ -55,7 +55,7 @@ class BankAccount extends Model
 
     public function getBank()
     {
-    	return $this->belongsTo('App\Bank');
+    	return $this->belongsTo('App\Bank', 'bank_id');
     }
 
     public function getCustomer()
