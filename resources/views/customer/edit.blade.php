@@ -85,7 +85,7 @@
                                                 <button class="btn btn-xs btn-default" type="button" ng-click="addNewProfile()">@lang('buttons.create_new_button')</button>
                                             </div>
                                             <div class="col-md-11">
-                                                <div ng-repeat="profile in profiles" ng-init="profileIndex = $index">
+                                                <div ng-repeat="profile in profiles">
                                                     <div class="box box-widget">
                                                         <div class="box-header with-border">
                                                             <div class="user-block">
@@ -134,10 +134,11 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr ng-repeat="ph in profile.phone_number">
+                                                                        <tr ng-repeat="ph in profile.get_phone_number">
                                                                             <td>
-                                                                                <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" ng-model="ph.provider"
-                                                                                        ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
+                                                                                <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
+                                                                                        ng-model="ph.phone_provider_id"
+                                                                                        ng-options="p.id as p.name + ' (' + p.short_name + ')' for p in providerDDL">
                                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 </select>
                                                                             </td>
@@ -285,7 +286,7 @@
         var app = angular.module("customerModule", []);
         app.controller("customerController", ['$scope', function($scope) {
             $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getBankAccount)) ? '[]':htmlspecialchars_decode($customer->getBankAccount) !!}');
-            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getBankProfile)) ? '[]':htmlspecialchars_decode($customer->getBankProfile) !!}');
+            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getProfiles)) ? '[]':htmlspecialchars_decode($customer->getProfiles) !!}');
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
 
@@ -313,8 +314,8 @@
                     'address': '',
                     'ic_num': '',
                     'image_filename': '',
-                    'phone_number':[{
-                        'provider': '',
+                    'get_phone_number':[{
+                        'phone_provider_id': '',
                         'number': '',
                         'remarks': ''
                     }]
@@ -326,15 +327,15 @@
             };
 
             $scope.addNewPhone = function(parentIndex) {
-                $scope.profiles[parentIndex].phone_number.push({
-                    'provider': '',
+                $scope.profiles[parentIndex].get_phone_number.push({
+                    'phone_provider_id': '',
                     'number': '',
                     'remarks': ''
                 });
             };
 
             $scope.removeSelectedPhone = function(parentIndex, idx) {
-                $scope.profiles[parentIndex].phone_number.splice(idx, 1);
+                $scope.profiles[parentIndex].get_phone_number.splice(idx, 1);
             };
         }]);
     </script>

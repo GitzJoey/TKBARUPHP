@@ -103,7 +103,7 @@ class CustomerController extends Controller
 
     public function edit($id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = Customer::with('getProfiles.getPhoneNumber', 'getBankAccount')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
@@ -122,17 +122,35 @@ class CustomerController extends Controller
 
         $customer->getBankAccount()->detach();
 
-        $newba = array();
         for($i=0; $i<count($data['bank']); $i++) {
             $ba = new BankAccount();
             $ba->bank_id = $data["bank"][$i];
             $ba->account_number = $data["account_number"][$i];
             $ba->remarks = $data["bank_remarks"][$i];
 
-            array_push($newba, $ba);
+            $customer->getBankAccount()->save($ba);
         }
 
-        $customer->getBankAccount()->attach($newba);
+        $customer->getProfiles()->detach();
+
+        for($i=0; $i<count($data['bank']); $i++) {
+            $pa = new Profile();
+            $pa->first_name = $data["first_name"][$i];
+            $pa->last_name = $data["last_name"][$i];
+            $pa->address = $data["profile_address"][$i];
+            $pa->ic_num = $data["ic_num"][$i];
+
+            $customer->getProfiles()->save($pa);
+
+            for ($j=0; $j<count($data['profile_'.$i.'_phone_provider']); $j++) {
+                $ph = new PhoneNumber();
+                $ph->phone_provider_id = $data['profile_'.$i.'_phone_provider'][$j];
+                $ph->number = $data['profile_'.$i.'_phone_number'][$j];
+                $ph->remarks = $data['profile_'.$i.'_remarks'][$j];
+
+                $pa->getPhoneNumber()->save($ph);
+            }
+        }
 
         $customer->name             = $data['name'];
         $customer->address          = $data['address'];

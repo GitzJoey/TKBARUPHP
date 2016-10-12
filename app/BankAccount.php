@@ -57,10 +57,9 @@ class BankAccount extends Model
     {
     	return $this->belongsTo('App\Bank');
     }
-    /*
+
     public function getCustomer()
     {
         return $this->belongsToMany('App\Customer', 'customer_bank_account', 'customer_id', 'bank_account_id');
     }
-    */
 }
