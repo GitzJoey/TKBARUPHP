@@ -29,8 +29,13 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $customer = Customer::find($id);
-        return view('customer.show')->with('customer', $customer);
+        $customer = Customer::with('getProfiles.getPhoneNumber', 'getBankAccount.getBank')->find($id);
+
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+        $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+
+        return view('customer.show', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL'));
     }
 
     public function create()

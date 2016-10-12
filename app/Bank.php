@@ -57,4 +57,9 @@ class Bank extends Model
     public function getBankFullNameAttribute() {
         return $this->attributes['name'] . ' ' . '(' .$this->attributes['short_name']. ')';
     }
+
+    public function getBankAccount()
+    {
+        return $this->hasMany('App\BankAccount');
+    }
 }

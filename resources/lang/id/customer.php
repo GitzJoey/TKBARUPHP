@@ -106,4 +106,35 @@ return [
             ],
         ],
     ],
+    'show' => [
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => '',
+        ],
+        'tab' => [
+            'customer' => '',
+            'pic' => '',
+            'bank_account' => '',
+            'settings' => '',
+            'header' => [
+                'bank_lists' => '',
+            ],
+        ],
+        'table_phone' => [
+            'header' => [
+                'provider' => '',
+                'number' => '',
+                'remarks' => '',
+            ],
+        ],
+        'table_bank' => [
+            'header' => [
+                'bank' => '',
+                'account_number' => '',
+                'remarks' => '',
+            ],
+        ],
+    ],
 ];

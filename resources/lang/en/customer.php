@@ -106,4 +106,35 @@ return [
             ],
         ],
     ],
+    'show' => [
+        'title' => 'Customer',
+        'page_title' => 'Customer',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Show Customer',
+        ],
+        'tab' => [
+            'customer' => 'Customer Data',
+            'pic' => 'Person In Charge',
+            'bank_account' => 'Bank Account',
+            'settings' => 'Settings',
+            'header' => [
+                'bank_lists' => 'Bank Account Lists',
+            ],
+        ],
+        'table_phone' => [
+            'header' => [
+                'provider' => 'Provider',
+                'number' => 'Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table_bank' => [
+            'header' => [
+                'bank' => 'Bank',
+                'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+    ],
 ];
