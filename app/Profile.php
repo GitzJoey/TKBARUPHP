@@ -11,6 +11,7 @@ namespace App;
 use App\User;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Profile
@@ -48,6 +49,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Profile extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $table = 'profiles';
 
     protected $fillable = [
@@ -74,4 +79,29 @@ class Profile extends Model
         return $this->belongsToMany('App\Customer', 'customer_pic', 'customer_id', 'profile_id');
     }
     */
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($model)
+        {
+            $user = Auth::user();
+            $model->created_by = $user->id;
+            $model->updated_by = $user->id;
+        });
+
+        static::updating(function($model)
+        {
+            $user = Auth::user();
+            $model->updated_by = $user->id;
+        });
+
+        static::deleting(function($model)
+        {
+            $user = Auth::user();
+            $model->deleted_by = $user->id;
+            $model->save();
+        });
+    }
 }

@@ -10,8 +10,10 @@ namespace App;
 
 use App\User;
 
+use Auth;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Store
@@ -53,6 +55,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Store extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $table = 'store';
 
     protected $fillable = [
@@ -66,5 +72,35 @@ class Store extends Model
     public function getUser()
     {
         return $this->hasMany('App\User', 'store_id');
+    }
+
+    public function getProduct()
+    {
+        return $this->hasMany('App\Product', 'store_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($model)
+        {
+            $user = Auth::user();
+            $model->created_by = $user->id;
+            $model->updated_by = $user->id;
+        });
+
+        static::updating(function($model)
+        {
+            $user = Auth::user();
+            $model->updated_by = $user->id;
+        });
+
+        static::deleting(function($model)
+        {
+            $user = Auth::user();
+            $model->deleted_by = $user->id;
+            $model->save();
+        });
     }
 }

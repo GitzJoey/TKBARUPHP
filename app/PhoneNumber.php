@@ -8,7 +8,8 @@
 
 namespace App;
 
-use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\PhoneNumber
@@ -40,7 +41,11 @@ use \Illuminate\Database\Eloquent\Model;
  */
 class PhoneNumber extends Model
 {
-	protected $table = 'phone_number';
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
+    protected $table = 'phone_number';
 
 	protected $fillable = ['phone_provider_id', 'number', 'status', 'remarks'];
 
@@ -52,5 +57,30 @@ class PhoneNumber extends Model
     public function getProvider()
     {
     	return $this->belongsTo('App\PhoneProvider', 'phone_provider_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($model)
+        {
+            $user = Auth::user();
+            $model->created_by = $user->id;
+            $model->updated_by = $user->id;
+        });
+
+        static::updating(function($model)
+        {
+            $user = Auth::user();
+            $model->updated_by = $user->id;
+        });
+
+        static::deleting(function($model)
+        {
+            $user = Auth::user();
+            $model->deleted_by = $user->id;
+            $model->save();
+        });
     }
 }

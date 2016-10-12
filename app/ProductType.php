@@ -9,7 +9,7 @@
 namespace App;
 
 use Vinkla\Hashids\Facades\Hashids;
-use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -44,6 +44,10 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class ProductType extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $table = 'product_type';
 
     protected $fillable = [
@@ -57,5 +61,30 @@ class ProductType extends Model
     public function getProduct()
     {
         return $this->hasMany('App\Product', 'product_type_id');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($model)
+        {
+            $user = Auth::user();
+            $model->created_by = $user->id;
+            $model->updated_by = $user->id;
+        });
+
+        static::updating(function($model)
+        {
+            $user = Auth::user();
+            $model->updated_by = $user->id;
+        });
+
+        static::deleting(function($model)
+        {
+            $user = Auth::user();
+            $model->deleted_by = $user->id;
+            $model->save();
+        });
     }
 }

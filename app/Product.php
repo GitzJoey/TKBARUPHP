@@ -9,8 +9,9 @@
 namespace App;
 
 use Vinkla\Hashids\Facades\Hashids;
-use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Product
@@ -53,6 +54,10 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class Product extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $table = 'product';
 
     protected $fillable = [
@@ -92,5 +97,30 @@ class Product extends Model
         }
 
         return json_encode($pu);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($model)
+        {
+            $user = Auth::user();
+            $model->created_by = $user->id;
+            $model->updated_by = $user->id;
+        });
+
+        static::updating(function($model)
+        {
+            $user = Auth::user();
+            $model->updated_by = $user->id;
+        });
+
+        static::deleting(function($model)
+        {
+            $user = Auth::user();
+            $model->deleted_by = $user->id;
+            $model->save();
+        });
     }
 }

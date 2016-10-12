@@ -32,7 +32,7 @@
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputStoreName" class="col-sm-2 control-label">@lang('store.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputStoreName" name="store_name" type="text" class="form-control" value="{{ $store->name }}" placeholder="Name">
+                        <input id="inputStoreName" name="name" type="text" class="form-control" value="{{ $store->name }}" placeholder="Name">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
                     <label for="inputAddress" class="col-sm-2 control-label">@lang('store.field.address')</label>
                     <div class="col-sm-10">
-                        <textarea id="inputAddress" class="form-control" rows="5" name="store_address">{{ $store->address }}</textarea>
+                        <textarea id="inputAddress" class="form-control" rows="5" name="address">{{ $store->address }}</textarea>
                         <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                     </div>
                 </div>
