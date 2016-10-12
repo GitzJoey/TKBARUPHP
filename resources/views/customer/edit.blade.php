@@ -138,7 +138,7 @@
                                                                             <td>
                                                                                 <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
                                                                                         ng-model="ph.phone_provider_id"
-                                                                                        ng-options="p.id as p.name + ' (' + p.short_name + ')' for p in providerDDL">
+                                                                                        ng-options="p.id as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
                                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 </select>
                                                                             </td>
