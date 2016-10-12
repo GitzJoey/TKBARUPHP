@@ -47,7 +47,7 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('so.so-create'))
-                            <li><a href="#"><i class="fa fa-cart-arrow-down fa-fw"></i>&nbsp;@lang('menu.item.so_new')</a></li>
+                            <li><a href="{{ route('db.so.create') }}"><i class="fa fa-cart-arrow-down fa-fw"></i>&nbsp;@lang('menu.item.so_new')</a></li>
                         @endif
                         @if(Entrust::can('so.so-revise'))
                             <li><a href="#"><i class="fa fa fa-code-fork fa-fw"></i>&nbsp;@lang('menu.item.so_revise')</a></li>

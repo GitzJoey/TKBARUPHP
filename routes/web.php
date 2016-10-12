@@ -196,6 +196,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/po/create', 'PurchaseOrderController@create')->name('db.po.create');
     Route::post('/dashboard/po/create', 'PurchaseOrderController@create');
 
+    Route::get('/dashboard/so/create', 'SalesOrderController@create')->name('db.so.create');
+    Route::post('/dashboard/so/create', 'SalesOrderController@create');
+
     Route::get('/dashboard/report/trx', 'ReportController@report_trx')->name('db.report.transaction');
     Route::get('/dashboard/report/mon', 'ReportController@report_mon')->name('db.report.monitoring');
     Route::get('/dashboard/report/tax', 'ReportController@report_tax')->name('db.report.tax');

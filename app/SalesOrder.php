@@ -9,6 +9,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\SalesOrder
@@ -17,6 +18,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SalesOrder extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
+    protected $table = 'sales_order';
+
+    protected $fillable = [
+        'store_id', 'customer_id', 'vendor_truck_id', 'code', 'so_created', 'shipping_date', 'customer_type', 'walk_in_cust_detail', 'so_type', 'status', 'remarks'
+    ];
+
+
     public static function boot()
     {
         parent::boot();
