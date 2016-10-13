@@ -18,7 +18,7 @@ class PurchaseOrderController extends Controller
 
     public function create()
     {
-        return view('po.create');
+        return view('purchase_order.create');
     }
 
     public function store($data)

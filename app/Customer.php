@@ -12,6 +12,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Profile[] $profile
+ * @property integer $id
+ * @property string $name
+ * @property string $address
+ * @property string $city
+ * @property string $phone_number
+ * @property string $fax_num
+ * @property string $tax_id
+ * @property integer $payment_due_day
+ * @property string $remarks
+ * @property string $status
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereCity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereFaxNum($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereTaxId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer wherePaymentDueDay($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Customer whereDeletedAt($value)
  */
 class Customer extends Model
 {

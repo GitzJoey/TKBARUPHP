@@ -38,6 +38,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereDeletedAt($value)
+ * @property integer $profile_id
+ * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereProfileId($value)
  */
 class PhoneNumber extends Model
 {

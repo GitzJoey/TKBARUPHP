@@ -43,6 +43,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Bank whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Bank whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Bank whereDeletedAt($value)
+ * @property-read mixed $bank_full_name
  */
 class Bank extends Model
 {
