@@ -21,12 +21,13 @@ class SalesOrderController extends Controller
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $soTypeDDL = Lookup::where('category', '=', 'SO_TYPE')->get()->pluck('description', 'code');
+        $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get()->pluck('description', 'code');
+        $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get()->pluck('description', 'code');
 
         $vendortruckingDDL = VendorTrucking::whereStatus('STATUS.active')->get(['name', 'id']);
 
 
-        return view('sales_order.create', compact('statusDDL', 'soTypeDDL'));
+        return view('sales_order.create', compact('statusDDL', 'soTypeDDL', 'customerTypeDDL'));
     }
 
 }

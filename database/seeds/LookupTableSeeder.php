@@ -97,6 +97,24 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'POTYPE',
             ],
             [
+                'code' => 'CUSTOMERTYPE.r',
+                'description' => 'Registered Customer',
+                'category' => 'CUSTOMERTYPE',
+            ],[
+                'code' => 'CUSTOMERTYPE.wi',
+                'description' => 'Walk In Customer',
+                'category' => 'CUSTOMERTYPE',
+            ],
+            [
+                'code' => 'SUPPLIERTYPE.r',
+                'description' => 'Registered Supplier',
+                'category' => 'SUPPLIERTYPE',
+            ],[
+                'code' => 'SUPPLIERTYPE.wi',
+                'description' => 'Walk In Supplier',
+                'category' => 'SUPPLIERTYPE',
+            ],
+            [
                 'code' => 'SOTYPE.S',
                 'description' => 'Standard SO',
                 'category' => 'SOTYPE',

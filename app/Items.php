@@ -15,6 +15,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * App\Items
  *
  * @mixin \Eloquent
+ * @property integer $id
+ * @property integer $store_id
+ * @property integer $product_id
+ * @property integer $stocks_id
+ * @property integer $selected_unit_id
+ * @property integer $base_unit_id
+ * @property float $conversion_value
+ * @property float $quantity
+ * @property float $price
+ * @property float $to_base_quantity
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereStocksId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereSelectedUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereBaseUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereConversionValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereToBaseQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Items whereDeletedAt($value)
  */
 class Items extends Model
 {
