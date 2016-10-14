@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-smile-o fa-fw"></span>&nbsp;@lang('supplier.show.page_title')
+    <span class="fa fa-building-o fa-fw"></span>&nbsp;@lang('supplier.show.page_title')
 @endsection
 @section('page_title_desc')
     @lang('supplier.show.page_title_desc')

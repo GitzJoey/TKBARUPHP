@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-smile-o fa-fw"></span>&nbsp;@lang('supplier.index.page_title')
+    <span class="fa fa-building-o fa-fw"></span>&nbsp;@lang('supplier.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('supplier.index.page_title_desc')
@@ -35,18 +35,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($customer as $key => $cust)
+                @foreach ($supplier as $key => $supp)
                     <tr>
-                        <td class="text-center">{{ $cust->name }}</td>
-                        <td class="text-center">{{ $cust->address }}</td>
-                        <td class="text-center">{{ $cust->tax_id }}</td>
-                        <td class="text-center">{{ $cust->phone }}</td>
-                        <td class="text-center">{{ $cust->remarks }}</td>
+                        <td class="text-center">{{ $supp->name }}</td>
+                        <td class="text-center">{{ $supp->address }}</td>
+                        <td class="text-center">{{ $supp->tax_id }}</td>
+                        <td class="text-center">{{ $supp->phone }}</td>
+                        <td class="text-center">{{ $supp->remarks }}</td>
                         <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.master.customer.show', $cust->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.customer.edit', $cust->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.customer.delete', $cust->hId()], 'style'=>'display:inline'])  !!}
-                            <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                            <a class="btn btn-xs btn-info" href="{{ route('db.master.supplier.show', $cust->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.supplier.edit', $cust->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.supplier.delete', $cust->hId()], 'style'=>'display:inline'])  !!}
+                                <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                             {!! Form::close() !!}
                         </td>
                     </tr>
@@ -55,8 +55,8 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.master.customer.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
-            {{ $customer->render() }}
+            <a class="btn btn-success" href="{{ route('db.master.supplier.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
+            {{ $supplier->render() }}
         </div>
     </div>
 @endsection

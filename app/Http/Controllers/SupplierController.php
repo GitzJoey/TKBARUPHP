@@ -29,29 +29,28 @@ class SupplierController extends Controller
 
 	public function index()
 	{
-        $suppliers = Supplier::paginate(10);
-	    return view('supplier.index', compact('suppliers'));
+        $supplier = Supplier::paginate(10);
+	    return view('supplier.index', compact('supplier'));
 	}
 
 	public function show($id)
 	{
-        $supplier = Supplier::findOrFail($id);
-        $products = $supplier->products;
-        $pics = $supplier->pic;
-        $phone_provider = PhoneProvider::all();
-        $banks = Bank::all();
-        $bank_account = $supplier->bank;
+        $supplier = Supplier::with('getProfiles.getPhoneNumber', 'getBankAccount.getBank')->find($id);
+
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+        $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
 
         return view('supplier.show', compact('supplier','products', 'pics', 'phone_provider','banks','bank_account','statusDDL'));
 	}
 
 	public function create()
 	{
-        $banks = Bank::all();
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+        $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
 
-        return view('supplier.create', compact('banks', 'statusDDL'));
+        return view('supplier.create', compact('bankDDL', 'statusDDL', 'providerDDL'));
 	}
 
 	public function store(Request $request)
