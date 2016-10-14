@@ -8,6 +8,7 @@
 
 namespace App;
 
+use Auth;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -73,21 +74,27 @@ class Unit extends Model
         static::creating(function($model)
         {
             $user = Auth::user();
-            $model->created_by = $user->id;
-            $model->updated_by = $user->id;
+            if ($user) {
+                $model->created_by = $user->id;
+                $model->updated_by = $user->id;
+            }
         });
 
         static::updating(function($model)
         {
             $user = Auth::user();
-            $model->updated_by = $user->id;
+            if ($user) {
+                $model->updated_by = $user->id;
+            }
         });
 
         static::deleting(function($model)
         {
             $user = Auth::user();
-            $model->deleted_by = $user->id;
-            $model->save();
+            if ($user) {
+                $model->deleted_by = $user->id;
+                $model->save();
+            }
         });
     }
 }

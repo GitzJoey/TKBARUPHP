@@ -7,7 +7,8 @@
  * Time: 10:19 PM
  */
 
-use \Illuminate\Database\Seeder;
+use Illuminate\Database\Seeder;
+
 use App\Permission;
 
 class PermissionTableSeeder extends Seeder

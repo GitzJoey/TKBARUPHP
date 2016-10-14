@@ -6,7 +6,8 @@
  * Date: 9/10/2016
  * Time: 11:11 AM
  */
-use \Illuminate\Database\Seeder;
+use Illuminate\Database\Seeder;
+
 use App\PhoneProvider;
 
 class PhoneProviderTableSeeder extends Seeder

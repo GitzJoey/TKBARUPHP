@@ -7,8 +7,9 @@
  * Time: 1:29 AM
  */
 
-use \Illuminate\Database\Seeder;
-use \App\Settings;
+use Illuminate\Database\Seeder;
+
+use App\Settings;
 
 class SettingsTableSeeder extends Seeder
 {

@@ -6,7 +6,8 @@
  * Time: 11:35 PM
  */
 
-use \Illuminate\Database\Seeder;
+use Illuminate\Database\Seeder;
+
 use App\Unit;
 
 class DefaultListUnitTableSeeder extends Seeder

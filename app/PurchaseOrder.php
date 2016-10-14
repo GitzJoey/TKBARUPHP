@@ -9,6 +9,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\PurchaseOrder
@@ -17,6 +18,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PurchaseOrder extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
+    protected $table = 'purchase_order';
+
+    protected $fillable = [
+
+    ];
+
     public static function boot()
     {
         parent::boot();
@@ -24,21 +35,27 @@ class PurchaseOrder extends Model
         static::creating(function($model)
         {
             $user = Auth::user();
-            $model->created_by = $user->id;
-            $model->updated_by = $user->id;
+            if ($user) {
+                $model->created_by = $user->id;
+                $model->updated_by = $user->id;
+            }
         });
 
         static::updating(function($model)
         {
             $user = Auth::user();
-            $model->updated_by = $user->id;
+            if ($user) {
+                $model->updated_by = $user->id;
+            }
         });
 
         static::deleting(function($model)
         {
             $user = Auth::user();
-            $model->deleted_by = $user->id;
-            $model->save();
+            if ($user) {
+                $model->deleted_by = $user->id;
+                $model->save();
+            }
         });
     }
 }

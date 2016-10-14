@@ -7,8 +7,9 @@
  * Time: 1:16 PM
  */
 
-use \Illuminate\Database\Seeder;
-use \App\Lookup;
+use Illuminate\Database\Seeder;
+
+use App\Lookup;
 
 class CreateLookupTableSeeder extends Seeder
 {
