@@ -1,7 +1,6 @@
 <?php 
 
 return [
-    '0' => '1',
     'create' => [
         'title' => '',
         'page_title' => '',
