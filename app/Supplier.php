@@ -9,7 +9,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
- 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * App\Supplier
  *
@@ -52,23 +53,59 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Supplier extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $table = 'supplier';
 
     protected $fillable = [
         'name', 'address', 'city', 'phone_number', 'fax_num', 'tax_id', 'payment_due_day', 'status', 'remarks',
     ];
 
-    public function getProfile()
+    public function getProfiles()
     {
         return $this->belongsToMany('App\Profile', 'supplier_pic', 'supplier_id', 'profile_id');
     }
-    public function getBank()
+
+    public function getBankAccount()
     {
-    	return $this->belongsToMany('App\BankAccount', 'supplier_bank_account');
+        return $this->belongsToMany('App\BankAccount', 'supplier_bank_account', 'supplier_id', 'bank_account_id');
     }
 
     public function getProducts()
     {
         return $this->belongsToMany('App\Product', 'supplier_prod');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($model)
+        {
+            $user = Auth::user();
+            if ($user) {
+                $model->created_by = $user->id;
+                $model->updated_by = $user->id;
+            }
+        });
+
+        static::updating(function($model)
+        {
+            $user = Auth::user();
+            if ($user) {
+                $model->updated_by = $user->id;
+            }
+        });
+
+        static::deleting(function($model)
+        {
+            $user = Auth::user();
+            if ($user) {
+                $model->deleted_by = $user->id;
+                $model->save();
+            }
+        });
     }
 }

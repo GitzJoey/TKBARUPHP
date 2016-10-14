@@ -8,17 +8,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Supplier;
+use Illuminate\Http\Request;
+
+use App\Bank;
+use App\Lookup;
 use App\Profile;
+use App\Product;
+use App\Supplier;
+use App\BankAccount;
 use App\PhoneNumber;
 use App\PhoneProvider;
-use App\Product;
-use App\Bank;
-use App\BankAccount;
 use App\SupplierSetting;
-use App\Lookup;
-
-use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
@@ -29,8 +29,8 @@ class SupplierController extends Controller
 
 	public function index()
 	{
-        $suppliers = Supplier::paginate(10);;
-	    return view('suppliers.index', compact('suppliers'));
+        $suppliers = Supplier::paginate(10);
+	    return view('supplier.index', compact('suppliers'));
 	}
 
 	public function show($id)
@@ -43,7 +43,7 @@ class SupplierController extends Controller
         $bank_account = $supplier->bank;
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('suppliers.show', compact('supplier','products', 'pics', 'phone_provider','banks','bank_account','statusDDL'));
+        return view('supplier.show', compact('supplier','products', 'pics', 'phone_provider','banks','bank_account','statusDDL'));
 	}
 
 	public function create()
@@ -51,7 +51,7 @@ class SupplierController extends Controller
         $banks = Bank::all();
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('suppliers.create', compact('banks', 'statusDDL'));
+        return view('supplier.create', compact('banks', 'statusDDL'));
 	}
 
 	public function store(Request $request)
@@ -120,7 +120,7 @@ class SupplierController extends Controller
         $bank_account = $supplier->bank;
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('suppliers.edit', compact('supplier', 'phone_provider','pics','products','banks','bank_account','statusDDL','phones'));
+        return view('supplier.edit', compact('supplier', 'phone_provider','pics','products','banks','bank_account','statusDDL','phones'));
 	}
 
 	public function update(Request $request, $id)
@@ -185,7 +185,7 @@ class SupplierController extends Controller
     {
         $pic = Profile::find($pic_id);
         // return $pic;
-        return view('suppliers.pic.edit', compact('pic','id','pic_id'));
+        return view('supplier.pic.edit', compact('pic','id','pic_id'));
     }
 
     public function updatePic(Request $request, $id, $pic_id)
@@ -240,7 +240,7 @@ class SupplierController extends Controller
         $phone_provider = PhoneProvider::all();
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('suppliers.phone.edit', compact('phone','phone_provider','statusDDL','id', 'pic_id', 'phone_id'));
+        return view('supplier.phone.edit', compact('phone','phone_provider','statusDDL','id', 'pic_id', 'phone_id'));
     }
 
     public function updatePhone(Request $request, $id, $pic_id, $phone_id)
@@ -298,7 +298,7 @@ class SupplierController extends Controller
         $banks = Bank::all();
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('suppliers.bank.edit', compact('bank_account', 'banks', 'statusDDL', 'id'));
+        return view('supplier.bank.edit', compact('bank_account', 'banks', 'statusDDL', 'id'));
     }
 
     public function updateBank(Request $request, $id, $bank_id) {

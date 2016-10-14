@@ -9,7 +9,9 @@
 namespace App\Http\Controllers;
 
 use App\Lookup;
+use App\Product;
 use App\VendorTrucking;
+use App\Warehouse;
 
 class SalesOrderController extends Controller
 {
@@ -23,11 +25,14 @@ class SalesOrderController extends Controller
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get()->pluck('description', 'code');
         $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get()->pluck('description', 'code');
+        $warehouseDDL = Warehouse::whereStatus('STATUS.Active')->get(['name', 'id']);
+        $productDDL = Product::whereStatus('STATUS.Active')->get(['name', 'id']);
+        $stocksDDL = '';
 
         $vendortruckingDDL = VendorTrucking::whereStatus('STATUS.active')->get(['name', 'id']);
 
 
-        return view('sales_order.create', compact('statusDDL', 'soTypeDDL', 'customerTypeDDL'));
+        return view('sales_order.create', compact('statusDDL', 'soTypeDDL', 'customerTypeDDL', 'warehouseDDL' ,'productDDL', 'stocksDDL'));
     }
 
 }
