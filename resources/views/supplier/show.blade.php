@@ -43,9 +43,10 @@
                     <div class="col-md-12">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                                <li><a href="#tab_customer" data-toggle="tab">@lang('supplier.show.tab.customer')</a></li>
+                                <li><a href="#tab_supplier" data-toggle="tab">@lang('supplier.show.tab.supplier')</a></li>
                                 <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.show.tab.pic')</a></li>
                                 <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.show.tab.bank_account')</a></li>
+                                <li><a href="#tab_product" data-toggle="tab">@lang('supplier.show.tab.product')</a></li>
                                 <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.show.tab.settings')</a></li>
                             </ul>
                             <div class="tab-content">
@@ -54,7 +55,7 @@
                                         <label for="inputName" class="col-sm-2 control-label">@lang('supplier.field.name')</label>
                                         <div class="col-sm-10">
                                             <label id="inputName" class="control-label">
-                                                <span class="control-label-normal">{{ $customer->name }}</span>
+                                                <span class="control-label-normal">{{ $supplier->name }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -62,7 +63,7 @@
                                         <label for="inputAddress" class="col-sm-2 control-label">@lang('supplier.field.address')</label>
                                         <div class="col-sm-10">
                                             <label id="inputAddress" class="control-label">
-                                                <span class="control-label-normal">{{ $customer->address }}</span>
+                                                <span class="control-label-normal">{{ $supplier->address }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -70,7 +71,7 @@
                                         <label for="inputCity" class="col-sm-2 control-label">@lang('supplier.field.city')</label>
                                         <div class="col-sm-10">
                                             <label id="inputCity" class="control-label">
-                                                <span class="control-label-normal">{{ $customer->city }}</span>
+                                                <span class="control-label-normal">{{ $supplier->city }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -78,7 +79,7 @@
                                         <label for="inputPhone" class="col-sm-2 control-label">@lang('supplier.field.phone')</label>
                                         <div class="col-sm-10">
                                             <label id="inputPhone" class="control-label">
-                                                <span class="control-label-normal">{{ $customer->phone }}</span>
+                                                <span class="control-label-normal">{{ $supplier->phone }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -86,7 +87,7 @@
                                         <label for="inputTaxId" class="col-sm-2 control-label">@lang('supplier.field.tax_id')</label>
                                         <div class="col-sm-10">
                                             <label id="inputTaxId" class="control-label">
-                                                <span class="control-label-normal">{{ $customer->tax_id }}</span>
+                                                <span class="control-label-normal">{{ $supplier->tax_id }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -94,7 +95,7 @@
                                         <label for="inputRemarks" class="col-sm-2 control-label">@lang('supplier.field.remarks')</label>
                                         <div class="col-sm-10">
                                             <label id="inputRemarks" class="control-label">
-                                                <span class="control-label-normal">{{ $customer->remarks }}</span>
+                                                <span class="control-label-normal">{{ $supplier->remarks }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -102,7 +103,7 @@
                                 <div class="tab-pane" id="tab_pic">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            @foreach($customer->getProfiles as $key => $profile)
+                                            @foreach($supplier->getProfiles as $key => $profile)
                                                 <div class="box box-widget">
                                                     <div class="box-header with-border">
                                                         <div class="user-block">
@@ -176,46 +177,31 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab_bank_account">
-                                    <div class="box-group" id="accordion_bankaccount">
-                                        <div class="panel box box-default">
-                                            <div class="box-header with-border">
-                                                <h4 class="box-title">
-                                                    <a class="collapsed" aria-expanded="false" href="#collapseBankAccountLists" data-toggle="collapse" data-parent="#accordion_bankaccount">
-                                                        @lang('supplier.show.tab.header.bank_lists')
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div class="panel-collapse collapse" id="collapseBankAccountLists" aria-expanded="false">
-                                                <div class="box-body">
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="text-center">@lang('supplier.show.table_bank.header.bank')</th>
-                                                            <th class="text-center">@lang('supplier.show.table_bank.header.account_number')</th>
-                                                            <th class="text-center">@lang('supplier.show.table_bank.header.remarks')</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @foreach($customer->getBankAccount as $ba)
-                                                            <tr>
-                                                                <td>{{ $ba->getBank->name }}&nbsp;({{ $ba->getBank->name }})</td>
-                                                                <td>{{ $ba->account_number }}</td>
-                                                                <td>{{ $ba->remarks }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">@lang('supplier.show.table_bank.header.bank')</th>
+                                            <th class="text-center">@lang('supplier.show.table_bank.header.account_number')</th>
+                                            <th class="text-center">@lang('supplier.show.table_bank.header.remarks')</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($supplier->getBankAccount as $ba)
+                                            <tr>
+                                                <td>{{ $ba->getBank->name }}&nbsp;({{ $ba->getBank->name }})</td>
+                                                <td>{{ $ba->account_number }}</td>
+                                                <td>{{ $ba->remarks }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="tab-pane" id="tab_settings">
                                     <div class="form-group">
                                         <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
                                         <div class="col-sm-10">
                                             <label id="inputPaymentDueDay" class="control-label">
-                                                <span class="control-label-normal">{{ $customer->payment_due_day }}</span>
+                                                <span class="control-label-normal">{{ $supplier->payment_due_day }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -226,7 +212,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-2">
-                        <a href="{{ route('db.master.customer') }}" class="btn btn-default">@lang('buttons.back_button')</a>
+                        <a href="{{ route('db.master.supplier') }}" class="btn btn-default">@lang('buttons.back_button')</a>
                     </div>
                 </div>
             </div>

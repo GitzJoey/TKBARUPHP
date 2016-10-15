@@ -180,15 +180,16 @@
                                             <tr ng-repeat="bank in banks">
                                                 <td>
                                                     <select class="form-control"
+                                                            name="bank[]"
                                                             ng-model="bank.bank_id"
-                                                            ng-options="b.id as b.name for b in bankDDL track by b.id">
+                                                            ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id">
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="account_number[]" ng-model="bank.account_number">
+                                                    <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="bank_remarks[]" ng-model="bank.remarks">
+                                                    <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
@@ -196,6 +197,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
+                                        <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
                                     </div>
                                     <div class="tab-pane" id="tab_settings">
                                         <div class="form-group">
@@ -211,7 +213,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10 col-md-offset-2">
-                            <a href="{{ route('db.master.supplier') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <a href="{{ route('db.master.customer') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
                             <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                         </div>
                     </div>
@@ -232,9 +234,9 @@
 
             $scope.addNewBank = function() {
                 $scope.banks.push({
-                    'bank_id': $scope.inputBank.bank.id,
-                    'account_number': $scope.inputBank.bank_account,
-                    'remarks': $scope.inputBank.remarks
+                    'bank_id': '',
+                    'account_number': '',
+                    'remarks': ''
                 });
             };
 

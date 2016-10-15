@@ -8,8 +8,7 @@
  */
 namespace App;
 
-use App\User;
-
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

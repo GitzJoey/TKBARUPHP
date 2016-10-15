@@ -15,8 +15,7 @@ return [
             'product' => 'Product List',
             'settings' => 'Settings',
             'header' => [
-                'bank_lists' => 'Bank Lists',
-                'bank_inputs' => 'Bank Inputs',
+                'bank_lists' => '',
             ],
         ],
         'table_phone' => [
@@ -50,21 +49,17 @@ return [
         'payment_due_day' => 'Payment Due Day',
     ],
     'edit' => [
-        'title' => '',
-        'page_title' => '',
+        'title' => 'Supplier',
+        'page_title' => 'Supplier',
         'page_title_desc' => '',
         'header' => [
-            'title' => '',
+            'title' => 'Edit Supplier',
         ],
         'tab' => [
-            'customer' => '',
-            'pic' => '',
-            'bank_account' => '',
-            'settings' => '',
-            'header' => [
-                'bank_lists' => '',
-                'bank_inputs' => '',
-            ],
+            'customer' => 'Customer Data',
+            'pic' => 'Person In Charge',
+            'bank_account' => 'Bank Account',
+            'settings' => 'Settings',
         ],
         'table_phone' => [
             'header' => [
@@ -82,50 +77,48 @@ return [
         ],
     ],
     'index' => [
-        'title' => '',
-        'page_title' => '',
+        'title' => 'Supplier',
+        'page_title' => 'Supplier',
         'page_title_desc' => '',
         'header' => [
-            'title' => '',
+            'title' => 'Supplier Lists',
         ],
         'table' => [
             'header' => [
-                'name' => '',
-                'address' => '',
-                'tax_id' => '',
-                'phone' => '',
-                'remarks' => '',
+                'name' => 'Name',
+                'address' => 'Address',
+                'tax_id' => 'Tax ID',
+                'phone' => 'Phone',
+                'remarks' => 'Remarks',
             ],
         ],
     ],
     'show' => [
-        'title' => '',
-        'page_title' => '',
+        'title' => 'Supplier',
+        'page_title' => 'Supplier',
         'page_title_desc' => '',
         'header' => [
-            'title' => '',
+            'title' => 'Show Supplier',
         ],
         'tab' => [
-            'customer' => '',
-            'pic' => '',
-            'bank_account' => '',
-            'settings' => '',
-            'header' => [
-                'bank_lists' => '',
-            ],
+            'supplier' => 'Supplier Data',
+            'pic' => 'Person In Charge',
+            'bank_account' => 'Bank Account',
+            'product' => 'Product Lists',
+            'settings' => 'Settings',
         ],
         'table_phone' => [
             'header' => [
-                'provider' => '',
-                'number' => '',
-                'remarks' => '',
+                'provider' => 'Provider',
+                'number' => 'Number',
+                'remarks' => 'Remarks',
             ],
         ],
         'table_bank' => [
             'header' => [
-                'bank' => '',
-                'account_number' => '',
-                'remarks' => '',
+                'bank' => 'Bank',
+                'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
             ],
         ],
     ],

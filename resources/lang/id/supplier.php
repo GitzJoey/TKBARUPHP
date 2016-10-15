@@ -16,7 +16,6 @@ return [
             'settings' => '',
             'header' => [
                 'bank_lists' => '',
-                'bank_inputs' => '',
             ],
         ],
         'table_phone' => [
@@ -106,13 +105,11 @@ return [
             'title' => '',
         ],
         'tab' => [
-            'customer' => '',
+            'supplier' => '',
             'pic' => '',
             'bank_account' => '',
+            'product' => '',
             'settings' => '',
-            'header' => [
-                'bank_lists' => '',
-            ],
         ],
         'table_phone' => [
             'header' => [

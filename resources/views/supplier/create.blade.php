@@ -168,94 +168,37 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tab_bank_account">
-                                        <div class="box-group" id="accordion_bankaccount">
-                                            <div class="panel box box-default">
-                                                <div class="box-header with-border">
-                                                    <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseBankAccountLists" data-toggle="collapse" data-parent="#accordion_bankaccount">
-                                                            @lang('supplier.create.tab.header.bank_lists')
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="panel-collapse collapse" id="collapseBankAccountLists" aria-expanded="false">
-                                                    <div class="box-body">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                            <tr>
-                                                                <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
-                                                                <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
-                                                                <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
-                                                                <th class="text-center">@lang('labels.ACTION')</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr ng-repeat="bank in banks">
-                                                                    <td>
-                                                                        <span ng-repeat="b in bankDDL | filter:{'id': bank.bank_id }:true">
-                                                                            @{{ b.name }}&nbsp;(@{{ b.short_name }})
-                                                                        </span>
-                                                                        <input type="hidden" name="bank[]" value="@{{ bank.bank_id }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        @{{ bank.account_number }}
-                                                                        <input type="hidden" name="account_number[]" value="@{{ bank.account_number }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        @{{ bank.remarks }}
-                                                                        <input type="hidden" name="bank_remarks[]" value="@{{ bank.remarks }}">
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel box box-default">
-                                                <div class="box-header with-border">
-                                                    <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseBankAccountInputs" data-toggle="collapse" data-parent="#accordion_bankaccount">
-                                                            @lang('supplier.create.tab.header.bank_inputs')
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="panel-collapse collapse" id="collapseBankAccountInputs" aria-expanded="false">
-                                                    <div class="box-body">
-                                                        <div class="form-group">
-                                                            <label for="inputBank" class="col-sm-2 control-label">@lang('supplier.field.bank')</label>
-                                                            <div class="col-sm-10">
-                                                                <select id="inputBank" class="form-control"
-                                                                        ng-model="inputBank.bank"
-                                                                        ng-options="b.name + ' (' + b.short_name + ')' for b in bankDDL">
-                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputBankAccount" class="col-sm-2 control-label">@lang('supplier.field.bank_account')</label>
-                                                            <div class="col-sm-10">
-                                                                <input id="inputBankAccount" type="text" class="form-control" ng-model="inputBank.bank_account" placeholder="@lang('supplier.field.bank_account')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputRemarks" class="col-sm-2 control-label">@lang('supplier.field.remarks')</label>
-                                                            <div class="col-sm-10">
-                                                                <input id="inputRemarks" type="text" class="form-control" ng-model="inputBank.remarks" placeholder="@lang('supplier.field.remarks')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputBankButtons" class="col-sm-2 control-label">&nbsp;</label>
-                                                            <div class="col-sm-10">
-                                                                <button class="btn btn-xs btn-default" type="button" ng-click="resetInputBank()">@lang('buttons.reset_button')</button>
-                                                                <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
+                                                <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
+                                                <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
+                                                <th class="text-center">@lang('labels.ACTION')</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="bank in banks">
+                                                <td>
+                                                    <select class="form-control"
+                                                            name="bank[]"
+                                                            ng-model="bank.bank_id"
+                                                            ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id">
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
                                     </div>
                                     <div class="tab-pane" id="tab_product">
                                         <div class="box-group" id="accordion_product">
@@ -310,9 +253,9 @@
 
             $scope.addNewBank = function() {
                 $scope.banks.push({
-                    'bank_id': $scope.inputBank.bank.id,
-                    'account_number': $scope.inputBank.bank_account,
-                    'remarks': $scope.inputBank.remarks
+                    'bank_id': '',
+                    'account_number': '',
+                    'remarks': ''
                 });
             };
 

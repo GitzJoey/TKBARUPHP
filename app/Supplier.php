@@ -8,6 +8,8 @@
 
 namespace App;
 
+use Auth;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -62,6 +64,10 @@ class Supplier extends Model
     protected $fillable = [
         'name', 'address', 'city', 'phone_number', 'fax_num', 'tax_id', 'payment_due_day', 'status', 'remarks',
     ];
+
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
 
     public function getProfiles()
     {

@@ -43,9 +43,9 @@
                         <td class="text-center">{{ $supp->phone }}</td>
                         <td class="text-center">{{ $supp->remarks }}</td>
                         <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.master.supplier.show', $cust->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.supplier.edit', $cust->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.supplier.delete', $cust->hId()], 'style'=>'display:inline'])  !!}
+                            <a class="btn btn-xs btn-info" href="{{ route('db.master.supplier.show', $supp->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.supplier.edit', $supp->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.supplier.delete', $supp->hId()], 'style'=>'display:inline'])  !!}
                                 <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                             {!! Form::close() !!}
                         </td>
