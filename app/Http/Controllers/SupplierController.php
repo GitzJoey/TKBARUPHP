@@ -113,7 +113,7 @@ class SupplierController extends Controller
 
 	public function edit($id)
 	{
-        $suppiier = Supplier::with('getProfiles.getPhoneNumber', 'getBankAccount.getBank')->find($id);
+        $supplier = Supplier::with('getProfiles.getPhoneNumber', 'getBankAccount.getBank')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);

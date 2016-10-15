@@ -29,7 +29,7 @@
         </div>
         {!! Form::model($supplier, ['method' => 'PATCH','route' => ['db.master.supplier.edit', $supplier->hId()], 'class' => 'form-horizontal']) !!}
             {{ csrf_field() }}
-            <div ng-app="customerModule" ng-controller="customerController">
+            <div ng-app="supplierModule" ng-controller="supplierController">
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -182,7 +182,8 @@
                                             <tr ng-repeat="bank in banks">
                                                 <td>
                                                     <select class="form-control"
-                                                            ng-model="bank[]"
+                                                            name="bank[]"
+                                                            ng-model="bank.bank_id"
                                                             ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id">
                                                     </select>
                                                 </td>
