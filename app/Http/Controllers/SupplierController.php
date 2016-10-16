@@ -76,6 +76,7 @@ class SupplierController extends Controller
             'tax_id' => $request->input('tax_id'),
             'status' => $request->input('status'),
             'remarks' => $request->input('remarks'),
+            'payment_due_day' => empty($request->input('payment_due_day')) ? 0:$request->input('payment_due_day'),
         ];
 
         $supplier = Supplier::create($suppliers);
@@ -122,7 +123,7 @@ class SupplierController extends Controller
         return view('supplier.edit', compact('supplier', 'bankDDL', 'statusDDL', 'providerDDL'));
 	}
 
-	public function update(Request $request, $id)
+	public function update($id, Request $request)
 	{
         $supplier = Supplier::findOrFail($id);
 

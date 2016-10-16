@@ -172,7 +172,20 @@ class CustomerController extends Controller
 
     public function delete($id)
     {
-        Customer::findOrFail($id)->delete();
+        $customer = Customer::findOrFail($id);
+
+        if ($customer) {
+            $customer->getBankAccount()->delete();
+
+            foreach ($customer->getProfiles as $prof) {
+                $prof->getPhoneNumber()->delete();
+            }
+
+            $customer->getProfiles()->delete();
+
+            $customer->delete();
+        }
+
         return redirect(route('db.master.customer'));
     }
 }
