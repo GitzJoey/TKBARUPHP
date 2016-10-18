@@ -13,33 +13,24 @@ require('laravel-elixir-vue');
  |
  */
 
-elixir(mix => {
-    mix.sass('app.scss')
-       .webpack('app.js');
-});
-
 /* AdminLTE */
-elixir(function(mix) {
+elixir(function (mix) {
     mix.styles([
-        'bootstrap/dist/css/bootstrap.min.css',
-        'font-awesome/css/font-awesome.min.css',
-        'ionicons/dist/css/ionicons.min.css',
-        'admin-lte/dist/css/AdminLTE.min.css',
-        'admin-lte/dist/css/skins/_all-skins.min.css',
-        'icheck/skins/square/blue.css',
-    ], 'public/adminlte/css/adminlte.css', 'node_modules')
-        .copy('resources/assets/css/adminlte.custom.css', 'public/adminlte/css')
-        .scripts([
-            'jquery/dist/jquery.min.js',
-            'bootstrap/dist/js/bootstrap.min.js',
-            'angular/angular.min.js',
-            'admin-lte/dist/js/app.min.js',
-            'icheck/icheck.min.js'
-        ], 'public/adminlte/js/app.js', 'node_modules')
-        .copy('resources/assets/js/adminlte.custom.js', 'public/adminlte/js')
-        .copy('node_modules/bootstrap/fonts', 'public/adminlte/fonts')
-        .copy('node_modules/font-awesome/fonts', 'public/adminlte/fonts')
-        .copy('node_modules/ionicons/dist/fonts', 'public/adminlte/fonts')
-        .copy('node_modules/icheck/skins/square/blue.png', 'public/adminlte/css')
-        .copy('node_modules/icheck/skins/square/blue@2x.png', 'public/adminlte/css');
-})
+        './node_modules/bootstrap/dist/css/bootstrap.min.css',
+        './node_modules/font-awesome/css/font-awesome.min.css',
+        './node_modules/ionicons/dist/css/ionicons.min.css',
+        './node_modules/admin-lte/dist/css/AdminLTE.min.css',
+        './node_modules/admin-lte/dist/css/skins/_all-skins.min.css',
+        './node_modules/icheck/skins/square/blue.css',
+        './node_modules/bootstrap-daterangepicker/daterangepicker.css'
+    ], 'public/adminlte/css/adminlte.css')
+    .scripts([
+        './node_modules/jquery/dist/jquery.min.js',
+        './node_modules/bootstrap/dist/js/bootstrap.min.js',
+        './node_modules/angular/angular.min.js',
+        './node_modules/bootstrap-daterangepicker/moment.min.js',
+        './node_modules/icheck/icheck.min.js',
+        './node_modules/bootstrap-daterangepicker/daterangepicker.js',
+        './node_modules/admin-lte/dist/js/app.min.js'
+    ], 'public/adminlte/js/app.js');
+});
