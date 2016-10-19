@@ -139,7 +139,7 @@
                                                                             <td>
                                                                                 <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
                                                                                         ng-model="ph.phone_provider_id"
-                                                                                        ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL">
+                                                                                        ng-options="toInt(p.id) as p.name + ' (' + p.short_name + ')' for p in providerDDL">
                                                                                 </select>
                                                                             </td>
                                                                             <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number"></td>
@@ -229,15 +229,17 @@
     <script type="application/javascript">
         var app = angular.module("supplierModule", []);
 
-        app.directive('convertToNumber', function() {
+        app.directive('convertToString', function() {
             return {
                 require: 'ngModel',
-                link: function(scope, element, attrs, ngModel) {
-                    ngModel.$parsers.push(function(val) {
-                        return val != null ? parseInt(val, 10) : null;
+                link: function (scope, element, attrs, ngModel) {
+                    ngModel.$parsers.push(function (val) {
+                        console.log('c');
+                        return '' + val;
                     });
-                    ngModel.$formatters.push(function(val) {
-                        return val != null ? '' + parseInt(val, 10) : '';
+                    ngModel.$formatters.push(function (val) {
+                        console.log('c');
+                        return '' + val;
                     });
                 }
             };
@@ -248,6 +250,11 @@
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
             $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->getBankAccount)) ? '[]':htmlspecialchars_decode($supplier->getBankAccount) !!}');
             $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->getProfiles)) ? '[]':htmlspecialchars_decode($supplier->getProfiles) !!}');
+
+            $scope.toInt = function(val) {
+                console.log(val, parseInt(val,10));
+                return parseInt(val,10);
+            };
 
             $scope.addNewBank = function() {
                 $scope.banks.push({
