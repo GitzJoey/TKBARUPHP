@@ -195,6 +195,7 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="item in items">
+<<<<<<< HEAD
                                                 <input type="hidden" name="product_id" ng-value="item.product.id">
                                                 <input type="hidden" name="base_unit_id" ng-value="item.base_unit.unit.id">
                                                 <td>@{{ item.product.name }}</td>
@@ -211,11 +212,26 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" name="price" ng-model="item.price">
+=======
+                                                <td>@{{ item.name }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="quantity[]" ng-model="item.quantity">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="product_unit[]" ng-model="item.product_unit">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="price[]" ng-model="item.price">
+>>>>>>> Eagerly load list of product to po creation page. || Add function to add product to transaction/items table(??) in po creation page || Add (back) deleted_at to PurchaseOrder model.
                                                 </td>
                                                 <td>
                                                 </td>
                                                 <td>
+<<<<<<< HEAD
                                                     <input type="text" class="form-control" name="total_price" ng-value="item.quantity * item.price" readonly>
+=======
+                                                    <input type="text" class="form-control" name="total_price[]" ng-value="item.quantity * item.price">
+>>>>>>> Eagerly load list of product to po creation page. || Add function to add product to transaction/items table(??) in po creation page || Add (back) deleted_at to PurchaseOrder model.
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -275,7 +291,6 @@
         var app = angular.module('poModule', []);
 
         app.controller("poController", ['$scope', function($scope) {
-
             $scope.supplierDDL = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.poTypeDDL = JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}')
@@ -302,7 +317,7 @@
                     'price': 0
                 });
             }
-        });
+        }]);
 
         $(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
