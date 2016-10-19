@@ -273,7 +273,8 @@
     <script type="application/javascript">
         var app = angular.module('poModule', []);
 
-        app.controller("poController", function($scope) {
+        app.controller("poController", ['$scope', function($scope) {
+
             $scope.supplierDDL = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.poTypeDDL = JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}')
