@@ -31,7 +31,7 @@ class PurchaseOrderController extends Controller
         $supplierDDL = Supplier::all([ 'id', 'name', 'address', 'city', 'phone_number', 'fax_num' ]);
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
         $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
-        $productDDL = Product::all([ 'id', 'name' ]);
+        $productDDL = Product::with('getProductUnit.getUnit')->get();
         $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code' ]);
         $poCode = POCodeGenerator::generateWithLength(6);
 

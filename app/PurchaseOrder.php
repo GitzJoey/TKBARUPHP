@@ -23,6 +23,8 @@ class PurchaseOrder extends Model
 
     protected $table = 'purchase_order';
 
+    protected $dates = ['deleted_at'];
+
     protected $fillable = [
 
     ];

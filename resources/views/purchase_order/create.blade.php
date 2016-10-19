@@ -136,7 +136,6 @@
                 </div>
                 <div class="col-md-2">
                     <div class="box box-info">
-
                     </div>
                 </div>
             </div>
@@ -174,7 +173,23 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-
+                                            <tr ng-repeat="item in items">
+                                                <td>@{{ item.name }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="quantity[]" ng-model="item.quantity">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="product_unit[]" ng-model="item.product_unit">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="price[]" ng-model="item.price">
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="total_price[]" ng-value="item.quantity * item.price">
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -240,6 +255,7 @@
         var app = angular.module('poModule', []);
 
         app.controller("poController", ['$scope', function($scope) {
+            $scope.items = [];
             $scope.supplierDDL = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.poTypeDDL = JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}');
@@ -249,7 +265,13 @@
             $scope.poCode = '{!! $poCode !!}';
 
             $scope.insertProduct = function (product) {
-                console.log(product);
+                $scope.items.push({
+                    'product_id': product.id,
+                    'name': product.name,
+                    'quantity': 0,
+                    'product_unit': product.get_product_unit[0].get_unit.symbol,
+                    'price': 0
+                });
             }
         }]);
 
