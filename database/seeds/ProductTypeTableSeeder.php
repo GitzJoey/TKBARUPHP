@@ -1,5 +1,7 @@
 <?php
 
+use App\ProductType;
+
 use Illuminate\Database\Seeder;
 
 class ProductTypeTableSeeder extends Seeder
@@ -11,6 +13,39 @@ class ProductTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $prdType = [
+            [
+                'store_id' => 1,
+                'name' => 'Product Type 1',
+                'short_code' => 'PRD1',
+                'description' => 'Product Type 1',
+                'status' => 'STATUS.Active'
+            ],
+            [
+                'store_id' => 1,
+                'name' => 'Product Type 2',
+                'short_code' => 'PRD2',
+                'description' => 'Product Type 2',
+                'status' => 'STATUS.Active'
+            ],
+            [
+                'store_id' => 1,
+                'name' => 'Product Type 3',
+                'short_code' => 'PRD3',
+                'description' => 'Product Type 3',
+                'status' => 'STATUS.Active'
+            ],
+            [
+                'store_id' => 1,
+                'name' => 'Product Type 4',
+                'short_code' => 'PRD4',
+                'description' => 'Product Type 4',
+                'status' => 'STATUS.Active'
+            ],
+        ];
+
+        foreach ($prdType as $key => $value) {
+            ProductType::create($value);
+        }
     }
 }

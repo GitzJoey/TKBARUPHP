@@ -13,13 +13,27 @@ class VendorTruckingTableSeeder extends Seeder
     public function run()
     {
         $vts = [
-          [
-              'store_id' => 1,
-              'name' => 'Vendor1',
-              'address' => 'Jl. Ahmad Yani no. 17',
-              'tax_id' => '123-123-123-123',
-              'status' => 'Active'
-          ]
+            [
+                'store_id' => 1,
+                'name' => 'Vendor 1',
+                'address' => 'Jl. Ahmad Yani no. 17',
+                'tax_id' => '123-123-123-123',
+                'status' => 'STATUS.Active'
+            ],
+            [
+                'store_id' => 1,
+                'name' => 'Vendor 2',
+                'address' => 'Jl. Yani no. 117',
+                'tax_id' => '445-445-445-445',
+                'status' => 'STATUS.Active'
+            ],
+            [
+                'store_id' => 1,
+                'name' => 'Vendor 3',
+                'address' => 'Jl. Ahmad Dhani no. 69',
+                'tax_id' => '123-123-123-123',
+                'status' => 'STATUS.Active'
+            ]
         ];
 
         foreach ($vts as $key => $value) {
