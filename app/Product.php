@@ -62,7 +62,7 @@ class Product extends Model
     protected $table = 'product';
 
     protected $fillable = [
-        'store_id', 'type', 'name', 'short_code', 'description', 'image_path', 'status', 'remarks'
+        'store_id', 'product_type_id', 'name', 'short_code', 'description', 'image_path', 'status', 'remarks'
     ];
 
     public function hId() {

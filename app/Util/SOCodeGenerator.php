@@ -1,22 +1,14 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: miftah.fathudin
- * Date: 10/18/2016
- * Time: 3:11 AM
+ * User: Sugito
+ * Date: 10/19/2016
+ * Time: 1:51 PM
  */
 
 namespace App\Util;
 
-
-/**
- * Class POCodeGenerator
- *
- * A utility class to generate a random alphanumeric string for PO code.
- *
- * @package App\Util
- */
-class POCodeGenerator implements StringGenerator
+class SOCodeGenerator implements StringGenerator
 {
 
     /**

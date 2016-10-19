@@ -1,5 +1,10 @@
 <?php
 
+use App\Profile;
+use App\Supplier;
+use App\BankAccount;
+use App\PhoneNumber;
+
 use Illuminate\Database\Seeder;
 
 class SupplierTableSeeder extends Seeder
@@ -11,20 +16,41 @@ class SupplierTableSeeder extends Seeder
      */
     public function run()
     {
-        $ba = [
-          'bank_id' => 1,
-          'account_number' => '1234567890'
-        ];
+        for ($s = 0; $s < 3; $s++) {
+            $supplier = new Supplier();
+            $supplier->name = 'Supplier '.$s;
+            $supplier->address = 'Jl. Supplier Alamat '.$s;
+            $supplier->city = 'Kota Supplier '.$s;
+            $supplier->phone_number = '0000000000';
+            $supplier->fax_num = '0000000000';
+            $supplier->tax_id = '123-123-123-123-123';
 
-        $supplier = [
-            'name' => 'Miftah Fathudin',
-            'address' => 'Jl. TMP Taruna no.74',
-            'city' => 'Tangerang',
-            'phone_number' => '12345678',
-            'fax_num' => '0987654321',
-            'tax_id' => '123-123-123-123-123'
-        ];
+            $supplier->save();
 
+            for ($b = 0; $b < 2; $b++) {
+                $ba = new BankAccount();
+                $ba->bank_id = $b + 1;
+                $ba->account_number = '123123123';
+                $ba->remarks = 'Bank ' . $b;
 
+                $supplier->getBankAccount()->save($ba);
+            }
+
+            for ($p = 0; $p < 1; $p++) {
+                $pf = new Profile();
+                $pf->first_name = "First Name ".$p;
+                $pf->last_name = "First Name ".$p;
+
+                $supplier->getProfiles()->save($pf);
+
+                for ($ph = 0; $ph < 1; $ph++) {
+                    $phone = new PhoneNumber();
+                    $phone->phone_provider_id = $ph;
+                    $phone->number = '123123123';
+
+                    $pf->getPhoneNumber()->save($phone);
+                }
+            }
+        }
     }
 }
