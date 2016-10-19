@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PhoneProviderTableSeeder::class);
         $this->call(CreateLookupTableSeeder::class);
         $this->call(BankTableSeeder::class);
+        $this->call(ProductTypeTableSeeder::class);
+        $this->call(SupplierTableSeeder::class);
+        $this->call(VendorTruckingTableSeeder::class);
+        $this->call(WarehouseTableSeeder::class);
     }
 }
