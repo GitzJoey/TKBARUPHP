@@ -21,13 +21,44 @@ class PurchaseOrder extends Model
 {
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
-
     protected $table = 'purchase_order';
 
     protected $fillable = [
 
     ];
+
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
+
+    public function getItems(){
+        return $this->belongsToMany('App\Items', 'po_items', 'po_id', 'items_id');
+    }
+
+    public function getPayments()
+    {
+        return $this->belongsToMany('App\Model\Payments', 'po_payments', 'po_id', 'payments_id');
+    }
+
+    public function getSupplier()
+    {
+        return $this->belongsTo('App\Supplier', 'supplier_id');
+    }
+
+    public function getTruckVendor()
+    {
+        return $this->belongsTo('App\VendorTrucking', 'vendor_trucking_id');
+    }
+
+    public function getStore()
+    {
+        return $this->belongsTo('App\Store', 'store_id');
+    }
+
+    public function getWarehouse()
+    {
+        return $this->belongsTo('App\Warehouse', 'warehouse_id');
+    }
 
     public static function boot()
     {

@@ -9,6 +9,15 @@
 namespace App\Http\Controllers;
 
 
+use App\Lookup;
+use App\Product;
+use App\PurchaseOrder;
+use App\Supplier;
+use App\Util\POCodeGenerator;
+use App\VendorTrucking;
+use App\Warehouse;
+use Illuminate\Http\Request;
+
 class PurchaseOrderController extends Controller
 {
     public function __construct()
@@ -18,11 +27,36 @@ class PurchaseOrderController extends Controller
 
     public function create()
     {
-        return view('purchase_order.create');
+        //Use get all for now because the mechanism to set record status to 'Active' is not working.
+        $supplierDDL = Supplier::all([ 'id', 'name', 'address', 'city', 'phone_number', 'fax_num' ]);
+        $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
+        $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
+        $productDDL = Product::all([ 'id', 'name' ]);
+        $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code' ]);
+        $poCode = POCodeGenerator::generateWithLength(6);
+
+        return view('purchase_order.create', compact('supplierDDL', 'warehouseDDL', 'vendorTruckingDDL', 'productDDL', 'poTypeDDL', 'poCode'));
     }
 
-    public function store($data)
+    public function store(Request $request)
     {
+        $this->validate($request,[
+
+        ]);
+
+        $params = [
+            'code' => $request->input('po_code'),
+            'po_type' => $request->input('po_type'),
+            'po_created' => $request->input('po_created'),
+            'shipping_date' => $request->input('shipping_date'),
+            'remarks' => $request->input('remarks'),
+            'status' => $request->input('status')
+        ];
+
+        $po = PurchaseOrder::create($request->input('remarks'));
+
+        $selectedSupplier = Supplier::find($request->input('supplier_id'));
+        $selectedSupplier->getPurchaceOrders()->save($po);
 
     }
 }

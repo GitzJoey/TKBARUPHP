@@ -84,6 +84,11 @@ class Supplier extends Model
         return $this->belongsToMany('App\Product', 'supplier_prod');
     }
 
+    public function getPurchaseOrders()
+    {
+        return $this->hasMany('App\PurchaseOrder');
+    }
+
     public static function boot()
     {
         parent::boot();
