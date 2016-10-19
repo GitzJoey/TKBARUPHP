@@ -131,7 +131,7 @@ class SupplierController extends Controller
             return redirect(route('db.master.supplier'));
         }
 
-        $supplier->getBankAccount()->detach();
+        //$supplier->getBankAccount()->detach();
 
         for($i=0; $i<count($request['bank']); $i++) {
             $ba = new BankAccount();
@@ -139,10 +139,10 @@ class SupplierController extends Controller
             $ba->account_number = $request["account_number"][$i];
             $ba->remarks = $request["bank_remarks"][$i];
 
-            $supplier->getBankAccount()->save($ba);
+            //$supplier->getBankAccount()->save($ba);
         }
 
-        $supplier->getProfiles()->detach();
+        //$supplier->getProfiles()->detach();
 
         for($i=0; $i<count($request['first_name']); $i++) {
             $pa = new Profile();
@@ -151,15 +151,16 @@ class SupplierController extends Controller
             $pa->address = $request["profile_address"][$i];
             $pa->ic_num = $request["ic_num"][$i];
 
-            $supplier->getProfiles()->save($pa);
+            //$supplier->getProfiles()->save($pa);
 
             for ($j=0; $j<count($request['profile_'.$i.'_phone_provider']); $j++) {
                 $ph = new PhoneNumber();
                 $ph->phone_provider_id = $request['profile_'.$i.'_phone_provider'][$j];
+                error_log($request['profile_'.$i.'_phone_provider'][$j]);
                 $ph->number = $request['profile_'.$i.'_phone_number'][$j];
                 $ph->remarks = $request['profile_'.$i.'_remarks'][$j];
 
-                $pa->getPhoneNumber()->save($ph);
+                //$pa->getPhoneNumber()->save($ph);
             }
         }
 
@@ -171,8 +172,9 @@ class SupplierController extends Controller
         $supplier->tax_id = $request->input('tax_id');
         $supplier->status = $request->input('status');
         $supplier->remarks = $request->input('remarks');
+        $supplier->payment_due_day = empty($request->input('payment_due_day')) ? 0:$request->input('payment_due_day');
 
-        $supplier->save();
+        //W$supplier->save();
 
         return redirect(route('db.master.supplier'));
 	}
