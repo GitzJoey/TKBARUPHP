@@ -288,6 +288,7 @@
         var app = angular.module('poModule', []);
 
         app.controller("poController", ['$scope', function($scope) {
+            $scope.items = [];
             $scope.supplierDDL = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.poTypeDDL = JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}')
