@@ -54,13 +54,13 @@ class ProductUnit extends Model
     protected $fillable = [
         'product_id', 'unit_id', 'is_base', 'conversion_value', 'remarks'
     ];
-
+    
     public function product() {
-        $this->belongsTo('App\Product');
+        $this->belongsTo('App\Model\Product');
     }
 
     public function unit() {
-        return $this->belongsTo('App\Unit', 'unit_id');
+        return $this->belongsTo('App\Model\Unit', 'unit_id');
     }
 
     public static function boot()
