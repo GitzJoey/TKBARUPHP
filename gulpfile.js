@@ -38,6 +38,7 @@ elixir(function (mix) {
         './node_modules/parsleyjs/dist/i18n/en.js',
         './node_modules/parsleyjs/dist/i18n/id.js',
         './node_modules/parsleyjs/dist/i18n/en.extra.js',
-        './node_modules/parsleyjs/dist/i18n/id.extra.js'
+        './node_modules/parsleyjs/dist/i18n/id.extra.js',
+        './node_modules/admin-lte/dist/js/app.min.js'
     ], 'public/adminlte/js/app.js');
 });
