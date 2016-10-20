@@ -69,17 +69,17 @@ class Product extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getStore()
+    public function store()
     {
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
-    public function getType()
+    public function type()
     {
         return $this->belongsTo('App\Model\ProductType', 'product_type_id');
     }
 
-    public function getProductUnit()
+    public function productUnits()
     {
         return $this->hasMany('App\Model\ProductUnit');
     }

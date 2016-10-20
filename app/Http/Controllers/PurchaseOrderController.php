@@ -28,14 +28,23 @@ class PurchaseOrderController extends Controller
     public function create()
     {
         //Use get all for now because the mechanism to set record status to 'Active' is not working.
-        $supplierDDL = Supplier::all([ 'id', 'name', 'address', 'city', 'phone_number', 'fax_num' ]);
+        $supplierDDL = Supplier::all([ 'id', 'name' ]);
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
         $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
-        $productDDL = Product::with('getProductUnit.getUnit')->get();
+        $productDDL = Product::with('productUnits.unit')->get();
         $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code' ]);
+        $supplierTypeDDL = Lookup::where('category', '=', 'SUPPLIERTYPE')->get(['description', 'code' ]);
         $poCode = POCodeGenerator::generateWithLength(6);
 
-        return view('purchase_order.create', compact('supplierDDL', 'warehouseDDL', 'vendorTruckingDDL', 'productDDL', 'poTypeDDL', 'poCode'));
+        return view('purchase_order.create', compact(
+            'supplierDDL',
+            'warehouseDDL',
+            'vendorTruckingDDL',
+            'supplierTypeDDL',
+            'poTypeDDL',
+            'unitDDL',
+            'productDDL',
+            'poCode'));
     }
 
     public function store(Request $request)

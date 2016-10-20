@@ -13,7 +13,7 @@ return [
             'remarks' => 'Remarks',
         ],
         'field' => [
-            'supplier_type' => 'Name',
+            'supplier_type' => 'Type',
             'supplier_name' => 'Name',
             'supplier_details' => 'Details',
             'shipping_date' => 'Date',

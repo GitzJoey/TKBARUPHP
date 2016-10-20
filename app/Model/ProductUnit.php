@@ -55,12 +55,12 @@ class ProductUnit extends Model
         'product_id', 'unit_id', 'is_base', 'conversion_value', 'remarks'
     ];
 
-    public function getProduct() {
-        $this->belongsTo('App\Model\Product');
+    public function product() {
+        $this->belongsTo('App\Product');
     }
 
-    public function getUnit() {
-        return $this->belongsTo('App\Model\Unit', 'unit_id');
+    public function unit() {
+        return $this->belongsTo('App\Unit', 'unit_id');
     }
 
     public static function boot()

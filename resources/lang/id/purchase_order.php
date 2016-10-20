@@ -13,7 +13,7 @@ return [
             'remarks' => 'Catatan',
         ],
         'field' => [
-            'supplier_type' => 'Nama',
+            'supplier_type' => 'Tipe',
             'supplier_name' => 'Nama',
             'supplier_details' => 'Detil',
             'shipping_date' => 'Tanggal Pengiriman',
