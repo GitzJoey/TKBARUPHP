@@ -22,6 +22,7 @@ class CreateSalesOrderTable extends Migration
             $table->dateTime('so_created')->nullable();
             $table->dateTime('shipping_date')->nullable();
             $table->string('customer_type')->nullable();
+            $table->string('walk_in_cust')->nullable();
             $table->string('walk_in_cust_detail')->nullable();
             $table->string('so_type')->nullable();
             $table->string('status')->nullable();
