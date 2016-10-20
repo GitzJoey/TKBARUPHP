@@ -6,7 +6,8 @@
  * Date: 9/7/2016
  * Time: 12:06 AM
  */
-namespace App;
+
+namespace App\Model;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -65,17 +66,17 @@ class Profile extends Model
 
     public function getPhoneNumber()
     {
-        return $this->hasMany('App\PhoneNumber');
+        return $this->hasMany('App\Model\PhoneNumber');
     }
 
     public function getSupplier()
     {
-    	return $this->belongsToMany('App\Supplier', 'supplier_profile', 'supplier_id', 'profile_id');
+    	return $this->belongsToMany('App\Model\Supplier', 'supplier_profile', 'supplier_id', 'profile_id');
     }
     /*
     public function getCustomer()
     {
-        return $this->belongsToMany('App\Customer', 'customer_pic', 'customer_id', 'profile_id');
+        return $this->belongsToMany('App\Model\Customer', 'customer_pic', 'customer_id', 'profile_id');
     }
     */
 

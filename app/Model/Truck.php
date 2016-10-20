@@ -6,7 +6,7 @@
  * Time: 12:17 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -58,7 +58,7 @@ class Truck extends Model
 
     public function getTruckMaintenance()
     {
-        return $this->hasMany('App\TruckMaintenance');
+        return $this->hasMany('App\Model\TruckMaintenance');
     }
 
     public static function boot()

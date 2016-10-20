@@ -6,7 +6,7 @@
  * Time: 1:13 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;

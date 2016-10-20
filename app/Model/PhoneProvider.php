@@ -6,7 +6,7 @@
  * Time: 11:06 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -60,7 +60,7 @@ class PhoneProvider extends Model
 
     public function getPhoneNumber()
     {
-        $this->hasMany('App\PhoneNumber');
+        $this->hasMany('App\Model\PhoneNumber');
     }
 
     public static function boot()

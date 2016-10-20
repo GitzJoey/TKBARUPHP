@@ -12,11 +12,11 @@ use Illuminate\Http\Request;
 use Session;
 use Validator;
 
-use App\User;
-use App\Role;
-use App\Store;
-use App\Profile;
-use App\Lookup;
+use App\Model\User;
+use App\Model\Role;
+use App\Model\Store;
+use App\Model\Lookup;
+use App\Model\Profile;
 
 class UserController extends Controller
 {

@@ -6,7 +6,7 @@
  * Time: 12:17 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -71,17 +71,17 @@ class Product extends Model
 
     public function getStore()
     {
-        return $this->belongsTo('App\Store', 'store_id');
+        return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
     public function getType()
     {
-        return $this->belongsTo('App\ProductType', 'product_type_id');
+        return $this->belongsTo('App\Model\ProductType', 'product_type_id');
     }
 
     public function getProductUnit()
     {
-        return $this->hasMany('App\ProductUnit');
+        return $this->hasMany('App\Model\ProductUnit');
     }
 
     public function getProductUnitJSON()

@@ -6,7 +6,7 @@
  * Time: 11:05 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -54,12 +54,12 @@ class PhoneNumber extends Model
 
     public function getProfile()
     {
-        $this->belongsTo('App\Profile');
+        $this->belongsTo('App\Model\Profile');
     }
 
     public function getProvider()
     {
-    	return $this->belongsTo('App\PhoneProvider', 'phone_provider_id');
+    	return $this->belongsTo('App\Model\PhoneProvider', 'phone_provider_id');
     }
 
     public static function boot()

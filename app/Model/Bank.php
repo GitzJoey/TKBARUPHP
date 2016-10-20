@@ -6,7 +6,7 @@
  * Time: 12:25 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -67,7 +67,7 @@ class Bank extends Model
 
     public function getBankAccount()
     {
-        return $this->hasMany('App\BankAccount', 'bank_id');
+        return $this->hasMany('App\Model\BankAccount', 'bank_id');
     }
 
     public static function boot()

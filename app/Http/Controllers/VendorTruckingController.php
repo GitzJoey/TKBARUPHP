@@ -11,8 +11,8 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 
-use App\Lookup;
-use App\VendorTrucking;
+use App\Model\Lookup;
+use App\Model\VendorTrucking;
 
 class VendorTruckingController extends Controller
 {

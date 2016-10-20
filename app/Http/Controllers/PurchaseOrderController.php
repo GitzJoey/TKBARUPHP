@@ -8,15 +8,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Lookup;
+use App\Model\Product;
+use App\Model\Supplier;
+use App\Model\Warehouse;
+use App\Model\PurchaseOrder;
+use App\Model\VendorTrucking;
 
-use App\Lookup;
-use App\Product;
-use App\PurchaseOrder;
-use App\Supplier;
-use App\Util\POCodeGenerator;
-use App\VendorTrucking;
-use App\Warehouse;
 use Illuminate\Http\Request;
+use App\Util\POCodeGenerator;
 
 class PurchaseOrderController extends Controller
 {

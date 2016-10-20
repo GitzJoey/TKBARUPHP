@@ -11,8 +11,8 @@ use Auth;
 use Validator;
 use Illuminate\Http\Request;
 
-use App\Lookup;
-use App\Warehouse;
+use App\Model\Lookup;
+use App\Model\Warehouse;
 
 class WarehouseController extends Controller
 {

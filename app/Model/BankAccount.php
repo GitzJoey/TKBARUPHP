@@ -7,7 +7,7 @@
  * Time: 12:22 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -56,17 +56,17 @@ class BankAccount extends Model
 
     public function supplier()
     {
-    	return $this->belongsToMany('App\Supplier', 'supplier_bank_account');
+    	return $this->belongsToMany('App\Model\Supplier', 'supplier_bank_account');
     }
 
     public function getBank()
     {
-    	return $this->belongsTo('App\Bank', 'bank_id');
+    	return $this->belongsTo('App\Model\Bank', 'bank_id');
     }
 
     public function getCustomer()
     {
-        return $this->belongsToMany('App\Customer', 'customer_bank_account', 'customer_id', 'bank_account_id');
+        return $this->belongsToMany('App\Model\Customer', 'customer_bank_account', 'customer_id', 'bank_account_id');
     }
 
     public static function boot()

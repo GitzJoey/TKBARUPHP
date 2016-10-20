@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Settings;
+use App\Model\Settings;
 
 use Illuminate\Http\Request;
 

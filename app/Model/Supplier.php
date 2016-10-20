@@ -6,7 +6,7 @@
  * Time: 12:17 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -71,22 +71,22 @@ class Supplier extends Model
 
     public function getProfiles()
     {
-        return $this->belongsToMany('App\Profile', 'supplier_pic', 'supplier_id', 'profile_id');
+        return $this->belongsToMany('App\Model\Profile', 'supplier_pic', 'supplier_id', 'profile_id');
     }
 
     public function getBankAccount()
     {
-        return $this->belongsToMany('App\BankAccount', 'supplier_bank_account', 'supplier_id', 'bank_account_id');
+        return $this->belongsToMany('App\Model\BankAccount', 'supplier_bank_account', 'supplier_id', 'bank_account_id');
     }
 
     public function getProducts()
     {
-        return $this->belongsToMany('App\Product', 'supplier_prod');
+        return $this->belongsToMany('App\Model\Product', 'supplier_prod');
     }
 
     public function getPurchaseOrders()
     {
-        return $this->hasMany('App\PurchaseOrder');
+        return $this->hasMany('App\Model\PurchaseOrder');
     }
 
     public static function boot()

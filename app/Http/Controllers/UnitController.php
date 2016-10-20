@@ -8,10 +8,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Unit;
 use Validator;
 use Illuminate\Http\Request;
-use App\Lookup;
+
+use App\Model\Unit;
+use App\Model\Lookup;
 
 class UnitController extends Controller
 {

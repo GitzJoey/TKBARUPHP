@@ -6,7 +6,7 @@
  * Time: 1:40 PM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -62,7 +62,7 @@ class ProductType extends Model
 
     public function getProduct()
     {
-        return $this->hasMany('App\Product', 'product_type_id');
+        return $this->hasMany('App\Model\Product', 'product_type_id');
     }
 
     public static function boot()
