@@ -1,7 +1,7 @@
 <?php
 
-use App\Product;
-use App\ProductUnit;
+use App\Model\Product;
+use App\Model\ProductUnit;
 
 use Illuminate\Database\Seeder;
 
@@ -31,14 +31,14 @@ class ProductTableSeeder extends Seeder
         $produnit11_1->is_base = true;
         $produnit11_1->conversion_value = 1;
 
-        $prod11->getProductUnit()->save($produnit11_1);
+        $prod11->productUnits()->save($produnit11_1);
 
         $produnit11_2 = new ProductUnit();
         $produnit11_2->unit_id = 3;
         $produnit11_2->is_base = false;
         $produnit11_2->conversion_value = 1000;
 
-        $prod11->getProductUnit()->save($produnit11_2);
+        $prod11->productUnits()->save($produnit11_2);
 
         $prod12 = new Product();
         $prod12->store_id = 1;
@@ -57,14 +57,14 @@ class ProductTableSeeder extends Seeder
         $produnit12_1->is_base = true;
         $produnit12_1->conversion_value = 1;
 
-        $prod12->getProductUnit()->save($produnit12_1);
+        $prod12->productUnits()->save($produnit12_1);
 
         $produnit12_2 = new ProductUnit();
         $produnit12_2->unit_id = 3;
         $produnit12_2->is_base = false;
         $produnit12_2->conversion_value = 1000;
 
-        $prod12->getProductUnit()->save($produnit12_2);
+        $prod12->productUnits()->save($produnit12_2);
 
         $prod21 = new Product();
         $prod21->store_id = 1;
@@ -83,14 +83,14 @@ class ProductTableSeeder extends Seeder
         $produnit21_1->is_base = true;
         $produnit21_1->conversion_value = 1;
 
-        $prod21->getProductUnit()->save($produnit21_1);
+        $prod21->productUnits()->save($produnit21_1);
 
         $produnit21_2 = new ProductUnit();
         $produnit21_2->unit_id = 3;
         $produnit21_2->is_base = false;
         $produnit21_2->conversion_value = 1000;
 
-        $prod21->getProductUnit()->save($produnit21_2);
+        $prod21->productUnits()->save($produnit21_2);
 
         $prod22 = new Product();
         $prod22->store_id = 1;
@@ -161,20 +161,20 @@ class ProductTableSeeder extends Seeder
         $produnit31_1->is_base = true;
         $produnit31_1->conversion_value = 1;
 
-        $prod31->getProductUnit()->save($produnit31_1);
+        $prod31->productUnits()->save($produnit31_1);
 
         $produnit31_2 = new ProductUnit();
         $produnit31_2->unit_id = 3;
         $produnit31_2->is_base = false;
         $produnit31_2->conversion_value = 1000;
 
-        $prod31->getProductUnit()->save($produnit31_2);
+        $prod31->productUnits()->save($produnit31_2);
 
         $produnit31_3 = new ProductUnit();
         $produnit31_3->unit_id = 4;
         $produnit31_3->is_base = false;
         $produnit31_3->conversion_value = 50;
 
-        $prod31->getProductUnit()->save($produnit31_3);
+        $prod31->productUnits()->save($produnit31_3);
     }
 }

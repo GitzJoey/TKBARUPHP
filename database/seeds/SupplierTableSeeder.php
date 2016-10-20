@@ -1,9 +1,9 @@
 <?php
 
-use App\Profile;
-use App\Supplier;
-use App\BankAccount;
-use App\PhoneNumber;
+use App\Model\Supplier;
+use App\Model\Profile;
+use App\Model\BankAccount;
+use App\Model\PhoneNumber;
 
 use Illuminate\Database\Seeder;
 

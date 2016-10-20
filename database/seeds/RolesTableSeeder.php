@@ -9,8 +9,8 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Role;
-use App\Permission;
+use App\Model\Role;
+use App\Model\Permission;
 
 class RolesTableSeeder extends Seeder
 {

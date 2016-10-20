@@ -9,7 +9,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Settings;
+use App\Model\Settings;
 
 class SettingsTableSeeder extends Seeder
 {

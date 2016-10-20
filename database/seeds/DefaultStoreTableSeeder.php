@@ -7,7 +7,7 @@
  */
 
 use Illuminate\Database\Seeder;
-use App\Store;
+use App\Model\Store;
 
 class DefaultStoreTableSeeder extends Seeder
 {
