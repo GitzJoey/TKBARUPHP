@@ -27,13 +27,13 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('truck.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.truck.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.master.truck.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
                     <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.field.plate_number')</label>
                     <div class="col-sm-10">
-                        <input id="plate_number" name="plate_number" type="text" class="form-control" placeholder="@lang('truck.field.plate_number')">
+                        <input id="plate_number" name="plate_number" type="text" class="form-control" placeholder="@lang('truck.field.plate_number')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('plate_number') ? $errors->first('plate_number') : '' }}</span>
                     </div>
                 </div>
@@ -70,8 +70,8 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.master.truck') }}" class="btn btn-default">@lang('buttons.create.cancel')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.create.save')</button>
+                        <a href="{{ route('db.master.truck') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                        <button class="btn btn-default" type="submit">@lang('buttons.create_new_button')</button>
                     </div>
                 </div>
             </div>
