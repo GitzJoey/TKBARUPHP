@@ -26,7 +26,7 @@ class PurchaseOrder extends Model
     protected $dates = ['deleted_at', 'po_created', 'shipping_date'];
 
     protected $fillable = [
-
+        'code', 'po_type', 'po_created', 'shipping_date', 'supplier_type', 'walk_in_supplier', 'walk_in_supplier_detail', 'remarks', 'status'
     ];
 
     public function hId() {

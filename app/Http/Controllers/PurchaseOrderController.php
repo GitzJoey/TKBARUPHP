@@ -54,7 +54,6 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request)
     {
-        \Log::info('Masuk sini');
         $params = [
             'code' => $request->input('code'),
             'po_type' => $request->input('po_type'),
@@ -84,7 +83,7 @@ class PurchaseOrderController extends Controller
         $store = Store::find(1);
         $store->purchaseOrders()->save($po);
 
-        for($i = 0; i < count($request['product_id']); $i++)
+        for($i = 0; $i < count($request['product_id']); $i++)
         {
             $item = new Item();
             $item->product_id = $request["product_id"][$i];
@@ -100,9 +99,8 @@ class PurchaseOrderController extends Controller
             $item->quantity = $request["quantity"][$i];
             $item->price = $request["price"][$i];
             $item->to_base_quantity = $item->quantity * $item->conversion_value;
-            $item->save();
 
-            $po->items()->attach($item->id);
+            $po->items()->save($item);
         }
 
         return redirect(route('db.po.create'));

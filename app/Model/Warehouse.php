@@ -62,7 +62,7 @@ class Warehouse extends Model
 
     public function purchaseOrders()
     {
-        $this->hasMany('App\Model\PurchaseOrder');
+        return $this->hasMany('App\Model\PurchaseOrder');
     }
     public static function boot()
     {
