@@ -31,6 +31,12 @@ elixir(function (mix) {
         './node_modules/bootstrap-daterangepicker/moment.min.js',
         './node_modules/icheck/icheck.min.js',
         './node_modules/bootstrap-daterangepicker/daterangepicker.js',
+        './resources/assets/js/parsley.config.js',
+        './node_modules/parsleyjs/dist/parsley.min.js',
+        './node_modules/parsleyjs/dist/i18n/en.js',
+        './node_modules/parsleyjs/dist/i18n/id.js',
+        './node_modules/parsleyjs/dist/i18n/en.extra.js',
+        './node_modules/parsleyjs/dist/i18n/id.extra.js',
         './node_modules/admin-lte/dist/js/app.min.js'
     ], 'public/adminlte/js/app.js');
 });
