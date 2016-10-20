@@ -32,7 +32,6 @@ elixir(function (mix) {
         './node_modules/bootstrap-daterangepicker/moment.min.js',
         './node_modules/icheck/icheck.min.js',
         './node_modules/bootstrap-daterangepicker/daterangepicker.js',
-        './node_modules/ui-select/dist/select.min.js',
         './resources/assets/js/parsley.config.js',
         './node_modules/parsleyjs/dist/parsley.min.js',
         './node_modules/parsleyjs/dist/i18n/en.js',
