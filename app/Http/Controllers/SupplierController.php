@@ -19,7 +19,6 @@ use App\Model\BankAccount;
 use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
 use App\Model\SupplierSetting;
-use Illuminate\Support\Facades\Log;
 
 class SupplierController extends Controller
 {

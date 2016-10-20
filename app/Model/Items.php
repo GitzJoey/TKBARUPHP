@@ -49,7 +49,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Items whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Items whereDeletedAt($value)
  */
-class Item extends Model
+class Items extends Model
 {
     use SoftDeletes;
 
@@ -61,11 +61,18 @@ class Item extends Model
         'quantity',
     ];
 
+    //Many to One
+    /*
     public function product()
     {
         return $this->belongsTo('product', 'product_id');
     }
 
+    public function unit_code()
+    {
+
+    }
+    */
     public static function boot()
     {
         parent::boot();

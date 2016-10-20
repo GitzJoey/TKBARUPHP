@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Item;
+use App\Model\Items;
 use App\Model\Lookup;
 use App\Model\Product;
 use App\Model\ProductUnit;
@@ -20,7 +20,6 @@ use App\Model\VendorTrucking;
 
 use Illuminate\Http\Request;
 use App\Util\POCodeGenerator;
-use Illuminate\Support\Facades\Log;
 
 class PurchaseOrderController extends Controller
 {
@@ -90,7 +89,7 @@ class PurchaseOrderController extends Controller
 
         for($i = 0; $i < count($request['product_id']); $i++)
         {
-            $item = new Item();
+            $item = new Items();
             $item->product_id = $request["product_id"][$i];
             $item->store_id = $store->id;
             $item->selected_unit_id = $request["selected_unit_id"][$i];
