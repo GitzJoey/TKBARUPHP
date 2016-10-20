@@ -19,6 +19,9 @@ class CreatePurchaseOrderTable extends Migration
             $table->string('po_type');
             $table->date('po_created');
             $table->date('shipping_date');
+            $table->string('supplier_type')->nullable();
+            $table->string('walk_in_supplier')->nullable();
+            $table->string('walk_in_supplier_detail')->nullable();
             $table->string('remarks');
             $table->string('status')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
