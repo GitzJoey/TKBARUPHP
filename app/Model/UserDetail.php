@@ -6,7 +6,7 @@
  * Time: 9:10 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;

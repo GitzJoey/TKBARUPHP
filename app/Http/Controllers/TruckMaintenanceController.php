@@ -7,9 +7,9 @@ use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-use App\Truck;
-use App\Lookup;
-use App\TruckMaintenance;
+use App\Model\Truck;
+use App\Model\Lookup;
+use App\Model\TruckMaintenance;
 
 class TruckMaintenanceController extends Controller
 {

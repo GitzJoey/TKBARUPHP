@@ -11,8 +11,8 @@ namespace App\Http\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 
-use App\Lookup;
-use App\ProductType;
+use App\Model\Lookup;
+use App\Model\ProductType;
 
 class ProductTypeController extends Controller
 {

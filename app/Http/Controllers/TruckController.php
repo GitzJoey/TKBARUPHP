@@ -13,8 +13,8 @@ use DateTime;
 use Validator;
 use Illuminate\Http\Request;
 
-use App\Truck;
-use App\Lookup;
+use App\Model\Truck;
+use App\Model\Lookup;
 
 class TruckController extends Controller
 {

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\ProductUnit;
 use Auth;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-use App\Unit;
-use App\Lookup;
-use App\Product;
-use App\ProductType;
+use App\Model\Unit;
+use App\Model\Lookup;
+use App\Model\Product;
+use App\Model\ProductUnit;
+use App\Model\ProductType;
 
 class ProductController extends Controller
 {

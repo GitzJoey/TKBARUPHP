@@ -7,11 +7,12 @@
  */
 namespace App\Http\Controllers;
 
-use \DateTime;
-use Illuminate\Http\Request;
-use App\PhoneProvider;
-use App\Lookup;
+use DateTime;
 use Validator;
+use Illuminate\Http\Request;
+
+use App\Model\Lookup;
+use App\Model\PhoneProvider;
 
 class PhoneProviderController extends Controller
 {

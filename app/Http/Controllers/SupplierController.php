@@ -10,15 +10,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Bank;
-use App\Lookup;
-use App\Profile;
-use App\Product;
-use App\Supplier;
-use App\BankAccount;
-use App\PhoneNumber;
-use App\PhoneProvider;
-use App\SupplierSetting;
+use App\Model\Bank;
+use App\Model\Lookup;
+use App\Model\Profile;
+use App\Model\Product;
+use App\Model\Supplier;
+use App\Model\BankAccount;
+use App\Model\PhoneNumber;
+use App\Model\PhoneProvider;
+use App\Model\SupplierSetting;
 
 class SupplierController extends Controller
 {

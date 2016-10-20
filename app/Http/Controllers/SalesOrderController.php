@@ -8,10 +8,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Lookup;
-use App\Product;
-use App\VendorTrucking;
-use App\Warehouse;
+use App\Model\Lookup;
+use App\Model\Product;
+use App\Model\Warehouse;
+use App\Model\VendorTrucking;
 
 class SalesOrderController extends Controller
 {

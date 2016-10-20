@@ -6,7 +6,7 @@
  * Time: 3:16 AM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -62,7 +62,7 @@ class VendorTrucking extends Model
 
     public function getBankAccount()
     {
-        $this->hasMany('App\BankAccount');
+        $this->hasMany('App\Model\BankAccount');
     }
 
     public static function boot()

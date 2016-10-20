@@ -6,7 +6,7 @@
  * Time: 11:50 PM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +32,7 @@ class PurchaseOrder extends Model
     }
 
     public function getItems(){
-        return $this->belongsToMany('App\Items', 'po_items', 'po_id', 'items_id');
+        return $this->belongsToMany('App\Model\Items', 'po_items', 'po_id', 'items_id');
     }
 
     public function getPayments()
@@ -42,22 +42,22 @@ class PurchaseOrder extends Model
 
     public function getSupplier()
     {
-        return $this->belongsTo('App\Supplier', 'supplier_id');
+        return $this->belongsTo('App\Model\Supplier', 'supplier_id');
     }
 
     public function getTruckVendor()
     {
-        return $this->belongsTo('App\VendorTrucking', 'vendor_trucking_id');
+        return $this->belongsTo('App\Model\VendorTrucking', 'vendor_trucking_id');
     }
 
     public function getStore()
     {
-        return $this->belongsTo('App\Store', 'store_id');
+        return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
     public function getWarehouse()
     {
-        return $this->belongsTo('App\Warehouse', 'warehouse_id');
+        return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
     }
 
     public static function boot()

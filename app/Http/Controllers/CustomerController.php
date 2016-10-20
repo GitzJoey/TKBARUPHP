@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\BankAccount;
-use App\PhoneNumber;
-use App\PhoneProvider;
-use App\Profile;
+use App\Model\Bank;
+use App\Model\Lookup;
+use App\Model\Profile;
+use App\Model\Customer;
+use App\Model\BankAccount;
+use App\Model\PhoneNumber;
+use App\Model\PhoneProvider;
+
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
-use App\Bank;
-use App\Lookup;
-use App\Customer;
 
 class CustomerController extends Controller
 {

@@ -6,7 +6,7 @@
  * Time: 10:30 PM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -64,7 +64,7 @@ class Unit extends Model
     }
 
     public function getProductUnit() {
-        return $this->hasMany('App\ProductUnit', 'unit_id');
+        return $this->hasMany('App\Model\ProductUnit', 'unit_id');
     }
 
     public static function boot()

@@ -6,7 +6,7 @@
  * Time: 9:32 PM
  */
 
-namespace App;
+namespace App\Model;
 
 use Zizaco\Entrust\EntrustRole;
 use Vinkla\Hashids\Facades\Hashids;
@@ -42,6 +42,6 @@ class Role extends EntrustRole
     }
 
     public function getPermission() {
-        return $this->belongsToMany('App\Permission', 'permission_role', 'role_id', 'permission_id');
+        return $this->belongsToMany('App\Model\Permission', 'permission_role', 'role_id', 'permission_id');
     }
 }

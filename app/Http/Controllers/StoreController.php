@@ -11,8 +11,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
-use App\Store;
-use App\Lookup;
+use App\Model\Store;
+use App\Model\Lookup;
 
 class StoreController extends Controller
 {

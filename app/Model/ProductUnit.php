@@ -6,7 +6,7 @@
  * Time: 12:57 PM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -56,11 +56,11 @@ class ProductUnit extends Model
     ];
 
     public function getProduct() {
-        $this->belongsTo('App\Product');
+        $this->belongsTo('App\Model\Product');
     }
 
     public function getUnit() {
-        return $this->belongsTo('App\Unit', 'unit_id');
+        return $this->belongsTo('App\Model\Unit', 'unit_id');
     }
 
     public static function boot()

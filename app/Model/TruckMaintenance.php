@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -56,7 +56,7 @@ class TruckMaintenance extends Model
     }
 
     public function getTruck() {
-        return $this->belongsTo('App\Truck');
+        return $this->belongsTo('App\Model\Truck');
     }
 
     public static function boot()

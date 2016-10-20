@@ -13,8 +13,8 @@ use DateTime;
 use Validator;
 use Illuminate\Http\Request;
 
-use App\Bank;
-use App\Lookup;
+use App\Model\Bank;
+use App\Model\Lookup;
 
 class BankController extends Controller
 {

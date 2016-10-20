@@ -6,7 +6,7 @@
  * Time: 4:36 PM
  */
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;

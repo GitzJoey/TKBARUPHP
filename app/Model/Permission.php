@@ -6,7 +6,7 @@
  * Time: 9:32 PM
  */
 
-namespace App;
+namespace App\Model;
 
 use Zizaco\Entrust\EntrustPermission;
 
@@ -33,6 +33,6 @@ class Permission extends EntrustPermission
 {
     public function role()
     {
-        $this->belongsToMany('App\Role', 'permission_role', 'permission_id', 'role_id');
+        $this->belongsToMany('App\Model\Role', 'permission_role', 'permission_id', 'role_id');
     }
 }

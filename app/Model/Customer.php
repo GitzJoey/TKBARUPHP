@@ -1,7 +1,7 @@
 <?php
 // PetengDedet
 
-namespace App;
+namespace App\Model;
 
 use Auth;
 use Vinkla\Hashids\Facades\Hashids;
@@ -64,12 +64,12 @@ class Customer extends Model
 
     public function getProfiles()
     {
-        return $this->belongsToMany('App\Profile', 'customer_pic', 'customer_id', 'profile_id');
+        return $this->belongsToMany('App\Model\Profile', 'customer_pic', 'customer_id', 'profile_id');
     }
 
     public function getBankAccount()
     {
-        return $this->belongsToMany('App\BankAccount', 'customer_bank_account', 'customer_id', 'bank_account_id');
+        return $this->belongsToMany('App\Model\BankAccount', 'customer_bank_account', 'customer_id', 'bank_account_id');
     }
 
     public static function boot()
