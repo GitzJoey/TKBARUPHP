@@ -52,13 +52,13 @@
                                 <div class="form-group">
                                     <label for="inputSupplierName" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-9">
-                                        <input type="text" id="inputSupplierName" name="supplier_name" class="form-control" ng-model="supplier_name">
+                                        <input type="text" id="inputSupplierName" name="walk_in_supplier" class="form-control" ng-model="supplier_name">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputSupplierDetails" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-9">
-                                        <textarea id="inputSupplierDetails" class="form-control" rows="5" name="supplier_detail" ng-model="supplier_details"></textarea>
+                                        <textarea id="inputSupplierDetails" class="form-control" rows="5" name="walk_in_supplier_detail" ng-model="supplier_details"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label for="inputPoCode" class="col-sm-2 control-label">@lang('purchase_order.create.po_code')</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputPoCode" name="po_code" placeholder="PO Code" readonly ng-model="poCode">
+                                        <input type="text" class="form-control" id="inputPoCode" name="code" placeholder="PO Code" readonly ng-model="poCode">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -95,14 +95,15 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" class="form-control" id="inputPoDate" name="po_date">
+                                            <input type="text" class="form-control" id="inputPoDate" name="po_created">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPoStatus" class="col-sm-2 control-label">@lang('purchase_order.create.po_status')</label>
                                     <div class="col-sm-10">
-                                        <label class="control-label control-label-normal">@{{ poStatus }}</label>
+                                        <label class="control-label control-label-normal">@{{ poStatus.description }}</label>
+                                        <input type="hidden" name="status" value="@{{ poStatus.code }}">
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +215,7 @@
                                                 <td>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="total_price" ng-value="item.quantity * item.price">
+                                                    <input type="text" class="form-control" name="total_price" ng-value="item.quantity * item.price" readonly>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -226,7 +227,7 @@
                                         <tr>
                                             <td width="80%" class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <input type="text" class="form-control" name="total_price" ng-model="grandTotal"
+                                                <input type="text" class="form-control" name="total_price" ng-model="grandTotal" readonly>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -284,10 +285,9 @@
 
             $scope.registeredType = $scope.supplierTypeDDL[0];
             $scope.walkinType = $scope.supplierTypeDDL[1];
-            $scope.poStatus = 'Draft';
+            $scope.poStatus = JSON.parse('{!! htmlspecialchars_decode($poStatus) !!}')[0];
             $scope.poCode = '{!! $poCode !!}';
             $scope.supplier_type =  $scope.registeredType.code;
-
             $scope.items = [];
 
             function isBase(unit) {

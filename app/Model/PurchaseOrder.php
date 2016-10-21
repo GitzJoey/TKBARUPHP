@@ -23,7 +23,7 @@ class PurchaseOrder extends Model
 
     protected $table = 'purchase_order';
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'po_created', 'shipping_date'];
 
     protected $fillable = [
 
@@ -33,31 +33,31 @@ class PurchaseOrder extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getItems(){
+    public function items(){
         return $this->belongsToMany('App\Model\Items', 'po_items', 'po_id', 'items_id');
     }
 
-    public function getPayments()
+    public function payments()
     {
         return $this->belongsToMany('App\Model\Payments', 'po_payments', 'po_id', 'payments_id');
     }
 
-    public function getSupplier()
+    public function suppliers()
     {
         return $this->belongsTo('App\Model\Supplier', 'supplier_id');
     }
 
-    public function getTruckVendor()
+    public function truckVendor()
     {
         return $this->belongsTo('App\Model\VendorTrucking', 'vendor_trucking_id');
     }
 
-    public function getStore()
+    public function store()
     {
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
-    public function getWarehouse()
+    public function warehouse()
     {
         return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
     }

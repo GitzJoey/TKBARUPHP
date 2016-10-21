@@ -109,14 +109,14 @@ class ProductTableSeeder extends Seeder
         $produnit22_1->is_base = true;
         $produnit22_1->conversion_value = 1;
 
-        $prod22->getProductUnit()->save($produnit22_1);
+        $prod22->productUnits()->save($produnit22_1);
 
         $produnit22_2 = new ProductUnit();
         $produnit22_2->unit_id = 3;
         $produnit22_2->is_base = false;
         $produnit22_2->conversion_value = 1000;
 
-        $prod22->getProductUnit()->save($produnit22_2);
+        $prod22->productUnits()->save($produnit22_2);
 
         $prod23 = new Product();
         $prod23->store_id = 1;
@@ -135,14 +135,14 @@ class ProductTableSeeder extends Seeder
         $produnit23_1->is_base = true;
         $produnit23_1->conversion_value = 1;
 
-        $prod23->getProductUnit()->save($produnit23_1);
+        $prod23->productUnits()->save($produnit23_1);
 
         $produnit23_2 = new ProductUnit();
         $produnit23_2->unit_id = 3;
         $produnit23_2->is_base = false;
         $produnit23_2->conversion_value = 1000;
 
-        $prod23->getProductUnit()->save($produnit23_2);
+        $prod23->productUnits()->save($produnit23_2);
 
         $prod31 = new Product();
         $prod31->store_id = 1;

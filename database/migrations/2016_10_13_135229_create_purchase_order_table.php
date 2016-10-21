@@ -31,13 +31,9 @@ class CreatePurchaseOrderTable extends Migration
             $table->softDeletes();
 
             $table->unsignedBigInteger('supplier_id');
-            $table->foreign('supplier_id')->references('id')->on('supplier');
             $table->unsignedBigInteger('vendor_trucking_id');
-            $table->foreign('vendor_trucking_id')->references('id')->on('vendor_trucking');
             $table->unsignedBigInteger('store_id');
-            $table->foreign('store_id')->references('id')->on('store');
             $table->unsignedBigInteger('warehouse_id');
-            $table->foreign('warehouse_id')->references('id')->on('warehouse');
         });
     }
 

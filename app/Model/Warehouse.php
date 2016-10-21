@@ -60,6 +60,10 @@ class Warehouse extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function purchaseOrders()
+    {
+        $this->hasMany('App\Model\PurchaseOrder');
+    }
     public static function boot()
     {
         parent::boot();

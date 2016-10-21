@@ -67,14 +67,19 @@ class Store extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getUser()
+    public function users()
     {
         return $this->hasMany('App\User', 'store_id');
     }
 
-    public function getProduct()
+    public function products()
     {
         return $this->hasMany('App\Model\Product', 'store_id');
+    }
+
+    public function purchaseOrders()
+    {
+        $this->hasMany('App\Model\PurchaseOrder');
     }
 
     public static function boot()

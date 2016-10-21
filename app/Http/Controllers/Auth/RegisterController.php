@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use App\Role;
-use App\Profile;
-use App\UserDetail;
-use App\Lookup;
+use App\Model\Role;
+use App\Model\UserDetail;
+use App\Model\Lookup;
 
 use Validator;
 use App\Http\Controllers\Controller;

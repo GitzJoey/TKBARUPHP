@@ -16,9 +16,7 @@ class CreatePurchaseOrderPaymentsTable extends Migration
         Schema::create('po_payments', function ( Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('po_id');
-            $table->foreign('po_id')->references('id')->on('purchase_order');
             $table->unsignedBigInteger('payments_id');
-            $table->foreign('payments_id')->references('id')->on('payments');
         });
     }
 

@@ -60,9 +60,14 @@ class VendorTrucking extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getBankAccount()
+    public function bankAccounts()
     {
         $this->hasMany('App\Model\BankAccount');
+    }
+
+    public function purchaseOrders()
+    {
+        $this->hasMany('App\Model\PurchaseOrder');
     }
 
     public static function boot()
