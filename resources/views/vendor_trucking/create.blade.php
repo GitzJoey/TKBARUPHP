@@ -27,13 +27,13 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('vendor_trucking.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.vendor.trucking.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.master.vendor.trucking.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputName" class="col-sm-2 control-label">@lang('vendor_trucking.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="name" type="text" class="form-control" value="{{ old('name') }}" placeholder="Name">
+                        <input id="inputName" name="name" type="text" class="form-control" value="{{ old('name') }}" placeholder="Name" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
@@ -54,14 +54,14 @@
                 <div class="form-group {{ $errors->has('tax_id') ? 'has-error' : '' }}">
                     <label for="inputTax" class="col-sm-2 control-label">@lang('vendor_trucking.field.tax_id')</label>
                     <div class="col-sm-10">
-                        <input id="inputTax" name="tax_id" type="text" class="form-control" value="{{ old('tax_id') }}" placeholder="Tax ID">
+                        <input id="inputTax" name="tax_id" type="text" class="form-control" value="{{ old('tax_id') }}" placeholder="Tax ID" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('tax_id') ? $errors->first('tax_id') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('vendor_trucking.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>

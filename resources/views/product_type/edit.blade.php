@@ -27,12 +27,12 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('product_type.edit.header.title')</h3>
         </div>
-        {!! Form::model($prodtype, ['method' => 'PATCH','route' => ['db.master.producttype.edit', $prodtype->hId()], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($prodtype, ['method' => 'PATCH','route' => ['db.master.producttype.edit', $prodtype->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'true']) !!}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputName" class="col-sm-2 control-label">@lang('product_type.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="name" type="text" class="form-control" value="{{ $prodtype->name }}" placeholder="Name">
+                        <input id="inputName" name="name" type="text" class="form-control" value="{{ $prodtype->name }}" placeholder="Name" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('product_type.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>

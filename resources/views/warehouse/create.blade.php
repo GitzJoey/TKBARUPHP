@@ -28,13 +28,13 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('warehouse.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.warehouse.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.master.warehouse.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="name" name="name" type="text" class="form-control" placeholder="@lang('warehouse.field.name')">
+                        <input id="name" name="name" type="text" class="form-control" placeholder="@lang('warehouse.field.name')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('warehouse.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>

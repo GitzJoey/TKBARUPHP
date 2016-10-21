@@ -27,34 +27,34 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('user.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.admin.user.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.admin.user.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputName" class="col-sm-2 control-label">@lang('user.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="name" type="text" class="form-control" placeholder="Name">
+                        <input id="inputName" name="name" type="text" class="form-control" placeholder="Name" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                     <label for="inputEmail" class="col-sm-2 control-label">@lang('user.field.email')</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" value="{{ old('email') }}">
+                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" value="{{ old('email') }}" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('email') ? $errors->first('email') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('store') ? 'has-error' : '' }}">
                     <label for="inputStore" class="col-sm-2 control-label">@lang('user.field.store')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('store', $storeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('store', $storeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('store') ? $errors->first('store') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="inputRoles" class="col-sm-2 control-label">@lang('user.field.roles')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('roles', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('roles', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('roles') ? $errors->first('roles') : '' }}</span>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('type', $usertypeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('type', $usertypeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>

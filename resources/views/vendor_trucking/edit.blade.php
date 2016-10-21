@@ -27,12 +27,12 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('vendor_trucking.edit.header.title')</h3>
         </div>
-        {!! Form::model($vt, ['method' => 'PATCH','route' => ['db.master.vendor.trucking.edit', $vt->hId()], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($vt, ['method' => 'PATCH','route' => ['db.master.vendor.trucking.edit', $vt->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputStoreName" class="col-sm-2 control-label">@lang('vendor_trucking.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputStoreName" name="store_name" type="text" class="form-control" value="{{ $vt->name }}" placeholder="Name">
+                        <input id="inputStoreName" name="store_name" type="text" class="form-control" value="{{ $vt->name }}" placeholder="Name" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
@@ -53,13 +53,13 @@
                 <div class="form-group">
                     <label for="inputTax" class="col-sm-2 control-label">@lang('vendor_trucking.field.tax_id')</label>
                     <div class="col-sm-10">
-                        <input id="inputTax" name="tax_id" type="text" class="form-control" value="{{ $vt->tax_id }}" placeholder="Tax ID"/>
+                        <input id="inputTax" name="tax_id" type="text" class="form-control" value="{{ $vt->tax_id }}" placeholder="Tax ID" data-parsley-required="true">
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('vendor_trucking.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' = 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>

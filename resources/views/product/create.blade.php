@@ -35,20 +35,20 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('product.create.header.title')</h3>
         </div>
-        <form id="productForm" class="form-horizontal" action="{{ route('db.master.product.create') }}" enctype="multipart/form-data" method="post">
+        <form id="productForm" class="form-horizontal" action="{{ route('db.master.product.create') }}" enctype="multipart/form-data" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="inputType" class="col-sm-2 control-label">@lang('product.field.type')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('type', $prodtypeDdL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('type', $prodtypeDdL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputName" class="col-sm-2 control-label">@lang('product.field.name')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }} " placeholder="@lang('product.field.name')">
+                        <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }} " placeholder="@lang('product.field.name')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
@@ -93,14 +93,14 @@
                                             <input type="checkbox" ng-model="unit.selected" ng-click="checkSelectAll()"/>
                                         </td>
                                         <td>
-                                            {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'ng-model' => 'unit.unit_id')) }}
+                                            {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'ng-model' => 'unit.unit_id', 'data-parsley-required' => 'true')) }}
                                         </td>
                                         <td class="text-center">
                                             <input type="checkbox" ng-model="unit.is_base" ng-click="checkOnlyOneIsBase($index)" name="is_base[]"/>
                                             <input type="hidden" ng-model="unit.is_base_val" name="is_base[]"/>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="unit.conversion_value" name="conversion_value[]"/>
+                                            <input type="text" class="form-control" ng-model="unit.conversion_value" name="conversion_value[]" data-parsley-required="true"/>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="unit.remarks" name="remarks[]"/>
@@ -122,7 +122,7 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('product.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>

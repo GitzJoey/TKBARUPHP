@@ -28,12 +28,12 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('phone_provider.edit.header.title')</h3>
         </div>
-        {!! Form::model($phoneProvider, ['method' => 'PATCH','route' => ['db.admin.phone_provider.edit', $phoneProvider->hId()], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($phoneProvider, ['method' => 'PATCH','route' => ['db.admin.phone_provider.edit', $phoneProvider->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'true']) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('phone_provider.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="name" type="text" class="form-control" value="{{ $phoneProvider->name }}" placeholder="@lang('phone_provider.field.name')">
+                        <input id="inputName" name="name" type="text" class="form-control" value="{{ $phoneProvider->name }}" placeholder="@lang('phone_provider.field.name')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>&nbsp;
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('phone_provider.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>

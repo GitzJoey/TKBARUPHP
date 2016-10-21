@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('supplier.edit.header.title')</h3>
         </div>
-        {!! Form::model($supplier, ['method' => 'PATCH','route' => ['db.master.supplier.edit', $supplier->hId()], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($supplier, ['method' => 'PATCH','route' => ['db.master.supplier.edit', $supplier->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
             <div ng-app="supplierModule" ng-controller="supplierController">
                 <div class="box-body">
@@ -46,7 +46,8 @@
                                         <div class="form-group">
                                             <label for="inputName" class="col-sm-2 control-label">@lang('supplier.field.name')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputName" name="name" type="text" class="form-control" value="{{ $supplier->name }}" placeholder="@lang('supplier.field.name')">
+                                                <input id="inputName" name="name" type="text" class="form-control" value="{{ $supplier->name }}" placeholder="@lang('supplier.field.name')" data-parsley-required="true">
+                                                <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">

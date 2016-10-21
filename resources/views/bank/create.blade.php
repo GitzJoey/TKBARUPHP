@@ -28,37 +28,41 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('bank.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.bank.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.master.bank.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">@lang('bank.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="name" name="name" type="text" class="form-control" placeholder="@lang('bank.field.name')">
+                        <input id="name" name="name" type="text" class="form-control" placeholder="@lang('bank.field.name')" data-parsley-required="true">
+                        <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputShortName" class="col-sm-2 control-label">@lang('bank.field.short_name')</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="short_name" name="short_name" placeholder="@lang('bank.field.short_name')">
+                        <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputBranch" class="col-sm-2 control-label">@lang('bank.field.branch')</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="branch" name="branch" placeholder="@lang('bank.field.branch')">
+                        <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputBranch" class="col-sm-2 control-label">@lang('bank.field.branch_code')</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="branch_code" name="branch_code" placeholder="@lang('bank.field.branch_code')">
+                        <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('bank.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
