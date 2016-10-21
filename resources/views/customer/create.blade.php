@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('customer.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.customer.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.master.customer.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div ng-app="customerModule" ng-controller="customerController">
                 <div class="box-body">
@@ -45,7 +45,8 @@
                                         <div class="form-group">
                                             <label for="inputName" class="col-sm-2 control-label">@lang('customer.field.name')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('customer.field.name')">
+                                                <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('customer.field.name')" data-parsley-required="true">
+                                                <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">

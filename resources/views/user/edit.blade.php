@@ -27,35 +27,35 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('user.edit.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.admin.user.edit', $user->hId()) }}" method="post" accept-charset="UTF-8">
+        <form class="form-horizontal" action="{{ route('db.admin.user.edit', $user->hId()) }}" method="post" accept-charset="UTF-8" data-parsley-validate="parsley">
             <input name="_method" type="hidden" value="PATCH"/>
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="name" value="{{ $user->name }}" type="text" class="form-control" placeholder="Name">
+                        <input id="inputName" name="name" value="{{ $user->name }}" type="text" class="form-control" placeholder="Name" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                     <label for="inputEmail" class="col-sm-2 control-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
+                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('email') ? $errors->first('email') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('store') ? 'has-error' : '' }}">
                     <label for="inputStore" class="col-sm-2 control-label">Store</label>
                     <div class="col-sm-10">
-                        {{ Form::select('store', $storeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('store', $storeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('store') ? $errors->first('store') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="inputRoles" class="col-sm-2 control-label">Roles</label>
                     <div class="col-sm-10">
-                        {{ Form::select('roles', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('roles', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('roles') ? $errors->first('roles') : '' }}</span>
                     </div>
                 </div>

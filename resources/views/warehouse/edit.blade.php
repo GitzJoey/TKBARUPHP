@@ -27,12 +27,12 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('warehouse.edit.header.title')</h3>
         </div>
-        {!! Form::model($warehouse, ['method' => 'PATCH','route' => ['db.master.warehouse.edit', $warehouse->hId()], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($warehouse, ['method' => 'PATCH','route' => ['db.master.warehouse.edit', $warehouse->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         <div class="box-body">
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>
                 <div class="col-sm-10">
-                    <input id="inputName" name="name" type="text" class="form-control" value="{{ $warehouse->name }}" placeholder="Name">
+                    <input id="inputName" name="name" type="text" class="form-control" value="{{ $warehouse->name }}" placeholder="Name" data-parsley-required="true">
                 </div>
             </div>
             <div class="form-group">
@@ -50,7 +50,7 @@
             <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                 <label for="inputStatus" class="col-sm-2 control-label">@lang('bank.field.status')</label>
                 <div class="col-sm-10">
-                    {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                    {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                     <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                 </div>
             </div>

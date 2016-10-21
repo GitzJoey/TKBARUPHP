@@ -27,20 +27,20 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('truckmtc.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.truck.maintenance.create') }}" method="post">
+        <form class="form-horizontal" action="{{ route('db.truck.maintenance.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.plate_number')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('plate_number', $trucklist, old('plate_number'), array('class' => 'form-control', 'placeholder' => trans('labels.PLEASE_SELECT'))) }}
+                        {{ Form::select('plate_number', $trucklist, old('plate_number'), array('class' => 'form-control', 'placeholder' => trans('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('plate_number') ? $errors->first('plate_number') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('maintenance_type') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_type')</label>
                     <div class="col-sm-10">
-                        <select class="form-control" name="maintenance_type">
+                        <select class="form-control" name="maintenance_type" data-parsley-required="true">
                             <option value>@lang('labels.PLEASE_SELECT')</option>
                             @foreach($mtctypeDDL as $t)
                                 <option value="{{$t}}" {{(old('maintenance_type')==$t)?'selected':''}}>@lang('lookup.'.$t)</option>
@@ -52,14 +52,14 @@
                 <div class="form-group {{ $errors->has('cost') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.cost')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="cost" name="cost" placeholder="@lang('truckmtc.field.cost')" value="{{ old('cost') }}">
+                        <input type="text" class="form-control" id="cost" name="cost" placeholder="@lang('truckmtc.field.cost')" value="{{ old('cost') }}" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('cost') ? $errors->first('cost') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('odometer') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.odometer')</label>
                     <div class="col-sm-10">
-                        <input id="odometer" name="odometer" type="text" class="form-control" placeholder="@lang('truckmtc.field.odometer')" value="{{ old('odometer') }}">
+                        <input id="odometer" name="odometer" type="text" class="form-control" placeholder="@lang('truckmtc.field.odometer')" value="{{ old('odometer') }}" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('odometer') ? $errors->first('odometer') : '' }}</span>
                     </div>
                 </div>
