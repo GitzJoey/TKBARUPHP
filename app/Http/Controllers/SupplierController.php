@@ -19,6 +19,7 @@ use App\Model\BankAccount;
 use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
 use App\Model\SupplierSetting;
+use Illuminate\Support\Facades\Log;
 
 class SupplierController extends Controller
 {
@@ -66,6 +67,7 @@ class SupplierController extends Controller
             'status' => 'required',
             */
         ]);
+
 
         $suppliers = [
             'name' => $request->input('name'),

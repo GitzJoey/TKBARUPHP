@@ -20,6 +20,7 @@ use App\Model\VendorTrucking;
 
 use Illuminate\Http\Request;
 use App\Util\POCodeGenerator;
+use Illuminate\Support\Facades\Log;
 
 class PurchaseOrderController extends Controller
 {
@@ -54,6 +55,10 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request,[
+
+        ]);
+
         $params = [
             'code' => $request->input('code'),
             'po_type' => $request->input('po_type'),
@@ -88,9 +93,6 @@ class PurchaseOrderController extends Controller
             $item = new Item();
             $item->product_id = $request["product_id"][$i];
             $item->store_id = $store->id;
-            /**
-             * TODO: Don't know how to get stock for the item yet, must be replaced later
-             */
             $item->selected_unit_id = $request["selected_unit_id"][$i];
             $item->base_unit_id = $request["base_unit_id"][$i];
             $item->conversion_value = ProductUnit::where(
