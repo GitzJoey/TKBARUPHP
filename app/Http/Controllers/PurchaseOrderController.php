@@ -100,10 +100,33 @@ class PurchaseOrderController extends Controller
             $item->quantity = $request["quantity"][$i];
             $item->price = $request["price"][$i];
             $item->to_base_quantity = $item->quantity * $item->conversion_value;
-
             $po->items()->save($item);
         }
 
         return redirect(route('db.po.create'));
     }
-}
+
+    public function revisionIndex(){
+        $purchaseOrders = PurchaseOrder::whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
+        $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
+    }
+
+    public function revise($id){
+
+    }
+
+    public function saveRevision(Request $request, $id){
+
+    }
+
+    public function paymentIndex(){
+
+    }
+
+    public function payment($id){
+
+    }
+
+    public function savePayment(Request $request, $id){
+
+    }}

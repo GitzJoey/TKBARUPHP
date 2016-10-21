@@ -27,10 +27,10 @@
                             <li><a href="{{ route('db.po.create') }}"><i class="fa fa-truck fa-fw"></i>&nbsp;@lang('menu.item.po_new')</a></li>
                         @endif
                         @if(Entrust::can('po.po-revise'))
-                            <li><a href="#"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_revise')</a></li>
+                            <li><a href="{{ route('db.po.revise.index') }}"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_revise')</a></li>
                         @endif
                         @if(Entrust::can('po.po-payment'))
-                            <li><a href="#"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a></li>
+                            <li><a href="{{ route('db.po.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a></li>
                         @endif
                     </ul>
                 </li>
