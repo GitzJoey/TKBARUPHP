@@ -9,7 +9,6 @@
 namespace App\Http\Controllers;
 
 use Auth;
-
 use App\Model\Items;
 use App\Model\Lookup;
 use App\Model\Product;
@@ -18,7 +17,6 @@ use App\Model\Supplier;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
-
 use Illuminate\Http\Request;
 use App\Util\POCodeGenerator;
 use Illuminate\Support\Facades\Log;
@@ -53,6 +51,7 @@ class PurchaseOrderController extends Controller
             'productDDL',
             'poStatus',
             'poCode'));
+
     }
 
     public function store(Request $request)

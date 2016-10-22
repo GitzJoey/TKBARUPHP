@@ -75,11 +75,14 @@ class Store extends Model
     public function products()
     {
         return $this->hasMany('App\Model\Product', 'store_id');
+<<<<<<< HEAD:app/Model/Store.php
     }
 
     public function purchaseOrders()
     {
         return $this->hasMany('App\Model\PurchaseOrder');
+=======
+>>>>>>> owner/master:app/Model/Store.php
     }
 
     public static function boot()

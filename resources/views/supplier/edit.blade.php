@@ -139,8 +139,11 @@
                                                                         <tr ng-repeat="ph in profile.get_phone_number">
                                                                             <td>
                                                                                 <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
-                                                                                        ng-model="ph.phone_provider_id"
+                                                                                        ng-init="phone_provider = { id: ph.phone_provider_id }"
+                                                                                        ng-model="phone_provider"
+                                                                                        ng-change="ph.phone_provider_id = phone_provider.id"
                                                                                         ng-options="p as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
+                                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 </select>
                                                                             </td>
                                                                             <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number"></td>
@@ -181,11 +184,12 @@
                                             <tbody>
                                             <tr ng-repeat="bank in banks">
                                                 <td>
-                                                    <select class="form-control"
-                                                            name="bank[]"
-                                                            ng-model="bank.bank_id">
+                                                    <select name="bank[]" class="form-control"
+                                                            ng-init="bank_list = { id: bank.bank_id }"
+                                                            ng-model="bank_list"
+                                                            ng-change="bank.bank_id = bank_list.id"
+                                                            ng-options="b as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option ng-repeat="b in bankDDL" value="@{{ b.id }}" ng-selected="b.id ==  bank.bank_id">@{{ b.name}}&nbsp;(@{{ b.short_name }})</option>
                                                     </select>
                                                 </td>
                                                 <td>
