@@ -140,7 +140,7 @@
                                                                             <td>
                                                                                 <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
                                                                                         ng-model="ph.phone_provider_id"
-                                                                                        ng-options="toInt(p.id) as p.name + ' (' + p.short_name + ')' for p in providerDDL">
+                                                                                        ng-options="p as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
                                                                                 </select>
                                                                             </td>
                                                                             <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number"></td>

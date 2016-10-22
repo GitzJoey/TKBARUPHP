@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
 
 use App\Model\Store;
@@ -23,26 +24,41 @@ class StoreController extends Controller
 
     public function index()
     {
+        Log::info('[StoreController@index] ' );
+
         $store = Store::paginate(10);
         return view('store.index', compact('store'));
+
+        Log::info('[StoreController@index] ' );
     }
 
     public function show($id)
     {
+        Log::info('[StoreController@show] $id: ' . $id);
+
         $store = Store::find($id);
+
+        Log::info('[StoreController@index] ');
+
         return view('store.show')->with('store', $store);
     }
 
     public function create()
     {
+        Log::info('[StoreController@create] ');
+
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
+
+        Log::info('[StoreController@create] ');
 
         return view('store.create', compact('statusDDL', 'yesnoDDL'));
     }
 
     public function store(Request $data)
     {
+        Log::info('[StoreController@store] ');
+
         $this->validate($data,[
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -74,26 +90,36 @@ class StoreController extends Controller
             'remarks'       => empty($data['remarks']) ? '' : $data['remarks']
         ]);
 
+        Log::info('[StoreController@store] ');
+
         return redirect(route('db.admin.store'));
     }
 
     private function changeIsDefault()
     {
+        Log::info('[StoreController@changeIsDefault] ');
 
+        Log::info('[StoreController@changeIsDefault] ');
     }
 
     public function edit($id)
     {
+        Log::info('[StoreController@edit] $id:' . $id);
+
         $store = Store::find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
+
+        Log::info('[StoreController@changeIsDefault] ');
 
         return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL'));
     }
 
     public function update($id, Request $data)
     {
+        Log::info('[StoreController@update] $id:' . $id);
+
         $store = Store::find($id);
 
         $imageName = '';
@@ -116,12 +142,19 @@ class StoreController extends Controller
         $store->remarks         = empty($data['remarks']) ? '' : $data['remarks'];
         $store->save();
 
+        Log::info('[StoreController@update] ');
+
         return redirect(route('db.admin.store'));
     }
 
     public function delete($id)
     {
+        Log::info('[StoreController@delete] $id:' . $id);
+
         Store::find($id)->delete();
+
+        Log::info('[StoreController@delete] ');
+
         return redirect(route('db.admin.store'));
     }
 }
