@@ -6,7 +6,7 @@
  * Time: 10:46 AM
  */
 
-use App\PriceLevel;
+use App\Model\PriceLevel;
 
 use Illuminate\Database\Seeder;
 

@@ -1,9 +1,9 @@
 <?php
 
-use App\Profile;
-use App\Supplier;
-use App\BankAccount;
-use App\PhoneNumber;
+use App\Model\Supplier;
+use App\Model\Profile;
+use App\Model\BankAccount;
+use App\Model\PhoneNumber;
 
 use Illuminate\Database\Seeder;
 
@@ -33,7 +33,7 @@ class SupplierTableSeeder extends Seeder
                 $ba->account_number = '123123123';
                 $ba->remarks = 'Bank ' . $b;
 
-                $supplier->getBankAccount()->save($ba);
+                $supplier->bankAccounts()->save($ba);
             }
 
             for ($p = 0; $p < 1; $p++) {
@@ -41,7 +41,7 @@ class SupplierTableSeeder extends Seeder
                 $pf->first_name = "First Name ".$p;
                 $pf->last_name = "First Name ".$p;
 
-                $supplier->getProfiles()->save($pf);
+                $supplier->profiles()->save($pf);
 
                 for ($ph = 0; $ph < 1; $ph++) {
                     $phone = new PhoneNumber();

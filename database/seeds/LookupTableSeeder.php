@@ -9,7 +9,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Lookup;
+use App\Model\Lookup;
 
 class CreateLookupTableSeeder extends Seeder
 {

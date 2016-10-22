@@ -8,7 +8,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Unit;
+use App\Model\Unit;
 
 class DefaultListUnitTableSeeder extends Seeder
 {

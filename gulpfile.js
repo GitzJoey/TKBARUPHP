@@ -13,7 +13,6 @@ require('laravel-elixir-vue');
  |
  */
 
-/* AdminLTE */
 elixir(function (mix) {
     mix.styles([
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
@@ -22,12 +21,14 @@ elixir(function (mix) {
         './node_modules/admin-lte/dist/css/AdminLTE.min.css',
         './node_modules/admin-lte/dist/css/skins/_all-skins.min.css',
         './node_modules/icheck/skins/square/blue.css',
-        './node_modules/bootstrap-daterangepicker/daterangepicker.css'
+        './node_modules/bootstrap-daterangepicker/daterangepicker.css',
+        './node_modules/ui-select/dist/select.min.css'
     ], 'public/adminlte/css/adminlte.css')
     .scripts([
         './node_modules/jquery/dist/jquery.min.js',
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './node_modules/angular/angular.min.js',
+        './node_modules/angular-sanitize/angular-sanitize.min.js',
         './node_modules/bootstrap-daterangepicker/moment.min.js',
         './node_modules/icheck/icheck.min.js',
         './node_modules/bootstrap-daterangepicker/daterangepicker.js',
@@ -37,6 +38,7 @@ elixir(function (mix) {
         './node_modules/parsleyjs/dist/i18n/id.js',
         './node_modules/parsleyjs/dist/i18n/en.extra.js',
         './node_modules/parsleyjs/dist/i18n/id.extra.js',
+        './node_modules/ui-select/dist/select.min.js',
         './node_modules/admin-lte/dist/js/app.min.js'
     ], 'public/adminlte/js/app.js');
 });

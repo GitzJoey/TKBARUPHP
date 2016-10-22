@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Warehouse;
+use App\Model\Warehouse;
 
 class WarehouseTableSeeder extends Seeder
 {

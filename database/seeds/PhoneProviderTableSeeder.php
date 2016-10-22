@@ -8,7 +8,7 @@
  */
 use Illuminate\Database\Seeder;
 
-use App\PhoneProvider;
+use App\Model\PhoneProvider;
 
 class PhoneProviderTableSeeder extends Seeder
 {

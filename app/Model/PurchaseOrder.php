@@ -9,6 +9,8 @@
 namespace App\Model;
 
 use Auth;
+use Carbon\Carbon;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,41 +25,62 @@ class PurchaseOrder extends Model
 
     protected $table = 'purchase_order';
 
-    protected $fillable = [
+    protected $dates = ['deleted_at', 'po_created', 'shipping_date'];
 
+    protected $fillable = [
+        'code', 'po_type', 'po_created', 'shipping_date',
+        'supplier_type', 'walk_in_supplier', 'walk_in_supplier_detail',
+        'remarks', 'status', 'supplier_id', 'vendor_trucking_id', 'warehouse_id',
+        'store_id'
     ];
 
     public function hId() {
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getItems(){
-        return $this->belongsToMany('App\Model\Items', 'po_items', 'po_id', 'items_id');
+    public function items(){
+        return $this->belongsToMany('App\Model\Items', 'purchase_order_items', 'po_id', 'items_id');
     }
 
-    public function getPayments()
+    public function payments()
     {
-        return $this->belongsToMany('App\Model\Payments', 'po_payments', 'po_id', 'payments_id');
+        return $this->belongsToMany('App\Model\Payments', 'purchase_order_payments', 'po_id', 'payments_id');
     }
 
-    public function getSupplier()
+    public function supplier()
     {
         return $this->belongsTo('App\Model\Supplier', 'supplier_id');
     }
 
-    public function getTruckVendor()
+    public function vendorTrucking()
     {
         return $this->belongsTo('App\Model\VendorTrucking', 'vendor_trucking_id');
     }
 
-    public function getStore()
+    public function store()
     {
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
-    public function getWarehouse()
+    public function warehouse()
     {
         return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
+    }
+
+    public function setPoCreatedAttribute($value){
+        $this->attributes['po_created'] = Carbon::createFromFormat('d/m/Y', $value);
+    }
+
+    public function getPoCreatedAttribute($value){
+        return Carbon::parse($value)->toDateString();
+    }
+
+    public function setShippingDateAttribute($value){
+        $this->attributes['shipping_date'] = Carbon::createFromFormat('d/m/Y', $value);
+    }
+
+    public function getShippingDateAttribute($value){
+        return Carbon::parse($value)->toDateString();
     }
 
     public static function boot()

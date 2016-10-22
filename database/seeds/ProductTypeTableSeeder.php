@@ -1,6 +1,6 @@
 <?php
 
-use App\ProductType;
+use App\Model\ProductType;
 
 use Illuminate\Database\Seeder;
 

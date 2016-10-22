@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\VendorTrucking;
+use App\Model\VendorTrucking;
 
 class VendorTruckingTableSeeder extends Seeder
 {

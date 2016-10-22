@@ -10,15 +10,15 @@ return [
             'purchase_order_detail' => 'Purchase Order Detail',
             'shipping' => 'Shipping',
             'transactions' => 'Transactions',
-            'remarks' => 'Remarks',
+            'remarks' => 'Remarks'
         ],
         'field' => [
-            'supplier_type' => 'Name',
+            'supplier_type' => 'Type',
             'supplier_name' => 'Name',
             'supplier_details' => 'Details',
             'shipping_date' => 'Date',
             'warehouse' => 'Warehouse',
-            'vendor_trucking' => 'Vendor Trucking',
+            'vendor_trucking' => 'Vendor Trucking'
         ],
         'po_code' => 'Code',
         'po_type' => 'Type',
@@ -29,16 +29,16 @@ return [
                 'header' => [
                     'product_name' => 'Product Name',
                     'header' => [
-                        'quantity' => 'Quantity',
+                        'quantity' => 'Quantity'
                     ],
                     'unit' => 'UoM',
                     'price_unit' => 'Price',
-                    'total_price' => 'Total Price',
+                    'total_price' => 'Total Price'
                 ],
             ],
             'total' => [
                 'body' => [
-                    'total' => 'Total Amount',
+                    'total' => 'Total Amount'
                 ],
             ],
         ],
@@ -48,7 +48,7 @@ return [
         'page_title' => '',
         'page_title_desc' => '',
         'box' => [
-            'po_detail' => '',
+            'po_detail' => ''
         ],
     ],
     'revise' => [
@@ -58,13 +58,13 @@ return [
             'supplier_details' => '',
             'shipping_date' => '',
             'warehouse' => '',
-            'vendor_trucking' => '',
+            'vendor_trucking' => ''
         ],
-        'po_code' => '',
-        'po_type' => '',
-        'po_date' => '',
+        'po_code' => 'Code',
+        'po_type' => 'Type',
+        'po_date' => 'Date',
         'po_status' => '',
-        'title' => '',
+        'title' => 'Revise',
         'page_title' => '',
         'page_title_desc' => '',
         'box' => [
@@ -72,25 +72,42 @@ return [
             'purchase_order_detail' => '',
             'shipping' => '',
             'transactions' => '',
-            'remarks' => '',
+            'remarks' => ''
         ],
         'table' => [
             'item' => [
                 'header' => [
                     'product_name' => '',
                     'header' => [
-                        'quantity' => '',
+                        'quantity' => ''
                     ],
                     'unit' => '',
                     'price_unit' => '',
-                    'total_price' => '',
+                    'total_price' => ''
                 ],
             ],
             'total' => [
                 'body' => [
-                    'total' => '',
+                    'total' => ''
                 ],
             ],
         ],
-    ],
+        'index' => [
+            'title' => 'Revise Purchase Order',
+            'page_title' => 'Revise Purchase Order',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Purchase Order List'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'po_date' => 'Created Date',
+                    'supplier' => 'Supplier',
+                    'shipping_date' => 'Shipping Date',
+                    'status' => 'Status'
+                ]
+            ]
+        ]
+    ]
 ];

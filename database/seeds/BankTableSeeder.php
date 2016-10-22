@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Bank;
+use App\Model\Bank;
 
 class BankTableSeeder extends Seeder
 {
