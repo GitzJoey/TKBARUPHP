@@ -138,7 +138,9 @@
                                                                         <tr ng-repeat="ph in profile.get_phone_number">
                                                                             <td>
                                                                                 <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
+                                                                                        ng-init="phone_provider = { id: ph.phone_provider_id }"
                                                                                         ng-model="ph.phone_provider_id"
+                                                                                        ng-change="ph.phone_provider_id = phone_provider.id"
                                                                                         ng-options="p.id as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
                                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 </select>
