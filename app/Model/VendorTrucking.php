@@ -62,16 +62,12 @@ class VendorTrucking extends Model
 
     public function bankAccounts()
     {
-<<<<<<< HEAD:app/Model/VendorTrucking.php
        return $this->hasMany('App\Model\BankAccount');
     }
 
     public function purchaseOrders()
     {
         return $this->hasMany('App\Model\PurchaseOrder');
-=======
-        $this->hasMany('App\Model\BankAccount');
->>>>>>> owner/master:app/Model/VendorTrucking.php
     }
 
     public static function boot()
