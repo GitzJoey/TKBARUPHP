@@ -62,41 +62,41 @@
                         <div ng-app="addUnitModule" ng-controller="addUnit">
                             <table class="table table-striped table-bordered">
                                 <thead>
-                                <tr>
-                                    <th class="text-center"><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
-                                    <th>@lang('product.edit.table.header.unit')</th>
-                                    <th class="text-center">@lang('product.edit.table.header.is_base')</th>
-                                    <th>@lang('product.edit.table.header.conversion_value')</th>
-                                    <th>@lang('product.edit.table.header.remarks')</th>
-                                </tr>
+                                    <tr>
+                                        <th class="text-center"><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                                        <th>@lang('product.edit.table.header.unit')</th>
+                                        <th class="text-center">@lang('product.edit.table.header.is_base')</th>
+                                        <th>@lang('product.edit.table.header.conversion_value')</th>
+                                        <th>@lang('product.edit.table.header.remarks')</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="unit in units">
-                                    <td class="text-center">
-                                        <input type="checkbox" ng-model="unit.selected" ng-click="checkSelectAll()"/>
-                                    </td>
-                                    <td>
-                                        {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'ng-model' => 'unit.unit_id'), 'data-parsley-required' => 'true') }}
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" ng-model="unit.is_base" ng-click="checkOnlyOneIsBase($index)" name="is_base[]"/>
-                                        <input type="hidden" ng-model="unit.is_base_val" name="is_base[]"/>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" ng-model="unit.conversion_value" name="conversion_value[]" data-parsley-required="true"/>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" ng-model="unit.remarks" name="remarks[]"/>
-                                    </td>
-                                </tr>
+                                    <tr ng-repeat="unit in units">
+                                        <td class="text-center">
+                                            <input type="checkbox" ng-model="unit.selected" ng-click="checkSelectAll()"/>
+                                        </td>
+                                        <td>
+                                            {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'ng-model' => 'unit.unit_id', 'data-parsley-required' => 'true')) }}
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" ng-model="unit.is_base" ng-click="checkOnlyOneIsBase($index)" name="is_base[]"/>
+                                            <input type="hidden" ng-model="unit.is_base_val" name="is_base[]"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="unit.conversion_value" name="conversion_value[]" data-parsley-required="true"/>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="unit.remarks" name="remarks[]"/>
+                                        </td>
+                                    </tr>
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <td colspan="4">
-                                        <button type="button" class="btn btn-xs btn-danger" ng-hide="!units.length" ng-click="remove()">@lang('buttons.remove_button')</button>
-                                        <button type="button" class="btn btn-xs btn-primary" ng-click="addNew()">@lang('buttons.create_new_button')</button>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <button type="button" class="btn btn-xs btn-danger" ng-hide="!units.length" ng-click="remove()">@lang('buttons.remove_button')</button>
+                                            <button type="button" class="btn btn-xs btn-primary" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                                        </td>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
