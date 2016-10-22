@@ -37,6 +37,10 @@
 
         <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
 
+        <script type="application/javascript">
+            window.ParsleyValidator.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
+        </script>
+
         @yield('custom_js')
     </body>
 </html>
