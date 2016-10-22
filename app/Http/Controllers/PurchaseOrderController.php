@@ -58,8 +58,6 @@ class PurchaseOrderController extends Controller
     public function store(Request $request)
     {
         Log::info('[PurchaseOrderController@store] ');
-        Log::info($request->input('po_created'));
-        Log::info($request->input('shipping_date'));
 
         $this->validate($request,[
 
@@ -74,7 +72,7 @@ class PurchaseOrderController extends Controller
             'walk_in_supplier' => $request->input('walk_in_supplier'),
             'walk_in_supplier_detail' => $request->input('walk_in_supplier_detail'),
             'remarks' => $request->input('remarks'),
-            'status' => $request->input('status'),
+            'status' => Lookup::whereCode('POSTATUS.D')->first()->code,
             'supplier_id' => $request->input('supplier_id'),
             'vendor_trucking_id' => $request->input('vendor_trucking_id'),
             'warehouse_id' => $request->input('warehouse_id'),
@@ -105,7 +103,7 @@ class PurchaseOrderController extends Controller
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
-        return view('revise_index', compact('purchaseOrders', 'poStatusDDL'));
+        return view('purchase_order.revise_index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
     public function revise($id){
@@ -126,4 +124,9 @@ class PurchaseOrderController extends Controller
 
     public function savePayment(Request $request, $id){
 
-    }}
+    }
+
+    public function delete(Request $request, $id){
+
+    }
+}

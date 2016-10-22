@@ -113,7 +113,7 @@
                                     <label for="inputPoStatus" class="col-sm-2 control-label">@lang('purchase_order.create.po_status')</label>
                                     <div class="col-sm-10">
                                         <label class="control-label control-label-normal">@{{ po.status.description }}</label>
-                                        <input type="hidden" name="status" ng-model="po.status.code">
+                                        <input type="hidden" name="status" value="@{{ po.status.code }}">
                                     </div>
                                 </div>
                             </div>
