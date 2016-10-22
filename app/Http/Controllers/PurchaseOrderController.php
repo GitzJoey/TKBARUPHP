@@ -8,11 +8,12 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+
 use App\Model\Items;
 use App\Model\Lookup;
 use App\Model\Product;
 use App\Model\ProductUnit;
-use App\Model\Store;
 use App\Model\Supplier;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
@@ -20,6 +21,7 @@ use App\Model\VendorTrucking;
 
 use Illuminate\Http\Request;
 use App\Util\POCodeGenerator;
+use Illuminate\Support\Facades\Log;
 
 class PurchaseOrderController extends Controller
 {
@@ -30,6 +32,7 @@ class PurchaseOrderController extends Controller
 
     public function create()
     {
+        Log::info('[PurchaseOrderController@create] ');
         //Use get all for now because the mechanism to set record status to 'Active' is not working.
         $supplierDDL = Supplier::all([ 'id', 'name' ]);
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
@@ -38,7 +41,7 @@ class PurchaseOrderController extends Controller
         $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code']);
         $supplierTypeDDL = Lookup::where('category', '=', 'SUPPLIERTYPE')->get(['description', 'code']);
         $poCode = POCodeGenerator::generateWithLength(6);
-        $poStatus = Lookup::where('code', '=', 'POSTATUS.WA')->get(['description', 'code']);
+        $poStatus = Lookup::where('code', '=', 'POSTATUS.D')->get(['description', 'code']);
 
         return view('purchase_order.create', compact(
             'supplierDDL',
@@ -54,6 +57,10 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request)
     {
+        Log::info('[PurchaseOrderController@store] ');
+        Log::info($request->input('po_created'));
+        Log::info($request->input('shipping_date'));
+
         $this->validate($request,[
 
         ]);
@@ -67,39 +74,27 @@ class PurchaseOrderController extends Controller
             'walk_in_supplier' => $request->input('walk_in_supplier'),
             'walk_in_supplier_detail' => $request->input('walk_in_supplier_detail'),
             'remarks' => $request->input('remarks'),
-            'status' => $request->input('status')
+            'status' => $request->input('status'),
+            'supplier_id' => $request->input('supplier_id'),
+            'vendor_trucking_id' => $request->input('vendor_trucking_id'),
+            'warehouse_id' => $request->input('warehouse_id'),
+            'store_id' => Auth::user()->store_id
         ];
 
         $po = PurchaseOrder::create($params);
 
-        $selectedSupplier = Supplier::find($request->input('supplier_id'));
-        $selectedSupplier->purchaseOrders()->save($po);
-
-        $vendorTrucking = VendorTrucking::find($request->input('vendor_trucking_id'));
-        $vendorTrucking->purchaseOrders()->save($po);
-
-        $warehouse = Warehouse::find($request->input('warehouse_id'));
-        $warehouse->purchaseOrders()->save($po);
-
-        /*
-         * TODO: Don't know how to retrieve current user store id yet, must be replaced later
-         */
-        $store = Store::find(1);
-        $store->purchaseOrders()->save($po);
-
-        for($i = 0; $i < count($request['product_id']); $i++)
+        for($i = 0; $i < count($request->input('product_id')); $i++)
         {
             $item = new Items();
-            $item->product_id = $request["product_id"][$i];
-            $item->store_id = $store->id;
-            $item->selected_unit_id = $request["selected_unit_id"][$i];
-            $item->base_unit_id = $request["base_unit_id"][$i];
-            $item->conversion_value = ProductUnit::where(
-                ['product_id' => $item->product_id, 'unit_id' => $item->selected_unit_id]
-            )->first()->conversion_value;
-            $item->quantity = $request["quantity"][$i];
-            $item->price = $request["price"][$i];
+            $item->product_id = $request->input("product_id.$i");
+            $item->store_id = Auth::user()->store_id;
+            $item->selected_unit_id = $request->input("selected_unit_id.$i");
+            $item->base_unit_id = $request->input("base_unit_id.$i");
+            $item->conversion_value = ProductUnit::where(['product_id' => $item->product_id, 'unit_id' => $item->selected_unit_id])->first()->conversion_value;
+            $item->quantity = $request->input("quantity.$i");
+            $item->price = $request->input("price.$i");
             $item->to_base_quantity = $item->quantity * $item->conversion_value;
+
             $po->items()->save($item);
         }
 
@@ -107,8 +102,10 @@ class PurchaseOrderController extends Controller
     }
 
     public function revisionIndex(){
-        $purchaseOrders = PurchaseOrder::whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
+        $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
+
+        return view('revise_index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
     public function revise($id){

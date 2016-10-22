@@ -15,14 +15,14 @@ class CreatePurchaseOrderTable extends Migration
     {
         Schema::create('purchase_order', function ( Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('code');
-            $table->string('po_type');
-            $table->date('po_created');
-            $table->date('shipping_date');
+            $table->string('code')->nullable();
+            $table->string('po_type')->nullable();
+            $table->date('po_created')->nullable();
+            $table->date('shipping_date')->nullable();
             $table->string('supplier_type')->nullable();
             $table->string('walk_in_supplier')->nullable();
             $table->string('walk_in_supplier_detail')->nullable();
-            $table->string('remarks');
+            $table->string('remarks')->nullable();
             $table->string('status')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);

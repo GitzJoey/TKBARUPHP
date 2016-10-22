@@ -41,7 +41,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/po/revise', 'PurchaseOrderController@revisionIndex')->name('db.po.revise.index');
     Route::get('/dashboard/po/revise/{id}', 'PurchaseOrderController@revise')->name('db.po.revise');
     Route::post('/dashboard/po/revise/{id}', 'PurchaseOrderController@saveRevision');
-    Route::get('/dashboard/po/revise', 'PurchaseOrderController@paymentIndex')->name('db.po.payment.index');
+    Route::get('/dashboard/po/payment', 'PurchaseOrderController@paymentIndex')->name('db.po.payment.index');
     Route::get('/dashboard/po/payment/{id}', 'PurchaseOrderController@pay')->name('db.po.payment');
     Route::post('/dashboard/po/payment/{id}', 'PurchaseOrderController@savePayment');
 
@@ -184,9 +184,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@edit')->name('db.price.price_level.edit');
     Route::patch('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@update');
     Route::delete('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
-
-    Route::get('/dashboard/po/create', 'PurchaseOrderController@create')->name('db.po.create');
-    Route::post('/dashboard/po/create', 'PurchaseOrderController@create');
 
     Route::get('/dashboard/so/create', 'SalesOrderController@create')->name('db.so.create');
     Route::post('/dashboard/so/create', 'SalesOrderController@create');
