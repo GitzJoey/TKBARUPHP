@@ -68,15 +68,15 @@ class User extends Authenticatable
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getProfile() {
+    public function profile() {
         return $this->hasOne('App\Model\Profile');
     }
 
-    public function getUserDetail() {
+    public function userDetail() {
         return $this->hasOne('App\Model\UserDetail');
     }
 
-    public function getStore() {
+    public function store() {
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
@@ -84,7 +84,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Model\Role', 'role_user', 'user_id', 'role_id');
     }
 
-    public function getSettings() {
+    public function settings() {
         return $this->hasMany('App\Model\Settings');
     }
 }

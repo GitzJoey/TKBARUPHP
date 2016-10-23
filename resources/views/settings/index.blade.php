@@ -38,10 +38,10 @@
                     @foreach ($data as $key => $item)
                         <tr>
                             <td>
-                                @if(is_null($item->getUser()))
+                                @if(is_null($item->user()))
                                     Default
                                 @else
-                                    $item->getUser()->name
+                                    $item->user()->name
                                 @endif
                             </td>
                             <td>{{ $item->category }}</td>

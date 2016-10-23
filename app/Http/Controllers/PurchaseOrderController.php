@@ -31,6 +31,8 @@ class PurchaseOrderController extends Controller
 
     public function create()
     {
+        Log::info('[PurchaseOrderController@create] ');
+
         $supplierDDL = Supplier::all([ 'id', 'name' ]);
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
         $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
@@ -38,7 +40,7 @@ class PurchaseOrderController extends Controller
         $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code']);
         $supplierTypeDDL = Lookup::where('category', '=', 'SUPPLIERTYPE')->get(['description', 'code']);
         $poCode = POCodeGenerator::generateWithLength(6);
-        $poStatus = Lookup::where('code', '=', 'POSTATUS.D')->get(['description', 'code']);
+        $poStatusDraft = Lookup::where('category', '=', 'POSTATUS')->get(['description', 'code'])->where('code', '=', 'POSTATUS.D');
 
         return view('purchase_order.create', compact(
             'supplierDDL',
@@ -48,7 +50,7 @@ class PurchaseOrderController extends Controller
             'poTypeDDL',
             'unitDDL',
             'productDDL',
-            'poStatus',
+            'poStatusDraft',
             'poCode'));
     }
 

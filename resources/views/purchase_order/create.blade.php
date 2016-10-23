@@ -36,16 +36,10 @@
                             <div class="form-group">
                                 <label for="inputSupplierType" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_type')</label>
                                 <div class="col-sm-9">
-                                    {{-- Commented because it still not work --}}
-                                    {{--<div ng-repeat="supplierType in supplierTypeDDL">--}}
-                                    {{--<input id="supplier_type@{{ $index }}" type="radio" name="supplier_type" ng-model="selection.supplier_type" ng-value="supplierType.code">--}}
-                                    {{--<label for="supplier_type@{{ $index }}">@{{ supplierType.description }}</label>--}}
-                                    {{--</div>--}}
-                                    {{--Code below is also not work--}}
-                                    <input id="supplier_type0" type="radio" name="supplier_type" ng-model="po.supplier_type" ng-value="registeredType.code">
-                                    <label for="supplier_type0">@{{ registeredType.description }}</label>
-                                    <input id="supplier_type1" type="radio" name="supplier_type" ng-model="po.supplier_type" ng-value="walkinType.code">
-                                    <label for="supplier_type1">@{{ walkinType.description }}</label>
+                                    <input id="supplier_type_r" type="radio" name="supplier_type" ng-model="po.supplier_type" ng-value="registeredType.code">
+                                    <label for="supplier_type_r">@{{ registeredType.description }}</label>
+                                    <input id="supplier_type_wi" type="radio" name="supplier_type" ng-model="po.supplier_type" ng-value="walkinType.code">
+                                    <label for="supplier_type_wi">@{{ walkinType.description }}</label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -63,7 +57,8 @@
                             <div class="form-group">
                                 <label for="inputSupplierName" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="inputSupplierName" name="walk_in_supplier" class="form-control" ng-model="po.supplier_name"></div>
+                                    <input type="text" id="inputSupplierName" name="walk_in_supplier" class="form-control" ng-model="po.supplier_name">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputSupplierDetails" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_details')</label>
@@ -83,7 +78,7 @@
                             <div class="form-group">
                                 <label for="inputPoCode" class="col-sm-2 control-label">@lang('purchase_order.create.po_code')</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputPoCode" name="code" placeholder="PO Code" readonly ng-model="po.code">
+                                    <input type="text" class="form-control" id="inputPoCode" name="code" placeholder="PO Code" readonly value="{{ $poCode }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -112,15 +107,13 @@
                             <div class="form-group">
                                 <label for="inputPoStatus" class="col-sm-2 control-label">@lang('purchase_order.create.po_status')</label>
                                 <div class="col-sm-10">
-                                    <label class="control-label control-label-normal">@{{ po.status.description }}</label>
-                                    <input type="hidden" name="status" value="@{{ po.status.code }}">
+                                    <label class="control-label control-label-normal">@lang('lookup.'.$poStatusDraft->first()->code)</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-10">
                     <div class="box box-info">
@@ -277,8 +270,8 @@
                     </div>
                 </div>
             </div>
+        </div>
     </form>
-    </div>
 @endsection
 
 @section('custom_js')
@@ -294,9 +287,8 @@
             $scope.registeredType = $scope.supplierTypeDDL[0];
             $scope.walkinType = $scope.supplierTypeDDL[1];
             $scope.po = {
-                status : JSON.parse('{!! htmlspecialchars_decode($poStatus) !!}')[0],
-                code : '{{ $poCode }}',
-                supplier_type: $scope.registeredType.code,
+                code : '',
+                supplier_type: '',
                 items: []
             };
             function isBase(unit) {

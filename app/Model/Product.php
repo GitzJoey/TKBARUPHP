@@ -79,7 +79,7 @@ class Product extends Model
         return $this->belongsTo('App\Model\ProductType', 'product_type_id');
     }
 
-    public function productUnits()
+    public function productUnit()
     {
         return $this->hasMany('App\Model\ProductUnit');
     }

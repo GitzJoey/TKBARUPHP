@@ -60,7 +60,7 @@ class ProductType extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getProduct()
+    public function product()
     {
         return $this->hasMany('App\Model\Product', 'product_type_id');
     }

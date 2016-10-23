@@ -47,17 +47,17 @@
                                     @endforeach
                                 @endif
                             </td>
-                            <td>{{ $item->getStore->name }}</td>
-                            <td>@lang('lookup.' . $item->getUserDetail->type)</td>
+                            <td>{{ $item->store->name }}</td>
+                            <td>@lang('lookup.' . $item->userDetail->type)</td>
                             <td class="text-center">
-                                @if($item->getUserDetail->allow_login)
+                                @if($item->userDetail->allow_login)
                                     <span class="fa fa-check-square-o fa-fw"></span>
                                 @else
                                     <span class="fa fa-square-o fa-fw"></span>
                                 @endif
                             </td>
                             <td class="text-center" width="20%">
-                                <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $item->Hid()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.admin.user.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.user.delete', $item->hId()], 'style'=>'display:inline'])  !!}
                                     <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>

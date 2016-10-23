@@ -59,7 +59,7 @@ class BankController extends Controller
         } else {
 
             Bank::create([
-                'store_id'      => Auth::user()->getStore->id,
+                'store_id'      => Auth::user()->store->id,
                 'name'       	=> $data['name'],
                 'short_name' 	=> $data['short_name'],
                 'branch'	 	=> $data['branch'],

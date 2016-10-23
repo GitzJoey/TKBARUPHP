@@ -55,7 +55,7 @@ class ProductController extends Controller
 
             $product = new Product;
 
-            $product->store_id = Auth::user()->getStore->id;
+            $product->store_id = Auth::user()->store->id;
             $product->product_type_id = $data['type'];
             $product->name = $data['name'];
             $product->short_code = $data['short_code'];
@@ -72,7 +72,7 @@ class ProductController extends Controller
                 $punit->conversion_value = $data['conversion_value'][$i];
                 $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
 
-                $product->getProductUnit()->save($punit);
+                $product->productUnit()->save($punit);
             }
 
             return redirect(route('db.master.product'));
@@ -86,7 +86,7 @@ class ProductController extends Controller
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
         $unitDDL = Unit::whereStatus('STATUS.active')->get()->pluck('unit_name', 'id');
 
-        $selected = $product->getType->id;
+        $selected = $product->type->id;
 
         return view('product.edit', compact('product', 'statusDDL', 'prodtypeDdL', 'selected', 'unitDDL'));
     }
@@ -94,7 +94,7 @@ class ProductController extends Controller
     public function update($id, Request $data) {
         $product = Product::find($id);
 
-        $product->getProductUnit()->delete();
+        $product->productUnit()->delete();
 
         $pu = array();
         for($i=0; $i<count($data['unit_id']); $i++) {
@@ -107,7 +107,7 @@ class ProductController extends Controller
             array_push($pu, $punit);
         }
 
-        $product->getProductUnit()->saveMany($pu);
+        $product->productUnit()->saveMany($pu);
 
         $product->update([
             'product_type_id' => $data['type'],
@@ -124,7 +124,7 @@ class ProductController extends Controller
     public function delete($id) {
         $product = Product::find($id);
 
-        $product->getProductUnit()->delete();
+        $product->productUnit()->delete();
         $product->delete();
 
         return redirect(route('db.master.product'));

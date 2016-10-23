@@ -56,10 +56,11 @@
                         <label for="inputPermission" class="col-sm-2 control-label">@lang('role.field.permission')</label>
                         <div class="col-sm-10">
                             <label id="inputPermission" class="control-label">
-                                <span class="control-label-normal">
-                                    @foreach($role->permissionList as $p)
+                                <span class="control-label-normal text-left">
+                                    @foreach($role->permission as $p)
                                         {{ $p->name }}&nbsp;-&nbsp;{{ $p->display_name }}<br>
-                                        <small>{{ $p->description }}</small><br/>
+                                        <small>{{ $p->description }}</small><br>
+                                        <br>
                                     @endforeach
                                 </span>
                             </label>

@@ -61,18 +61,6 @@ class Items extends Model
         'quantity',
     ];
 
-    //Many to One
-    /*
-    public function product()
-    {
-        return $this->belongsTo('product', 'product_id');
-    }
-
-    public function unit_code()
-    {
-
-    }
-    */
     public static function boot()
     {
         parent::boot();

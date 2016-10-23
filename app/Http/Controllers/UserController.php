@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Session;
 use Validator;
 
-use App\Model\User;
+use App\User;
 use App\Model\Role;
 use App\Model\Store;
 use App\Model\Lookup;

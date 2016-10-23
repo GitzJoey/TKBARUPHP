@@ -102,7 +102,7 @@
                                 <div class="tab-pane" id="tab_pic">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            @foreach($customer->getProfiles as $key => $profile)
+                                            @foreach($customer->profile as $key => $profile)
                                                 <div class="box box-widget">
                                                     <div class="box-header with-border">
                                                         <div class="user-block">
@@ -158,9 +158,9 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        @foreach($profile->getPhoneNumber as $phone)
+                                                                        @foreach($profile->phoneNumber as $phone)
                                                                             <tr>
-                                                                                <td>{{ $phone->getProvider->name }}</td>
+                                                                                <td>{{ $phone->provider->name }}</td>
                                                                                 <td>{{ $phone->number }}</td>
                                                                                 <td>{{ $phone->remarks }}</td>
                                                                             </tr>
@@ -196,9 +196,9 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($customer->getBankAccount as $ba)
+                                                            @foreach($customer->bankAccount as $ba)
                                                                 <tr>
-                                                                    <td>{{ $ba->getBank->name }}&nbsp;({{ $ba->getBank->name }})</td>
+                                                                    <td>{{ $ba->bank->name }}&nbsp;({{ $ba->bank->name }})</td>
                                                                     <td>{{ $ba->account_number }}</td>
                                                                     <td>{{ $ba->remarks }}</td>
                                                                 </tr>
