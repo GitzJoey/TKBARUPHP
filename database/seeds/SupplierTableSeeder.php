@@ -48,7 +48,7 @@ class SupplierTableSeeder extends Seeder
                     $phone->phone_provider_id = $ph;
                     $phone->number = '123123123';
 
-                    $pf->getPhoneNumber()->save($phone);
+                    $pf->phoneNumbers()->save($phone);
                 }
             }
         }
