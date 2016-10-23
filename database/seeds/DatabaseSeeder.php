@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(DefaultListUnitTableSeeder::class);
         $this->call(PhoneProviderTableSeeder::class);
         $this->call(CreateLookupTableSeeder::class);
+
+        /* DUMMY DATA */
         $this->call(BankTableSeeder::class);
         $this->call(ProductTableSeeder::class);
         $this->call(ProductTypeTableSeeder::class);

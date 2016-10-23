@@ -27,24 +27,27 @@
         {{ csrf_field() }}
         <div ng-app="poModule" ng-controller="poController">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-5">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.create.box.supplier')</h3>
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputSupplierType" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_type')</label>
-                                <div class="col-sm-9">
-                                    <input id="supplier_type_r" type="radio" name="supplier_type" ng-model="po.supplier_type" ng-value="registeredType.code">
-                                    <label for="supplier_type_r">@{{ registeredType.description }}</label>
-                                    <input id="supplier_type_wi" type="radio" name="supplier_type" ng-model="po.supplier_type" ng-value="walkinType.code">
-                                    <label for="supplier_type_wi">@{{ walkinType.description }}</label>
+                                <label for="inputSupplierType" class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_type')</label>
+                                <div class="col-sm-5">
+                                    <select id="inputSupplierType"
+                                            name="supplier_type"
+                                            class="form-control"
+                                            ng-model="supplier_type"
+                                            ng-options="st as st.description for st in supplierTypeDDL track by st.code">
+                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputSupplierId" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_name')</label>
-                                <div class="col-sm-9">
+                                <label for="inputSupplierId" class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
+                                <div class="col-sm-10">
                                     <select id="inputSupplierId"
                                             name="supplier_id"
                                             class="form-control"
@@ -55,21 +58,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputSupplierName" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_name')</label>
-                                <div class="col-sm-9">
+                                <label for="inputSupplierName" class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
+                                <div class="col-sm-10">
                                     <input type="text" id="inputSupplierName" name="walk_in_supplier" class="form-control" ng-model="po.supplier_name">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputSupplierDetails" class="col-sm-3 control-label">@lang('purchase_order.create.field.supplier_details')</label>
-                                <div class="col-sm-9">
+                                <label for="inputSupplierDetails" class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
+                                <div class="col-sm-10">
                                     <textarea id="inputSupplierDetails" class="form-control" rows="5" name="walk_in_supplier_detail" ng-model="po.supplier_details"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.create.box.purchase_order_detail')</h3>
@@ -113,17 +116,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-offset-1">
+                    &nbsp;
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.create.box.shipping')</h3>
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputShippingDate" class="col-sm-3 control-label">@lang('purchase_order.create.field.shipping_date')</label>
-                                <div class="col-sm-9">
+                                <label for="inputShippingDate" class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
+                                <div class="col-sm-5">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -133,8 +139,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputWarehouse" class="col-sm-3 control-label">@lang('purchase_order.create.field.warehouse')</label>
-                                <div class="col-sm-9">
+                                <label for="inputWarehouse" class="col-sm-2 control-label">@lang('purchase_order.create.field.warehouse')</label>
+                                <div class="col-sm-5">
                                     <select id="inputWarehouse"
                                             name="warehouse_id"
                                             class="form-control"
@@ -144,9 +150,10 @@
                                     </select>
                                 </div>
                             </div>
+                            <hr>
                             <div class="form-group">
-                                <label for="inputVendorTrucking" class="col-sm-3 control-label">@lang('purchase_order.create.field.vendor_trucking')</label>
-                                <div class="col-sm-9">
+                                <label for="inputVendorTrucking" class="col-sm-2 control-label">@lang('purchase_order.create.field.vendor_trucking')</label>
+                                <div class="col-sm-8">
                                     <select id="inputVendorTrucking"
                                             name="vendor_trucking_id"
                                             class="form-control"
@@ -165,7 +172,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-11">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.create.box.transactions')</h3>
@@ -188,41 +195,41 @@
                             <div class="col-md-12">
                                 <table id="itemsListTable" class="table table-bordered table-hover">
                                     <thead>
-                                    <tr>
-                                        <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
-                                        <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.header.quantity')</th>
-                                        <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
-                                        <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
-                                        <th width="5%">&nbsp;</th>
-                                        <th width="20%" class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
-                                    </tr>
+                                        <tr>
+                                            <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                            <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.header.quantity')</th>
+                                            <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
+                                            <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
+                                            <th width="5%">&nbsp;</th>
+                                            <th width="20%" class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="item in po.items">
-                                        <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                        <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
-                                        <td>@{{ item.product.name }}</td>
-                                        <td>
-                                            <input type="text" class="form-control" name="quantity[]" ng-model="item.quantity">
-                                        </td>
-                                        <td>
-                                            <select name="selected_unit_id[]"
-                                                    class="form-control"
-                                                    ng-model="item.selected_unit"
-                                                    ng-options="product_unit as product_unit.unit.symbol for product_unit in item.product.product_units track by product_unit.unit.id">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="price[]" ng-model="item.price">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="total_price[]" ng-value="item.quantity * item.price" readonly>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="item in po.items">
+                                            <input type="hidden" name="product_id[]" ng-value="item.product.id">
+                                            <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
+                                            <td class="valign-middle">@{{ item.product.name }}</td>
+                                            <td>
+                                                <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity">
+                                            </td>
+                                            <td>
+                                                <select name="selected_unit_id[]"
+                                                        class="form-control"
+                                                        ng-model="item.selected_unit"
+                                                        ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control text-right" name="price[]" ng-model="item.price">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control text-right" name="total_price[]" ng-value="item.quantity * item.price" readonly>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -231,18 +238,21 @@
                             <div class="col-md-12">
                                 <table id="itemsTotalListTable" class="table table-bordered">
                                     <tbody>
-                                    <tr>
-                                        <td width="80%" class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
-                                        <td width="20%" class="text-right">
-                                            <input type="text" class="form-control" name="total_price" ng-model="grandTotal" readonly>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td width="80%" class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                            <td width="20%" class="text-right">
+                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-offset-1">
+                    &nbsp;
                 </div>
             </div>
             <div class="row">
@@ -288,28 +298,38 @@
             $scope.supplierTypeDDL = JSON.parse('{!! htmlspecialchars_decode($supplierTypeDDL) !!}');
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
-            $scope.registeredType = $scope.supplierTypeDDL[0];
-            $scope.walkinType = $scope.supplierTypeDDL[1];
+
             $scope.po = {
-                code : '',
                 supplier_type: '',
                 items: []
             };
+
             function isBase(unit) {
                 return unit.is_base == 1;
-            }
+            };
+
+            $scope.grandTotal = function() {
+                var result = 0;
+                angular.forEach($scope.po.items, function(item, key) {
+                    result += (item.quantity * item.price);
+                });
+                return result;
+            };
+
             $scope.insertProduct = function (product){
                 $scope.po.items.push({
                     'product': product,
-                    'base_unit': product.product_units.find(isBase),
+                    'base_unit': '',
                     'quantity': 0,
                     'price': 0
                 });
-            }
+            };
+
             $scope.removeProduct = function (index) {
                 $scope.po.items.splice(index, 1);
-            }
+            };
         }]);
+
         $(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
                 checkboxClass: 'icheckbox_square-blue',

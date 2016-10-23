@@ -22,6 +22,7 @@ elixir(function (mix) {
         './node_modules/admin-lte/dist/css/skins/_all-skins.min.css',
         './node_modules/icheck/skins/square/blue.css',
         './node_modules/bootstrap-daterangepicker/daterangepicker.css',
+        './node_modules/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
         './node_modules/ui-select/dist/select.min.css',
         './node_modules/bootstrap-sweetalert/dist/sweetalert.css',
         './resources/assets/css/adminlte.custom.css'

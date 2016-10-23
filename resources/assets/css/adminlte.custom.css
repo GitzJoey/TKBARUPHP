@@ -6,3 +6,7 @@
 table thead {
     background-color: lightgray;
 }
+
+table td.valign-middle {
+    vertical-align: middle;
+}
