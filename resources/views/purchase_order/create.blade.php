@@ -207,9 +207,9 @@
                                         <tr ng-repeat="item in po.items">
                                             <input type="hidden" name="product_id[]" ng-value="item.product.id">
                                             <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
-                                            <td>@{{ item.product.name }}</td>
+                                            <td class="valign-middle">@{{ item.product.name }}</td>
                                             <td>
-                                                <input type="text" class="form-control" name="quantity[]" ng-model="item.quantity">
+                                                <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity">
                                             </td>
                                             <td>
                                                 <select name="selected_unit_id[]"
@@ -220,13 +220,13 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="price[]" ng-model="item.price">
+                                                <input type="text" class="form-control text-right" name="price[]" ng-model="item.price">
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="total_price[]" ng-value="item.quantity * item.price" readonly>
+                                                <input type="text" class="form-control text-right" name="total_price[]" ng-value="item.quantity * item.price" readonly>
                                             </td>
                                         </tr>
                                     </tbody>
