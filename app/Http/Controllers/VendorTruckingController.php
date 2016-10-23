@@ -50,7 +50,7 @@ class VendorTruckingController extends Controller
         ]);
 
         VendorTrucking::create([
-            'store_id'      => Auth::user()->getStore->id,
+            'store_id'      => Auth::user()->store->id,
             'name'          => $data['name'],
             'address'       => $data['address'],
             'tax_id'        => $data['tax_id'],

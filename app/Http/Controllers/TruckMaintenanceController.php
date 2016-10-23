@@ -45,7 +45,7 @@ class TruckMaintenanceController extends Controller
             return redirect(route('db.truck.maintenance.create'))->withInput()->withErrors($validator);
         } else {
             TruckMaintenance::create([
-                'store_id'          => Auth::user()->getStore->id,
+                'store_id'          => Auth::user()->store->id,
                 'truck_id'          => $data['plate_number'],
                 'maintenance_type'  => $data['maintenance_type'],
                 'cost'              => $data['cost'],
