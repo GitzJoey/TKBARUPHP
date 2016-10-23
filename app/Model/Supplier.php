@@ -69,17 +69,17 @@ class Supplier extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function profile()
+    public function profiles()
     {
         return $this->belongsToMany('App\Model\Profile', 'supplier_pic', 'supplier_id', 'profile_id');
     }
 
-    public function bankAccount()
+    public function bankAccounts()
     {
         return $this->belongsToMany('App\Model\BankAccount', 'supplier_bank_account', 'supplier_id', 'bank_account_id');
     }
 
-    public function product()
+    public function products()
     {
         return $this->belongsToMany('App\Model\Product', 'supplier_prod');
     }

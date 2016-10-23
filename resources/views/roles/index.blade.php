@@ -39,7 +39,7 @@
                         <td>{{ $role->description }}</td>
                         <td>
                             <select multiple class="form-control" readonly>
-                                @foreach($role->permission as $key => $p)
+                                @foreach($role->permissions as $key => $p)
                                     <option>{{ $p->display_name }}</option>
                                 @endforeach
                             </select>

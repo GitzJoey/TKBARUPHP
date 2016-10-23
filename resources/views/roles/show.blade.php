@@ -57,7 +57,7 @@
                         <div class="col-sm-10">
                             <label id="inputPermission" class="control-label">
                                 <span class="control-label-normal text-left">
-                                    @foreach($role->permission as $p)
+                                    @foreach($role->permissions as $p)
                                         {{ $p->name }}&nbsp;-&nbsp;{{ $p->display_name }}<br>
                                         <small>{{ $p->description }}</small><br>
                                         <br>

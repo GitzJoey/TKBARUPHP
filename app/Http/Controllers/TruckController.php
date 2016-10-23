@@ -49,7 +49,6 @@ class TruckController extends Controller
             'inspection_date' => 'required|string|max:255',
             'driver' => 'required|string|max:255',
             'status' => 'required',
-            'remarks' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -86,7 +85,6 @@ class TruckController extends Controller
             'inspection_date' => 'required|string|max:255',
             'driver' => 'required|string|max:255',
             'status' => 'required',
-            'remarks' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {

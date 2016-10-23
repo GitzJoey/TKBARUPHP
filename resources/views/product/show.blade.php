@@ -73,7 +73,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($product->productUnit as $produnit)
+                                    @foreach($product->productUnits as $produnit)
                                         <tr>
                                             <td>{{ $produnit->unit->name }}</td>
                                             <td>{{ $produnit->is_base }}</td>

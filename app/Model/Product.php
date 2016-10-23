@@ -84,7 +84,7 @@ class Product extends Model
         return $this->hasMany('App\Model\ProductUnit');
     }
 
-    public function getProductUnitJSON()
+    public function getProductUnitsJSON()
     {
         $pu = array();
 

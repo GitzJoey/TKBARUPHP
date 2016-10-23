@@ -65,7 +65,7 @@ class Bank extends Model
         return $this->attributes['name'] . ' ' . '(' .$this->attributes['short_name']. ')';
     }
 
-    public function bankAccount()
+    public function bankAccounts()
     {
         return $this->hasMany('App\Model\BankAccount', 'bank_id');
     }

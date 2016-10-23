@@ -103,7 +103,7 @@
                                 <div class="tab-pane" id="tab_pic">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            @foreach($supplier->profile as $key => $profile)
+                                            @foreach($supplier->profiles as $key => $profile)
                                                 <div class="box box-widget">
                                                     <div class="box-header with-border">
                                                         <div class="user-block">
@@ -159,7 +159,7 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    @foreach($profile->phoneNumber as $phone)
+                                                                    @foreach($profile->phoneNumbers as $phone)
                                                                         <tr>
                                                                             <td>{{ $phone->provider->name }}</td>
                                                                             <td>{{ $phone->number }}</td>
@@ -186,7 +186,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($supplier->bankAccount as $ba)
+                                        @foreach($supplier->bankAccounts as $ba)
                                             <tr>
                                                 <td>{{ $ba->getBank->name }}&nbsp;({{ $ba->bank->name }})</td>
                                                 <td>{{ $ba->account_number }}</td>

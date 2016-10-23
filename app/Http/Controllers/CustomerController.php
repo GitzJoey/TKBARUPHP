@@ -29,7 +29,7 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $customer = Customer::with('profile.phoneNumber', 'bankAccount.bank')->find($id);
+        $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
@@ -80,7 +80,7 @@ class CustomerController extends Controller
                 $ba->account_number = $data["account_number"][$i];
                 $ba->remarks = $data["bank_remarks"][$i];
 
-                $customer->bankAccount()->save($ba);
+                $customer->bankAccounts()->save($ba);
             }
 
             for($i=0; $i<count($data['first_name']); $i++) {
@@ -90,7 +90,7 @@ class CustomerController extends Controller
                 $pa->address = $data["profile_address"][$i];
                 $pa->ic_num = $data["ic_num"][$i];
 
-                $customer->profile()->save($pa);
+                $customer->profiles()->save($pa);
 
                 for ($j=0; $j<count($data['profile_'.$i.'_phone_provider']); $j++) {
                     $ph = new PhoneNumber();
@@ -98,7 +98,7 @@ class CustomerController extends Controller
                     $ph->number = $data['profile_'.$i.'_phone_number'][$j];
                     $ph->remarks = $data['profile_'.$i.'_remarks'][$j];
 
-                    $pa->phoneNumber()->save($ph);
+                    $pa->phoneNumbers()->save($ph);
                 }
             }
 
@@ -108,7 +108,7 @@ class CustomerController extends Controller
 
     public function edit($id)
     {
-        $customer = Customer::with('getProfiles.getPhoneNumber', 'getBankAccount')->find($id);
+        $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
@@ -125,7 +125,7 @@ class CustomerController extends Controller
             return redirect(route('db.master.customer'));
         }
 
-        $customer->bankAccount()->detach();
+        $customer->bankAccounts()->detach();
 
         for($i=0; $i<count($data['bank']); $i++) {
             $ba = new BankAccount();
@@ -133,10 +133,10 @@ class CustomerController extends Controller
             $ba->account_number = $data["account_number"][$i];
             $ba->remarks = $data["bank_remarks"][$i];
 
-            $customer->bankAccount()->save($ba);
+            $customer->bankAccounts()->save($ba);
         }
 
-        $customer->profile()->detach();
+        $customer->profiles()->detach();
 
         for($i=0; $i<count($data['first_name']); $i++) {
             $pa = new Profile();
@@ -145,7 +145,7 @@ class CustomerController extends Controller
             $pa->address = $data["profile_address"][$i];
             $pa->ic_num = $data["ic_num"][$i];
 
-            $customer->profile()->save($pa);
+            $customer->profiles()->save($pa);
 
             for ($j=0; $j<count($data['profile_'.$i.'_phone_provider']); $j++) {
                 $ph = new PhoneNumber();
@@ -153,7 +153,7 @@ class CustomerController extends Controller
                 $ph->number = $data['profile_'.$i.'_phone_number'][$j];
                 $ph->remarks = $data['profile_'.$i.'_remarks'][$j];
 
-                $pa->phoneNumber()->save($ph);
+                $pa->phoneNumbers()->save($ph);
             }
         }
 
@@ -175,13 +175,13 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
 
         if ($customer) {
-            $customer->bankAccount()->delete();
+            $customer->bankAccounts()->delete();
 
             foreach ($customer->getProfiles as $prof) {
                 $prof->phoneNumber()->delete();
             }
 
-            $customer->profile()->delete();
+            $customer->profiles()->delete();
 
             $customer->delete();
         }

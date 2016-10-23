@@ -55,14 +55,14 @@
                 <div class="form-group {{ $errors->has('cost') ? 'has-error' : '' }}">
                     <label for="inputCost" class="col-sm-2 control-label">@lang('truckmtc.field.cost')</label>
                     <div class="col-sm-10">
-                        <input name="cost" type="text" class="form-control" value="{{ (old('cost'))?old('cost'):$truckMtc->cost }}" placeholder="@lang('truckmtc.field.cost')" data-parsley-required="true">
+                        <input name="cost" type="text" class="form-control" value="{{ (old('cost'))?old('cost'):$truckMtc->cost }}" placeholder="@lang('truckmtc.field.cost')" data-parsley-required="true" data-parsley-type="number">
                         <span class="help-block">{{ $errors->has('cost') ? $errors->first('cost') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('odometer') ? 'has-error' : '' }}">
                     <label for="inputOdometer" class="col-sm-2 control-label">@lang('truckmtc.field.odometer')</label>
                     <div class="col-sm-10">
-                        <input class="form-control" placeholder="@lang('truckmtc.field.odometer')" name="odometer" value="{{(old('odometer'))?old('odometer'):$truckMtc->odometer }}" data-parsley-required="true">
+                        <input class="form-control" placeholder="@lang('truckmtc.field.odometer')" name="odometer" value="{{(old('odometer'))?old('odometer'):$truckMtc->odometer }}" data-parsley-required="true" data-parsley-type="number">
                         <span class="help-block">{{ $errors->has('odometer') ? $errors->first('odometer') : '' }}</span>
                     </div>
                 </div>
