@@ -96,7 +96,7 @@ class PurchaseOrderController extends Controller
         return redirect(route('db.po.create'));
     }
 
-    public function revisionIndex(){
+    public function index(){
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
@@ -114,10 +114,6 @@ class PurchaseOrderController extends Controller
 
     }
 
-    public function paymentIndex(){
-
-    }
-
     public function payment($id){
 
     }
@@ -127,6 +123,11 @@ class PurchaseOrderController extends Controller
     }
 
     public function delete(Request $request, $id){
+        $po = PurchaseOrder::find($id);
+        $po->items()->detach();
+        $po->payments()->detach();
+        $po->delete();
 
+        return redirect(route('db.po.revise.index'));
     }
 }

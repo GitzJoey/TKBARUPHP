@@ -38,10 +38,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 
     Route::get('/dashboard/po/create', 'PurchaseOrderController@create')->name('db.po.create');
     Route::post('/dashboard/po/create', 'PurchaseOrderController@store');
-    Route::get('/dashboard/po/revise', 'PurchaseOrderController@revisionIndex')->name('db.po.revise.index');
+    Route::get('/dashboard/po/revise', 'PurchaseOrderController@index')->name('db.po.revise.index');
     Route::get('/dashboard/po/revise/{id}', 'PurchaseOrderController@revise')->name('db.po.revise');
     Route::patch('/dashboard/po/revise/{id}', 'PurchaseOrderController@saveRevision');
-    Route::get('/dashboard/po/payment', 'PurchaseOrderController@paymentIndex')->name('db.po.payment.index');
+    Route::get('/dashboard/po/payment', 'PurchaseOrderController@index')->name('db.po.payment.index');
     Route::get('/dashboard/po/payment/{id}', 'PurchaseOrderController@pay')->name('db.po.payment');
     Route::patch('/dashboard/po/payment/{id}', 'PurchaseOrderController@savePayment');
     Route::delete('/dashboard/po/reject/{id}', 'PurchaseOrderController@delete')->name('db.po.reject');
