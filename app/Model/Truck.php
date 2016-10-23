@@ -56,7 +56,7 @@ class Truck extends Model
         'store_id', 'plate_number', 'inspection_date', 'driver', 'status', 'remarks'
     ];
 
-    public function getTruckMaintenance()
+    public function truckMaintenance()
     {
         return $this->hasMany('App\Model\TruckMaintenance');
     }

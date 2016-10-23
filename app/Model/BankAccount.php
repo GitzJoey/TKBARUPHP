@@ -59,12 +59,12 @@ class BankAccount extends Model
     	return $this->belongsToMany('App\Model\Supplier', 'supplier_bank_account');
     }
 
-    public function getBank()
+    public function bank()
     {
     	return $this->belongsTo('App\Model\Bank', 'bank_id');
     }
 
-    public function getCustomer()
+    public function customer()
     {
         return $this->belongsToMany('App\Model\Customer', 'customer_bank_account', 'customer_id', 'bank_account_id');
     }

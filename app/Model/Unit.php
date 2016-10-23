@@ -63,7 +63,7 @@ class Unit extends Model
         return $this->attributes['name'] . ' ('. $this->attributes['symbol'] .')';
     }
 
-    public function getProductUnit() {
+    public function productUnit() {
         return $this->hasMany('App\Model\ProductUnit', 'unit_id');
     }
 

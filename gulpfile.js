@@ -22,7 +22,8 @@ elixir(function (mix) {
         './node_modules/admin-lte/dist/css/skins/_all-skins.min.css',
         './node_modules/icheck/skins/square/blue.css',
         './node_modules/bootstrap-daterangepicker/daterangepicker.css',
-        './node_modules/ui-select/dist/select.min.css'
+        './node_modules/ui-select/dist/select.min.css',
+        './resources/assets/css/adminlte.custom.css'
     ], 'public/adminlte/css/adminlte.css')
     .scripts([
         './node_modules/jquery/dist/jquery.min.js',
@@ -39,6 +40,7 @@ elixir(function (mix) {
         './node_modules/parsleyjs/dist/i18n/en.extra.js',
         './node_modules/parsleyjs/dist/i18n/id.extra.js',
         './node_modules/ui-select/dist/select.min.js',
-        './node_modules/admin-lte/dist/js/app.min.js'
+        './node_modules/admin-lte/dist/js/app.min.js',
+        './resources/assets/js/adminlte.custom.js'
     ], 'public/adminlte/js/app.js');
 });

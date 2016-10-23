@@ -59,26 +59,20 @@ class Profile extends Model
         'first_name', 'last_name', 'address', 'ic_num', 'image_filename',
     ];
 
-    public function getUser()
+    public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    public function getPhoneNumber()
+    public function phoneNumber()
     {
         return $this->hasMany('App\Model\PhoneNumber');
     }
 
-    public function getSupplier()
+    public function supplier()
     {
     	return $this->belongsToMany('App\Model\Supplier', 'supplier_profile', 'supplier_id', 'profile_id');
     }
-    /*
-    public function getCustomer()
-    {
-        return $this->belongsToMany('App\Model\Customer', 'customer_pic', 'customer_id', 'profile_id');
-    }
-    */
 
     public static function boot()
     {

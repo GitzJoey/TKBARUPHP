@@ -62,12 +62,12 @@ class Customer extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getProfiles()
+    public function profile()
     {
         return $this->belongsToMany('App\Model\Profile', 'customer_pic', 'customer_id', 'profile_id');
     }
 
-    public function getBankAccount()
+    public function bankAccount()
     {
         return $this->belongsToMany('App\Model\BankAccount', 'customer_bank_account', 'customer_id', 'bank_account_id');
     }

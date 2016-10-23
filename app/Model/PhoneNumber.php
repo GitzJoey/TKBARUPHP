@@ -52,12 +52,12 @@ class PhoneNumber extends Model
 
 	protected $fillable = ['phone_provider_id', 'number', 'status', 'remarks'];
 
-    public function getProfile()
+    public function profile()
     {
         $this->belongsTo('App\Model\Profile');
     }
 
-    public function getProvider()
+    public function provider()
     {
     	return $this->belongsTo('App\Model\PhoneProvider', 'phone_provider_id');
     }
