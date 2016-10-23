@@ -246,6 +246,7 @@
         app.controller("poController", ['$scope', function($scope) {
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo) !!}');
+            console.log($scope.currentPo);
             $scope.po = {
               items: []
             };
@@ -254,13 +255,23 @@
                     id: $scope.currentPo.items[i].id,
                     product: $scope.currentPo.items[i].product,
                     base_unit: $scope.currentPo.items[i].product.product_units.find(isBase),
+                    selected_unit: $scope.currentPo.items[i].product.product_units.find(getSelectedUnit($scope.currentPo.items[i].selected_unit_id)),
                     quantity: $scope.currentPo.items[i].quantity,
                     price: $scope.currentPo.items[i].price
                 });
+                console.log($scope.currentPo.items[i].product.product_units.find(getSelectedUnit($scope.currentPo.items[i].selected_unit_id)));
             }
+
+            function getSelectedUnit(selectedUnitId) {
+                return function (element) {
+                    return element.unit_id == selectedUnitId;
+                }
+            }
+
             function isBase(unit) {
                 return unit.is_base == 1;
             }
+
             $scope.insertProduct = function (product){
                 $scope.po.items.push({
                     id: null,
