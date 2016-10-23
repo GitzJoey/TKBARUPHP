@@ -27,52 +27,63 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('price_level.edit.header.title')</h3>
         </div>
-        {!! Form::model($store, ['method' => 'PATCH','route' => ['db.price.price_level.edit', $store->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($pricelevel, ['method' => 'PATCH','route' => ['db.price.price_level.edit', $pricelevel->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="box-body">
                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                         <label for="inputType" class="col-sm-2 control-label">@lang('price_level.field.type')</label>
                         <div class="col-sm-10">
-
+                            {{ Form::select('type', $plTypeDDL, $pricelevel->type, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                             <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('weight') ? 'has-error' : '' }}">
                         <label for="inputWeight" class="col-sm-2 control-label">@lang('price_level.field.weight')</label>
                         <div class="col-sm-10">
-
+                            <select name="weight" class="form-control" data-parsley-required="true">
+                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                @for($x =1; $x <= 10; $x++)
+                                    @if($x == 1)
+                                        <option value="{{ $x }}" @if($pricelevel->weight == $x) selected="selected" @endif>{{ $x }} - Lowest</option>
+                                    @elseif($x == 10)
+                                        <option value="{{ $x }}" @if($pricelevel->weight == $x) selected="selected" @endif>{{ $x }} - Highest</option>
+                                    @else
+                                        <option value="{{ $x }}" @if($pricelevel->weight == $x) selected="selected" @endif>{{ $x }}</option>
+                                    @endif
+                                @endfor
+                            </select>
                             <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                         <label for="inputName" class="col-sm-2 control-label">@lang('price_level.field.name')</label>
                         <div class="col-sm-10">
-                            <input id="inputName" name="name" type="text" class="form-control" value="{{ old('name') }}" placeholder="Name">
+                            <input id="inputName" name="name" type="text" class="form-control" value="{{ $pricelevel->name }}" placeholder="Name">
                             <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputDescription" class="col-sm-2 control-label">@lang('price_level.field.description')</label>
                         <div class="col-sm-10">
-                            <input id="inputDescription" name="description" type="text" class="form-control" value="{{ old('description') }}" placeholder="Fax">
+                            <input id="inputDescription" name="description" type="text" class="form-control" value="{{ $pricelevel->description }}" placeholder="Description">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputIncVal" class="col-sm-2 control-label">@lang('price_level.field.incval')</label>
                         <div class="col-sm-10">
-                            <input id="inputIncVal" name="incval" type="text" class="form-control" value="{{ old('incval') }}" placeholder="Increment Value">
+                            <input id="inputIncVal" name="incval" type="text" class="form-control" value="{{ $pricelevel->increment_value }}" placeholder="Increment Value">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPctVal" class="col-sm-2 control-label">@lang('price_level.field.pctval')</label>
                         <div class="col-sm-10">
-                            <input id="inputPctVal" name="pctva;" type="text" class="form-control" value="{{ old('pctval') }}" placeholder="Percentage Value">
+                            <input id="inputPctVal" name="pctva;" type="text" class="form-control" value="{{ $pricelevel->percentage_value }}" placeholder="Percentage Value">
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('price_level.field.status')</label>
                         <div class="col-sm-10">
-                            {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                            {{ Form::select('status', $statusDDL, $pricelevel->status, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                             <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                         </div>
                     </div>
@@ -82,7 +93,7 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.admin.store') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                        <a href="{{ route('db.price.price_level') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
                         <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                     </div>
                 </div>

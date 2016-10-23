@@ -32,7 +32,7 @@
                         <label for="inputType" class="col-sm-2 control-label">@lang('product.field.type')</label>
                         <div class="col-sm-10">
                             <label id="inputType" class="control-label">
-                                <span class="control-label-normal">{{ $product->getType->name }}</span>
+                                <span class="control-label-normal">{{ $product->type->name }}</span>
                             </label>
                         </div>
                     </div>
@@ -73,9 +73,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($product->getProductUnit as $produnit)
+                                    @foreach($product->productUnit as $produnit)
                                         <tr>
-                                            <td>{{ $produnit->getUnit->name }}</td>
+                                            <td>{{ $produnit->unit->name }}</td>
                                             <td>{{ $produnit->is_base }}</td>
                                             <td>{{ $produnit->conversion_value }}</td>
                                             <td>{{ $produnit->remarks }}</td>

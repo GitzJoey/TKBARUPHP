@@ -8,6 +8,7 @@
 
 namespace App\Util;
 
+use Config;
 
 /**
  * Class POCodeGenerator
@@ -26,7 +27,7 @@ class POCodeGenerator implements StringGenerator
     public static function generateWithLength($length)
     {
         $generatedString = '';
-        $characters = array_merge(range('a', 'z'), range(0,9));
+        $characters = array_merge(Config::get('constants.RANDOMSTRINGRANGE.ALPHABET'), Config::get('constants.RANDOMSTRINGRANGE.NUMERIC'));
         $max = sizeof($characters) - 1;
 
         for ($i = 0; $i < $length; $i++) {

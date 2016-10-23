@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -47,9 +48,6 @@ class PriceLevelController extends Controller
             'type' => 'required|string|max:255',
             'weight' => 'required',
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'increment_value' => 'required',
-            'percentage_value' => 'required',
             'status' => 'required|string|max:255',
         ]);
 
@@ -58,6 +56,7 @@ class PriceLevelController extends Controller
         } else {
 
             PriceLevel::create([
+                'store_id' => Auth::user()->store->id,
                 'type' => $data['type'],
                 'weight' => $data['weight'],
                 'name' => $data['name'],
@@ -75,8 +74,9 @@ class PriceLevelController extends Controller
         $pricelevel = PriceLevel::find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $plTypeDDL = Lookup::where('category', '=', 'PRICELEVELTYPE')->get()->pluck('description', 'code');
 
-        return view('price_level.edit', compact('product', 'statusDDL'));
+        return view('price_level.edit', compact('pricelevel', 'plTypeDDL', 'statusDDL'));
     }
 
     public function update($id, Request $req)
