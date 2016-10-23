@@ -31,7 +31,7 @@ use Zizaco\Entrust\EntrustPermission;
  */
 class Permission extends EntrustPermission
 {
-    public function role()
+    public function roles()
     {
         $this->belongsToMany('App\Model\Role', 'permission_role', 'permission_id', 'role_id');
     }

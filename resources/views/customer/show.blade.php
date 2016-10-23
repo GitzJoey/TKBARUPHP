@@ -102,7 +102,7 @@
                                 <div class="tab-pane" id="tab_pic">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            @foreach($customer->profile as $key => $profile)
+                                            @foreach($customer->profiles as $key => $profile)
                                                 <div class="box box-widget">
                                                     <div class="box-header with-border">
                                                         <div class="user-block">
@@ -158,7 +158,7 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        @foreach($profile->phoneNumber as $phone)
+                                                                        @foreach($profile->phoneNumbers as $phone)
                                                                             <tr>
                                                                                 <td>{{ $phone->provider->name }}</td>
                                                                                 <td>{{ $phone->number }}</td>
@@ -196,7 +196,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach($customer->bankAccount as $ba)
+                                                            @foreach($customer->bankAccounts as $ba)
                                                                 <tr>
                                                                     <td>{{ $ba->bank->name }}&nbsp;({{ $ba->bank->name }})</td>
                                                                     <td>{{ $ba->account_number }}</td>

@@ -135,13 +135,13 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr ng-repeat="ph in profile.get_phone_number">
+                                                                        <tr ng-repeat="ph in profile.phone_numbers">
                                                                             <td>
                                                                                 <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
                                                                                         ng-init="phone_provider = { id: ph.phone_provider_id }"
-                                                                                        ng-model="ph.phone_provider_id"
+                                                                                        ng-model="phone_provider"
                                                                                         ng-change="ph.phone_provider_id = phone_provider.id"
-                                                                                        ng-options="p.id as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
+                                                                                        ng-options="p as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
                                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 </select>
                                                                             </td>
@@ -288,8 +288,8 @@
     <script type="application/javascript">
         var app = angular.module("customerModule", []);
         app.controller("customerController", ['$scope', function($scope) {
-            $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getBankAccount)) ? '[]':htmlspecialchars_decode($customer->getBankAccount) !!}');
-            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->getProfiles)) ? '[]':htmlspecialchars_decode($customer->getProfiles) !!}');
+            $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($customer->bankAccounts)) ? '[]':htmlspecialchars_decode($customer->bankAccounts) !!}');
+            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->profiles)) ? '[]':htmlspecialchars_decode($customer->profiles) !!}');
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
 
@@ -317,7 +317,7 @@
                     'address': '',
                     'ic_num': '',
                     'image_filename': '',
-                    'get_phone_number':[{
+                    'phone_numbers':[{
                         'phone_provider_id': '',
                         'number': '',
                         'remarks': ''
@@ -330,7 +330,7 @@
             };
 
             $scope.addNewPhone = function(parentIndex) {
-                $scope.profiles[parentIndex].get_phone_number.push({
+                $scope.profiles[parentIndex].phone_numbers.push({
                     'phone_provider_id': '',
                     'number': '',
                     'remarks': ''
@@ -338,7 +338,7 @@
             };
 
             $scope.removeSelectedPhone = function(parentIndex, idx) {
-                $scope.profiles[parentIndex].get_phone_number.splice(idx, 1);
+                $scope.profiles[parentIndex].phone_numbers.splice(idx, 1);
             };
         }]);
     </script>

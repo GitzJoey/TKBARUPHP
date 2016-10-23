@@ -41,7 +41,7 @@ class Role extends EntrustRole
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function permission() {
+    public function permissions() {
         return $this->belongsToMany('App\Model\Permission', 'permission_role', 'role_id', 'permission_id');
     }
 }

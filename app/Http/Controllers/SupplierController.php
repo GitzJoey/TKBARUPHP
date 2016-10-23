@@ -35,7 +35,7 @@ class SupplierController extends Controller
 
 	public function show($id)
 	{
-        $supplier = Supplier::with('profile.phoneNumber', 'bankAccount.bank')->find($id);
+        $supplier = Supplier::with('profiles.phoneNumbers', 'bankAccounts.bank')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
@@ -98,7 +98,7 @@ class SupplierController extends Controller
             $pa->address = $request["profile_address"][$i];
             $pa->ic_num = $request["ic_num"][$i];
 
-            $supplier->profile()->save($pa);
+            $supplier->profiles()->save($pa);
 
             for ($j=0; $j<count($request['profile_'.$i.'_phone_provider']); $j++) {
                 $ph = new PhoneNumber();
@@ -106,7 +106,7 @@ class SupplierController extends Controller
                 $ph->number = $request['profile_'.$i.'_phone_number'][$j];
                 $ph->remarks = $request['profile_'.$i.'_remarks'][$j];
 
-                $pa->phoneNumber()->save($ph);
+                $pa->phoneNumbers()->save($ph);
             }
         }
 
@@ -115,7 +115,7 @@ class SupplierController extends Controller
 
 	public function edit($id)
 	{
-        $supplier = Supplier::with('profile.phoneNumber.provider', 'bankAccounts.bank')->find($id);
+        $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
@@ -132,7 +132,7 @@ class SupplierController extends Controller
             return redirect(route('db.master.supplier'));
         }
 
-        $supplier->bankAccount()->detach();
+        $supplier->bankAccouns()->detach();
 
         for($i=0; $i<count($request['bank']); $i++) {
             $ba = new BankAccount();
@@ -140,10 +140,10 @@ class SupplierController extends Controller
             $ba->account_number = $request["account_number"][$i];
             $ba->remarks = $request["bank_remarks"][$i];
 
-            $supplier->bankAccount()->save($ba);
+            $supplier->bankAccounts()->save($ba);
         }
 
-        $supplier->profile()->detach();
+        $supplier->profiles()->detach();
 
         for($i=0; $i<count($request['first_name']); $i++) {
             $pa = new Profile();
@@ -152,7 +152,7 @@ class SupplierController extends Controller
             $pa->address = $request["profile_address"][$i];
             $pa->ic_num = $request["ic_num"][$i];
 
-            $supplier->profile()->save($pa);
+            $supplier->profiles()->save($pa);
 
             for ($j=0; $j<count($request['profile_'.$i.'_phone_provider']); $j++) {
                 $ph = new PhoneNumber();
@@ -161,7 +161,7 @@ class SupplierController extends Controller
                 $ph->number = $request['profile_'.$i.'_phone_number'][$j];
                 $ph->remarks = $request['profile_'.$i.'_remarks'][$j];
 
-                $pa->phoneNumber()->save($ph);
+                $pa->phoneNumbers()->save($ph);
             }
         }
 
@@ -184,8 +184,8 @@ class SupplierController extends Controller
 	{
         $supplier = Supplier::findOrFail($id);
 
-        $supplier->bankAccount()->detach();
-        $supplier->profile()->detach();
+        $supplier->bankAccounts()->detach();
+        $supplier->profiles()->detach();
         $supplier->delete();
         
         return redirect(route('db.master.supplier'));

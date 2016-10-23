@@ -136,7 +136,7 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr ng-repeat="ph in profile.get_phone_number">
+                                                                        <tr ng-repeat="ph in profile.phone_numbers">
                                                                             <td>
                                                                                 <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
                                                                                         ng-init="phone_provider = { id: ph.phone_provider_id }"
@@ -233,28 +233,11 @@
 @section('custom_js')
     <script type="application/javascript">
         var app = angular.module("supplierModule", []);
-
-        app.directive('convertToString', function() {
-            return {
-                require: 'ngModel',
-                link: function (scope, element, attrs, ngModel) {
-                    ngModel.$parsers.push(function (val) {
-                        console.log('c');
-                        return '' + val;
-                    });
-                    ngModel.$formatters.push(function (val) {
-                        console.log('c');
-                        return '' + val;
-                    });
-                }
-            };
-        });
-
         app.controller("supplierController", ['$scope', function($scope) {
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
-            $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->getBankAccount)) ? '[]':htmlspecialchars_decode($supplier->getBankAccount) !!}');
-            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->getProfiles)) ? '[]':htmlspecialchars_decode($supplier->getProfiles) !!}');
+            $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->bankAccounts)) ? '[]':htmlspecialchars_decode($supplier->bankAccount) !!}');
+            $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->profiles)) ? '[]':htmlspecialchars_decode($supplier->profiles) !!}');
 
             $scope.toInt = function(val) {
                 console.log(val, parseInt(val,10));
@@ -284,7 +267,7 @@
                     'address': '',
                     'ic_num': '',
                     'image_filename': '',
-                    'get_phone_number':[{
+                    'phone_numbers':[{
                         'phone_provider_id': '',
                         'number': '',
                         'remarks': ''
@@ -297,7 +280,7 @@
             };
 
             $scope.addNewPhone = function(parentIndex) {
-                $scope.profiles[parentIndex].get_phone_number.push({
+                $scope.profiles[parentIndex].phone_numbers.push({
                     'phone_provider_id': '',
                     'number': '',
                     'remarks': ''
@@ -305,7 +288,7 @@
             };
 
             $scope.removeSelectedPhone = function(parentIndex, idx) {
-                $scope.profiles[parentIndex].get_phone_number.splice(idx, 1);
+                $scope.profiles[parentIndex].phone_numbers.splice(idx, 1);
             };
         }]);
     </script>

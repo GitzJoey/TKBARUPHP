@@ -64,12 +64,12 @@ class Profile extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function phoneNumber()
+    public function phoneNumbers()
     {
         return $this->hasMany('App\Model\PhoneNumber');
     }
 
-    public function supplier()
+    public function suppliers()
     {
     	return $this->belongsToMany('App\Model\Supplier', 'supplier_profile', 'supplier_id', 'profile_id');
     }

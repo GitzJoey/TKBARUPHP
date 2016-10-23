@@ -54,7 +54,7 @@ class BankAccount extends Model
         'bank_id','account_number', 'remarks'
     ];
 
-    public function supplier()
+    public function suppliers()
     {
     	return $this->belongsToMany('App\Model\Supplier', 'supplier_bank_account');
     }
@@ -64,7 +64,7 @@ class BankAccount extends Model
     	return $this->belongsTo('App\Model\Bank', 'bank_id');
     }
 
-    public function customer()
+    public function customers()
     {
         return $this->belongsToMany('App\Model\Customer', 'customer_bank_account', 'customer_id', 'bank_account_id');
     }

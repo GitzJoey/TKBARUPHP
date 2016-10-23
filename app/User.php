@@ -80,7 +80,7 @@ class User extends Authenticatable
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
-    public function role() {
+    public function roles() {
         return $this->belongsToMany('App\Model\Role', 'role_user', 'user_id', 'role_id');
     }
 

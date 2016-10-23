@@ -54,7 +54,7 @@ class RolesController extends Controller
             $role->save();
 
             foreach($data['permission'] as $pl) {
-                $role->permissionList()->attach($pl);
+                $role->permissions()->attach($pl);
             }
 
             Session::flash('success', 'New User Created');
@@ -66,7 +66,7 @@ class RolesController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $selected = $role->permission->pluck('id')->toArray();
+        $selected = $role->permissions->pluck('id')->toArray();
         $permission = Permission::get()->pluck('display_name', 'id');
 
         return view('roles.edit', compact('role', 'permission', 'selected'));
@@ -83,7 +83,7 @@ class RolesController extends Controller
         $role = Role::whereId($id);
         $pl = Permission::whereIn('id', $req['permission'])->get();
 
-        $role->permissionList()->sync($pl);
+        $role->permissions()->sync($pl);
 
         $role->update([
             'name' => $req['name'],
@@ -98,7 +98,7 @@ class RolesController extends Controller
     {
         $role = Role::find($id);
 
-        $role->permission()->attach([]);
+        $role->permissions()->attach([]);
 
         $role->delete();
 
