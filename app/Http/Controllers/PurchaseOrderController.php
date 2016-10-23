@@ -104,7 +104,10 @@ class PurchaseOrderController extends Controller
     }
 
     public function revise($id){
+        $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier', 'vendorTrucking', 'warehouse')->find($id);
+        $productDDL = Product::with('productUnits.unit')->get();
 
+        return view('purchase_order.revise', compact('currentPo', 'productDDL'));
     }
 
     public function saveRevision(Request $request, $id){

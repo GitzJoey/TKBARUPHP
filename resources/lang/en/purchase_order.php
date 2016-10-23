@@ -53,42 +53,42 @@ return [
     ],
     'revise' => [
         'field' => [
-            'supplier_type' => '',
-            'supplier_name' => '',
-            'supplier_details' => '',
-            'shipping_date' => '',
-            'warehouse' => '',
-            'vendor_trucking' => ''
+            'supplier_type' => 'Type',
+            'supplier_name' => 'Name',
+            'supplier_details' => 'Details',
+            'shipping_date' => 'Date',
+            'warehouse' => 'Warehouse',
+            'vendor_trucking' => 'Vendor Trucking'
         ],
         'po_code' => 'Code',
         'po_type' => 'Type',
         'po_date' => 'Date',
-        'po_status' => '',
+        'po_status' => 'Status',
         'title' => 'Revise',
-        'page_title' => '',
-        'page_title_desc' => '',
+        'page_title' => 'Revise',
+        'page_title_desc' => 'Revise purchase order',
         'box' => [
-            'supplier' => '',
-            'purchase_order_detail' => '',
-            'shipping' => '',
-            'transactions' => '',
-            'remarks' => ''
+            'supplier' => 'Supplier',
+            'purchase_order_detail' => 'Detail',
+            'shipping' => 'Shipping',
+            'transactions' => 'Transaction',
+            'remarks' => 'Remarks'
         ],
         'table' => [
             'item' => [
                 'header' => [
-                    'product_name' => '',
+                    'product_name' => 'Product',
                     'header' => [
-                        'quantity' => ''
+                        'quantity' => 'Quantity'
                     ],
-                    'unit' => '',
-                    'price_unit' => '',
-                    'total_price' => ''
+                    'unit' => 'UoM',
+                    'price_unit' => 'Price',
+                    'total_price' => 'Total Price'
                 ],
             ],
             'total' => [
                 'body' => [
-                    'total' => ''
+                    'total' => 'Total Amount'
                 ],
             ],
         ],

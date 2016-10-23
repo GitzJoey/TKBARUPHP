@@ -40,11 +40,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::post('/dashboard/po/create', 'PurchaseOrderController@store');
     Route::get('/dashboard/po/revise', 'PurchaseOrderController@revisionIndex')->name('db.po.revise.index');
     Route::get('/dashboard/po/revise/{id}', 'PurchaseOrderController@revise')->name('db.po.revise');
-    Route::post('/dashboard/po/revise/{id}', 'PurchaseOrderController@saveRevision');
-    Route::delete('/dashboard/po/reject/{id}', 'PurchaseOrderController@delete')->name('db.po.reject');
+    Route::patch('/dashboard/po/revise/{id}', 'PurchaseOrderController@saveRevision');
     Route::get('/dashboard/po/payment', 'PurchaseOrderController@paymentIndex')->name('db.po.payment.index');
     Route::get('/dashboard/po/payment/{id}', 'PurchaseOrderController@pay')->name('db.po.payment');
-    Route::post('/dashboard/po/payment/{id}', 'PurchaseOrderController@savePayment');
+    Route::patch('/dashboard/po/payment/{id}', 'PurchaseOrderController@savePayment');
+    Route::delete('/dashboard/po/reject/{id}', 'PurchaseOrderController@delete')->name('db.po.reject');
 
     Route::get('/dashboard/admin/user', 'UserController@index')->name('db.admin.user');
     Route::get('/dashboard/admin/user/show/{id}', 'UserController@show')->name('db.admin.user.show');
