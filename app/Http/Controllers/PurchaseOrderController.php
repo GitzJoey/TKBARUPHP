@@ -17,6 +17,7 @@ use App\Model\Supplier;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Util\POCodeGenerator;
 use Illuminate\Support\Facades\Log;
@@ -30,8 +31,6 @@ class PurchaseOrderController extends Controller
 
     public function create()
     {
-        Log::info('[PurchaseOrderController@create] ');
-        //Use get all for now because the mechanism to set record status to 'Active' is not working.
         $supplierDDL = Supplier::all([ 'id', 'name' ]);
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
         $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
@@ -51,13 +50,10 @@ class PurchaseOrderController extends Controller
             'productDDL',
             'poStatus',
             'poCode'));
-
     }
 
     public function store(Request $request)
     {
-        Log::info('[PurchaseOrderController@store] ');
-
         $this->validate($request,[
 
         ]);
@@ -71,7 +67,7 @@ class PurchaseOrderController extends Controller
             'walk_in_supplier' => $request->input('walk_in_supplier'),
             'walk_in_supplier_detail' => $request->input('walk_in_supplier_detail'),
             'remarks' => $request->input('remarks'),
-            'status' => Lookup::whereCode('POSTATUS.D')->first()->code,
+            'status' => Lookup::whereCode('POSTATUS.WA')->first()->code,
             'supplier_id' => $request->input('supplier_id'),
             'vendor_trucking_id' => $request->input('vendor_trucking_id'),
             'warehouse_id' => $request->input('warehouse_id'),
