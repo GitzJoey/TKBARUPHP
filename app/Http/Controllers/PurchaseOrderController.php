@@ -100,7 +100,7 @@ class PurchaseOrderController extends Controller
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
-        return view('purchase_order.revise_index', compact('purchaseOrders', 'poStatusDDL'));
+        return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
     public function revise($id){
