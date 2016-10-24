@@ -43,7 +43,7 @@ elixir(function (mix) {
         './node_modules/parsleyjs/dist/i18n/id.extra.js',
         './node_modules/ui-select/dist/select.min.js',
         './node_modules/admin-lte/dist/js/app.min.js',
-        './resources/assets/js/adminlte.custom.js',
-        './node_modules/bootstrap-sweetalert/dist/sweetalert.min.js'
+        './node_modules/bootstrap-sweetalert/dist/sweetalert.min.js',
+        './resources/assets/js/adminlte.custom.js'
     ], 'public/adminlte/js/app.js');
 });

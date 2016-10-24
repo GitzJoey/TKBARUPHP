@@ -192,61 +192,61 @@
                             </div>
                             </div>
                             <div class="row">
-                            <div class="col-md-12">
-                                <table id="itemsListTable" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
-                                            <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.header.quantity')</th>
-                                            <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
-                                            <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%" class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="item in po.items">
-                                            <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                            <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
-                                            <td class="valign-middle">@{{ item.product.name }}</td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity">
-                                            </td>
-                                            <td>
-                                                <select name="selected_unit_id[]"
-                                                        class="form-control"
-                                                        ng-model="item.selected_unit"
-                                                        ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
-                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="price[]" ng-model="item.price">
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="total_price[]" ng-value="item.quantity * item.price" readonly>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                <div class="col-md-12">
+                                    <table id="itemsListTable" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.header.quantity')</th>
+                                                <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
+                                                <th width="15%" class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%" class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in po.items">
+                                                <input type="hidden" name="product_id[]" ng-value="item.product.id">
+                                                <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
+                                                <td class="valign-middle">@{{ item.product.name }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity">
+                                                </td>
+                                                <td>
+                                                    <select name="selected_unit_id[]"
+                                                            class="form-control"
+                                                            ng-model="item.selected_unit"
+                                                            ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
+                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="price[]" ng-model="item.price">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="total_price[]" ng-value="item.quantity * item.price" readonly>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="row">
-                            <div class="col-md-12">
-                                <table id="itemsTotalListTable" class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <td width="80%" class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
-                                            <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                <div class="col-md-12">
+                                    <table id="itemsTotalListTable" class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td width="80%" class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -317,6 +317,7 @@
             };
 
             $scope.insertProduct = function (product){
+                console.log(product.product_units.find(isBase));
                 $scope.po.items.push({
                     'product': product,
                     'base_unit': product.product_units.find(isBase),
