@@ -280,7 +280,9 @@
                     quantity: 0,
                     price: 0
                 });
-            }
+            };
+
+
             $scope.removeProduct = function (index) {
                 $scope.po.items.splice(index, 1);
             }

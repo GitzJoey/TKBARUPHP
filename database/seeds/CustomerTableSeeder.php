@@ -1,13 +1,19 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Sugito
+ * Date: 10/24/2016
+ * Time: 10:33 AM
+ */
 
 use App\Model\Profile;
-use App\Model\Supplier;
+use App\Model\Customer;
 use App\Model\BankAccount;
 use App\Model\PhoneNumber;
 
 use Illuminate\Database\Seeder;
 
-class SupplierTableSeeder extends Seeder
+class CustomerTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,15 +23,15 @@ class SupplierTableSeeder extends Seeder
     public function run()
     {
         for ($s = 0; $s < 3; $s++) {
-            $supplier = new Supplier();
-            $supplier->name = 'Supplier '.$s;
-            $supplier->address = 'Jl. Supplier Alamat '.$s;
-            $supplier->city = 'Kota Supplier '.$s;
-            $supplier->phone_number = '0000000000';
-            $supplier->fax_num = '0000000000';
-            $supplier->tax_id = '123-123-123-123-123';
+            $customer = new Customer();
+            $customer->name = 'Customer '.$s;
+            $customer->address = 'Jl. Customer Alamat '.$s;
+            $customer->city = 'Kota Customer '.$s;
+            $customer->phone_number = '0000000000';
+            $customer->fax_num = '0000000000';
+            $customer->tax_id = '123-123-123-123-123';
 
-            $supplier->save();
+            $customer->save();
 
             for ($b = 0; $b < 2; $b++) {
                 $ba = new BankAccount();
@@ -33,7 +39,7 @@ class SupplierTableSeeder extends Seeder
                 $ba->account_number = '123123123';
                 $ba->remarks = 'Bank ' . $b;
 
-                $supplier->bankAccounts()->save($ba);
+                $customer->bankAccounts()->save($ba);
             }
 
             for ($p = 0; $p < 1; $p++) {
@@ -41,7 +47,7 @@ class SupplierTableSeeder extends Seeder
                 $pf->first_name = "First Name ".$p;
                 $pf->last_name = "First Name ".$p;
 
-                $supplier->profiles()->save($pf);
+                $customer->profiles()->save($pf);
 
                 for ($ph = 0; $ph < 1; $ph++) {
                     $phone = new PhoneNumber();
