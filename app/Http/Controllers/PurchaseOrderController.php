@@ -93,7 +93,7 @@ class PurchaseOrderController extends Controller
             $po->items()->save($item);
         }
 
-        return redirect(route('db.po.create'));
+        return redirect(route('db'));
     }
 
     public function index(){
