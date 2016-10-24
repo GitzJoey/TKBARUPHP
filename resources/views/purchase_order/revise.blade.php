@@ -74,7 +74,7 @@
                             <div class="form-group">
                                 <label for="inputPoDate" class="col-sm-2 control-label">@lang('purchase_order.revise.po_date')</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly value="{{ $currentPo->po_created }}">
+                                    <input type="text" class="form-control" readonly value="{{ $currentPo->po_created->format('d-m-Y') }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -98,9 +98,9 @@
                                 <label for="inputShippingDate" class="col-sm-3 control-label">@lang('purchase_order.revise.field.shipping_date')</label>
                                 <div class="col-sm-9">
                                     @if($currentPo->status == 'POSTATUS.WA')
-                                        <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" value="{{ $currentPo->shipping_date }}">
+                                        <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" value="{{ $currentPo->shipping_date->format('d-m-Y') }}">
                                     @else
-                                        <input type="text" class="form-control" readonly value="{{ $currentPo->shipping_date }}">
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->shipping_date->format('d-m-Y') }}">
                                     @endif
                                 </div>
                             </div>
@@ -337,14 +337,11 @@
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
             });
-            $("#inputPoDate").daterangepicker(
-                    {
-                        singleDatePicker: true,
-                        showDropdowns: true
-                    }
-            );
             $("#inputShippingDate").daterangepicker(
                     {
+                        locale: {
+                            format: 'DD-MM-YYYY'
+                        },
                         singleDatePicker: true,
                         showDropdowns: true
                     }
