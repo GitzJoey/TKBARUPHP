@@ -193,9 +193,9 @@
                                     <table id="itemsTotalListTable" class="table table-bordered">
                                         <tbody>
                                         <tr>
-                                            <td width="80%" class="text-right">@lang('purchase_order.revise.table.total.body.total')</td>
+                                            <td width="80%" class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <input type="text" class="form-control" name="total_price" ng-model="grandTotal" readonly>
+                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -217,7 +217,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <textarea id="inputRemarks" name="remarks" class="form-control" rows="5" ng-model="po.remarks"></textarea>
+                                            <textarea id="inputRemarks" name="remarks" class="form-control" rows="5">{{ $currentPo->remarks }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -250,15 +250,37 @@
             $scope.po = {
               items: []
             };
+
             for(i = 0; i < $scope.currentPo.items.length; i++){
                 $scope.po.items.push({
-                    id: $scope.currentPo.items[i].id,
                     product: $scope.currentPo.items[i].product,
                     base_unit: _.find($scope.currentPo.items[i].product.product_units, isBase),
                     selected_unit: _.find($scope.currentPo.items[i].product.product_units, getSelectedUnit($scope.currentPo.items[i].selected_unit_id)),
                     quantity: $scope.currentPo.items[i].quantity,
                     price: $scope.currentPo.items[i].price
                 });
+            }
+
+            $scope.grandTotal = function() {
+                var result = 0;
+                angular.forEach($scope.po.items, function(item, key) {
+                    result += (item.quantity * item.price);
+                });
+                return result;
+            };
+
+            $scope.insertProduct = function (product){
+                $scope.po.items.push({
+                    product: product,
+                    base_unit: _.find(product.product_units, isBase),
+                    selected_unit: null,
+                    quantity: 0,
+                    price: 0
+                });
+            };
+
+            $scope.removeProduct = function (index) {
+                $scope.po.items.splice(index, 1);
             }
 
             function getSelectedUnit(selectedUnitId) {
@@ -270,23 +292,8 @@
             function isBase(unit) {
                 return unit.is_base == 1;
             }
-
-            $scope.insertProduct = function (product){
-                $scope.po.items.push({
-                    id: null,
-                    product: product,
-                    base_unit: _.find(product.product_units, isBase),
-                    selected_unit: null,
-                    quantity: 0,
-                    price: 0
-                });
-            };
-
-
-            $scope.removeProduct = function (index) {
-                $scope.po.items.splice(index, 1);
-            }
         }]);
+
         $(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
                 checkboxClass: 'icheckbox_square-blue',

@@ -111,7 +111,29 @@ class PurchaseOrderController extends Controller
     }
 
     public function saveRevision(Request $request, $id){
+        $currentPo = PurchaseOrder::find($id);
 
+        $currentPo->items()->detach();
+
+        for($i = 0; $i < count($request->input('product_id')); $i++)
+        {
+            $item = new Items();
+            $item->product_id = $request->input("product_id.$i");
+            $item->store_id = Auth::user()->store_id;
+            $item->selected_unit_id = $request->input("selected_unit_id.$i");
+            $item->base_unit_id = $request->input("base_unit_id.$i");
+            $item->conversion_value = ProductUnit::where(['product_id' => $item->product_id, 'unit_id' => $item->selected_unit_id])->first()->conversion_value;
+            $item->quantity = $request->input("quantity.$i");
+            $item->price = $request->input("price.$i");
+            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+
+            $currentPo->items()->save($item);
+        }
+
+        $currentPo->remarks = $request->input('remarks');
+        $currentPo->save();
+
+        return redirect(route('db.po.revise.index'));
     }
 
     public function payment($id){
