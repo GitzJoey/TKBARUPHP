@@ -319,7 +319,7 @@
             $scope.insertProduct = function (product){
                 $scope.po.items.push({
                     'product': product,
-                    'base_unit': product.product_units.find(isBase),
+                    'base_unit': _.find(product.product_units, isBase),
                     'quantity': 0,
                     'price': 0
                 });
