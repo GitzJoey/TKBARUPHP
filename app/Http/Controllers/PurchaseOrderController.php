@@ -100,14 +100,16 @@ class PurchaseOrderController extends Controller
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
-        return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL'));
+        return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL', 'warehouseDDL', 'vendorTruckingDDL'));
     }
 
     public function revise($id){
         $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier', 'vendorTrucking', 'warehouse')->find($id);
         $productDDL = Product::with('productUnits.unit')->get();
+        $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
+        $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
 
-        return view('purchase_order.revise', compact('currentPo', 'productDDL'));
+        return view('purchase_order.revise', compact('currentPo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL'));
     }
 
     public function saveRevision(Request $request, $id){
@@ -131,6 +133,8 @@ class PurchaseOrderController extends Controller
         }
 
         $currentPo->remarks = $request->input('remarks');
+        $currentPo->warehouse_id = $request->input('warehouse_id');
+        $currentPo->vendor_trucking_id = $request->input('vendor_trucking_id');
         $currentPo->save();
 
         return redirect(route('db.po.revise.index'));
