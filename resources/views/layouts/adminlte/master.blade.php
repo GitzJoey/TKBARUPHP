@@ -42,7 +42,7 @@
 
             $('#goTop').goTop();
 
-            var sessionTimeout = 7200000;
+            var sessionTimeout = parseInt('{{ Config::get('session.lifetime') }}') * 60 * 1000;
             function timeout() {
                 setTimeout(function () {
                     sessionTimeout = (sessionTimeout - 1000);
