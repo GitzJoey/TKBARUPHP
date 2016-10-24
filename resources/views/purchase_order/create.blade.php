@@ -179,17 +179,17 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                            <div class="col-md-11">
-                                <select id="inputProduct"
-                                        class="form-control"
-                                        ng-model="po.product"
-                                        ng-options="product as product.name for product in productDDL track by product.id">
-                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                </select>
-                            </div>
-                            <div class="col-md-1">
-                                <button type="button" class="btn btn-primary btn-md" ng-click="insertProduct(po.product)"><span class="fa fa-plus"/></button>
-                            </div>
+                                <div class="col-md-11">
+                                    <select id="inputProduct"
+                                            class="form-control"
+                                            ng-model="po.product"
+                                            ng-options="product as product.name for product in productDDL track by product.id">
+                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-primary btn-md" ng-click="insertProduct(po.product)"><span class="fa fa-plus"/></button>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -247,6 +247,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -317,10 +318,9 @@
             };
 
             $scope.insertProduct = function (product){
-                console.log(product.product_units.find(isBase));
                 $scope.po.items.push({
                     'product': product,
-                    'base_unit': product.product_units.find(isBase),
+                    'base_unit': _.find(product.product_units, isBase),
                     'quantity': 0,
                     'price': 0
                 });
