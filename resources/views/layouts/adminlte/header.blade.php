@@ -11,6 +11,9 @@
 
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <li>
+                    <a class="disabled" id="timeoutCount"></a>
+                </li>
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-globe"></i>

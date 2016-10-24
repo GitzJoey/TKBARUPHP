@@ -10,3 +10,9 @@
 @section('page_title_desc')
     @lang('dashboard.page_title_desc')
 @endsection
+
+@section('content')
+    @for ($i = 0; $i < 1000; $i++)
+        <br/>
+    @endfor
+@endsection

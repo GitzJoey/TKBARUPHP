@@ -45,6 +45,7 @@ elixir(function (mix) {
         './node_modules/admin-lte/dist/js/app.min.js',
         './node_modules/bootstrap-sweetalert/dist/sweetalert.min.js',
         './node_modules/lodash/lodash.min.js',
+        './node_modules/jquery-gotop/src/jquery.gotop.min.js',
         './resources/assets/js/adminlte.custom.js'
     ], 'public/adminlte/js/app.js');
 });
