@@ -9,7 +9,6 @@
 namespace App\Model;
 
 use Auth;
-use Carbon\Carbon;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -65,22 +64,6 @@ class PurchaseOrder extends Model
     public function warehouse()
     {
         return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
-    }
-
-    public function setPoCreatedAttribute($value){
-        $this->attributes['po_created'] = Carbon::createFromFormat('d/m/Y', $value);
-    }
-
-    public function getPoCreatedAttribute($value){
-        return Carbon::parse($value)->toDateString();
-    }
-
-    public function setShippingDateAttribute($value){
-        $this->attributes['shipping_date'] = Carbon::createFromFormat('d/m/Y', $value);
-    }
-
-    public function getShippingDateAttribute($value){
-        return Carbon::parse($value)->toDateString();
     }
 
     public static function boot()

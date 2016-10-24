@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Model\Items;
 use App\Model\Lookup;
 use App\Model\Product;
@@ -17,7 +16,8 @@ use App\Model\Supplier;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
-use Carbon\Carbon;
+
+use Auth;
 use Illuminate\Http\Request;
 use App\Util\POCodeGenerator;
 use Illuminate\Support\Facades\Log;
@@ -56,6 +56,8 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request)
     {
+        Log::info('[PurchaseOrderController@store] ');
+
         $this->validate($request,[
 
         ]);
@@ -63,8 +65,8 @@ class PurchaseOrderController extends Controller
         $params = [
             'code' => $request->input('code'),
             'po_type' => $request->input('po_type'),
-            'po_created' => $request->input('po_created'),
-            'shipping_date' => $request->input('shipping_date'),
+            'po_created' => date('Y-m-d', strtotime($request->input('po_created'))),
+            'shipping_date' => date('Y-m-d', strtotime($request->input('shipping_date'))),
             'supplier_type' => $request->input('supplier_type'),
             'walk_in_supplier' => $request->input('walk_in_supplier'),
             'walk_in_supplier_detail' => $request->input('walk_in_supplier_detail'),

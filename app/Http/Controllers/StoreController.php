@@ -27,9 +27,8 @@ class StoreController extends Controller
         Log::info('[StoreController@index] ' );
 
         $store = Store::paginate(10);
-        return view('store.index', compact('store'));
 
-        Log::info('[StoreController@index] ' );
+        return view('store.index', compact('store'));
     }
 
     public function show($id)
@@ -37,8 +36,6 @@ class StoreController extends Controller
         Log::info('[StoreController@show] $id: ' . $id);
 
         $store = Store::find($id);
-
-        Log::info('[StoreController@index] ');
 
         return view('store.show')->with('store', $store);
     }
@@ -49,8 +46,6 @@ class StoreController extends Controller
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
-
-        Log::info('[StoreController@create] ');
 
         return view('store.create', compact('statusDDL', 'yesnoDDL'));
     }
@@ -90,8 +85,6 @@ class StoreController extends Controller
             'remarks'       => empty($data['remarks']) ? '' : $data['remarks']
         ]);
 
-        Log::info('[StoreController@store] ');
-
         return redirect(route('db.admin.store'));
     }
 
@@ -99,7 +92,6 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@changeIsDefault] ');
 
-        Log::info('[StoreController@changeIsDefault] ');
     }
 
     public function edit($id)
@@ -110,8 +102,6 @@ class StoreController extends Controller
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
-
-        Log::info('[StoreController@changeIsDefault] ');
 
         return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL'));
     }
@@ -142,8 +132,6 @@ class StoreController extends Controller
         $store->remarks         = empty($data['remarks']) ? '' : $data['remarks'];
         $store->save();
 
-        Log::info('[StoreController@update] ');
-
         return redirect(route('db.admin.store'));
     }
 
@@ -152,8 +140,6 @@ class StoreController extends Controller
         Log::info('[StoreController@delete] $id:' . $id);
 
         Store::find($id)->delete();
-
-        Log::info('[StoreController@delete] ');
 
         return redirect(route('db.admin.store'));
     }

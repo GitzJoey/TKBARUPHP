@@ -338,12 +338,18 @@
             });
             $("#inputPoDate").daterangepicker(
                     {
+                        locale: {
+                            format: 'DD-MM-YYYY'
+                        },
                         singleDatePicker: true,
                         showDropdowns: true
                     }
             );
             $("#inputShippingDate").daterangepicker(
                     {
+                        locale: {
+                            format: 'DD-MM-YYYY'
+                        },
                         singleDatePicker: true,
                         showDropdowns: true
                     }
