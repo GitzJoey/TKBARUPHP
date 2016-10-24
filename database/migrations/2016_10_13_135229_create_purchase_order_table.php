@@ -15,6 +15,10 @@ class CreatePurchaseOrderTable extends Migration
     {
         Schema::create('purchase_order', function ( Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('store_id')->default(0);
+            $table->unsignedBigInteger('supplier_id')->default(0);
+            $table->unsignedBigInteger('warehouse_id')->default(0);
+            $table->unsignedBigInteger('vendor_trucking_id')->default(0);
             $table->string('code')->nullable();
             $table->string('po_type')->nullable();
             $table->date('po_created')->nullable();
@@ -29,11 +33,6 @@ class CreatePurchaseOrderTable extends Migration
             $table->unsignedBigInteger('deleted_by')->default(0);
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unsignedBigInteger('supplier_id');
-            $table->unsignedBigInteger('vendor_trucking_id');
-            $table->unsignedBigInteger('store_id');
-            $table->unsignedBigInteger('warehouse_id');
         });
     }
 

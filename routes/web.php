@@ -34,7 +34,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 
     Route::get('/home', 'HomeController@index');
 
-    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/dashboard', 'DashboardController@index')->name('db');
 
     Route::get('/dashboard/po/create', 'PurchaseOrderController@create')->name('db.po.create');
     Route::post('/dashboard/po/create', 'PurchaseOrderController@store');

@@ -17,6 +17,7 @@ class CreateSalesOrderTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('customer_id')->default(0);
+            $table->unsignedBigInteger('warehouse_id')->default(0);
             $table->unsignedBigInteger('vendor_truck_id')->default(0);
             $table->string('code')->nullable();
             $table->dateTime('so_created')->nullable();

@@ -10,3 +10,15 @@ table thead {
 table td.valign-middle {
     vertical-align: middle;
 }
+
+.table-bordered tbody tr td.valign-middle {
+    vertical-align: middle;
+}
+
+table td select.has-error {
+    border-color: #dd4b39;
+}
+
+table td span.help-block {
+    color: #dd4b39;
+}
