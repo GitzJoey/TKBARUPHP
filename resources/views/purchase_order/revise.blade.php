@@ -97,19 +97,43 @@
                             <div class="form-group">
                                 <label for="inputShippingDate" class="col-sm-3 control-label">@lang('purchase_order.revise.field.shipping_date')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" readonly value="{{ $currentPo->shipping_date }}">
+                                    @if($currentPo->status == 'POSTATUS.WA')
+                                        <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" value="{{ $currentPo->shipping_date }}">
+                                    @else
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->shipping_date }}">
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputWarehouse" class="col-sm-3 control-label">@lang('purchase_order.revise.field.warehouse')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" readonly value="{{ $currentPo->warehouse->name }}">
+                                    @if($currentPo->status == 'POSTATUS.WA')
+                                    <select id="inputWarehouse"
+                                            name="warehouse_id"
+                                            class="form-control"
+                                            ng-model="po.warehouse"
+                                            ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
+                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                    </select>
+                                    @else
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->warehouse->name }}">
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputVendorTrucking" class="col-sm-3 control-label">@lang('purchase_order.revise.field.vendor_trucking')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" readonly value="{{ $currentPo->vendorTrucking->name }}">
+                                    @if($currentPo->status == 'POSTATUS.WA')
+                                    <select id="inputVendorTrucking"
+                                            name="vendor_trucking_id"
+                                            class="form-control"
+                                            ng-model="po.vendorTrucking"
+                                            ng-options="vendorTrucking as vendorTrucking.name for vendorTrucking in vendorTruckingDDL track by vendorTrucking.id">
+                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                    </select>
+                                    @else
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->vendorTrucking->name }}">
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -165,15 +189,19 @@
                                                 <input type="text" class="form-control" name="quantity[]" ng-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'disabled' }}>
                                             </td>
                                             <td>
+                                                @if($currentPo->status == 'POSTATUS.WA')
                                                 <select name="selected_unit_id[]"
                                                         class="form-control"
                                                         ng-model="item.selected_unit"
                                                         ng-options="product_unit as product_unit.unit.symbol for product_unit in item.product.product_units track by product_unit.unit.id">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                 </select>
+                                                @else
+                                                    <input type="text" class="form-control" readonly value="@{{ item.selected_unit.unit.symbol }}">
+                                                @endif
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="price[]" ng-model="item.price" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'disabled' }}>
+                                                <input type="text" class="form-control" name="price[]" ng-model="item.price">
                                             </td>
                                             <td>
                                                 @if($currentPo->status == 'POSTATUS.WA')
@@ -193,9 +221,9 @@
                                     <table id="itemsTotalListTable" class="table table-bordered">
                                         <tbody>
                                         <tr>
-                                            <td width="80%" class="text-right">@lang('purchase_order.revise.table.total.body.total')</td>
+                                            <td width="80%" class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <input type="text" class="form-control" name="total_price" ng-model="grandTotal" readonly>
+                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -217,7 +245,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <textarea id="inputRemarks" name="remarks" class="form-control" rows="5" ng-model="po.remarks"></textarea>
+                                            <textarea id="inputRemarks" name="remarks" class="form-control" rows="5">{{ $currentPo->remarks }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -230,8 +258,8 @@
                 <div class="col-md-7 col-offset-md-5">
                     <div class="btn-toolbar">
                         <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
-                        <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                        <button id="cancelButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
+                        <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>
+                        <a id="cancelButton" href="{{ route('db.po.revise.index') }}" class="btn btn-primary pull-right" role="button">@lang('buttons.cancel_button')</a>
                     </div>
                 </div>
             </div>
@@ -246,19 +274,51 @@
         app.controller("poController", ['$scope', function($scope) {
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo) !!}');
-            console.log($scope.currentPo);
+            $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
+            $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
+
             $scope.po = {
-              items: []
+              items: [],
+              warehouse: {
+                  id: $scope.currentPo.warehouse.id,
+                  name: $scope.currentPo.warehouse.name
+              },
+              vendorTrucking : {
+                  id: $scope.currentPo.vendor_trucking.id,
+                  name: $scope.currentPo.vendor_trucking.name
+              }
             };
+
             for(i = 0; i < $scope.currentPo.items.length; i++){
                 $scope.po.items.push({
-                    id: $scope.currentPo.items[i].id,
                     product: $scope.currentPo.items[i].product,
                     base_unit: _.find($scope.currentPo.items[i].product.product_units, isBase),
                     selected_unit: _.find($scope.currentPo.items[i].product.product_units, getSelectedUnit($scope.currentPo.items[i].selected_unit_id)),
                     quantity: $scope.currentPo.items[i].quantity,
                     price: $scope.currentPo.items[i].price
                 });
+            }
+
+            $scope.grandTotal = function() {
+                var result = 0;
+                angular.forEach($scope.po.items, function(item, key) {
+                    result += (item.quantity * item.price);
+                });
+                return result;
+            };
+
+            $scope.insertProduct = function (product){
+                $scope.po.items.push({
+                    product: product,
+                    base_unit: _.find(product.product_units, isBase),
+                    selected_unit: null,
+                    quantity: 0,
+                    price: 0
+                });
+            };
+
+            $scope.removeProduct = function (index) {
+                $scope.po.items.splice(index, 1);
             }
 
             function getSelectedUnit(selectedUnitId) {
@@ -270,23 +330,8 @@
             function isBase(unit) {
                 return unit.is_base == 1;
             }
-
-            $scope.insertProduct = function (product){
-                $scope.po.items.push({
-                    id: null,
-                    product: product,
-                    base_unit: _.find(product.product_units, isBase),
-                    selected_unit: null,
-                    quantity: 0,
-                    price: 0
-                });
-            };
-
-
-            $scope.removeProduct = function (index) {
-                $scope.po.items.splice(index, 1);
-            }
         }]);
+
         $(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
                 checkboxClass: 'icheckbox_square-blue',

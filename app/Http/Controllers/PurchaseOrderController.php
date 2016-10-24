@@ -100,18 +100,44 @@ class PurchaseOrderController extends Controller
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
-        return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL'));
+        return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL', 'warehouseDDL', 'vendorTruckingDDL'));
     }
 
     public function revise($id){
         $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier', 'vendorTrucking', 'warehouse')->find($id);
         $productDDL = Product::with('productUnits.unit')->get();
+        $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
+        $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
 
-        return view('purchase_order.revise', compact('currentPo', 'productDDL'));
+        return view('purchase_order.revise', compact('currentPo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL'));
     }
 
     public function saveRevision(Request $request, $id){
+        $currentPo = PurchaseOrder::find($id);
 
+        $currentPo->items()->detach();
+
+        for($i = 0; $i < count($request->input('product_id')); $i++)
+        {
+            $item = new Items();
+            $item->product_id = $request->input("product_id.$i");
+            $item->store_id = Auth::user()->store_id;
+            $item->selected_unit_id = $request->input("selected_unit_id.$i");
+            $item->base_unit_id = $request->input("base_unit_id.$i");
+            $item->conversion_value = ProductUnit::where(['product_id' => $item->product_id, 'unit_id' => $item->selected_unit_id])->first()->conversion_value;
+            $item->quantity = $request->input("quantity.$i");
+            $item->price = $request->input("price.$i");
+            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+
+            $currentPo->items()->save($item);
+        }
+
+        $currentPo->remarks = $request->input('remarks');
+        $currentPo->warehouse_id = $request->input('warehouse_id');
+        $currentPo->vendor_trucking_id = $request->input('vendor_trucking_id');
+        $currentPo->save();
+
+        return redirect(route('db.po.revise.index'));
     }
 
     public function payment($id){
