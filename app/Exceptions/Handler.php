@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Psy\Exception\ErrorException;
 
 class Handler extends ExceptionHandler
 {
@@ -32,6 +33,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if($exception instanceof NotFoundHttpException)
+        {
+            return response()->view('errors.404', [], 404);
+        }
+
         parent::report($exception);
     }
 

@@ -45,6 +45,42 @@ class SalesOrderController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request,[
+
+        ]);
+
+        $params = [
+            'code' => $request->input('code'),
+            'so_type' => $request->input('so_type'),
+            'so_created' => $request->input('so_created'),
+            'shipping_date' => $request->input('shipping_date'),
+            'customer_type' => $request->input('supplier_type'),
+            'walk_in_cust' => $request->input('walk_in_cust'),
+            'walk_in_cust_detail' => $request->input('walk_in_cust_detail'),
+            'remarks' => $request->input('remarks'),
+            'status' => Lookup::whereCode('SOSTATUS.WA')->first()->code,
+            'customer_id' => $request->input('customer_id'),
+            'vendor_trucking_id' => $request->input('vendor_trucking_id'),
+            'warehouse_id' => $request->input('warehouse_id'),
+            'store_id' => Auth::user()->store_id
+        ];
+
+        $so = SalesOrder::create($params);
+
+        for($i = 0; $i < count($request->input('product_id')); $i++)
+        {
+            $item = new Items();
+            $item->product_id = $request->input("product_id.$i");
+            $item->store_id = Auth::user()->store_id;
+            $item->selected_unit_id = $request->input("selected_unit_id.$i");
+            $item->base_unit_id = $request->input("base_unit_id.$i");
+            $item->conversion_value = ProductUnit::where(['product_id' => $item->product_id, 'unit_id' => $item->selected_unit_id])->first()->conversion_value;
+            $item->quantity = $request->input("quantity.$i");
+            $item->price = $request->input("price.$i");
+            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+
+            $so->items()->save($item);
+        }
 
         return redirect(route('db.so.create'));
     }

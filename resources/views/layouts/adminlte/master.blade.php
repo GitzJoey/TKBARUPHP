@@ -39,6 +39,22 @@
 
         <script type="application/javascript">
             window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
+
+            $('#goTop').goTop();
+
+            var sessionTimeout = parseInt('{{ Config::get('session.lifetime') }}') * 60 * 1000;
+            function timeout() {
+                setTimeout(function () {
+                    sessionTimeout = (sessionTimeout - 1000);
+                    if (sessionTimeout >= 0) {
+                        $('#timeoutCount').text(sessionTimeout / 1000);
+                    } else {
+                        window.location.href = ctxpath + "/logout";
+                    }
+                    timeout();
+                }, 1000);
+            }
+            timeout();
         </script>
 
         @yield('custom_js')

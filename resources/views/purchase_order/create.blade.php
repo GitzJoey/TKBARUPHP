@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post">
+    <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
         <div ng-app="poModule" ng-controller="poController">
             <div class="row">
@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <label for="inputSupplierType" class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_type')</label>
                                 <div class="col-sm-5">
-                                    <select id="inputSupplierType"
+                                    <select id="inputSupplierType" data-parsley-required="true"
                                             name="supplier_type"
                                             class="form-control"
                                             ng-model="supplier_type"
@@ -87,7 +87,7 @@
                             <div class="form-group">
                                 <label for="inputPoType" class="col-sm-2 control-label">@lang('purchase_order.create.po_type')</label>
                                 <div class="col-sm-10">
-                                    <select id="inputPoType"
+                                    <select id="inputPoType" data-parsley-required="true"
                                             name="po_type"
                                             class="form-control"
                                             ng-model="po.poType"
@@ -103,7 +103,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" id="inputPoDate" name="po_created" ng-model="po.poCreated">
+                                        <input type="text" class="form-control" id="inputPoDate" name="po_created" ng-model="po.poCreated" data-parsley-required="true">
                                     </div>
                                 </div>
                             </div>
@@ -134,14 +134,14 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" ng-model="po.shippingDate">
+                                        <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" ng-model="po.shippingDate" data-parsley-required="true">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputWarehouse" class="col-sm-2 control-label">@lang('purchase_order.create.field.warehouse')</label>
                                 <div class="col-sm-5">
-                                    <select id="inputWarehouse"
+                                    <select id="inputWarehouse" data-parsley-required="true"
                                             name="warehouse_id"
                                             class="form-control"
                                             ng-model="po.warehouse"
@@ -210,10 +210,10 @@
                                                 <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
-                                                    <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity">
+                                                    <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity" data-parsley-required="true" data-parsley-type="number">
                                                 </td>
                                                 <td>
-                                                    <select name="selected_unit_id[]"
+                                                    <select name="selected_unit_id[]" data-parsley-required="true"
                                                             class="form-control"
                                                             ng-model="item.selected_unit"
                                                             ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
@@ -221,7 +221,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control text-right" name="price[]" ng-model="item.price">
+                                                    <input type="text" class="form-control text-right" name="price[]" ng-model="item.price" data-parsley-required="true" data-parsley-type="number" data-parsley-type="number">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
@@ -281,7 +281,7 @@
                     <div class="btn-toolbar">
                         <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                         <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                        <button id="cancelButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
+                        <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db') }}" >@lang('buttons.cancel_button')</a>
                     </div>
                 </div>
             </div>

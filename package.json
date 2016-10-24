@@ -22,13 +22,14 @@
     "awesome-bootstrap-checkbox": "^1.0.0-alpha.4",
     "bootstrap": "^3.3.7",
     "bootstrap-daterangepicker": "^2.1.24",
+    "bootstrap-sweetalert": "^1.0.1",
     "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
     "icheck": "^1.0.2",
     "ionicons": "^3.0.0",
     "jquery": "^3.1.0",
+    "jquery-gotop": "^1.1.2",
     "parsleyjs": "^2.5.0",
-    "ui-select": "^0.19.4",
-    "bootstrap-sweetalert": "^1.0.1"
+    "ui-select": "^0.19.4"
   }
 }

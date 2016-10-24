@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-    <form class="form-horizontal" action="{{ route('db.so.create') }}" method="post">
+    <form class="form-horizontal" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
         <div ng-app="SalesOrderModule" ng-controller="SalesOrderCreateController">
             <div class="box-body">
                 <div class="row">
@@ -36,7 +36,7 @@
                                                     <div class="form-group">
                                                         <label for="inputCustomerType" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_type')</label>
                                                         <div class="col-sm-5">
-                                                            <select id="inputCustomerType"
+                                                            <select id="inputCustomerType" data-parsley-required="true"
                                                                     class="form-control"
                                                                     ng-model="customer_type"
                                                                     ng-options="key as value for (key, value) in customerTypeDDL track by key">
@@ -86,7 +86,7 @@
                                                     <div class="form-group">
                                                         <label for="inputSoType" class="col-sm-2 control-label">@lang('sales_order.create.so_type')</label>
                                                         <div class="col-sm-10">
-                                                            <select id="inputSoType"
+                                                            <select id="inputSoType" data-parsley-required="true"
                                                                     class="form-control"
                                                                     ng-model="sales_type"
                                                                     ng-options="key as value for (key, value) in soTypeDDL track by key">
@@ -101,7 +101,7 @@
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <input type="text" class="form-control" id="inputSoDate" name="so_created" ng-model="so.soCreated">
+                                                                <input type="text" class="form-control" id="inputSoDate" name="so_created" ng-model="so.soCreated" data-parsley-required="true">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -129,7 +129,7 @@
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" ng-model="so.shippingDate">
+                                                                <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" ng-model="so.shippingDate" data-parsley-required="true">
                                                             </div>
                                                         </div>
                                                     </div>
