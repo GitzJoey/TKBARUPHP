@@ -38,7 +38,7 @@ return [
             ],
             'total' => [
                 'body' => [
-                    'total' => 'Total',
+                    'total' => 'Jumlah Total',
                 ],
             ],
         ],
@@ -53,44 +53,61 @@ return [
     ],
     'revise' => [
         'field' => [
-            'supplier_type' => '',
-            'supplier_name' => '',
-            'supplier_details' => '',
-            'shipping_date' => '',
-            'warehouse' => '',
-            'vendor_trucking' => '',
+            'supplier_type' => 'Tipe',
+            'supplier_name' => 'Nama',
+            'supplier_details' => 'Detail',
+            'shipping_date' => 'Tanggal',
+            'warehouse' => 'Gudang',
+            'vendor_trucking' => 'Penyedia Angkutan',
         ],
-        'po_code' => '',
-        'po_type' => '',
-        'po_date' => '',
-        'po_status' => '',
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
+        'po_code' => 'Code',
+        'po_type' => 'Tipe',
+        'po_date' => 'Tanggal',
+        'po_status' => 'Status',
+        'title' => 'Revisi',
+        'page_title' => 'Revisi',
+        'page_title_desc' => 'Revisi pembelian',
         'box' => [
-            'supplier' => '',
-            'purchase_order_detail' => '',
-            'shipping' => '',
-            'transactions' => '',
-            'remarks' => '',
+            'supplier' => 'Supplier',
+            'purchase_order_detail' => 'Detail',
+            'shipping' => 'Pengiriman',
+            'transactions' => 'Transaksi',
+            'remarks' => 'Catatan',
         ],
         'table' => [
             'item' => [
                 'header' => [
-                    'product_name' => '',
+                    'product_name' => 'Product',
                     'header' => [
-                        'quantity' => '',
+                        'quantity' => 'Jumlah',
                     ],
-                    'unit' => '',
-                    'price_unit' => '',
-                    'total_price' => '',
+                    'unit' => 'Satuan',
+                    'price_unit' => 'Harga Satuan',
+                    'total_price' => 'Total Harga',
                 ],
             ],
             'total' => [
                 'body' => [
-                    'total' => '',
+                    'total' => 'Jumlah Total',
                 ],
             ],
         ],
+        'index' => [
+            'title' => 'Revisi Pembelian',
+            'page_title' => 'Revisi Pembelian',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Pembelian'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'po_date' => 'Tanggal Pembuatan',
+                    'supplier' => 'Supplier',
+                    'shipping_date' => 'Tanggal Pengiriman',
+                    'status' => 'Status'
+                ]
+            ]
+        ]
     ],
 ];

@@ -178,6 +178,7 @@
                             <h3 class="box-title">@lang('purchase_order.create.box.transactions')</h3>
                         </div>
                         <div class="box-body">
+                            <div class="row">
                             <div class="col-md-11">
                                 <select id="inputProduct"
                                         class="form-control"
@@ -189,8 +190,8 @@
                             <div class="col-md-1">
                                 <button type="button" class="btn btn-primary btn-md" ng-click="insertProduct(po.product)"><span class="fa fa-plus"/></button>
                             </div>
-                            <br>
-                            <br>
+                            </div>
+                            <div class="row">
                             <div class="col-md-12">
                                 <table id="itemsListTable" class="table table-bordered table-hover">
                                     <thead>
@@ -232,6 +233,8 @@
                                     </tbody>
                                 </table>
                             </div>
+                            </div>
+                            <div class="row">
                             <div class="col-md-12">
                                 <table id="itemsTotalListTable" class="table table-bordered">
                                     <tbody>
@@ -243,6 +246,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -315,7 +319,7 @@
             $scope.insertProduct = function (product){
                 $scope.po.items.push({
                     'product': product,
-                    'base_unit': '',
+                    'base_unit': product.product_units.find(isBase),
                     'quantity': 0,
                     'price': 0
                 });

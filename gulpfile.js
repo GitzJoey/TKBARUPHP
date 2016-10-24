@@ -24,6 +24,7 @@ elixir(function (mix) {
         './node_modules/bootstrap-daterangepicker/daterangepicker.css',
         './node_modules/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
         './node_modules/ui-select/dist/select.min.css',
+        './node_modules/bootstrap-sweetalert/dist/sweetalert.css',
         './resources/assets/css/adminlte.custom.css'
     ], 'public/adminlte/css/adminlte.css')
     .scripts([
@@ -42,6 +43,7 @@ elixir(function (mix) {
         './node_modules/parsleyjs/dist/i18n/id.extra.js',
         './node_modules/ui-select/dist/select.min.js',
         './node_modules/admin-lte/dist/js/app.min.js',
-        './resources/assets/js/adminlte.custom.js'
+        './resources/assets/js/adminlte.custom.js',
+        './node_modules/bootstrap-sweetalert/dist/sweetalert.min.js'
     ], 'public/adminlte/js/app.js');
 });

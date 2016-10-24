@@ -17,7 +17,7 @@ use App\Model\Supplier;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Util\POCodeGenerator;
 use Illuminate\Support\Facades\Log;
@@ -56,8 +56,6 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request)
     {
-        Log::info('[PurchaseOrderController@store] ');
-
         $this->validate($request,[
 
         ]);
@@ -71,7 +69,7 @@ class PurchaseOrderController extends Controller
             'walk_in_supplier' => $request->input('walk_in_supplier'),
             'walk_in_supplier_detail' => $request->input('walk_in_supplier_detail'),
             'remarks' => $request->input('remarks'),
-            'status' => Lookup::whereCode('POSTATUS.D')->first()->code,
+            'status' => Lookup::whereCode('POSTATUS.WA')->first()->code,
             'supplier_id' => $request->input('supplier_id'),
             'vendor_trucking_id' => $request->input('vendor_trucking_id'),
             'warehouse_id' => $request->input('warehouse_id'),
@@ -98,22 +96,21 @@ class PurchaseOrderController extends Controller
         return redirect(route('db.po.create'));
     }
 
-    public function revisionIndex(){
+    public function index(){
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
-        return view('purchase_order.revise_index', compact('purchaseOrders', 'poStatusDDL'));
+        return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
     public function revise($id){
+        $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier', 'vendorTrucking', 'warehouse')->find($id);
+        $productDDL = Product::with('productUnits.unit')->get();
 
+        return view('purchase_order.revise', compact('currentPo', 'productDDL'));
     }
 
     public function saveRevision(Request $request, $id){
-
-    }
-
-    public function paymentIndex(){
 
     }
 
@@ -126,6 +123,11 @@ class PurchaseOrderController extends Controller
     }
 
     public function delete(Request $request, $id){
+        $po = PurchaseOrder::find($id);
+        $po->items()->detach();
+        $po->payments()->detach();
+        $po->delete();
 
+        return redirect(route('db.po.revise.index'));
     }
 }

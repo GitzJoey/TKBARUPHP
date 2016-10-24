@@ -45,7 +45,7 @@
                         <td class="text-center" width="20%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.po.revise', $po->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.po.reject', $po->hId()], 'style'=>'display:inline'])  !!}
-                            <button type="submit" class="btn btn-xs btn-danger" title="reject"><span class="fa fa-close fa-fw"></span></button>
+                            <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button"><span class="fa fa-close fa-fw"></span></button>
                             {!! Form::close() !!}
                         </td>
                     </tr>
@@ -54,4 +54,23 @@
             </table>
         </div>
     </div>
+@endsection
+@section('custom_js')
+    <script type="application/javascript">
+        $('#delete_button').on('click',function(e){
+            e.preventDefault();
+            var form = $(this).parents('form');
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this purchase order.",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, reject it!",
+                closeOnConfirm: false
+            }, function(isConfirm){
+                if (isConfirm) form.submit();
+            });
+        });
+    </script>
 @endsection
