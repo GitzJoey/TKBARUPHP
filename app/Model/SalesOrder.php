@@ -9,6 +9,8 @@
 namespace App\Model;
 
 use Auth;
+use Carbon\Carbon;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -64,6 +66,10 @@ class SalesOrder extends Model
     protected $fillable = [
         'store_id', 'customer_id', 'vendor_truck_id', 'code', 'so_created', 'shipping_date', 'customer_type', 'walk_in_cust_detail', 'so_type', 'status', 'remarks'
     ];
+
+    public function hId() {
+        return HashIds::encode($this->attributes['id']);
+    }
 
     public static function boot()
     {

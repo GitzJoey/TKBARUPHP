@@ -5,6 +5,9 @@ return [
         'title' => 'Sales Order',
         'page_title' => 'Sales Order',
         'page_title_desc' => '',
+        'tab' => [
+            'sales' => 'Sales',
+        ],
         'box' => [
             'supplier' => 'Supplier',
             'purchase_order_detail' => 'Detail',

@@ -5,6 +5,9 @@ return [
         'title' => '',
         'page_title' => '',
         'page_title_desc' => '',
+        'tab' => [
+            'sales' => 'Penjualan',
+        ],
         'box' => [
             'supplier' => '',
             'purchase_order_detail' => '',

@@ -46,6 +46,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/po/payment/{id}', 'PurchaseOrderController@savePayment');
     Route::delete('/dashboard/po/reject/{id}', 'PurchaseOrderController@delete')->name('db.po.reject');
 
+    Route::get('/dashboard/so/create', 'SalesOrderController@create')->name('db.so.create');
+    Route::post('/dashboard/so/create', 'SalesOrderController@create');
+    Route::get('/dashboard/so/revise', 'SalesOrderController@index')->name('db.so.revise.index');
+    Route::get('/dashboard/so/revise/{id}', 'SalesOrderController@revise')->name('db.so.revise');
+    Route::patch('/dashboard/so/revise/{id}', 'SalesOrderController@saveRevision');
+    Route::get('/dashboard/so/payment', 'SalesOrderController@index')->name('db.so.payment.index');
+    Route::get('/dashboard/so/payment/{id}', 'SalesOrderController@pay')->name('db.so.payment');
+    Route::patch('/dashboard/so/payment/{id}', 'SalesOrderController@savePayment');
+    Route::delete('/dashboard/so/reject/{id}', 'SalesOrderController@delete')->name('db.so.reject');
+
     Route::get('/dashboard/admin/user', 'UserController@index')->name('db.admin.user');
     Route::get('/dashboard/admin/user/show/{id}', 'UserController@show')->name('db.admin.user.show');
     Route::get('/dashboard/admin/user/create', 'UserController@create')->name('db.admin.user.create');
@@ -185,9 +195,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@edit')->name('db.price.price_level.edit');
     Route::patch('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@update');
     Route::delete('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
-
-    Route::get('/dashboard/so/create', 'SalesOrderController@create')->name('db.so.create');
-    Route::post('/dashboard/so/create', 'SalesOrderController@create');
 
     Route::get('/dashboard/report/trx', 'ReportController@report_trx')->name('db.report.transaction');
     Route::get('/dashboard/report/mon', 'ReportController@report_mon')->name('db.report.monitoring');
