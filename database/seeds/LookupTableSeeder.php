@@ -92,6 +92,11 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'POSTATUS',
             ],
             [
+                'code' => 'POSTATUS.RJT',
+                'description' => 'Rejected',
+                'category' => 'POSTATUS',
+            ],
+            [
                 'code' => 'POTYPE.S',
                 'description' => 'Standard PO',
                 'category' => 'POTYPE',

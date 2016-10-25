@@ -152,9 +152,8 @@ class PurchaseOrderController extends Controller
 
     public function delete(Request $request, $id){
         $po = PurchaseOrder::find($id);
-        $po->items()->detach();
-        $po->payments()->detach();
-        $po->delete();
+        $po->status = 'POSTATUS.RJT';
+        $po->save();
 
         return redirect(route('db.po.revise.index'));
     }

@@ -16,35 +16,35 @@
         {{ csrf_field() }}
         <div ng-app="poModule" ng-controller="poController">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-5">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.revise.box.supplier')</h3>
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputSupplierType" class="col-sm-3 control-label">@lang('purchase_order.revise.field.supplier_type')</label>
-                                <div class="col-sm-9">
+                                <label for="inputSupplierType" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_type')</label>
+                                <div class="col-sm-5">
                                     <input type="text" class="form-control" readonly value="@lang('lookup.'.$currentPo->supplier_type)">
                                 </div>
                             </div>
                             @if($currentPo->supplier_type == 'SUPPLIERTYPE.r')
                             <div class="form-group">
-                                <label for="inputSupplierId" class="col-sm-3 control-label">@lang('purchase_order.revise.field.supplier_name')</label>
-                                <div class="col-sm-9">
+                                <label for="inputSupplierId" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_name')</label>
+                                <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly value="{{ $currentPo->supplier->name }}">
                                 </div>
                             </div>
                             @else
                             <div class="form-group">
-                                <label for="inputSupplierName" class="col-sm-3 control-label">@lang('purchase_order.revise.field.supplier_name')</label>
-                                <div class="col-sm-9">
+                                <label for="inputSupplierName" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_name')</label>
+                                <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly value="{{ $currentPo->walk_in_supplier }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputSupplierDetails" class="col-sm-3 control-label">@lang('purchase_order.revise.field.supplier_details')</label>
-                                <div class="col-sm-9">
+                                <label for="inputSupplierDetails" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_details')</label>
+                                <div class="col-sm-10">
                                     <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_details }}
                                     </textarea>
                                 </div>
@@ -86,6 +86,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-offset-1">
+                    &nbsp;
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-10">
@@ -95,20 +98,20 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputShippingDate" class="col-sm-3 control-label">@lang('purchase_order.revise.field.shipping_date')</label>
-                                <div class="col-sm-9">
+                                <label for="inputShippingDate" class="col-sm-2 control-label">@lang('purchase_order.revise.field.shipping_date')</label>
+                                <div class="col-sm-5">
                                     @if($currentPo->status == 'POSTATUS.WA')
-                                        <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" value="{{ $currentPo->shipping_date->format('d-m-Y') }}">
+                                        <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" value="{{ $currentPo->shipping_date->format('d-m-Y') }}" data-parsley-required="true">
                                     @else
-                                        <input type="text" class="form-control" readonly value="{{ $currentPo->shipping_date->format('d-m-Y') }}">
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->shipping_date->format('d-m-Y') }}" data-parsley-required="true">
                                     @endif
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputWarehouse" class="col-sm-3 control-label">@lang('purchase_order.revise.field.warehouse')</label>
-                                <div class="col-sm-9">
+                                <label for="inputWarehouse" class="col-sm-2 control-label">@lang('purchase_order.revise.field.warehouse')</label>
+                                <div class="col-sm-5">
                                     @if($currentPo->status == 'POSTATUS.WA')
-                                    <select id="inputWarehouse"
+                                    <select id="inputWarehouse" data-parsley-required="true"
                                             name="warehouse_id"
                                             class="form-control"
                                             ng-model="po.warehouse"
@@ -121,10 +124,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputVendorTrucking" class="col-sm-3 control-label">@lang('purchase_order.revise.field.vendor_trucking')</label>
-                                <div class="col-sm-9">
+                                <label for="inputVendorTrucking" class="col-sm-2 control-label">@lang('purchase_order.revise.field.vendor_trucking')</label>
+                                <div class="col-sm-8">
                                     @if($currentPo->status == 'POSTATUS.WA')
-                                    <select id="inputVendorTrucking"
+                                    <select id="inputVendorTrucking" data-parsley-required="true"
                                             name="vendor_trucking_id"
                                             class="form-control"
                                             ng-model="po.vendorTrucking"
@@ -145,7 +148,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-11">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.revise.box.transactions')</h3>
@@ -186,7 +189,7 @@
                                             <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
                                             <td>@{{ item.product.name }}</td>
                                             <td>
-                                                <input type="text" class="form-control" name="quantity[]" ng-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'disabled' }}>
+                                                <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'disabled' }}>
                                             </td>
                                             <td>
                                                 @if($currentPo->status == 'POSTATUS.WA')
@@ -201,15 +204,15 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="price[]" ng-model="item.price">
+                                                <input type="text" class="form-control text-right" name="price[]" ng-model="item.price">
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 @if($currentPo->status == 'POSTATUS.WA')
                                                     <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="total_price[]" ng-value="item.quantity * item.price" readonly>
+                                                <input type="text" class="form-control text-right" name="total_price[]" ng-value="item.quantity * item.price" readonly>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -232,6 +235,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-offset-1">
+                    &nbsp;
                 </div>
             </div>
             <div class="row">
