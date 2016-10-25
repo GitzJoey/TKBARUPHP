@@ -50,6 +50,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Store whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Store whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Store whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Product[] $products
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
  */
 class Store extends Model
 {

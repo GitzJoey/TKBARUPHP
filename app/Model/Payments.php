@@ -5,6 +5,37 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Model\Payments
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property string $type
+ * @property string $payment_date
+ * @property string $effective_date
+ * @property float $total_amount
+ * @property string $status
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments wherePaymentDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereEffectiveDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereTotalAmount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class Payments extends Model
 {
     use SoftDeletes;

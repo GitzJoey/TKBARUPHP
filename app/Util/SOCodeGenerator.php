@@ -10,6 +10,8 @@ namespace App\Util;
 
 use Config;
 
+use App\Model\SalesOrder;
+
 class SOCodeGenerator implements StringGenerator
 {
 
@@ -28,5 +30,21 @@ class SOCodeGenerator implements StringGenerator
         }
 
         return strtoupper($generatedString);
+    }
+
+    public static function generateSOCode()
+    {
+        $result = '';
+
+        do
+        {
+            $temp_result = self::generateWithLength(Config::get('constants.TRXCODE.LENGTH'));
+            $so = SalesOrder::whereCode($temp_result);
+            if (empty($so->first())) {
+                $result = $temp_result;
+            }
+        } while (empty($result));
+
+        return $result;
     }
 }

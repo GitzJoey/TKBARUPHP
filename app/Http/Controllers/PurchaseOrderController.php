@@ -39,7 +39,7 @@ class PurchaseOrderController extends Controller
         $productDDL = Product::with('productUnits.unit')->get();
         $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code']);
         $supplierTypeDDL = Lookup::where('category', '=', 'SUPPLIERTYPE')->get(['description', 'code']);
-        $poCode = POCodeGenerator::generateWithLength(6);
+        $poCode = POCodeGenerator::generatePOCode();
         $poStatusDraft = Lookup::where('category', '=', 'POSTATUS')->get(['description', 'code'])->where('code', '=', 'POSTATUS.D');
 
         return view('purchase_order.create', compact(

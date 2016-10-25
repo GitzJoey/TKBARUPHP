@@ -46,6 +46,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PhoneNumber[] $phoneNumbers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Supplier[] $suppliers
  */
 class Profile extends Model
 {

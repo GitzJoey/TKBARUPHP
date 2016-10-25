@@ -10,6 +10,8 @@ namespace App\Util;
 
 use Config;
 
+use App\Model\PurchaseOrder;
+
 /**
  * Class POCodeGenerator
  *
@@ -35,5 +37,21 @@ class POCodeGenerator implements StringGenerator
         }
 
         return strtoupper($generatedString);
+    }
+
+    public static function generatePOCode()
+    {
+        $result = '';
+
+        do
+        {
+            $temp_result = self::generateWithLength(Config::get('constants.TRXCODE.LENGTH'));
+            $po = PurchaseOrder::whereCode($temp_result);
+            if (empty($po->first())) {
+                $result = $temp_result;
+            }
+        } while (empty($result));
+
+        return $result;
     }
 }

@@ -30,6 +30,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Role whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Permission[] $permissionList
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Permission[] $permissions
  */
 class Role extends EntrustRole
 {

@@ -30,7 +30,7 @@ class SalesOrderController extends Controller
         $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get()->pluck('description', 'code');
         $warehouseDDL = Warehouse::whereStatus('STATUS.Active')->get(['name', 'id']);
         $productDDL = Product::whereStatus('STATUS.Active')->get(['name', 'id']);
-        $soCode = SOCodeGenerator::generateWithLength(6);
+        $soCode = SOCodeGenerator::generateSOCode();
         $customerDDL = Customer::all([ 'id', 'name' ]);
         $vendortruckingDDL = VendorTrucking::whereStatus('STATUS.active')->get(['name', 'id']);
         $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=', 'SOSTATUS.D');

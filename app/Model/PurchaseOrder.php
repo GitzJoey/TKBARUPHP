@@ -17,6 +17,52 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * App\PurchaseOrder
  *
  * @mixin \Eloquent
+ * @property integer $id
+ * @property string $code
+ * @property string $po_type
+ * @property \Carbon\Carbon $po_created
+ * @property \Carbon\Carbon $shipping_date
+ * @property string $supplier_type
+ * @property string $walk_in_supplier
+ * @property string $walk_in_supplier_detail
+ * @property string $remarks
+ * @property string $status
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property integer $supplier_id
+ * @property integer $vendor_trucking_id
+ * @property integer $store_id
+ * @property integer $warehouse_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Items[] $items
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Payments[] $payments
+ * @property-read \App\Model\Supplier $supplier
+ * @property-read \App\Model\VendorTrucking $vendorTrucking
+ * @property-read \App\Model\Store $store
+ * @property-read \App\Model\Warehouse $warehouse
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder wherePoType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder wherePoCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereShippingDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereSupplierType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereWalkInSupplier($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereWalkInSupplierDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereSupplierId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereVendorTruckingId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereWarehouseId($value)
  */
 class PurchaseOrder extends Model
 {

@@ -45,6 +45,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Customer whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Customer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Customer whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Profile[] $profiles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
  */
 class Customer extends Model
 {
