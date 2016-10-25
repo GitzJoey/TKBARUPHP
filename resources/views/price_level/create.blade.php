@@ -33,7 +33,7 @@
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="inputType" class="col-sm-2 control-label">@lang('price_level.field.type')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('type', $plTypeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('type', $plTypeDDL, null, array('id' => 'priceLevelSelect', 'class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <label for="inputPctVal" class="col-sm-2 control-label">@lang('price_level.field.pctval')</label>
                     <div class="col-sm-10">
-                        <input id="inputPctVal" name="pctva;" type="text" class="form-control" value="{{ old('pctval') }}" placeholder="Percentage Value">
+                        <input id="inputPctVal" name="pctval" type="text" class="form-control" value="{{ old('pctval') }}" placeholder="Percentage Value">
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
@@ -99,4 +99,18 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $('select[id="priceLevelSelect"]').change(function() {
+            if ($(this).val() == 'PRICELEVELTYPE.inc') {
+                $('#inputIncVal').prop('readonly', false);
+                $('#inputPctVal').val('0').prop('readonly', true);
+            } else {
+                $('#inputIncVal').val('0').prop('readonly', true);
+                $('#inputPctVal').prop('readonly', false);
+            }
+        });
+    </script>
 @endsection

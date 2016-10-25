@@ -43,6 +43,10 @@ return [
     'CASHPAYMENTSTATUS.C' => 'Selesai',
     'CURRENCY.USD' => 'US Dollar',
     'CURRENCY.IDR' => 'Rupiah',
-    'SUPPLIERTYPE.r' => 'Supplier Terdaftar',
-    'SUPPLIERTYPE.wi' => 'Supplier Datang Langsung'
+    'SUPPLIERTYPE.R' => 'Supplier Terdaftar',
+    'SUPPLIERTYPE.WI' => 'Supplier Datang Langsung',
+    'CUSTOMERTYPE.R' => 'Pelanggan Terdaftar',
+    'CUSTOMERTYPE.WI' => 'Pelanggan Baru',
+    'PRICELEVELTYPE.INC' => 'Kenaikan Nilai',
+    'PRICELEVELTYPE.PCT' => 'Kenaikan Persentase',
 ];
