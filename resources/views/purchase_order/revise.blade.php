@@ -12,6 +12,17 @@
 @endsection
 
 @section('content')
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     {!! Form::model($currentPo, ['method' => 'PATCH','route' => ['db.po.revise', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         {{ csrf_field() }}
         <div ng-app="poModule" ng-controller="poController">
@@ -53,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.revise.box.purchase_order_detail')</h3>
@@ -96,14 +107,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-9">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.revise.box.shipping')</h3>
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputShippingDate" class="col-sm-3 control-label">@lang('purchase_order.revise.field.shipping_date')</label>
+                                <label for="inputShippingDate" class="col-sm-2 control-label">@lang('purchase_order.revise.field.shipping_date')</label>
                                 <div class="col-sm-5">
                                     <div class="input-group date">
                                         <div class="input-group-addon">

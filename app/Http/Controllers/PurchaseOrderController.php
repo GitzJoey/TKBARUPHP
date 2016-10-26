@@ -33,7 +33,7 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@create] ');
 
-        $supplierDDL = Supplier::all([ 'id', 'name' ]);
+        $supplierDDL = Supplier::with('profiles.phoneNumbers', 'bankAccounts.bank', 'products')->get();
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
         $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
         $productDDL = Product::with('productUnits.unit')->get();
