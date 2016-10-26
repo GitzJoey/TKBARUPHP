@@ -1,6 +1,29 @@
 <?php 
 
 return [
+    'inflow' => [
+        'index' => [
+            'title' => 'Barang Masuk',
+            'page_title' => 'Barang Masuk',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Barang Masuk'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'po_date' => 'Tanggal Pembuatan',
+                    'supplier' => 'Supplier',
+                    'shipping_date' => 'Tanggal Pengiriman',
+                    'status' => 'Status'
+                ]
+            ],
+            'header' => [
+                'warehouse' => 'Gudang',
+                'purchase_order' => 'Pembelian'
+            ]
+        ]
+    ],
     'create' => [
         'title' => 'Gudang',
         'page_title' => 'Gudang',

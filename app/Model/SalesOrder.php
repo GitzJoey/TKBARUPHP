@@ -61,7 +61,7 @@ class SalesOrder extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'sales_order';
+    protected $table = 'sales_orders';
 
     protected $fillable = [
         'store_id', 'customer_id', 'vendor_truck_id', 'code', 'so_created', 'shipping_date', 'customer_type', 'walk_in_cust_detail', 'so_type', 'status', 'remarks'

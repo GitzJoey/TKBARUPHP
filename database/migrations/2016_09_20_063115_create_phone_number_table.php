@@ -13,7 +13,7 @@ class CreatePhoneNumberTable extends Migration
      */
     public function up()
     {
-        Schema::create('phone_number', function(Blueprint $table) {
+        Schema::create('phone_numbers', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('profile_id')->default(0);
             $table->unsignedBigInteger('phone_provider_id')->default(0);
@@ -34,6 +34,6 @@ class CreatePhoneNumberTable extends Migration
      */
     public function down()
     {
-        Schema::drop('phone_number');
+        Schema::drop('phone_numbers');
     }
 }

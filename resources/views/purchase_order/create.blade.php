@@ -188,9 +188,10 @@
                                     </select>
                                 </div>
                                 <div class="col-md-1">
-                                    <button type="button" class="btn btn-primary btn-md" ng-click="insertProduct(po.product)"><span class="fa fa-plus"/></button>
+                                    <button type="button" class="btn btn-primary btn-md" ng-click="insertItem(po.product)"><span class="fa fa-plus"/></button>
                                 </div>
                             </div>
+                            <hr>
                             <div class="row">
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
@@ -224,7 +225,7 @@
                                                     <input type="text" class="form-control text-right" name="price[]" ng-model="item.price" data-parsley-required="true" data-parsley-type="number" data-parsley-type="number">
                                                 </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
+                                                    <button type="button" class="btn btn-danger btn-md" ng-click="removeItem($index)"><span class="fa fa-minus"/></button>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="total_price[]" ng-value="item.quantity * item.price" readonly>
@@ -317,7 +318,7 @@
                 return result;
             };
 
-            $scope.insertProduct = function (product){
+            $scope.insertItem = function (product){
                 $scope.po.items.push({
                     'product': product,
                     'base_unit': _.find(product.product_units, isBase),
@@ -326,7 +327,7 @@
                 });
             };
 
-            $scope.removeProduct = function (index) {
+            $scope.removeItem = function (index) {
                 $scope.po.items.splice(index, 1);
             };
         }]);

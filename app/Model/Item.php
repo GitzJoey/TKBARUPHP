@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Items
+ * App\Item
  *
  * @mixin \Eloquent
  * @property integer $id
@@ -32,24 +32,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereProductId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereStocksId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereSelectedUnitId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereBaseUnitId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereConversionValue($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereQuantity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items wherePrice($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereToBaseQuantity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Items whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereStocksId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereSelectedUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereBaseUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereConversionValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereToBaseQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Item whereDeletedAt($value)
  */
-class Items extends Model
+class Item extends Model
 {
     use SoftDeletes;
 
@@ -67,6 +67,14 @@ class Items extends Model
 
     public function selectedUnit(){
         return $this->belongsTo('App\Model\ProductUnit', 'selected_unit_id');
+    }
+
+    public function receipts(){
+        return $this->hasMany('App\Model\Receipt');
+    }
+
+    public function itemable(){
+        return $this->morphTo();
     }
 
     public static function boot()

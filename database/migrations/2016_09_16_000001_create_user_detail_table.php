@@ -14,7 +14,7 @@ Class CreateUserDetailTable extends Migration
 {
     public function up()
     {
-        Schema::create('user_detail', function (Blueprint $table) {
+        Schema::create('user_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->default(0);
             $table->string('type')->nullable();
@@ -29,6 +29,6 @@ Class CreateUserDetailTable extends Migration
 
     public function down()
     {
-        Schema::drop('user_detail');
+        Schema::drop('user_details');
     }
 }

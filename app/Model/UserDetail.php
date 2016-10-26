@@ -44,7 +44,7 @@ class UserDetail extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'user_detail';
+    protected $table = 'user_details';
 
     protected $fillable = [
         'type', 'allow_login'

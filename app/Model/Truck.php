@@ -50,7 +50,7 @@ class Truck extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'truck';
+    protected $table = 'trucks';
 
     protected $fillable = [
         'store_id', 'plate_number', 'inspection_date', 'driver', 'status', 'remarks'

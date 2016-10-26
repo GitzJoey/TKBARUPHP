@@ -14,7 +14,7 @@ Class CreatePhoneProviderTable extends Migration
 {
     public function up()
     {
-        Schema::create('phone_provider', function (Blueprint $table) {
+        Schema::create('phone_providers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('short_name')->nullable();
@@ -31,6 +31,6 @@ Class CreatePhoneProviderTable extends Migration
 
     public function down()
     {
-        Schema::drop('phone_provider');
+        Schema::drop('phone_providers');
     }
 }

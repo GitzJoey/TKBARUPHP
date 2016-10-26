@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Settings whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Settings whereUserId($value)
  */
-class Settings extends Model
+class Setting extends Model
 {
     protected $table = 'settings';
 

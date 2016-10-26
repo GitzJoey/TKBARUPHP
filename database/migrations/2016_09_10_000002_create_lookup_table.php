@@ -14,7 +14,7 @@ Class CreateLookupTable extends Migration
 {
     public function up()
     {
-        Schema::create('lookup', function (Blueprint $table) {
+        Schema::create('lookups', function (Blueprint $table) {
             $table->string('code')->nullable();
             $table->primary('code');
             $table->unique('code');
@@ -25,6 +25,6 @@ Class CreateLookupTable extends Migration
 
     public function down()
     {
-        Schema::drop('lookup');
+        Schema::drop('lookups');
     }
 }

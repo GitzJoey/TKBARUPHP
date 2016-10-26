@@ -13,7 +13,7 @@ class CreateBankTable extends Migration
      */
     public function up()
     {
-        Schema::create('bank', function (Blueprint $table) {
+        Schema::create('banks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('short_name')->nullable();
@@ -36,6 +36,6 @@ class CreateBankTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bank');
+        Schema::drop('banks');
     }
 }

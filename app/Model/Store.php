@@ -57,7 +57,7 @@ class Store extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'store';
+    protected $table = 'stores';
 
     protected $fillable = [
         'name', 'address', 'phone_num', 'fax_num', 'tax_id', 'status', 'is_default', 'image_filename', 'remarks'

@@ -14,7 +14,7 @@ Class CreateProductUnitTable extends Migration
 {
     public function up()
     {
-        Schema::create('product_unit', function (Blueprint $table) {
+        Schema::create('product_units', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_id')->default(0);
             $table->bigInteger('unit_id')->default(0);
@@ -32,6 +32,6 @@ Class CreateProductUnitTable extends Migration
 
     public function down()
     {
-        Schema::drop('product_unit');
+        Schema::drop('product_units');
     }
 }

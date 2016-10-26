@@ -74,7 +74,12 @@
                             <div class="form-group">
                                 <label for="inputPoDate" class="col-sm-2 control-label">@lang('purchase_order.revise.po_date')</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly value="{{ $currentPo->po_created->format('d-m-Y') }}">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->po_created->format('d-m-Y') }}">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -97,11 +102,16 @@
                             <div class="form-group">
                                 <label for="inputShippingDate" class="col-sm-3 control-label">@lang('purchase_order.revise.field.shipping_date')</label>
                                 <div class="col-sm-9">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
                                     @if($currentPo->status == 'POSTATUS.WA')
                                         <input type="text" class="form-control" id="inputShippingDate" name="shipping_date" value="{{ $currentPo->shipping_date->format('d-m-Y') }}">
                                     @else
                                         <input type="text" class="form-control" readonly value="{{ $currentPo->shipping_date->format('d-m-Y') }}">
                                     @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -162,9 +172,10 @@
                                         </select>
                                     </div>
                                     <div class="col-md-1">
-                                        <button type="button" class="btn btn-primary btn-md" ng-click="insertProduct(po.product)"><span class="fa fa-plus"/></button>
+                                        <button type="button" class="btn btn-primary btn-md" ng-click="insertItem(po.product)"><span class="fa fa-plus"/></button>
                                     </div>
                                 </div>
+                                <hr>
                             @endif
                             <div class="row">
                                 <div class="col-md-12">
@@ -181,7 +192,7 @@
                                         </thead>
                                         <tbody>
                                         <tr ng-repeat="item in po.items">
-                                            <input type="hidden" name="id[]" ng-value="item.id">
+                                            <input type="hidden" name="item_id[]" ng-value="item.id">
                                             <input type="hidden" name="product_id[]" ng-value="item.product.id">
                                             <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
                                             <td>@{{ item.product.name }}</td>
@@ -205,7 +216,7 @@
                                             </td>
                                             <td>
                                                 @if($currentPo->status == 'POSTATUS.WA')
-                                                    <button type="button" class="btn btn-danger btn-md" ng-click="removeProduct($index)"><span class="fa fa-minus"/></button>
+                                                    <button type="button" class="btn btn-danger btn-md" ng-click="removeItem($index)"><span class="fa fa-minus"/></button>
                                                 @endif
                                             </td>
                                             <td>
@@ -272,30 +283,31 @@
         var app = angular.module('poModule', []);
 
         app.controller("poController", ['$scope', function($scope) {
-            $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
-            $scope.currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo) !!}');
-            $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-            $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
+            $scope.productDDL = {!! htmlspecialchars_decode($productDDL) !!};
+            var currentPo = {!! htmlspecialchars_decode($currentPo) !!};
+            $scope.warehouseDDL = {!! htmlspecialchars_decode($warehouseDDL) !!};
+            $scope.vendorTruckingDDL = {!! htmlspecialchars_decode($vendorTruckingDDL) !!};
 
             $scope.po = {
               items: [],
               warehouse: {
-                  id: $scope.currentPo.warehouse.id,
-                  name: $scope.currentPo.warehouse.name
+                  id: currentPo.warehouse.id,
+                  name: currentPo.warehouse.name
               },
               vendorTrucking : {
-                  id: $scope.currentPo.vendor_trucking.id,
-                  name: $scope.currentPo.vendor_trucking.name
+                  id: currentPo.vendor_trucking.id,
+                  name: currentPo.vendor_trucking.name
               }
             };
 
-            for(i = 0; i < $scope.currentPo.items.length; i++){
+            for(var i = 0; i < currentPo.items.length; i++){
                 $scope.po.items.push({
-                    product: $scope.currentPo.items[i].product,
-                    base_unit: _.find($scope.currentPo.items[i].product.product_units, isBase),
-                    selected_unit: _.find($scope.currentPo.items[i].product.product_units, getSelectedUnit($scope.currentPo.items[i].selected_unit_id)),
-                    quantity: $scope.currentPo.items[i].quantity,
-                    price: $scope.currentPo.items[i].price
+                    id: currentPo.items[i].id,
+                    product: currentPo.items[i].product,
+                    base_unit: _.find(currentPo.items[i].product.product_units, isBase),
+                    selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
+                    quantity: currentPo.items[i].quantity,
+                    price: currentPo.items[i].price
                 });
             }
 
@@ -307,8 +319,9 @@
                 return result;
             };
 
-            $scope.insertProduct = function (product){
+            $scope.insertItem = function (product){
                 $scope.po.items.push({
+                    id: null,
                     product: product,
                     base_unit: _.find(product.product_units, isBase),
                     selected_unit: null,
@@ -317,7 +330,7 @@
                 });
             };
 
-            $scope.removeProduct = function (index) {
+            $scope.removeItem = function (index) {
                 $scope.po.items.splice(index, 1);
             }
 
@@ -337,6 +350,7 @@
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
             });
+
             $("#inputShippingDate").daterangepicker(
                     {
                         locale: {

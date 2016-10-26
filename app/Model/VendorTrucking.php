@@ -50,7 +50,7 @@ class VendorTrucking extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'vendor_trucking';
+    protected $table = 'vendor_truckings';
 
     protected $fillable = [
         'store_id', 'name', 'address', 'tax_id', 'status', 'remarks'

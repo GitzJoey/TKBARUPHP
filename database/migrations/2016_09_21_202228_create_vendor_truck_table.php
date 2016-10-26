@@ -13,7 +13,7 @@ class CreateVendorTruckTable extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_trucking', function (Blueprint $table) {
+        Schema::create('vendor_truckings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->string('name')->nullable();
@@ -36,6 +36,6 @@ class CreateVendorTruckTable extends Migration
      */
     public function down()
     {
-        Schema::drop('vendor_trucking');
+        Schema::drop('vendor_truckings');
     }
 }
