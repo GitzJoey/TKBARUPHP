@@ -42,6 +42,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\ProductUnit whereDeletedAt($value)
+ * @property-read \App\Model\Product $product
+ * @property-read \App\Model\Unit $unit
  */
 class ProductUnit extends Model
 {

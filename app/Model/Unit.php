@@ -42,6 +42,7 @@ use App\Model\ProductUnit;
  * @method static \Illuminate\Database\Query\Builder|\App\Unit whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Unit whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Unit whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ProductUnit[] $productUnits
  */
 class Unit extends Model
 {

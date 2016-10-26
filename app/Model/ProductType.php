@@ -43,6 +43,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Product[] $products
  */
 class ProductType extends Model
 {

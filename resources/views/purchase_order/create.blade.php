@@ -252,9 +252,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-offset-1">
-                    &nbsp;
+                    <div class="col-md-offset-1">
+                        &nbsp;
+                    </div>
                 </div>
             </div>
             <div class="row">

@@ -32,7 +32,7 @@
                         <label for="inputType" class="col-sm-2 control-label">@lang('price_level.field.type')</label>
                         <div class="col-sm-10">
                             <label id="inputType" class="control-label">
-                                <span class="control-label-normal">{{ $pricelevel->type }}</span>
+                                <span class="control-label-normal">@lang('lookup.'.$pricelevel->type)</span>
                             </label>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                         <label for="inputIncVal" class="col-sm-2 control-label">@lang('price_level.field.incval')</label>
                         <div class="col-sm-10">
                             <label id="inputIncVal" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $pricelevel->incval }}</span>
+                                <span class="control-label-normal">{{ empty($pricelevel->incval) ? 0:$pricelevel->incval }}</span>
                             </label>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <label for="inputPctVal" class="col-sm-2 control-label">@lang('price_level.field.pctval')</label>
                         <div class="col-sm-10">
                             <label id="inputPctVal" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $pricelevel->pctval }}</span>
+                                <span class="control-label-normal">{{ empty($pricelevel->pctval) ? 0:$pricelevel->pctval }}</span>
                             </label>
                         </div>
                     </div>

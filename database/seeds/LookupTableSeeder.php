@@ -17,22 +17,22 @@ class CreateLookupTableSeeder extends Seeder
     {
         $lookup = [
             [
-                'code' => 'STATUS.Active',
+                'code' => 'STATUS.ACTIVE',
                 'description' => 'Active',
                 'category' => 'STATUS',
             ],
             [
-                'code' => 'STATUS.Inctive',
+                'code' => 'STATUS.INACTIVE',
                 'description' => 'Inactive',
                 'category' => 'STATUS',
             ],
             [
-                'code' => 'YESNOSELECT.Yes',
+                'code' => 'YESNOSELECT.YES',
                 'description' => 'Yes',
                 'category' => 'YESNOSELECT',
             ],
             [
-                'code' => 'YESNOSELECT.No',
+                'code' => 'YESNOSELECT.NO',
                 'description' => 'No',
                 'category' => 'YESNOSELECT',
             ],
@@ -47,12 +47,12 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'CURRENCY',
             ],
             [
-                'code' => 'LANGUAGE.in',
+                'code' => 'LANGUAGE.IN',
                 'description' => 'Indonesian',
                 'category' => 'LANGUAGE',
             ],
             [
-                'code' => 'LANGUANGE.en',
+                'code' => 'LANGUANGE.EN',
                 'description' => 'English',
                 'category' => 'LANGUAGE',
             ],
@@ -92,25 +92,30 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'POSTATUS',
             ],
             [
+                'code' => 'POSTATUS.RJT',
+                'description' => 'Rejected',
+                'category' => 'POSTATUS',
+            ],
+            [
                 'code' => 'POTYPE.S',
                 'description' => 'Standard PO',
                 'category' => 'POTYPE',
             ],
             [
-                'code' => 'CUSTOMERTYPE.r',
+                'code' => 'CUSTOMERTYPE.R',
                 'description' => 'Registered Customer',
                 'category' => 'CUSTOMERTYPE',
             ],[
-                'code' => 'CUSTOMERTYPE.wi',
+                'code' => 'CUSTOMERTYPE.WI',
                 'description' => 'Walk In Customer',
                 'category' => 'CUSTOMERTYPE',
             ],
             [
-                'code' => 'SUPPLIERTYPE.r',
+                'code' => 'SUPPLIERTYPE.R',
                 'description' => 'Registered Supplier',
                 'category' => 'SUPPLIERTYPE',
             ],[
-                'code' => 'SUPPLIERTYPE.wi',
+                'code' => 'SUPPLIERTYPE.WI',
                 'description' => 'Walk In Supplier',
                 'category' => 'SUPPLIERTYPE',
             ],
@@ -120,7 +125,7 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'SOTYPE',
             ],
             [
-                'code' => 'SOTYPE.Svc',
+                'code' => 'SOTYPE.SVC',
                 'description' => 'Service Sales',
                 'category' => 'SOTYPE',
             ],
@@ -170,12 +175,12 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'CASHPAYMENTSTATUS',
             ],
             [
-                'code' => 'TRFPAYMENTSTATUS.unconfirmed',
+                'code' => 'TRFPAYMENTSTATUS.UNCONFIRMED',
                 'description' => 'Unconfirmed',
                 'category' => 'TRFPAYMENTSTATUS',
             ],
             [
-                'code' => 'TRFPAYMENTSTATUS.confirmed',
+                'code' => 'TRFPAYMENTSTATUS.CONFIRMED',
                 'description' => 'Confirmed',
                 'category' => 'TRFPAYMENTSTATUS',
             ],
@@ -225,12 +230,12 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'USERTYPE',
             ],
             [
-                'code' => 'PRICELEVELTYPE.inc',
+                'code' => 'PRICELEVELTYPE.INC',
                 'description' => 'Increment Value',
                 'category' => 'PRICELEVELTYPE',
             ],
             [
-                'code' => 'PRICELEVELTYPE.pct',
+                'code' => 'PRICELEVELTYPE.PCT',
                 'description' => 'Percentage Value',
                 'category' => 'PRICELEVELTYPE',
             ],

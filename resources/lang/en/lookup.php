@@ -43,6 +43,10 @@ return [
     'CASHPAYMENTSTATUS.C' => 'Closed',
     'CURRENCY.USD' => 'US Dollar',
     'CURRENCY.IDR' => 'Indonesian Rupiah',
-    'SUPPLIERTYPE.r' => 'Registered Supplier',
-    'SUPPLIERTYPE.wi' => 'Walk In Supplier'
+    'SUPPLIERTYPE.R' => 'Registered Supplier',
+    'SUPPLIERTYPE.WI' => 'Walk In Supplier',
+    'CUSTOMERTYPE.R' => 'Registered Customer',
+    'CUSTOMERTYPE.WI' => 'Walk In Customer',
+    'PRICELEVELTYPE.INC' => 'Increment Value',
+    'PRICELEVELTYPE.PCT' => 'Percentage Value',
 ];

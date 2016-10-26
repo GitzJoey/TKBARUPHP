@@ -19,7 +19,7 @@
                     <div class="col-md-12">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                                <li><a href="#tab_so1" data-toggle="tab">@lang('sales_order.create.tab.sales')</a></li>
+                                <li class="active"><a href="#tab_so1" data-toggle="tab">@lang('sales_order.create.tab.sales')</a></li>
                                 <li>
                                     <button id="newTab" type="button" class="btn btn-xs btn-default pull-right"><span class="glyphicon glyphicon-plus"></span></button>
                                 </li>
