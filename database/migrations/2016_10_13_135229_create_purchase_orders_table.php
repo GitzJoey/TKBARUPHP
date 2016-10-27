@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSalesOrderTable extends Migration
+class CreatePurchaseOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,21 @@ class CreateSalesOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales_orders', function (Blueprint $table) {
+        Schema::create('purchase_orders', function ( Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
-            $table->unsignedBigInteger('customer_id')->default(0);
+            $table->unsignedBigInteger('supplier_id')->default(0);
             $table->unsignedBigInteger('warehouse_id')->default(0);
-            $table->unsignedBigInteger('vendor_truck_id')->default(0);
+            $table->unsignedBigInteger('vendor_trucking_id')->default(0);
             $table->string('code')->nullable();
-            $table->dateTime('so_created')->nullable();
-            $table->dateTime('shipping_date')->nullable();
-            $table->string('customer_type')->nullable();
-            $table->string('walk_in_cust')->nullable();
-            $table->string('walk_in_cust_detail')->nullable();
-            $table->string('so_type')->nullable();
-            $table->string('status')->nullable();
+            $table->string('po_type')->nullable();
+            $table->date('po_created')->nullable();
+            $table->date('shipping_date')->nullable();
+            $table->string('supplier_type')->nullable();
+            $table->string('walk_in_supplier')->nullable();
+            $table->string('walk_in_supplier_detail')->nullable();
             $table->string('remarks')->nullable();
+            $table->string('status')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);
@@ -43,6 +43,6 @@ class CreateSalesOrderTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sales_orders');
+        Schema::drop('purchase_orders');
     }
 }

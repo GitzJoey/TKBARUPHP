@@ -10,7 +10,7 @@ use \Illuminate\Support\Facades\Schema;
 use \Illuminate\Database\Schema\Blueprint;
 use \Illuminate\Database\Migrations\Migration;
 
-Class CreateLookupTable extends Migration
+Class CreateLookupsTable extends Migration
 {
     public function up()
     {

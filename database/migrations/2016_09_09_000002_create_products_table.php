@@ -10,7 +10,7 @@ use \Illuminate\Support\Facades\Schema;
 use \Illuminate\Database\Schema\Blueprint;
 use \Illuminate\Database\Migrations\Migration;
 
-Class CreateProductTable extends Migration
+Class CreateProductsTable extends Migration
 {
     public function up()
     {
