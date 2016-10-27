@@ -299,11 +299,12 @@
     <script type="application/javascript">
         var app = angular.module('poModule', []);
 
-        app.controller("poController", ['$scope', function($scope) {
-            $scope.productDDL = {!! htmlspecialchars_decode($productDDL) !!};
-            var currentPo = {!! htmlspecialchars_decode($currentPo) !!};
-            $scope.warehouseDDL = {!! htmlspecialchars_decode($warehouseDDL) !!};
-            $scope.vendorTruckingDDL = {!! htmlspecialchars_decode($vendorTruckingDDL) !!};
+        app.controller('poController', ['$scope', function($scope) {
+            $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
+            $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
+            $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
+
+            var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
 
             $scope.po = {
               items: [],
@@ -312,8 +313,8 @@
                   name: currentPo.warehouse.name
               },
               vendorTrucking : {
-                  id: currentPo.vendor_trucking.id,
-                  name: currentPo.vendor_trucking.name
+                  id: (currentPo.vendor_trucking == null) ? '':currentPo.vendor_trucking.id,
+                  name: (currentPo.vendor_trucking == null) ? '':currentPo.vendor_trucking.name
               }
             };
 

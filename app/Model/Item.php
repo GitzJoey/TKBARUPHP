@@ -61,6 +61,10 @@ class Item extends Model
         'quantity',
     ];
 
+    protected $hidden = [
+        'itemable_type'
+    ];
+
     public function product(){
         return $this->belongsTo('App\Model\Product', 'product_id');
     }
