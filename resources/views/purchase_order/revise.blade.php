@@ -39,27 +39,27 @@
                                     <input type="text" class="form-control" readonly value="@lang('lookup.'.$currentPo->supplier_type)">
                                 </div>
                             </div>
-                            @if($currentPo->supplier_type == 'SUPPLIERTYPE.r')
-                            <div class="form-group">
-                                <label for="inputSupplierId" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_name')</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly value="{{ $currentPo->supplier->name }}">
+                            @if($currentPo->supplier_type == 'SUPPLIERTYPE.R')
+                                <div class="form-group">
+                                    <label for="inputSupplierId" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_name')</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->supplier->name }}">
+                                    </div>
                                 </div>
-                            </div>
                             @else
-                            <div class="form-group">
-                                <label for="inputSupplierName" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_name')</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" readonly value="{{ $currentPo->walk_in_supplier }}">
+                                <div class="form-group">
+                                    <label for="inputSupplierName" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_name')</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->walk_in_supplier }}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputSupplierDetails" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_details')</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_details }}
-                                    </textarea>
+                                <div class="form-group">
+                                    <label for="inputSupplierDetails" class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_details')</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_details }}
+                                        </textarea>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                                 <label for="inputVendorTrucking" class="col-sm-2 control-label">@lang('purchase_order.revise.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
                                     @if($currentPo->status == 'POSTATUS.WA')
-                                    <select id="inputVendorTrucking" data-parsley-required="true"
+                                    <select id="inputVendorTrucking"
                                             name="vendor_trucking_id"
                                             class="form-control"
                                             ng-model="po.vendorTrucking"
@@ -209,7 +209,7 @@
                                             <input type="hidden" name="item_id[]" ng-value="item.id">
                                             <input type="hidden" name="product_id[]" ng-value="item.product.id">
                                             <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
-                                            <td>@{{ item.product.name }}</td>
+                                            <td class="valign-middle">@{{ item.product.name }}</td>
                                             <td>
                                                 <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'disabled' }}>
                                             </td>

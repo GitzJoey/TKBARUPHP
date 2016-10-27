@@ -151,7 +151,7 @@ class PurchaseOrderController extends Controller
         $currentPo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
         $currentPo->remarks = $request->input('remarks');
         $currentPo->warehouse_id = $request->input('warehouse_id');
-        $currentPo->vendor_trucking_id = $request->input('vendor_trucking_id');
+        $currentPo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0:$request->input('vendor_trucking_id');
         $currentPo->save();
 
         return redirect(route('db.po.revise.index'));
