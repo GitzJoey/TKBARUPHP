@@ -46,7 +46,11 @@ class SalesOrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-
+            'code' => 'required|string|max:255',
+            'so_type' => 'required|string|max:255',
+            'so_created' => 'required|string|max:255',
+            'shipping_date' => 'required|string|max:255',
+            'customer_type' => 'required|string|max:255',
         ]);
 
         $params = [

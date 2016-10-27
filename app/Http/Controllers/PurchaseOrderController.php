@@ -59,7 +59,11 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@store] ');
 
         $this->validate($request,[
-
+            'code' => 'required|string|max:255',
+            'po_type' => 'required|string|max:255',
+            'po_created' => 'required|string|max:255',
+            'shipping_date' => 'required|string|max:255',
+            'supplier_type' => 'required|string|max:255',
         ]);
 
         $params = [
@@ -73,7 +77,7 @@ class PurchaseOrderController extends Controller
             'remarks' => $request->input('remarks'),
             'status' => Lookup::whereCode('POSTATUS.WA')->first()->code,
             'supplier_id' => $request->input('supplier_id'),
-            'vendor_trucking_id' => $request->input('vendor_trucking_id'),
+            'vendor_trucking_id' => empty($request->input('vendor_trucking_id')) ? 0:$request->input('vendor_trucking_id'),
             'warehouse_id' => $request->input('warehouse_id'),
             'store_id' => Auth::user()->store_id
         ];
