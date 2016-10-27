@@ -35,7 +35,7 @@ class SupplierController extends Controller
 
 	public function show($id)
 	{
-        $supplier = Supplier::with('profiles.phoneNumbers', 'bankAccounts.bank')->find($id);
+        $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);

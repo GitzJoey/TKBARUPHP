@@ -18,25 +18,25 @@ class DefaultListUnitTableSeeder extends Seeder
             [
                 'name'      => 'Kilogram',
                 'symbol'    => 'Kg',
-                'status'    => 'STATUS.Active',
+                'status'    => 'STATUS.ACTIVE',
                 'remarks'   => ''
             ],
             [
                 'name'      => 'Drum',
                 'symbol'    => 'Dr',
-                'status'    => 'STATUS.Active',
+                'status'    => 'STATUS.ACTIVE',
                 'remarks'   => ''
             ],
             [
                 'name'      => 'Tonne',
                 'symbol'    => 'Tn',
-                'status'    => 'STATUS.Active',
+                'status'    => 'STATUS.ACTIVE',
                 'remarks'   => ''
             ],
             [
                 'name'      => 'Zak',
                 'symbol'    => 'z',
-                'status'    => 'STATUS.Active',
+                'status'    => 'STATUS.ACTIVE',
                 'remarks'   => ''
             ],
         ];

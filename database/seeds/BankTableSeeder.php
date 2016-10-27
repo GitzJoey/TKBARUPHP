@@ -19,7 +19,7 @@ class BankTableSeeder extends Seeder
         		'short_name' => 'Mandiri',
         		'branch' => 'Jakarta',
         		'branch_code' => 'M0321',
-        		'status' => 'STATUS.Active',
+        		'status' => 'STATUS.ACTIVE',
         		'remarks' => 'Bank Mandiri'
         	],
         	[
@@ -27,7 +27,7 @@ class BankTableSeeder extends Seeder
         		'short_name' => 'BCA',
         		'branch' => 'Jakarta',
         		'branch_code' => 'B0235',
-        		'status' => 'STATUS.Active',
+        		'status' => 'STATUS.ACTIVE',
         		'remarks' => 'Bank Central Asia'
         	],
         	[
@@ -35,7 +35,7 @@ class BankTableSeeder extends Seeder
         		'short_name' => 'PRMT',
         		'branch' => 'Jakarta',
         		'branch_code' => 'P0232',
-        		'status' => 'STATUS.Active',
+        		'status' => 'STATUS.ACTIVE',
         		'remarks' => 'Bank Permata'
         	]
         ];

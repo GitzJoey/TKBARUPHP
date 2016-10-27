@@ -188,7 +188,7 @@
                                         <tbody>
                                         @foreach($supplier->bankAccounts as $ba)
                                             <tr>
-                                                <td>{{ $ba->getBank->name }}&nbsp;({{ $ba->bank->name }})</td>
+                                                <td>{{ $ba->bank->name }}&nbsp;({{ $ba->bank->name }})</td>
                                                 <td>{{ $ba->account_number }}</td>
                                                 <td>{{ $ba->remarks }}</td>
                                             </tr>

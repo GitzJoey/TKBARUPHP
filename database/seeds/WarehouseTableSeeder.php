@@ -17,14 +17,14 @@ class WarehouseTableSeeder extends Seeder
                 'store_id' => 1,
                 'name' => 'Gudang Utama',
                 'address' => 'Jl. TMP Taruna no. 74',
-                'status' => 'STATUS.Active',
+                'status' => 'STATUS.ACTIVE',
                 'phone_num' => '085883227507'
             ],
             [
                 'store_id' => 1,
                 'name' => 'Gudang Tambahan',
                 'address' => 'Jl. TMP Taruna no. 75',
-                'status' => 'STATUS.Active',
+                'status' => 'STATUS.ACTIVE',
                 'phone_num' => '085883227507'
             ]
         ];

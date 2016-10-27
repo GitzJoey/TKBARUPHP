@@ -28,7 +28,7 @@ class PriceLevelTableSeeder extends Seeder
                 'description' => 'Retail / Eceran',
                 'increment_value' => 200,
                 'percentage_value' => 0,
-                'status' => 'STATUS.Active',
+                'status' => 'STATUS.ACTIVE',
             ],
             [
                 'store_id' => 1,
@@ -38,7 +38,7 @@ class PriceLevelTableSeeder extends Seeder
                 'description' => 'Wholesale / Grosir Type 1',
                 'increment_value' => 100,
                 'percentage_value' => 0,
-                'status' => 'STATUS.Active',
+                'status' => 'STATUS.ACTIVE',
             ],
             [
                 'store_id' => 1,
@@ -48,7 +48,7 @@ class PriceLevelTableSeeder extends Seeder
                 'description' => 'Wholesale / Grosir Type 2',
                 'increment_value' => 50,
                 'percentage_value' => 0,
-                'status' => 'STATUS.Active',
+                'status' => 'STATUS.ACTIVE',
             ],
         ];
 
