@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Model\Payments
+ * App\Model\Payment
  *
  * @property integer $id
  * @property integer $store_id
@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payments whereDeletedAt($value)
  * @mixin \Eloquent
  */
-class Payments extends Model
+class Payment extends Model
 {
     use SoftDeletes;
 

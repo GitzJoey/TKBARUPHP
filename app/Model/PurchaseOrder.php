@@ -68,7 +68,7 @@ class PurchaseOrder extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'purchase_order';
+    protected $table = 'purchase_orders';
 
     protected $dates = ['deleted_at', 'po_created', 'shipping_date'];
 
@@ -84,12 +84,16 @@ class PurchaseOrder extends Model
     }
 
     public function items(){
-        return $this->belongsToMany('App\Model\Items', 'purchase_order_items', 'po_id', 'items_id');
+        return $this->morphMany('App\Model\Item', 'itemable');
+    }
+
+    public function receipts(){
+        return  $this->hasManyThrough('App\Model\Receipt', 'App\Model\Item', 'itemable_id', 'item_id', 'id');
     }
 
     public function payments()
     {
-        return $this->belongsToMany('App\Model\Payments', 'purchase_order_payments', 'po_id', 'payments_id');
+        return $this->belongsToMany('App\Model\Payment', 'purchase_order_payments', 'po_id', 'payment_id');
     }
 
     public function supplier()
@@ -110,6 +114,10 @@ class PurchaseOrder extends Model
     public function warehouse()
     {
         return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
+    }
+
+    public function getIdAttribute($value){
+        return HashIds::encode($value);
     }
 
     public static function boot()

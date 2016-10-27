@@ -14,7 +14,7 @@ class CreateStoreTable extends Migration
 {
     public function up()
     {
-        Schema::create('store', function (Blueprint $table) {
+        Schema::create('stores', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('address')->nullable();
@@ -35,6 +35,6 @@ class CreateStoreTable extends Migration
 
     public function down()
     {
-        Schema::drop('store');
+        Schema::drop('stores');
     }
 }

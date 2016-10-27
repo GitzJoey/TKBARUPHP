@@ -62,7 +62,7 @@ class Supplier extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'supplier';
+    protected $table = 'suppliers';
 
     protected $fillable = [
         'name', 'address', 'city', 'phone_number', 'fax_num', 'tax_id', 'payment_due_day', 'status', 'remarks',

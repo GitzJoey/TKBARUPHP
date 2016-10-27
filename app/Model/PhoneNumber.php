@@ -48,7 +48,7 @@ class PhoneNumber extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'phone_number';
+    protected $table = 'phone_numbers';
 
 	protected $fillable = ['phone_provider_id', 'number', 'status', 'remarks'];
 

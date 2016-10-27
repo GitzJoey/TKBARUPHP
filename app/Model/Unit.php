@@ -50,7 +50,7 @@ class Unit extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'unit';
+    protected $table = 'units';
 
     protected $fillable = [
         'name', 'symbol', 'status', 'remarks',

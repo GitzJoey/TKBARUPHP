@@ -38,34 +38,38 @@
                                                         <div class="col-sm-5">
                                                             <select id="inputCustomerType" data-parsley-required="true"
                                                                     class="form-control"
-                                                                    ng-model="customer_type"
+                                                                    ng-model="so.customer_type"
                                                                     ng-options="key as value for (key, value) in customerTypeDDL track by key">
                                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="inputCustomerId" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
-                                                        <div class="col-sm-7">
-                                                            <select id="inputCustomerId"
-                                                                    name="customer_id"
-                                                                    class="form-control"
-                                                                    ng-model="so.customer"
-                                                                    ng-options="customer as customer.name for customer in customerDDL track by customer.id">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                            </select>
+                                                    <div ng-show="so.customer_type == 'CUSTOMERTYPE.r'">
+                                                        <div class="form-group">
+                                                            <label for="inputCustomerId" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                            <div class="col-sm-7">
+                                                                <select id="inputCustomerId"
+                                                                        name="customer_id"
+                                                                        class="form-control"
+                                                                        ng-model="so.customer"
+                                                                        ng-options="customer as customer.name for customer in customerDDL track by customer.id">
+                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="inputCustomerName" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
-                                                        <div class="col-sm-9">
-                                                            <input type="text" class="form-control" id="inputCustomerName" name="customer_name" placeholder="Customer Name">
+                                                    <div ng-show="so.customer_type == 'CUSTOMERTYPE.wi'">
+                                                        <div class="form-group">
+                                                            <label for="inputCustomerName" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control" id="inputCustomerName" name="customer_name" placeholder="Customer Name">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="inputCustomerDetails" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_details')</label>
-                                                        <div class="col-sm-9">
-                                                            <textarea id="inputCustomerDetails" class="form-control" rows="5" name="customer_detail"></textarea>
+                                                        <div class="form-group">
+                                                            <label for="inputCustomerDetails" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_details')</label>
+                                                            <div class="col-sm-9">
+                                                                <textarea id="inputCustomerDetails" class="form-control" rows="5" name="customer_detail"></textarea>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

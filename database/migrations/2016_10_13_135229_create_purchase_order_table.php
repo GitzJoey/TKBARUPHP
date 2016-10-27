@@ -13,7 +13,7 @@ class CreatePurchaseOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_order', function ( Blueprint $table) {
+        Schema::create('purchase_orders', function ( Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('supplier_id')->default(0);
@@ -43,6 +43,6 @@ class CreatePurchaseOrderTable extends Migration
      */
     public function down()
     {
-        Schema::drop('purchase_order');
+        Schema::drop('purchase_orders');
     }
 }

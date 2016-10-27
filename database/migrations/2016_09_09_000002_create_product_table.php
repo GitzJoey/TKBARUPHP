@@ -14,7 +14,7 @@ Class CreateProductTable extends Migration
 {
     public function up()
     {
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('product_type_id')->default(0);
@@ -34,6 +34,6 @@ Class CreateProductTable extends Migration
 
     public function down()
     {
-        Schema::drop('product');
+        Schema::drop('products');
     }
 }

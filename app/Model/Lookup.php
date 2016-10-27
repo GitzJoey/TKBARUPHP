@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Lookup extends Model
 {
-    protected $table = 'lookup';
+    protected $table = 'lookups';
 
     public $timestamps = false;
 

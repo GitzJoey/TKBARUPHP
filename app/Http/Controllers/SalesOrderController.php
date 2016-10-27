@@ -69,7 +69,7 @@ class SalesOrderController extends Controller
 
         for($i = 0; $i < count($request->input('product_id')); $i++)
         {
-            $item = new Items();
+            $item = new Item();
             $item->product_id = $request->input("product_id.$i");
             $item->store_id = Auth::user()->store_id;
             $item->selected_unit_id = $request->input("selected_unit_id.$i");
@@ -79,7 +79,7 @@ class SalesOrderController extends Controller
             $item->price = $request->input("price.$i");
             $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
-            $so->items()->save($item);
+            $so->item()->save($item);
         }
 
         return redirect(route('db.so.create'));
@@ -118,7 +118,7 @@ class SalesOrderController extends Controller
     {
         $so = PurchaseOrder::find($id);
 
-        $so->items()->detach();
+        $so->item()->detach();
         $so->payments()->detach();
         $so->delete();
 

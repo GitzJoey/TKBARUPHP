@@ -51,7 +51,7 @@ class ProductType extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'product_type';
+    protected $table = 'product_types';
 
     protected $fillable = [
         'store_id', 'name', 'short_code', 'description', 'status'

@@ -54,7 +54,7 @@ class Customer extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'customer';
+    protected $table = 'customers';
 
 	protected $fillable = [
         'name', 'address', 'city', 'phone_number', 'remarks', 'tax_id', 'payment_due_day'

@@ -45,7 +45,7 @@ class TruckMaintenance extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'truck_maintenance';
+    protected $table = 'truck_maintenances';
 
     protected $fillable = [
         'store_id', 'truck_id', 'maintenance_type', 'cost', 'odometer', 'remarks'

@@ -13,7 +13,7 @@ class CreateSalesOrderCopyTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales_order_copy', function (Blueprint $table) {
+        Schema::create('sales_order_copies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('customer_id')->default(0);
@@ -42,6 +42,6 @@ class CreateSalesOrderCopyTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sales_order_copy');
+        Schema::drop('sales_order_copies');
     }
 }

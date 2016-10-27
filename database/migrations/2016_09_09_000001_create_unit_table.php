@@ -14,7 +14,7 @@ class CreateUnitTable extends Migration
 {
     public function up()
     {
-        Schema::create('unit', function(Blueprint $table) {
+        Schema::create('units', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('symbol')->nullable();
@@ -30,6 +30,6 @@ class CreateUnitTable extends Migration
 
     public function down()
     {
-        Schema::drop('unit');
+        Schema::drop('units');
     }
 }

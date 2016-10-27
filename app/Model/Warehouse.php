@@ -51,7 +51,7 @@ class Warehouse extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'warehouse';
+    protected $table = 'warehouses';
 
     protected $fillable = [
         'store_id', 'name', 'address', 'phone_num', 'status', 'remarks'

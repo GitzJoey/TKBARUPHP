@@ -9,7 +9,7 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Model\Settings;
+use App\Model\Setting;
 
 class SettingsTableSeeder extends Seeder
 {
@@ -25,7 +25,7 @@ class SettingsTableSeeder extends Seeder
             ]
         ];
         foreach ($settings as $key => $value) {
-            Settings::create($value);
+            Setting::create($value);
         }
 
     }

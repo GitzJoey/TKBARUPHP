@@ -13,7 +13,7 @@ class CreateSalesOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales_order', function (Blueprint $table) {
+        Schema::create('sales_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('customer_id')->default(0);
@@ -43,6 +43,6 @@ class CreateSalesOrderTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sales_order');
+        Schema::drop('sales_orders');
     }
 }

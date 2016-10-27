@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @mixin \Eloquent
  */
-class Stocks extends Model
+class Stock extends Model
 {
     use SoftDeletes;
 

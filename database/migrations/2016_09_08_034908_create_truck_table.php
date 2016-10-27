@@ -13,7 +13,7 @@ class CreateTruckTable extends Migration
      */
     public function up()
     {
-        Schema::create('truck', function (Blueprint $table) {
+        Schema::create('trucks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->string('plate_number')->nullable();
@@ -37,6 +37,6 @@ class CreateTruckTable extends Migration
      */
     public function down()
     {
-        Schema::drop('truck');
+        Schema::drop('trucks');
     }
 }

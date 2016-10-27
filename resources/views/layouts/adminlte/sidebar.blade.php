@@ -98,7 +98,7 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('warehouse.inflow-input'))
-                            <li><a href="{{ route('db.warehouse.inflow') }}"><i class="fa fa-mail-forward fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_inflow')</a></li>
+                            <li><a href="{{ route('db.warehouse.inflow.index') }}"><i class="fa fa-mail-forward fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_inflow')</a></li>
                         @endif
                         @if(Entrust::can('warehouse.outflow-input'))
                             <li><a href="{{ route('db.warehouse.outflow') }}"><i class="fa fa-mail-reply fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_outflow')</a></li>

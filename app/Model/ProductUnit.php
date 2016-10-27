@@ -51,7 +51,7 @@ class ProductUnit extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'product_unit';
+    protected $table = 'product_units';
 
     protected $fillable = [
         'product_id', 'unit_id', 'is_base', 'conversion_value', 'remarks'

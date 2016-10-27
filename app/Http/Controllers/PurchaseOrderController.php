@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Items;
+use App\Model\Item;
 use App\Model\Lookup;
 use App\Model\Product;
 use App\Model\ProductUnit;
@@ -33,7 +33,7 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@create] ');
 
-        $supplierDDL = Supplier::all([ 'id', 'name' ]);
+        $supplierDDL = Supplier::with('profiles.phoneNumbers', 'bankAccounts.bank', 'products')->get();
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
         $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
         $productDDL = Product::with('productUnits.unit')->get();
@@ -82,7 +82,7 @@ class PurchaseOrderController extends Controller
 
         for($i = 0; $i < count($request->input('product_id')); $i++)
         {
-            $item = new Items();
+            $item = new Item();
             $item->product_id = $request->input("product_id.$i");
             $item->store_id = Auth::user()->store_id;
             $item->selected_unit_id = $request->input("selected_unit_id.$i");
@@ -115,13 +115,23 @@ class PurchaseOrderController extends Controller
     }
 
     public function saveRevision(Request $request, $id){
-        $currentPo = PurchaseOrder::find($id);
+        // Get current PO
+        $currentPo = PurchaseOrder::with('items')->find($id);
 
-        $currentPo->items()->detach();
+        // Get ID of current PO's items
+        $poItemsId = $currentPo->items->map(function ($item){
+            return $item->id;
+        })->all();
 
-        for($i = 0; $i < count($request->input('product_id')); $i++)
+        // Get the id of removed items
+        $poItemsToBeDeleted = array_diff($poItemsId, $request->input('item_id'));
+
+        // Remove the item that removed on the revise page
+        Item::destroy($poItemsToBeDeleted);
+
+        for($i = 0; $i < count($request->input('item_id')); $i++)
         {
-            $item = new Items();
+            $item = Item::findOrNew($request->input("item_id.$i"));
             $item->product_id = $request->input("product_id.$i");
             $item->store_id = Auth::user()->store_id;
             $item->selected_unit_id = $request->input("selected_unit_id.$i");
@@ -134,6 +144,7 @@ class PurchaseOrderController extends Controller
             $currentPo->items()->save($item);
         }
 
+        $currentPo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
         $currentPo->remarks = $request->input('remarks');
         $currentPo->warehouse_id = $request->input('warehouse_id');
         $currentPo->vendor_trucking_id = $request->input('vendor_trucking_id');

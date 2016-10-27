@@ -50,7 +50,7 @@ class BankAccount extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'bank_account';
+    protected $table = 'bank_accounts';
 
     protected $fillable = [
         'bank_id','account_number', 'remarks'

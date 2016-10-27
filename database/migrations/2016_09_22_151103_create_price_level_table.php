@@ -13,7 +13,7 @@ class CreatePriceLevelTable extends Migration
      */
     public function up()
     {
-        Schema::create('price_level', function (Blueprint $table) {
+        Schema::create('price_levels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->string('type')->nullable();
@@ -38,6 +38,6 @@ class CreatePriceLevelTable extends Migration
      */
     public function down()
     {
-        Schema::drop('price_level');
+        Schema::drop('price_levels');
     }
 }

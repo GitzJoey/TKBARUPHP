@@ -13,7 +13,7 @@ class CreateBankAccountTable extends Migration
      */
     public function up()
     {
-        Schema::create('bank_account', function (Blueprint $table) {
+        Schema::create('bank_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('bank_id')->default(0);
             $table->string('account_number')->nullable();
@@ -33,6 +33,6 @@ class CreateBankAccountTable extends Migration
      */
     public function down()
     {
-        Schema::drop('bank_account');
+        Schema::drop('bank_accounts');
     }
 }

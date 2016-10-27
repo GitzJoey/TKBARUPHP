@@ -54,7 +54,7 @@ class PriceLevel extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'price_level';
+    protected $table = 'price_levels';
 
     protected $fillable = [
         'store_id', 'type', 'weight', 'name', 'description', 'increment_value', 'percentage_value', 'status',

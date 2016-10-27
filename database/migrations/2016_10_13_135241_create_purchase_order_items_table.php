@@ -13,7 +13,7 @@ class CreatePurchaseOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_order_items', function ( Blueprint $table) {
+        Schema::create('purchase_order_item', function ( Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('po_id');
             $table->unsignedBigInteger('items_id');
@@ -26,6 +26,6 @@ class CreatePurchaseOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('purchase_order_items');
+        Schema::drop('purchase_order_item');
     }
 }

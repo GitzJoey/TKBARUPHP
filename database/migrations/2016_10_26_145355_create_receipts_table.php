@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTruckMaintenance extends Migration
+class CreateReceiptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,21 @@ class CreateTruckMaintenance extends Migration
      */
     public function up()
     {
-        Schema::create('truck_maintenances', function (Blueprint $table) {
+        Schema::create('receipts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('store_id')->default(0);
-            $table->unsignedBigInteger('truck_id')->default(0);
-            $table->string('maintenance_type')->nullable();
-            $table->bigInteger('cost')->default(0);
-            $table->bigInteger('odometer')->default(0);
-            $table->string('remarks')->nullable();
+            $table->date('receipt_date');
+            $table->decimal('brutto');
+            $table->decimal('netto');
+            $table->decimal('tare');
+            $table->string('licence_plate');
+            $table->timestamps();
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);
-            $table->timestamps();
-            $table->softDeletes();
+            $table->unsignedBigInteger('item_id');
+            $table->unsignedBigInteger('store_id');
+            $table->unsignedBigInteger('selected_unit_id');
         });
     }
 
@@ -36,6 +38,6 @@ class CreateTruckMaintenance extends Migration
      */
     public function down()
     {
-        Schema::drop('truck_maintenances');
+        Schema::dropIfExists('receipts');
     }
 }
