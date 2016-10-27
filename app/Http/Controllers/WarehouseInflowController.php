@@ -12,7 +12,7 @@ use App\Model\Receipt;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 
-class WarehouseController extends Controller
+class WarehouseInflowController extends Controller
 {
     public function __construct()
     {

@@ -41,8 +41,8 @@
                     <thead>
                     <tr>
                         <th class="text-center">@lang('warehouse.outflow.index.table.header.code')</th>
-                        <th class="text-center">@lang('warehouse.outflow.index.table.header.po_date')</th>
-                        <th class="text-center">@lang('warehouse.outflow.index.table.header.supplier')</th>
+                        <th class="text-center">@lang('warehouse.outflow.index.table.header.so_date')</th>
+                        <th class="text-center">@lang('warehouse.outflow.index.table.header.customer')</th>
                         <th class="text-center">@lang('warehouse.outflow.index.table.header.shipping_date')</th>
                         <th class="text-center">@lang('labels.ACTION')</th>
                     </tr>
@@ -54,7 +54,7 @@
                         <td class="text-center">@{{ so.supplier.name }}</td>
                         <td class="text-center">@{{ so.shipping_date }}</td>
                         <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.outflow') }}/@{{ po.id }}" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.outflow.index') }}/@{{ po.id }}" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
                         </td>
                     </tr>
                     </tbody>

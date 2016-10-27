@@ -8,29 +8,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Warehouse;
 use App\Model\SalesOrder;
 
-class WarehouseController extends Controller
+class WarehouseOutflowController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function ouflow(){
+    public function outflow()
+    {
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
         $allSOs = SalesOrder::with('customer')->where('status', '=', 'POSTATUS.WA')->get();
 
         return view('warehouse.outflow', compact('warehouseDDL', 'allSOs'));
     }
 
-    public function deliver($id){
+    public function deliver($id)
+    {
         $po = SalesOrder::with('items.product.productUnits.unit')->find($id);
 
         return view('warehouse.receipt', compact('po'));
     }
 
-    public function saveDeliver(Request $request){
+    public function saveDeliver(Request $request)
+    {
         for($i = 0; $i < sizeof($request->input('item_id')); $i++){
             $params = [
                 'deliver_date' => date('Y-m-d', strtotime($request->input('deliver_date'))),

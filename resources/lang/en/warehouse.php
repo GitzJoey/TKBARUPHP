@@ -52,6 +52,29 @@ return [
             ]
         ]
     ],
+    'outflow' => [
+        'index' => [
+            'title' => 'Outflow',
+            'page_title' => 'Outflow',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Outflow'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'so_date' => 'Created Date',
+                    'customer' => 'Customer',
+                    'shipping_date' => 'Shipping Date',
+                    'status' => 'Status'
+                ]
+            ],
+            'header' => [
+                'warehouse' => 'Warehouse',
+                'sales_order' => 'Sales Order'
+            ]
+        ],
+    ],
     'create' => [
         'title' => 'Warehouse',
         'page_title' => 'Warehouse',

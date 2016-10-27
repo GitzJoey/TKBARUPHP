@@ -101,7 +101,7 @@
                             <li><a href="{{ route('db.warehouse.inflow.index') }}"><i class="fa fa-mail-forward fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_inflow')</a></li>
                         @endif
                         @if(Entrust::can('warehouse.outflow-input'))
-                            <li><a href="{{ route('db.warehouse.outflow') }}"><i class="fa fa-mail-reply fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_outflow')</a></li>
+                            <li><a href="{{ route('db.warehouse.outflow.index') }}"><i class="fa fa-mail-reply fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_outflow')</a></li>
                         @endif
                         @if(Entrust::can('warehouse.stockopname'))
                             <li><a href="{{ route('db.warehouse.stockopname') }}"><i class="fa fa-database"></i>&nbsp;@lang('menu.item.wh_stockopname')</a></li>
