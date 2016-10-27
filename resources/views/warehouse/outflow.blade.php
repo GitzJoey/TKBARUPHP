@@ -34,7 +34,7 @@
         </div>
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">@lang('warehouse.outflow.index.header.purchase_order')</h3>
+                <h3 class="box-title">@lang('warehouse.outflow.index.header.sales_order')</h3>
             </div>
             <div class="box-body">
                 <table class="table table-bordered">
