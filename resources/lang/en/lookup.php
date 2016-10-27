@@ -6,10 +6,10 @@
  * Time: 8:09 AM
  */
 return [
-    'STATUS.Active' => 'Active',
-    'STATUS.Inactive' => 'Inactive',
-    'YESNOSELECT.Yes' => 'Yes',
-    'YESNOSELECT.No' => 'No',
+    'STATUS.ACTIVE' => 'Active',
+    'STATUS.INACTIVE' => 'Inactive',
+    'YESNOSELECT.YES' => 'Yes',
+    'YESNOSELECT.NO' => 'No',
     'USERTYPE.U' => 'User',
     'USERTYPE.O' => 'Owner',
     'USERTYPE.A' => 'Administrator',

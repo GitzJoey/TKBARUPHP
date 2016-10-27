@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('truck.edit.header.title')</h3>
         </div>
-        {!! Form::model($truck, ['method' => 'PATCH','route' => ['db.master.truck.edit', $truck->id], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($truck, ['method' => 'PATCH','route' => ['db.master.truck.edit', $truck->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
                     <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.field.plate_number')</label>
@@ -39,8 +39,13 @@
                 <div class="form-group {{ $errors->has('inspection_date') ? 'has-error' : '' }}">
                     <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truck.field.inspection_date')</label>
                     <div class="col-sm-10">
-                        <textarea id="inputInspectionDate" class="form-control" rows="5" name="inspection_date" placeholder="@lang('truck.field.inspection_date')">{{ $truck->inspection_date }}</textarea>
-                        <span class="help-block">{{ $errors->has('inspection') ? $errors->first('inspection') : '' }}</span>&nbsp;
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control" id="inspection_date" name="inspection_date" data-parsley-required="true" value="{{ date('d-m-Y', strtotime($truck->inspection_date)) }}">
+                        </div>
+                        <span class="help-block">{{ $errors->has('inspection_date') ? $errors->first('inspection_date') : '' }}</span>&nbsp;
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('driver') ? 'has-error' : '' }}">
@@ -69,11 +74,23 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.master.truck') }}" class="btn btn-default">@lang('buttons.edit.cancel')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.edit.save')</button>
+                        <a href="{{ route('db.master.truck') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                     </div>
                 </div>
             </div>
         {!! Form::close() !!}
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $("#inspection_date").daterangepicker({
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+            singleDatePicker: true,
+            showDropdowns: true
+        });
+    </script>
 @endsection

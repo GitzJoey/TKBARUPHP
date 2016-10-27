@@ -66,7 +66,8 @@ class Store extends Model
         'name', 'address', 'phone_num', 'fax_num', 'tax_id', 'status', 'is_default', 'image_filename', 'remarks'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 

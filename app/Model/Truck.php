@@ -9,6 +9,7 @@
 namespace App\Model;
 
 use Auth;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -56,6 +57,11 @@ class Truck extends Model
     protected $fillable = [
         'store_id', 'plate_number', 'inspection_date', 'driver', 'status', 'remarks'
     ];
+
+    public function hId()
+    {
+        return HashIds::encode($this->attributes['id']);
+    }
 
     public function truckMaintenances()
     {

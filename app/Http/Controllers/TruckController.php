@@ -54,13 +54,10 @@ class TruckController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.master.truck.create'))->withInput()->withErrors($validator);
         } else {
-            $date = DateTime::createFromFormat('Y-m-d', $data['inspection_date']);
-            $usableDate = $date->format('Y-m-d H:i:s');
-
             Truck::create([
                 'store_id'          => Auth::user()->store->id,
                 'plate_number'      => $data['plate_number'],
-                'inspection_date'   => $usableDate,
+                'inspection_date'   => date('Y-m-d', strtotime($data->input('inspection_date '))),
                 'driver'            => $data['driver'],
                 'status'            => $data['status'],
                 'remarks'           => $data['remarks']

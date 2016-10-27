@@ -6,10 +6,10 @@
  * Time: 8:09 AM
  */
 return [
-    'STATUS.Active' => 'Aktif',
-    'STATUS.Inactive' => 'Inaktif',
-    'YESNOSELECT.Yes' => 'Ya',
-    'YESNOSELECT.No' => 'Tidak',
+    'STATUS.ACTIVE' => 'Aktif',
+    'STATUS.INACTIVE' => 'Inaktif',
+    'YESNOSELECT.YES' => 'Ya',
+    'YESNOSELECT.NO' => 'Tidak',
     'USERTYPE.U' => 'Pengguna',
     'USERTYPE.O' => 'Pemilik',
     'USERTYPE.A' => 'Administrator',

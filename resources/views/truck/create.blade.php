@@ -40,7 +40,12 @@
                 <div class="form-group {{ $errors->has('inspection_date') ? 'has-error' : '' }}">
                     <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truck.field.inspection_date')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inspection_date" name="inspection_date" placeholder="@lang('truck.field.inspection_date')">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control" id="inspection_date" name="inspection_date" data-parsley-required="true">
+                        </div>
                         <span class="help-block">{{ $errors->has('inspection_date') ? $errors->first('inspection_date') : '' }}</span>
                     </div>
                 </div>
@@ -77,4 +82,16 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $("#inspection_date").daterangepicker({
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+            singleDatePicker: true,
+            showDropdowns: true
+        });
+    </script>
 @endsection

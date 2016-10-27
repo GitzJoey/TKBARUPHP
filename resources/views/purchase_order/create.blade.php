@@ -46,7 +46,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div ng-show="po.supplier_type.code == 'SUPPLIERTYPE.r'">
+                            <div ng-show="po.supplier_type.code == 'SUPPLIERTYPE.R'">
                                 <div class="form-group">
                                     <label for="inputSupplierId"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="po.supplier_type.code == 'SUPPLIERTYPE.wi'">
+                            <div ng-show="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
                                 <div class="form-group">
                                     <label for="inputSupplierName"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
@@ -150,8 +150,7 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputShippingDate"
-                                       class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
+                                <label for="inputShippingDate" class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
                                 <div class="col-sm-5">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
