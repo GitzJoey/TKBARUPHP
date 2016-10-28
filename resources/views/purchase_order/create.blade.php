@@ -251,6 +251,7 @@
                                                 <select name="selected_unit_id[]" data-parsley-required="true"
                                                         class="form-control"
                                                         ng-model="item.selected_unit"
+                                                        data-parsley-required="true"
                                                         ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                 </select>
@@ -258,7 +259,7 @@
                                             <td>
                                                 <input type="text" class="form-control text-right" name="price[]"
                                                        ng-model="item.price" data-parsley-required="true"
-                                                       data-parsley-type="number" data-parsley-type="number">
+                                                       data-parsley-type="number">
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md"
