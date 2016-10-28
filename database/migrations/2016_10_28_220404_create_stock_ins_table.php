@@ -15,17 +15,17 @@ class CreateStockInsTable extends Migration
     {
         Schema::create('stock_ins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->decimal('quantity');
-            $table->timestamps();
-            $table->softDeletes();
-            $table->unsignedBigInteger('created_by')->default(0);
-            $table->unsignedBigInteger('updated_by')->default(0);
-            $table->unsignedBigInteger('deleted_by')->default(0);
             $table->unsignedBigInteger('store_id');
             $table->unsignedBigInteger('po_id');
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('warehouse_id');
             $table->unsignedBigInteger('stock_id');
+            $table->unsignedBigInteger('warehouse_id');
+            $table->decimal('quantity');
+            $table->unsignedBigInteger('created_by')->default(0);
+            $table->unsignedBigInteger('updated_by')->default(0);
+            $table->unsignedBigInteger('deleted_by')->default(0);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
