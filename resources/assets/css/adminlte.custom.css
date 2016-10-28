@@ -3,7 +3,7 @@
     display:inline-block;
 }
 
-table thead {
+table.table thead {
     background-color: lightgray;
 }
 

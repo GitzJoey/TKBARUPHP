@@ -47,5 +47,10 @@ elixir(function (mix) {
         './node_modules/lodash/lodash.min.js',
         './node_modules/jquery-gotop/src/jquery.gotop.min.js',
         './resources/assets/js/adminlte.custom.js'
-    ], 'public/adminlte/js/app.js');
+    ], 'public/adminlte/js/app.js')
+        .copy('node_modules/bootstrap/fonts', 'public/adminlte/fonts')
+        .copy('node_modules/font-awesome/fonts', 'public/adminlte/fonts')
+        .copy('node_modules/ionicons/dist/fonts', 'public/adminlte/fonts')
+        .copy('node_modules/icheck/skins/square/blue.png', 'public/adminlte/css')
+        .copy('node_modules/icheck/skins/square/blue@2x.png', 'public/adminlte/css');
 });
