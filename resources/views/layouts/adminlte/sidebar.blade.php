@@ -24,13 +24,19 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('po.po-create'))
-                            <li class="{{ active_class(if_route('db.po.create')) }}"><a href="{{ route('db.po.revise.index') }}"><a href="{{ route('db.po.create') }}"><i class="fa fa-truck fa-fw"></i>&nbsp;@lang('menu.item.po_new')</a></li>
+                            <li class="{{ active_class(if_route('db.po.create')) }}">
+                                <a href="{{ route('db.po.create') }}"><i class="fa fa-truck fa-fw"></i>&nbsp;@lang('menu.item.po_new')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('po.po-revise'))
-                            <li class="{{ active_class(if_route('db.po.revise.index')) }}"><a href="{{ route('db.po.revise.index') }}"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_revise')</a></li>
+                            <li class="{{ active_class(if_route('db.po.revise.index')) }}">
+                                <a href="{{ route('db.po.revise.index') }}"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_revise')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('po.po-payment'))
-                            <li class="{{ active_class(if_route('db.po.payment.index')) }}"><a href="{{ route('db.po.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a></li>
+                            <li class="{{ active_class(if_route('db.po.payment.index')) }}">
+                                <a href="{{ route('db.po.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a>
+                            </li>
                         @endif
                     </ul>
                 </li>
@@ -111,7 +117,7 @@
             @endif
             @if(Entrust::can('bank.upload') OR
                 Entrust::can('bank.consolidate'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.bank') || Active::checkRoutePattern('db.bank.*')) }}">
                     <a href="#"><i class="fa fa-bank fa-fw"></i><span>&nbsp;@lang('menu.item.bank')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -119,10 +125,14 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('bank.upload'))
-                            <li><a href="{{ route('db.bank.upload') }}"><i class="fa fa-cloud-upload fa-fw"></i>&nbsp;@lang('menu.item.bank_upload')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.bank.upload')) }}">
+                                <a href="{{ route('db.bank.upload') }}"><i class="fa fa-cloud-upload fa-fw"></i>&nbsp;@lang('menu.item.bank_upload')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('bank.consolidate'))
-                            <li><a href="#"><i class="fa fa-compress fa-fw"></i>&nbsp;@lang('menu.item.bank_consolidate')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.bank.consolidate')) }}">
+                                <a href="#"><i class="fa fa-compress fa-fw"></i>&nbsp;@lang('menu.item.bank_consolidate')</a>
+                            </li>
                         @endif
                     </ul>
                 </li>
@@ -137,10 +147,14 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('customer.confirmation'))
-                            <li><a href="{{ route('db.customer.confirmation') }}"><i class="fa fa-check fa-fw"></i>&nbsp;@lang('menu.item.customer_confirm')</a></li>
+                            <li>
+                                <a href="{{ route('db.customer.confirmation') }}"><i class="fa fa-check fa-fw"></i>&nbsp;@lang('menu.item.customer_confirm')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('customer.approval'))
-                            <li><a href="{{ route('db.customer.approval') }}"><i class="fa fa-bell-o"></i>&nbsp;@lang('menu.item.customer_approval')</a></li>
+                            <li>
+                                <a href="{{ route('db.customer.approval') }}"><i class="fa fa-bell-o"></i>&nbsp;@lang('menu.item.customer_approval')</a>
+                            </li>
                         @endif
                     </ul>
                 </li>
@@ -162,18 +176,28 @@
                     </ul>
                 </li>
             @endif
-            <li class="treeview">
+            <li class="treeview {{ active_class(Active::checkRoutePattern('db.report') || Active::checkRoutePattern('db.report.*')) }}">
                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i><span>&nbsp;@lang('menu.item.rpt')</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('db.report.transaction') }}"><i class="fa fa-connectdevelop fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttrx')</a></li>
-                    <li><a href="{{ route('db.report.monitoring') }}"><i class="fa fa-eye fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmntr')</a></li>
-                    <li><a href="{{ route('db.report.tax') }}"><i class="fa fa-institution fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttax')</a></li>
-                    <li><a href="{{ route('db.report.master') }}"><i class="fa fa-file-text-o fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmaster')</a></li>
-                    <li><a href="{{ route('db.report.admin') }}"><i class="glyphicon glyphicon-cog"></i>&nbsp;@lang('menu.item.rpt_rptadmin')</a></li>
+                    <li class="{{ active_class(Active::checkRoutePattern('db.report.transaction')) }}">
+                        <a href="{{ route('db.report.transaction') }}"><i class="fa fa-connectdevelop fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttrx')</a>
+                    </li>
+                    <li class="{{ active_class(Active::checkRoutePattern('db.report.monitoring')) }}">
+                        <a href="{{ route('db.report.monitoring') }}"><i class="fa fa-eye fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmntr')</a>
+                    </li>
+                    <li class="{{ active_class(Active::checkRoutePattern('db.report.tax')) }}">
+                        <a href="{{ route('db.report.tax') }}"><i class="fa fa-institution fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttax')</a>
+                    </li>
+                    <li class="{{ active_class(Active::checkRoutePattern('db.report.master')) }}">
+                        <a href="{{ route('db.report.master') }}"><i class="fa fa-file-text-o fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmaster')</a>
+                    </li>
+                    <li class="{{ active_class(Active::checkRoutePattern('db.report.admin')) }}">
+                        <a href="{{ route('db.report.admin') }}"><i class="glyphicon glyphicon-cog"></i>&nbsp;@lang('menu.item.rpt_rptadmin')</a>
+                    </li>
                 </ul>
             </li>
             @if(Entrust::can('master.customer-list') OR

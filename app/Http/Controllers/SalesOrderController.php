@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Model\Lookup;
 use App\Model\Product;
 use App\Model\Customer;
+use App\Model\SalesOrder;
 use App\Model\Warehouse;
 use App\Model\VendorTrucking;
 
@@ -90,7 +91,7 @@ class SalesOrderController extends Controller
     }
 
     public function index(){
-        $salesorder = '';
+        $salesorder = SalesOrder::all();
         $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
 
         return view('sales_order.index', compact('salesorder', 'soStatusDDL'));
@@ -122,9 +123,8 @@ class SalesOrderController extends Controller
     {
         $so = PurchaseOrder::find($id);
 
-        $so->item()->detach();
-        $so->payments()->detach();
-        $so->delete();
+        $so->status = 'SOSTATUS.RJT';
+        $so->save();
 
         return redirect(route('db.so.revise.index'));
     }

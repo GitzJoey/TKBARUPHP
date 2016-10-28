@@ -49,6 +49,7 @@ return [
         'phone' => 'Phone',
         'remarks' => 'Remarks',
         'tax_id' => 'Tax ID',
+        'status' => 'Status',
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
         'ic_num' => 'IC Number',

@@ -49,6 +49,7 @@ return [
         'phone' => 'Telepon',
         'remarks' => 'Keterangan',
         'tax_id' => 'NPWP ID',
+        'status' => 'Status',
         'first_name' => 'Nama Depan',
         'last_name' => 'Nama Belakang',
         'ic_num' => 'NPWP',
