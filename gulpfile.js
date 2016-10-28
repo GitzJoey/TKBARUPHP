@@ -32,7 +32,7 @@ elixir(function (mix) {
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './node_modules/angular/angular.min.js',
         './node_modules/angular-sanitize/angular-sanitize.min.js',
-        './node_modules/bootstrap-daterangepicker/moment.min.js',
+        './node_modules/moment/min/moment.min.js',
         './node_modules/icheck/icheck.min.js',
         './node_modules/bootstrap-daterangepicker/daterangepicker.js',
         './resources/assets/js/parsley.config.js',
