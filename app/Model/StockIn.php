@@ -1,32 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sugito
- * Date: 9/10/2016
- * Time: 12:08 AM
- */
 
 namespace App\Model;
 
-use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
-/**
- * App\Stocks
- *
- * @mixin \Eloquent
- */
-class Stock extends Model
+class StockIn extends Model
 {
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'stocks';
+    protected $table = 'stock_ins';
 
     protected $fillable = [
-        'quantity', 'current_quantity', 'store_id', 'po_id', 'product_id', 'warehouse_id'
+        'quantity', 'store_id', 'po_id', 'product_id', 'warehouse_id', 'stock_id'
     ];
 
     public static function boot()

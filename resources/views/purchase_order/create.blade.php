@@ -60,9 +60,9 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
-                                        <button id="supplierDetailButton" type="button" class="btn btn-info btn-sm"
+                                        <button id="supplierDetailButton" type="button" class="btn btn-primary btn-sm"
                                                 data-toggle="modal" data-target="#supplierDetailModal"><span
-                                                    class="fa fa-address-card-o"></span></button>
+                                                    class="fa fa-info-circle fa-lg"></span></button>
                                     </div>
                                 </div>
                             </div>
@@ -251,6 +251,7 @@
                                                 <select name="selected_unit_id[]" data-parsley-required="true"
                                                         class="form-control"
                                                         ng-model="item.selected_unit"
+                                                        data-parsley-required="true"
                                                         ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                 </select>
@@ -258,7 +259,7 @@
                                             <td>
                                                 <input type="text" class="form-control text-right" name="price[]"
                                                        ng-model="item.price" data-parsley-required="true"
-                                                       data-parsley-type="number" data-parsley-type="number">
+                                                       data-parsley-type="number">
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md"
@@ -296,265 +297,265 @@
                     &nbsp;
                 </div>
             </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@lang('purchase_order.create.box.remarks')</h3>
-                </div>
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <textarea id="inputRemarks" name="remarks" class="form-control" rows="5"
-                                              ng-model="po.remarks"></textarea>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.create.box.remarks')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <textarea id="inputRemarks" name="remarks" class="form-control" rows="5"
+                                                      ng-model="po.remarks"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-7 col-offset-md-5">
-            <div class="btn-toolbar">
-                <button id="submitButton" type="submit"
-                        class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
-                &nbsp;&nbsp;&nbsp;
-                <a id="printButton" href="#" target="_blank"
-                   class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                <a id="cancelButton" class="btn btn-primary pull-right"
-                   href="{{ route('db') }}">@lang('buttons.cancel_button')</a>
+            <div class="row">
+                <div class="col-md-7 col-offset-md-5">
+                    <div class="btn-toolbar">
+                        <button id="submitButton" type="submit"
+                                class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <a id="printButton" href="#" target="_blank"
+                           class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
+                        <a id="cancelButton" class="btn btn-primary pull-right"
+                           href="{{ route('db') }}">@lang('buttons.cancel_button')</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    </form>
+        </form>
 
-    <div class="modal fade" id="supplierDetailModal" tabindex="-1" role="dialog"
-         aria-labelledby="supplierDetailModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="supplierDetailModalLabel">Supplier Details</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="nav-tabs-custom">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab_supplier"
-                                                          data-toggle="tab">@lang('supplier.create.tab.supplier')</a>
-                                    </li>
-                                    <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.create.tab.pic')</a></li>
-                                    <li><a href="#tab_bank_account"
-                                           data-toggle="tab">@lang('supplier.create.tab.bank_account')</a></li>
-                                    <li><a href="#tab_product"
-                                           data-toggle="tab">@lang('supplier.create.tab.product')</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab_supplier">
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <label for="inputName"
-                                                       class="col-sm-2 control-label">@lang('supplier.field.name')</label>
-                                                <div class="col-sm-10">
-                                                    <input id="inputName" type="text" class="form-control" readonly
-                                                           ng-model="po.supplier.name">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputAddress"
-                                                       class="col-sm-2 control-label">@lang('supplier.field.address')</label>
-                                                <div class="col-sm-10">
-                                                    <textarea name="address" id="inputAddress" class="form-control"
-                                                              readonly rows="4">@{{ po.supplier.address }}</textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputCity"
-                                                       class="col-sm-2 control-label">@lang('supplier.field.city')</label>
-                                                <div class="col-sm-10">
-                                                    <input id="inputCity" type="text" class="form-control" readonly
-                                                           ng-model="po.supplier.city">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputPhone"
-                                                       class="col-sm-2 control-label">@lang('supplier.field.phone')</label>
-                                                <div class="col-sm-10">
-                                                    <input id="inputPhone" type="tel" class="form-control" readonly
-                                                           ng-model="po.supplier.phone_number">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputTaxId"
-                                                       class="col-sm-2 control-label">@lang('supplier.field.tax_id')</label>
-                                                <div class="col-sm-10">
-                                                    <input id="inputTaxId" type="text" class="form-control" readonly
-                                                           ng-model="po.supplier.tax_id">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputRemarks"
-                                                       class="col-sm-2 control-label">@lang('supplier.field.remarks')</label>
-                                                <div class="col-sm-10">
-                                                    <input id="inputRemarks" type="text" class="form-control" readonly
-                                                           ng-model="po.supplier.remarks">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab_pic">
-                                        <div class="row">
-                                            <div class="col-md-11">
-                                                <div ng-repeat="profile in profiles" ng-init="profileIndex = $index">
-                                                    <div class="box box-widget">
-                                                        <div class="box-header with-border">
-                                                            <div class="user-block">
-                                                                <strong>Person In Charge @{{ $index + 1 }}</strong><br/>
-                                                                &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}
-                                                                &nbsp;@{{ profile.last_name }}
-                                                            </div>
-                                                            <div class="box-tools">
-                                                                <button type="button" class="btn btn-box-tool"
-                                                                        data-widget="collapse"><i
-                                                                            class="fa fa-minus"></i></button>
-                                                            </div>
+        <div class="modal fade" id="supplierDetailModal" tabindex="-1" role="dialog"
+             aria-labelledby="supplierDetailModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="supplierDetailModalLabel">Supplier Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#tab_supplier"
+                                                                  data-toggle="tab">@lang('supplier.create.tab.supplier')</a>
+                                            </li>
+                                            <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.create.tab.pic')</a></li>
+                                            <li><a href="#tab_bank_account"
+                                                   data-toggle="tab">@lang('supplier.create.tab.bank_account')</a></li>
+                                            <li><a href="#tab_product"
+                                                   data-toggle="tab">@lang('supplier.create.tab.product')</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab_supplier">
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <label for="inputName"
+                                                               class="col-sm-2 control-label">@lang('supplier.field.name')</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="inputName" type="text" class="form-control" readonly
+                                                                   ng-model="po.supplier.name">
                                                         </div>
-                                                        <div class="box-body">
-                                                            <div class="form-group">
-                                                                <label for="inputFirstName"
-                                                                       class="col-sm-2 control-label">@lang('supplier.field.first_name')</label>
-                                                                <div class="col-sm-10">
-                                                                    <input id="inputFirstName" type="text"
-                                                                           name="first_name[]" class="form-control"
-                                                                           ng-model="profile.first_name"
-                                                                           placeholder="@lang('supplier.field.first_name')">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="inputAddress"
+                                                               class="col-sm-2 control-label">@lang('supplier.field.address')</label>
+                                                        <div class="col-sm-8">
+                                                            <textarea id="inputAddress" class="form-control"
+                                                                      readonly rows="4">@{{ po.supplier.address }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="inputCity"
+                                                               class="col-sm-2 control-label">@lang('supplier.field.city')</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="inputCity" type="text" class="form-control" readonly
+                                                                   ng-model="po.supplier.city">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="inputPhone"
+                                                               class="col-sm-2 control-label">@lang('supplier.field.phone')</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="inputPhone" type="tel" class="form-control" readonly
+                                                                   ng-model="po.supplier.phone_number">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="inputTaxId"
+                                                               class="col-sm-2 control-label">@lang('supplier.field.tax_id')</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="inputTaxId" type="text" class="form-control" readonly
+                                                                   ng-model="po.supplier.tax_id">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="inputRemarks"
+                                                               class="col-sm-2 control-label">@lang('supplier.field.remarks')</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="inputRemarks" type="text" class="form-control" readonly
+                                                                   ng-model="po.supplier.remarks">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="tab_pic">
+                                                <div class="row">
+                                                    <div class="col-md-11">
+                                                        <div ng-repeat="profile in po.supplier.profiles">
+                                                            <div class="box box-widget">
+                                                                <div class="box-header with-border">
+                                                                    <div class="user-block">
+                                                                        <strong>Person In Charge @{{ $index + 1 }}</strong><br/>
+                                                                        &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}
+                                                                        &nbsp;@{{ profile.last_name }}
+                                                                    </div>
+                                                                    <div class="box-tools">
+                                                                        <button type="button" class="btn btn-box-tool"
+                                                                                data-widget="collapse"><i
+                                                                                    class="fa fa-minus"></i></button>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputLastName"
-                                                                       class="col-sm-2 control-label">@lang('supplier.field.last_name')</label>
-                                                                <div class="col-sm-10">
-                                                                    <input id="inputLastName" type="text"
-                                                                           name="last_name[]" class="form-control"
-                                                                           ng-model="profile.last_name"
-                                                                           placeholder="@lang('supplier.field.last_name')">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputAddress"
-                                                                       class="col-sm-2 control-label">@lang('supplier.field.address')</label>
-                                                                <div class="col-sm-10">
-                                                                    <input id="inputAddress" type="text"
-                                                                           name="profile_address[]" class="form-control"
-                                                                           ng-model="profile.address"
-                                                                           placeholder="@lang('supplier.field.address')">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputICNum"
-                                                                       class="col-sm-2 control-label">@lang('supplier.field.ic_num')</label>
-                                                                <div class="col-sm-10">
-                                                                    <input id="inputICNum" type="text" name="ic_num[]"
-                                                                           class="form-control"
-                                                                           ng-model="profile.ic_num"
-                                                                           placeholder="@lang('supplier.field.ic_num')">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="inputPhoneNumber"
-                                                                       class="col-sm-2 control-label">@lang('supplier.field.phone_number')</label>
-                                                                <div class="col-sm-10">
-                                                                    <table class="table table-bordered">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th>@lang('supplier.create.table_phone.header.provider')</th>
-                                                                            <th>@lang('supplier.create.table_phone.header.number')</th>
-                                                                            <th>@lang('supplier.create.table_phone.header.remarks')</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                        <tr ng-repeat="ph in profile.phone_number">
-                                                                            <td>
-                                                                                <select name="profile_@{{ $parent.$index }}_phone_provider[]"
-                                                                                        class="form-control"
-                                                                                        ng-model="ph.provider"
-                                                                                        ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
-                                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                                </select>
-                                                                            </td>
-                                                                            <td><input type="text"
-                                                                                       name="profile_@{{ $parent.$index }}_phone_number[]"
-                                                                                       class="form-control"
-                                                                                       ng-model="ph.number"></td>
-                                                                            <td><input type="text" class="form-control"
-                                                                                       name="profile_@{{ $parent.$index }}_remarks[]"
-                                                                                       ng-model="ph.remarks"></td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
+                                                                <div class="box-body">
+                                                                    <div class="form-group">
+                                                                        <label for="inputFirstName"
+                                                                               class="col-sm-2 control-label">@lang('supplier.field.first_name')</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input id="inputFirstName" type="text"
+                                                                                   class="form-control"
+                                                                                   readonly
+                                                                                   ng-model="profile.first_name">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="inputLastName"
+                                                                               class="col-sm-2 control-label">@lang('supplier.field.last_name')</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input id="inputLastName" type="text"
+                                                                                   class="form-control"
+                                                                                   readonly
+                                                                                   ng-model="profile.last_name">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="inputAddress"
+                                                                               class="col-sm-2 control-label">@lang('supplier.field.address')</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input id="inputAddress" type="text"
+                                                                                   class="form-control"
+                                                                                   readonly
+                                                                                   ng-model="profile.address">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="inputICNum"
+                                                                               class="col-sm-2 control-label">@lang('supplier.field.ic_num')</label>
+                                                                        <div class="col-sm-10">
+                                                                            <input id="inputICNum" type="text"
+                                                                                   class="form-control"
+                                                                                   readonly
+                                                                                   ng-model="profile.ic_num">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="inputPhoneNumber"
+                                                                               class="col-sm-2 control-label">@lang('supplier.field.phone_number')</label>
+                                                                        <div class="col-sm-10">
+                                                                            <table class="table table-bordered">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>@lang('supplier.create.table_phone.header.provider')</th>
+                                                                                    <th>@lang('supplier.create.table_phone.header.number')</th>
+                                                                                    <th>@lang('supplier.create.table_phone.header.remarks')</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr ng-repeat="phoneNumber in profile.phone_numbers">
+                                                                                    <td>
+                                                                                        <input type="text" class="form-control"
+                                                                                               readonly
+                                                                                               ng-model="phoneNumber.provider.name">
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="text" class="form-control"
+                                                                                               readonly
+                                                                                               ng-model="phoneNumber.number">
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input type="text" class="form-control"
+                                                                                               readonly
+                                                                                               ng-model="phoneNumber.remarks">
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab_bank_account">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
-                                                <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
-                                                <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr ng-repeat="bank in banks">
-                                                <td>
-                                                    <select class="form-control"
-                                                            name="bank[]"
-                                                            ng-model="bank.bank_id"
-                                                            ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id">
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="account_number[]"
-                                                           ng-model="bank.account_number">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="bank_remarks[]"
-                                                           ng-model="bank.remarks">
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <button class="btn btn-xs btn-default" type="button"
-                                                ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
-                                    </div>
-                                    <div class="tab-pane" id="tab_product">
-                                        <div class="box-group" id="accordion_product">
-                                            <div class="panel box box-default">
-                                                <div class="box-header with-border">
-                                                    <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false"
-                                                           href="#collapseProductLists" data-toggle="collapse"
-                                                           data-parent="#accordion_product">
-                                                            @lang('supplier.create.tab.header.bank_lists')
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="panel-collapse collapse" id="collapseProductLists"
-                                                     aria-expanded="false">
-                                                    <div class="box-body">
-                                                        ...
+                                            <div class="tab-pane" id="tab_bank_account">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
+                                                        <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
+                                                        <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="bankAccount in po.supplier.bank_accounts">
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                   readonly
+                                                                   ng-model="bankAccount.bank.name">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                   readonly
+                                                                   ng-model="bankAccount.account_number">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control"
+                                                                   readonly
+                                                                   ng-model="bankAccount.remarks">
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="tab-pane" id="tab_product">
+                                                <div class="box-group" id="accordion_product">
+                                                    <div class="panel box box-default">
+                                                        <div class="box-header with-border">
+                                                            <h4 class="box-title">
+                                                                <a class="collapsed" aria-expanded="false"
+                                                                   href="#collapseProductLists" data-toggle="collapse"
+                                                                   data-parent="#accordion_product">
+                                                                    @lang('supplier.create.tab.header.bank_lists')
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div class="panel-collapse collapse" id="collapseProductLists"
+                                                             aria-expanded="false">
+                                                            <div class="box-body">
+                                                                ...
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -562,10 +563,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -579,7 +580,7 @@
         app.controller("poController", ['$scope', function ($scope) {
             $scope.supplierDDL = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-            $scope.poTypeDDL = JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}')
+            $scope.poTypeDDL = JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}');
             $scope.supplierTypeDDL = JSON.parse('{!! htmlspecialchars_decode($supplierTypeDDL) !!}');
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
