@@ -11,6 +11,8 @@ namespace App\Http\Controllers;
 use App\Model\Receipt;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WarehouseInflowController extends Controller
 {
