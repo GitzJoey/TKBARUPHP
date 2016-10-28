@@ -6,6 +6,42 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * App\Model\Receipt
+ *
+ * @property integer $id
+ * @property \Carbon\Carbon $receipt_date
+ * @property float $brutto
+ * @property float $netto
+ * @property float $tare
+ * @property string $licence_plate
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property integer $item_id
+ * @property integer $store_id
+ * @property integer $selected_unit_id
+ * @property-read \App\Model\Item $item
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereReceiptDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereBrutto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereNetto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereTare($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereLicencePlate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereItemId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereSelectedUnitId($value)
+ * @mixin \Eloquent
+ */
 class Receipt extends Model
 {
     use SoftDeletes;

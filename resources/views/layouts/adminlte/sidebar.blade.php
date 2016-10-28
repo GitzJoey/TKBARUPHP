@@ -16,7 +16,7 @@
             @if(Entrust::can('po.po-create') OR
                 Entrust::can('po.po-revise') OR
                 Entrust::can('po.po-payment'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.po.*')) }}">
                     <a href="#"><i class="fa fa-truck fa-fw"></i><span>&nbsp;@lang('menu.item.po')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -24,13 +24,13 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('po.po-create'))
-                            <li><a href="{{ route('db.po.create') }}"><i class="fa fa-truck fa-fw"></i>&nbsp;@lang('menu.item.po_new')</a></li>
+                            <li class="{{ active_class(if_route('db.po.create')) }}"><a href="{{ route('db.po.revise.index') }}"><a href="{{ route('db.po.create') }}"><i class="fa fa-truck fa-fw"></i>&nbsp;@lang('menu.item.po_new')</a></li>
                         @endif
                         @if(Entrust::can('po.po-revise'))
-                            <li><a href="{{ route('db.po.revise.index') }}"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_revise')</a></li>
+                            <li class="{{ active_class(if_route('db.po.revise.index')) }}"><a href="{{ route('db.po.revise.index') }}"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_revise')</a></li>
                         @endif
                         @if(Entrust::can('po.po-payment'))
-                            <li><a href="{{ route('db.po.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a></li>
+                            <li class="{{ active_class(if_route('db.po.payment.index')) }}"><a href="{{ route('db.po.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a></li>
                         @endif
                     </ul>
                 </li>
@@ -39,7 +39,7 @@
                 Entrust::can('so.so-revise') OR
                 Entrust::can('so.so-payment') OR
                 Entrust::can('so.so-copy'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.so.*')) }}">
                     <a href="#"><i class="fa fa-cart-arrow-down fa-fw"></i><span>&nbsp;@lang('menu.item.so')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -47,16 +47,16 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('so.so-create'))
-                            <li><a href="{{ route('db.so.create') }}"><i class="fa fa-cart-arrow-down fa-fw"></i>&nbsp;@lang('menu.item.so_new')</a></li>
+                            <li class="{{ active_class(if_route('db.so.create')) }}"><a href="{{ route('db.so.create') }}"><i class="fa fa-cart-arrow-down fa-fw"></i>&nbsp;@lang('menu.item.so_new')</a></li>
                         @endif
                         @if(Entrust::can('so.so-revise'))
-                            <li><a href="{{ route('db.so.revise.index') }}"><i class="fa fa fa-code-fork fa-fw"></i>&nbsp;@lang('menu.item.so_revise')</a></li>
+                            <li class="{{ active_class(if_route('db.so.revise.index')) }}"><a href="{{ route('db.so.revise.index') }}"><i class="fa fa fa-code-fork fa-fw"></i>&nbsp;@lang('menu.item.so_revise')</a></li>
                         @endif
                         @if(Entrust::can('so.so-payment'))
-                            <li><a href="#"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.so_payment')</a></li>
+                            <li class="{{ active_class(if_route('')) }}"><a href="#"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.so_payment')</a></li>
                         @endif
                         @if(Entrust::can('so.so-copy'))
-                            <li><a href="#"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a></li>
+                            <li class="{{ active_class(if_route('')) }}"><a href="#"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a></li>
                         @endif
                     </ul>
                 </li>
@@ -67,7 +67,7 @@
                 Entrust::can('price.pricelevel-create') OR
                 Entrust::can('price.pricelevel-edit') OR
                 Entrust::can('price.pricelevel-delete'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.price.*')) }}">
                     <a href="#"><i class="fa fa-barcode fa-fw"></i><span>&nbsp;@lang('menu.item.price')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -82,7 +82,7 @@
                             Entrust::can('price.pricelevel-create') OR
                             Entrust::can('price.pricelevel-edit') OR
                             Entrust::can('price.pricelevel-delete'))
-                            <li><a href="{{ route('db.price.price_level') }}"><i class="fa  fa-table fa-fw"></i>&nbsp;@lang('menu.item.price_pricelevel')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.price.price_level') || Active::checkRoutePattern('db.price.price_level.*')) }}"><a href="{{ route('db.price.price_level') }}"><i class="fa  fa-table fa-fw"></i>&nbsp;@lang('menu.item.price_pricelevel')</a></li>
                         @endif
                     </ul>
                 </li>
@@ -149,14 +149,16 @@
                 Entrust::can('truck.maintenance-create') OR
                 Entrust::can('truck.maintenance-edit') OR
                 Entrust::can('truck.maintenance-delete'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.truck.maintenance') || Active::checkRoutePattern('db.truck.maintenance.*')) }}">
                     <a href="#"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i><span>&nbsp;@lang('menu.item.truck')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ route('db.truck.maintenance') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.truck_maintenance')</a></li>
+                        <li class="{{ active_class(Active::checkRoutePattern('db.truck.maintenance') || Active::checkRoutePattern('db.truck.maintenance.*')) }}">
+                            <a href="{{ route('db.truck.maintenance') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.truck_maintenance')</a>
+                        </li>
                     </ul>
                 </li>
             @endif
@@ -206,7 +208,7 @@
                 Entrust::can('master.vendor.truck-create') OR
                 Entrust::can('master.vendor.truck-edit') OR
                 Entrust::can('master.vendor.truck-delete'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.master.*')) }}">
                     <a href="#"><i class="fa fa-file-text-o fa-fw"></i><span>&nbsp;@lang('menu.item.master')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -217,13 +219,17 @@
                             Entrust::can('master.customer-create') OR
                             Entrust::can('master.customer-edit') OR
                             Entrust::can('master.customer-delete'))
-                            <li><a href="{{ route('db.master.customer') }}"><i class="fa fa-smile-o fa-fw"></i>&nbsp;@lang('menu.item.master_customer')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.master.customer') || Active::checkRoutePattern('db.master.customer.*')) }}">
+                                <a href="{{ route('db.master.customer') }}"><i class="fa fa-smile-o fa-fw"></i>&nbsp;@lang('menu.item.master_customer')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('master.supplier-list') OR
                             Entrust::can('master.supplier-create') OR
                             Entrust::can('master.supplier-edit') OR
                             Entrust::can('master.supplier-delete'))
-                            <li><a href="{{ route('db.master.supplier') }}"><i class="fa fa-building-o fa-fw"></i>&nbsp;@lang('menu.item.master_supplier')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.master.supplier') || Active::checkRoutePattern('db.master.supplier.*')) }}">
+                                <a href="{{ route('db.master.supplier') }}"><i class="fa fa-building-o fa-fw"></i>&nbsp;@lang('menu.item.master_supplier')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('master.product-list') OR
                             Entrust::can('master.product-create') OR
@@ -233,7 +239,10 @@
                             Entrust::can('master.product.producttype-create') OR
                             Entrust::can('master.product.producttype-edit') OR
                             Entrust::can('master.product.producttype-delete'))
-                            <li class="treeview">
+                            <li class="treeview {{ active_class(Active::checkRoutePattern('db.master.product') ||
+                                                                Active::checkRoutePattern('db.master.product.*') ||
+                                                                Active::checkRoutePattern('db.master.producttype') ||
+                                                                Active::checkRoutePattern('db.master.producttype.*')) }}">
                                 <a href="#">
                                     <i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.master_product')
                                     <span class="pull-right-container">
@@ -241,8 +250,12 @@
                                 </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{ route('db.master.product') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.master_product')</a></li>
-                                    <li><a href="{{ route('db.master.producttype') }}"><i class="fa fa-cube fa-fw"></i>&nbsp;@lang('menu.item.master_producttype')</a></li>
+                                    <li class="{{ active_class(Active::checkRoutePattern('db.master.product') || Active::checkRoutePattern('db.master.product.*')) }}">
+                                        <a href="{{ route('db.master.product') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.master_product')</a>
+                                    </li>
+                                    <li class="{{ active_class(Active::checkRoutePattern('db.master.producttype') || Active::checkRoutePattern('db.master.producttype.*')) }}">
+                                        <a href="{{ route('db.master.producttype') }}"><i class="fa fa-cube fa-fw"></i>&nbsp;@lang('menu.item.master_producttype')</a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif
@@ -250,25 +263,31 @@
                             Entrust::can('master.warehouse-create') OR
                             Entrust::can('master.warehouse-edit') OR
                             Entrust::can('master.warehouse-delete'))
-                            <li><a href="{{ route('db.master.warehouse') }}"><i class="fa fa-wrench fa-fw"></i>&nbsp;@lang('menu.item.master_warehouse')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.master.warehouse') || Active::checkRoutePattern('db.master.warehouse.*')) }}">
+                                <a href="{{ route('db.master.warehouse') }}"><i class="fa fa-wrench fa-fw"></i>&nbsp;@lang('menu.item.master_warehouse')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('master.bank-list') OR
-                           Entrust::can('master.bank-create') OR
+                            Entrust::can('master.bank-create') OR
                             Entrust::can('master.bank-edit') OR
                             Entrust::can('master.bank-delete'))
-                            <li><a href="{{ route('db.master.bank') }}"><i class="fa fa-bank fa-fw"></i>&nbsp;@lang('menu.item.master_bank')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.master.bank') || Active::checkRoutePattern('db.master.bank.*')) }}">
+                                <a href="{{ route('db.master.bank') }}"><i class="fa fa-bank fa-fw"></i>&nbsp;@lang('menu.item.master_bank')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('master.truck-list') OR
                             Entrust::can('master.truck-create') OR
                             Entrust::can('master.truck-edit') OR
                             Entrust::can('master.truck-delete'))
-                            <li><a href="{{ route('db.master.truck') }}"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i>&nbsp;@lang('menu.item.master_truck')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.master.truck') || Active::checkRoutePattern('db.master.truck.*')) }}">
+                                <a href="{{ route('db.master.truck') }}"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i>&nbsp;@lang('menu.item.master_truck')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('master.vendor.truck-list') OR
                             Entrust::can('master.vendor.truck-create') OR
                             Entrust::can('master.vendor.truck-edit') OR
                             Entrust::can('master.vendor.truck-delete'))
-                            <li class="treeview">
+                            <li class="treeview {{ active_class(Active::checkRoutePattern('db.master.vendor.trucking') || Active::checkRoutePattern('db.master.vendor.trucking.*')) }}">
                                 <a href="#">
                                     <i class="fa fa-vine fa-flip-horizontal fa-fw"></i>&nbsp;@lang('menu.item.master_vendor')
                                     <span class="pull-right-container">
@@ -276,7 +295,9 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li><a href="{{ route('db.master.vendor.trucking') }}"><i class="fa fa-ge fa-fw"></i>&nbsp;@lang('menu.item.master_vendor_trucking')</a></li>
+                                    <li class="{{ active_class(Active::checkRoutePattern('db.master.vendor.trucking') || Active::checkRoutePattern('db.master.vendor.trucking.*')) }}">
+                                        <a href="{{ route('db.master.vendor.trucking') }}"><i class="fa fa-ge fa-fw"></i>&nbsp;@lang('menu.item.master_vendor_trucking')</a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif
@@ -308,7 +329,7 @@
                 Entrust::can('admin.smsservice-list') OR
                 Entrust::can('admin.smsservice-modem') OR
                 Entrust::can('admin.smsservice-send'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.admin.*')) }}">
                     <a href="#"><i class="glyphicon glyphicon-cog"></i><span>&nbsp;@lang('menu.item.adm')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -319,35 +340,47 @@
                             Entrust::can('admin.user-create') OR
                             Entrust::can('admin.user-edit') OR
                             Entrust::can('admin.user-delete'))
-                            <li><a href="{{ route('db.admin.user') }}"><i class="fa fa-user fa-fw"></i>&nbsp;@lang('menu.item.adm_user')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.admin.user') || Active::checkRoutePattern('db.admin.user.*')) }}">
+                                <a href="{{ route('db.admin.user') }}"><i class="fa fa-user fa-fw"></i>&nbsp;@lang('menu.item.adm_user')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('admin.role-list') OR
                             Entrust::can('admin.role-create') OR
                             Entrust::can('admin.role-edit') OR
                             Entrust::can('admin.role-delete'))
-                            <li><a href="{{ route('db.admin.roles') }}"><i class="fa fa-key fa-fw"></i>&nbsp;@lang('menu.item.adm_role')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.admin.roles') || Active::checkRoutePattern('db.admin.roles.*')) }}">
+                                <a href="{{ route('db.admin.roles') }}"><i class="fa fa-key fa-fw"></i>&nbsp;@lang('menu.item.adm_role')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('admin.store-list') OR
                             Entrust::can('admin.store-create') OR
                             Entrust::can('admin.store-edit') OR
                             Entrust::can('admin.store-delete'))
-                            <li><a href="{{ route('db.admin.store') }}"><i class="fa fa-umbrella fa-fw"></i>&nbsp;@lang('menu.item.adm_store')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.admin.store') || Active::checkRoutePattern('db.admin.store.*')) }}">
+                                <a href="{{ route('db.admin.store') }}"><i class="fa fa-umbrella fa-fw"></i>&nbsp;@lang('menu.item.adm_store')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('admin.unit-list') OR
                             Entrust::can('admin.unit-create') OR
                             Entrust::can('admin.unit-edit') OR
                             Entrust::can('admin.unit-delete'))
-                            <li><a href="{{ route('db.admin.unit') }}"><i class="glyphicon glyphicon-flash"></i>&nbsp;@lang('menu.item.adm_unit')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.admin.unit') || Active::checkRoutePattern('db.admin.unit.*')) }}">
+                                <a href="{{ route('db.admin.unit') }}"><i class="glyphicon glyphicon-flash"></i>&nbsp;@lang('menu.item.adm_unit')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('admin.settings-list') OR
                             Entrust::can('admin.settings-edit'))
-                            <li><a href="{{ route('db.admin.settings') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;@lang('menu.item.adm_settings')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.admin.settings') || Active::checkRoutePattern('db.admin.settings.*')) }}">
+                                <a href="{{ route('db.admin.settings') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;@lang('menu.item.adm_settings')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('admin.phoneprovider-list') OR
                             Entrust::can('admin.phoneprovider-create') OR
                             Entrust::can('admin.phoneprovider-edit') OR
                             Entrust::can('admin.phoneprovider-delete'))
-                            <li><a href="{{ route('db.admin.phone_provider') }}"><i class="glyphicon glyphicon-phone"></i>&nbsp;@lang('menu.item.adm_phone_provider')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.admin.phone_provider') || Active::checkRoutePattern('db.admin.phone_provider.*')) }}">
+                                <a href="{{ route('db.admin.phone_provider') }}"><i class="glyphicon glyphicon-phone"></i>&nbsp;@lang('menu.item.adm_phone_provider')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('admin.smsservice-list') OR
                             Entrust::can('admin.smsservice-modem') OR

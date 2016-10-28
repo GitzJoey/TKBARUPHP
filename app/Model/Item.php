@@ -48,6 +48,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Item whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Item whereDeletedAt($value)
+ * @property integer $stock_id
+ * @property string $itemable_id
+ * @property string $itemable_type
+ * @property-read \App\Model\Product $product
+ * @property-read \App\Model\ProductUnit $selectedUnit
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Receipt[] $receipts
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $itemable
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereStockId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereItemableId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereItemableType($value)
  */
 class Item extends Model
 {
