@@ -23,10 +23,10 @@ class Stock extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = '';
+    protected $table = 'stocks';
 
     protected $fillable = [
-
+        'quantity', 'current_quantity', 'store_id', 'po_id', 'product_id', 'warehouse_id'
     ];
 
     public static function boot()
