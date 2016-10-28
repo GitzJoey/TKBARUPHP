@@ -96,7 +96,7 @@
             @if(Entrust::can('warehouse.inflow-input') OR
                 Entrust::can('warehouse.outflow-input') OR
                 Entrust::can('warehouse.stockopname'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.warehouse') || Active::checkRoutePattern('db.warehouse.*')) }}">
                     <a href="#"><i class="fa fa-wrench fa-fw"></i><span>&nbsp;@lang('menu.item.wh')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -104,13 +104,19 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('warehouse.inflow-input'))
-                            <li><a href="{{ route('db.warehouse.inflow.index') }}"><i class="fa fa-mail-forward fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_inflow')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.inflow.*')) }}">
+                                <a href="{{ route('db.warehouse.inflow.index') }}"><i class="fa fa-mail-forward fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_inflow')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('warehouse.outflow-input'))
-                            <li><a href="{{ route('db.warehouse.outflow.index') }}"><i class="fa fa-mail-reply fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_outflow')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.outflow.*')) }}">
+                                <a href="{{ route('db.warehouse.outflow.index') }}"><i class="fa fa-mail-reply fa-rotate-90 fa-fw"></i>&nbsp;@lang('menu.item.wh_outflow')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('warehouse.stockopname'))
-                            <li><a href="{{ route('db.warehouse.stockopname') }}"><i class="fa fa-database"></i>&nbsp;@lang('menu.item.wh_stockopname')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.stockopname.*')) }}">
+                                <a href="{{ route('db.warehouse.stockopname.index') }}"><i class="fa fa-database"></i>&nbsp;@lang('menu.item.wh_stockopname')</a>
+                            </li>
                         @endif
                     </ul>
                 </li>

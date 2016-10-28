@@ -192,7 +192,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/warehouse/outflow/{id}', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow');
     Route::post('/dashboard/warehouse/outflow', 'WarehouseOutflowController@saveDeliver');
 
-    Route::get('/dashboard/warehouse/stockopname', 'WarehouseController@stockopname')->name('db.warehouse.stockopname');
+    Route::get('/dashboard/warehouse/stockopname', 'WarehouseController@stockopname')->name('db.warehouse.stockopname.index');
 
     Route::get('/dashboard/price/price_level', 'PriceLevelController@index')->name('db.price.price_level');
     Route::get('/dashboard/price/price_level/show/{id}', 'PriceLevelController@show')->name('db.price.price_level.show');
