@@ -38,9 +38,15 @@
                 @foreach ($purchaseOrders as $key => $po)
                     <tr>
                         <td class="text-center">{{ $po->code }}</td>
-                        <td class="text-center">{{ $po->po_created }}</td>
-                        <td class="text-center">{{ $po->supplier->name }}</td>
-                        <td class="text-center">{{ $po->shipping_date }}</td>
+                        <td class="text-center">{{ date('d-m-Y', strtotime($po->po_created)) }}</td>
+                        <td class="text-center">
+                            @if($po->supplier_type == 'SUPPLIERTYPE.R')
+                                {{ $po->supplier->name }}
+                            @else
+                                {{ $po->walk_in_supplier }}
+                            @endif
+                        </td>
+                        <td class="text-center">{{ date('d-m-Y', strtotime($po->shipping_date)) }}</td>
                         <td class="text-center">{{ $poStatusDDL[$po->status] }}</td>
                         <td class="text-center" width="20%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.po.revise', $po->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>

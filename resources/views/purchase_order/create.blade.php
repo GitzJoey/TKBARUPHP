@@ -621,24 +621,26 @@
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
             });
-            $("#inputPoDate").daterangepicker(
-                    {
-                        locale: {
-                            format: 'DD-MM-YYYY'
-                        },
-                        singleDatePicker: true,
-                        showDropdowns: true
-                    }
-            );
-            $("#inputShippingDate").daterangepicker(
-                    {
-                        locale: {
-                            format: 'DD-MM-YYYY'
-                        },
-                        singleDatePicker: true,
-                        showDropdowns: true
-                    }
-            );
+
+            $("#inputPoDate").daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 15,
+                locale: {
+                    format: 'DD-MM-YYYY'
+                },
+                singleDatePicker: true,
+                showDropdowns: true
+            });
+
+            $("#inputShippingDate").daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 15,
+                locale: {
+                    format: 'DD-MM-YYYY'
+                },
+                singleDatePicker: true,
+                showDropdowns: true
+            });
         });
     </script>
 @endsection
