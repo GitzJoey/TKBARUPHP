@@ -57,7 +57,7 @@ class Customer extends Model
     protected $table = 'customers';
 
 	protected $fillable = [
-        'name', 'address', 'city', 'phone_number', 'remarks', 'tax_id', 'payment_due_day'
+        'name', 'address', 'city', 'phone_number', 'remarks', 'tax_id', 'status', 'payment_due_day'
     ];
 
     public function hId() {

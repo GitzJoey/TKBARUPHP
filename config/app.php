@@ -186,6 +186,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Themsaid\Langman\LangmanServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        HieuLe\Active\ActiveServiceProvider::class,
     ],
 
     /*
@@ -202,6 +203,7 @@ return [
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
+        'Active' => HieuLe\Active\Facades\Active::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,

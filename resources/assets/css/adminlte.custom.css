@@ -22,3 +22,7 @@ table td select.has-error {
 table td span.help-block {
     color: #dd4b39;
 }
+
+.skin-blue .treeview-menu > li.active > a, .skin-blue .treeview-menu > li > a:hover {
+    color: lightskyblue;
+}

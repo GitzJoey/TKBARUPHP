@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Settings;
+use App\Model\Setting;
 
 use Illuminate\Http\Request;
 
@@ -21,15 +21,15 @@ class SettingsController extends Controller
 
     public function index()
     {
-        $settings = Settings::paginate(10);
-        return view('settings.index')->with('data', $settings);
+        $settings = Setting::paginate(10);
+        return view('setting.index')->with('data', $settings);
     }
 
     public function edit($id)
     {
-        $settings = Settings::find($id);
+        $settings = Setting::find($id);
 
-        return view('settings.edit', compact('settings'));
+        return view('setting.edit', compact('settings'));
 
     }
 

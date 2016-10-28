@@ -56,6 +56,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereDeletedAt($value)
  * @property string $walk_in_cust
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWalkInCust($value)
+ * @property integer $warehouse_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWarehouseId($value)
  */
 class SalesOrder extends Model
 {

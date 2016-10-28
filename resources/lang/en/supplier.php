@@ -39,6 +39,7 @@ return [
         'city' => 'City',
         'phone' => 'Phone',
         'tax_id' => 'Tax ID',
+        'status' => 'Status',
         'remarks' => 'Remarks',
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
