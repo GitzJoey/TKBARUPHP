@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Receipt;
 use App\Model\Stock;
+use App\Model\StockIn;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use Illuminate\Http\Request;
@@ -63,6 +64,16 @@ class WarehouseInflowController extends Controller
             $receipt = Receipt::create($receiptParams);
             $stock = Stock::create($stockParams);
 
+            $stockInParams = [
+                'store_id' => Auth::user()->store_id,
+                'po_id' => Hashids::decode($po->id)[0],
+                'product_id' => $request->input("product_id.$i"),
+                'warehouse_id' => $po->warehouse_id,
+                'stock_id' => $stock->id,
+                'quantity' => $request->input("netto.$i")
+            ];
+
+            $stockIn = StockIn::create($stockInParams);
         }
 
         return redirect(route('db.warehouse.inflow.index'));
