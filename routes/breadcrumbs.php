@@ -35,4 +35,17 @@ Breadcrumbs::register('receipt', function ($breadcrumbs, $poId){
     $breadcrumbs->push('Receipt', route('db.warehouse.inflow', $poId));
 });
 
+Breadcrumbs::register('create_sales_order', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Create Sales Order', route('db.so.create'));
+});
 
+Breadcrumbs::register('sales_order', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Sales Order', route('db.so.revise.index'));
+});
+
+Breadcrumbs::register('revise_sales_order', function ($breadcrumbs, $soId){
+    $breadcrumbs->parent('sales_order');
+    $breadcrumbs->push('Revise Sales Order', route('db.so.revise', $soId));
+});
