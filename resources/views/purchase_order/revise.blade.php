@@ -214,12 +214,14 @@
                                             <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
                                             <td class="valign-middle">@{{ item.product.name }}</td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="quantity[]" ng-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'disabled' }}>
+                                                <input type="text" class="form-control text-right" data-parsley-required="true" data-parsley-type="number"
+                                                       name="quantity[]" ng-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'disabled' }}>
                                             </td>
                                             <td>
                                                 @if($currentPo->status == 'POSTATUS.WA')
                                                 <select name="selected_unit_id[]"
                                                         class="form-control"
+                                                        data-parsley-required="true"
                                                         ng-model="item.selected_unit"
                                                         ng-options="product_unit as product_unit.unit.symbol for product_unit in item.product.product_units track by product_unit.unit.id">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
@@ -229,7 +231,9 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="price[]" ng-model="item.price">
+                                                <input type="text" class="form-control text-right" name="price[]" ng-model="item.price"
+                                                       data-parsley-required="true"
+                                                       data-parsley-type="number">
                                             </td>
                                             <td class="text-center">
                                                 @if($currentPo->status == 'POSTATUS.WA')

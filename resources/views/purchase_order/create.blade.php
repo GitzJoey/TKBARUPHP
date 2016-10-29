@@ -187,7 +187,6 @@
                                     <select id="inputVendorTrucking"
                                             name="vendor_trucking_id"
                                             class="form-control"
-                                            data-parsley-required="true"
                                             ng-model="po.vendorTrucking"
                                             ng-options="vendorTrucking as vendorTrucking.name for vendorTrucking in vendorTruckingDDL track by vendorTrucking.id">
                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
