@@ -25,13 +25,13 @@ Breadcrumbs::register('revise_purchase_order', function ($breadcrumbs, $poId){
     $breadcrumbs->push('Revise Purchase Order', route('db.po.revise', $poId));
 });
 
-Breadcrumbs::register('inflow', function ($breadcrumbs){
+Breadcrumbs::register('inflow', function ($breadcrumbs, $warehouseId){
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push('Inflow', route('db.warehouse.inflow.index'));
+    $breadcrumbs->push('Inflow', route('db.warehouse.inflow.index', $warehouseId));
 });
 
-Breadcrumbs::register('receipt', function ($breadcrumbs, $poId){
-    $breadcrumbs->parent('inflow');
+Breadcrumbs::register('receipt', function ($breadcrumbs, $poId, $warehouseId){
+    $breadcrumbs->parent('inflow', $warehouseId);
     $breadcrumbs->push('Receipt', route('db.warehouse.inflow', $poId));
 });
 

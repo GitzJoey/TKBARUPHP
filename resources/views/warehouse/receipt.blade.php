@@ -11,7 +11,7 @@
     @lang('warehouse.inflow.receipt.page_title_desc')
 @endsection
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('receipt', $po->hId()) !!}
+    {!! Breadcrumbs::render('receipt', $po->hId(), $po->warehouse_id) !!}
 @endsection
 
 @section('content')

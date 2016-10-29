@@ -11,7 +11,7 @@
     @lang('warehouse.inflow.index.page_title_desc')
 @endsection
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('inflow') !!}
+    {!! Breadcrumbs::render('inflow', $warehouse == null ? null : $warehouse->id) !!}
 @endsection
 
 @section('content')
