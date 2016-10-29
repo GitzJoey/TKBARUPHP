@@ -20,6 +20,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
+
     <div ng-app="warehouseModule" ng-controller="warehouseController">
         <div class="box box-info">
             <div class="box-header with-border">
@@ -28,6 +29,7 @@
             <div class="box-body">
                 <select id="inputWarehouse"
                         class="form-control"
+                        ng-change="refreshWarehousePo(warehouse)"
                         ng-model="warehouse"
                         ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
@@ -50,7 +52,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="po in selectedWarehousePo(warehouse)">
+                        <tr ng-repeat="po in warehouse.purchase_orders">
                             <td class="text-center">@{{ po.code }}</td>
                             <td class="text-center">@{{ po.po_created }}</td>
                             <td class="text-center">@{{ po.supplier.name }}</td>
@@ -68,15 +70,13 @@
 @section('custom_js')
     <script type="application/javascript">
         var app = angular.module('warehouseModule', []);
-        app.controller('warehouseController', ['$scope', function($scope) {
+        app.controller('warehouseController', ['$scope', '$window', function($scope, $window) {
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-            $scope.allPOs = JSON.parse('{!! htmlspecialchars_decode($allPOs) !!}');
+            $scope.warehouse = JSON.parse('{!! htmlspecialchars_decode($warehouse) == '' ? '{}' : htmlspecialchars_decode($warehouse) !!}');
 
-            $scope.selectedWarehousePo = function (warehouse) {
-                return _.filter($scope.allPOs, function (PO) {
-                    return PO.warehouse_id === warehouse.id;
-                });
-            };
+            $scope.refreshWarehousePo = function (warehouse) {
+                $window.location.href = '{{ route('db.warehouse.inflow.index') }}/' + warehouse.id;
+            }
         }]);
     </script>
 @endsection

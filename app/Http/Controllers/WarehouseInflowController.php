@@ -26,11 +26,11 @@ class WarehouseInflowController extends Controller
         $this->middleware('auth');
     }
 
-    public function inflow(){
-        $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
-        $allPOs = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WA')->get();
+    public function inflow($id = null){
+        $warehouseDDL = Warehouse::all();
+        $warehouse = Warehouse::with('purchaseOrders.supplier')->find($id);
 
-        return view('warehouse.inflow', compact('warehouseDDL', 'allPOs'));
+        return view('warehouse.inflow', compact('warehouseDDL', 'warehouse'));
     }
 
     public function receipt($id){
