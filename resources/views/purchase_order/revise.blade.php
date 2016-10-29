@@ -232,7 +232,7 @@
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                 </select>
                                                 @else
-                                                    <input type="text" class="form-control" readonly value="@{{ item.selected_unit.unit.symbol }}">
+                                                    <input type="text" class="form-control" readonly value="@{{ item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')' }}">
                                                 @endif
                                             </td>
                                             <td>
