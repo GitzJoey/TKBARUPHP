@@ -67,20 +67,20 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="inputReceiptDate" name="receipt_date" class="form-control">
+                                        <input type="text" id="inputReceiptDate" name="receipt_date" class="form-control" data-parsley-required="true">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputVendorTrucking" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly value="{{ $po->vendorTrucking->name }}">
+                                    <input type="text" class="form-control" readonly value="{{ $po->vendorTrucking->name }}" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputLicencePlate" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.licence_plate')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="inputLicencePlate" name="licence_plate" class="form-control">
+                                    <input type="text" id="inputLicencePlate" name="licence_plate" class="form-control" data-parsley-required="true">
                                 </div>
                             </div>
                         </div>
@@ -122,13 +122,19 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="brutto[]" ng-model="receipt.brutto">
+                                                <input type="text" class="form-control text-right" name="brutto[]" ng-model="receipt.brutto"
+                                                       data-parsley-required="true"
+                                                       data-parsley-type="number">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="netto[]" ng-model="receipt.netto">
+                                                <input type="text" class="form-control text-right" name="netto[]" ng-model="receipt.netto"
+                                                       data-parsley-required="true"
+                                                       data-parsley-type="number">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="tare[]" ng-model="receipt.tare">
+                                                <input type="text" class="form-control text-right" name="tare[]" ng-model="receipt.tare"
+                                                       data-parsley-required="true"
+                                                       data-parsley-type="number">
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md" ng-click="removeReceipt($index)"><span class="fa fa-minus"/></button>
