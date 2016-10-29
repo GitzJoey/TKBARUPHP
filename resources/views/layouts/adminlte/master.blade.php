@@ -21,8 +21,10 @@
                 <section class="content-header">
                     <h1>@yield('page_title')
                         <small>@yield('page_title_desc')</small>
+                        @yield('breadcrumbs')
                     </h1>
                     @include('layouts.adminlte.control-sidebar')
+
                 </section>
 
                 <section class="content">

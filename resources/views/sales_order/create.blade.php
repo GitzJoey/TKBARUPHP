@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('sales_order.create.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('create_sales_order') !!}
+@endsection
 
 @section('content')
     <form class="form-horizontal" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">

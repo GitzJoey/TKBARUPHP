@@ -110,7 +110,7 @@ class PurchaseOrderController extends Controller
     }
 
     public function revise($id){
-        $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier', 'vendorTrucking', 'warehouse')->find($id);
+        $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products', 'vendorTrucking', 'warehouse')->find($id);
         $productDDL = Product::with('productUnits.unit')->get();
         $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
         $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);

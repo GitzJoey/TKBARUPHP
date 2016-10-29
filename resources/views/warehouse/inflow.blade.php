@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('warehouse.inflow.index.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('inflow', $warehouse == null ? null : $warehouse->id) !!}
+@endsection
 
 @section('content')
     @if ($message = Session::get('success'))
@@ -17,6 +20,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
+
     <div ng-app="warehouseModule" ng-controller="warehouseController">
         <div class="box box-info">
             <div class="box-header with-border">
@@ -25,6 +29,7 @@
             <div class="box-body">
                 <select id="inputWarehouse"
                         class="form-control"
+                        ng-change="refreshWarehousePo(warehouse)"
                         ng-model="warehouse"
                         ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
@@ -47,15 +52,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="po in selectedWarehousePo(warehouse)">
-                            <td class="text-center">@{{ po.code }}</td>
-                            <td class="text-center">@{{ po.po_created }}</td>
-                            <td class="text-center">@{{ po.supplier.name }}</td>
-                            <td class="text-center">@{{ po.shipping_date }}</td>
-                            <td class="text-center" width="20%">
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow') }}/@{{ po.id }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
-                            </td>
-                        </tr>
+                    @if($warehouse != null)
+                        @foreach ($warehouse->purchaseOrders as $key => $po)
+                            <tr>
+                                <td class="text-center">{{ $po->code }}</td>
+                                <td class="text-center">{{ date('d-m-Y', strtotime($po->po_created)) }}</td>
+                                <td class="text-center">
+                                    @if($po->supplier_type == 'SUPPLIERTYPE.R')
+                                        {{ $po->supplier->name }}
+                                    @else
+                                        {{ $po->walk_in_supplier }}
+                                    @endif
+                                </td>
+                                <td class="text-center">{{ date('d-m-Y', strtotime($po->shipping_date)) }}</td>
+                                <td class="text-center" width="20%">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow', $po->hId()) }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     </tbody>
                 </table>
             </div>
@@ -65,15 +80,13 @@
 @section('custom_js')
     <script type="application/javascript">
         var app = angular.module('warehouseModule', []);
-        app.controller('warehouseController', ['$scope', function($scope) {
+        app.controller('warehouseController', ['$scope', '$window', function($scope, $window) {
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-            $scope.allPOs = JSON.parse('{!! htmlspecialchars_decode($allPOs) !!}');
+            $scope.warehouse = JSON.parse('{!! htmlspecialchars_decode($warehouse) == '' ? '{}' : htmlspecialchars_decode($warehouse) !!}');
 
-            $scope.selectedWarehousePo = function (warehouse) {
-                return _.filter($scope.allPOs, function (PO) {
-                    return PO.warehouse_id === warehouse.id;
-                });
-            };
+            $scope.refreshWarehousePo = function (warehouse) {
+                $window.location.href = '{{ route('db.warehouse.inflow.index') }}/' + warehouse.id;
+            }
         }]);
     </script>
 @endsection

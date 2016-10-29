@@ -187,6 +187,8 @@ return [
         Themsaid\Langman\LangmanServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class
     ],
 
     /*
@@ -207,6 +209,7 @@ return [
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
@@ -215,6 +218,7 @@ return [
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
         'Event' => Illuminate\Support\Facades\Event::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'File' => Illuminate\Support\Facades\File::class,
         'Form' => Collective\Html\FormFacade::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,

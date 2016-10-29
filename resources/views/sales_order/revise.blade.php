@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('sales_order.revise.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('revise_sales_order') !!}
+@endsection
 
 @section('content')
 @endsection

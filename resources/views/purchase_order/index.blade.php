@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('purchase_order.revise.index.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('purchase_order') !!}
+@endsection
 
 @section('content')
     @if ($message = Session::get('success'))

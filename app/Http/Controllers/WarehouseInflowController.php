@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\ProductUnit;
 use App\Model\Receipt;
 use App\Model\Stock;
 use App\Model\StockIn;
@@ -15,6 +16,7 @@ use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Vinkla\Hashids\Facades\Hashids;
 
 class WarehouseInflowController extends Controller
@@ -24,11 +26,11 @@ class WarehouseInflowController extends Controller
         $this->middleware('auth');
     }
 
-    public function inflow(){
-        $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
-        $allPOs = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WA')->get();
+    public function inflow($id = null){
+        $warehouseDDL = Warehouse::all();
+        $warehouse = Warehouse::with('purchaseOrders.supplier')->find($id);
 
-        return view('warehouse.inflow', compact('warehouseDDL', 'allPOs'));
+        return view('warehouse.inflow', compact('warehouseDDL', 'warehouse'));
     }
 
     public function receipt($id){
@@ -38,25 +40,31 @@ class WarehouseInflowController extends Controller
     }
 
     public function saveReceipt(Request $request, $id){
-        $po = PurchaseOrder::find($id);
 
         for($i = 0; $i < sizeof($request->input('item_id')); $i++){
+            $conversionValue = ProductUnit::where(['product_id' => $request->input("product_id.$i"),
+                'unit_id' => $request->input("selected_unit_id.$i")])->first()->conversion_value;
+
             $receiptParams = [
                 'receipt_date' => date('Y-m-d', strtotime($request->input('receipt_date'))),
                 'brutto' => $request->input("brutto.$i"),
+                'base_brutto' => $conversionValue * $request->input("brutto.$i"),
                 'netto' => $request->input("netto.$i"),
+                'base_netto' => $conversionValue * $request->input("netto.$i"),
                 'tare' => $request->input("tare.$i"),
+                'base_tare' => $conversionValue * $request->input("tare.$i"),
                 'licence_plate' => $request->input('licence_plate'),
                 'item_id' => $request->input("item_id.$i"),
                 'selected_unit_id' => $request->input("selected_unit_id.$i"),
+                'base_unit_id' => $request->input("base_unit_id.$i"),
                 'store_id' => Auth::user()->store_id
             ];
 
             $stockParams = [
                 'store_id' => Auth::user()->store_id,
-                'po_id' => Hashids::decode($po->id)[0],
+                'po_id' => $id,
                 'product_id' => $request->input("product_id.$i"),
-                'warehouse_id' => $po->warehouse_id,
+                'warehouse_id' => $request->input('warehouse_id'),
                 'quantity' => $request->input("netto.$i"),
                 'current_quantity' => $request->input("netto.$i")
             ];
@@ -66,9 +74,9 @@ class WarehouseInflowController extends Controller
 
             $stockInParams = [
                 'store_id' => Auth::user()->store_id,
-                'po_id' => Hashids::decode($po->id)[0],
+                'po_id' => $id,
                 'product_id' => $request->input("product_id.$i"),
-                'warehouse_id' => $po->warehouse_id,
+                'warehouse_id' => $request->input('warehouse_id'),
                 'stock_id' => $stock->id,
                 'quantity' => $request->input("netto.$i")
             ];

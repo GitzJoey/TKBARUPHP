@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('warehouse.inflow.receipt.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('receipt', $po->hId(), $po->warehouse_id) !!}
+@endsection
 
 @section('content')
     @if (count($errors) > 0)
@@ -37,6 +40,7 @@
                                 <label for="inputWarehouse" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.warehouse')</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" readonly value="{{ $po->warehouse->name }}">
+                                    <input type="hidden" name="warehouse_id" value="{{ $po->warehouse->id }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -63,20 +67,20 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="inputReceiptDate" name="receipt_date" class="form-control">
+                                        <input type="text" id="inputReceiptDate" name="receipt_date" class="form-control" data-parsley-required="true">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputVendorTrucking" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly value="{{ $po->vendorTrucking->name }}">
+                                    <input type="text" class="form-control" readonly value="{{ $po->vendorTrucking->name }}" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputLicencePlate" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.licence_plate')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="inputLicencePlate" name="licence_plate" class="form-control">
+                                    <input type="text" id="inputLicencePlate" name="licence_plate" class="form-control" data-parsley-required="true">
                                 </div>
                             </div>
                         </div>
@@ -107,6 +111,7 @@
                                         <tr ng-repeat="receipt in inflow.receipts">
                                             <input type="hidden" name="item_id[]" ng-value="receipt.item.id">
                                             <input type="hidden" name="product_id[]" ng-value="receipt.item.product.id">
+                                            <input type="hidden" name="base_unit_id[]" ng-value="receipt.item.base_unit_id">
                                             <td class="align-middle">@{{ receipt.item.product.name }}</td>
                                             <td>
                                                 <select name="selected_unit_id[]" data-parsley-required="true"
@@ -117,13 +122,19 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="brutto[]" ng-model="receipt.brutto">
+                                                <input type="text" class="form-control text-right" name="brutto[]" ng-model="receipt.brutto"
+                                                       data-parsley-required="true"
+                                                       data-parsley-type="number">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="netto[]" ng-model="receipt.netto">
+                                                <input type="text" class="form-control text-right" name="netto[]" ng-model="receipt.netto"
+                                                       data-parsley-required="true"
+                                                       data-parsley-type="number">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="tare[]" ng-model="receipt.tare">
+                                                <input type="text" class="form-control text-right" name="tare[]" ng-model="receipt.tare"
+                                                       data-parsley-required="true"
+                                                       data-parsley-type="number">
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md" ng-click="removeReceipt($index)"><span class="fa fa-minus"/></button>
@@ -143,7 +154,7 @@
                 <div class="btn-toolbar">
                     <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                     <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db') }}" >@lang('buttons.cancel_button')</a>
+                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.inflow.index', $po->warehouse->id) }}" >@lang('buttons.cancel_button')</a>
                 </div>
             </div>
         </div>

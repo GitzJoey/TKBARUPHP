@@ -26,3 +26,7 @@ table td span.help-block {
 .skin-blue .treeview-menu > li.active > a, .skin-blue .treeview-menu > li > a:hover {
     color: lightskyblue;
 }
+
+ol.breadcrumb {
+    font-size: 12px;
+}

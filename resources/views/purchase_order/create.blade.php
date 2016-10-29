@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('purchase_order.create.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('create_purchase_order') !!}
+@endsection
 
 @section('content')
     @if (count($errors) > 0)
@@ -54,6 +57,7 @@
                                         <select id="inputSupplierId"
                                                 name="supplier_id"
                                                 class="form-control"
+                                                data-parsley-required="true"
                                                 ng-model="po.supplier"
                                                 ng-options="supplier as supplier.name for supplier in supplierDDL track by supplier.id">
                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
@@ -72,7 +76,7 @@
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-10">
                                         <input type="text" id="inputSupplierName" name="walk_in_supplier"
-                                               class="form-control" ng-model="po.supplier_name">
+                                               class="form-control" data-parsley-required="true" ng-model="po.supplier_name">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -80,7 +84,7 @@
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-10">
                                         <textarea id="inputSupplierDetails" class="form-control" rows="5"
-                                                  name="walk_in_supplier_detail"
+                                                  name="walk_in_supplier_detail" data-parsley-required="true"
                                                   ng-model="po.supplier_details"></textarea>
                                     </div>
                                 </div>
