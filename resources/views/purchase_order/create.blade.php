@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('purchase_order.create.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('create_purchase_order') !!}
+@endsection
 
 @section('content')
     @if (count($errors) > 0)

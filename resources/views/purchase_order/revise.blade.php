@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('purchase_order.revise.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('revise_purchase_order', $currentPo->hId()) !!}
+@endsection
 
 @section('content')
     @if (count($errors) > 0)

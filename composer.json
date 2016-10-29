@@ -16,7 +16,7 @@
         "intervention/image": "2.3.8",
         "rap2hpoutre/laravel-log-viewer": "v0.7.0",
         "hootlex/laravel-moderation": "v1.0.7",
-        "davejamesmiller/laravel-breadcrumbs": "3.0.1",
+        "davejamesmiller/laravel-breadcrumbs": "^3.0",
         "themsaid/laravel-langman": "v1.3.3",
         "hieu-le/active": "3.3.1",
         "maatwebsite/excel": "~2.1.6",

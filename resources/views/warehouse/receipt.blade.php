@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('warehouse.inflow.receipt.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('receipt', $po->hId()) !!}
+@endsection
 
 @section('content')
     @if (count($errors) > 0)

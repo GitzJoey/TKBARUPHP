@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('warehouse.inflow.index.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('inflow') !!}
+@endsection
 
 @section('content')
     @if ($message = Session::get('success'))
