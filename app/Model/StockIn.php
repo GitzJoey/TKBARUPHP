@@ -15,15 +15,19 @@ class StockIn extends Model
     protected $table = 'stock_ins';
 
     protected $fillable = [
-        'quantity', 'store_id', 'po_id', 'product_id', 'warehouse_id', 'stock_id'
+        'quantity',
+        'store_id',
+        'po_id',
+        'product_id',
+        'warehouse_id',
+        'stock_id'
     ];
 
     public static function boot()
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -31,16 +35,14 @@ class StockIn extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

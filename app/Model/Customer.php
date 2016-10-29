@@ -56,11 +56,19 @@ class Customer extends Model
 
     protected $table = 'customers';
 
-	protected $fillable = [
-        'name', 'address', 'city', 'phone_number', 'remarks', 'tax_id', 'status', 'payment_due_day'
+    protected $fillable = [
+        'name',
+        'address',
+        'city',
+        'phone_number',
+        'remarks',
+        'tax_id',
+        'status',
+        'payment_due_day'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
@@ -78,8 +86,7 @@ class Customer extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -87,16 +94,14 @@ class Customer extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

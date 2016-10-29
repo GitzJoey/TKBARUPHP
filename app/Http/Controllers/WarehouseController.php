@@ -41,7 +41,7 @@ class WarehouseController extends Controller
 
     public function store(Request $data)
     {
-        $this->validate($data,[
+        $this->validate($data, [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phone_num' => 'required|string|max:255',
@@ -49,12 +49,12 @@ class WarehouseController extends Controller
         ]);
 
         Warehouse::create([
-            'store_id'      => Auth::user()->store->id,
-            'name'          => $data['name'],
-            'address'       => $data['address'],
-            'phone_num'     => $data['phone_num'],
-            'status'        => $data['status'],
-            'remarks'       => $data['remarks']
+            'store_id' => Auth::user()->store->id,
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'phone_num' => $data['phone_num'],
+            'status' => $data['status'],
+            'remarks' => $data['remarks']
         ]);
 
         return redirect(route('db.master.warehouse'));

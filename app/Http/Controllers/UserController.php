@@ -66,7 +66,7 @@ class UserController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.admin.user.create'))->withInput()->withErrors($validator);
         } else {
-            $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
+            $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
             $data->image_path->move(public_path('images'), $imageName);
 
             $usr = new User();

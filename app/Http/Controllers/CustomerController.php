@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-	 public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
@@ -64,17 +64,17 @@ class CustomerController extends Controller
             return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
         } else {
             $customer = new Customer();
-            $customer->name             = $data['name'];
-            $customer->address          = $data['address'];
-            $customer->city             = $data['city'];
-            $customer->phone_number     = $data['phone'];
-            $customer->tax_id           = $data['tax_id'];
-            $customer->remarks          = $data['remarks'];
-            $customer->payment_due_day  = is_int($data['payment_due_day']) ? $data['payment_due_day']:0;
+            $customer->name = $data['name'];
+            $customer->address = $data['address'];
+            $customer->city = $data['city'];
+            $customer->phone_number = $data['phone'];
+            $customer->tax_id = $data['tax_id'];
+            $customer->remarks = $data['remarks'];
+            $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
 
             $customer->save();
 
-            for($i=0; $i<count($data['bank']); $i++) {
+            for ($i = 0; $i < count($data['bank']); $i++) {
                 $ba = new BankAccount();
                 $ba->bank_id = $data["bank"][$i];
                 $ba->account_number = $data["account_number"][$i];
@@ -83,7 +83,7 @@ class CustomerController extends Controller
                 $customer->bankAccounts()->save($ba);
             }
 
-            for($i=0; $i<count($data['first_name']); $i++) {
+            for ($i = 0; $i < count($data['first_name']); $i++) {
                 $pa = new Profile();
                 $pa->first_name = $data["first_name"][$i];
                 $pa->last_name = $data["last_name"][$i];
@@ -92,11 +92,11 @@ class CustomerController extends Controller
 
                 $customer->profiles()->save($pa);
 
-                for ($j=0; $j<count($data['profile_'.$i.'_phone_provider']); $j++) {
+                for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
                     $ph = new PhoneNumber();
-                    $ph->phone_provider_id = $data['profile_'.$i.'_phone_provider'][$j];
-                    $ph->number = $data['profile_'.$i.'_phone_number'][$j];
-                    $ph->remarks = $data['profile_'.$i.'_remarks'][$j];
+                    $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
+                    $ph->number = $data['profile_' . $i . '_phone_number'][$j];
+                    $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
 
                     $pa->phoneNumbers()->save($ph);
                 }
@@ -127,7 +127,7 @@ class CustomerController extends Controller
 
         $customer->bankAccounts()->detach();
 
-        for($i=0; $i<count($data['bank']); $i++) {
+        for ($i = 0; $i < count($data['bank']); $i++) {
             $ba = new BankAccount();
             $ba->bank_id = $data["bank"][$i];
             $ba->account_number = $data["account_number"][$i];
@@ -138,7 +138,7 @@ class CustomerController extends Controller
 
         $customer->profiles()->detach();
 
-        for($i=0; $i<count($data['first_name']); $i++) {
+        for ($i = 0; $i < count($data['first_name']); $i++) {
             $pa = new Profile();
             $pa->first_name = $data["first_name"][$i];
             $pa->last_name = $data["last_name"][$i];
@@ -147,23 +147,23 @@ class CustomerController extends Controller
 
             $customer->profiles()->save($pa);
 
-            for ($j=0; $j<count($data['profile_'.$i.'_phone_provider']); $j++) {
+            for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
                 $ph = new PhoneNumber();
-                $ph->phone_provider_id = $data['profile_'.$i.'_phone_provider'][$j];
-                $ph->number = $data['profile_'.$i.'_phone_number'][$j];
-                $ph->remarks = $data['profile_'.$i.'_remarks'][$j];
+                $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
+                $ph->number = $data['profile_' . $i . '_phone_number'][$j];
+                $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
 
                 $pa->phoneNumbers()->save($ph);
             }
         }
 
-        $customer->name             = $data['name'];
-        $customer->address          = $data['address'];
-        $customer->city             = $data['city'];
-        $customer->phone_number     = $data['phone'];
-        $customer->tax_id           = $data['tax_id'];
-        $customer->remarks          = $data['remarks'];
-        $customer->payment_due_day  = is_int($data['payment_due_day']) ? $data['payment_due_day']:0;
+        $customer->name = $data['name'];
+        $customer->address = $data['address'];
+        $customer->city = $data['city'];
+        $customer->phone_number = $data['phone'];
+        $customer->tax_id = $data['tax_id'];
+        $customer->remarks = $data['remarks'];
+        $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
 
         $customer->save();
 

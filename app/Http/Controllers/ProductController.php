@@ -20,19 +20,22 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() {
+    public function index()
+    {
         $product = Product::paginate(10);
 
         return view('product.index')->with('productlist', $product);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $product = Product::find($id);
 
         return view('product.show')->with('product', $product);
     }
 
-    public function create() {
+    public function create()
+    {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
         $unitDDL = Unit::whereStatus('STATUS.active')->get()->pluck('unit_name', 'id');
@@ -40,7 +43,8 @@ class ProductController extends Controller
         return view('product.create', compact('statusDDL', 'prodtypeDdL', 'unitDDL'));
     }
 
-    public function store(Request $data) {
+    public function store(Request $data)
+    {
         $validator = Validator::make($data->all(), [
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:255',
@@ -65,7 +69,7 @@ class ProductController extends Controller
 
             $product->save();
 
-            for($i=0; $i<count($data['unit_id']); $i++) {
+            for ($i = 0; $i < count($data['unit_id']); $i++) {
                 $punit = new ProductUnit();
                 $punit->unit_id = $data['unit_id'][$i];
                 $punit->is_base = (bool)$data['is_base'][$i];
@@ -79,7 +83,8 @@ class ProductController extends Controller
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $product = Product::find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
@@ -91,13 +96,14 @@ class ProductController extends Controller
         return view('product.edit', compact('product', 'statusDDL', 'prodtypeDdL', 'selected', 'unitDDL'));
     }
 
-    public function update($id, Request $data) {
+    public function update($id, Request $data)
+    {
         $product = Product::find($id);
 
         $product->productUnit()->delete();
 
         $pu = array();
-        for($i=0; $i<count($data['unit_id']); $i++) {
+        for ($i = 0; $i < count($data['unit_id']); $i++) {
             $punit = new ProductUnit();
             $punit->unit_id = $data['unit_id'][$i];
             $punit->is_base = (bool)$data['is_base'][$i];
@@ -121,7 +127,8 @@ class ProductController extends Controller
         return redirect(route('db.master.product'));
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $product = Product::find($id);
 
         $product->productUnit()->delete();

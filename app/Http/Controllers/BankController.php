@@ -18,7 +18,7 @@ use App\Model\Lookup;
 
 class BankController extends Controller
 {
-	public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
@@ -44,13 +44,13 @@ class BankController extends Controller
 
     public function store(Request $data)
     {
-        $validator = Validator::make($data->all(),[
-            'name'    		=> 'required|string|max:255',
-            'short_name' 	=> 'required|string|max:255',
-          	'branch' 	 	=> 'required|string|max:255',
-          	'branch_code' 	=> 'required|string|max:255',
-            'status'     	=> 'required',
-            'remarks'    	=> 'required|string|max:255',
+        $validator = Validator::make($data->all(), [
+            'name' => 'required|string|max:255',
+            'short_name' => 'required|string|max:255',
+            'branch' => 'required|string|max:255',
+            'branch_code' => 'required|string|max:255',
+            'status' => 'required',
+            'remarks' => 'required|string|max:255',
 
         ]);
 
@@ -59,13 +59,13 @@ class BankController extends Controller
         } else {
 
             Bank::create([
-                'store_id'      => Auth::user()->store->id,
-                'name'       	=> $data['name'],
-                'short_name' 	=> $data['short_name'],
-                'branch'	 	=> $data['branch'],
-                'branch_code'	=> $data['branch_code'],
-                'status'     	=> $data['status'],
-                'remarks'    	=> $data['remarks']
+                'store_id' => Auth::user()->store->id,
+                'name' => $data['name'],
+                'short_name' => $data['short_name'],
+                'branch' => $data['branch'],
+                'branch_code' => $data['branch_code'],
+                'status' => $data['status'],
+                'remarks' => $data['remarks']
             ]);
             return redirect(route('db.master.bank'));
         }
@@ -79,7 +79,7 @@ class BankController extends Controller
 
     public function edit($id)
     {
-        $bank= Bank::find($id);
+        $bank = Bank::find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 

@@ -53,17 +53,19 @@ class BankAccount extends Model
     protected $table = 'bank_accounts';
 
     protected $fillable = [
-        'bank_id','account_number', 'remarks'
+        'bank_id',
+        'account_number',
+        'remarks'
     ];
 
     public function suppliers()
     {
-    	return $this->belongsToMany('App\Model\Supplier', 'supplier_bank_account');
+        return $this->belongsToMany('App\Model\Supplier', 'supplier_bank_account');
     }
 
     public function bank()
     {
-    	return $this->belongsTo('App\Model\Bank', 'bank_id');
+        return $this->belongsTo('App\Model\Bank', 'bank_id');
     }
 
     public function customers()
@@ -75,8 +77,7 @@ class BankAccount extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -84,16 +85,14 @@ class BankAccount extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

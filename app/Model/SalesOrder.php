@@ -68,10 +68,21 @@ class SalesOrder extends Model
     protected $table = 'sales_orders';
 
     protected $fillable = [
-        'store_id', 'customer_id', 'vendor_truck_id', 'code', 'so_created', 'shipping_date', 'customer_type', 'walk_in_cust_detail', 'so_type', 'status', 'remarks'
+        'store_id',
+        'customer_id',
+        'vendor_truck_id',
+        'code',
+        'so_created',
+        'shipping_date',
+        'customer_type',
+        'walk_in_cust_detail',
+        'so_type',
+        'status',
+        'remarks'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
@@ -79,8 +90,7 @@ class SalesOrder extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -88,20 +98,19 @@ class SalesOrder extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;
                 $model->save();
             }
         });
-    }}
+    }
+}

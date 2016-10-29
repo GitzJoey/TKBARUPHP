@@ -51,14 +51,28 @@ class Receipt extends Model
 
     protected $dates = ['deleted_at', 'receipt_date'];
 
-    protected $fillable = [ 'item_id', 'licence_plate', 'receipt_date', 'brutto', 'base_brutto',
-        'netto', 'base_netto', 'tare', 'base_tare', 'selected_unit_id', 'base_unit_id', 'store_id' ];
+    protected $fillable = [
+        'item_id',
+        'licence_plate',
+        'receipt_date',
+        'brutto',
+        'base_brutto',
+        'netto',
+        'base_netto',
+        'tare',
+        'base_tare',
+        'selected_unit_id',
+        'base_unit_id',
+        'store_id'
+    ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function item(){
+    public function item()
+    {
         return $this->belongsTo('App\Model\Item', 'item_id');
     }
 
@@ -66,8 +80,7 @@ class Receipt extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -75,16 +88,14 @@ class Receipt extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

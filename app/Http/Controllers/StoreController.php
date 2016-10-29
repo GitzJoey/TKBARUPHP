@@ -24,7 +24,7 @@ class StoreController extends Controller
 
     public function index()
     {
-        Log::info('[StoreController@index] ' );
+        Log::info('[StoreController@index] ');
 
         $store = Store::paginate(10);
 
@@ -54,7 +54,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@store] ');
 
-        $this->validate($data,[
+        $this->validate($data, [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phone_num' => 'required|string|max:255',
@@ -67,22 +67,22 @@ class StoreController extends Controller
         $imageName = '';
 
         if (!empty($data->image_path)) {
-            $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
+            $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
             $path = public_path('images') . '/' . $imageName;
 
             Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
         }
 
         Store::create([
-            'name'          => $data['name'],
-            'address'       => $data['address'],
-            'phone_num'     => $data['phone_num'],
-            'fax_num'       => $data['fax_num'],
-            'tax_id'        => $data['tax_id'],
-            'status'        => $data['status'],
-            'is_default'    => $data['is_default'],
-            'image_filename'=> $imageName,
-            'remarks'       => empty($data['remarks']) ? '' : $data['remarks']
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'phone_num' => $data['phone_num'],
+            'fax_num' => $data['fax_num'],
+            'tax_id' => $data['tax_id'],
+            'status' => $data['status'],
+            'is_default' => $data['is_default'],
+            'image_filename' => $imageName,
+            'remarks' => empty($data['remarks']) ? '' : $data['remarks']
         ]);
 
         return redirect(route('db.admin.store'));
@@ -115,21 +115,21 @@ class StoreController extends Controller
         $imageName = '';
 
         if (!empty($data->image_path)) {
-            $imageName = time().'.'.$data->image_path->getClientOriginalExtension();
+            $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
             $path = public_path('images') . '/' . $imageName;
 
             Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
         }
 
-        $store->name            = $data['name'];
-        $store->address         = $data['address'];
-        $store->phone_num       = $data['phone_num'];
-        $store->fax_num         = $data['fax_num'];
-        $store->tax_id          = $data['tax_id'];
-        $store->status          = $data['status'];
-        $store->is_default      = $data['is_default'];
-        $store->image_filename  = $imageName;
-        $store->remarks         = empty($data['remarks']) ? '' : $data['remarks'];
+        $store->name = $data['name'];
+        $store->address = $data['address'];
+        $store->phone_num = $data['phone_num'];
+        $store->fax_num = $data['fax_num'];
+        $store->tax_id = $data['tax_id'];
+        $store->status = $data['status'];
+        $store->is_default = $data['is_default'];
+        $store->image_filename = $imageName;
+        $store->remarks = empty($data['remarks']) ? '' : $data['remarks'];
         $store->save();
 
         return redirect(route('db.admin.store'));

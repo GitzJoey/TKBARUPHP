@@ -54,10 +54,16 @@ class Warehouse extends Model
     protected $table = 'warehouses';
 
     protected $fillable = [
-        'store_id', 'name', 'address', 'phone_num', 'status', 'remarks'
+        'store_id',
+        'name',
+        'address',
+        'phone_num',
+        'status',
+        'remarks'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
@@ -65,12 +71,12 @@ class Warehouse extends Model
     {
         return $this->hasMany('App\Model\PurchaseOrder');
     }
+
     public static function boot()
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -78,16 +84,14 @@ class Warehouse extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

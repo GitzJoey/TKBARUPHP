@@ -55,16 +55,22 @@ class VendorTrucking extends Model
     protected $table = 'vendor_truckings';
 
     protected $fillable = [
-        'store_id', 'name', 'address', 'tax_id', 'status', 'remarks'
+        'store_id',
+        'name',
+        'address',
+        'tax_id',
+        'status',
+        'remarks'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
     public function bankAccounts()
     {
-       return $this->hasMany('App\Model\BankAccount');
+        return $this->hasMany('App\Model\BankAccount');
     }
 
     public function purchaseOrders()
@@ -76,8 +82,7 @@ class VendorTrucking extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -85,16 +90,14 @@ class VendorTrucking extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

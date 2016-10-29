@@ -74,22 +74,34 @@ class PurchaseOrder extends Model
     protected $dates = ['deleted_at', 'po_created', 'shipping_date'];
 
     protected $fillable = [
-        'code', 'po_type', 'po_created', 'shipping_date',
-        'supplier_type', 'walk_in_supplier', 'walk_in_supplier_detail',
-        'remarks', 'status', 'supplier_id', 'vendor_trucking_id', 'warehouse_id',
+        'code',
+        'po_type',
+        'po_created',
+        'shipping_date',
+        'supplier_type',
+        'walk_in_supplier',
+        'walk_in_supplier_detail',
+        'remarks',
+        'status',
+        'supplier_id',
+        'vendor_trucking_id',
+        'warehouse_id',
         'store_id'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function items(){
+    public function items()
+    {
         return $this->morphMany('App\Model\Item', 'itemable');
     }
 
-    public function receipts(){
-        return  $this->hasManyThrough('App\Model\Receipt', 'App\Model\Item', 'itemable_id', 'item_id', 'id');
+    public function receipts()
+    {
+        return $this->hasManyThrough('App\Model\Receipt', 'App\Model\Item', 'itemable_id', 'item_id', 'id');
     }
 
     public function payments()
@@ -117,7 +129,8 @@ class PurchaseOrder extends Model
         return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
     }
 
-    public function getIdAttribute($value){
+    public function getIdAttribute($value)
+    {
         return HashIds::encode($value);
     }
 
@@ -125,8 +138,7 @@ class PurchaseOrder extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -134,16 +146,14 @@ class PurchaseOrder extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

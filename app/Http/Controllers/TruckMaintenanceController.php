@@ -20,37 +20,37 @@ class TruckMaintenanceController extends Controller
 
     public function index()
     {
-		$trucklist = TruckMaintenance::paginate(10);
+        $trucklist = TruckMaintenance::paginate(10);
         return view('truck_maintenance.index', compact('trucklist'));
     }
 
     public function create()
     {
         $mtctypeDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
-		$trucklist = Truck::get()->pluck('plate_number', 'id');
+        $trucklist = Truck::get()->pluck('plate_number', 'id');
 
-        return view('truck_maintenance.create', compact('mtctypeDDL','trucklist'));
+        return view('truck_maintenance.create', compact('mtctypeDDL', 'trucklist'));
     }
 
     public function store(Request $data)
     {
-        $validator = Validator::make($data->all(),[
-            'plate_number'      => 'required',
-            'maintenance_type'  => 'required',
-            'cost'              => 'required|numeric',
-            'odometer'          => 'required|numeric',
+        $validator = Validator::make($data->all(), [
+            'plate_number' => 'required',
+            'maintenance_type' => 'required',
+            'cost' => 'required|numeric',
+            'odometer' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.truck.maintenance.create'))->withInput()->withErrors($validator);
         } else {
             TruckMaintenance::create([
-                'store_id'          => Auth::user()->store->id,
-                'truck_id'          => $data['plate_number'],
-                'maintenance_type'  => $data['maintenance_type'],
-                'cost'              => $data['cost'],
-                'odometer'          => $data['odometer'],
-                'remarks'           => $data['remarks'],
+                'store_id' => Auth::user()->store->id,
+                'truck_id' => $data['plate_number'],
+                'maintenance_type' => $data['maintenance_type'],
+                'cost' => $data['cost'],
+                'odometer' => $data['odometer'],
+                'remarks' => $data['remarks'],
             ]);
 
             return redirect(route('db.truck.maintenance'));
@@ -61,19 +61,19 @@ class TruckMaintenanceController extends Controller
     {
         $truckMtc = TruckMaintenance::find($id);
 
-        $trucklist = Truck::get()->pluck('plate_number', 'id' );
+        $trucklist = Truck::get()->pluck('plate_number', 'id');
         $mtctypeDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
 
-        return view('truck_maintenance.edit', compact('truckMtc','trucklist', 'mtctypeDDL'));
+        return view('truck_maintenance.edit', compact('truckMtc', 'trucklist', 'mtctypeDDL'));
     }
 
     public function update($id, Request $req)
     {
-        $validator = Validator::make($req->all(),[
+        $validator = Validator::make($req->all(), [
             'maintenance_type' => 'required',
-            'cost'             => 'required|numeric',
-            'odometer'         => 'required|numeric',
-            'remarks'          => 'required',
+            'cost' => 'required|numeric',
+            'odometer' => 'required|numeric',
+            'remarks' => 'required',
         ]);
         if ($validator->fails()) {
             return redirect(route('db.truck.maintenance.edit', ['id' => $id]))->withInput()->withErrors($validator);

@@ -32,9 +32,10 @@ class SalesOrderController extends Controller
         $warehouseDDL = Warehouse::whereStatus('STATUS.Active')->get(['name', 'id']);
         $productDDL = Product::whereStatus('STATUS.Active')->get(['name', 'id']);
         $soCode = SOCodeGenerator::generateSOCode();
-        $customerDDL = Customer::all([ 'id', 'name' ]);
+        $customerDDL = Customer::all(['id', 'name']);
         $vendortruckingDDL = VendorTrucking::whereStatus('STATUS.active')->get(['name', 'id']);
-        $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=', 'SOSTATUS.D');
+        $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=',
+            'SOSTATUS.D');
 
         $stocksDDL = '';
 
@@ -46,7 +47,7 @@ class SalesOrderController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'code' => 'required|string|max:255',
             'so_type' => 'required|string|max:255',
             'so_created' => 'required|string|max:255',
@@ -72,14 +73,16 @@ class SalesOrderController extends Controller
 
         $so = SalesOrder::create($params);
 
-        for($i = 0; $i < count($request->input('product_id')); $i++)
-        {
+        for ($i = 0; $i < count($request->input('product_id')); $i++) {
             $item = new Item();
             $item->product_id = $request->input("product_id.$i");
             $item->store_id = Auth::user()->store_id;
             $item->selected_unit_id = $request->input("selected_unit_id.$i");
             $item->base_unit_id = $request->input("base_unit_id.$i");
-            $item->conversion_value = ProductUnit::where(['product_id' => $item->product_id, 'unit_id' => $item->selected_unit_id])->first()->conversion_value;
+            $item->conversion_value = ProductUnit::where([
+                'product_id' => $item->product_id,
+                'unit_id' => $item->selected_unit_id
+            ])->first()->conversion_value;
             $item->quantity = $request->input("quantity.$i");
             $item->price = $request->input("price.$i");
             $item->to_base_quantity = $item->quantity * $item->conversion_value;
@@ -90,7 +93,8 @@ class SalesOrderController extends Controller
         return redirect(route('db.so.create'));
     }
 
-    public function index(){
+    public function index()
+    {
         $salesorder = SalesOrder::all();
         $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
 

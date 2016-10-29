@@ -42,7 +42,7 @@ class VendorTruckingController extends Controller
 
     public function store(Request $data)
     {
-        $this->validate($data,[
+        $this->validate($data, [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'tax_id' => 'required|string|max:255',
@@ -50,12 +50,12 @@ class VendorTruckingController extends Controller
         ]);
 
         VendorTrucking::create([
-            'store_id'      => Auth::user()->store->id,
-            'name'          => $data['name'],
-            'address'       => $data['address'],
-            'tax_id'        => $data['tax_id'],
-            'status'        => $data['status'],
-            'remarks'       => $data['remarks']
+            'store_id' => Auth::user()->store->id,
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'tax_id' => $data['tax_id'],
+            'status' => $data['status'],
+            'remarks' => $data['remarks']
         ]);
 
         return redirect(route('db.master.vendor.trucking'));
