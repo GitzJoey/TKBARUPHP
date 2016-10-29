@@ -32,7 +32,7 @@ elixir(function (mix) {
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
         './node_modules/angular/angular.min.js',
         './node_modules/angular-sanitize/angular-sanitize.min.js',
-        './node_modules/bootstrap-daterangepicker/moment.min.js',
+        './node_modules/moment/min/moment.min.js',
         './node_modules/icheck/icheck.min.js',
         './node_modules/bootstrap-daterangepicker/daterangepicker.js',
         './resources/assets/js/parsley.config.js',
@@ -47,5 +47,10 @@ elixir(function (mix) {
         './node_modules/lodash/lodash.min.js',
         './node_modules/jquery-gotop/src/jquery.gotop.min.js',
         './resources/assets/js/adminlte.custom.js'
-    ], 'public/adminlte/js/app.js');
+    ], 'public/adminlte/js/app.js')
+    .copy('node_modules/bootstrap/fonts', 'public/adminlte/fonts')
+    .copy('node_modules/font-awesome/fonts', 'public/adminlte/fonts')
+    .copy('node_modules/ionicons/dist/fonts', 'public/adminlte/fonts')
+    .copy('node_modules/icheck/skins/square/blue.png', 'public/adminlte/css')
+    .copy('node_modules/icheck/skins/square/blue@2x.png', 'public/adminlte/css');
 });

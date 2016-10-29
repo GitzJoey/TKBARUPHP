@@ -48,14 +48,14 @@
                 <div class="form-group {{ $errors->has('store') ? 'has-error' : '' }}">
                     <label for="inputStore" class="col-sm-2 control-label">Store</label>
                     <div class="col-sm-10">
-                        {{ Form::select('store', $storeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('store', $storeDDL, $user->store->id, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('store') ? $errors->first('store') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="inputRoles" class="col-sm-2 control-label">Roles</label>
                     <div class="col-sm-10">
-                        {{ Form::select('roles', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('roles', $rolesDDL, $user->roles->first()->name, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('roles') ? $errors->first('roles') : '' }}</span>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                 <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
                     <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputFirstName" name="first_name" placeholder="First Name">
+                        <input type="text" class="form-control" id="inputFirstName" name="first_name" value="{{ $user->userDetails }}" placeholder="First Name">
                         <span class="help-block">{{ $errors->has('first_name') ? $errors->first('first_name') : '' }}</span>
                     </div>
                 </div>

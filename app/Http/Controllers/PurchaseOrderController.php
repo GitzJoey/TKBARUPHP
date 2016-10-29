@@ -76,7 +76,7 @@ class PurchaseOrderController extends Controller
             'walk_in_supplier_detail' => $request->input('walk_in_supplier_detail'),
             'remarks' => $request->input('remarks'),
             'status' => Lookup::whereCode('POSTATUS.WA')->first()->code,
-            'supplier_id' => $request->input('supplier_id'),
+            'supplier_id' => empty($request->input('supplier_id')) ? 0:$request->input('supplier_id'),
             'vendor_trucking_id' => empty($request->input('vendor_trucking_id')) ? 0:$request->input('vendor_trucking_id'),
             'warehouse_id' => $request->input('warehouse_id'),
             'store_id' => Auth::user()->store_id
