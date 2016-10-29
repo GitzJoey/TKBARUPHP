@@ -51,7 +51,8 @@ class Receipt extends Model
 
     protected $dates = ['deleted_at', 'receipt_date'];
 
-    protected $fillable = [ 'item_id', 'licence_plate', 'receipt_date', 'brutto', 'netto', 'tare', 'selected_unit_id', 'store_id' ];
+    protected $fillable = [ 'item_id', 'licence_plate', 'receipt_date', 'brutto', 'base_brutto',
+        'netto', 'base_netto', 'tare', 'base_tare', 'selected_unit_id', 'base_unit_id', 'store_id' ];
 
     public function hId() {
         return HashIds::encode($this->attributes['id']);

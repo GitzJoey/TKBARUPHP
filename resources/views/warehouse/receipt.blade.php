@@ -40,6 +40,7 @@
                                 <label for="inputWarehouse" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.warehouse')</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" readonly value="{{ $po->warehouse->name }}">
+                                    <input type="hidden" name="warehouse_id" value="{{ $po->warehouse->id }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -110,6 +111,7 @@
                                         <tr ng-repeat="receipt in inflow.receipts">
                                             <input type="hidden" name="item_id[]" ng-value="receipt.item.id">
                                             <input type="hidden" name="product_id[]" ng-value="receipt.item.product.id">
+                                            <input type="hidden" name="base_unit_id[]" ng-value="receipt.item.base_unit_id">
                                             <td class="align-middle">@{{ receipt.item.product.name }}</td>
                                             <td>
                                                 <select name="selected_unit_id[]" data-parsley-required="true"
