@@ -26,21 +26,19 @@ class SalesOrderController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $customerDDL = Customer::all([ 'id', 'name' ]);
+        $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
+        $vendorTruckingDDL = VendorTrucking::all([ 'id', 'name' ]);
+        $productDDL = Product::with('productUnits.unit')->get();
         $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get()->pluck('description', 'code');
         $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get()->pluck('description', 'code');
-        $warehouseDDL = Warehouse::whereStatus('STATUS.Active')->get(['name', 'id']);
-        $productDDL = Product::whereStatus('STATUS.Active')->get(['name', 'id']);
         $soCode = SOCodeGenerator::generateSOCode();
-        $customerDDL = Customer::all([ 'id', 'name' ]);
-        $vendortruckingDDL = VendorTrucking::whereStatus('STATUS.active')->get(['name', 'id']);
         $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=', 'SOSTATUS.D');
 
         $stocksDDL = '';
 
-        return view('sales_order.create', compact(
-            'statusDDL', 'soTypeDDL', 'customerTypeDDL', 'warehouseDDL',
-            'productDDL', 'stocksDDL', 'vendortruckingDDL', 'customerDDL'
+        return view('sales_order.create', compact( 'soTypeDDL', 'customerTypeDDL', 'warehouseDDL',
+            'productDDL', 'stocksDDL', 'vendorTruckingDDL', 'customerDDL'
             , 'soCode', 'soStatusDraft'));
     }
 
@@ -99,6 +97,7 @@ class SalesOrderController extends Controller
 
     public function revise($id)
     {
+
         $currentSales = '';
 
         return view('sales_order.revise', compact('currentSales', 'productDDL'));
