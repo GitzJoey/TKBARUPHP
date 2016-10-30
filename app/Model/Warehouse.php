@@ -62,7 +62,16 @@ class Warehouse extends Model
         'remarks'
     ];
 
+    protected $appends = [
+        'hid'
+    ];
+
     public function hId()
+    {
+        return HashIds::encode($this->attributes['id']);
+    }
+
+    public function getHidAttribute()
     {
         return HashIds::encode($this->attributes['id']);
     }

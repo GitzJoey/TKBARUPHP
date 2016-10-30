@@ -85,7 +85,7 @@
             $scope.warehouse = JSON.parse('{!! htmlspecialchars_decode($warehouse) == '' ? '{}' : htmlspecialchars_decode($warehouse) !!}');
 
             $scope.refreshWarehousePo = function (warehouse) {
-                $window.location.href = '{{ route('db.warehouse.inflow.index') }}/' + warehouse.id;
+                $window.location.href = '{{ route('db.warehouse.inflow.index') }}/' + warehouse.hid;
             }
         }]);
     </script>
