@@ -20,7 +20,7 @@ class WarehouseOutflowController extends Controller
 
     public function outflow()
     {
-        $warehouseDDL = Warehouse::all([ 'id', 'name' ]);
+        $warehouseDDL = Warehouse::all(['id', 'name']);
         $allSOs = SalesOrder::with('customer')->where('status', '=', 'POSTATUS.WA')->get();
 
         return view('warehouse.outflow', compact('warehouseDDL', 'allSOs'));
@@ -35,7 +35,7 @@ class WarehouseOutflowController extends Controller
 
     public function saveDeliver(Request $request)
     {
-        for($i = 0; $i < sizeof($request->input('item_id')); $i++){
+        for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
             $params = [
                 'deliver_date' => date('Y-m-d', strtotime($request->input('deliver_date'))),
                 'brutto' => $request->input("brutto.$i"),

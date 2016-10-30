@@ -26,24 +26,29 @@ class WarehouseInflowController extends Controller
         $this->middleware('auth');
     }
 
-    public function inflow($id = null){
+    public function inflow($id = null)
+    {
         $warehouseDDL = Warehouse::all();
         $warehouse = Warehouse::with('purchaseOrders.supplier')->find($id);
 
         return view('warehouse.inflow', compact('warehouseDDL', 'warehouse'));
     }
 
-    public function receipt($id){
+    public function receipt($id)
+    {
         $po = PurchaseOrder::with('items.product.productUnits.unit')->find($id);
 
         return view('warehouse.receipt', compact('po'));
     }
 
-    public function saveReceipt(Request $request, $id){
+    public function saveReceipt(Request $request, $id)
+    {
 
-        for($i = 0; $i < sizeof($request->input('item_id')); $i++){
-            $conversionValue = ProductUnit::where(['product_id' => $request->input("product_id.$i"),
-                'unit_id' => $request->input("selected_unit_id.$i")])->first()->conversion_value;
+        for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
+            $conversionValue = ProductUnit::where([
+                'product_id' => $request->input("product_id.$i"),
+                'unit_id' => $request->input("selected_unit_id.$i")
+            ])->first()->conversion_value;
 
             $receiptParams = [
                 'receipt_date' => date('Y-m-d', strtotime($request->input('receipt_date'))),

@@ -45,7 +45,8 @@ class Setting extends Model
         'description'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 

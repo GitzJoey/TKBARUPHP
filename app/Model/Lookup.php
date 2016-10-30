@@ -32,7 +32,9 @@ class Lookup extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'code', 'description', 'category'
+        'code',
+        'description',
+        'category'
     ];
 
 }

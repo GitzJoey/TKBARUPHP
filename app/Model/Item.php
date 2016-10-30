@@ -75,19 +75,23 @@ class Item extends Model
         'itemable_type'
     ];
 
-    public function product(){
+    public function product()
+    {
         return $this->belongsTo('App\Model\Product', 'product_id');
     }
 
-    public function selectedUnit(){
+    public function selectedUnit()
+    {
         return $this->belongsTo('App\Model\ProductUnit', 'selected_unit_id');
     }
 
-    public function receipts(){
+    public function receipts()
+    {
         return $this->hasMany('App\Model\Receipt');
     }
 
-    public function itemable(){
+    public function itemable()
+    {
         return $this->morphTo();
     }
 

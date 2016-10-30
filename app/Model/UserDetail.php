@@ -47,10 +47,12 @@ class UserDetail extends Model
     protected $table = 'user_details';
 
     protected $fillable = [
-        'type', 'allow_login'
+        'type',
+        'allow_login'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 
@@ -58,8 +60,7 @@ class UserDetail extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -67,16 +68,14 @@ class UserDetail extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

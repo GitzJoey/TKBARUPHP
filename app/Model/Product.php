@@ -63,10 +63,18 @@ class Product extends Model
     protected $table = 'products';
 
     protected $fillable = [
-        'store_id', 'product_type_id', 'name', 'short_code', 'description', 'image_path', 'status', 'remarks'
+        'store_id',
+        'product_type_id',
+        'name',
+        'short_code',
+        'description',
+        'image_path',
+        'status',
+        'remarks'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
@@ -89,10 +97,10 @@ class Product extends Model
     {
         $pu = array();
 
-        foreach($this->getProductUnit as $produnit) {
+        foreach ($this->getProductUnit as $produnit) {
             array_push($pu, array(
                 'unit_id' => (string)$produnit->unit_id,
-                'is_base' => empty($produnit->is_base) ? false:true,
+                'is_base' => empty($produnit->is_base) ? false : true,
                 'conversion_value' => $produnit->conversion_value,
                 'remarks' => $produnit->remarks,
             ));
@@ -105,8 +113,7 @@ class Product extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -114,16 +121,14 @@ class Product extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

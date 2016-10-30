@@ -54,10 +54,15 @@ class ProductType extends Model
     protected $table = 'product_types';
 
     protected $fillable = [
-        'store_id', 'name', 'short_code', 'description', 'status'
+        'store_id',
+        'name',
+        'short_code',
+        'description',
+        'status'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
@@ -70,8 +75,7 @@ class ProductType extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -79,16 +83,14 @@ class ProductType extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

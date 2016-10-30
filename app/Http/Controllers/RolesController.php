@@ -53,7 +53,7 @@ class RolesController extends Controller
             $role->description = $data['description'];
             $role->save();
 
-            foreach($data['permission'] as $pl) {
+            foreach ($data['permission'] as $pl) {
                 $role->permissions()->attach($pl);
             }
 

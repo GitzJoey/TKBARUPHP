@@ -48,14 +48,21 @@ class TruckMaintenance extends Model
     protected $table = 'truck_maintenances';
 
     protected $fillable = [
-        'store_id', 'truck_id', 'maintenance_type', 'cost', 'odometer', 'remarks'
+        'store_id',
+        'truck_id',
+        'maintenance_type',
+        'cost',
+        'odometer',
+        'remarks'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function truck() {
+    public function truck()
+    {
         return $this->belongsTo('App\Model\Truck');
     }
 
@@ -63,8 +70,7 @@ class TruckMaintenance extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -72,16 +78,14 @@ class TruckMaintenance extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

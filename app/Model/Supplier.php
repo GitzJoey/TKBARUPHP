@@ -65,10 +65,19 @@ class Supplier extends Model
     protected $table = 'suppliers';
 
     protected $fillable = [
-        'name', 'address', 'city', 'phone_number', 'fax_num', 'tax_id', 'payment_due_day', 'status', 'remarks',
+        'name',
+        'address',
+        'city',
+        'phone_number',
+        'fax_num',
+        'tax_id',
+        'payment_due_day',
+        'status',
+        'remarks',
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
@@ -96,8 +105,7 @@ class Supplier extends Model
     {
         parent::boot();
 
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->created_by = $user->id;
@@ -105,16 +113,14 @@ class Supplier extends Model
             }
         });
 
-        static::updating(function($model)
-        {
+        static::updating(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->updated_by = $user->id;
             }
         });
 
-        static::deleting(function($model)
-        {
+        static::deleting(function ($model) {
             $user = Auth::user();
             if ($user) {
                 $model->deleted_by = $user->id;

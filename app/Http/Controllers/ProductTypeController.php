@@ -42,7 +42,7 @@ class ProductTypeController extends Controller
 
     public function store(Request $data)
     {
-        $this->validate($data,[
+        $this->validate($data, [
             'name' => 'required|string|max:255',
             'short_code' => 'required|string|max:255',
             'description' => 'required|string|max:255',
@@ -50,10 +50,10 @@ class ProductTypeController extends Controller
         ]);
 
         ProductType::create([
-            'name'          => $data['name'],
-            'short_code'    => $data['short_code'],
-            'description'   => $data['description'],
-            'status'        => $data['status'],
+            'name' => $data['name'],
+            'short_code' => $data['short_code'],
+            'description' => $data['description'],
+            'status' => $data['status'],
         ]);
 
         return redirect(route('db.master.producttype'));

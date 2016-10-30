@@ -35,14 +35,18 @@ use Vinkla\Hashids\Facades\Hashids;
 class Role extends EntrustRole
 {
     protected $fillable = [
-      'name', 'display_name', 'description'
+        'name',
+        'display_name',
+        'description'
     ];
 
-    public function hId() {
+    public function hId()
+    {
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function permissions() {
+    public function permissions()
+    {
         return $this->belongsToMany('App\Model\Permission', 'permission_role', 'role_id', 'permission_id');
     }
 }

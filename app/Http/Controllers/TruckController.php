@@ -44,7 +44,7 @@ class TruckController extends Controller
 
     public function store(Request $data)
     {
-        $validator = Validator::make($data->all(),[
+        $validator = Validator::make($data->all(), [
             'plate_number' => 'required|string|max:255',
             'inspection_date' => 'required|string|max:255',
             'driver' => 'required|string|max:255',
@@ -55,12 +55,12 @@ class TruckController extends Controller
             return redirect(route('db.master.truck.create'))->withInput()->withErrors($validator);
         } else {
             Truck::create([
-                'store_id'          => Auth::user()->store->id,
-                'plate_number'      => $data['plate_number'],
-                'inspection_date'   => date('Y-m-d', strtotime($data->input('inspection_date '))),
-                'driver'            => $data['driver'],
-                'status'            => $data['status'],
-                'remarks'           => $data['remarks']
+                'store_id' => Auth::user()->store->id,
+                'plate_number' => $data['plate_number'],
+                'inspection_date' => date('Y-m-d', strtotime($data->input('inspection_date '))),
+                'driver' => $data['driver'],
+                'status' => $data['status'],
+                'remarks' => $data['remarks']
             ]);
             return redirect(route('db.master.truck'));
         }
@@ -77,7 +77,7 @@ class TruckController extends Controller
 
     public function update($id, Request $req)
     {
-        $validator = Validator::make($req->all(),[
+        $validator = Validator::make($req->all(), [
             'plate_number' => 'required|string|max:255',
             'inspection_date' => 'required|string|max:255',
             'driver' => 'required|string|max:255',
