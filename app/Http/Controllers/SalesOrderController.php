@@ -14,6 +14,7 @@ use App\Model\Product;
 use App\Model\ProductUnit;
 use App\Model\PurchaseOrder;
 use App\Model\SalesOrder;
+use App\Model\Stock;
 use App\Model\VendorTrucking;
 use App\Model\Warehouse;
 use App\Util\SOCodeGenerator;
@@ -38,7 +39,8 @@ class SalesOrderController extends Controller
         $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=',
             'SOSTATUS.D');
 
-        $stocksDDL = '';
+        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
+            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL',
             'productDDL', 'stocksDDL', 'vendorTruckingDDL', 'customerDDL'

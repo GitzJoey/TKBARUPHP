@@ -54,7 +54,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div ng-show="so.customer_type == 'CUSTOMERTYPE.r'">
+                                                    <div ng-show="so.customer_type == 'CUSTOMERTYPE.R'">
                                                         <div class="form-group">
                                                             <label for="inputCustomerId@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-7">
@@ -68,7 +68,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div ng-show="so.customer_type == 'CUSTOMERTYPE.wi'">
+                                                    <div ng-show="so.customer_type == 'CUSTOMERTYPE.WI'">
                                                         <div class="form-group">
                                                             <label for="inputCustomerName@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-9">
@@ -122,7 +122,7 @@
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <input type="text" class="form-control" id="inputSoDate@{{ $index + 1 }}"
+                                                                <input type="text" class="form-control inputSoDate" id="inputSoDate@{{ $index + 1 }}"
                                                                        name="so_created[]" ng-model="so.soCreated" data-parsley-required="true">
                                                             </div>
                                                         </div>
@@ -151,7 +151,7 @@
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <input type="text" class="form-control" id="inputShippingDate@{{ $index + 1 }}"
+                                                                <input type="text" class="form-control inputShippingDate" id="inputShippingDate@{{ $index + 1 }}"
                                                                        name="shipping_date[]" ng-model="so.shippingDate" data-parsley-required="true">
                                                             </div>
                                                         </div>
@@ -216,7 +216,7 @@
                                                                 <select id="inputStock@{{ $index + 1 }}"
                                                                         class="form-control"
                                                                         ng-model="so.stock"
-                                                                        ng-options="stock as stock.product.name for stock in stockDDL track by stock.id">
+                                                                        ng-options="stock as stock.product.name for stock in stocksDDL track by stock.id">
                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                 </select>
                                                             </div>
@@ -309,9 +309,11 @@
             $scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
+            $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
+            $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
 
             $scope.SOs = [{
-                so_code: '{!! \App\Util\SOCodeGenerator::generateSOCode() !!}',
+                so_code: '{!! SOCodeGenerator::generateSOCode() !!}',
                 customer_type : '',
                 items : []
             }];
@@ -319,14 +321,24 @@
         }]);
 
         $(function () {
-            $("#inputSoDate").daterangepicker(
+            $(".inputSoDate").daterangepicker(
                     {
+                        timePicker: true,
+                        timePickerIncrement: 15,
+                        locale: {
+                            format: 'DD-MM-YYYY'
+                        },
                         singleDatePicker: true,
                         showDropdowns: true
                     }
             );
-            $("#inputShippingDate").daterangepicker(
+            $(".inputShippingDate").daterangepicker(
                     {
+                        timePicker: true,
+                        timePickerIncrement: 15,
+                        locale: {
+                            format: 'DD-MM-YYYY'
+                        },
                         singleDatePicker: true,
                         showDropdowns: true
                     }
