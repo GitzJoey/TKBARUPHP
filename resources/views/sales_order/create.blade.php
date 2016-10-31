@@ -27,7 +27,7 @@
                                     <a href="#tab_so@{{ $index + 1 }}" data-toggle="tab">@lang('sales_order.create.tab.sales') @{{ $index + 1 }}</a>
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-xs btn-default pull-right">
+                                    <button type="button" class="btn btn-xs btn-default pull-right" ng-click="insertTab()">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
                                 </li>
@@ -342,7 +342,7 @@
 @section('custom_js')
     <script type="application/javascript">
         var app = angular.module("SalesOrderModule", []);
-        app.controller("SalesOrderCreateController", ['$scope', '$http', function($scope, $http) {
+        app.controller("SalesOrderCreateController", ['$scope', '$http', '$q', function($scope, $http, $q) {
             $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
             $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');
             $scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');
@@ -351,11 +351,52 @@
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
 
+            $scope.setSOCode = function(so){
+                $http.get('{{ route('api.so.code') }}').success(function(data){
+                    so.so_code = data;
+                });
+            };
+
             $scope.SOs = [{
-                so_code: '{{ $soCode }}',
+                so_code: '',
                 customer_type : '',
                 items : []
             }];
+            $scope.setSOCode($scope.SOs[0]);
+
+            $scope.insertTab = function(){
+                var so = {
+                    so_code: '',
+                    customer_type: '',
+                    items : []
+                }
+                $scope.setSOCode(so);
+                $scope.SOs.push(so);
+                $(function () {
+                    $(".inputSoDate").daterangepicker(
+                            {
+                                timePicker: true,
+                                timePickerIncrement: 15,
+                                locale: {
+                                    format: 'DD-MM-YYYY'
+                                },
+                                singleDatePicker: true,
+                                showDropdowns: true
+                            }
+                    );
+                    $(".inputShippingDate").daterangepicker(
+                            {
+                                timePicker: true,
+                                timePickerIncrement: 15,
+                                locale: {
+                                    format: 'DD-MM-YYYY'
+                                },
+                                singleDatePicker: true,
+                                showDropdowns: true
+                            }
+                    );
+                });
+            };
 
             $scope.grandTotal = function (index) {
                 var result = 0;
@@ -367,7 +408,8 @@
 
             function isBase(unit) {
                 return unit.is_base == 1;
-            };
+            }
+
 
             $scope.insertProduct = function (index, product) {
                 $scope.SOs[index].items.push({
