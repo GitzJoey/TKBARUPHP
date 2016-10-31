@@ -22,7 +22,7 @@ class PriceLevelTableSeeder extends Seeder
         $pp = [
             [
                 'store_id' => 1,
-                'type' => 'PRICELEVELTYPE.inc',
+                'type' => 'PRICELEVELTYPE.INC',
                 'weight' => 0,
                 'name' => 'RETAIL',
                 'description' => 'Retail / Eceran',
@@ -32,7 +32,7 @@ class PriceLevelTableSeeder extends Seeder
             ],
             [
                 'store_id' => 1,
-                'type' => 'PRICELEVELTYPE.inc',
+                'type' => 'PRICELEVELTYPE.INC',
                 'weight' => 1,
                 'name' => 'WHOLESALE 1',
                 'description' => 'Wholesale / Grosir Type 1',
@@ -42,7 +42,7 @@ class PriceLevelTableSeeder extends Seeder
             ],
             [
                 'store_id' => 1,
-                'type' => 'PRICELEVELTYPE.inc',
+                'type' => 'PRICELEVELTYPE.INC',
                 'weight' => 2,
                 'name' => 'WHOLESALE 2',
                 'description' => 'Wholesale / Grosir Type 2',

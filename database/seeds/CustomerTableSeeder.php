@@ -8,6 +8,7 @@
 
 use App\Model\Profile;
 use App\Model\Customer;
+use App\Model\PriceLevel;
 use App\Model\BankAccount;
 use App\Model\PhoneNumber;
 
@@ -30,6 +31,7 @@ class CustomerTableSeeder extends Seeder
             $customer->phone_number = '0000000000';
             $customer->fax_num = '0000000000';
             $customer->tax_id = '123-123-123-123-123';
+            $customer->price_level_id = 1;
 
             $customer->save();
 

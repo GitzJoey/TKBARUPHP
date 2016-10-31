@@ -56,6 +56,7 @@ return [
         'phone_number' => 'Telepon',
         'bank' => 'Bank',
         'bank_account' => 'Akun Bank',
+        'price_level' => 'Tingkatan Harga',
         'payment_due_day' => 'Tenggat Pembayaran',
     ],
     'index' => [

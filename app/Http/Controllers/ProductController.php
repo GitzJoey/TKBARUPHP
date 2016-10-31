@@ -38,7 +38,7 @@ class ProductController extends Controller
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
-        $unitDDL = Unit::whereStatus('STATUS.active')->get()->pluck('unit_name', 'id');
+        $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
         return view('product.create', compact('statusDDL', 'prodtypeDdL', 'unitDDL'));
     }
@@ -89,7 +89,7 @@ class ProductController extends Controller
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
-        $unitDDL = Unit::whereStatus('STATUS.active')->get()->pluck('unit_name', 'id');
+        $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
         $selected = $product->type->id;
 

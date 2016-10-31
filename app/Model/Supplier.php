@@ -65,6 +65,7 @@ class Supplier extends Model
     protected $table = 'suppliers';
 
     protected $fillable = [
+        'store_id',
         'name',
         'address',
         'city',
@@ -99,6 +100,11 @@ class Supplier extends Model
     public function purchaseOrders()
     {
         return $this->hasMany('App\Model\PurchaseOrder');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
     public static function boot()

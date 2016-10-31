@@ -269,6 +269,15 @@
                                     </div>
                                     <div class="tab-pane" id="tab_settings">
                                         <div class="form-group">
+                                            <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
+                                            <div class="col-sm-10">
+                                                <select name="price_level" class="form-control" ng-model="pricelevel"
+                                                        ng-options="pp.name + ' (' + pp.description + ')' for pp in pricelevelDDL track by pp.id">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
                                             <div class="col-sm-10">
                                                 <input id="inputPaymentDueDay" name="payment_due_day" type="text" value="{{ $customer->payment_due_day }}" class="form-control">
@@ -299,6 +308,7 @@
             $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->profiles)) ? '[]':htmlspecialchars_decode($customer->profiles) !!}');
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
+            $scope.pricelevelDDL = JSON.parse('{!! htmlspecialchars_decode($priceLevelDDL) !!}');
 
             $scope.addNewBank = function() {
                 $scope.banks.push({
