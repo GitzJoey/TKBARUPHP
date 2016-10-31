@@ -212,6 +212,12 @@
                                 </div>
                                 <div class="tab-pane" id="tab_settings">
                                     <div class="form-group">
+                                        <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
+                                        <div class="col-sm-10">
+                                            <span class="control-label-normal">{{ $customer->priceLevel }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
                                         <div class="col-sm-10">
                                             <label id="inputPaymentDueDay" class="control-label">

@@ -55,6 +55,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Profile[] $profiles
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
+ * @property integer $store_id
+ * @property-read \App\Model\Store $store
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Supplier whereStoreId($value)
  */
 class Supplier extends Model
 {
@@ -65,6 +68,7 @@ class Supplier extends Model
     protected $table = 'suppliers';
 
     protected $fillable = [
+        'store_id',
         'name',
         'address',
         'city',
@@ -99,6 +103,11 @@ class Supplier extends Model
     public function purchaseOrders()
     {
         return $this->hasMany('App\Model\PurchaseOrder');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
     public static function boot()

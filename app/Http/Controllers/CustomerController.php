@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Model\Bank;
 use App\Model\Lookup;
+use App\Model\PriceLevel;
 use App\Model\Profile;
 use App\Model\Customer;
 use App\Model\BankAccount;
 use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
 
+use Auth;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -32,8 +34,8 @@ class CustomerController extends Controller
         $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
-        $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
+        $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
 
         return view('customer.show', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL'));
     }
@@ -41,29 +43,27 @@ class CustomerController extends Controller
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
-        $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
+        $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
+        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
 
-        return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL'));
+        return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL'));
     }
 
     public function store(Request $data)
     {
         $validator = Validator::make($data->all(), [
-            /*
-            'name'              => 'required|string|max:255',
-            'address'           => 'required|string',
-            'city'              => 'required|string|max:255',
-            'phone'             => 'required|regex:/[0-9]{9}/',
-            'tax_id'            => 'required|string|max:255',
-            'remarks'           => 'required|string|max:255'
-            */
+            'name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'city' => 'required|string|max:255',
+            'tax_id' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
         } else {
             $customer = new Customer();
+            $customer->store = Auth::user()->store;
             $customer->name = $data['name'];
             $customer->address = $data['address'];
             $customer->city = $data['city'];
@@ -71,6 +71,7 @@ class CustomerController extends Controller
             $customer->tax_id = $data['tax_id'];
             $customer->remarks = $data['remarks'];
             $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
+            $customer->price_level_id = $data['price_level'];
 
             $customer->save();
 
@@ -111,10 +112,11 @@ class CustomerController extends Controller
         $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $bankDDL = Bank::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
-        $providerDDL = PhoneProvider::whereStatus('STATUS.active')->get(['name', 'short_name', 'id']);
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
+        $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
+        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
 
-        return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL'));
+        return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL'));
     }
 
     public function update($id, Request $data)
@@ -163,9 +165,12 @@ class CustomerController extends Controller
         $customer->phone_number = $data['phone'];
         $customer->tax_id = $data['tax_id'];
         $customer->remarks = $data['remarks'];
+        $customer->price_level_id = empty($data['price_level']) ? 0 : $data['price_level'];
         $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
 
         $customer->save();
+
+        dd($data['price_level']);
 
         return redirect(route('db.master.customer'));
     }

@@ -47,6 +47,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Customer whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Profile[] $profiles
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
+ * @property integer $store_id
+ * @property integer $price_level_id
+ * @property-read \App\Model\PriceLevel $priceLevel
+ * @property-read \App\Model\Store $store
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer wherePriceLevelId($value)
  */
 class Customer extends Model
 {
@@ -57,14 +63,16 @@ class Customer extends Model
     protected $table = 'customers';
 
     protected $fillable = [
+        'store_id',
         'name',
         'address',
         'city',
         'phone_number',
-        'remarks',
         'tax_id',
+        'payment_due_day',
+        'price_level_id',
         'status',
-        'payment_due_day'
+        'remarks'
     ];
 
     public function hId()
@@ -80,6 +88,16 @@ class Customer extends Model
     public function bankAccounts()
     {
         return $this->belongsToMany('App\Model\BankAccount', 'customer_bank_account', 'customer_id', 'bank_account_id');
+    }
+
+    public function priceLevel()
+    {
+        return $this->belongsTo('App\Model\PriceLevel', 'price_level_id');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
     public static function boot()

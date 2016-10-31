@@ -44,6 +44,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
+ * @property-read mixed $hid
  */
 class Warehouse extends Model
 {

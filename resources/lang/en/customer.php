@@ -56,6 +56,7 @@ return [
         'phone_number' => 'Phone Number',
         'bank' => 'Bank',
         'bank_account' => 'Bank Account',
+        'price_level' => 'Price Level',
         'payment_due_day' => 'Payment Due Day',
     ],
     'index' => [
