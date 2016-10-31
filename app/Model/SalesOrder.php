@@ -70,11 +70,14 @@ class SalesOrder extends Model
     protected $fillable = [
         'store_id',
         'customer_id',
+        'warehouse_id',
         'vendor_truck_id',
         'code',
+        'so_type',
         'so_created',
         'shipping_date',
         'customer_type',
+        'walk_in_cust',
         'walk_in_cust_detail',
         'so_type',
         'status',
@@ -84,6 +87,11 @@ class SalesOrder extends Model
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function items()
+    {
+        return $this->morphMany('App\Model\Item', 'itemable');
     }
 
     public static function boot()

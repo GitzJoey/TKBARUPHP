@@ -26,8 +26,7 @@
         </div>
     @endif
     <div ng-app="poModule" ng-controller="poController">
-        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post"
-              data-parsley-validate="parsley">
+        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-5">
@@ -57,7 +56,6 @@
                                         <select id="inputSupplierId"
                                                 name="supplier_id"
                                                 class="form-control"
-                                                data-parsley-required="true"
                                                 ng-model="po.supplier"
                                                 ng-options="supplier as supplier.name for supplier in supplierDDL track by supplier.id">
                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
@@ -76,7 +74,7 @@
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-10">
                                         <input type="text" id="inputSupplierName" name="walk_in_supplier"
-                                               class="form-control" data-parsley-required="true" ng-model="po.supplier_name">
+                                               class="form-control" ng-model="po.supplier_name">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -84,7 +82,7 @@
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-10">
                                         <textarea id="inputSupplierDetails" class="form-control" rows="5"
-                                                  name="walk_in_supplier_detail" data-parsley-required="true"
+                                                  name="walk_in_supplier_detail"
                                                   ng-model="po.supplier_details"></textarea>
                                     </div>
                                 </div>
@@ -327,7 +325,6 @@
                     <div class="btn-toolbar">
                         <button id="submitButton" type="submit"
                                 class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
-                        &nbsp;&nbsp;&nbsp;
                         <a id="printButton" href="#" target="_blank"
                            class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
                         <a id="cancelButton" class="btn btn-primary pull-right"

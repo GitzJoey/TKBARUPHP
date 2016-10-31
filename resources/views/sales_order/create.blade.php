@@ -16,6 +16,7 @@
 
 @section('content')
     <form class="form-horizontal" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
+        {{ csrf_field() }}
         <div ng-app="SalesOrderModule" ng-controller="SalesOrderCreateController">
             <div class="box-body">
                 <div class="row">
@@ -26,8 +27,7 @@
                                     <a href="#tab_so@{{ $index + 1 }}" data-toggle="tab">@lang('sales_order.create.tab.sales') @{{ $index + 1 }}</a>
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-xs btn-default pull-right"
-                                            ng-click="addNewTab()">
+                                    <button type="button" class="btn btn-xs btn-default pull-right">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
                                 </li>
@@ -35,7 +35,7 @@
                             <div class="tab-content">
                                 <div ng-repeat="so in SOs"
                                      ng-class="{active: $last}"
-                                     class="tab-pane active" id="tab_so@{{ $index + 1 }}">
+                                     class="tab-pane" id="tab_so@{{ $index + 1 }}">
                                     <div class="row">
                                         <div class="col-md-7">
                                             <div class="box box-info">
@@ -48,6 +48,7 @@
                                                         <div class="col-sm-5">
                                                             <select id="inputCustomerType@{{ $index + 1 }}" data-parsley-required="true"
                                                                     class="form-control"
+                                                                    name="customer_type[]"
                                                                     ng-model="so.customer_type"
                                                                     ng-options="key as value for (key, value) in customerTypeDDL track by key">
                                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
@@ -73,16 +74,16 @@
                                                             <label for="inputCustomerName@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" class="form-control" id="inputCustomerName@{{ $index + 1 }}"
-                                                                       name="customer_name[]" placeholder="Customer Name"
-                                                                       ng-model="so.customer_name">
+                                                                       name="walk_in_customer[]" placeholder="Customer Name"
+                                                                       ng-model="so.walk_in_customer">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="inputCustomerDetails@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_details')</label>
                                                             <div class="col-sm-9">
                                                                 <textarea id="inputCustomerDetails@{{ $index + 1 }}" class="form-control"
-                                                                          rows="5" name="customer_detail[]"
-                                                                          ng-model="so.customer_detail"></textarea>
+                                                                          rows="5" name="walk_in_customer_details[]"
+                                                                          ng-model="so.walk_in_customer_details"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -197,7 +198,7 @@
                                                 </div>
                                                 <div class="box-body">
                                                     <div class="row">
-                                                        <div ng-show="so.sales_type == 'SOTYPE.S'">
+                                                        <div ng-show="so.sales_type == 'SOTYPE.SVC'">
                                                             <div class="col-md-11">
                                                                 <select id="inputProduct@{{ $index + 1 }}"
                                                                         class="form-control"
@@ -208,10 +209,10 @@
                                                             </div>
                                                             <div class="col-md-1">
                                                                 <button type="button" class="btn btn-primary btn-md"
-                                                                        ng-click="insertProduct(so.product)"><span class="fa fa-plus"/></button>
+                                                                        ng-click="insertProduct($index, so.product)"><span class="fa fa-plus"/></button>
                                                             </div>
                                                         </div>
-                                                        <div ng-show="so.sales_type == 'SOTYPE.SVC'">
+                                                        <div ng-show="so.sales_type == 'SOTYPE.S'">
                                                             <div class="col-md-11">
                                                                 <select id="inputStock@{{ $index + 1 }}"
                                                                         class="form-control"
@@ -222,7 +223,7 @@
                                                             </div>
                                                             <div class="col-md-1">
                                                                 <button type="button" class="btn btn-primary btn-md"
-                                                                        ng-click="insertStock(so.stock)"><span class="fa fa-plus"/></button>
+                                                                        ng-click="insertStock($index, so.stock)"><span class="fa fa-plus"/></button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -241,6 +242,40 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                                <tr ng-repeat="item in so.items">
+                                                                    <input type="hidden" name="so@{{ $parent.$index }}_product_id[]" ng-value="item.product.id">
+                                                                    <input type="hidden" name="so@{{ $parent.$index }}_stock_id[]" ng-value="item.stock_id">
+                                                                    <input type="hidden" name="so@{{ $parent.$index }}_base_unit_id[]" ng-value="item.base_unit.unit.id">
+                                                                    <td class="valign-middle">@{{ item.product.name }}</td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control text-right" name="so@{{ $parent.$index }}_quantity[]"
+                                                                               ng-model="item.quantity" data-parsley-required="true"
+                                                                               data-parsley-type="number">
+                                                                    </td>
+                                                                    <td>
+                                                                        <select name="so@{{ $parent.$index }}_selected_unit_id[]" data-parsley-required="true"
+                                                                                class="form-control"
+                                                                                ng-model="item.selected_unit"
+                                                                                data-parsley-required="true"
+                                                                                ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
+                                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control text-right" name="so@{{ $parent.$index }}_price[]"
+                                                                               ng-model="item.price" data-parsley-required="true"
+                                                                               data-parsley-type="number">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                                ng-click="removeItem($parent.$index, $index)"><span class="fa fa-minus"/>
+                                                                        </button>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control text-right" name="so@{{ $parent.$index }}_total_price[]"
+                                                                               ng-value="item.quantity * item.price" readonly>
+                                                                    </td>
+                                                                </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -250,8 +285,11 @@
                                                             <table id="itemsTotalListTable" class="table table-bordered">
                                                                 <tbody>
                                                                 <tr>
-                                                                    <td width="80%" class="text-right">@lang('sales_order.create.table.total.body.total')</td>
-                                                                    <td width="20%" class="text-right"></td>
+                                                                    <td width="80%"
+                                                                        class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                                                    <td width="20%" class="text-right">
+                                                                        <span class="control-label-normal">@{{ grandTotal($index) }}</span>
+                                                                    </td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -272,7 +310,8 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    <textarea id="inputRemarks" class="form-control" rows="5"></textarea>
+                                                                    <textarea id="inputRemarks" class="form-control" rows="5" name="remarks[]"
+                                                                              ng-model="so.remarks"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -303,7 +342,7 @@
 @section('custom_js')
     <script type="application/javascript">
         var app = angular.module("SalesOrderModule", []);
-        app.controller("SalesOrderCreateController", ['$scope', function($scope) {
+        app.controller("SalesOrderCreateController", ['$scope', '$http', function($scope, $http) {
             $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
             $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');
             $scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');
@@ -313,10 +352,46 @@
             $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
 
             $scope.SOs = [{
-                so_code: '{!! SOCodeGenerator::generateSOCode() !!}',
+                so_code: '{{ $soCode }}',
                 customer_type : '',
                 items : []
             }];
+
+            $scope.grandTotal = function (index) {
+                var result = 0;
+                angular.forEach($scope.SOs[index].items, function (item, key) {
+                    result += (item.quantity * item.price);
+                });
+                return result;
+            };
+
+            function isBase(unit) {
+                return unit.is_base == 1;
+            };
+
+            $scope.insertProduct = function (index, product) {
+                $scope.SOs[index].items.push({
+                    'stock_id': 0,
+                    'product': product,
+                    'base_unit': _.find(product.product_units, isBase),
+                    'quantity': 0,
+                    'price': 0
+                });
+            };
+
+            $scope.insertStock = function (index, stock) {
+                $scope.SOs[index].items.push({
+                    'stock_id': stock.id,
+                    'product': stock.product,
+                    'base_unit': _.find(stock.product.product_units, isBase),
+                    'quantity': 0,
+                    'price': 0
+                });
+            };
+
+            $scope.removeItem = function (SOIndex, index) {
+                $scope.SOs[SOIndex].items.splice(index, 1);
+            };
 
         }]);
 
