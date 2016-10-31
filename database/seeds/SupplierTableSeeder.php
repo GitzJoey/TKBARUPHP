@@ -24,6 +24,7 @@ class SupplierTableSeeder extends Seeder
             $supplier->phone_number = '0000000000';
             $supplier->fax_num = '0000000000';
             $supplier->tax_id = '123-123-123-123-123';
+            $supplier->store_id = 1;
 
             $supplier->save();
 
