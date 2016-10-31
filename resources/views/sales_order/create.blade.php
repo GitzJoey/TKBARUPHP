@@ -286,7 +286,7 @@
                                                                 <tbody>
                                                                 <tr>
                                                                     <td width="80%"
-                                                                        class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                                                        class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                     <td width="20%" class="text-right">
                                                                         <span class="control-label-normal">@{{ grandTotal($index) }}</span>
                                                                     </td>
