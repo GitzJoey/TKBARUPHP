@@ -42,6 +42,14 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereSelectedUnitId($value)
  * @mixin \Eloquent
+ * @property integer $base_unit_id
+ * @property float $base_brutto
+ * @property float $base_netto
+ * @property float $base_tare
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereBaseUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereBaseBrutto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereBaseNetto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereBaseTare($value)
  */
 class Receipt extends Model
 {

@@ -58,6 +58,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWalkInCust($value)
  * @property integer $warehouse_id
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWarehouseId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $items
  */
 class SalesOrder extends Model
 {

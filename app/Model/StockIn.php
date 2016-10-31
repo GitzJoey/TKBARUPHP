@@ -6,6 +6,37 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * App\Model\StockIn
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property integer $po_id
+ * @property integer $product_id
+ * @property integer $stock_id
+ * @property integer $warehouse_id
+ * @property float $quantity
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn wherePoId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereStockId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class StockIn extends Model
 {
     use SoftDeletes;

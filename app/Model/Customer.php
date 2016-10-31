@@ -47,6 +47,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Customer whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Profile[] $profiles
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
+ * @property integer $store_id
+ * @property integer $price_level_id
+ * @property-read \App\Model\PriceLevel $priceLevel
+ * @property-read \App\Model\Store $store
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer wherePriceLevelId($value)
  */
 class Customer extends Model
 {
