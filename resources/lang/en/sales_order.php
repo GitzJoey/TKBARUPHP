@@ -14,7 +14,7 @@ return [
             'shipping' => 'Shipping',
             'transactions' => 'Transactions',
             'remarks' => 'Remarks',
-            'customer' => '',
+            'customer' => 'Customer',
         ],
         'field' => [
             'customer_type' => 'Customer Type',
@@ -33,16 +33,16 @@ return [
                 'header' => [
                     'product_name' => 'Product Name',
                     'header' => [
-                        'quantity' => '',
+                        'quantity' => 'Quantity',
                     ],
-                    'unit' => '',
-                    'price_unit' => '',
-                    'total_price' => '',
+                    'unit' => 'UoM',
+                    'price_unit' => 'Price',
+                    'total_price' => 'Total Price',
                 ],
             ],
             'total' => [
                 'body' => [
-                    'total' => '',
+                    'total' => 'Total Amount',
                 ],
             ],
         ],

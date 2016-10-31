@@ -34,6 +34,11 @@ class Stock extends Model
         'warehouse_id'
     ];
 
+    public function product()
+    {
+        return $this->belongsTo('App\Model\Product', 'product_id');
+    }
+
     public static function boot()
     {
         parent::boot();

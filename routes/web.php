@@ -47,7 +47,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::delete('/dashboard/po/reject/{id}', 'PurchaseOrderController@delete')->name('db.po.reject');
 
     Route::get('/dashboard/so/create', 'SalesOrderController@create')->name('db.so.create');
-    Route::post('/dashboard/so/create', 'SalesOrderController@create');
+    Route::post('/dashboard/so/create', 'SalesOrderController@store');
     Route::get('/dashboard/so/revise', 'SalesOrderController@index')->name('db.so.revise.index');
     Route::get('/dashboard/so/revise/{id}', 'SalesOrderController@revise')->name('db.so.revise');
     Route::patch('/dashboard/so/revise/{id}', 'SalesOrderController@saveRevision');
