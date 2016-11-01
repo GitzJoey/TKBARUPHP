@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-    <form class="form-horizontal" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
+    <form class="form-horizontal so-form" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
         <div ng-app="SalesOrderModule" ng-controller="SalesOrderCreateController">
             <div class="box-body">
@@ -365,6 +365,9 @@
             $scope.setSOCode($scope.SOs[0]);
 
             $scope.insertTab = function(){
+                if(!$(".so-form").parsley().validate())
+                    return;
+
                 var so = {
                     so_code: '',
                     customer_type: '',
