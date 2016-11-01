@@ -58,7 +58,9 @@ return [
             'page_title' => 'Outflow',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Outflow'
+                'title' => 'Outflow',
+                'warehouse' => 'Warehouse',
+                'sales_order' => 'Sales Order'
             ],
             'table' => [
                 'header' => [
@@ -68,12 +70,34 @@ return [
                     'shipping_date' => 'Shipping Date',
                     'status' => 'Status'
                 ]
-            ],
-            'header' => [
-                'warehouse' => 'Warehouse',
-                'sales_order' => 'Sales Order'
             ]
         ],
+        'deliver' => [
+            'title' => 'Deliver',
+            'page_title' => 'Deliver',
+            'page_title_desc' => '',
+            'box' => [
+                'deliver' => 'Deliver',
+                'items' => 'Items'
+            ],
+            'field' => [
+                'warehouse' => 'Warehouse',
+                'so_code' => 'SO Code',
+                'shipping_date' => 'Shipping Date',
+                'deliver_date' => 'Deliver Date',
+                'vendor_trucking' => 'Vendor Trucking',
+                'licence_plate' => 'Licence Plate'
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Product Name',
+                        'unit' => 'UoM',
+                        'brutto' => 'Brutto'
+                    ]
+                ]
+            ]
+        ]
     ],
     'create' => [
         'title' => 'Warehouse',

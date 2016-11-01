@@ -72,7 +72,7 @@ class SalesOrder extends Model
         'store_id',
         'customer_id',
         'warehouse_id',
-        'vendor_truck_id',
+        'vendor_trucking_id',
         'code',
         'so_type',
         'so_created',

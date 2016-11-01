@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputDeliverDate" class="col-sm-2 control-label">@lang('warehouse.outflow.deliver.field.receipt_date')</label>
+                                <label for="inputDeliverDate" class="col-sm-2 control-label">@lang('warehouse.outflow.deliver.field.deliver_date')</label>
                                 <div class="col-sm-8">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
