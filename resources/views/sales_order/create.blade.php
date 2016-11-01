@@ -160,7 +160,7 @@
                                                     <div class="form-group">
                                                         <label for="inputWarehouse@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
                                                         <div class="col-sm-9">
-                                                            <select id="inputWarehouse@{{ $index + 1 }}"
+                                                            <select id="inputWarehouse@{{ $index + 1 }}" data-parsley-required="true"
                                                                     name="warehouse_id[]"
                                                                     class="form-control"
                                                                     ng-model="so.warehouse"
