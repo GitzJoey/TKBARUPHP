@@ -25,14 +25,24 @@ Breadcrumbs::register('revise_purchase_order', function ($breadcrumbs, $poId){
     $breadcrumbs->push('Revise Purchase Order', route('db.po.revise', $poId));
 });
 
-Breadcrumbs::register('inflow', function ($breadcrumbs, $warehouseId){
+Breadcrumbs::register('inflow', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push('Inflow', route('db.warehouse.inflow.index', $warehouseId));
+    $breadcrumbs->push('Inflow', route('db.warehouse.inflow.index'));
 });
 
-Breadcrumbs::register('receipt', function ($breadcrumbs, $poId, $warehouseId){
-    $breadcrumbs->parent('inflow', $warehouseId);
+Breadcrumbs::register('receipt', function ($breadcrumbs, $poId){
+    $breadcrumbs->parent('inflow');
     $breadcrumbs->push('Receipt', route('db.warehouse.inflow', $poId));
+});
+
+Breadcrumbs::register('outflow', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Outflow', route('db.warehouse.outflow.index'));
+});
+
+Breadcrumbs::register('deliver', function ($breadcrumbs, $poId){
+    $breadcrumbs->parent('outflow');
+    $breadcrumbs->push('Deliver', route('db.warehouse.outflow', $poId));
 });
 
 Breadcrumbs::register('create_sales_order', function ($breadcrumbs){

@@ -10,6 +10,9 @@
 @section('page_title_desc')
     @lang('warehouse.outflow.index.page_title_desc')
 @endsection
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('outflow') !!}
+@endsection
 
 @section('content')
     @if ($message = Session::get('success'))
@@ -27,7 +30,8 @@
                 <select id="inputWarehouse"
                         class="form-control"
                         ng-model="warehouse"
-                        ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
+                        ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id"
+                        ng-change="getWarehouseSOs(warehouse)">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                 </select>
             </div>
@@ -48,13 +52,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="so in selectedWarehouseSo(warehouse)">
+                    <tr ng-repeat="so in SOs">
                         <td class="text-center">@{{ so.code }}</td>
-                        <td class="text-center">@{{ so.po_created }}</td>
-                        <td class="text-center">@{{ so.supplier.name }}</td>
+                        <td class="text-center">@{{ so.so_created }}</td>
+                        <td class="text-center">@{{ so.customer.name }}</td>
                         <td class="text-center">@{{ so.shipping_date }}</td>
                         <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.outflow.index') }}/@{{ po.id }}" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.outflow') }}/@{{ so.id }}" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
                         </td>
                     </tr>
                     </tbody>
@@ -66,15 +70,16 @@
 @section('custom_js')
     <script type="application/javascript">
         var app = angular.module('warehouseOutflowModule', []);
-        app.controller('warehouseOutflowController', ['$scope', function($scope) {
+        app.controller('warehouseOutflowController', ['$scope', '$http', function($scope, $http) {
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-            $scope.allSOs = JSON.parse('{!! htmlspecialchars_decode($allSOs) !!}');
 
-            $scope.selectedWarehouseSo = function (warehouse) {
-                return _.filter($scope.allSOs, function (SO) {
-                    return SO.warehouse_id === warehouse.id;
+            $scope.SOs = [];
+
+            $scope.getWarehouseSOs = function (warehouse) {
+                $http.get('{{ route('api.warehouse.outflow.so') }}/' + warehouse.id).success(function (data) {
+                    $scope.SOs = data;
                 });
-            };
+            }
         }]);
     </script>
 @endsection

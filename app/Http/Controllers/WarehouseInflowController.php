@@ -17,21 +17,19 @@ use App\Model\PurchaseOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Vinkla\Hashids\Facades\Hashids;
 
 class WarehouseInflowController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', [ 'except' => [ 'getWarehousePOs' ] ]);
     }
 
-    public function inflow($id = null)
+    public function inflow()
     {
         $warehouseDDL = Warehouse::all();
-        $warehouse = Warehouse::with('purchaseOrders.supplier')->find($id);
 
-        return view('warehouse.inflow', compact('warehouseDDL', 'warehouse'));
+        return view('warehouse.inflow', compact('warehouseDDL'));
     }
 
     public function receipt($id)
@@ -90,5 +88,16 @@ class WarehouseInflowController extends Controller
         }
 
         return redirect(route('db.warehouse.inflow.index'));
+    }
+
+    public function getWarehousePOs(Request $request, $id)
+    {
+        Log::info("WarehouseOutflowController@getWarehousePOs");
+
+        $POs = PurchaseOrder::with('supplier')->where('warehouse_id', '=', $id)->get();
+
+        Log::info($POs);
+
+        return $POs;
     }
 }

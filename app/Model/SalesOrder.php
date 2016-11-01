@@ -64,7 +64,7 @@ class SalesOrder extends Model
 {
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'so_created', 'shipping_date'];
 
     protected $table = 'sales_orders';
 
@@ -93,6 +93,26 @@ class SalesOrder extends Model
     public function items()
     {
         return $this->morphMany('App\Model\Item', 'itemable');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo('App\Model\Customer', 'customer_id');
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
+    }
+
+    public function vendorTrucking()
+    {
+        return $this->belongsTo('App\Model\VendorTrucking', 'vendor_trucking_id');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
     public static function boot()

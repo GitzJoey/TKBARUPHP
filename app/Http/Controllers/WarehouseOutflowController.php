@@ -10,27 +10,29 @@ namespace App\Http\Controllers;
 
 use App\Model\Warehouse;
 use App\Model\SalesOrder;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class WarehouseOutflowController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', [ 'except' => [ 'getWarehouseSOs' ] ]);
     }
 
     public function outflow()
     {
         $warehouseDDL = Warehouse::all(['id', 'name']);
-        $allSOs = SalesOrder::with('customer')->where('status', '=', 'POSTATUS.WA')->get();
 
-        return view('warehouse.outflow', compact('warehouseDDL', 'allSOs'));
+        return view('warehouse.outflow', compact('warehouseDDL'));
     }
 
     public function deliver($id)
     {
-        $po = SalesOrder::with('items.product.productUnits.unit')->find($id);
+        $so = SalesOrder::with('items.product.productUnits.unit')->find($id);
 
-        return view('warehouse.receipt', compact('po'));
+        return view('warehouse.deliver', compact('so'));
     }
 
     public function saveDeliver(Request $request)
@@ -51,5 +53,16 @@ class WarehouseOutflowController extends Controller
         }
 
         return redirect(route('db.warehouse.outflow.index'));
+    }
+
+    public function getWarehouseSOs(Request $request, $id)
+    {
+        Log::info("WarehouseOutflowController@getWarehouseSOs");
+
+        $SOs = SalesOrder::with('customer')->where('warehouse_id', '=', $id)->get();
+
+        Log::info($SOs);
+
+        return $SOs;
     }
 }
