@@ -115,6 +115,11 @@ class SalesOrder extends Model
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
+    public function getIdAttribute($value)
+    {
+        return HashIds::encode($value);
+    }
+
     public static function boot()
     {
         parent::boot();

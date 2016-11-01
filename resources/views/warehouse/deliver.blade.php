@@ -162,6 +162,7 @@
             };
 
             for(var i = 0; i < SO.items.length; i++){
+                console.log(SO.items);
                 $scope.outflow.delivers.push({
                     item: SO.items[i],
                     selected_unit: _.find(SO.items[i].product.product_units, getSelectedUnit(SO.items[i].selected_unit_id)),
