@@ -1,5 +1,6 @@
 <?php
 
+use Config;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,13 +22,15 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateLookupTableSeeder::class);
 
         /* DUMMY DATA */
-        $this->call(BankTableSeeder::class);
-        $this->call(ProductTableSeeder::class);
-        $this->call(ProductTypeTableSeeder::class);
-        $this->call(SupplierTableSeeder::class);
-        $this->call(CustomerTableSeeder::class);
-        $this->call(VendorTruckingTableSeeder::class);
-        $this->call(WarehouseTableSeeder::class);
-        $this->call(PriceLevelTableSeeder::class);
+        if (Config::get('APP_ENV') != 'production') {
+            $this->call(BankTableSeeder::class);
+            $this->call(ProductTableSeeder::class);
+            $this->call(ProductTypeTableSeeder::class);
+            $this->call(SupplierTableSeeder::class);
+            $this->call(CustomerTableSeeder::class);
+            $this->call(VendorTruckingTableSeeder::class);
+            $this->call(WarehouseTableSeeder::class);
+            $this->call(PriceLevelTableSeeder::class);
+        }
     }
 }
