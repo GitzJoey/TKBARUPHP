@@ -67,7 +67,7 @@ class SalesOrderController extends Controller
                 'so_created' => date('Y-m-d', strtotime($request->input("so_created.$i"))),
                 'shipping_date' => date('Y-m-d', strtotime($request->input("shipping_date.$i"))),
                 'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
-                'vendor_truck_id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i"),
+                'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i"),
                 'warehouse_id' => $request->input("warehouse_id.$i"),
                 'remarks' => $request->input("remarks.$i"),
                 'store_id' => Auth::user()->store_id

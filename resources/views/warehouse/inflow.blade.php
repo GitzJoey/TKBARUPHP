@@ -11,7 +11,7 @@
     @lang('warehouse.inflow.index.page_title_desc')
 @endsection
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('inflow', $warehouse == null ? null : $warehouse->id) !!}
+    {!! Breadcrumbs::render('inflow') !!}
 @endsection
 
 @section('content')
@@ -29,9 +29,9 @@
             <div class="box-body">
                 <select id="inputWarehouse"
                         class="form-control"
-                        ng-change="refreshWarehousePo(warehouse)"
                         ng-model="warehouse"
-                        ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
+                        ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id"
+                        ng-change="getWarehousePOs(warehouse)">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                 </select>
             </div>
@@ -52,25 +52,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if($warehouse != null)
-                        @foreach ($warehouse->purchaseOrders as $key => $po)
-                            <tr>
-                                <td class="text-center">{{ $po->code }}</td>
-                                <td class="text-center">{{ date('d-m-Y', strtotime($po->po_created)) }}</td>
-                                <td class="text-center">
-                                    @if($po->supplier_type == 'SUPPLIERTYPE.R')
-                                        {{ $po->supplier->name }}
-                                    @else
-                                        {{ $po->walk_in_supplier }}
-                                    @endif
-                                </td>
-                                <td class="text-center">{{ date('d-m-Y', strtotime($po->shipping_date)) }}</td>
-                                <td class="text-center" width="20%">
-                                    <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow', $po->hId()) }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
+                        <tr ng-repeat="po in POs">
+                            <td class="text-center">@{{ po.code }}</td>
+                            <td class="text-center">@{{ po.po_created }}</td>
+                            <td class="text-center">@{{ po.supplier.name }}</td>
+                            <td class="text-center">@{{ po.shipping_date }}</td>
+                            <td class="text-center" width="20%">
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow') }}/@{{ po.id }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -80,12 +70,15 @@
 @section('custom_js')
     <script type="application/javascript">
         var app = angular.module('warehouseModule', []);
-        app.controller('warehouseController', ['$scope', '$window', function($scope, $window) {
+        app.controller('warehouseController', ['$scope', '$http', function($scope, $http) {
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-            $scope.warehouse = JSON.parse('{!! htmlspecialchars_decode($warehouse) == '' ? '{}' : htmlspecialchars_decode($warehouse) !!}');
 
-            $scope.refreshWarehousePo = function (warehouse) {
-                $window.location.href = '{{ route('db.warehouse.inflow.index') }}/' + warehouse.hid;
+            $scope.POs = [];
+
+            $scope.getWarehousePOs = function (warehouse) {
+                $http.get('{{ route('api.warehouse.inflow.po') }}/' + warehouse.id).success(function (data) {
+                    $scope.POs = data;
+                });
             }
         }]);
     </script>
