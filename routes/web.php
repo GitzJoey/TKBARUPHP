@@ -176,7 +176,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@update');
     Route::delete('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@delete')->name('db.master.vendor.trucking.delete');
 
-    Route::get('/dashboard/customer/confirmation', 'CustomerController@confirmation')->name('db.customer.confirmation');
+    Route::get('/dashboard/customer/confirmation', 'CustomerController@confirmationIndex')->name('db.customer.confirmation');
     Route::get('/dashboard/customer/confirmation/{id}', 'CustomerController@confirmation');
     Route::patch('/dashboard/customer/confirmation/{id}', 'CustomerController@confirmation');
 

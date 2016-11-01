@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Model\Bank;
 use App\Model\Lookup;
-use App\Model\PriceLevel;
 use App\Model\Profile;
 use App\Model\Customer;
+use App\Model\SalesOrder;
+use App\Model\PriceLevel;
 use App\Model\BankAccount;
 use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
@@ -63,7 +64,7 @@ class CustomerController extends Controller
             return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
         } else {
             $customer = new Customer();
-            $customer->store = Auth::user()->store;
+            $customer->store_id = Auth::user()->store->id;
             $customer->name = $data['name'];
             $customer->address = $data['address'];
             $customer->city = $data['city'];
@@ -192,5 +193,12 @@ class CustomerController extends Controller
         }
 
         return redirect(route('db.master.customer'));
+    }
+
+    public function confirmationIndex()
+    {
+        $solist = '';
+
+        return redirect(route('db.customer.confirmation'), compact('solist'));
     }
 }

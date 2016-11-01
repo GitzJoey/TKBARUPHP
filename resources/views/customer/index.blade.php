@@ -25,14 +25,14 @@
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center">@lang('customer.index.table.header.name')</th>
-                    <th class="text-center">@lang('customer.index.table.header.address')</th>
-                    <th class="text-center">@lang('customer.index.table.header.tax_id')</th>
-                    <th class="text-center">@lang('customer.index.table.header.phone')</th>
-                    <th class="text-center">@lang('customer.index.table.header.remarks')</th>
-                    <th class="text-center">@lang('labels.ACTION')</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">@lang('customer.index.table.header.name')</th>
+                        <th class="text-center">@lang('customer.index.table.header.address')</th>
+                        <th class="text-center">@lang('customer.index.table.header.tax_id')</th>
+                        <th class="text-center">@lang('customer.index.table.header.phone')</th>
+                        <th class="text-center">@lang('customer.index.table.header.remarks')</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach ($customer as $key => $cust)
