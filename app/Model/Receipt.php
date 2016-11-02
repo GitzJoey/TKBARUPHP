@@ -63,6 +63,7 @@ class Receipt extends Model
         'item_id',
         'licence_plate',
         'receipt_date',
+        'conversion_value',
         'brutto',
         'base_brutto',
         'netto',
