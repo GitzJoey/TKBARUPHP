@@ -19,6 +19,7 @@ class CreateReceiptsTable extends Migration
             $table->unsignedBigInteger('item_id')->default(0);
             $table->unsignedBigInteger('selected_unit_id')->default(0);
             $table->unsignedBigInteger('base_unit_id')->default(0);
+            $table->decimal('conversion_value')->default(0);
             $table->date('receipt_date')->nullable();
             $table->decimal('brutto')->default(0);
             $table->decimal('base_brutto')->default(0);
