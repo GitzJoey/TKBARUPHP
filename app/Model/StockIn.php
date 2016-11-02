@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * App\Model\StockIn
@@ -53,6 +54,11 @@ class StockIn extends Model
         'warehouse_id',
         'stock_id'
     ];
+
+    public function hId()
+    {
+        return HashIds::encode($this->attributes['id']);
+    }
 
     public static function boot()
     {
