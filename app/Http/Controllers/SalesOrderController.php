@@ -38,14 +38,14 @@ class SalesOrderController extends Controller
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $productDDL = Product::with('productUnits.unit')->get();
+        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
+            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
         $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get()->pluck('description', 'code');
         $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get()->pluck('description', 'code');
         $soCode = SOCodeGenerator::generateSOCode();
         $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=',
             'SOSTATUS.D');
 
-        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
-            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL',
             'productDDL', 'stocksDDL', 'vendorTruckingDDL', 'customerDDL'
@@ -61,7 +61,7 @@ class SalesOrderController extends Controller
                 'customer_type' => $request->input("customer_type.$i"),
                 'customer_id' => empty($request->input("customer_id.$i")) ? 0 :$request->input("customer_id.$i"),
                 'walk_in_cust' => $request->input("walk_in_customer.$i"),
-                'walk_in_cust_details' => $request->input("walk_in_customer_details.$i"),
+                'walk_in_cust_detail' => $request->input("walk_in_customer_details.$i"),
                 'code' => $request->input("so_code.$i"),
                 'so_type' => $request->input("sales_type.$i"),
                 'so_created' => date('Y-m-d', strtotime($request->input("so_created.$i"))),
@@ -75,19 +75,19 @@ class SalesOrderController extends Controller
 
             $so = SalesOrder::create($params);
 
-            for ($j = 0; $j < count($request->input("so$i"."_product_id")); $j++) {
+            for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
                 $item = new Item();
-                $item->product_id = $request->input("so$i"."_product_id.$j");
-                $item->stock_id = $request->input("so$i"."_stock_id.$j");
+                $item->product_id = $request->input("so_$i"."_product_id.$j");
+                $item->stock_id = $request->input("so_$i"."_stock_id.$j");
                 $item->store_id = Auth::user()->store_id;
-                $item->selected_unit_id = $request->input("so$i"."_selected_unit_id.$j");
-                $item->base_unit_id = $request->input("so$i"."_base_unit_id.$j");
+                $item->selected_unit_id = $request->input("so_$i"."_selected_unit_id.$j");
+                $item->base_unit_id = $request->input("so_$i"."_base_unit_id.$j");
                 $item->conversion_value = ProductUnit::where([
                     'product_id' => $item->product_id,
                     'unit_id' => $item->selected_unit_id
                 ])->first()->conversion_value;
-                $item->quantity = $request->input("so$i"."_quantity.$j");
-                $item->price = $request->input("so$i"."_price.$j");
+                $item->quantity = $request->input("so_$i"."_quantity.$j");
+                $item->price = $request->input("so_$i"."_price.$j");
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $so->items()->save($item);
@@ -99,23 +99,71 @@ class SalesOrderController extends Controller
 
     public function index()
     {
-        $salesOrder = SalesOrder::all();
+        Log::info('SalesOrderController@index');
+
+        $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WA', 'SOSTATUS.WD'])->get();
         $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
 
-        return view('sales_order.index', compact('salesOrder', 'soStatusDDL'));
+        return view('sales_order.index', compact('salesOrders', 'soStatusDDL'));
     }
 
     public function revise($id)
     {
+        Log::info('SalesOrderController@revise');
 
-        $currentSales = '';
+        $currentSo = SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
+            'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse')->find($id);
+        $warehouseDDL = Warehouse::all(['id', 'name']);
+        $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
+        $productDDL = Product::with('productUnits.unit')->get();
+        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
+            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
 
-        return view('sales_order.revise', compact('currentSales', 'productDDL'));
+        return view('sales_order.revise', compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL'));
     }
 
     public function saveRevision(Request $request, $id)
     {
+        // Get current SO
+        $currentSo = SalesOrder::with('items')->find($id);
 
+        // Get ID of current SO's items
+        $soItemsId = $currentSo->items->map(function ($item) {
+            return $item->id;
+        })->all();
+
+        // Get the id of removed items
+        $soItemsToBeDeleted = array_diff($soItemsId, $request->input('item_id'));
+
+        // Remove the item that removed on the revise page
+        Item::destroy($soItemsToBeDeleted);
+
+        $currentSo->warehouse_id = $request->input('warehouse_id');
+        $currentSo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
+        $currentSo->remarks = $request->input('remarks');
+        $currentSo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
+
+        for ($i = 0; $i < count($request->input('item_id')); $i++) {
+            $item = Item::findOrNew($request->input("item_id.$i"));
+            $item->product_id = $request->input("product_id.$i");
+            $item->stock_id = empty($request->input("stock_id.$i")) ? 0 : $request->input("stock_id.$i");
+            $item->store_id = Auth::user()->store_id;
+            $item->selected_unit_id = $request->input("selected_unit_id.$i");
+            $item->base_unit_id = $request->input("base_unit_id.$i");
+            $item->conversion_value = ProductUnit::where([
+                'product_id' => $item->product_id,
+                'unit_id' => $item->selected_unit_id
+            ])->first()->conversion_value;
+            $item->quantity = $request->input("quantity.$i");
+            $item->price = $request->input("price.$i");
+            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+
+            $currentSo->items()->save($item);
+        }
+
+        $currentSo->save();
+
+        return redirect(route('db.so.revise.index'));
     }
 
     public function payment($id)
@@ -130,7 +178,7 @@ class SalesOrderController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $so = PurchaseOrder::find($id);
+        $so = SalesOrder::find($id);
 
         $so->status = 'SOSTATUS.RJT';
         $so->save();

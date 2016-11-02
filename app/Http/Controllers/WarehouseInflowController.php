@@ -50,6 +50,7 @@ class WarehouseInflowController extends Controller
 
             $receiptParams = [
                 'receipt_date' => date('Y-m-d', strtotime($request->input('receipt_date'))),
+                'conversion_value' => $conversionValue,
                 'brutto' => $request->input("brutto.$i"),
                 'base_brutto' => $conversionValue * $request->input("brutto.$i"),
                 'netto' => $request->input("netto.$i"),

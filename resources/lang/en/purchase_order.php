@@ -39,8 +39,8 @@ return [
             'total' => [
                 'body' => [
                     'total' => 'Total Amount'
-                ],
-            ],
+                ]
+            ]
         ],
     ],
     'payment' => [

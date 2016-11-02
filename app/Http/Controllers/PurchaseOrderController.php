@@ -57,7 +57,7 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request)
     {
-        Log::info('[PurchaseOrderController@store] ');
+        Log::info('[PurchaseOrderController@store]');
 
         $this->validate($request, [
             'code' => 'required|string|max:255',
@@ -107,6 +107,8 @@ class PurchaseOrderController extends Controller
 
     public function index()
     {
+        Log::info('[PurchaseOrderController@index]');
+
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
@@ -116,6 +118,8 @@ class PurchaseOrderController extends Controller
 
     public function revise($id)
     {
+        Log::info('[PurchaseOrderController@revise]');
+
         $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
             'supplier.bankAccounts.bank', 'supplier.products', 'vendorTrucking', 'warehouse')->find($id);
         $productDDL = Product::with('productUnits.unit')->get();
@@ -141,6 +145,11 @@ class PurchaseOrderController extends Controller
         // Remove the item that removed on the revise page
         Item::destroy($poItemsToBeDeleted);
 
+        $currentPo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
+        $currentPo->warehouse_id = $request->input('warehouse_id');
+        $currentPo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
+        $currentPo->remarks = $request->input('remarks');
+
         for ($i = 0; $i < count($request->input('item_id')); $i++) {
             $item = Item::findOrNew($request->input("item_id.$i"));
             $item->product_id = $request->input("product_id.$i");
@@ -158,10 +167,6 @@ class PurchaseOrderController extends Controller
             $currentPo->items()->save($item);
         }
 
-        $currentPo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
-        $currentPo->remarks = $request->input('remarks');
-        $currentPo->warehouse_id = $request->input('warehouse_id');
-        $currentPo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
         $currentPo->save();
 
         return redirect(route('db.po.revise.index'));
