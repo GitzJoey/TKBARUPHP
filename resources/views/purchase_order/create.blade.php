@@ -260,7 +260,7 @@
                                             <td>
                                                 <input type="text" class="form-control text-right" name="price[]"
                                                        ng-model="item.price" data-parsley-required="true"
-                                                       data-parsley-type="number">
+                                                       data-parsley-type="number" fcsa-number/>
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md"
@@ -575,7 +575,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('poModule', []);
+        var app = angular.module('poModule', ['fcsa-number']);
         app.controller("poController", ['$scope', function ($scope) {
             $scope.supplierDDL = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');

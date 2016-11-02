@@ -264,7 +264,7 @@
                                                                     <td>
                                                                         <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_price[]"
                                                                                ng-model="item.price" data-parsley-required="true"
-                                                                               data-parsley-type="number">
+                                                                               data-parsley-type="number" fcsa-number>
                                                                     </td>
                                                                     <td class="text-center">
                                                                         <button type="button" class="btn btn-danger btn-md"
@@ -340,7 +340,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soModule", []);
+        var app = angular.module("soModule", ['fcsa-number']);
         app.controller("soController", ['$scope', '$http', '$q', function($scope, $http, $q) {
             $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
             $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');
