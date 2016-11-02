@@ -8,10 +8,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Deliver;
+use App\Model\ProductUnit;
+use App\Model\Stock;
+use App\Model\StockOut;
 use App\Model\Warehouse;
 use App\Model\SalesOrder;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class WarehouseOutflowController extends Controller
@@ -35,21 +39,49 @@ class WarehouseOutflowController extends Controller
         return view('warehouse.deliver', compact('so'));
     }
 
-    public function saveDeliver(Request $request)
+    public function saveDeliver(Request $request, $id)
     {
         for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
-            $params = [
+            $conversionValue = ProductUnit::where([
+                'product_id' => $request->input("product_id.$i"),
+                'unit_id' => $request->input("selected_unit_id.$i")
+            ])->first()->conversion_value;
+
+            $deliverParams = [
                 'deliver_date' => date('Y-m-d', strtotime($request->input('deliver_date'))),
+                'conversion_value' => $conversionValue,
                 'brutto' => $request->input("brutto.$i"),
-                'netto' => $request->input("netto.$i"),
-                'tare' => $request->input("tare.$i"),
+                'base_brutto' => $conversionValue * $request->input("brutto.$i"),
+                'netto' => $request->input("brutto.$i"),
+                'base_netto' => $conversionValue * $request->input("brutto.$i"),
+                'tare' => 0,
+                'base_tare' => 0,
                 'licence_plate' => $request->input('licence_plate'),
                 'item_id' => $request->input("item_id.$i"),
                 'selected_unit_id' => $request->input("selected_unit_id.$i"),
+                'base_unit_id' => $request->input("base_unit_id.$i"),
                 'store_id' => Auth::user()->store_id
             ];
 
-            $receipt = Receipt::create($params);
+            $deliver = Deliver::create($deliverParams);
+
+            if($request->input("stock_id.$i") != 0){
+                $stockOutParams = [
+                    'store_id' => Auth::user()->store_id,
+                    'so_id' => $id,
+                    'product_id' => $request->input("product_id.$i"),
+                    'warehouse_id' => $request->input('warehouse_id'),
+                    'stock_id' => $request->input("stock_id.$i"),
+                    'quantity' => $request->input("brutto.$i")
+                ];
+
+                $stockOut = StockOut::create($stockOutParams);
+
+                $stock = Stock::find($request->input("stock_id.$i"));
+                $stock->current_quantity -= $request->input("brutto.$i");
+                $stock->save();
+            }
+
         }
 
         return redirect(route('db.warehouse.outflow.index'));
