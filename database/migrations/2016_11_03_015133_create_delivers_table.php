@@ -23,6 +23,10 @@ class CreateDeliversTable extends Migration
             $table->date('deliver_date')->nullable();
             $table->decimal('brutto')->default(0);
             $table->decimal('base_brutto')->default(0);
+            $table->decimal('netto')->default(0);
+            $table->decimal('base_netto')->default(0);
+            $table->decimal('tare')->default(0);
+            $table->decimal('base_tare')->default(0);
             $table->string('licence_plate')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);

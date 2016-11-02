@@ -22,6 +22,10 @@ class Deliver extends Model
         'conversion_value',
         'brutto',
         'base_brutto',
+        'netto',
+        'base_netto',
+        'tare',
+        'base_tare',
         'selected_unit_id',
         'base_unit_id',
         'store_id'
