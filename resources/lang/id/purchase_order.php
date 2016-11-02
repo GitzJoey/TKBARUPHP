@@ -102,7 +102,7 @@ return [
             'table' => [
                 'header' => [
                     'code' => 'Kode',
-                    'po_date' => 'Tanggal Pembuatan',
+                    'po_date' => 'Tanggal Dibuat',
                     'supplier' => 'Supplier',
                     'shipping_date' => 'Tanggal Pengiriman',
                     'status' => 'Status'

@@ -47,4 +47,23 @@ return [
             ],
         ],
     ],
+    'revise' => [
+        'index' => [
+            'title' => 'Revise Sales Order',
+            'page_title' => 'Revise Sales Order',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Sales Order List'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'so_date' => 'Created Date',
+                    'customer' => 'Customer',
+                    'shipping_date' => 'Shipping Date',
+                    'status' => 'Status'
+                ]
+            ]
+        ]
+    ]
 ];

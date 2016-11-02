@@ -28,31 +28,37 @@
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center">@lang('sales_order.revise.index.table.header.code')</th>
-                    <th class="text-center">@lang('sales_order.revise.index.table.header.so_date')</th>
-                    <th class="text-center">@lang('sales_order.revise.index.table.header.customer')</th>
-                    <th class="text-center">@lang('sales_order.revise.index.table.header.shipping_date')</th>
-                    <th class="text-center">@lang('sales_order.revise.index.table.header.status')</th>
-                    <th class="text-center">@lang('labels.ACTION')</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">@lang('sales_order.revise.index.table.header.code')</th>
+                        <th class="text-center">@lang('sales_order.revise.index.table.header.so_date')</th>
+                        <th class="text-center">@lang('sales_order.revise.index.table.header.customer')</th>
+                        <th class="text-center">@lang('sales_order.revise.index.table.header.shipping_date')</th>
+                        <th class="text-center">@lang('sales_order.revise.index.table.header.status')</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ($salesorder as $key => $po)
-                    <tr>
-                        <td class="text-center">{{ $so->code }}</td>
-                        <td class="text-center">{{ $so->po_created }}</td>
-                        <td class="text-center">{{ $so->customer->name }}</td>
-                        <td class="text-center">{{ $so->shipping_date }}</td>
-                        <td class="text-center">{{ $soStatusDDL[$po->status] }}</td>
-                        <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.po.revise', $so->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.po.reject', $so->hId()], 'style'=>'display:inline'])  !!}
-                                <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button"><span class="fa fa-close fa-fw"></span></button>
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach ($salesOrders as $key => $so)
+                        <tr>
+                            <td class="text-center">{{ $so->code }}</td>
+                            <td class="text-center">{{ $so->so_created }}</td>
+                            <td class="text-center">
+                                @if($so->customer_type == 'CUSTOMERTYPE.R')
+                                    {{ $so->customer->name }}
+                                @else
+                                    {{ $so->walk_in_customer }}
+                                @endif
+                            </td>
+                            <td class="text-center">{{ $so->shipping_date }}</td>
+                            <td class="text-center">{{ $soStatusDDL[$so->status] }}</td>
+                            <td class="text-center" width="20%">
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.so.revise', $so->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.so.reject', $so->hId()], 'style'=>'display:inline'])  !!}
+                                    <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button"><span class="fa fa-close fa-fw"></span></button>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

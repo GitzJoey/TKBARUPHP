@@ -47,4 +47,23 @@ return [
             ],
         ],
     ],
+    'revise' => [
+        'index' => [
+            'title' => 'Revisi Penjualan',
+            'page_title' => 'Revisi Penjualan',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Penjualan'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'so_date' => 'Tanggal Dibuat',
+                    'customer' => 'Pelanggan',
+                    'shipping_date' => 'Tanggal Pengiriman',
+                    'status' => 'Status'
+                ]
+            ]
+        ]
+    ]
 ];

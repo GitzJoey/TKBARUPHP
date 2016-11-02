@@ -15,9 +15,9 @@
 @endsection
 
 @section('content')
-    <form class="form-horizontal so-form" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
+    <div ng-app="soModule" ng-controller="soController">
+        <form class="form-horizontal so-form" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
-        <div ng-app="SalesOrderModule" ng-controller="SalesOrderCreateController">
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -273,7 +273,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_total_price[]"
-                                                                               ng-value="item.quantity * item.price" readonly>
+                                                                               ng-value="item.selected_unit.conversion_value * item.quantity * item.price" readonly>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -335,14 +335,14 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("SalesOrderModule", []);
-        app.controller("SalesOrderCreateController", ['$scope', '$http', '$q', function($scope, $http, $q) {
+        var app = angular.module("soModule", []);
+        app.controller("soController", ['$scope', '$http', '$q', function($scope, $http, $q) {
             $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
             $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');
             $scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');
@@ -404,7 +404,7 @@
             $scope.grandTotal = function (index) {
                 var result = 0;
                 angular.forEach($scope.SOs[index].items, function (item, key) {
-                    result += (item.quantity * item.price);
+                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
                 });
                 return result;
             };
@@ -416,21 +416,27 @@
 
             $scope.insertProduct = function (index, product) {
                 $scope.SOs[index].items.push({
-                    'stock_id': 0,
-                    'product': product,
-                    'base_unit': _.find(product.product_units, isBase),
-                    'quantity': 0,
-                    'price': 0
+                    stock_id: 0,
+                    product: product,
+                    selected_unit: {
+                        conversion_value: 1
+                    },
+                    base_unit: _.find(product.product_units, isBase),
+                    quantity: 0,
+                    price: 0
                 });
             };
 
             $scope.insertStock = function (index, stock) {
                 $scope.SOs[index].items.push({
-                    'stock_id': stock.id,
-                    'product': stock.product,
-                    'base_unit': _.find(stock.product.product_units, isBase),
-                    'quantity': 0,
-                    'price': 0
+                    stock_id: stock.id,
+                    product: stock.product,
+                    selected_unit: {
+                        conversion_value: 1
+                    },
+                    base_unit: _.find(stock.product.product_units, isBase),
+                    quantity: 0,
+                    price: 0
                 });
             };
 

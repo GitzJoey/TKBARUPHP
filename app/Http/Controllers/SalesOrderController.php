@@ -99,10 +99,12 @@ class SalesOrderController extends Controller
 
     public function index()
     {
-        $salesOrder = SalesOrder::all();
+        Log::info('SalesOrderController@index');
+
+        $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WA', 'SOSTATUS.WD'])->get();
         $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
 
-        return view('sales_order.index', compact('salesOrder', 'soStatusDDL'));
+        return view('sales_order.index', compact('salesOrders', 'soStatusDDL'));
     }
 
     public function revise($id)
