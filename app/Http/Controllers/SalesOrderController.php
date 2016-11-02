@@ -146,7 +146,7 @@ class SalesOrderController extends Controller
         for ($i = 0; $i < count($request->input('item_id')); $i++) {
             $item = Item::findOrNew($request->input("item_id.$i"));
             $item->product_id = $request->input("product_id.$i");
-            $item->stock_id = $request->input("stock_id.$i");
+            $item->stock_id = empty($request->input("stock_id.$i")) ? 0 : $request->input("stock_id.$i");
             $item->store_id = Auth::user()->store_id;
             $item->selected_unit_id = $request->input("selected_unit_id.$i");
             $item->base_unit_id = $request->input("base_unit_id.$i");

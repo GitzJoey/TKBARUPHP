@@ -340,8 +340,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-12">
                                                 <textarea id="inputRemarks" class="form-control" rows="5"
-                                                          name="remarks"
-                                                          ng-model="so.remarks">{{ $currentSo->remarks }}</textarea>
+                                                          name="remarks">{{ $currentSo->remarks }}</textarea>
                                         </div>
                                     </div>
                                 </div>
