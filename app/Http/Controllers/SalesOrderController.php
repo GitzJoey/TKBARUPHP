@@ -38,14 +38,14 @@ class SalesOrderController extends Controller
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $productDDL = Product::with('productUnits.unit')->get();
+        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
+            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
         $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get()->pluck('description', 'code');
         $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get()->pluck('description', 'code');
         $soCode = SOCodeGenerator::generateSOCode();
         $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=',
             'SOSTATUS.D');
 
-        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
-            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL',
             'productDDL', 'stocksDDL', 'vendorTruckingDDL', 'customerDDL'
@@ -109,9 +109,17 @@ class SalesOrderController extends Controller
 
     public function revise($id)
     {
-        $currentSales = '';
+        Log::info('SalesOrderController@revise');
 
-        return view('sales_order.revise', compact('currentSales', 'productDDL'));
+        $currentSo = SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
+            'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse')->find($id);
+        $warehouseDDL = Warehouse::all(['id', 'name']);
+        $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
+        $productDDL = Product::with('productUnits.unit')->get();
+        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
+            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
+
+        return view('sales_order.revise', compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL'));
     }
 
     public function saveRevision(Request $request, $id)
@@ -131,7 +139,7 @@ class SalesOrderController extends Controller
 
     public function delete(Request $request, $id)
     {
-        $so = PurchaseOrder::find($id);
+        $so = SalesOrder::find($id);
 
         $so->status = 'SOSTATUS.RJT';
         $so->save();
