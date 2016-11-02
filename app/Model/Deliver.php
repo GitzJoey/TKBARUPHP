@@ -18,14 +18,10 @@ class Deliver extends Model
     protected $fillable = [
         'item_id',
         'licence_plate',
-        'receipt_date',
+        'deliver_date',
         'conversion_value',
         'brutto',
         'base_brutto',
-        'netto',
-        'base_netto',
-        'tare',
-        'base_tare',
         'selected_unit_id',
         'base_unit_id',
         'store_id'
