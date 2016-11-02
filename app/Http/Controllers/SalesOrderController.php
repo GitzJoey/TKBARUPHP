@@ -75,19 +75,19 @@ class SalesOrderController extends Controller
 
             $so = SalesOrder::create($params);
 
-            for ($j = 0; $j < count($request->input("so$i"."_product_id")); $j++) {
+            for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
                 $item = new Item();
-                $item->product_id = $request->input("so$i"."_product_id.$j");
-                $item->stock_id = $request->input("so$i"."_stock_id.$j");
+                $item->product_id = $request->input("so_$i"."_product_id.$j");
+                $item->stock_id = $request->input("so_$i"."_stock_id.$j");
                 $item->store_id = Auth::user()->store_id;
-                $item->selected_unit_id = $request->input("so$i"."_selected_unit_id.$j");
-                $item->base_unit_id = $request->input("so$i"."_base_unit_id.$j");
+                $item->selected_unit_id = $request->input("so_$i"."_selected_unit_id.$j");
+                $item->base_unit_id = $request->input("so_$i"."_base_unit_id.$j");
                 $item->conversion_value = ProductUnit::where([
                     'product_id' => $item->product_id,
                     'unit_id' => $item->selected_unit_id
                 ])->first()->conversion_value;
-                $item->quantity = $request->input("so$i"."_quantity.$j");
-                $item->price = $request->input("so$i"."_price.$j");
+                $item->quantity = $request->input("so_$i"."_quantity.$j");
+                $item->price = $request->input("so_$i"."_price.$j");
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $so->items()->save($item);
@@ -107,7 +107,6 @@ class SalesOrderController extends Controller
 
     public function revise($id)
     {
-
         $currentSales = '';
 
         return view('sales_order.revise', compact('currentSales', 'productDDL'));
