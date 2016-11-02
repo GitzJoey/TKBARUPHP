@@ -74,7 +74,11 @@
                             <div class="form-group">
                                 <label for="inputVendorTrucking" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly value="{{ $po->vendorTrucking->name }}" >
+                                    @if (empty($po->vendorTrucking))
+                                        <input type="text" class="form-control" readonly value="" >
+                                    @else
+                                        <input type="text" class="form-control" readonly value="{{ $po->vendorTrucking->name }}" >
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group">
