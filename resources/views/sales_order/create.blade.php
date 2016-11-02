@@ -271,9 +271,8 @@
                                                                                 ng-click="removeItem($parent.$index, $index)"><span class="fa fa-minus"/>
                                                                         </button>
                                                                     </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_total_price[]"
-                                                                               ng-value="item.selected_unit.conversion_value * item.quantity * item.price" readonly>
+                                                                    <td class="text-right valign-middle">
+                                                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -288,7 +287,7 @@
                                                                     <td width="80%"
                                                                         class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                     <td width="20%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ grandTotal($index) }}</span>
+                                                                        <span class="control-label-normal">@{{ grandTotal($index) | number }}</span>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>

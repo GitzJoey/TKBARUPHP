@@ -18,6 +18,7 @@
   "dependencies": {
     "admin-lte": "^2.3.6",
     "angular": "^1.5.8",
+    "angular-fcsa-number": "^1.5.7",
     "angular-sanitize": "^1.5.8",
     "awesome-bootstrap-checkbox": "^1.0.0-alpha.4",
     "bootstrap": "^3.3.7",
