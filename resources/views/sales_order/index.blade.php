@@ -46,7 +46,7 @@
                                 @if($so->customer_type == 'CUSTOMERTYPE.R')
                                     {{ $so->customer->name }}
                                 @else
-                                    {{ $so->walk_in_customer }}
+                                    {{ $so->walk_in_cust }}
                                 @endif
                             </td>
                             <td class="text-center">{{ $so->shipping_date }}</td>
