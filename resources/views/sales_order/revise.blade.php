@@ -146,7 +146,7 @@
                                                    value="{{ $currentSo->shipping_date->format('d-m-Y') }}"
                                                    data-parsley-required="true">
                                         @else
-                                            <input type="text" class="form-control" readonly
+                                            <input type="text" class="form-control" readonly name="shipping_date"
                                                    value="{{ $currentSo->shipping_date->format('d-m-Y') }}"
                                                    data-parsley-required="true">
                                         @endif
@@ -168,6 +168,8 @@
                                     @else
                                         <input type="text" class="form-control" readonly
                                                value="{{ $currentSo->warehouse->name }}">
+                                        <input type="hidden" name="warehouse_id"
+                                               value="{{ $currentSo->warehouse->id }}">
                                     @endif
                                 </div>
                             </div>
@@ -186,6 +188,8 @@
                                     @else
                                         <input type="text" class="form-control" readonly
                                                value="{{ $currentSo->vendorTrucking->name }}">
+                                        <input type="hidden" name="vendor_trucking_id"
+                                               value="{{ $currentPo->vendorTrucking->id }}">
                                     @endif
                                 </div>
                             </div>
@@ -279,6 +283,8 @@
                                                 @else
                                                     <input type="text" class="form-control" readonly
                                                            value="@{{ item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')' }}">
+                                                    <input type="hidden" name="selected_unit_id[]"
+                                                           ng-value="item.selected_unit.unit.id">
                                                 @endif
                                             </td>
                                             <td>

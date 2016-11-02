@@ -124,7 +124,46 @@ class SalesOrderController extends Controller
 
     public function saveRevision(Request $request, $id)
     {
+        // Get current SO
+        $currentSo = SalesOrder::with('items')->find($id);
 
+        // Get ID of current SO's items
+        $soItemsId = $currentSo->items->map(function ($item) {
+            return $item->id;
+        })->all();
+
+        // Get the id of removed items
+        $soItemsToBeDeleted = array_diff($soItemsId, $request->input('item_id'));
+
+        // Remove the item that removed on the revise page
+        Item::destroy($soItemsToBeDeleted);
+
+        $currentSo->warehouse_id = $request->input('warehouse_id');
+        $currentSo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
+        $currentSo->remarks = $request->input('remarks');
+        $currentSo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
+
+        for ($i = 0; $i < count($request->input('item_id')); $i++) {
+            $item = Item::findOrNew($request->input("item_id.$i"));
+            $item->product_id = $request->input("product_id.$i");
+            $item->stock_id = $request->input("stock_id.$i");
+            $item->store_id = Auth::user()->store_id;
+            $item->selected_unit_id = $request->input("selected_unit_id.$i");
+            $item->base_unit_id = $request->input("base_unit_id.$i");
+            $item->conversion_value = ProductUnit::where([
+                'product_id' => $item->product_id,
+                'unit_id' => $item->selected_unit_id
+            ])->first()->conversion_value;
+            $item->quantity = $request->input("quantity.$i");
+            $item->price = $request->input("price.$i");
+            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+
+            $currentSo->items()->save($item);
+        }
+
+        $currentSo->save();
+
+        return redirect(route('db.so.revise.index'));
     }
 
     public function payment($id)
