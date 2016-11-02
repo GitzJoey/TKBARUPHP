@@ -264,16 +264,15 @@
                                                                     <td>
                                                                         <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_price[]"
                                                                                ng-model="item.price" data-parsley-required="true"
-                                                                               data-parsley-type="number">
+                                                                               data-parsley-type="number" fcsa-number>
                                                                     </td>
                                                                     <td class="text-center">
                                                                         <button type="button" class="btn btn-danger btn-md"
                                                                                 ng-click="removeItem($parent.$index, $index)"><span class="fa fa-minus"/>
                                                                         </button>
                                                                     </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_total_price[]"
-                                                                               ng-value="item.selected_unit.conversion_value * item.quantity * item.price" readonly>
+                                                                    <td class="text-right valign-middle">
+                                                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -288,7 +287,7 @@
                                                                     <td width="80%"
                                                                         class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                     <td width="20%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ grandTotal($index) }}</span>
+                                                                        <span class="control-label-normal">@{{ grandTotal($index) | number }}</span>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -341,7 +340,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soModule", []);
+        var app = angular.module("soModule", ['fcsa-number']);
         app.controller("soController", ['$scope', '$http', '$q', function($scope, $http, $q) {
             $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
             $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');

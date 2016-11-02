@@ -260,16 +260,15 @@
                                             <td>
                                                 <input type="text" class="form-control text-right" name="price[]"
                                                        ng-model="item.price" data-parsley-required="true"
-                                                       data-parsley-type="number">
+                                                       data-parsley-type="number" fcsa-number/>
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md"
                                                         ng-click="removeItem($index)"><span class="fa fa-minus"/>
                                                 </button>
                                             </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="total_price[]"
-                                                       ng-value="item.selected_unit.conversion_value * item.quantity * item.price" readonly>
+                                            <td class="text-right valign-middle">
+                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -284,7 +283,7 @@
                                             <td width="80%"
                                                 class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                                <span class="control-label-normal">@{{ grandTotal() | number }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -576,7 +575,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('poModule', []);
+        var app = angular.module('poModule', ['fcsa-number']);
         app.controller("poController", ['$scope', function ($scope) {
             $scope.supplierDDL = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
