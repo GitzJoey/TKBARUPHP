@@ -74,7 +74,7 @@
                             <div class="form-group">
                                 <label for="inputVendorTrucking" class="col-sm-2 control-label">@lang('warehouse.outflow.deliver.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
-                                    @if (empt($so->vendorTrucking))
+                                    @if (empty($so->vendorTrucking))
                                         <input type="text" class="form-control" readonly value="" >
                                     @else
                                         <input type="text" class="form-control" readonly value="{{ $so->vendorTrucking->name }}" >
@@ -102,19 +102,19 @@
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.product_name')</th>
-                                            <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.unit')</th>
-                                            <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.brutto')</th>
-                                            <th width="">&nbsp;</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.product_name')</th>
+                                                <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.unit')</th>
+                                                <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.brutto')</th>
+                                                <th width="">&nbsp;</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                         <tr ng-repeat="deliver in outflow.delivers">
                                             <input type="hidden" name="item_id[]" ng-value="deliver.item.id">
                                             <input type="hidden" name="product_id[]" ng-value="deliver.item.product.id">
                                             <input type="hidden" name="base_unit_id[]" ng-value="deliver.item.base_unit_id">
-                                            <td class="align-middle">@{{ deliver.item.product.name }}</td>
+                                            <td class="valign-middle">@{{ deliver.item.product.name }}</td>
                                             <td>
                                                 <select name="selected_unit_id[]" data-parsley-required="true"
                                                         class="form-control"
@@ -166,10 +166,10 @@
             };
 
             for(var i = 0; i < SO.items.length; i++){
-                console.log(SO.items);
                 $scope.outflow.delivers.push({
                     item: SO.items[i],
                     selected_unit: _.find(SO.items[i].product.product_units, getSelectedUnit(SO.items[i].selected_unit_id)),
+                    brutto: SO.items[i].quantity
                 });
             }
 
