@@ -185,12 +185,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/customer/approval/{id}', 'CustomerController@approval');
 
     Route::get('/dashboard/warehouse/inflow', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
-    Route::get('/dashboard/warehouse/inflow/receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
-    Route::post('/dashboard/warehouse/inflow/receipt/{id?}', 'WarehouseInflowController@saveReceipt');
+    Route::get('/dashboard/warehouse/inflow/receipt/{id}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
+    Route::post('/dashboard/warehouse/inflow/receipt/{id}', 'WarehouseInflowController@saveReceipt');
 
     Route::get('/dashboard/warehouse/outflow', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow.index');
-    Route::get('/dashboard/warehouse/outflow/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
-    Route::post('/dashboard/warehouse/outflow/{id?}', 'WarehouseOutflowController@saveDeliver');
+    Route::get('/dashboard/warehouse/outflow/{id}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
+    Route::post('/dashboard/warehouse/outflow/{id}', 'WarehouseOutflowController@saveDeliver');
 
     Route::get('/dashboard/warehouse/stockopname', 'WarehouseController@stockopname')->name('db.warehouse.stockopname.index');
 

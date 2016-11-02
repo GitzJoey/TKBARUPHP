@@ -26,7 +26,7 @@
         </div>
     @endif
 
-    <form class="form-horizontal" action="{{ route('db.warehouse.inflow') }}/{{ $po->hId() }}" method="post" data-parsley-validate="parsley">
+    <form class="form-horizontal" action="{{ route('db.warehouse.inflow', $po->hId())}}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
         <div ng-app="warehouseInflowModule" ng-controller="warehouseInflowController">
             <div class="row">
@@ -114,7 +114,7 @@
                                         <tbody>
                                         <tr ng-repeat="receipt in inflow.receipts">
                                             <input type="hidden" name="item_id[]" ng-value="receipt.item.id">
-                                            <input type="hidden" name="product_id[]" ng-value="receipt.item.product.id">
+                                            <input type="hidden" name="product_id[]" ng-value="receipt.item.product_id">
                                             <input type="hidden" name="base_unit_id[]" ng-value="receipt.item.base_unit_id">
                                             <td class="valign-middle">@{{ receipt.item.product.name }}</td>
                                             <td>
