@@ -28,7 +28,7 @@
 
     <form class="form-horizontal" action="{{ route('db.warehouse.inflow') }}/{{ $po->hId() }}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
-        <div ng-app="warehouseModule" ng-controller="warehouseController">
+        <div ng-app="warehouseInflowModule" ng-controller="warehouseInflowController">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -116,7 +116,7 @@
                                             <input type="hidden" name="item_id[]" ng-value="receipt.item.id">
                                             <input type="hidden" name="product_id[]" ng-value="receipt.item.product.id">
                                             <input type="hidden" name="base_unit_id[]" ng-value="receipt.item.base_unit_id">
-                                            <td class="align-middle">@{{ receipt.item.product.name }}</td>
+                                            <td class="valign-middle">@{{ receipt.item.product.name }}</td>
                                             <td>
                                                 <select name="selected_unit_id[]" data-parsley-required="true"
                                                         class="form-control"
@@ -126,19 +126,25 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="brutto[]" ng-model="receipt.brutto"
+                                                <input id="brutto_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="brutto[]" ng-model="receipt.brutto"
                                                        data-parsley-required="true"
-                                                       data-parsley-type="number">
+                                                       data-parsley-type="number"
+                                                       data-parsley-checkequal="@{{ receipt.item.id }}"
+                                                       data-parsley-trigger="change">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="netto[]" ng-model="receipt.netto"
+                                                <input id="netto_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="netto[]" ng-model="receipt.netto"
                                                        data-parsley-required="true"
-                                                       data-parsley-type="number">
+                                                       data-parsley-type="number"
+                                                       data-parsley-checkequal="@{{ receipt.item.id }}"
+                                                       data-parsley-trigger="change">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="tare[]" ng-model="receipt.tare"
+                                                <input id="tare_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="tare[]" ng-model="receipt.tare"
                                                        data-parsley-required="true"
-                                                       data-parsley-type="number">
+                                                       data-parsley-type="number"
+                                                       data-parsley-checkequal="@{{ receipt.item.id }}"
+                                                       data-parsley-trigger="change">
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md" ng-click="removeReceipt($index)"><span class="fa fa-minus"/></button>
@@ -168,9 +174,8 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('warehouseModule', []);
-
-        app.controller("warehouseController", ['$scope', function($scope) {
+        var app = angular.module('warehouseInflowModule', []);
+        app.controller("warehouseInflowController", ['$scope', function($scope) {
             var PO = {!! htmlspecialchars_decode($po) !!}
 
             $scope.inflow = {
@@ -199,15 +204,27 @@
         }]);
 
         $(function () {
-            $("#inputReceiptDate").daterangepicker(
-                    {
-                        locale: {
-                            format: 'DD-MM-YYYY'
-                        },
-                        singleDatePicker: true,
-                        showDropdowns: true
-                    }
-            );
+            $("#inputReceiptDate").daterangepicker({
+                locale: {
+                    format: 'DD-MM-YYYY'
+                },
+                singleDatePicker: true,
+                showDropdowns: true
+            });
         });
+
+        window.Parsley.addValidator('checkequal', function (value, itemId) {
+            var brutto = '#brutto_' + itemId;
+            var netto = '#netto_' + itemId;
+            var tare = '#tare_' + itemId;
+
+            if (Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))) {
+                return true;
+            } else {
+                return false;
+            }
+        }, 32)
+                .addMessage('en', 'checkequal', 'Netto and Tare value not equal with Bruto')
+                .addMessage('id', 'checkequal', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
     </script>
 @endsection
