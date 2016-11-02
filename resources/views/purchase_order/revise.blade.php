@@ -246,7 +246,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control text-right" name="total_price[]" ng-value="item.quantity * item.price" readonly>
+                                                <input type="text" class="form-control text-right" name="total_price[]" ng-value="item.selected_unit.conversion_value * item.quantity * item.price" readonly>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -585,7 +585,7 @@
             $scope.grandTotal = function() {
                 var result = 0;
                 angular.forEach($scope.po.items, function(item, key) {
-                    result += (item.quantity * item.price);
+                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
                 });
                 return result;
             };

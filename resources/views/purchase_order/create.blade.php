@@ -241,8 +241,7 @@
                                         <tbody>
                                         <tr ng-repeat="item in po.items">
                                             <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                            <input type="hidden" name="base_unit_id[]"
-                                                   ng-value="item.base_unit.unit.id">
+                                            <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
                                             <td class="valign-middle">@{{ item.product.name }}</td>
                                             <td>
                                                 <input type="text" class="form-control text-right" name="quantity[]"
@@ -270,7 +269,7 @@
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control text-right" name="total_price[]"
-                                                       ng-value="item.quantity * item.price" readonly>
+                                                       ng-value="item.selected_unit.conversion_value * item.quantity * item.price" readonly>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -598,17 +597,20 @@
             $scope.grandTotal = function () {
                 var result = 0;
                 angular.forEach($scope.po.items, function (item, key) {
-                    result += (item.quantity * item.price);
+                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
                 });
                 return result;
             };
 
             $scope.insertItem = function (product) {
                 $scope.po.items.push({
-                    'product': product,
-                    'base_unit': _.find(product.product_units, isBase),
-                    'quantity': 0,
-                    'price': 0
+                    product: product,
+                    selected_unit: {
+                      conversion_value: 1
+                    },
+                    base_unit: _.find(product.product_units, isBase),
+                    quantity: 0,
+                    price: 0
                 });
             };
 
