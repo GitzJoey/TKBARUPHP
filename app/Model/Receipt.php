@@ -50,6 +50,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereBaseBrutto($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereBaseNetto($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereBaseTare($value)
+ * @property float $conversion_value
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereConversionValue($value)
  */
 class Receipt extends Model
 {

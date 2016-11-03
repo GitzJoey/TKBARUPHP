@@ -7,6 +7,52 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Vinkla\Hashids\Facades\Hashids;
 
+/**
+ * App\Model\Deliver
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property integer $item_id
+ * @property integer $selected_unit_id
+ * @property integer $base_unit_id
+ * @property float $conversion_value
+ * @property \Carbon\Carbon $deliver_date
+ * @property float $brutto
+ * @property float $base_brutto
+ * @property float $netto
+ * @property float $base_netto
+ * @property float $tare
+ * @property float $base_tare
+ * @property string $licence_plate
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\Item $item
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereItemId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereSelectedUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBaseUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereConversionValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereDeliverDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBrutto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBaseBrutto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereNetto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBaseNetto($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereTare($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBaseTare($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereLicencePlate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class Deliver extends Model
 {
     use SoftDeletes;

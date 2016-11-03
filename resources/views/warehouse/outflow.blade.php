@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span>&nbsp;@lang('warehouse.outflow.index.page_title')
+    <span class="fa fa-mail-reply fa-rotate-90 fa-fw"></span>&nbsp;@lang('warehouse.outflow.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('warehouse.outflow.index.page_title_desc')
@@ -55,7 +55,8 @@
                     <tr ng-repeat="so in SOs">
                         <td class="text-center">@{{ so.code }}</td>
                         <td class="text-center">@{{ so.so_created }}</td>
-                        <td class="text-center">@{{ so.customer.name }}</td>
+                        <td ng-show="so.customer_type == 'CUSTOMERTYPE.R'" class="text-center">@{{ so.customer.name }}</td>
+                        <td ng-show="so.customer_type == 'CUSTOMERTYPE.WI'" class="text-center">@{{ so.walk_in_cust }}</td>
                         <td class="text-center">@{{ so.shipping_date }}</td>
                         <td class="text-center" width="20%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.outflow') }}/@{{ so.id }}" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>

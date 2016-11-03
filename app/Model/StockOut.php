@@ -7,6 +7,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Vinkla\Hashids\Facades\Hashids;
 
+/**
+ * App\Model\StockOut
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property integer $so_id
+ * @property integer $product_id
+ * @property integer $stock_id
+ * @property integer $warehouse_id
+ * @property float $quantity
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereSoId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereStockId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class StockOut extends Model
 {
     use SoftDeletes;

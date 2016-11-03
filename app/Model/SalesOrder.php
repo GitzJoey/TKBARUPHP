@@ -59,6 +59,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $warehouse_id
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWarehouseId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $items
+ * @property integer $vendor_trucking_id
+ * @property-read \App\Model\Customer $customer
+ * @property-read \App\Model\Warehouse $warehouse
+ * @property-read \App\Model\VendorTrucking $vendorTrucking
+ * @property-read \App\Model\Store $store
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereVendorTruckingId($value)
  */
 class SalesOrder extends Model
 {
