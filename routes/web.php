@@ -189,8 +189,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::post('/dashboard/warehouse/inflow/receipt/{id?}', 'WarehouseInflowController@saveReceipt');
 
     Route::get('/dashboard/warehouse/outflow', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow.index');
-    Route::get('/dashboard/warehouse/outflow/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
-    Route::post('/dashboard/warehouse/outflow/{id?}', 'WarehouseOutflowController@saveDeliver');
+    Route::get('/dashboard/warehouse/outflow/deliver/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
+    Route::post('/dashboard/warehouse/outflow/deliver/{id?}', 'WarehouseOutflowController@saveDeliver');
 
     Route::get('/dashboard/warehouse/stockopname', 'WarehouseController@stockopname')->name('db.warehouse.stockopname.index');
 
