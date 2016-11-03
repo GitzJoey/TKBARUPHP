@@ -40,9 +40,9 @@ Breadcrumbs::register('outflow', function ($breadcrumbs){
     $breadcrumbs->push('Outflow', route('db.warehouse.outflow.index'));
 });
 
-Breadcrumbs::register('deliver', function ($breadcrumbs, $poId){
+Breadcrumbs::register('deliver', function ($breadcrumbs, $soId){
     $breadcrumbs->parent('outflow');
-    $breadcrumbs->push('Deliver', route('db.warehouse.outflow', $poId));
+    $breadcrumbs->push('Deliver', route('db.warehouse.outflow', $soId));
 });
 
 Breadcrumbs::register('create_sales_order', function ($breadcrumbs){
