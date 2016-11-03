@@ -197,7 +197,8 @@ class CustomerController extends Controller
 
     public function confirmationIndex()
     {
-        $solist = '';
+        $id = '';
+        $solist = SalesOrder::whereCustomerId();
 
         return redirect(route('db.customer.confirmation'), compact('solist'));
     }

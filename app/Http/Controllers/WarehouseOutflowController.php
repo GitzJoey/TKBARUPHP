@@ -81,7 +81,6 @@ class WarehouseOutflowController extends Controller
                 $stock->current_quantity -= $request->input("brutto.$i");
                 $stock->save();
             }
-
         }
 
         return redirect(route('db.warehouse.outflow.index'));
