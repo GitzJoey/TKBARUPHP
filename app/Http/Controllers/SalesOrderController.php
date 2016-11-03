@@ -87,7 +87,7 @@ class SalesOrderController extends Controller
                     'unit_id' => $item->selected_unit_id
                 ])->first()->conversion_value;
                 $item->quantity = $request->input("so_$i"."_quantity.$j");
-                $item->price = $request->input("so_$i"."_price.$j");
+                $item->price = floatval(str_replace(',', '', $request->input("so_$i"."_price.$j")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $so->items()->save($item);

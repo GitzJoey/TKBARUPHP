@@ -264,7 +264,7 @@
                                                                     <td>
                                                                         <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_price[]"
                                                                                ng-model="item.price" data-parsley-required="true"
-                                                                               data-parsley-type="number" fcsa-number>
+                                                                               data-parsley-pattern="^\d+(,\d+)?$" fcsa-number>
                                                                     </td>
                                                                     <td class="text-center">
                                                                         <button type="button" class="btn btn-danger btn-md"
