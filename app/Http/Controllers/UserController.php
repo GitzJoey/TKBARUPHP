@@ -95,7 +95,7 @@ class UserController extends Controller
         $rolesDDL = Role::get()->pluck('display_name', 'name');
         $storeDDL = Store::get()->pluck('name', 'id');
         $usertypeDDL = Lookup::whereCategory('USERTYPE')->pluck('description', 'code');
-        $profiles = Profile::where('user_id', '=', 0);
+        $profiles = Profile::with('suppliers', 'customers')->where('user_id', '=', 0)->orWhere('user_id', '=', $user->id)->get();
 
         return view('user.edit', compact('user', 'storeDDL', 'rolesDDL', 'usertypeDDL', 'profiles'));
     }
@@ -104,7 +104,6 @@ class UserController extends Controller
     {
         $this->validate($req, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'roles' => 'required',
             'store' => 'required',
@@ -115,17 +114,19 @@ class UserController extends Controller
         $usr->email = $req['email'];
         $usr->password = bcrypt($req['password']);
         $usr->store_id = $req['store'];
-        $usr->role_id = $req['roles'];;
-
         $usr->save();
 
+        $role_id = Role::whereName($req['roles'])->get(['id']);
+        dd($role_id);
+        $usr->roles()->sync([$role_id]);
+
+        $p = Profile::whereId($req['link_profile']);
+        $usr->profile()->save($p);
+
         $usr->userDetail->type = $req['type'];
-        $usr->userDetail->allow_login = $req['allow_login'];
+        $usr->userDetail->allow_login = boolval($req['allow_login']);
         $usr->userDetail->save();
 
-        $p = Profile::whereId($req['profile']);
-
-        $usr->profile()->save($p);
 
         return redirect(route('db.admin.user'));
     }
