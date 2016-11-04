@@ -81,12 +81,10 @@ class Profile extends Model
         return $this->belongsToMany('App\Model\Customer', 'customer_pic', 'customer_id', 'profile_id');
     }
 
-    /*
     public function suppliers()
     {
         return $this->belongsToMany('App\Model\Supplier', 'supplier_pic', 'supplier_id', 'profile_id');
     }
-    */
 
     public static function boot()
     {

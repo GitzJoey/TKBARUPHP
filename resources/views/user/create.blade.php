@@ -94,11 +94,7 @@
                     <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                     <div class="col-sm-10">
                         @foreach($profiles as $p)
-                            @if (!empty($p->suppliers()->first()->id))
-                                {{ $p->suppliers()->first()->name }}
-                            @else
-                                {{ $p->customers()->first()->name }}
-                            @endif
+                            {{ $p->customers }}
                         @endforeach
 
                     </div>
