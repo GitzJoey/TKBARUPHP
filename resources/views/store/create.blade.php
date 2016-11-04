@@ -73,14 +73,14 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('store.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('is_default') ? 'has-error' : '' }}">
                     <label for="inputIsDefault" class="col-sm-2 control-label">@lang('store.field.default')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('is_default', $yesnoDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('is_default', $yesnoDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('is_default') ? $errors->first('is_default') : '' }}</span>
                     </div>
                 </div>
