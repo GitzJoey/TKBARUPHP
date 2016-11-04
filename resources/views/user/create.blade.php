@@ -94,6 +94,7 @@
                     <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                     <div class="col-sm-10">
                         @foreach($profiles as $p)
+                            {{ $p->suppliers }}
                             {{ $p->customers }}
                         @endforeach
 

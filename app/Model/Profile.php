@@ -78,12 +78,12 @@ class Profile extends Model
 
     public function customers()
     {
-        return $this->belongsToMany('App\Model\Customer', 'customer_pic', 'customer_id', 'profile_id');
+        return $this->belongsToMany('App\Model\Customer', 'customer_pic', 'profile_id', 'customer_id');
     }
 
     public function suppliers()
     {
-        return $this->belongsToMany('App\Model\Supplier', 'supplier_pic', 'supplier_id', 'profile_id');
+        return $this->belongsToMany('App\Model\Supplier', 'supplier_pic', 'profile_id', 'supplier_id');
     }
 
     public static function boot()
