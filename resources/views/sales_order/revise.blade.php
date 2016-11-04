@@ -65,14 +65,14 @@
                                            class="col-sm-3 control-label">@lang('sales_order.revise.field.customer_name')</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" readonly
-                                               value="{{ $currentSo->walk_in_customer }}">
+                                               value="{{ $currentSo->walk_in_cust }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputCustomerDetails"
                                            class="col-sm-3 control-label">@lang('sales_order.revise.field.customer_details')</label>
                                     <div class="col-sm-9">
-                                            <textarea class="form-control" rows="5" readonly>{{ $currentSo->walk_in_customer_details }}
+                                            <textarea class="form-control" rows="5" readonly>{{ $currentSo->walk_in_cust_detail }}
                                             </textarea>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@
                                         <tr ng-repeat="item in so.items">
                                             <input type="hidden" name="item_id[]" ng-value="item.id">
                                             <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                            <input type="hidden" name="stock_id[]" ng-value="item.stock_id">
+                                            <input type="hidden" name="stock_id[]" ng-value="item.stock.id">
                                             <input type="hidden" name="base_unit_id[]"
                                                    ng-value="item.base_unit.unit.id">
                                             <td class="valign-middle">@{{ item.product.name }}</td>

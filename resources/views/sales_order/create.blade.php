@@ -50,12 +50,12 @@
                                                                     class="form-control"
                                                                     name="customer_type[]"
                                                                     ng-model="so.customer_type"
-                                                                    ng-options="key as value for (key, value) in customerTypeDDL track by key">
+                                                                    ng-options="customerType as customerType.description for customerType in customerTypeDDL track by customerType.code">
                                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div ng-show="so.customer_type == 'CUSTOMERTYPE.R'">
+                                                    <div ng-show="so.customer_type.code == 'CUSTOMERTYPE.R'">
                                                         <div class="form-group">
                                                             <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-7">
@@ -69,13 +69,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div ng-show="so.customer_type == 'CUSTOMERTYPE.WI'">
+                                                    <div ng-show="so.customer_type.code == 'CUSTOMERTYPE.WI'">
                                                         <div class="form-group">
                                                             <label for="inputCustomerName_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-9">
                                                                 <input type="text" class="form-control" id="inputCustomerName_@{{ $index + 1 }}"
                                                                        name="walk_in_customer[]" placeholder="Customer Name"
-                                                                       ng-model="so.walk_in_customer">
+                                                                       ng-model="so.walk_in_cust">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -83,7 +83,7 @@
                                                             <div class="col-sm-9">
                                                                 <textarea id="inputCustomerDetails_@{{ $index + 1 }}" class="form-control"
                                                                           rows="5" name="walk_in_customer_details[]"
-                                                                          ng-model="so.walk_in_customer_details"></textarea>
+                                                                          ng-model="so.walk_in_cust_details"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -111,7 +111,7 @@
                                                                     class="form-control"
                                                                     name="sales_type[]"
                                                                     ng-model="so.sales_type"
-                                                                    ng-options="key as value for (key, value) in soTypeDDL track by key">
+                                                                    ng-options="salesType as salesType.description for salesType in soTypeDDL track by salesType.code">
                                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                             </select>
                                                         </div>
@@ -124,7 +124,7 @@
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
                                                                 <input type="text" class="form-control inputSoDate" id="inputSoDate_@{{ $index + 1 }}"
-                                                                       name="so_created[]" ng-model="so.soCreated" data-parsley-required="true">
+                                                                       name="so_created[]" ng-model="so.so_created" data-parsley-required="true">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -153,7 +153,7 @@
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
                                                                 <input type="text" class="form-control inputShippingDate" id="inputShippingDate_@{{ $index + 1 }}"
-                                                                       name="shipping_date[]" ng-model="so.shippingDate" data-parsley-required="true">
+                                                                       name="shipping_date[]" ng-model="so.shipping_date" data-parsley-required="true">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -198,7 +198,7 @@
                                                 </div>
                                                 <div class="box-body">
                                                     <div class="row">
-                                                        <div ng-show="so.sales_type == 'SOTYPE.SVC'">
+                                                        <div ng-show="so.sales_type.code == 'SOTYPE.SVC'">
                                                             <div class="col-md-11">
                                                                 <select id="inputProduct_@{{ $index + 1 }}"
                                                                         class="form-control"
@@ -212,7 +212,7 @@
                                                                         ng-click="insertProduct($index, so.product)"><span class="fa fa-plus"/></button>
                                                             </div>
                                                         </div>
-                                                        <div ng-show="so.sales_type == 'SOTYPE.S'">
+                                                        <div ng-show="so.sales_type.code == 'SOTYPE.S'">
                                                             <div class="col-md-11">
                                                                 <select id="inputStock_@{{ $index + 1 }}"
                                                                         class="form-control"
@@ -322,9 +322,17 @@
                                     <div class="row">
                                         <div class="col-md-7 col-offset-md-5">
                                             <div class="btn-toolbar">
-                                                <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
+                                                <button id="submitButton" type="submit" name="submit" value="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                                                 <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                                                <button id="cancelButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
+                                                <button id="cancelButton" type="submit" name="cancel" value="cancel" class="btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-2 col-md-offset-5">
+                                            <div class="btn-toolbar">
+                                                <button id="draftButton" type="submit" name="draft" value="draft" class="btn btn-primary btn-block">Save as Draft</button>
                                             </div>
                                         </div>
                                     </div>
@@ -349,6 +357,10 @@
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
+            $scope.SOs = JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}');
+
+            console.log($scope.SOs);
+            console.log($scope.customerTypeDDL);
 
             $scope.setSOCode = function(so){
                 $http.get('{{ route('api.so.code') }}').success(function(data){
@@ -356,12 +368,13 @@
                 });
             };
 
-            $scope.SOs = [{
+            var so = {
                 so_code: '',
-                customer_type : '',
+                customer_type: '',
                 items : []
-            }];
-            $scope.setSOCode($scope.SOs[0]);
+            };
+            $scope.setSOCode(so);
+            $scope.SOs.push(so);
 
             $scope.insertTab = function(){
                 if(!$(".so-form").parsley().validate())

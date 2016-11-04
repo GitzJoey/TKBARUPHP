@@ -40,61 +40,74 @@ class SalesOrderController extends Controller
         $productDDL = Product::with('productUnits.unit')->get();
         $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
             ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
-        $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get()->pluck('description', 'code');
-        $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get()->pluck('description', 'code');
+        $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get(['code', 'description']);
+        $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get(['code', 'description']);
         $soCode = SOCodeGenerator::generateSOCode();
         $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=',
             'SOSTATUS.D');
 
+        $userSOs = session('userSOs', collect([]));
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL',
             'productDDL', 'stocksDDL', 'vendorTruckingDDL', 'customerDDL'
-            , 'soCode', 'soStatusDraft'));
+            , 'soCode', 'soStatusDraft', 'userSOs'));
     }
 
     public function store(Request $request)
     {
         Log::info('SalesOrderController@store');
 
-        for($i = 0; $i < count($request->input('so_code')); $i++){
-            $params = [
-                'customer_type' => $request->input("customer_type.$i"),
-                'customer_id' => empty($request->input("customer_id.$i")) ? 0 :$request->input("customer_id.$i"),
-                'walk_in_cust' => $request->input("walk_in_customer.$i"),
-                'walk_in_cust_detail' => $request->input("walk_in_customer_details.$i"),
-                'code' => $request->input("so_code.$i"),
-                'so_type' => $request->input("sales_type.$i"),
-                'so_created' => date('Y-m-d', strtotime($request->input("so_created.$i"))),
-                'shipping_date' => date('Y-m-d', strtotime($request->input("shipping_date.$i"))),
-                'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
-                'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i"),
-                'warehouse_id' => $request->input("warehouse_id.$i"),
-                'remarks' => $request->input("remarks.$i"),
-                'store_id' => Auth::user()->store_id
-            ];
+        if($request->input('submit')){
 
-            $so = SalesOrder::create($params);
+            Log::info('Store SO to DB.');
 
-            for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
-                $item = new Item();
-                $item->product_id = $request->input("so_$i"."_product_id.$j");
-                $item->stock_id = $request->input("so_$i"."_stock_id.$j");
-                $item->store_id = Auth::user()->store_id;
-                $item->selected_unit_id = $request->input("so_$i"."_selected_unit_id.$j");
-                $item->base_unit_id = $request->input("so_$i"."_base_unit_id.$j");
-                $item->conversion_value = ProductUnit::where([
-                    'product_id' => $item->product_id,
-                    'unit_id' => $item->selected_unit_id
-                ])->first()->conversion_value;
-                $item->quantity = $request->input("so_$i"."_quantity.$j");
-                $item->price = floatval(str_replace(',', '', $request->input("so_$i"."_price.$j")));
-                $item->to_base_quantity = $item->quantity * $item->conversion_value;
+            for($i = 0; $i < count($request->input('so_code')); $i++){
+                $params = [
+                    'customer_type' => $request->input("customer_type.$i"),
+                    'customer_id' => empty($request->input("customer_id.$i")) ? 0 :$request->input("customer_id.$i"),
+                    'walk_in_cust' => $request->input("walk_in_customer.$i"),
+                    'walk_in_cust_detail' => $request->input("walk_in_customer_details.$i"),
+                    'code' => $request->input("so_code.$i"),
+                    'so_type' => $request->input("sales_type.$i"),
+                    'so_created' => date('Y-m-d', strtotime($request->input("so_created.$i"))),
+                    'shipping_date' => date('Y-m-d', strtotime($request->input("shipping_date.$i"))),
+                    'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
+                    'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i"),
+                    'warehouse_id' => $request->input("warehouse_id.$i"),
+                    'remarks' => $request->input("remarks.$i"),
+                    'store_id' => Auth::user()->store_id
+                ];
 
-                $so->items()->save($item);
+                $so = SalesOrder::create($params);
+
+                for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
+                    $item = new Item();
+                    $item->product_id = $request->input("so_$i"."_product_id.$j");
+                    $item->stock_id = empty($request->input("so_$i"."_stock_id.$i")) ? 0 : $request->input("so_$i"."_stock_id.$i");
+                    $item->store_id = Auth::user()->store_id;
+                    $item->selected_unit_id = $request->input("so_$i"."_selected_unit_id.$j");
+                    $item->base_unit_id = $request->input("so_$i"."_base_unit_id.$j");
+                    $item->conversion_value = ProductUnit::where([
+                        'product_id' => $item->product_id,
+                        'unit_id' => $item->selected_unit_id
+                    ])->first()->conversion_value;
+                    $item->quantity = $request->input("so_$i"."_quantity.$j");
+                    $item->price = floatval(str_replace(',', '', $request->input("so_$i"."_price.$j")));
+                    $item->to_base_quantity = $item->quantity * $item->conversion_value;
+
+                    $so->items()->save($item);
+                }
             }
-        }
 
-        return redirect(route('db'));
+            $request->session()->forget('userSOs');
+            return redirect(route('db'));
+        }
+        else{
+            Log::info('Store SO to Session.');
+
+            $this->storeToSession($request);
+            return redirect(route('db.so.create'));
+        }
     }
 
     public function index()
@@ -184,5 +197,64 @@ class SalesOrderController extends Controller
         $so->save();
 
         return redirect(route('db.so.revise.index'));
+    }
+
+    private function storeToSession(Request $request)
+    {
+        $SOs = [];
+
+        for($i = 0; $i < count($request->input('so_code')); $i++){
+
+            $items = [];
+            for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
+                $items[] = [
+                    'quantity' => $request->input("so_$i"."_quantity.$j"),
+                    'selected_unit' => [
+                        'conversion_value' => ProductUnit::where([
+                            'product_id' => $request->input("so_$i"."_product_id.$j"),
+                            'unit_id' => $request->input("so_$i"."_selected_unit_id.$j")
+                        ])->first()->conversion_value,
+                        'unit' => [
+                            'id' => $request->input("so_$i"."_selected_unit_id.$j")
+                        ]
+                    ],
+                    'product' => Product::with('productUnits.unit')->find($request->input("so_$i"."_product_id.$j")),
+                    'stock_id' => empty($request->input("so_$i"."stock_id.$i")) ? 0 : $request->input("so_$i"."_stock_id.$j"),
+                    'base_unit' => [
+                        'unit' => [
+                            'id' => $request->input("so_$i"."_base_unit_id.$j")
+                        ]
+                    ],
+                    'price' => floatval(str_replace(',', '', $request->input("so_$i"."_price.$j")))
+                ];
+            }
+
+            $SOs[] = [
+                'customer_type' => [
+                    'code' => $request->input("customer_type.$i")
+                ],
+                'customer' => [
+                    'id' => empty($request->input("customer_id.$i")) ? 0 :$request->input("customer_id.$i")
+                ],
+                'walk_in_cust' => $request->input("walk_in_customer.$i"),
+                'walk_in_cust_details' => $request->input("walk_in_customer_details.$i"),
+                'so_code' => $request->input("so_code.$i"),
+                'sales_type' => [
+                    'code' => $request->input("sales_type.$i")
+                ],
+                'so_created' => $request->input("so_created.$i"),
+                'shipping_date' => $request->input("shipping_date.$i"),
+                'warehouse' => [
+                    'id' => $request->input("warehouse_id.$i")
+                ],
+                'vendorTrucking' => [
+                    'id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i")
+                ],
+                'remarks' => $request->input("remarks.$i"),
+                'items' => $items
+            ];
+        }
+
+        session(['userSOs' => collect($SOs)]);
     }
 }
