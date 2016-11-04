@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.create.page_title')
+    <span class="fa fa-user fa-fw" xmlns="http://www.w3.org/1999/html"></span>&nbsp;@lang('user.create.page_title')
 @endsection
 @section('page_title_desc')
     @lang('user.create.page_title_desc')
@@ -93,11 +93,15 @@
                 <div class="form-group">
                     <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                     <div class="col-sm-10">
-                        @foreach($profiles as $p)
-                            {{ $p->suppliers }}
-                            {{ $p->customers }}
-                        @endforeach
-
+                        <select name="link_profile" class="form-control">
+                            @foreach($profiles as $p)
+                                @if (!empty($p->suppliers()->first()->id))
+                                    <option value="{{ $p->id }}">[Supplier] Name: {{ $p->suppliers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                @else
+                                    <option value="{{ $p->id }}">[Customer] Name: {{ $p->customers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
