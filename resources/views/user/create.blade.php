@@ -83,14 +83,23 @@
                 <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
                     <label for="inputAllowLogin" class="col-sm-2 control-label">@lang('user.field.allow_login')</label>
                     <div class="col-sm-10">
-                        <label>
-                            <input type="checkbox" name="allow_login">
-                        </label>
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" name="allow_login">&nbsp;
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                     <div class="col-sm-10">
+                        @foreach($profiles as $p)
+                            @if (!empty($p->suppliers()->first()->id))
+                                {{ $p->suppliers()->first()->name }}
+                            @else
+                                {{ $p->customers()->first()->name }}
+                            @endif
+                        @endforeach
 
                     </div>
                 </div>
@@ -104,4 +113,16 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="text/javascript">
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
 @endsection

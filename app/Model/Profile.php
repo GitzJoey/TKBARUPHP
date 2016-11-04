@@ -48,6 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Profile whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PhoneNumber[] $phoneNumbers
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Supplier[] $suppliers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Customer[] $customers
  */
 class Profile extends Model
 {
@@ -75,10 +76,17 @@ class Profile extends Model
         return $this->hasMany('App\Model\PhoneNumber');
     }
 
+    public function customers()
+    {
+        return $this->belongsToMany('App\Model\Customer', 'customer_pic', 'customer_id', 'profile_id');
+    }
+
+    /*
     public function suppliers()
     {
-        return $this->belongsToMany('App\Model\Supplier', 'supplier_profile', 'supplier_id', 'profile_id');
+        return $this->belongsToMany('App\Model\Supplier', 'supplier_pic', 'supplier_id', 'profile_id');
     }
+    */
 
     public static function boot()
     {

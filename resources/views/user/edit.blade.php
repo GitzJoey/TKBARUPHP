@@ -74,45 +74,49 @@
                     </div>
                 </div>
                 <hr>
-                <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
-                    <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                    <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputFirstName" name="first_name" value="{{ $user->userDetails }}" placeholder="First Name">
-                        <span class="help-block">{{ $errors->has('first_name') ? $errors->first('first_name') : '' }}</span>
+                        {{ Form::select('type', $usertypeDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
-                    <label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
+                <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
+                    <label for="inputAllowLogin" class="col-sm-2 control-label">@lang('user.field.allow_login')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputFirstName" name="last_name" placeholder="Last Name">
-                        <span class="help-block">{{ $errors->has('last_name') ? $errors->first('last_name') : '' }}</span>
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" name="allow_login">&nbsp;
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
-                    <label for="inputUserImage" class="col-sm-2 control-label">&nbsp;</label>
+                <div class="form-group">
+                    <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                     <div class="col-sm-10">
-                        @if(!empty($user->image_filename))
-                            <img src="{{ asset('images/'.$user->image_filename) }}" class="img-responsive img-circle" style="max-width: 150px; max-height: 150px;"/>
-                        @endif
-                        <input id="inputUserImage" name="image_path" type="file" class="form-control">
-                        <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <label for="inputAddress" class="col-sm-2 control-label">Address</label>
-                    <div class="col-sm-10">
-                        <textarea id="inputAddress" class="form-control" rows="5" name="address"></textarea>
-                        <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.admin.user') }}" class="btn btn-default">Cancel</a>
-                        <button class="btn btn-default" type="submit">Submit</button>
+                        <a href="{{ route('db.admin.user') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="text/javascript">
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
 @endsection

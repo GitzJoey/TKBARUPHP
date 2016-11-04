@@ -48,8 +48,9 @@ class UserController extends Controller
         $rolesDDL = Role::get()->pluck('display_name', 'name');
         $storeDDL = Store::get()->pluck('name', 'id');
         $usertypeDDL = Lookup::whereCategory('USERTYPE')->pluck('description', 'code');
+        $profiles = Profile::where('user_id', '=', 0)->get();
 
-        return view('user.create', compact('rolesDDL', 'storeDDL', 'usertypeDDL'));
+        return view('user.create', compact('rolesDDL', 'storeDDL', 'usertypeDDL', 'profiles'));
     }
 
     public function store(Request $data)
@@ -90,8 +91,10 @@ class UserController extends Controller
 
         $rolesDDL = Role::get()->pluck('display_name', 'name');
         $storeDDL = Store::get()->pluck('name', 'id');
+        $usertypeDDL = Lookup::whereCategory('USERTYPE')->pluck('description', 'code');
+        $profiles = Profile::where('user_id', '=', 0);
 
-        return view('user.edit', compact('user', 'storeDDL', 'rolesDDL'));
+        return view('user.edit', compact('user', 'storeDDL', 'rolesDDL', 'usertypeDDL', 'profiles'));
     }
 
     public function update($id, Request $req)
