@@ -4,15 +4,6 @@
     @lang('user.show.title')
 @endsection
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
-@endsection
-
 @section('page_title')
     <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.show.page_title')
 @endsection
@@ -55,19 +46,39 @@
                     <div class="form-group">
                         <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
                         <div class="col-sm-10">
-
+                            <span class="control-label-normal">{{ $user->userDetail->type }}</span>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
                         <label for="inputAllowLogin" class="col-sm-2 control-label">@lang('user.field.allow_login')</label>
                         <div class="col-sm-10">
-
+                            <span class="control-label-normal">
+                                @if(is_null($user->userDetail->allow_login))
+                                    <div class="checkbox icheck">
+                                        <label>
+                                            <input type="checkbox" disabled>&nbsp;
+                                        </label>
+                                    </div>
+                                @else
+                                    <div class="checkbox icheck">
+                                        <label>
+                                            <input type="checkbox" checked disabled>&nbsp;
+                                        </label>
+                                    </div>
+                                @endif
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                         <div class="col-sm-10">
-
+                            <span class="control-label-normal">
+                                @if (!is_null($user->profile))
+                                    @if (!empty($user->profile->suppliers()->first()->id))
+                                    @else
+                                    @endif
+                                @endif
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -82,4 +93,16 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="text/javascript">
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
 @endsection

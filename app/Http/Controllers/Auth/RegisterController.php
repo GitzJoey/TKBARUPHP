@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Model\Role;
-use App\Model\UserDetail;
+use App\Model\Store;
 use App\Model\Lookup;
+use App\Model\UserDetail;
 
 use Validator;
 use App\Http\Controllers\Controller;

@@ -41,7 +41,7 @@
                 <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                     <label for="inputEmail" class="col-sm-2 control-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" data-parsley-required="true">
+                        <input type="email" class="form-control" id="inputEmail" name="email" value="{{ $user->email }}" placeholder="Email" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('email') ? $errors->first('email') : '' }}</span>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('type', $usertypeDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('type', $usertypeDDL, $user->userDetail()->pluck('type')->first(), array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
@@ -86,7 +86,11 @@
                     <div class="col-sm-10">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" name="allow_login">&nbsp;
+                                @if (boolval($user->userDetail()->pluck('allow_login')->first()))
+                                    <input type="checkbox" name="allow_login" checked>&nbsp;
+                                @else
+                                    <input type="checkbox" name="allow_login">&nbsp;
+                                @endif
                             </label>
                         </div>
                     </div>

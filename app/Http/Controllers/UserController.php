@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\UserDetail;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -61,23 +62,25 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
             'roles' => 'required',
             'store' => 'required',
-            'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.admin.user.create'))->withInput()->withErrors($validator);
         } else {
-            $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
-            $data->image_path->move(public_path('images'), $imageName);
-
             $usr = new User();
             $usr->name = $data['name'];
             $usr->email = $data['email'];
             $usr->password = bcrypt($data['password']);
-            $usr->store_id = 1;
-            $usr->role_id = 1;
+            $usr->store_id = $data['store'];
+
+            $ud = new UserDetail();
+            $ud->type = $data['type'];
+            $ud->allow_login = boolval($data['allow_login']);
 
             $usr->save();
+            $usr->roles()->attach(Role::whereName($data['roles'])->get());
+            $usr->profile()->save(Profile::whereId($data['link_profile'])->first());
+            $usr->userDetail()->save($ud);
 
             Session::flash('success', 'New User Created');
 
@@ -105,12 +108,25 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
             'roles' => 'required',
             'store' => 'required',
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'address' => 'required|max:255',
         ]);
 
-        User::find($id)->update($req->all());
+        $usr = User::find($id);
+        $usr->name = $req['name'];
+        $usr->email = $req['email'];
+        $usr->password = bcrypt($req['password']);
+        $usr->store_id = $req['store'];
+        $usr->role_id = $req['roles'];;
+
+        $usr->save();
+
+        $usr->userDetail->type = $req['type'];
+        $usr->userDetail->allow_login = $req['allow_login'];
+        $usr->userDetail->save();
+
+        $p = Profile::whereId($req['profile']);
+
+        $usr->profile()->save($p);
+
         return redirect(route('db.admin.user'));
     }
 

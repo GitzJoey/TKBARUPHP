@@ -48,9 +48,9 @@
                                 @endif
                             </td>
                             <td>{{ $item->store->name }}</td>
-                            <td>@lang('lookup.' . $item->userDetail->type)</td>
+                            <td>@lang('lookup.'.$item->userDetail()->pluck('type')->first())</td>
                             <td class="text-center">
-                                @if($item->userDetail->allow_login)
+                                @if(!is_null($item->userDetail()->pluck('allow_login')->first()))
                                     <span class="fa fa-check-square-o fa-fw"></span>
                                 @else
                                     <span class="fa fa-square-o fa-fw"></span>
