@@ -47,14 +47,14 @@
                 <div class="form-group {{ $errors->has('store') ? 'has-error' : '' }}">
                     <label for="inputStore" class="col-sm-2 control-label">@lang('user.field.store')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('store', $storeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('store', $storeDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('store') ? $errors->first('store') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                     <label for="inputRoles" class="col-sm-2 control-label">@lang('user.field.roles')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('roles', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('roles', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('roles') ? $errors->first('roles') : '' }}</span>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('type', $usertypeDDL, null, array('class' => 'form-control', 'placeholder' => 'Please Select', 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('type', $usertypeDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
@@ -88,46 +88,17 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
-                    <label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+                <div class="form-group">
+                    <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputFirstName" name="first_name" placeholder="First Name">
-                        <span class="help-block">{{ $errors->has('first_name') ? $errors->first('first_name') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
-                    <label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputFirstName" name="last_name" placeholder="Last Name">
-                        <span class="help-block">{{ $errors->has('last_name') ? $errors->first('last_name') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
-                    <label for="inputUserImage" class="col-sm-2 control-label">&nbsp;</label>
-                    <div class="col-sm-10">
-                        <input id="inputUserImage" name="image_path" type="file" class="form-control">
-                        <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <label for="inputAddress" class="col-sm-2 control-label">Address</label>
-                    <div class="col-sm-10">
-                        <textarea id="inputAddress" class="form-control" rows="5" name="address"></textarea>
-                        <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('ic_num') ? 'has-error' : '' }}">
-                    <label for="inputICNum" class="col-sm-2 control-label">IC Number</label>
-                    <div class="col-sm-10">
-                        <input id="inputICNum" name="ic_num" type="text" class="form-control">
-                        <span class="help-block">{{ $errors->has('ic_num') ? $errors->first('ic_num') : '' }}</span>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
                         <a href="{{ route('db.admin.user') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">Submit</button>
+                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                     </div>
                 </div>
             </div>

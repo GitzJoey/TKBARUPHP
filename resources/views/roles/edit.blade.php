@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label for="inputPermission" class="col-sm-2 control-label">@lang('role.field.permission')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('permission[]', $permission, $selected, array('multiple', 'size' => 25, 'class' => 'form-control', 'placeholder' => 'Please Select')) }}
+                        {{ Form::select('permission[]', $permission, $selected, array('multiple', 'size' => 25, 'class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'))) }}
                     </div>
                 </div>
             </div>
