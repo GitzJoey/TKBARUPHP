@@ -37,3 +37,8 @@ Route::group(['prefix' => 'warehouse'], function ()
         Route::get('/po/{id?}', 'WarehouseInflowController@getWarehousePOs')->name('api.warehouse.inflow.po');
     });
 });
+
+Route::group(['prefix' => 'search'], function ()
+{
+    Route::get('customers', 'CustomerController@searchCustomers')->name('api.search.customers');
+});
