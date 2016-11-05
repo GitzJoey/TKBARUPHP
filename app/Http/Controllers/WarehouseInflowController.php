@@ -41,7 +41,6 @@ class WarehouseInflowController extends Controller
 
     public function saveReceipt(Request $request, $id)
     {
-
         for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
             $conversionValue = ProductUnit::where([
                 'product_id' => $request->input("product_id.$i"),
@@ -88,6 +87,10 @@ class WarehouseInflowController extends Controller
             $stockIn = StockIn::create($stockInParams);
         }
 
+        $po = PurchaseOrder::whereId($id)->first();
+        $po->status = 'POSTATUS.WP';
+        $po->save();
+
         return redirect(route('db.warehouse.inflow.index'));
     }
 
@@ -95,7 +98,7 @@ class WarehouseInflowController extends Controller
     {
         Log::info("WarehouseOutflowController@getWarehousePOs");
 
-        $POs = PurchaseOrder::with('supplier')->where('warehouse_id', '=', $id)->get();
+        $POs = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WA')->where('warehouse_id', '=', $id)->get();
 
         Log::info($POs);
 
