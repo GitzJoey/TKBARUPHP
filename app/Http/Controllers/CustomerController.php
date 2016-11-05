@@ -16,6 +16,7 @@ use Auth;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Vinkla\Hashids\Facades\Hashids;
 
 class CustomerController extends Controller
 {
@@ -171,8 +172,6 @@ class CustomerController extends Controller
 
         $customer->save();
 
-        dd($data['price_level']);
-
         return redirect(route('db.master.customer'));
     }
 
@@ -197,9 +196,28 @@ class CustomerController extends Controller
 
     public function confirmationIndex()
     {
-        $id = '';
-        $solist = SalesOrder::whereCustomerId();
+        $profile = Profile::with('customers')->where('user_id', '=' , Auth::user()->id)->first();
 
-        return redirect(route('db.customer.confirmation'), compact('solist'));
+        $customerhid = Hashids::encode(0);
+
+        if ($profile && $profile->customers()) {
+            $customerhid = Hashids::encode($profile->customers()->first()->id);
+        }
+
+        return redirect(route('db.customer.confirmation.customer', $customerhid));
+    }
+
+    public function confirmationCustomer($id, Request $req)
+    {
+        $solist = array();
+
+        if ($id == 0) {
+            $req->session()->flash('info', 'This ID are not associated with any customer.');
+            return view('customer.confirmation.index', compact('solist'));
+        }
+
+        $solist = SalesOrder::whereCustomerId($id)->where('status', '=', 'SOSTATUS.WP')->paginate(10);
+
+        return view('customer.confirmation.index', compact('solist'));
     }
 }

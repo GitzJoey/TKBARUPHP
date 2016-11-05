@@ -18,6 +18,7 @@ return [
         'retype_password' => 'Ulangi Password',
         'user_type' => 'Tipe User',
         'allow_login' => 'Boleh Login',
+        'link_profile' => '',
     ],
     'edit' => [
         'title' => 'Pengguna',

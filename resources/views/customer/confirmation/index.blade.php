@@ -16,6 +16,10 @@
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
+    @elseif ($message = Session::get('info'))
+        <div class="alert alert-info">
+            <p>{{ $message }}</p>
+        </div>
     @endif
 
     <div class="box box-info">
@@ -35,24 +39,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($solist as $key => $so)
-                    <tr>
-                        <td class="text-center">{{ $so->code }}</td>
-                        <td class="text-center">{{ $so->so_date }}</td>
-                        <td class="text-center">{{ $so->shipping_date }}</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">{{ $so->status }}</td>
-                        <td class="text-center" width="20%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.master.customer.show', $so->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.customer.edit', $so->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                        </td>
-                    </tr>
-                @endforeach
+                    @if (!empty($solist))
+                        @foreach ($solist as $key => $so)
+                            <tr>
+                                <td class="text-center">{{ $so->code }}</td>
+                                <td class="text-center">{{ $so->so_date }}</td>
+                                <td class="text-center">{{ $so->shipping_date }}</td>
+                                <td class="text-center"></td>
+                                <td class="text-center">{{ $so->status }}</td>
+                                <td class="text-center" width="20%">
+                                    <a class="btn btn-xs btn-info" href="{{ route('db.master.customer.show', $so->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('db.master.customer.edit', $so->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
         <div class="box-footer clearfix">
-            {{ $solist->render() }}
+            @if (!empty($solist))
+                {{ $solist->render() }}
+            @endif
         </div>
     </div>
 @endsection

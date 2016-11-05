@@ -65,6 +65,8 @@ return [
                 'bank_lists' => '',
                 'bank_inputs' => '',
             ],
+            'supplier' => '',
+            'product' => '',
         ],
         'table_phone' => [
             'header' => [
