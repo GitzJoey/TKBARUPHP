@@ -52,6 +52,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property \Carbon\Carbon $confirm_receive_date
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereConfirmReceiveDate($value)
  */
 class Deliver extends Model
 {
@@ -59,12 +61,13 @@ class Deliver extends Model
 
     protected $table = 'delivers';
 
-    protected $dates = ['deleted_at', 'deliver_date'];
+    protected $dates = ['deleted_at', 'deliver_date', 'confirm_receive_date'];
 
     protected $fillable = [
         'item_id',
         'licence_plate',
         'deliver_date',
+        'confirm_receive_date',
         'conversion_value',
         'brutto',
         'base_brutto',
