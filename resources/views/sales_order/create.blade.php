@@ -16,7 +16,7 @@
 
 @section('content')
     <div ng-app="soModule" ng-controller="soController">
-        <form class="form-horizontal so-form" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
+        <form class="form-horizontal" id="so-form" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
             <div class="box-body">
                 <div class="row">
@@ -30,7 +30,7 @@
                                         : (defaultTabLabel + " " + ($index + 1)) }}</a>
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-xs btn-default pull-right" ng-click="insertTab()">
+                                    <button type="button" class="btn btn-xs btn-default pull-right" ng-click="insertTab(SOs)">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
                                 </li>
@@ -39,6 +39,15 @@
                                 <div ng-repeat="so in SOs"
                                      ng-class="{active: $last}"
                                      class="tab-pane" id="tab_so@{{ $index + 1 }}">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="box box-info">
+                                                <div class="box-body">
+                                                    <button id="draftButton" type="submit" name="draft" value="draft" class="btn btn-xs btn-primary pull-right"><span class="fa fa-save fa-fw"></span>Save as Draft</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-7">
                                             <div class="box box-info">
@@ -135,7 +144,6 @@
                                                         <label for="inputSoStatus_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_status')</label>
                                                         <div class="col-sm-10">
                                                             <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
-                                                            <button id="draftButton" type="submit" name="draft" value="draft" class="btn btn-primary pull-right">Save as Draft</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -203,7 +211,7 @@
                                                 <div class="box-body">
                                                     <div class="row">
                                                         <div ng-show="so.sales_type.code == 'SOTYPE.SVC'">
-                                                            <div class="col-md-11">x
+                                                            <div class="col-md-11">
                                                                 <select id="inputProduct_@{{ $index + 1 }}"
                                                                         class="form-control"
                                                                         ng-model="so.product"
@@ -326,9 +334,9 @@
                                     <div class="row">
                                         <div class="col-md-7 col-offset-md-5">
                                             <div class="btn-toolbar">
-                                                <button id="submitButton" type="submit" name="submit" value="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
+                                                <button id="submitButton_@{{ $index }}" type="submit" name="submit" ng-value="$index" class="submitButton btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                                                 <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                                                <button id="cancelButton" type="submit" name="cancel" value="cancel" class="btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
+                                                <button id="cancelButton_@{{ $index }}" type="submit" name="cancel" ng-value="$index" class="cancelButton btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
                                             </div>
                                         </div>
                                     </div>
@@ -344,8 +352,16 @@
 
 @section('custom_js')
     <script type="application/javascript">
+        $(document).ready(function () {
+            $('.cancelButton').on('click', function(e){
+                var form = $("#so-form");
+                form.parsley().destroy();
+                form.submit();
+            });
+        });
+
         var app = angular.module("soModule", ['fcsa-number']);
-        app.controller("soController", ['$scope', '$http', '$q', function($scope, $http, $q) {
+        app.controller("soController", ['$scope', '$http', function($scope, $http) {
             $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
             $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');
             $scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');
@@ -362,27 +378,17 @@
                 });
             };
 
-            if($scope.SOs.length == 0){
+            $scope.insertTab = function(SOs){
+                if(!$("#so-form").parsley().validate())
+                    return;
                 var so = {
                     so_code: '',
                     customer_type: '',
                     items : []
                 };
                 $scope.setSOCode(so);
-                $scope.SOs.push(so);
-            }
+                SOs.push(so);
 
-            $scope.insertTab = function(){
-                if(!$(".so-form").parsley().validate())
-                    return;
-
-                var so = {
-                    so_code: '',
-                    customer_type: '',
-                    items : []
-                }
-                $scope.setSOCode(so);
-                $scope.SOs.push(so);
                 $(function () {
                     $(".inputSoDate").daterangepicker(
                             {
@@ -409,6 +415,10 @@
                 });
             };
 
+            if($scope.SOs.length == 0){
+                $scope.insertTab($scope.SOs);
+            }
+
             $scope.grandTotal = function (index) {
                 var result = 0;
                 angular.forEach($scope.SOs[index].items, function (item, key) {
@@ -420,7 +430,6 @@
             function isBase(unit) {
                 return unit.is_base == 1;
             }
-
 
             $scope.insertProduct = function (index, product) {
                 $scope.SOs[index].items.push({
@@ -451,32 +460,6 @@
             $scope.removeItem = function (SOIndex, index) {
                 $scope.SOs[SOIndex].items.splice(index, 1);
             };
-
         }]);
-
-        $(function () {
-            $(".inputSoDate").daterangepicker(
-                    {
-                        timePicker: true,
-                        timePickerIncrement: 15,
-                        locale: {
-                            format: 'DD-MM-YYYY'
-                        },
-                        singleDatePicker: true,
-                        showDropdowns: true
-                    }
-            );
-            $(".inputShippingDate").daterangepicker(
-                    {
-                        timePicker: true,
-                        timePickerIncrement: 15,
-                        locale: {
-                            format: 'DD-MM-YYYY'
-                        },
-                        singleDatePicker: true,
-                        showDropdowns: true
-                    }
-            );
-        });
     </script>
 @endsection

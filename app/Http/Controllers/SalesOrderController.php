@@ -57,57 +57,66 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@store');
 
-        if($request->input('submit')){
+        $submitIndex = $request->input('submit');
+        $cancelIndex = $request->input('cancel');
+
+        Log::info("Submited SO index : $submitIndex");
+        Log::info("Cancelled SO index : $cancelIndex");
+
+        //If it is SO submission
+        if($submitIndex){
 
             Log::info('Store SO to DB.');
 
-            for($i = 0; $i < count($request->input('so_code')); $i++){
-                $params = [
-                    'customer_type' => $request->input("customer_type.$i"),
-                    'customer_id' => empty($request->input("customer_id.$i")) ? 0 :$request->input("customer_id.$i"),
-                    'walk_in_cust' => $request->input("walk_in_customer.$i"),
-                    'walk_in_cust_detail' => $request->input("walk_in_customer_details.$i"),
-                    'code' => $request->input("so_code.$i"),
-                    'so_type' => $request->input("sales_type.$i"),
-                    'so_created' => date('Y-m-d', strtotime($request->input("so_created.$i"))),
-                    'shipping_date' => date('Y-m-d', strtotime($request->input("shipping_date.$i"))),
-                    'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
-                    'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i"),
-                    'warehouse_id' => $request->input("warehouse_id.$i"),
-                    'remarks' => $request->input("remarks.$i"),
-                    'store_id' => Auth::user()->store_id
-                ];
+            $params = [
+                'customer_type' => $request->input("customer_type.$submitIndex"),
+                'customer_id' => empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex"),
+                'walk_in_cust' => $request->input("walk_in_customer.$submitIndex"),
+                'walk_in_cust_detail' => $request->input("walk_in_customer_details.$submitIndex"),
+                'code' => $request->input("so_code.$submitIndex"),
+                'so_type' => $request->input("sales_type.$submitIndex"),
+                'so_created' => date('Y-m-d', strtotime($request->input("so_created.$submitIndex"))),
+                'shipping_date' => date('Y-m-d', strtotime($request->input("shipping_date.$submitIndex"))),
+                'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
+                'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$submitIndex")) ? 0 : $request->input("vendor_trucking_id.$submitIndex"),
+                'warehouse_id' => $request->input("warehouse_id.$submitIndex"),
+                'remarks' => $request->input("remarks.$submitIndex"),
+                'store_id' => Auth::user()->store_id
+            ];
 
-                $so = SalesOrder::create($params);
+            $so = SalesOrder::create($params);
 
-                for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
-                    $item = new Item();
-                    $item->product_id = $request->input("so_$i"."_product_id.$j");
-                    $item->stock_id = empty($request->input("so_$i"."_stock_id.$i")) ? 0 : $request->input("so_$i"."_stock_id.$i");
-                    $item->store_id = Auth::user()->store_id;
-                    $item->selected_unit_id = $request->input("so_$i"."_selected_unit_id.$j");
-                    $item->base_unit_id = $request->input("so_$i"."_base_unit_id.$j");
-                    $item->conversion_value = ProductUnit::where([
-                        'product_id' => $item->product_id,
-                        'unit_id' => $item->selected_unit_id
-                    ])->first()->conversion_value;
-                    $item->quantity = $request->input("so_$i"."_quantity.$j");
-                    $item->price = floatval(str_replace(',', '', $request->input("so_$i"."_price.$j")));
-                    $item->to_base_quantity = $item->quantity * $item->conversion_value;
+            for ($j = 0; $j < count($request->input("so_$submitIndex"."_product_id")); $j++) {
+                $item = new Item();
+                $item->product_id = $request->input("so_$submitIndex"."_product_id.$j");
+                $item->stock_id = empty($request->input("so_$submitIndex"."_stock_id.$j")) ? 0 : $request->input("so_$submitIndex"."_stock_id.$j");
+                $item->store_id = Auth::user()->store_id;
+                $item->selected_unit_id = $request->input("so_$submitIndex"."_selected_unit_id.$j");
+                $item->base_unit_id = $request->input("so_$submitIndex"."_base_unit_id.$j");
+                $item->conversion_value = ProductUnit::where([
+                    'product_id' => $item->product_id,
+                    'unit_id' => $item->selected_unit_id
+                ])->first()->conversion_value;
+                $item->quantity = $request->input("so_$submitIndex"."_quantity.$j");
+                $item->price = floatval(str_replace(',', '', $request->input("so_$submitIndex"."_price.$j")));
+                $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
-                    $so->items()->save($item);
-                }
+                $so->items()->save($item);
             }
-
-            $request->session()->forget('userSOs');
-            return redirect(route('db'));
         }
-        else{
-            Log::info('Store SO to Session.');
 
-            $this->storeToSession($request);
+        //Always save to session.
+        //Save all SOs except the SO to be submitted or cancelled (indicated from it's index).
+        //If it is a submission, get the index from submitIndex
+        //If it is cancellation, get the index from cancelIndex
+        //If there is no index to be excluded, it's mean all SOs must be saved as draft.
+        // (negative index means there is no exclusion)
+        $this->storeToSession($request, !empty($submitIndex) ? $submitIndex : !empty($cancelIndex) ? $cancelIndex : -1);
+
+        if(count($request->input('so_code')) > 1)
             return redirect(route('db.so.create'));
-        }
+        else
+            return redirect(route('db'));
     }
 
     public function index()
@@ -199,60 +208,63 @@ class SalesOrderController extends Controller
         return redirect(route('db.so.revise.index'));
     }
 
-    private function storeToSession(Request $request)
+    private function storeToSession(Request $request, $filteredIndex)
     {
+        Log::info("Filtered index : $filteredIndex");
+
         $SOs = [];
 
         for($i = 0; $i < count($request->input('so_code')); $i++){
+            if($i != $filteredIndex){
+                $items = [];
+                for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
+                    $items[] = [
+                        'quantity' => $request->input("so_$i"."_quantity.$j"),
+                        'selected_unit' => [
+                            'conversion_value' => ProductUnit::where([
+                                'product_id' => $request->input("so_$i"."_product_id.$j"),
+                                'unit_id' => $request->input("so_$i"."_selected_unit_id.$j")
+                            ])->first()->conversion_value,
+                            'unit' => [
+                                'id' => $request->input("so_$i"."_selected_unit_id.$j")
+                            ]
+                        ],
+                        'product' => Product::with('productUnits.unit')->find($request->input("so_$i"."_product_id.$j")),
+                        'stock_id' => empty($request->input("so_$i"."stock_id.$i")) ? 0 : $request->input("so_$i"."_stock_id.$j"),
+                        'base_unit' => [
+                            'unit' => [
+                                'id' => $request->input("so_$i"."_base_unit_id.$j")
+                            ]
+                        ],
+                        'price' => floatval(str_replace(',', '', $request->input("so_$i"."_price.$j")))
+                    ];
+                }
 
-            $items = [];
-            for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
-                $items[] = [
-                    'quantity' => $request->input("so_$i"."_quantity.$j"),
-                    'selected_unit' => [
-                        'conversion_value' => ProductUnit::where([
-                            'product_id' => $request->input("so_$i"."_product_id.$j"),
-                            'unit_id' => $request->input("so_$i"."_selected_unit_id.$j")
-                        ])->first()->conversion_value,
-                        'unit' => [
-                            'id' => $request->input("so_$i"."_selected_unit_id.$j")
-                        ]
+                $SOs[] = [
+                    'customer_type' => [
+                        'code' => $request->input("customer_type.$i")
                     ],
-                    'product' => Product::with('productUnits.unit')->find($request->input("so_$i"."_product_id.$j")),
-                    'stock_id' => empty($request->input("so_$i"."stock_id.$i")) ? 0 : $request->input("so_$i"."_stock_id.$j"),
-                    'base_unit' => [
-                        'unit' => [
-                            'id' => $request->input("so_$i"."_base_unit_id.$j")
-                        ]
+                    'customer' => [
+                        'id' => empty($request->input("customer_id.$i")) ? 0 :$request->input("customer_id.$i")
                     ],
-                    'price' => floatval(str_replace(',', '', $request->input("so_$i"."_price.$j")))
+                    'walk_in_cust' => $request->input("walk_in_customer.$i"),
+                    'walk_in_cust_details' => $request->input("walk_in_customer_details.$i"),
+                    'so_code' => $request->input("so_code.$i"),
+                    'sales_type' => [
+                        'code' => $request->input("sales_type.$i")
+                    ],
+                    'so_created' => $request->input("so_created.$i"),
+                    'shipping_date' => $request->input("shipping_date.$i"),
+                    'warehouse' => [
+                        'id' => $request->input("warehouse_id.$i")
+                    ],
+                    'vendorTrucking' => [
+                        'id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i")
+                    ],
+                    'remarks' => $request->input("remarks.$i"),
+                    'items' => $items
                 ];
             }
-
-            $SOs[] = [
-                'customer_type' => [
-                    'code' => $request->input("customer_type.$i")
-                ],
-                'customer' => [
-                    'id' => empty($request->input("customer_id.$i")) ? 0 :$request->input("customer_id.$i")
-                ],
-                'walk_in_cust' => $request->input("walk_in_customer.$i"),
-                'walk_in_cust_details' => $request->input("walk_in_customer_details.$i"),
-                'so_code' => $request->input("so_code.$i"),
-                'sales_type' => [
-                    'code' => $request->input("sales_type.$i")
-                ],
-                'so_created' => $request->input("so_created.$i"),
-                'shipping_date' => $request->input("shipping_date.$i"),
-                'warehouse' => [
-                    'id' => $request->input("warehouse_id.$i")
-                ],
-                'vendorTrucking' => [
-                    'id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i")
-                ],
-                'remarks' => $request->input("remarks.$i"),
-                'items' => $items
-            ];
         }
 
         session(['userSOs' => collect($SOs)]);
