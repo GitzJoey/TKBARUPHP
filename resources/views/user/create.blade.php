@@ -76,7 +76,7 @@
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('type', $usertypeDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('type', $usertypeDDL, null, array('id' => 'userTypeDDL', 'class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                 <div class="form-group">
                     <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                     <div class="col-sm-10">
-                        <select name="link_profile" class="form-control">
+                        <select id="profileDDL" name="link_profile" class="form-control">
                             <option value="">@lang('labels.PLEASE_SELECT')</option>
                             @foreach($profiles as $p)
                                 @if (!empty($p->suppliers()->first()->id))
@@ -124,6 +124,11 @@
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'
+            });
+
+            $('#profileDDL').change(function(val) {
+                alert(val);
+                $('#userTypeDDL').val();
             });
         });
     </script>

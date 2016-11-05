@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-smile-o fa-fw"></span>&nbsp;@lang('customer.confirmation.index.page_title')
+    <span class="fa fa-check fa-fw"></span>&nbsp;@lang('customer.confirmation.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('customer.confirmation.index.page_title_desc')
@@ -46,8 +46,8 @@
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>
                                 <td class="text-center" width="20%">
-                                    <a class="btn btn-xs btn-info" href="{{ route('db.master.customer.show', $so->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                                    <a class="btn btn-xs btn-primary" href="{{ route('db.master.customer.edit', $so->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                    <a class="btn btn-xs btn-info" href="{{ route('db.customer.confirmation.confirm.show', $so->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('db.customer.confirmation.confirm', $so->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 </td>
                             </tr>
                         @endforeach
