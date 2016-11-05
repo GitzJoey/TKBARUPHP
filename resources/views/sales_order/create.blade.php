@@ -24,7 +24,10 @@
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
                                 <li ng-repeat="so in SOs" ng-class="{active: $last}">
-                                    <a href="#tab_so@{{ $index + 1 }}" data-toggle="tab">@lang('sales_order.create.tab.sales') @{{ $index + 1 }}</a>
+                                    <a href="#tab_so@{{ $index + 1 }}" data-toggle="tab">
+                                        @{{ so.customer_type.code == 'CUSTOMERTYPE.R' ? so.customer.name || (defaultTabLabel + " " + ($index + 1))
+                                        : so.customer_type.code == 'CUSTOMERTYPE.WI' ? so.walk_in_cust || (defaultTabLabel + " " + ($index + 1))
+                                        : (defaultTabLabel + " " + ($index + 1)) }}</a>
                                 </li>
                                 <li>
                                     <button type="button" class="btn btn-xs btn-default pull-right" ng-click="insertTab()">
@@ -132,6 +135,7 @@
                                                         <label for="inputSoStatus_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_status')</label>
                                                         <div class="col-sm-10">
                                                             <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
+                                                            <button id="draftButton" type="submit" name="draft" value="draft" class="btn btn-primary pull-right">Save as Draft</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -199,7 +203,7 @@
                                                 <div class="box-body">
                                                     <div class="row">
                                                         <div ng-show="so.sales_type.code == 'SOTYPE.SVC'">
-                                                            <div class="col-md-11">
+                                                            <div class="col-md-11">x
                                                                 <select id="inputProduct_@{{ $index + 1 }}"
                                                                         class="form-control"
                                                                         ng-model="so.product"
@@ -328,14 +332,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-2 col-md-offset-5">
-                                            <div class="btn-toolbar">
-                                                <button id="draftButton" type="submit" name="draft" value="draft" class="btn btn-primary btn-block">Save as Draft</button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -358,9 +354,7 @@
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
             $scope.SOs = JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}');
-
-            console.log($scope.SOs);
-            console.log($scope.customerTypeDDL);
+            $scope.defaultTabLabel = '@lang('sales_order.create.tab.sales')';
 
             $scope.setSOCode = function(so){
                 $http.get('{{ route('api.so.code') }}').success(function(data){
@@ -368,13 +362,15 @@
                 });
             };
 
-            var so = {
-                so_code: '',
-                customer_type: '',
-                items : []
-            };
-            $scope.setSOCode(so);
-            $scope.SOs.push(so);
+            if($scope.SOs.length == 0){
+                var so = {
+                    so_code: '',
+                    customer_type: '',
+                    items : []
+                };
+                $scope.setSOCode(so);
+                $scope.SOs.push(so);
+            }
 
             $scope.insertTab = function(){
                 if(!$(".so-form").parsley().validate())
