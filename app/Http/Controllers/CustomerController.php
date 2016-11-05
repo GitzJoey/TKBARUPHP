@@ -21,7 +21,7 @@ class CustomerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', [ 'except' => [ 'searchCustomers' ] ]);
     }
 
     public function index()
@@ -201,5 +201,20 @@ class CustomerController extends Controller
         $solist = SalesOrder::whereCustomerId();
 
         return redirect(route('db.customer.confirmation'), compact('solist'));
+    }
+
+    public function searchCustomers(Request $request)
+    {
+        $param = $request->input('param');
+
+        if(empty($param))
+            return collect([]);
+
+        return Customer::with('profiles')->where('name', 'like', "%$param%")
+            ->orWhereHas('profiles', function ($query) use ($param)
+            {
+                $query->where('first_name', 'like', "%$param%")
+                      ->orWhere('last_name', 'like', "%$param%");
+            })->get();
     }
 }

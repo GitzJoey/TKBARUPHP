@@ -32,6 +32,7 @@
     "jquery-gotop": "^1.1.2",
     "moment": "^2.15.2",
     "parsleyjs": "^2.5.0",
-    "ui-select": "^0.19.4"
+    "ui-select": "^0.19.4",
+    "select2": "^4.0.3"
   }
 }
