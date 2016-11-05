@@ -176,7 +176,7 @@
     <script type="application/javascript">
         var app = angular.module('warehouseInflowModule', []);
         app.controller("warehouseInflowController", ['$scope', function($scope) {
-            var PO = {!! htmlspecialchars_decode($po) !!}
+            var PO =JSON.parse('{!! htmlspecialchars_decode($po) !!}');
 
             $scope.inflow = {
                 receipts : []

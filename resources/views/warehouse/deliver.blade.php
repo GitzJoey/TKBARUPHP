@@ -28,7 +28,7 @@
 
     <form class="form-horizontal" action="{{ route('db.warehouse.outflow', $so->hId())}}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
-        <div ng-app="warehouseModule" ng-controller="warehouseController">
+        <div ng-app="warehouseOutflowModule" ng-controller="warehouseOutflowController">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -157,10 +157,9 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('warehouseModule', []);
-
-        app.controller("warehouseController", ['$scope', function($scope) {
-            var SO = {!! htmlspecialchars_decode($so) !!}
+        var app = angular.module('warehouseOutflowModule', []);
+        app.controller("warehouseOutflowController", ['$scope', function($scope) {
+            var SO = JSON.parse('{!! htmlspecialchars_decode($so) !!}');
 
             $scope.outflow = {
                 delivers : []

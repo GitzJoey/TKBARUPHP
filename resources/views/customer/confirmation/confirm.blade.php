@@ -43,13 +43,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputWarehouse" class="col-sm-2 control-label">@lang('customer.confirmation.confirm.field.warehouse')</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" readonly value="{{ $so->warehouse->name }}">
-                                    <input type="hidden" name="warehouse_id" value="{{ $so->warehouse->id }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="inputShippingDate" class="col-sm-2 control-label">@lang('customer.confirmation.confirm.field.shipping_date')</label>
                                 <div class="col-sm-8">
                                     <div class="input-group date">
@@ -61,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputDeliverDate" class="col-sm-2 control-label">@lang('customer.confirmation.confirm.field.deliver_date')</label>
+                                <label for="inputConfirmDate" class="col-sm-2 control-label">@lang('customer.confirmation.confirm.field.deliver_date')</label>
                                 <div class="col-sm-8">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
@@ -69,16 +62,6 @@
                                         </div>
                                         <input type="text" id="inputDeliverDate" name="deliver_date" class="form-control" data-parsley-required="true">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputVendorTrucking" class="col-sm-2 control-label">@lang('customer.confirmation.confirm.field.vendor_trucking')</label>
-                                <div class="col-sm-8">
-                                    @if (empty($po->vendorTrucking))
-                                        <input type="text" class="form-control" readonly value="" >
-                                    @else
-                                        <input type="text" class="form-control" readonly value="{{ $po->vendorTrucking->name }}" >
-                                    @endif
                                 </div>
                             </div>
                             <div class="form-group">
