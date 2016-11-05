@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Sugito
- * Date: 9/15/2016
- * Time: 8:09 AM
- */
+<?php 
+
 return [
     'STATUS.ACTIVE' => 'Aktif',
     'STATUS.INACTIVE' => 'Inaktif',
@@ -49,4 +44,11 @@ return [
     'CUSTOMERTYPE.WI' => 'Pelanggan Baru',
     'PRICELEVELTYPE.INC' => 'Kenaikan Nilai',
     'PRICELEVELTYPE.PCT' => 'Kenaikan Persentase',
+    'USERTYPE' => [
+        'DR' => '',
+        'FD' => '',
+        'FIN' => '',
+        'C' => '',
+        'S' => '',
+    ],
 ];

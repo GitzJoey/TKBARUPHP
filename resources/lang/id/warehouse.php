@@ -34,7 +34,7 @@ return [
                 'shipping_date' => '',
                 'receipt_date' => '',
                 'vendor_trucking' => '',
-                'licence_plate' => '',
+                'license_plate' => '',
             ],
             'table' => [
                 'item' => [
@@ -112,7 +112,7 @@ return [
                 'shipping_date' => '',
                 'deliver_date' => '',
                 'vendor_trucking' => '',
-                'licence_plate' => '',
+                'license_plate' => '',
             ],
             'table' => [
                 'item' => [

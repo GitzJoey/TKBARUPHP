@@ -216,9 +216,21 @@ class CustomerController extends Controller
             return view('customer.confirmation.index', compact('solist'));
         }
 
-        $solist = SalesOrder::whereCustomerId($id)->where('status', '=', 'SOSTATUS.WP')->paginate(10);
+        $solist = SalesOrder::with('customer', 'items.product')->where('customer_id', '=', $id)->where('status', '=', 'SOSTATUS.WP')->paginate(10);
 
         return view('customer.confirmation.index', compact('solist'));
+    }
+
+    public function confirmSalesOrder($id)
+    {
+        $so = SalesOrder::with('customer', 'items.product.productUnits.unit')->where('id', '=', $id)->first();
+
+        return view('customer.confirmation.confirm', compact('so'));
+    }
+
+    public function storeConfirmationSalesOrder($id, Request $req)
+    {
+
     }
 
     public function searchCustomers(Request $request)

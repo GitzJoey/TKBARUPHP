@@ -27,7 +27,7 @@ class CreateReceiptsTable extends Migration
             $table->decimal('base_netto')->default(0);
             $table->decimal('tare')->default(0);
             $table->decimal('base_tare')->default(0);
-            $table->string('licence_plate')->nullable();
+            $table->string('license_plate')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);

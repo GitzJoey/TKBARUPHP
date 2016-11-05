@@ -56,7 +56,7 @@ class WarehouseOutflowController extends Controller
                 'base_netto' => 0,
                 'tare' => 0,
                 'base_tare' => 0,
-                'licence_plate' => $request->input('licence_plate'),
+                'license_plate' => $request->input('license_plate'),
                 'item_id' => $request->input("item_id.$i"),
                 'selected_unit_id' => $request->input("selected_unit_id.$i"),
                 'base_unit_id' => $request->input("base_unit_id.$i"),

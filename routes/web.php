@@ -178,7 +178,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 
     Route::get('/dashboard/customer/confirmation', 'CustomerController@confirmationIndex')->name('db.customer.confirmation');
     Route::get('/dashboard/customer/confirmation/{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.confirm.customer');
-    Route::get('/dashboard/customer/confirmation/show/{id}', 'CustomerController@confirmationShowSalesOrder')->name('db.customer.confirmation.confirm.show');
     Route::get('/dashboard/customer/confirmation/confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
     Route::patch('/dashboard/customer/confirmation/confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
 

@@ -157,5 +157,32 @@ return [
                 ],
             ],
         ],
+        'confirm' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'sales_order' => '',
+                'items' => '',
+            ],
+            'field' => [
+                'so_code' => '',
+                'deliver_date' => '',
+                'license_plate' => '',
+                'confirm_receive_date' => '',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'unit' => '',
+                        'brutto' => '',
+                        'netto' => '',
+                        'tare' => '',
+                        'remarks' => '',
+                    ],
+                ],
+            ],
+        ],
     ],
 ];

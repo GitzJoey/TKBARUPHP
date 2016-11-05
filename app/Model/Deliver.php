@@ -65,7 +65,7 @@ class Deliver extends Model
 
     protected $fillable = [
         'item_id',
-        'licence_plate',
+        'license_plate',
         'deliver_date',
         'confirm_receive_date',
         'conversion_value',
