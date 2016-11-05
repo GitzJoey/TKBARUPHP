@@ -145,7 +145,7 @@
             @endif
             @if(Entrust::can('customer.confirmation') OR
                 Entrust::can('customer.approval'))
-                <li class="treeview">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.customer.confirmation') || Active::checkRoutePattern('db.customer.confirmation.*')) }}">
                     <a href="#"><i class="fa fa-smile-o fa-fw"></i><span>&nbsp;@lang('menu.item.customer')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -153,12 +153,12 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('customer.confirmation'))
-                            <li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.customer.confirmation.confirm.*')) }}">
                                 <a href="{{ route('db.customer.confirmation') }}"><i class="fa fa-check fa-fw"></i>&nbsp;@lang('menu.item.customer_confirm')</a>
                             </li>
                         @endif
                         @if(Entrust::can('customer.approval'))
-                            <li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.customer.confirmation.approval.*')) }}">
                                 <a href="{{ route('db.customer.approval') }}"><i class="fa fa-bell-o"></i>&nbsp;@lang('menu.item.customer_approval')</a>
                             </li>
                         @endif

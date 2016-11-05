@@ -150,9 +150,9 @@ return [
             'table' => [
                 'header' => [
                     'so_code' => 'Code',
-                    'so_date' => 'Sales Order Date',
-                    'shipping_date' => 'Shipping Date',
                     'deliver_date' => 'Delivery Date',
+                    'deliverer' => 'Deliverer',
+                    'items' => 'Items',
                     'status' => 'Status',
                 ],
             ],

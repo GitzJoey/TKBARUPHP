@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span>&nbsp;@lang('customer.confirmation.confirm.page_title')
+    <span class="fa fa-check fa-fw"></span>&nbsp;@lang('customer.confirmation.confirm.page_title')
 @endsection
 @section('page_title_desc')
     @lang('customer.confirmation.confirm.page_title_desc')

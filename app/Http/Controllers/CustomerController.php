@@ -204,7 +204,7 @@ class CustomerController extends Controller
             $customerhid = Hashids::encode($profile->customers()->first()->id);
         }
 
-        return redirect(route('db.customer.confirmation.customer', $customerhid));
+        return redirect(route('db.customer.confirmation.confirm.customer', $customerhid));
     }
 
     public function confirmationCustomer($id, Request $req)
