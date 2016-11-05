@@ -139,4 +139,23 @@ return [
             ],
         ],
     ],
+    'confirmation' => [
+        'index' => [
+            'title' => 'Customer Confirmation',
+            'page_title' => 'Customer Confirmation',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Sales Order List',
+            ],
+            'table' => [
+                'header' => [
+                    'so_code' => 'Code',
+                    'so_date' => 'Sales Order Date',
+                    'shipping_date' => 'Shipping Date',
+                    'deliver_date' => 'Delivery Date',
+                    'status' => 'Status',
+                ],
+            ],
+        ],
+    ],
 ];

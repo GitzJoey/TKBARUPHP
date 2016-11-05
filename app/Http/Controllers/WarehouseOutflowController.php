@@ -83,6 +83,10 @@ class WarehouseOutflowController extends Controller
             }
         }
 
+        $so = SalesOrder::whereId($id)->first();
+        $so->status = 'SOSTATUS.WP';
+        $so->save();
+
         return redirect(route('db.warehouse.outflow.index'));
     }
 
@@ -90,7 +94,7 @@ class WarehouseOutflowController extends Controller
     {
         Log::info("WarehouseOutflowController@getWarehouseSOs");
 
-        $SOs = SalesOrder::with('customer')->where('warehouse_id', '=', $id)->get();
+        $SOs = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WD')->where('warehouse_id', '=', $id)->get();
 
         Log::info($SOs);
 

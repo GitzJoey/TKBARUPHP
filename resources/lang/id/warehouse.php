@@ -7,7 +7,8 @@ return [
             'page_title' => 'Barang Masuk',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Barang Masuk'
+                'warehouse' => 'Gudang',
+                'purchase_order' => 'Pembelian',
             ],
             'table' => [
                 'header' => [
@@ -15,14 +16,38 @@ return [
                     'po_date' => 'Tanggal Pembuatan',
                     'supplier' => 'Supplier',
                     'shipping_date' => 'Tanggal Pengiriman',
-                    'status' => 'Status'
-                ]
+                    'status' => 'Status',
+                ],
             ],
-            'header' => [
-                'warehouse' => 'Gudang',
-                'purchase_order' => 'Pembelian'
-            ]
-        ]
+        ],
+        'receipt' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'receipt' => '',
+                'items' => '',
+            ],
+            'field' => [
+                'warehouse' => '',
+                'po_code' => '',
+                'shipping_date' => '',
+                'receipt_date' => '',
+                'vendor_trucking' => '',
+                'licence_plate' => '',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'unit' => '',
+                        'brutto' => '',
+                        'netto' => '',
+                        'tare' => '',
+                    ],
+                ],
+            ],
+        ],
     ],
     'create' => [
         'title' => 'Gudang',
@@ -70,6 +95,53 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Tampilan Gudang',
+        ],
+    ],
+    'outflow' => [
+        'deliver' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'deliver' => '',
+                'items' => '',
+            ],
+            'field' => [
+                'warehouse' => '',
+                'so_code' => '',
+                'shipping_date' => '',
+                'deliver_date' => '',
+                'vendor_trucking' => '',
+                'licence_plate' => '',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'unit' => '',
+                        'brutto' => '',
+                    ],
+                ],
+            ],
+        ],
+        'index' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'warehouse' => '',
+                'sales_order' => '',
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'code' => '',
+                    'so_date' => '',
+                    'customer' => '',
+                    'shipping_date' => '',
+                    'status' => '',
+                ],
+            ],
         ],
     ],
 ];

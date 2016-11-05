@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
@@ -73,6 +74,10 @@ class StoreController extends Controller
             Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
         }
 
+        if ($data['is_default'] == 'YESNOSELECT.YES') {
+            $this->resetIsDefault();
+        }
+
         Store::create([
             'name' => $data['name'],
             'address' => $data['address'],
@@ -88,10 +93,16 @@ class StoreController extends Controller
         return redirect(route('db.admin.store'));
     }
 
-    private function changeIsDefault()
+    private function resetIsDefault()
     {
         Log::info('[StoreController@changeIsDefault] ');
 
+        $store = Store::whereIsDefault('YESNOSELECT.YES')->get();
+
+        foreach ($store as $s) {
+            $s->is_default = Lookup::whereCode('YESNOSELECT.NO')->first()->code;
+            $s->save();
+        }
     }
 
     public function edit($id)
@@ -121,6 +132,10 @@ class StoreController extends Controller
             Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
         }
 
+        if ($data['is_default'] == 'YESNOSELECT.YES') {
+            $this->resetIsDefault();
+        }
+
         $store->name = $data['name'];
         $store->address = $data['address'];
         $store->phone_num = $data['phone_num'];
@@ -139,7 +154,29 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@delete] $id:' . $id);
 
-        Store::find($id)->delete();
+        $store = Store::find($id);
+
+        $validator = Validator::extend('isdefault', function($field, $value, $parameters){
+            return $value == 'YESNOSELECT.YES' ? false:true;
+        });
+
+        $inputs = array(
+            'is_default' => $store->is_default
+        );
+
+        $rules = array('is_default'=>'isdefault');
+
+        $messages = array(
+            'isdefault'=>'Default Store cannot be deleted'
+        );
+
+        $validator = Validator::make($inputs, $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect(route('db.admin.store'))->withErrors($validator);
+        } else {
+            $store->delete();
+        }
 
         return redirect(route('db.admin.store'));
     }

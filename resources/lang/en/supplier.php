@@ -61,6 +61,12 @@ return [
             'pic' => 'Person In Charge',
             'bank_account' => 'Bank Account',
             'settings' => 'Settings',
+            'supplier' => '',
+            'product' => '',
+            'header' => [
+                'bank_lists' => '',
+                'bank_inputs' => '',
+            ],
         ],
         'table_phone' => [
             'header' => [

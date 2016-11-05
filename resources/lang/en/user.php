@@ -18,6 +18,7 @@ return [
         'retype_password' => 'Retype Password',
         'user_type' => 'User Type',
         'allow_login' => 'Allow Login',
+        'link_profile' => '',
     ],
     'edit' => [
         'title' => 'User',

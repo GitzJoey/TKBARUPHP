@@ -15,6 +15,7 @@ return [
             'transactions' => 'Transaksi',
             'remarks' => 'Catatan',
             'customer' => 'Pelanggan',
+            'purchase_order_detail' => '',
         ],
         'field' => [
             'customer_type' => 'Tipe',
@@ -56,7 +57,7 @@ return [
             'sales_order_detail' => 'Detail',
             'shipping' => 'Pengiriman',
             'transactions' => 'Transaksi',
-            'remarks' => 'Catatan'
+            'remarks' => 'Catatan',
         ],
         'field' => [
             'customer_type' => 'Tipe Pelanggan',
@@ -64,7 +65,7 @@ return [
             'customer_details' => 'Detail',
             'shipping_date' => 'Tanggal Pengiriman',
             'warehouse' => 'Gudang',
-            'vendor_trucking' => 'Penyedia Angkutan'
+            'vendor_trucking' => 'Penyedia Angkutan',
         ],
         'so_code' => 'Kode',
         'so_type' => 'Tipe Penjualan',
@@ -75,25 +76,25 @@ return [
                 'header' => [
                     'product_name' => 'Nama Produk',
                     'header' => [
-                        'quantity' => 'Jumlah'
+                        'quantity' => 'Jumlah',
                     ],
                     'unit' => 'Satuan',
                     'price_unit' => 'Harga',
-                    'total_price' => 'Total Harga'
-                ]
+                    'total_price' => 'Total Harga',
+                ],
             ],
             'total' => [
                 'body' => [
-                    'total' => 'Jumlah Total'
-                ]
-            ]
+                    'total' => 'Jumlah Total',
+                ],
+            ],
         ],
         'index' => [
             'title' => 'Revisi Penjualan',
             'page_title' => 'Revisi Penjualan',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Daftar Penjualan'
+                'title' => 'Daftar Penjualan',
             ],
             'table' => [
                 'header' => [
@@ -101,9 +102,14 @@ return [
                     'so_date' => 'Tanggal Dibuat',
                     'customer' => 'Pelanggan',
                     'shipping_date' => 'Tanggal Pengiriman',
-                    'status' => 'Status'
-                ]
-            ]
-        ]
-    ]
+                    'status' => 'Status',
+                ],
+            ],
+        ],
+    ],
+    'payment' => [
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+    ],
 ];

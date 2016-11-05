@@ -116,17 +116,22 @@ class UserController extends Controller
         $usr->store_id = $req['store'];
         $usr->save();
 
-        $role_id = Role::whereName($req['roles'])->get(['id']);
-        dd($role_id);
+        $role_id = Role::whereName($req['roles'])->first()->id;
         $usr->roles()->sync([$role_id]);
 
-        $p = Profile::whereId($req['link_profile']);
+        //unlink last profile
+        $lastp = Profile::whereUserId($usr->id)->first();
+        if ($lastp) {
+            $lastp->user_id = 0;
+            $lastp->save();
+        }
+
+        $p = Profile::whereId($req['link_profile'])->first();
         $usr->profile()->save($p);
 
         $usr->userDetail->type = $req['type'];
         $usr->userDetail->allow_login = boolval($req['allow_login']);
         $usr->userDetail->save();
-
 
         return redirect(route('db.admin.user'));
     }
