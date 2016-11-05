@@ -68,11 +68,21 @@ class SalesOrderController extends Controller
 
             Log::info('Store SO to DB.');
 
+            if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R'){
+                $customer_id = empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex");
+                $walk_in_cust = '';
+                $walk_in_cust_detail = '';
+            } else {
+                $customer_id = 0;
+                $walk_in_cust = $request->input("walk_in_customer.$submitIndex");
+                $walk_in_cust_detail = $request->input("walk_in_customer_details.$submitIndex");
+            }
+
             $params = [
                 'customer_type' => $request->input("customer_type.$submitIndex"),
-                'customer_id' => empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex"),
-                'walk_in_cust' => $request->input("walk_in_customer.$submitIndex"),
-                'walk_in_cust_detail' => $request->input("walk_in_customer_details.$submitIndex"),
+                'customer_id' => $customer_id,
+                'walk_in_cust' => $walk_in_cust,
+                'walk_in_cust_detail' => $walk_in_cust_detail,
                 'code' => $request->input("so_code.$submitIndex"),
                 'so_type' => $request->input("sales_type.$submitIndex"),
                 'so_created' => date('Y-m-d', strtotime($request->input("so_created.$submitIndex"))),

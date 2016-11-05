@@ -67,17 +67,27 @@ class PurchaseOrderController extends Controller
             'supplier_type' => 'required|string|max:255',
         ]);
 
+        if ($request->input('supplier_type') == 'SUPPLIERTYPE.R'){
+            $supplier_id = empty($request->input('supplier_id')) ? 0 : $request->input('supplier_id');
+            $walk_in_supplier = '';
+            $walk_in_supplier_detail = '';
+        } else {
+            $supplier_id = 0;
+            $walk_in_supplier = $request->input('walk_in_supplier');
+            $walk_in_supplier_detail = $request->input('walk_in_supplier_detail');
+        }
+
         $params = [
             'code' => $request->input('code'),
             'po_type' => $request->input('po_type'),
             'po_created' => date('Y-m-d', strtotime($request->input('po_created'))),
             'shipping_date' => date('Y-m-d', strtotime($request->input('shipping_date'))),
             'supplier_type' => $request->input('supplier_type'),
-            'walk_in_supplier' => $request->input('walk_in_supplier'),
-            'walk_in_supplier_detail' => $request->input('walk_in_supplier_detail'),
+            'walk_in_supplier' => $walk_in_supplier,
+            'walk_in_supplier_detail' => $walk_in_supplier_detail,
             'remarks' => $request->input('remarks'),
             'status' => Lookup::whereCode('POSTATUS.WA')->first()->code,
-            'supplier_id' => empty($request->input('supplier_id')) ? 0 : $request->input('supplier_id'),
+            'supplier_id' => $supplier_id,
             'vendor_trucking_id' => empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id'),
             'warehouse_id' => $request->input('warehouse_id'),
             'store_id' => Auth::user()->store_id
