@@ -90,6 +90,11 @@ class Item extends Model
         return $this->hasMany('App\Model\Receipt');
     }
 
+    public function delivers()
+    {
+        return $this->hasMany('App\Model\Deliver');
+    }
+
     public function itemable()
     {
         return $this->morphTo();
