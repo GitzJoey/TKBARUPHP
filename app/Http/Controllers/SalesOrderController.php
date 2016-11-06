@@ -60,14 +60,7 @@ class SalesOrderController extends Controller
         $submitIndex = $request->input('submit');
         $cancelIndex = $request->input('cancel');
 
-        Log::info("Submited SO index : $submitIndex");
-        Log::info("Cancelled SO index : $cancelIndex");
-
-        //If it is SO submission
-        if($submitIndex){
-
-            Log::info('Store SO to DB.');
-
+        if(!is_null($submitIndex)){
             $params = [
                 'customer_type' => $request->input("customer_type.$submitIndex"),
                 'customer_id' => empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex"),
