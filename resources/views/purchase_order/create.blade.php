@@ -481,21 +481,9 @@
                                                                                 </thead>
                                                                                 <tbody>
                                                                                 <tr ng-repeat="phoneNumber in profile.phone_numbers">
-                                                                                    <td>
-                                                                                        <input type="text" class="form-control"
-                                                                                               readonly
-                                                                                               ng-model="phoneNumber.provider.name">
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <input type="text" class="form-control"
-                                                                                               readonly
-                                                                                               ng-model="phoneNumber.number">
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <input type="text" class="form-control"
-                                                                                               readonly
-                                                                                               ng-model="phoneNumber.remarks">
-                                                                                    </td>
+                                                                                    <td>@{{ phoneNumber.provider.name }}</td>
+                                                                                    <td>@{{ phoneNumber.number }}</td>
+                                                                                    <td>@{{ phoneNumber.remarks }}</td>
                                                                                 </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -518,21 +506,9 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr ng-repeat="bankAccount in po.supplier.bank_accounts">
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   readonly
-                                                                   ng-model="bankAccount.bank.name">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   readonly
-                                                                   ng-model="bankAccount.account_number">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   readonly
-                                                                   ng-model="bankAccount.remarks">
-                                                        </td>
+                                                        <td>@{{ bankAccount.bank.name }}</td>
+                                                        <td>@{{ bankAccount.account_number }}</td>
+                                                        <td>@{{ bankAccount.remarks }}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>

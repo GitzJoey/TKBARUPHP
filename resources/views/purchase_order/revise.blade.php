@@ -188,9 +188,9 @@
                                     </select>
                                 @else
                                     <input type="text" class="form-control" readonly
-                                           value="{{ $currentPo->vendorTrucking->name }}">
+                                           value="{{ empty($currentPo->vendorTrucking->name) ? '':$currentPo->vendorTrucking->name }}">
                                     <input type="hidden" name="vendor_trucking_id"
-                                           value="{{ $currentPo->vendorTrucking->id }}">
+                                           value="{{ empty($currentPo->vendorTrucking->id) ? '':$currentPo->vendorTrucking->id }}">
                                 @endif
                             </div>
                         </div>
@@ -284,10 +284,8 @@
                                                 </button>
                                             @endif
                                         </td>
-                                        <td>
-                                            <input type="text" class="form-control text-right" name="total_price[]"
-                                                   ng-value="item.selected_unit.conversion_value * item.quantity * item.price"
-                                                   readonly>
+                                        <td class="text-right valign-middle">
+                                            @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
                                         </td>
                                     </tr>
                                     </tbody>
@@ -302,7 +300,7 @@
                                         <td width="80%"
                                             class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                         <td width="20%" class="text-right">
-                                            <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                            <span class="control-label-normal">@{{ grandTotal() | number }}</span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -509,24 +507,9 @@
                                                                                 </thead>
                                                                                 <tbody>
                                                                                 <tr ng-repeat="phoneNumber in profile.phone_numbers">
-                                                                                    <td>
-                                                                                        <input type="text"
-                                                                                               class="form-control"
-                                                                                               readonly
-                                                                                               ng-model="phoneNumber.provider.name">
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <input type="text"
-                                                                                               class="form-control"
-                                                                                               readonly
-                                                                                               ng-model="phoneNumber.number">
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <input type="text"
-                                                                                               class="form-control"
-                                                                                               readonly
-                                                                                               ng-model="phoneNumber.remarks">
-                                                                                    </td>
+                                                                                    <td>@{{ phoneNumber.provider.name }}</td>
+                                                                                    <td>@{{ phoneNumber.number }}</td>
+                                                                                    <td>@{{ phoneNumber.remarks }}</td>
                                                                                 </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -549,21 +532,9 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr ng-repeat="bankAccount in po.supplier.bank_accounts">
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   readonly
-                                                                   ng-model="bankAccount.bank.name">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   readonly
-                                                                   ng-model="bankAccount.account_number">
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                   readonly
-                                                                   ng-model="bankAccount.remarks">
-                                                        </td>
+                                                        <td>@{{ bankAccount.bank.name }}</td>
+                                                        <td>@{{ bankAccount.account_number }}</td>
+                                                        <td>@{{ bankAccount.remarks }}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
