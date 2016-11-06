@@ -56,7 +56,7 @@ class WarehouseInflowController extends Controller
                 'base_netto' => $conversionValue * $request->input("netto.$i"),
                 'tare' => $request->input("tare.$i"),
                 'base_tare' => $conversionValue * $request->input("tare.$i"),
-                'licence_plate' => $request->input('licence_plate'),
+                'license_plate' => $request->input('license_plate'),
                 'item_id' => $request->input("item_id.$i"),
                 'selected_unit_id' => $request->input("selected_unit_id.$i"),
                 'base_unit_id' => $request->input("base_unit_id.$i"),

@@ -63,7 +63,7 @@ class Receipt extends Model
 
     protected $fillable = [
         'item_id',
-        'licence_plate',
+        'license_plate',
         'receipt_date',
         'conversion_value',
         'brutto',

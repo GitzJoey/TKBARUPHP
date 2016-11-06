@@ -65,7 +65,7 @@ class Deliver extends Model
 
     protected $fillable = [
         'item_id',
-        'licence_plate',
+        'license_plate',
         'deliver_date',
         'confirm_receive_date',
         'conversion_value',
@@ -77,7 +77,8 @@ class Deliver extends Model
         'base_tare',
         'selected_unit_id',
         'base_unit_id',
-        'store_id'
+        'store_id',
+        'remarks'
     ];
 
     public function hId()

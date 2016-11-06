@@ -42,11 +42,18 @@
                         @foreach ($solist as $key => $so)
                             <tr>
                                 <td class="text-center">{{ $so->code }}</td>
+                                <td class="text-center">
+                                    @foreach ($so->items as $i)
+                                        {{ $i->delivers()->first()->deliver_date->format('d-m-Y') }}
+                                    @endforeach
+                                </td>
                                 <td class="text-center"></td>
-                                <td class="text-center"></td>
-                                <td class="text-center"></td>
+                                <td class="text-center">
+                                    @foreach ($so->items as $i)
+                                        {{ $i->product()->first()->name }}<br/>
+                                    @endforeach
+                                </td>
                                 <td class="text-center" width="20%">
-                                    <a class="btn btn-xs btn-info" href="{{ route('db.customer.confirmation.confirm.show', $so->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.customer.confirmation.confirm', $so->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 </td>
                             </tr>

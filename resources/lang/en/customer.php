@@ -157,5 +157,53 @@ return [
                 ],
             ],
         ],
+        'confirm' => [
+            'title' => 'Confirm Sales Order',
+            'page_title' => 'Confirm Sales Order',
+            'page_title_desc' => '',
+            'box' => [
+                'sales_order' => 'Sales Order',
+                'items' => 'Items',
+            ],
+            'field' => [
+                'so_code' => 'Code',
+                'deliver_date' => 'Deliver Date',
+                'license_plate' => 'License Plate',
+                'confirm_receive_date' => 'Receive Date',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Product',
+                        'unit' => 'Unit',
+                        'brutto' => 'Brutto',
+                        'netto' => 'Netto',
+                        'tare' => 'Tare',
+                        'remarks' => 'Remarks',
+                    ],
+                ],
+            ],
+        ],
+        'approval' => [
+            'title' => 'Approval Sales Order',
+            'page_title' => 'Approval Sales Order',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Sales Order List',
+            ],
+            'table' => [
+                'header' => [
+                    'so' => 'Sales Order',
+                    'items_detail' => 'Items',
+                    'items' => [
+                        'product_name' => 'Product Name',
+                        'brutto' => 'Brutto',
+                        'netto' => 'Netto',
+                        'tare' => 'Tare',
+                        'remarks' => 'Remarks',
+                    ],
+                ],
+            ],
+        ],
     ],
 ];

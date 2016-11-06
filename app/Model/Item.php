@@ -58,6 +58,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereStockId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereItemableId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereItemableType($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Deliver[] $delivers
  */
 class Item extends Model
 {

@@ -82,9 +82,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputLicencePlate" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.licence_plate')</label>
+                                <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.license_plate')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="inputLicencePlate" name="licence_plate" class="form-control" data-parsley-required="true">
+                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" data-parsley-required="true">
                                 </div>
                             </div>
                         </div>

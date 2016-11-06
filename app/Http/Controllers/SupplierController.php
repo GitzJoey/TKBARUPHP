@@ -41,8 +41,9 @@ class SupplierController extends Controller
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
+        $productList = Product::whereStatus('STATUS.ACTIVE')->get();
 
-        return view('supplier.show', compact('supplier', 'products', 'pics', 'phone_provider', 'banks', 'bank_account', 'statusDDL'));
+        return view('supplier.show', compact('supplier', 'products', 'pics', 'phone_provider', 'banks', 'bank_account', 'statusDDL', 'productList'));
     }
 
     public function create()
@@ -50,8 +51,9 @@ class SupplierController extends Controller
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
+        $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name', 'short_code', 'description', 'remarks']);
 
-        return view('supplier.create', compact('bankDDL', 'statusDDL', 'providerDDL'));
+        return view('supplier.create', compact('bankDDL', 'statusDDL', 'providerDDL', 'productList'));
     }
 
     public function store(Request $request)
@@ -118,8 +120,9 @@ class SupplierController extends Controller
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
+        $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name', 'short_code', 'description', 'remarks']);
 
-        return view('supplier.edit', compact('supplier', 'bankDDL', 'statusDDL', 'providerDDL'));
+        return view('supplier.edit', compact('supplier', 'bankDDL', 'statusDDL', 'providerDDL', 'productList'));
     }
 
     public function update($id, Request $request)

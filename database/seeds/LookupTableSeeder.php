@@ -140,6 +140,16 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'SOSTATUS',
             ],
             [
+                'code' => 'SOSTATUS.WCC',
+                'description' => 'Awaiting Customer Confirmation',
+                'category' => 'SOSTATUS',
+            ],
+            [
+                'code' => 'SOSTATUS.WAPPV',
+                'description' => 'Awaiting Approval',
+                'category' => 'SOSTATUS',
+            ],
+            [
                 'code' => 'SOSTATUS.WP',
                 'description' => 'Awaiting For Payment',
                 'category' => 'SOSTATUS',
@@ -227,6 +237,31 @@ class CreateLookupTableSeeder extends Seeder
             [
                 'code' => 'USERTYPE.U',
                 'description' => 'User',
+                'category' => 'USERTYPE',
+            ],
+            [
+                'code' => 'USERTYPE.DR',
+                'description' => 'Driver',
+                'category' => 'USERTYPE',
+            ],
+            [
+                'code' => 'USERTYPE.FD',
+                'description' => 'Front Desk',
+                'category' => 'USERTYPE',
+            ],
+            [
+                'code' => 'USERTYPE.FIN',
+                'description' => 'Finance',
+                'category' => 'USERTYPE',
+            ],
+            [
+                'code' => 'USERTYPE.C',
+                'description' => 'Customer',
+                'category' => 'USERTYPE',
+            ],
+            [
+                'code' => 'USERTYPE.S',
+                'description' => 'Supplier',
                 'category' => 'USERTYPE',
             ],
             [
