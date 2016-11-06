@@ -71,13 +71,17 @@
                                                         <div class="form-group">
                                                             <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-7">
-                                                                <select id="inputCustomerId_@{{ $index + 1 }}"
-                                                                        name="customer_id[]"
-                                                                        class="form-control"
-                                                                        ng-model="so.customer"
-                                                                        ng-options="customer as customer.name for customer in customerDDL track by customer.id">
-                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                </select>
+                                                                <ui-select ng-model="so.customer"
+                                                                           spinner-enabled="true">
+                                                                    <ui-select-match placeholder="Choose customer..."
+                                                                                     allow-clear="true">@{{$select.selected.name}}</ui-select-match>
+                                                                    <ui-select-choices repeat="customer in customerDDL track by customer.id"
+                                                                                       refresh="refreshCustomers($select.search)"
+                                                                                       refresh-delay="0">
+                                                                        <span ng-bind="customer.name"></span>
+                                                                    </ui-select-choices>
+                                                                </ui-select>
+                                                                <input type="hidden" name="customer_id[]" ng-value="so.customer.id">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -360,11 +364,12 @@
             });
         });
 
-        var app = angular.module("soModule", ['fcsa-number']);
+        var app = angular.module("soModule", ['fcsa-number', 'ui.select', 'ngSanitize']);
         app.controller("soController", ['$scope', '$http', function($scope, $http) {
             $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
             $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');
-            $scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');
+            {{--$scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');--}}
+            $scope.customerDDL = [];
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
@@ -460,6 +465,13 @@
             $scope.removeItem = function (SOIndex, index) {
                 $scope.SOs[SOIndex].items.splice(index, 1);
             };
+
+            $scope.refreshCustomers = function (param) {
+                return $http.get('{{ route('api.search.customers') }}/' + param)
+                        .then(function (response) {
+                            $scope.customerDDL = response.data;
+                        });
+            }
         }]);
     </script>
 @endsection

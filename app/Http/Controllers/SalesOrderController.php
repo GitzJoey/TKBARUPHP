@@ -60,14 +60,7 @@ class SalesOrderController extends Controller
         $submitIndex = $request->input('submit');
         $cancelIndex = $request->input('cancel');
 
-        Log::info("Submited SO index : $submitIndex");
-        Log::info("Cancelled SO index : $cancelIndex");
-
-        //If it is SO submission
-        if($submitIndex){
-
-            Log::info('Store SO to DB.');
-
+        if(!is_null($submitIndex)){
             if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R'){
                 $customer_id = empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex");
                 $walk_in_cust = '';

@@ -14,6 +14,7 @@ use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
 
 use Auth;
+use Illuminate\Support\Facades\Log;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -264,9 +265,9 @@ class CustomerController extends Controller
         return view('customer.confirmation.approval', compact('solist'));
     }
 
-    public function searchCustomers(Request $request)
+    public function searchCustomers($param = "")
     {
-        $param = $request->input('param');
+        Log::info("CustomerController@searchCustomers\nparam : $param");
 
         if(empty($param))
             return collect([]);
