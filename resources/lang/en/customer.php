@@ -184,5 +184,26 @@ return [
                 ],
             ],
         ],
+        'approval' => [
+            'title' => 'Approval Sales Order',
+            'page_title' => 'Approval Sales Order',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Sales Order List',
+            ],
+            'table' => [
+                'header' => [
+                    'so' => 'Sales Order',
+                    'items_detail' => 'Items',
+                    'items' => [
+                        'product_name' => 'Product Name',
+                        'brutto' => 'Brutto',
+                        'netto' => 'Netto',
+                        'tare' => 'Tare',
+                        'remarks' => 'Remarks',
+                    ],
+                ],
+            ],
+        ],
     ],
 ];

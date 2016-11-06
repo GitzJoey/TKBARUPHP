@@ -184,5 +184,26 @@ return [
                 ],
             ],
         ],
+        'approval' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'so' => '',
+                    'items_detail' => '',
+                    'items' => [
+                        'product_name' => '',
+                        'brutto' => '',
+                        'netto' => '',
+                        'tare' => '',
+                        'remarks' => '',
+                    ],
+                ],
+            ],
+        ],
     ],
 ];

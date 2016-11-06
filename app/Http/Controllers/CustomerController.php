@@ -205,7 +205,7 @@ class CustomerController extends Controller
             $customerhid = Hashids::encode($profile->customers()->first()->id);
         }
 
-        return redirect(route('db.customer.confirmation.confirm.customer', $customerhid));
+        return redirect(route('db.customer.confirmation.customer', $customerhid));
     }
 
     public function confirmationCustomer($id, Request $req)
@@ -255,6 +255,13 @@ class CustomerController extends Controller
         $so->save();
 
         return redirect()->action('App\Http\Controllers\CustomerController@confirmSalesOrder', [$id]);
+    }
+
+    public function approvalIndex()
+    {
+        $solist = SalesOrder::with('customer', 'items.product.productUnits.unit')->whereIn('status', ['SOSTATUS.WCC', 'SOSTATUS.WAPPV'])->paginate(10);
+
+        return view('customer.confirmation.approval', compact('solist'));
     }
 
     public function searchCustomers(Request $request)

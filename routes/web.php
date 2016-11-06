@@ -176,14 +176,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@update');
     Route::delete('/dashboard/master/vendor/trucking/edit/{id}', 'VendorTruckingController@delete')->name('db.master.vendor.trucking.delete');
 
-    Route::get('/dashboard/customer/confirmation', 'CustomerController@confirmationIndex')->name('db.customer.confirmation');
-    Route::get('/dashboard/customer/confirmation/{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.confirm.customer');
+    Route::get('/dashboard/customer/confirmation', 'CustomerController@confirmationIndex')->name('db.customer.confirmation.index');
+    Route::get('/dashboard/customer/confirmation/{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.customer');
     Route::get('/dashboard/customer/confirmation/confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
     Route::patch('/dashboard/customer/confirmation/confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
 
-    Route::get('/dashboard/customer/approval', 'CustomerController@approval')->name('db.customer.approval');
-    Route::get('/dashboard/customer/approval/{id}', 'CustomerController@approval');
-    Route::patch('/dashboard/customer/approval/{id}', 'CustomerController@approval');
+    Route::get('/dashboard/customer/approval', 'CustomerController@approvalIndex')->name('db.customer.approval.index');
+    Route::get('/dashboard/customer/approval/{id}', 'CustomerController@approval')->name('db.customer.approval.approve');
+    Route::get('/dashboard/customer/reject/{id}', 'CustomerController@reject')->name('db.customer.approval.reject');
 
     Route::get('/dashboard/warehouse/inflow', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
     Route::get('/dashboard/warehouse/inflow/receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
