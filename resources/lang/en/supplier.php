@@ -32,6 +32,15 @@ return [
                 'remarks' => 'Remarks',
             ],
         ],
+        'table' => [
+            'header' => [
+                'type' => '',
+                'name' => '',
+                'short_code' => '',
+                'description' => '',
+                'remarks' => '',
+            ],
+        ],
     ],
     'field' => [
         'name' => 'Name',
@@ -69,16 +78,25 @@ return [
         ],
         'table_phone' => [
             'header' => [
-                'provider' => '',
-                'number' => '',
-                'remarks' => '',
+                'provider' => 'Provider',
+                'number' => 'Number',
+                'remarks' => 'Remarks',
             ],
         ],
         'table_bank' => [
             'header' => [
-                'bank' => '',
-                'account_number' => '',
-                'remarks' => '',
+                'bank' => 'Bank',
+                'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table' => [
+            'header' => [
+                'type' => 'Type',
+                'name' => 'Name',
+                'short_code' => 'Short Code',
+                'description' => 'Description',
+                'remarks' => 'Remarks',
             ],
         ],
     ],

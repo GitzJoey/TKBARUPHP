@@ -32,6 +32,15 @@ return [
                 'remarks' => '',
             ],
         ],
+        'table' => [
+            'header' => [
+                'type' => '',
+                'name' => '',
+                'short_code' => '',
+                'description' => '',
+                'remarks' => '',
+            ],
+        ],
     ],
     'field' => [
         'name' => '',
@@ -57,16 +66,15 @@ return [
             'title' => '',
         ],
         'tab' => [
-            'customer' => '',
+            'supplier' => '',
             'pic' => '',
             'bank_account' => '',
+            'product' => '',
             'settings' => '',
             'header' => [
                 'bank_lists' => '',
                 'bank_inputs' => '',
             ],
-            'supplier' => '',
-            'product' => '',
         ],
         'table_phone' => [
             'header' => [
@@ -79,6 +87,15 @@ return [
             'header' => [
                 'bank' => '',
                 'account_number' => '',
+                'remarks' => '',
+            ],
+        ],
+        'table' => [
+            'header' => [
+                'type' => '',
+                'name' => '',
+                'short_code' => '',
+                'description' => '',
                 'remarks' => '',
             ],
         ],
