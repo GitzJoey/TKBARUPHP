@@ -209,22 +209,40 @@
                                         <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
                                     </div>
                                     <div class="tab-pane" id="tab_product">
-                                        <div class="box-group" id="accordion_product">
-                                            <div class="panel box box-default">
-                                                <div class="box-header with-border">
-                                                    <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseProductLists" data-toggle="collapse" data-parent="#accordion_product">
-                                                            @lang('supplier.create.tab.header.bank_lists')
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="panel-collapse collapse" id="collapseProductLists" aria-expanded="false">
-                                                    <div class="box-body">
-                                                        ...
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="text-center">@lang('supplier.create.table.header.type')</th>
+                                                <th class="text-center">@lang('supplier.create.table.header.name')</th>
+                                                <th class="text-center">@lang('supplier.create.table.header.short_code')</th>
+                                                <th class="text-center">@lang('supplier.create.table.header.description')</th>
+                                                <th class="text-center">@lang('supplier.create.table.header.remarks')</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="p in productList">
+                                                <td class="text-center">
+                                                    <input type="checkbox" name="productSelected[]">
+                                                </td>
+                                                <td>
+                                                    @{{ p.product_type_id }}
+                                                </td>
+                                                <td>
+                                                    @{{ p.name }}
+                                                </td>
+                                                <td>
+                                                    @{{ p.short_code }}
+                                                </td>
+                                                <td>
+                                                    @{{ p.description }}
+                                                </td>
+                                                <td>
+                                                    @{{ p.remarks }}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="tab-pane" id="tab_settings">
                                         <div class="form-group">
@@ -258,6 +276,7 @@
             $scope.profiles = [];
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
+            $scope.productList = JSON.parse('{!! htmlspecialchars_decode($productList) !!}');
 
             $scope.addNewBank = function() {
                 $scope.banks.push({

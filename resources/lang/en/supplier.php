@@ -57,12 +57,11 @@ return [
             'title' => 'Edit Supplier',
         ],
         'tab' => [
-            'customer' => 'Customer Data',
+            'supplier' => 'Supplier Data',
             'pic' => 'Person In Charge',
             'bank_account' => 'Bank Account',
+            'product' => 'Product List',
             'settings' => 'Settings',
-            'supplier' => '',
-            'product' => '',
             'header' => [
                 'bank_lists' => '',
                 'bank_inputs' => '',

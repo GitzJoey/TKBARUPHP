@@ -35,14 +35,14 @@
                         <div class="col-md-12">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#tab_supplier" data-toggle="tab">@lang('supplier.edit.tab.supplier')</a></li>
+                                    <li><a href="#tab_supplier" class="active" data-toggle="tab">@lang('supplier.edit.tab.supplier')</a></li>
                                     <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.edit.tab.pic')</a></li>
                                     <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.edit.tab.bank_account')</a></li>
-                                    <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.edit.tab.product')</a></li>
+                                    <li><a href="#tab_product" data-toggle="tab">@lang('supplier.edit.tab.product')</a></li>
                                     <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.edit.tab.settings')</a></li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="tab_customer">
+                                    <div class="tab-pane active" id="tab_supplier">
                                         <div class="form-group">
                                             <label for="inputName" class="col-sm-2 control-label">@lang('supplier.field.name')</label>
                                             <div class="col-sm-10">
@@ -213,6 +213,42 @@
                                         </table>
                                         <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
                                     </div>
+                                    <div class="tab-pane" id="tab_product">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="text-center">@lang('supplier.edit.table.header.type')</th>
+                                                <th class="text-center">@lang('supplier.edit.table.header.name')</th>
+                                                <th class="text-center">@lang('supplier.edit.table.header.short_code')</th>
+                                                <th class="text-center">@lang('supplier.edit.table.header.description')</th>
+                                                <th class="text-center">@lang('supplier.edit.table.header.remarks')</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="p in productList">
+                                                    <td class="text-center">
+                                                        <input type="checkbox" name="productSelected[]">
+                                                    </td>
+                                                    <td>
+                                                        @{{ p.product_type_id }}
+                                                    </td>
+                                                    <td>
+                                                        @{{ p.name }}
+                                                    </td>
+                                                    <td>
+                                                        @{{ p.short_code }}
+                                                    </td>
+                                                    <td>
+                                                        @{{ p.description }}
+                                                    </td>
+                                                    <td>
+                                                        @{{ p.remarks }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <div class="tab-pane" id="tab_settings">
                                         <div class="form-group">
                                             <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
@@ -243,8 +279,9 @@
         app.controller("supplierController", ['$scope', function($scope) {
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
-            $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->bankAccounts)) ? '[]':htmlspecialchars_decode($supplier->bankAccount) !!}');
+            $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->bankAccounts)) ? '[]':htmlspecialchars_decode($supplier->bankAccounts) !!}');
             $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->profiles)) ? '[]':htmlspecialchars_decode($supplier->profiles) !!}');
+            $scope.productList = JSON.parse('{!! htmlspecialchars_decode($productList) !!}');
 
             $scope.toInt = function(val) {
                 console.log(val, parseInt(val,10));
