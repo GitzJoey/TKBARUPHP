@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Bank;
 use App\Model\Lookup;
 use App\Model\Profile;
+use App\Model\Deliver;
 use App\Model\Customer;
 use App\Model\SalesOrder;
 use App\Model\PriceLevel;
@@ -216,7 +217,10 @@ class CustomerController extends Controller
             return view('customer.confirmation.index', compact('solist'));
         }
 
-        $solist = SalesOrder::with('customer', 'items.product')->where('customer_id', '=', $id)->where('status', '=', 'SOSTATUS.WP')->paginate(10);
+        $solist = SalesOrder::with('customer', 'items.delivers', 'items.product')
+            ->where('customer_id', '=', $id)
+            ->where('status', '=', 'SOSTATUS.WCC')
+            ->paginate(10);
 
         return view('customer.confirmation.index', compact('solist'));
     }
@@ -228,9 +232,29 @@ class CustomerController extends Controller
         return view('customer.confirmation.confirm', compact('so'));
     }
 
-    public function storeConfirmationSalesOrder($id, Request $req)
+    public function storeConfirmationSalesOrder($id, Request $request)
     {
+        for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
+            $conversionValue = ProductUnit::where([
+                'product_id' => $request->input("product_id.$i"),
+                'unit_id' => $request->input("selected_unit_id.$i")
+            ])->first()->conversion_value;
 
+            $deliver = Deliver::whereId($request->input('deliver_id'))->first();
+            $deliver->netto = $request->input('netto');
+            $deliver->base_netto = $conversionValue * $request->input('netto');
+            $deliver->tare = $request->input('tare');
+            $deliver->base_tare = $conversionValue * $request->input('tare');
+            $deliver->remarks = $request->input('remarks');
+
+            $deliver->save();
+        }
+
+        $so = SalesOrder::whereId($id)->first();
+        $so->status = 'POSTATUS.WAPPV';
+        $so->save();
+
+        return redirect()->action('App\Http\Controllers\CustomerController@confirmSalesOrder', [$id]);
     }
 
     public function searchCustomers(Request $request)

@@ -97,9 +97,10 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="deliver in outflow.delivers">
-                                                <input type="hidden" name="item_id[]" ng-value="item.id">
-                                                <input type="hidden" name="product_id[]" ng-value="item.product_id">
-                                                <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit_id">
+                                                <input type="hidden" name="deliver_id[]" ng-value="deliver.id">
+                                                <input type="hidden" name="item_id[]" ng-value="deliver.item.id">
+                                                <input type="hidden" name="product_id[]" ng-value="deliver.item.product_id">
+                                                <input type="hidden" name="base_unit_id[]" ng-value="deliver.item.base_unit_id">
                                                 <td class="valign-middle">@{{ deliver.item.product.name }}</td>
                                                 <td>
                                                     <select name="selected_unit_id[]" data-parsley-required="true"

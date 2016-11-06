@@ -77,7 +77,8 @@ class Deliver extends Model
         'base_tare',
         'selected_unit_id',
         'base_unit_id',
-        'store_id'
+        'store_id',
+        'remarks'
     ];
 
     public function hId()

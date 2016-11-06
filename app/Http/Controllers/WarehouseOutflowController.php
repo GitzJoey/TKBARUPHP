@@ -60,7 +60,8 @@ class WarehouseOutflowController extends Controller
                 'item_id' => $request->input("item_id.$i"),
                 'selected_unit_id' => $request->input("selected_unit_id.$i"),
                 'base_unit_id' => $request->input("base_unit_id.$i"),
-                'store_id' => Auth::user()->store_id
+                'store_id' => Auth::user()->store_id,
+                'status' => 'CUSTCONFSTATUS.WSC'
             ];
 
             $deliver = Deliver::create($deliverParams);
@@ -84,7 +85,7 @@ class WarehouseOutflowController extends Controller
         }
 
         $so = SalesOrder::whereId($id)->first();
-        $so->status = 'SOSTATUS.WP';
+        $so->status = 'SOSTATUS.WCC';
         $so->save();
 
         return redirect(route('db.warehouse.outflow.index'));
