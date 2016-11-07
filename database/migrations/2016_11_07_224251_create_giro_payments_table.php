@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSalesOrderItemsTable extends Migration
+class CreateGiroPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateSalesOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales_order_item', function (Blueprint $table) {
+        Schema::create('giro_payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('sales_order_id')->default(0);
-            $table->unsignedBigInteger('items_id')->default(0);
+            $table->unsignedBigInteger('giro_id')->default(0);
         });
     }
 
@@ -27,6 +26,6 @@ class CreateSalesOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sales_order_item');
+        Schema::dropIfExists('giro_payments');
     }
 }

@@ -11,6 +11,7 @@ namespace App\Model;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * App\Item
@@ -69,12 +70,17 @@ class Item extends Model
     protected $table = 'items';
 
     protected $fillable = [
-        'quantity',
+        'quantity'
     ];
 
     protected $hidden = [
         'itemable_type'
     ];
+
+    public function hId()
+    {
+        return HashIds::encode($this->attributes['id']);
+    }
 
     public function product()
     {

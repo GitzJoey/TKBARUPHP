@@ -181,7 +181,7 @@ class CreateLookupTableSeeder extends Seeder
             ],
             [
                 'code' => 'CASHPAYMENTSTATUS.C',
-                'description' => 'Closed',
+                'description' => 'Confirmed',
                 'category' => 'CASHPAYMENTSTATUS',
             ],
             [

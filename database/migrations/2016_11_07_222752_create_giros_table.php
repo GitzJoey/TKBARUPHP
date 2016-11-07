@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentsTable extends Migration
+class CreateGirosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('giros', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('store_id')->default(0);
-            $table->string('type')->nullable();
-            $table->dateTime('payment_date');
-            $table->dateTime('effective_date');
-            $table->decimal('total_amount');
-            $table->string('status');
+            $table->unsignedBigInteger('bank_id')->default(0);
+            $table->string('serial_number')->nullable();
+            $table->date('effective_date')->nullable();
+            $table->decimal('amount')->default(0);
+            $table->string('printed_name')->nullable();
+            $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);
@@ -36,6 +36,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('payments');
+        Schema::dropIfExists('giros');
     }
 }

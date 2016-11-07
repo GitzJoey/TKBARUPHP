@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePurchaseOrderPaymentsTable extends Migration
+class CreateTransferPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatePurchaseOrderPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_order_payment', function ( Blueprint $table) {
+        Schema::create('transfer_payments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('po_id');
-            $table->unsignedBigInteger('payment_id');
+            $table->date('effective_date')->nullable();
+            $table->unsignedBigInteger('bank_from_id')->default(0);
+            $table->unsignedBigInteger('bank_to_id')->default(0);
         });
     }
 
@@ -27,6 +28,6 @@ class CreatePurchaseOrderPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('purchase_order_payment');
+        Schema::dropIfExists('transfer_payments');
     }
 }
