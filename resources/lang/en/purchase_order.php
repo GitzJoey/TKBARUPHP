@@ -60,6 +60,48 @@ return [
                     'status' => 'Status'
                 ]
             ]
+        ],
+        'cash' => [
+            'field' => [
+                'supplier_type' => 'Type',
+                'supplier_name' => 'Name',
+                'supplier_details' => 'Details',
+                'shipping_date' => 'Date',
+                'warehouse' => 'Warehouse',
+                'vendor_trucking' => 'Vendor Trucking'
+            ],
+            'po_code' => 'Code',
+            'po_type' => 'Type',
+            'po_date' => 'Date',
+            'po_status' => 'Status',
+            'title' => 'Purchase Order Cash Payment',
+            'page_title' => 'Purchase Order Cash Payment',
+            'page_title_desc' => 'Create cash payment for purchase order',
+            'box' => [
+                'supplier' => 'Supplier',
+                'purchase_order_detail' => 'Detail',
+                'shipping' => 'Shipping',
+                'transactions' => 'Transaction',
+                'remarks' => 'Remarks'
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Product',
+                        'header' => [
+                            'quantity' => 'Quantity'
+                        ],
+                        'unit' => 'UoM',
+                        'price_unit' => 'Price',
+                        'total_price' => 'Total Price'
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total Amount'
+                    ],
+                ],
+            ],
         ]
     ],
     'revise' => [

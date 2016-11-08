@@ -193,11 +193,11 @@ class PurchaseOrderController extends Controller
 
     public function createCashPayment($id)
     {
-        $currentPO = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
+        $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
             'vendorTrucking', 'warehouse')->find($id);
 
-        return view('purchase_order.cash_payment', compact('currentPO'));
+        return view('purchase_order.cash_payment', compact('currentPo'));
     }
 
     public function saveCashPayment(Request $request, $id)

@@ -64,7 +64,7 @@
                         @endif
                         @if(Entrust::can('so.so-payment'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.so.payment') || Active::checkRoutePattern('db.so.payment.*')) }}">
-                                <a href="{{ route('db.so.payment.index') }}"><i class="fa fa-calculator fa-fw">&nbsp;@lang('menu.item.so_payment')</a>
+                                <a href="{{ route('db.so.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.so_payment')</a>
                             </li>
                         @endif
                         @if(Entrust::can('so.so-copy'))

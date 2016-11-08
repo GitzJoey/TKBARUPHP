@@ -118,7 +118,7 @@ return [
             'table' => [
                 'header' => [
                     'code' => 'Code',
-                    'po_date' => 'Created Date',
+                    'so_date' => 'Created Date',
                     'supplier' => 'Customer',
                     'shipping_date' => 'Shipping Date',
                     'status' => 'Status'
