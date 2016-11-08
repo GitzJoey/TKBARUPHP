@@ -114,7 +114,7 @@ class SalesOrderController extends Controller
         //If it is cancellation, get the index from cancelIndex
         //If there is no index to be excluded, it's mean all SOs must be saved as draft.
         // (negative index means there is no exclusion)
-        $this->storeToSession($request, !empty($submitIndex) ? $submitIndex : !empty($cancelIndex) ? $cancelIndex : -1);
+        $this->storeToSession($request, !is_null($submitIndex) ? $submitIndex : !is_null($cancelIndex) ? $cancelIndex : -1);
 
         if(count($request->input('so_code')) > 1)
             return redirect(route('db.so.create'));
