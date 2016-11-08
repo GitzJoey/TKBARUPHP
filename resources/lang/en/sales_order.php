@@ -108,8 +108,22 @@ return [
         ],
     ],
     'payment' => [
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
+        'index' => [
+            'title' => 'Sales Order Payment',
+            'page_title' => 'Sales Order Payment',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Sales Order List'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'po_date' => 'Created Date',
+                    'supplier' => 'Customer',
+                    'shipping_date' => 'Shipping Date',
+                    'status' => 'Status'
+                ]
+            ]
+        ]
     ],
 ];

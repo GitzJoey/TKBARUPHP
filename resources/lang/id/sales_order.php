@@ -108,8 +108,22 @@ return [
         ],
     ],
     'payment' => [
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
+        'index' => [
+            'title' => 'Pembayaran Penjualan',
+            'page_title' => 'Pembayaran Penjualan',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Penjualan'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'po_date' => 'Tanggal Dibuat',
+                    'supplier' => 'Pelanggan',
+                    'shipping_date' => 'Tanggal Pengiriman',
+                    'status' => 'Status'
+                ]
+            ]
+        ]
     ],
 ];

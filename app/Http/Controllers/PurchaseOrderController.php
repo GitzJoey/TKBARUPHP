@@ -122,8 +122,7 @@ class PurchaseOrderController extends Controller
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])->get();
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
-        return view('purchase_order.index',
-            compact('purchaseOrders', 'poStatusDDL', 'warehouseDDL', 'vendorTruckingDDL'));
+        return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
     public function revise($id)
@@ -182,9 +181,14 @@ class PurchaseOrderController extends Controller
         return redirect(route('db.po.revise.index'));
     }
 
-    public function payment($id)
+    public function paymentIndex()
     {
+        Log::info('[PurchaseOrderController@paymentIndex]');
 
+        $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')->get();
+        $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
+
+        return view('purchase_order.payment_index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
     public function savePayment(Request $request, $id)

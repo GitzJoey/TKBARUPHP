@@ -129,7 +129,7 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@index');
 
-        $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WA', 'SOSTATUS.WD'])->get();
+        $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])->get();
         $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
 
         return view('sales_order.index', compact('salesOrders', 'soStatusDDL'));
@@ -198,9 +198,14 @@ class SalesOrderController extends Controller
         return redirect(route('db.so.revise.index'));
     }
 
-    public function payment($id)
+    public function paymentIndex()
     {
+        Log::info('SalesOrderController@paymentIndex');
 
+        $salesOrders = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WP')->get();
+        $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
+
+        return view('sales_order.payment_index', compact('salesOrders', 'soStatusDDL'));
     }
 
     public function savePayment(Request $request, $id)

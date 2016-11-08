@@ -25,6 +25,11 @@ Breadcrumbs::register('revise_purchase_order', function ($breadcrumbs, $poId){
     $breadcrumbs->push('Revise Purchase Order', route('db.po.revise', $poId));
 });
 
+Breadcrumbs::register('purchase_order_payment', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Purchase Order Payment', route('db.po.payment.index'));
+});
+
 Breadcrumbs::register('inflow', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Inflow', route('db.warehouse.inflow.index'));
@@ -58,4 +63,9 @@ Breadcrumbs::register('sales_order', function ($breadcrumbs){
 Breadcrumbs::register('revise_sales_order', function ($breadcrumbs, $soId){
     $breadcrumbs->parent('sales_order');
     $breadcrumbs->push('Revise Sales Order', route('db.so.revise', $soId));
+});
+
+Breadcrumbs::register('sales_order_payment', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Sales Order Payment', route('db.so.payment.index'));
 });

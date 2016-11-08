@@ -59,7 +59,7 @@
                             <li class="{{ active_class(if_route('db.so.revise.index')) }}"><a href="{{ route('db.so.revise.index') }}"><i class="fa fa fa-code-fork fa-fw"></i>&nbsp;@lang('menu.item.so_revise')</a></li>
                         @endif
                         @if(Entrust::can('so.so-payment'))
-                            <li class="{{ active_class(if_route('')) }}"><a href="#"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.so_payment')</a></li>
+                            <li class="{{ active_class(if_route('db.so.payment.index')) }}"><a href="{{ route('db.so.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.so_payment')</a></li>
                         @endif
                         @if(Entrust::can('so.so-copy'))
                             <li class="{{ active_class(if_route('')) }}"><a href="#"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a></li>

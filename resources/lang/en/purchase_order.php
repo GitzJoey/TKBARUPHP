@@ -44,12 +44,23 @@ return [
         ],
     ],
     'payment' => [
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
-        'box' => [
-            'po_detail' => ''
-        ],
+        'index' => [
+            'title' => 'Purchase Order Payment',
+            'page_title' => 'Purchase Order Payment',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Purchase Order List'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'po_date' => 'Created Date',
+                    'supplier' => 'Supplier',
+                    'shipping_date' => 'Shipping Date',
+                    'status' => 'Status'
+                ]
+            ]
+        ]
     ],
     'revise' => [
         'field' => [
