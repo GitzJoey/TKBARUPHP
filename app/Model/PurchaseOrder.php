@@ -104,11 +104,6 @@ class PurchaseOrder extends Model
         return $this->hasManyThrough('App\Model\Receipt', 'App\Model\Item', 'itemable_id', 'item_id', 'id');
     }
 
-    public function payments()
-    {
-        return $this->belongsToMany('App\Model\Payment', 'purchase_order_payments', 'po_id', 'payment_id');
-    }
-
     public function supplier()
     {
         return $this->belongsTo('App\Model\Supplier', 'supplier_id');
@@ -129,9 +124,9 @@ class PurchaseOrder extends Model
         return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
     }
 
-    public function getIdAttribute($value)
+    public function payments()
     {
-        return HashIds::encode($value);
+        return $this->morphMany('App\Model\Payment', 'payable');
     }
 
     public static function boot()

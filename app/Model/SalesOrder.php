@@ -101,6 +101,11 @@ class SalesOrder extends Model
         return $this->morphMany('App\Model\Item', 'itemable');
     }
 
+    public function delivers()
+    {
+        return $this->hasManyThrough('App\Model\Deliver', 'App\Model\Item', 'itemable_id', 'item_id', 'id');
+    }
+
     public function customer()
     {
         return $this->belongsTo('App\Model\Customer', 'customer_id');
@@ -121,9 +126,9 @@ class SalesOrder extends Model
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
-    public function getIdAttribute($value)
+    public function payments()
     {
-        return HashIds::encode($value);
+        return $this->morphMany('App\Model\Payment', 'payable');
     }
 
     public static function boot()

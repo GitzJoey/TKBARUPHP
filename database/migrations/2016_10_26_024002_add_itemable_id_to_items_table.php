@@ -14,7 +14,7 @@ class AddItemableIdToItemsTable extends Migration
     public function up()
     {
         Schema::table('items', function (Blueprint $table) {
-            $table->string('itemable_id');
+            $table->unsignedBigInteger('itemable_id');
         });
     }
 

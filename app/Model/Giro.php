@@ -6,25 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
-class Payment extends Model
+class Giro extends Model
 {
+
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-
-    protected $hidden = [
-        'payment_detail_type', 'payable_type'
-    ];
-
-    public function payment_detail()
-    {
-        return $this->morphTo();
-    }
-
-    public function payable()
-    {
-        return $this->morphTo();
-    }
 
     public static function boot()
     {
