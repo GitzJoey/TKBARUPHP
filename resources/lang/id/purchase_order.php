@@ -44,12 +44,23 @@ return [
         ],
     ],
     'payment' => [
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
-        'box' => [
-            'po_detail' => '',
-        ],
+        'index' => [
+            'title' => 'Pembayaran Pembelian',
+            'page_title' => 'Pembayaran Pembelian',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Pembelian'
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'po_date' => 'Tanggal Dibuat',
+                    'supplier' => 'Supplier',
+                    'shipping_date' => 'Tanggal Pengiriman',
+                    'status' => 'Status'
+                ]
+            ]
+        ]
     ],
     'revise' => [
         'field' => [

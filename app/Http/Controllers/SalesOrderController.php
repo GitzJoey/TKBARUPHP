@@ -63,7 +63,7 @@ class SalesOrderController extends Controller
         Log::info("SalesOrderController@store submitIndex = $submitIndex");
         Log::info("SalesOrderController@store cancelIndex = $cancelIndex");
 
-        if(!is_null($submitIndex)){
+        if(isset($submitIndex)){
             if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R'){
                 $customer_id = empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex");
                 $walk_in_cust = '';
@@ -117,7 +117,7 @@ class SalesOrderController extends Controller
         //If it is cancellation, get the index from cancelIndex
         //If there is no index to be excluded, it's mean all SOs must be saved as draft.
         // (negative index means there is no exclusion)
-        $this->storeToSession($request, !isset($submitIndex) ? $submitIndex : !isset($cancelIndex) ? $cancelIndex : -1);
+        $this->storeToSession($request, isset($submitIndex) ? $submitIndex : isset($cancelIndex) ? $cancelIndex : -1);
 
         if(count($request->input('so_code')) > 1)
             return redirect(route('db.so.create'));
@@ -129,7 +129,7 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@index');
 
-        $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WA', 'SOSTATUS.WD'])->get();
+        $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])->get();
         $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
 
         return view('sales_order.index', compact('salesOrders', 'soStatusDDL'));
@@ -198,9 +198,14 @@ class SalesOrderController extends Controller
         return redirect(route('db.so.revise.index'));
     }
 
-    public function payment($id)
+    public function paymentIndex()
     {
+        Log::info('SalesOrderController@paymentIndex');
 
+        $salesOrders = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WP')->get();
+        $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
+
+        return view('sales_order.payment_index', compact('salesOrders', 'soStatusDDL'));
     }
 
     public function savePayment(Request $request, $id)

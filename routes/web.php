@@ -41,10 +41,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/po/revise', 'PurchaseOrderController@index')->name('db.po.revise.index');
     Route::get('/dashboard/po/revise/{id}', 'PurchaseOrderController@revise')->name('db.po.revise');
     Route::patch('/dashboard/po/revise/{id}', 'PurchaseOrderController@saveRevision');
-    Route::get('/dashboard/po/payment', 'PurchaseOrderController@index')->name('db.po.payment.index');
-    Route::get('/dashboard/po/payment/{id}', 'PurchaseOrderController@pay')->name('db.po.payment');
-    Route::patch('/dashboard/po/payment/{id}', 'PurchaseOrderController@savePayment');
     Route::delete('/dashboard/po/reject/{id}', 'PurchaseOrderController@delete')->name('db.po.reject');
+    Route::get('/dashboard/po/payment', 'PurchaseOrderController@paymentIndex')->name('db.po.payment.index');
+    Route::get('/dashboard/po/payment/{id}', 'PurchaseOrderController@paymentHistory')->name('db.po.payment.history');
+    Route::get('/dashboard/po/payment/{id}/cash', 'PurchaseOrderController@createCashPayment')->name('db.po.payment.cash');
+    Route::post('/dashboard/po/payment/{id}/cash', 'PurchaseOrderController@saveCashPayment');
+    Route::get('/dashboard/po/payment/{id}/transfer', 'PurchaseOrderController@createTransferPayment')
+        ->name('db.po.payment.transfer');
+    Route::post('/dashboard/po/payment/{id}/transfer', 'PurchaseOrderController@saveTransferPayment');
+    Route::get('/dashboard/po/payment/{id}/giro', 'PurchaseOrderController@createGiroPayment')->name('db.po.payment.giro');
+    Route::post('/dashboard/po/payment/{id}/giro', 'PurchaseOrderController@saveGiroPayment');
 
     Route::get('/dashboard/so/create', 'SalesOrderController@create')->name('db.so.create');
     Route::post('/dashboard/so/create', 'SalesOrderController@store');
@@ -55,6 +61,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/so/payment/{id}', 'SalesOrderController@pay')->name('db.so.payment');
     Route::patch('/dashboard/so/payment/{id}', 'SalesOrderController@savePayment');
     Route::delete('/dashboard/so/reject/{id}', 'SalesOrderController@delete')->name('db.so.reject');
+    Route::get('/dashboard/so/payment', 'SalesOrderController@paymentIndex')->name('db.so.payment.index');
+    Route::get('/dashboard/so/payment/{id}', 'SalesOrderController@paymentHistory')->name('db.so.payment.history');
+    Route::get('/dashboard/so/payment/{id}/cash', 'SalesOrderController@createCashPayment')->name('db.so.payment.cash');
+    Route::post('/dashboard/so/payment/{id}/cash', 'SalesOrderController@saveCashPayment');
+    Route::get('/dashboard/so/payment/{id}/transfer', 'SalesOrderController@createTransferPayment')
+        ->name('db.so.payment.transfer');
+    Route::post('/dashboard/so/payment/{id}/transfer', 'SalesOrderController@saveTransferPayment');
+    Route::get('/dashboard/so/payment/{id}/giro', 'SalesOrderController@createGiroPayment')->name('db.so.payment.giro');
+    Route::post('/dashboard/so/payment/{id}/giro', 'SalesOrderController@saveGiroPayment');
     Route::get('/dashboard/so/copy', 'SalesOrderController@indexSO')->name('db.so.copy.index');
     Route::get('/dashboard/so/copy/{id}', 'SalesOrderController@copySO')->name('db.so.copy');
     Route::patch('/dashboard/so/copy/{id}', 'SalesOrderController@saveSOCopy');
