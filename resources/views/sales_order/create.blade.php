@@ -81,7 +81,7 @@
                                                                         <span ng-bind="customer.name"></span>
                                                                     </ui-select-choices>
                                                                 </ui-select>
-                                                                <input type="hidden" name="customer_id[]" ng-value="so.customer.id">
+                                                                <input type="hidden" name="customer_id[]" ng-value="so.customer.id" >
                                                             </div>
                                                         </div>
                                                     </div>
