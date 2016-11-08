@@ -284,7 +284,7 @@
                     &nbsp;&nbsp;&nbsp;
                     <a id="printButton" href="#" target="_blank"
                        class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>
-                    <a id="cancelButton" href="{{ route('db.po.payment.cash.index') }}" class="btn btn-primary pull-right"
+                    <a id="cancelButton" href="{{ route('db.po.payment.index') }}" class="btn btn-primary pull-right"
                        role="button">@lang('buttons.cancel_button')</a>
                 </div>
             </div>
