@@ -29,12 +29,12 @@
                             </li>
                         @endif
                         @if(Entrust::can('po.po-revise'))
-                            <li class="{{ active_class(if_route('db.po.revise.index')) }}">
+                            <li class="{{ active_class(Active::checkRoutePattern('db.po.revise') || Active::checkRoutePattern('db.po.revise.*')) }}">
                                 <a href="{{ route('db.po.revise.index') }}"><i class="fa fa-code-fork fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_revise')</a>
                             </li>
                         @endif
                         @if(Entrust::can('po.po-payment'))
-                            <li class="{{ active_class(if_route('db.po.payment.index')) }}">
+                            <li class="{{ active_class(Active::checkRoutePattern('db.po.payment') || Active::checkRoutePattern('db.po.payment.*')) }}">
                                 <a href="{{ route('db.po.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a>
                             </li>
                         @endif
@@ -53,16 +53,24 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Entrust::can('so.so-create'))
-                            <li class="{{ active_class(if_route('db.so.create')) }}"><a href="{{ route('db.so.create') }}"><i class="fa fa-cart-arrow-down fa-fw"></i>&nbsp;@lang('menu.item.so_new')</a></li>
+                            <li class="{{ active_class(if_route('db.so.create')) }}">
+                                <a href="{{ route('db.so.create') }}"><i class="fa fa-cart-arrow-down fa-fw"></i>&nbsp;@lang('menu.item.so_new')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('so.so-revise'))
-                            <li class="{{ active_class(if_route('db.so.revise.index')) }}"><a href="{{ route('db.so.revise.index') }}"><i class="fa fa fa-code-fork fa-fw"></i>&nbsp;@lang('menu.item.so_revise')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.so.revise') || Active::checkRoutePattern('db.so.revise.*')) }}">
+                                <a href="{{ route('db.so.revise.index') }}"><i class="fa fa fa-code-fork fa-fw"></i>&nbsp;@lang('menu.item.so_revise')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('so.so-payment'))
-                            <li class="{{ active_class(if_route('db.so.payment.index')) }}"><a href="{{ route('db.so.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.so_payment')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.so.payment') || Active::checkRoutePattern('db.so.payment.*')) }}">
+                                <a href="{{ route('db.so.payment.index') }}"><i class="fa fa-calculator fa-fw">&nbsp;@lang('menu.item.so_payment')</a>
+                            </li>
                         @endif
                         @if(Entrust::can('so.so-copy'))
-                            <li class="{{ active_class(if_route('')) }}"><a href="#"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.so.copy') || Active::checkRoutePattern('db.so.copy.*')) }}">
+                                <a href="#"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a>
+                            </li>
                         @endif
                     </ul>
                 </li>

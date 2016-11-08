@@ -191,7 +191,16 @@ class PurchaseOrderController extends Controller
         return view('purchase_order.payment_index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
-    public function savePayment(Request $request, $id)
+    public function createCashPayment($id)
+    {
+        $currentPO = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
+            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
+            'vendorTrucking', 'warehouse')->find($id);
+
+        return view('purchase_order.cash_payment', compact('currentPO'));
+    }
+
+    public function saveCashPayment(Request $request, $id)
     {
 
     }
