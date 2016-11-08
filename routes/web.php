@@ -55,6 +55,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/so/payment/{id}', 'SalesOrderController@pay')->name('db.so.payment');
     Route::patch('/dashboard/so/payment/{id}', 'SalesOrderController@savePayment');
     Route::delete('/dashboard/so/reject/{id}', 'SalesOrderController@delete')->name('db.so.reject');
+    Route::get('/dashboard/so/copy', 'SalesOrderController@indexSO')->name('db.so.copy.index');
+    Route::get('/dashboard/so/copy/{id}', 'SalesOrderController@copySO')->name('db.so.copy');
+    Route::patch('/dashboard/so/copy/{id}', 'SalesOrderController@saveSOCopy');
 
     Route::get('/dashboard/admin/user', 'UserController@index')->name('db.admin.user');
     Route::get('/dashboard/admin/user/show/{id}', 'UserController@show')->name('db.admin.user.show');
