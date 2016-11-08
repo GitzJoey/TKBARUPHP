@@ -63,7 +63,7 @@ class SalesOrderController extends Controller
         Log::info("SalesOrderController@store submitIndex = $submitIndex");
         Log::info("SalesOrderController@store cancelIndex = $cancelIndex");
 
-        if(!is_null($submitIndex)){
+        if(isset($submitIndex)){
             if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R'){
                 $customer_id = empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex");
                 $walk_in_cust = '';
