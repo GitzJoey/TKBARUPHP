@@ -53,9 +53,11 @@
                         <td class="text-center">{{ $poStatusDDL[$po->status] }}</td>
                         <td class="text-center" width="20%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.po.revise', $po->hId()) }}" title="Revise"><span class="fa fa-pencil fa-fw"></span></a>
+                            @if($po->status == 'POSTATUS.WA')
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.po.reject', $po->hId()], 'style'=>'display:inline'])  !!}
                                 <button type="submit" class="btn btn-xs btn-danger" title="Reject" id="delete_button"><span class="fa fa-close fa-fw"></span></button>
                             {!! Form::close() !!}
+                            @endif
                         </td>
                     </tr>
                 @endforeach
