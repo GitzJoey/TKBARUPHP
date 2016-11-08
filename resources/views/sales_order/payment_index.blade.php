@@ -30,7 +30,7 @@
                 <thead>
                 <tr>
                     <th class="text-center">@lang('sales_order.payment.index.table.header.code')</th>
-                    <th class="text-center">@lang('sales_order.payment.index.table.header.po_date')</th>
+                    <th class="text-center">@lang('sales_order.payment.index.table.header.so_date')</th>
                     <th class="text-center">@lang('sales_order.payment.index.table.header.supplier')</th>
                     <th class="text-center">@lang('sales_order.payment.index.table.header.shipping_date')</th>
                     <th class="text-center">@lang('sales_order.payment.index.table.header.status')</th>
@@ -41,9 +41,9 @@
                 @foreach ($salesOrders as $key => $so)
                     <tr>
                         <td class="text-center">{{ $so->code }}</td>
-                        <td class="text-center">{{ date('d-m-Y', strtotime($so->po_created)) }}</td>
+                        <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
                         <td class="text-center">
-                            @if($po->supplier_type == 'SUPPLIERTYPE.R')
+                            @if($so->customer_type == 'CUSTOMERTYPE.R')
                                 {{ $so->customer->name }}
                             @else
                                 {{ $so->walk_in_customer }}
