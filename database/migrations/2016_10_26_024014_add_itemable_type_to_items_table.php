@@ -16,6 +16,8 @@ class AddItemableTypeToItemsTable extends Migration
         Schema::table('items', function (Blueprint $table) {
             $table->string('itemable_type');
         });
+
+        DB::statement("ALTER TABLE items CHANGE COLUMN itemable_type itemable_type VARCHAR(255) CHARACTER SET 'utf8' NOT NULL AFTER itemable_id");
     }
 
     /**

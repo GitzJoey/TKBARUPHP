@@ -299,10 +299,8 @@
                                                     </button>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="total_price[]"
-                                                       ng-value="item.selected_unit.conversion_value * item.quantity * item.price"
-                                                       readonly>
+                                            <td class="text-right valign-middle">
+                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -317,7 +315,7 @@
                                             <td width="80%"
                                                 class="text-right">@lang('sales_order.revise.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                                <span class="control-label-normal">@{{ grandTotal() | number }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -375,6 +373,7 @@
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
+            $scope.customerDDL = JSON.parse('{!! empty($customerDDL) ? '[]' : htmlspecialchars_decode($customerDDL) !!}');
 
             var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
 

@@ -146,8 +146,12 @@ class SalesOrderController extends Controller
         $productDDL = Product::with('productUnits.unit')->get();
         $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
             ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
+        $customerDDL = [];
+        if ($currentSo->customer_id != 0) {
+            $customerDDL = Customer::with('bankAccounts', 'profiles.phoneNumbers.provider')->where('id', '=', $currentSo->customer->id)->get();
+        }
 
-        return view('sales_order.revise', compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL'));
+        return view('sales_order.revise', compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL', 'customerDDL'));
     }
 
     public function saveRevision(Request $request, $id)

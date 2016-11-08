@@ -16,6 +16,8 @@ class AddItemableIdToItemsTable extends Migration
         Schema::table('items', function (Blueprint $table) {
             $table->unsignedBigInteger('itemable_id');
         });
+
+        DB::statement("ALTER TABLE items CHANGE COLUMN itemable_id itemable_id BIGINT(20) UNSIGNED DEFAULT '0' AFTER base_unit_id");
     }
 
     /**
