@@ -200,8 +200,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/customer/confirmation/confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
 
     Route::get('/dashboard/customer/approval', 'CustomerController@approvalIndex')->name('db.customer.approval.index');
-    Route::get('/dashboard/customer/approval/{id}', 'CustomerController@approval')->name('db.customer.approval.approve');
-    Route::get('/dashboard/customer/reject/{id}', 'CustomerController@reject')->name('db.customer.approval.reject');
+    Route::get('/dashboard/customer/approval/approve/{id}', 'CustomerController@approval')->name('db.customer.approval.approve');
+    Route::get('/dashboard/customer/approval/reject/{id}', 'CustomerController@reject')->name('db.customer.approval.reject');
 
     Route::get('/dashboard/warehouse/inflow', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
     Route::get('/dashboard/warehouse/inflow/receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');

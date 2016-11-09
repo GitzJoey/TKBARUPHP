@@ -103,12 +103,12 @@
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th width="" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.product_name')</th>
-                                            <th width="" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.unit')</th>
-                                            <th width="" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.brutto')</th>
-                                            <th width="" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.netto')</th>
-                                            <th width="" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.tare')</th>
-                                            <th width="">&nbsp;</th>
+                                            <th width="50%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.product_name')</th>
+                                            <th width="15%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.unit')</th>
+                                            <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.brutto')</th>
+                                            <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.netto')</th>
+                                            <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.tare')</th>
+                                            <th width="5%">&nbsp;</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -186,8 +186,8 @@
                 $scope.inflow.receipts.push({
                     item: PO.items[i],
                     selected_unit: _.find(PO.items[i].product.product_units, getSelectedUnit(PO.items[i].selected_unit_id)),
-                    brutto: PO.items[i].quantity,
-                    netto: PO.items[i].quantity,
+                    brutto: parseFloat(PO.items[i].quantity).toFixed(0),
+                    netto: parseFloat(PO.items[i].quantity).toFixed(0),
                     tare: 0
                 });
             }

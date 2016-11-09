@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('purchase_order.revise.page_title')
+    <span class="fa fa-code-fork fa-rotate-180 fa-fw"></span>&nbsp;@lang('purchase_order.revise.page_title')
 @endsection
 @section('page_title_desc')
     @lang('purchase_order.revise.page_title_desc')
@@ -268,9 +268,8 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="price[]"
-                                                           ng-model="item.price"
-                                                           data-parsley-required="true"
-                                                           data-parsley-type="number">
+                                                           ng-model="item.price" data-parsley-required="true"
+                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number>
                                                 </td>
                                                 <td class="text-center">
                                                     @if($currentPo->status == 'POSTATUS.WA')
@@ -582,8 +581,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('poModule', []);
-
+        var app = angular.module('poModule', ['fcsa-number']);
         app.controller('poController', ['$scope', function ($scope) {
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
@@ -610,8 +608,8 @@
                     product: currentPo.items[i].product,
                     base_unit: _.find(currentPo.items[i].product.product_units, isBase),
                     selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
-                    quantity: currentPo.items[i].quantity,
-                    price: currentPo.items[i].price
+                    quantity: parseFloat(currentPo.items[i].quantity).toFixed(0),
+                    price: parseFloat(currentPo.items[i].price).toFixed(0)
                 });
             }
 

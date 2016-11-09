@@ -20,6 +20,7 @@
         <div class="alert alert-info">
             <p>{{ $message }}</p>
         </div>
+        {{ Session::forget('info') }}
     @endif
 
     <div class="box box-info">
