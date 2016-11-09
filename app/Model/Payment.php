@@ -10,11 +10,13 @@ class Payment extends Model
 {
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'payment_date'];
 
     protected $hidden = [
         'payment_detail_type', 'payable_type'
     ];
+
+    protected $fillable = ['payment_date', 'total_amount', 'status', 'type'];
 
     public function payment_detail()
     {

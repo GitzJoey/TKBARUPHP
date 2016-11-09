@@ -8,8 +8,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\CashPayment;
 use App\Model\Item;
 use App\Model\Lookup;
+use App\Model\Payment;
 use App\Model\Product;
 use App\Model\ProductUnit;
 use App\Model\Supplier;
@@ -193,16 +195,42 @@ class PurchaseOrderController extends Controller
 
     public function createCashPayment($id)
     {
+        Log::info('[PurchaseOrderController@createCashPayment]');
+
         $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
             'vendorTrucking', 'warehouse')->find($id);
+        $paymentTypeDLL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $cashPaymentStatusDLL = Lookup::where('category', '=', 'CASHPAYMENTSTATUS')->get()->pluck('description', 'code');
 
-        return view('purchase_order.cash_payment', compact('currentPo'));
+        return view('purchase_order.cash_payment', compact('currentPo', 'paymentTypeDLL', 'cashPaymentStatusDLL'));
     }
 
     public function saveCashPayment(Request $request, $id)
     {
+        Log::info('[PurchaseOrderController@saveCashPayment]');
 
+        $cashPayment = new CashPayment();
+        $cashPayment->save();
+
+        $paymentParam = [
+            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
+            'total_amount' => $request->input('total_amount'),
+            'status' => Lookup::whereCode('CASHPAYMENTSTATUS.C')->first()->code,
+            'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
+        ];
+
+        $payment = Payment::create($paymentParam);
+
+        $cashPayment->payment()->save($payment);
+
+        $currentPo = PurchaseOrder::find($id);
+
+        $currentPo->payments()->save($payment);
+
+        $currentPo->updatePaymentStatus();
+
+        return redirect(route('db.po.payment.index'));
     }
 
     public function delete(Request $request, $id)

@@ -30,10 +30,11 @@
                 <thead>
                 <tr>
                     <th class="text-center">@lang('sales_order.payment.index.table.header.code')</th>
+                    <th class="text-center">@lang('sales_order.payment.index.table.header.customer')</th>
                     <th class="text-center">@lang('sales_order.payment.index.table.header.so_date')</th>
-                    <th class="text-center">@lang('sales_order.payment.index.table.header.supplier')</th>
-                    <th class="text-center">@lang('sales_order.payment.index.table.header.shipping_date')</th>
-                    <th class="text-center">@lang('sales_order.payment.index.table.header.status')</th>
+                    <th class="text-center">@lang('sales_order.payment.index.table.header.total')</th>
+                    <th class="text-center">@lang('sales_order.payment.index.table.header.paid')</th>
+                    <th class="text-center">@lang('sales_order.payment.index.table.header.rest')</th>
                     <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 </thead>
@@ -41,7 +42,6 @@
                 @foreach ($salesOrders as $key => $so)
                     <tr>
                         <td class="text-center">{{ $so->code }}</td>
-                        <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
                         <td class="text-center">
                             @if($so->customer_type == 'CUSTOMERTYPE.R')
                                 {{ $so->customer->name }}
@@ -49,8 +49,10 @@
                                 {{ $so->walk_in_customer }}
                             @endif
                         </td>
-                        <td class="text-center">{{ date('d-m-Y', strtotime($so->shipping_date)) }}</td>
-                        <td class="text-center">{{ $soStatusDDL[$so->status] }}</td>
+                        <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
+                        <td class="text-center">{{ $so->totalAmount() }}</td>
+                        <td class="text-center">{{ $so->totalAmountPaid() }}</td>
+                        <td class="text-center">{{ $so->totalAmount() - $so->totalAmountPaid() }}</td>
                         <td class="text-center" width="20%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.cash', $so->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.transfer', $so->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>

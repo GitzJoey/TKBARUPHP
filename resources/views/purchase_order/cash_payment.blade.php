@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('purchase_order.payment.cash.page_title')
+    <span class="fa fa-money fa-fw"></span>&nbsp;@lang('purchase_order.payment.cash.page_title')
 @endsection
 @section('page_title_desc')
     @lang('purchase_order.payment.cash.page_title_desc')
@@ -27,7 +27,7 @@
     @endif
 
     <div ng-app="poModule" ng-controller="poController">
-        {!! Form::model($currentPo, ['method' => 'PATCH','route' => ['db.po.payment.cash', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($currentPo, ['method' => 'POST','route' => ['db.po.payment.cash', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         {{ csrf_field() }}
         <div class="row">
             <div class="col-md-5">
@@ -152,9 +152,7 @@
                             <label for="inputWarehouse"
                                    class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.warehouse')</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" readonly
-                                       value="{{ $currentPo->warehouse->name }}">
-                                <input type="hidden" name="warehouse_id" value="{{ $currentPo->warehouse->id }}">
+                                <input type="text" class="form-control" readonly value="{{ $currentPo->warehouse->name }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -163,8 +161,6 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" readonly
                                        value="{{ empty($currentPo->vendorTrucking->name) ? '':$currentPo->vendorTrucking->name }}">
-                                <input type="hidden" name="vendor_trucking_id"
-                                       value="{{ empty($currentPo->vendorTrucking->id) ? '':$currentPo->vendorTrucking->id }}">
                             </div>
                         </div>
                     </div>
@@ -201,21 +197,16 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="item in po.items">
-                                        <input type="hidden" name="item_id[]" ng-value="item.id">
-                                        <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                        <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
                                         <td class="valign-middle">@{{ item.product.name }}</td>
                                         <td>
                                             <input type="text" class="form-control text-right"
                                                    data-parsley-required="true" data-parsley-type="number"
                                                    name="quantity[]"
-                                                   ng-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}>
+                                                   ng-model="item.quantity" readonly>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" readonly
                                                    value="@{{ item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')' }}">
-                                            <input type="hidden" name="selected_unit_id[]"
-                                                   ng-value="item.selected_unit.unit.id">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
@@ -239,7 +230,7 @@
                                     <tbody>
                                     <tr>
                                         <td width="80%"
-                                            class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                            class="text-right">@lang('purchase_order.payment.cash.table.total.body.total')</td>
                                         <td width="20%" class="text-right">
                                             <span class="control-label-normal">@{{ grandTotal() | number }}</span>
                                         </td>
@@ -277,14 +268,119 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.payment_history')</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="paymentHistoryTable" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th width="25%" class="text-center">@lang('purchase_order.payment.cash.table.payments.header.payment_type')</th>
+                                        <th width="25%" class="text-center">@lang('purchase_order.payment.cash.table.payments.header.payment_date')</th>
+                                        <th width="25%" class="text-center">@lang('purchase_order.payment.cash.table.payments.header.payment_status')</th>
+                                        <th width="25%" class="text-center">@lang('purchase_order.payment.cash.table.payments.header.payment_amount')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($currentPo->payments as $key => $payment)
+                                            <tr>
+                                                <td class="text-center">{{ $paymentTypeDLL[$payment->type] }}</td>
+                                                <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
+                                                <td class="text-center">{{ $cashPaymentStatusDLL[$payment->status] }}</td>
+                                                <td class="text-center">{{ $payment->total_amount }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="paymentSummaryTable" class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-right">@lang('purchase_order.payment.cash.table.total.body.paid_amount')</td>
+                                        <td width="25%" class="text-right">
+                                            <span class="control-label-normal">{{ $currentPo->totalAmountPaid() }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">@lang('purchase_order.payment.cash.table.total.body.to_be_paid_amount')</td>
+                                        <td width="25%" class="text-right">
+                                            <span class="control-label-normal">
+                                                {{ $currentPo->totalAmount() - $currentPo->totalAmountPaid()}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.payment')</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="inputPaymentType"
+                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_type')</label>
+                                <div class="col-sm-4">
+                                    <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.'PAYMENTTYPE.C')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="inputPaymentDate"
+                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_date')</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control" id="inputPaymentDate"
+                                               name="payment_date" data-parsley-required="true">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="inputPaymentAmount"
+                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_amount')</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            Rp
+                                        </div>
+                                        <input type="text" class="form-control" id="inputPaymentAmount"
+                                               name="total_amount" data-parsley-required="true">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-7 col-offset-md-5">
                 <div class="btn-toolbar">
                     <button id="submitButton" type="submit"
                             class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
                     &nbsp;&nbsp;&nbsp;
-                    <a id="printButton" href="#" target="_blank"
-                       class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>
-                    <a id="cancelButton" href="{{ route('db.po.payment.cash.index') }}" class="btn btn-primary pull-right"
+                    <a id="cancelButton" href="{{ route('db.po.payment.index') }}" class="btn btn-primary pull-right"
                        role="button">@lang('buttons.cancel_button')</a>
                 </div>
             </div>
@@ -565,5 +661,13 @@
                 return unit.is_base == 1;
             }
         }]);
+
+        $("#inputPaymentDate").daterangepicker({
+            locale: {
+                format: 'DD-MM-YYYY'
+            },
+            singleDatePicker: true,
+            showDropdowns: true
+        });
     </script>
 @endsection

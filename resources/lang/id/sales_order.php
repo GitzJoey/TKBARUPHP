@@ -120,10 +120,68 @@ return [
                     'code' => 'Kode',
                     'po_date' => 'Tanggal Dibuat',
                     'supplier' => 'Pelanggan',
-                    'shipping_date' => 'Tanggal Pengiriman',
-                    'status' => 'Status'
+                    'total' => 'Total',
+                    'paid' => 'Bayar',
+                    'rest' => 'Kurang'
                 ]
             ]
+        ],
+        'cash' => [
+            'field' => [
+                'customer_type' => 'Tipe',
+                'customer_name' => 'Nama',
+                'customer_details' => 'Detail',
+                'shipping_date' => 'Tanggal',
+                'warehouse' => 'Gudang',
+                'vendor_trucking' => 'Penyedia Angkutan',
+                'payment_type' => 'Tipe Pembayaran',
+                'payment_date' => 'Tanggal Pembayaran',
+                'payment_amount' => 'Jumlah Pembayaran'
+            ],
+            'so_code' => 'Kode',
+            'so_type' => 'Tipe',
+            'so_date' => 'Tanggal',
+            'so_status' => 'Status',
+            'title' => 'Pembayaran Tunai Penjualan',
+            'page_title' => 'Pembayaran Tunai Penjualan',
+            'page_title_desc' => 'Buat pembayaran tunai untuk penjualan',
+            'box' => [
+                'customer' => 'Pelanggan',
+                'sales_order_detail' => 'Detail',
+                'shipping' => 'Pengiriman',
+                'transactions' => 'Transaksi',
+                'remarks' => 'Catatan',
+                'payment_history' => 'Catatan Pembayaran',
+                'payment' => 'Pembayaran'
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Produk',
+                        'header' => [
+                            'quantity' => 'Jumlah'
+                        ],
+                        'unit' => 'Satuan',
+                        'price_unit' => 'Harga Satuan',
+                        'total_price' => 'Total Harga'
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Jumlah Total',
+                        'paid_amount' => 'Total',
+                        'to_be_paid_amount' => 'Kurang'
+                    ],
+                ],
+                'payments' => [
+                    'header' => [
+                        'payment_type' => 'Tipe Pembayaran',
+                        'payment_date' => 'Tanggal Pembayaran',
+                        'payment_amount' => 'Jumlah Pembayaran',
+                        'payment_status' => 'Status Pembayaran'
+                    ]
+                ]
+            ],
         ]
     ],
 ];

@@ -8,9 +8,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\CashPayment;
 use App\Model\Customer;
 use App\Model\Item;
 use App\Model\Lookup;
+use App\Model\Payment;
 use App\Model\Product;
 use App\Model\ProductUnit;
 use App\Model\PurchaseOrder;
@@ -208,9 +210,44 @@ class SalesOrderController extends Controller
         return view('sales_order.payment_index', compact('salesOrders', 'soStatusDDL'));
     }
 
-    public function savePayment(Request $request, $id)
+    public function createCashPayment($id)
     {
+        Log::info('[SalesOrderController@createCashPayment]');
 
+        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
+            'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank', 'vendorTrucking',
+            'warehouse')->find($id);
+        $paymentTypeDLL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $cashPaymentStatusDLL = Lookup::where('category', '=', 'CASHPAYMENTSTATUS')->get()->pluck('description', 'code');
+
+        return view('sales_order.cash_payment', compact('currentSo', 'paymentTypeDLL', 'cashPaymentStatusDLL'));
+    }
+
+    public function saveCashPayment(Request $request, $id)
+    {
+        Log::info('[SalesOrderController@saveCashPayment]');
+
+        $cashPayment = new CashPayment();
+        $cashPayment->save();
+
+        $paymentParam = [
+            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
+            'total_amount' => $request->input('total_amount'),
+            'status' => Lookup::whereCode('CASHPAYMENTSTATUS.C')->first()->code,
+            'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
+        ];
+
+        $payment = Payment::create($paymentParam);
+
+        $cashPayment->payment()->save($payment);
+
+        $currentSo = SalesOrder::find($id);
+
+        $currentSo->payments()->save($payment);
+
+        $currentSo->updatePaymentStatus();
+
+        return redirect(route('db.so.payment.index'));
     }
 
     public function delete(Request $request, $id)

@@ -119,11 +119,69 @@ return [
                 'header' => [
                     'code' => 'Code',
                     'so_date' => 'Created Date',
-                    'supplier' => 'Customer',
-                    'shipping_date' => 'Shipping Date',
-                    'status' => 'Status'
+                    'customer' => 'Customer',
+                    'total' => 'Total Amount',
+                    'paid' => 'Paid Amount',
+                    'rest' => 'Rest Amount'
                 ]
             ]
+        ],
+        'cash' => [
+            'field' => [
+                'customer_type' => 'Type',
+                'customer_name' => 'Name',
+                'customer_details' => 'Details',
+                'shipping_date' => 'Date',
+                'warehouse' => 'Warehouse',
+                'vendor_trucking' => 'Vendor Trucking',
+                'payment_type' => 'Payment Type',
+                'payment_date' => 'Payment Date',
+                'payment_amount' => 'Payment Amount'
+            ],
+            'so_code' => 'Code',
+            'so_type' => 'Type',
+            'so_date' => 'Date',
+            'so_status' => 'Status',
+            'title' => 'Sales Order Cash Payment',
+            'page_title' => 'Sales Order Cash Payment',
+            'page_title_desc' => 'Create cash payment for sales order',
+            'box' => [
+                'customer' => 'Customer',
+                'sales_order_detail' => 'Detail',
+                'shipping' => 'Shipping',
+                'transactions' => 'Transaction',
+                'remarks' => 'Remarks',
+                'payment_history' => 'Payment History',
+                'payment' => 'Payment'
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Product',
+                        'header' => [
+                            'quantity' => 'Quantity'
+                        ],
+                        'unit' => 'UoM',
+                        'price_unit' => 'Price',
+                        'total_price' => 'Total Price'
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total Amount',
+                        'paid_amount' => 'Paid Amount',
+                        'to_be_paid_amount' => 'Rest Amount'
+                    ],
+                ],
+                'payments' => [
+                    'header' => [
+                        'payment_type' => 'Payment Type',
+                        'payment_date' => 'Payment Date',
+                        'payment_amount' => 'Payment Amount',
+                        'payment_status' => 'Payment Status'
+                    ]
+                ]
+            ],
         ]
     ],
 ];

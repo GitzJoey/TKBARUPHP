@@ -129,6 +129,26 @@ class PurchaseOrder extends Model
         return $this->morphMany('App\Model\Payment', 'payable');
     }
 
+    public function totalAmount()
+    {
+        return $this->items->map(function($item, $key){
+            return $item->price * $item->to_base_quantity;
+        })->sum();
+    }
+
+    public function totalAmountPaid()
+    {
+        return $this->payments->sum('total_amount');
+    }
+
+    public function updatePaymentStatus()
+    {
+        if($this->totalAmount() === $this->totalAmountPaid())
+            $this->status = "POSTATUS.C";
+
+        $this->save();
+    }
+
     public static function boot()
     {
         parent::boot();
