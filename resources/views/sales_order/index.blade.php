@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-code-fork fa-rotate-180 fa-fw"></span>&nbsp;@lang('sales_order.revise.index.page_title')
+    <span class="fa fa-code-fork fa-fw"></span>&nbsp;@lang('sales_order.revise.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('sales_order.revise.index.page_title_desc')

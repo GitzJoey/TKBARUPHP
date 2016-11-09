@@ -265,6 +265,36 @@ class CustomerController extends Controller
         return view('customer.confirmation.approval', compact('solist'));
     }
 
+    public function approval($id)
+    {
+        $so = SalesOrder::whereId($id)->first();
+
+        foreach ($so->items as $i) {
+            foreach ($i->delivers as $d) {
+                $d->netto = $d->brutto;
+                $d->base_netto = $d->base_brutto;
+                $d->tare - 0;
+                $d->updated_by = Auth::user()->id;
+                $d->remarks = 'Auto Approve By '.Auth::user()->name;
+                $d->save();
+            }
+        }
+
+        $so->status = 'SOSTATUS.WP';
+        $so->save();
+
+        return redirect()->route('db.customer.approval.index');
+    }
+
+    public function reject($id)
+    {
+        $so = SalesOrder::whereId($id)->first();
+
+
+
+        return redirect()->route('db.customer.approval.index');
+    }
+
     public function searchCustomers($param = "")
     {
         Log::info("CustomerController@searchCustomers\nparam : $param");

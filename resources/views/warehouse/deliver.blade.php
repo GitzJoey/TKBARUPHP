@@ -103,10 +103,10 @@
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.product_name')</th>
-                                                <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.unit')</th>
-                                                <th width="" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.brutto')</th>
-                                                <th width="">&nbsp;</th>
+                                                <th width="65%" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.product_name')</th>
+                                                <th width="15%" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.unit')</th>
+                                                <th width="15%" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.brutto')</th>
+                                                <th width="5%">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -169,7 +169,7 @@
                 $scope.outflow.delivers.push({
                     item: SO.items[i],
                     selected_unit: _.find(SO.items[i].product.product_units, getSelectedUnit(SO.items[i].selected_unit_id)),
-                    brutto: SO.items[i].quantity
+                    brutto: parseFloat(SO.items[i].quantity).toFixed(0)
                 });
             }
 

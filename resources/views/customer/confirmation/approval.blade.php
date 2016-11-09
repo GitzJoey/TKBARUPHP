@@ -30,9 +30,9 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th width="20%" class="text-center">@lang('customer.confirmation.approval.table.header.so')</th>
-                    <th width="75%" class="text-center" colspan="5">@lang('customer.confirmation.approval.table.header.items_detail')</th>
-                    <th width="5%" class="text-center">@lang('labels.ACTION')</th>
+                    <th width="25%" class="text-center">@lang('customer.confirmation.approval.table.header.so')</th>
+                    <th width="65%" class="text-center" colspan="5">@lang('customer.confirmation.approval.table.header.items_detail')</th>
+                    <th width="10%" class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 <tr>
                     <th class="text-center"></th>
@@ -47,21 +47,30 @@
                 <tbody>
                 @foreach ($solist as $key => $so)
                     <tr>
-                        <td class="text-center">{{ $so->code }}</td>
-                        <td class="text-center">
+                        <td>
+                            {{ $so->code }}<br/>
                             @foreach ($so->items as $i)
                                 {{ $i->delivers()->first()->deliver_date->format('d-m-Y') }}
                             @endforeach
+                            <br/>
                         </td>
-                        <td class="text-center"></td>
-                        <td class="text-center">
+                        <td>
                             @foreach ($so->items as $i)
                                 {{ $i->product()->first()->name }}<br/>
                             @endforeach
                         </td>
-                        <td class="text-center" width="20%">
+                        <td class="text-center">
+                            @foreach ($so->items as $i)
+                                {{ $i->brutto }}<br/>
+                            @endforeach
+                        </td>
+                        <td class="text-center">
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center valign-middle" width="20%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.customer.approval.approve', $so->hId()) }}"><span class="fa fa-check fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.customer.approval.reject', $so->hId()) }}"><span class="fa fa-danger fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.customer.approval.reject', $so->hId()) }}"><span class="fa fa-close fa-fw"></span></a>
                         </td>
                     </tr>
                 @endforeach

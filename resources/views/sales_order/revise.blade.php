@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('sales_order.revise.page_title')
+    <span class="fa fa-code-fork fa-fw"></span>&nbsp;@lang('sales_order.revise.page_title')
 @endsection
 @section('page_title_desc')
     @lang('sales_order.revise.page_title_desc')
@@ -290,7 +290,7 @@
                                             <td>
                                                 <input type="text" class="form-control text-right" name="price[]"
                                                        ng-model="item.price" data-parsley-required="true"
-                                                       data-parsley-type="number">
+                                                       data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number>
                                             </td>
                                             <td class="text-center">
                                                 @if($currentSo->status == 'SOSTATUS.WD')
@@ -367,7 +367,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soModule", []);
+        var app = angular.module("soModule", ['fcsa-number']);
         app.controller("soController", ['$scope', function ($scope) {
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
@@ -398,8 +398,8 @@
                     product: currentSo.items[i].product,
                     base_unit: _.find(currentSo.items[i].product.product_units, isBase),
                     selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
-                    quantity: currentSo.items[i].quantity,
-                    price: currentSo.items[i].price
+                    quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
+                    price: parseFloat(currentSo.items[i].price).toFixed(0)
                 });
             }
 
