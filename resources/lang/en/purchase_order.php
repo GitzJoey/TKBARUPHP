@@ -56,8 +56,9 @@ return [
                     'code' => 'Code',
                     'po_date' => 'Created Date',
                     'supplier' => 'Supplier',
-                    'shipping_date' => 'Shipping Date',
-                    'status' => 'Status'
+                    'total' => 'Total Amount',
+                    'paid' => 'Paid Amount',
+                    'rest' => 'Rest Amount'
                 ]
             ]
         ],
@@ -68,7 +69,10 @@ return [
                 'supplier_details' => 'Details',
                 'shipping_date' => 'Date',
                 'warehouse' => 'Warehouse',
-                'vendor_trucking' => 'Vendor Trucking'
+                'vendor_trucking' => 'Vendor Trucking',
+                'payment_type' => 'Payment Type',
+                'payment_date' => 'Payment Date',
+                'payment_amount' => 'Payment Amount'
             ],
             'po_code' => 'Code',
             'po_type' => 'Type',
@@ -82,7 +86,9 @@ return [
                 'purchase_order_detail' => 'Detail',
                 'shipping' => 'Shipping',
                 'transactions' => 'Transaction',
-                'remarks' => 'Remarks'
+                'remarks' => 'Remarks',
+                'payment_history' => 'Payment History',
+                'payment' => 'Payment'
             ],
             'table' => [
                 'item' => [
@@ -98,9 +104,19 @@ return [
                 ],
                 'total' => [
                     'body' => [
-                        'total' => 'Total Amount'
+                        'total' => 'Total Amount',
+                        'paid_amount' => 'Paid Amount',
+                        'to_be_paid_amount' => 'Rest Amount'
                     ],
                 ],
+                'payments' => [
+                    'header' => [
+                        'payment_type' => 'Payment Type',
+                        'payment_date' => 'Payment Date',
+                        'payment_amount' => 'Payment Amount',
+                        'payment_status' => 'Payment Status'
+                    ]
+                ]
             ],
         ]
     ],
