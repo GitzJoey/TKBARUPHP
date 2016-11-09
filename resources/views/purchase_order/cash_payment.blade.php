@@ -152,9 +152,7 @@
                             <label for="inputWarehouse"
                                    class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.warehouse')</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" readonly
-                                       value="{{ $currentPo->warehouse->name }}">
-                                <input type="hidden" name="warehouse_id" value="{{ $currentPo->warehouse->id }}">
+                                <input type="text" class="form-control" readonly value="{{ $currentPo->warehouse->name }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -163,8 +161,6 @@
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" readonly
                                        value="{{ empty($currentPo->vendorTrucking->name) ? '':$currentPo->vendorTrucking->name }}">
-                                <input type="hidden" name="vendor_trucking_id"
-                                       value="{{ empty($currentPo->vendorTrucking->id) ? '':$currentPo->vendorTrucking->id }}">
                             </div>
                         </div>
                     </div>
@@ -201,21 +197,16 @@
                                     </thead>
                                     <tbody>
                                     <tr ng-repeat="item in po.items">
-                                        <input type="hidden" name="item_id[]" ng-value="item.id">
-                                        <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                        <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
                                         <td class="valign-middle">@{{ item.product.name }}</td>
                                         <td>
                                             <input type="text" class="form-control text-right"
                                                    data-parsley-required="true" data-parsley-type="number"
                                                    name="quantity[]"
-                                                   ng-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}>
+                                                   ng-model="item.quantity" readonly>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" readonly
                                                    value="@{{ item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')' }}">
-                                            <input type="hidden" name="selected_unit_id[]"
-                                                   ng-value="item.selected_unit.unit.id">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
