@@ -50,9 +50,9 @@
                             @endif
                         </td>
                         <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
-                        <td class="text-center">{{ $so->totalAmount() }}</td>
-                        <td class="text-center">{{ $so->totalAmountPaid() }}</td>
-                        <td class="text-center">{{ $so->totalAmount() - $so->totalAmountPaid() }}</td>
+                        <td class="text-center">{{ number_format($so->totalAmount(), 2) }}</td>
+                        <td class="text-center">{{ number_format($so->totalAmountPaid(), 2) }}</td>
+                        <td class="text-center">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 2) }}</td>
                         <td class="text-center" width="20%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.cash', $so->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.transfer', $so->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>

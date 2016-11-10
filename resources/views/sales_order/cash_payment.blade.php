@@ -210,7 +210,7 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
-                                                   ng-model="item.price" data-parsley-required="true"
+                                                   ng-model="item.price" data-parsley-required="true" readonly
                                                    data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number>
                                         </td>
                                         <td class="text-center">
@@ -257,7 +257,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <textarea id="inputRemarks" name="remarks" class="form-control"
-                                                  rows="5">{{ $currentSo->remarks }}</textarea>
+                                                  rows="5" readonly>{{ $currentSo->remarks }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +290,7 @@
                                                 <td class="text-center">{{ $paymentTypeDLL[$payment->type] }}</td>
                                                 <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
                                                 <td class="text-center">{{ $cashPaymentStatusDLL[$payment->status] }}</td>
-                                                <td class="text-center">{{ $payment->total_amount }}</td>
+                                                <td class="text-center">{{ number_format($payment->total_amount, 2) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -304,14 +304,14 @@
                                     <tr>
                                         <td class="text-right">@lang('sales_order.payment.cash.table.total.body.paid_amount')</td>
                                         <td width="25%" class="text-right">
-                                            <span class="control-label-normal">{{ $currentSo->totalAmountPaid() }}</span>
+                                            <span class="control-label-normal">{{ number_format($currentSo->totalAmountPaid(), 2) }}</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-right">@lang('sales_order.payment.cash.table.total.body.to_be_paid_amount')</td>
                                         <td width="25%" class="text-right">
                                             <span class="control-label-normal">
-                                                {{ $currentSo->totalAmount() - $currentSo->totalAmountPaid()}}
+                                                {{ number_format($currentSo->totalAmount() - $currentSo->totalAmountPaid(), 2)}}
                                             </span>
                                         </td>
                                     </tr>

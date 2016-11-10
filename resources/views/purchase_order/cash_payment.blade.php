@@ -210,9 +210,8 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
-                                                   ng-model="item.price"
-                                                   data-parsley-required="true"
-                                                   data-parsley-type="number">
+                                                   ng-model="item.price" data-parsley-required="true" data-parsley-type="number"
+                                                   readonly>
                                         </td>
                                         <td class="text-center">
                                         </td>
