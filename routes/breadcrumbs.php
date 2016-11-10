@@ -35,6 +35,11 @@ Breadcrumbs::register('purchase_order_payment_cash', function ($breadcrumbs, $po
     $breadcrumbs->push('Cash Payment', route('db.po.payment.cash', $poId));
 });
 
+Breadcrumbs::register('purchase_order_payment_transfer', function ($breadcrumbs, $poId){
+    $breadcrumbs->parent('purchase_order_payment');
+    $breadcrumbs->push('Transfer Payment', route('db.po.payment.transfer', $poId));
+});
+
 Breadcrumbs::register('inflow', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Inflow', route('db.warehouse.inflow.index'));

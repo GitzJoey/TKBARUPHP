@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Bank;
 use App\Model\CashPayment;
 use App\Model\Item;
 use App\Model\Lookup;
@@ -197,10 +198,12 @@ class PurchaseOrderController extends Controller
         $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
             'vendorTrucking', 'warehouse')->find($id);
-        $paymentTypeDLL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
-        $cashPaymentStatusDLL = Lookup::where('category', '=', 'CASHPAYMENTSTATUS')->get()->pluck('description', 'code');
-
-        return view('purchase_order.cash_payment', compact('currentPo', 'paymentTypeDLL', 'cashPaymentStatusDLL'));
+        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRANSFERPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+            ->get()->pluck('description', 'code');
+        $paymentType = 'PAYMENTTYPE.C';
+        
+        return view('purchase_order.cash_payment', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType'));
     }
 
     public function saveCashPayment(Request $request, $id)
@@ -230,6 +233,49 @@ class PurchaseOrderController extends Controller
         return redirect(route('db.po.payment.index'));
     }
 
+    public function createTransferPayment($id)
+    {
+        Log::info('[PurchaseOrderController@createTransferPayment]');
+
+        $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
+            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
+            'vendorTrucking', 'warehouse')->find($id);
+        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $bankDDL = Bank::all(['id', 'name']);
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRANSFERPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+            ->get()->pluck('description', 'code');
+        $paymentType = 'PAYMENTTYPE.T';
+
+        return view('purchase_order.transfer_payment', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'bankDDL'));
+    }
+
+    public function saveTransferPayment(Request $request, $id)
+    {
+        Log::info('[PurchaseOrderController@saveTransferPayment]');
+
+        $cashPayment = new CashPayment();
+        $cashPayment->save();
+
+        $paymentParam = [
+            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
+            'total_amount' => $request->input('total_amount'),
+            'status' => Lookup::whereCode('CASHPAYMENTSTATUS.C')->first()->code,
+            'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
+        ];
+
+        $payment = Payment::create($paymentParam);
+
+        $cashPayment->payment()->save($payment);
+
+        $currentPo = PurchaseOrder::find($id);
+
+        $currentPo->payments()->save($payment);
+
+        $currentPo->updatePaymentStatus();
+
+        return redirect(route('db.po.payment.index'));
+    }
+    
     public function delete(Request $request, $id)
     {
         $po = PurchaseOrder::find($id);
