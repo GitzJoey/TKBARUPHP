@@ -51,7 +51,7 @@ class SupplierController extends Controller
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name', 'short_code', 'description', 'remarks']);
+        $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get();
 
         return view('supplier.create', compact('bankDDL', 'statusDDL', 'providerDDL', 'productList'));
     }
@@ -60,10 +60,6 @@ class SupplierController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
-            'tax_id' => 'required|string|max:255',
             'status' => 'required',
         ]);
 
@@ -110,12 +106,17 @@ class SupplierController extends Controller
             }
         }
 
+        for($i = 0; $i < count($request['productSelected']); $i++) {
+            $pr = Product::whereId($request['productSelected'][$i])->first();
+            $supplier->products()->save($pr);
+        }
+
         return redirect(route('db.master.supplier'));
     }
 
     public function edit($id)
     {
-        $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank')->find($id);
+        $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'products')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
@@ -164,6 +165,13 @@ class SupplierController extends Controller
 
                 $pa->phoneNumbers()->save($ph);
             }
+        }
+
+        $supplier->products()->detach();
+
+        for($i = 0; $i < count($request['productSelected']); $i++) {
+            $pr = Product::whereId($request['productSelected'][$i])->first();
+            $supplier->products()->save($pr);
         }
 
         $supplier->name = $request->input('name');

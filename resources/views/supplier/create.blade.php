@@ -213,33 +213,21 @@
                                             <thead>
                                             <tr>
                                                 <th></th>
-                                                <th class="text-center">@lang('supplier.create.table.header.type')</th>
-                                                <th class="text-center">@lang('supplier.create.table.header.name')</th>
-                                                <th class="text-center">@lang('supplier.create.table.header.short_code')</th>
-                                                <th class="text-center">@lang('supplier.create.table.header.description')</th>
-                                                <th class="text-center">@lang('supplier.create.table.header.remarks')</th>
+                                                <th class="text-center">@lang('supplier.create.table_prod.header.type')</th>
+                                                <th class="text-center">@lang('supplier.create.table_prod.header.name')</th>
+                                                <th class="text-center">@lang('supplier.create.table_prod.header.short_code')</th>
+                                                <th class="text-center">@lang('supplier.create.table_prod.header.description')</th>
+                                                <th class="text-center">@lang('supplier.create.table_prod.header.remarks')</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr ng-repeat="p in productList">
-                                                <td class="text-center">
-                                                    <input type="checkbox" name="productSelected[]">
-                                                </td>
-                                                <td>
-                                                    @{{ p.product_type_id }}
-                                                </td>
-                                                <td>
-                                                    @{{ p.name }}
-                                                </td>
-                                                <td>
-                                                    @{{ p.short_code }}
-                                                </td>
-                                                <td>
-                                                    @{{ p.description }}
-                                                </td>
-                                                <td>
-                                                    @{{ p.remarks }}
-                                                </td>
+                                                <td class="text-center"><input type="checkbox" name="productSelected[]" value="@{{ p.id }}"></td>
+                                                <td>@{{ p.type.name }}</td>
+                                                <td>@{{ p.name }}</td>
+                                                <td>@{{ p.short_code }}</td>
+                                                <td>@{{ p.description }}</td>
+                                                <td>@{{ p.remarks }}</td>
                                             </tr>
                                             </tbody>
                                         </table>

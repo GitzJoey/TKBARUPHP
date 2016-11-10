@@ -227,24 +227,12 @@
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="p in productList">
-                                                    <td class="text-center">
-                                                        <input type="checkbox" name="productSelected[]">
-                                                    </td>
-                                                    <td>
-                                                        @{{ p.product_type_id }}
-                                                    </td>
-                                                    <td>
-                                                        @{{ p.name }}
-                                                    </td>
-                                                    <td>
-                                                        @{{ p.short_code }}
-                                                    </td>
-                                                    <td>
-                                                        @{{ p.description }}
-                                                    </td>
-                                                    <td>
-                                                        @{{ p.remarks }}
-                                                    </td>
+                                                    <td class="text-center"><input type="checkbox" name="productSelected[]" ng-model="products.id" value="@{{ p.id }}"></td>
+                                                    <td>@{{ p.product_type_id }}</td>
+                                                    <td>@{{ p.name }}</td>
+                                                    <td>@{{ p.short_code }}</td>
+                                                    <td>@{{ p.description }}</td>
+                                                    <td>@{{ p.remarks }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -279,9 +267,10 @@
         app.controller("supplierController", ['$scope', function($scope) {
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
+            $scope.productList = JSON.parse('{!! htmlspecialchars_decode($productList) !!}');
             $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->bankAccounts)) ? '[]':htmlspecialchars_decode($supplier->bankAccounts) !!}');
             $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->profiles)) ? '[]':htmlspecialchars_decode($supplier->profiles) !!}');
-            $scope.productList = JSON.parse('{!! htmlspecialchars_decode($productList) !!}');
+            $scope.products = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->products)) ? '[]':htmlspecialchars_decode($supplier->products) !!}');
 
             $scope.toInt = function(val) {
                 console.log(val, parseInt(val,10));

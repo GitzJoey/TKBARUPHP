@@ -90,13 +90,13 @@ return [
                 'remarks' => '',
             ],
         ],
-        'table' => [
+        'table_prod' => [
             'header' => [
-                'type' => '',
-                'name' => '',
-                'short_code' => '',
-                'description' => '',
-                'remarks' => '',
+                'type' => 'Type',
+                'name' => 'Name',
+                'short_code' => 'Short Code',
+                'description' => 'Description',
+                'remarks' => 'Remarks',
             ],
         ],
     ],
