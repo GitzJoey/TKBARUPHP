@@ -121,9 +121,10 @@ class SupplierController extends Controller
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name', 'short_code', 'description', 'remarks']);
+        $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get();
+        $productSelected = array_fill_keys($supplier->products()->pluck('products.id')->toArray(),true);
 
-        return view('supplier.edit', compact('supplier', 'bankDDL', 'statusDDL', 'providerDDL', 'productList'));
+        return view('supplier.edit', compact('supplier', 'bankDDL', 'statusDDL', 'providerDDL', 'productList', 'productSelected'));
     }
 
     public function update($id, Request $request)
@@ -133,6 +134,8 @@ class SupplierController extends Controller
         if (!$supplier) {
             return redirect(route('db.master.supplier'));
         }
+
+        dd($request['productSelected']);
 
         $supplier->bankAccouns()->detach();
 

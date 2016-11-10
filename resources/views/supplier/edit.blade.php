@@ -227,8 +227,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="p in productList">
-                                                    <td class="text-center"><input type="checkbox" name="productSelected[]" ng-model="products.id" value="@{{ p.id }}"></td>
-                                                    <td>@{{ p.product_type_id }}</td>
+                                                    <td class="text-center"><input type="checkbox" name="productSelected[]" ng-model="productSelected[p.id]" value="@{{ p.id }}"></td>
+                                                    <td>@{{ p.type.name }}</td>
                                                     <td>@{{ p.name }}</td>
                                                     <td>@{{ p.short_code }}</td>
                                                     <td>@{{ p.description }}</td>
@@ -253,6 +253,7 @@
                         <div class="col-md-10 col-md-offset-2">
                             <a href="{{ route('db.master.supplier') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
                             <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+
                         </div>
                     </div>
                 </div>
@@ -270,7 +271,7 @@
             $scope.productList = JSON.parse('{!! htmlspecialchars_decode($productList) !!}');
             $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->bankAccounts)) ? '[]':htmlspecialchars_decode($supplier->bankAccounts) !!}');
             $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->profiles)) ? '[]':htmlspecialchars_decode($supplier->profiles) !!}');
-            $scope.products = JSON.parse('{!! empty(htmlspecialchars_decode($supplier->products)) ? '[]':htmlspecialchars_decode($supplier->products) !!}');
+            $scope.productSelected = JSON.parse('{!! json_encode($productSelected) !!}');
 
             $scope.toInt = function(val) {
                 console.log(val, parseInt(val,10));
