@@ -305,14 +305,14 @@
                                     <tr>
                                         <td class="text-right">@lang('purchase_order.payment.cash.table.total.body.paid_amount')</td>
                                         <td width="25%" class="text-right">
-                                            <span class="control-label-normal">{{ $currentPo->totalAmountPaid() }}</span>
+                                            <span class="control-label-normal">{{ number_format($currentPo->totalAmountPaid(), 2) }}</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-right">@lang('purchase_order.payment.cash.table.total.body.to_be_paid_amount')</td>
                                         <td width="25%" class="text-right">
                                             <span class="control-label-normal">
-                                                {{ $currentPo->totalAmount() - $currentPo->totalAmountPaid()}}
+                                                {{ number_format($currentPo->totalAmount() - $currentPo->totalAmountPaid(), 2) }}
                                             </span>
                                         </td>
                                     </tr>
