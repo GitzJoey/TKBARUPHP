@@ -1,6 +1,7 @@
 <?php
 
 use App\Model\Profile;
+use App\Model\Product;
 use App\Model\Supplier;
 use App\Model\BankAccount;
 use App\Model\PhoneNumber;
@@ -52,6 +53,8 @@ class SupplierTableSeeder extends Seeder
                     $pf->phoneNumbers()->save($phone);
                 }
             }
+
+            $supplier->products()->save(Product::whereId(1)->first());
         }
     }
 }
