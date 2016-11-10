@@ -16,6 +16,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
+            $table->string('type')->nullable();
             $table->date('payment_date')->nullable();
             $table->decimal('total_amount')->default(0);
             $table->string('status')->nullable();
