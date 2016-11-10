@@ -210,7 +210,7 @@
                                             <select id="inputProduct"
                                                     class="form-control"
                                                     ng-model="po.product"
-                                                    ng-options="product as product.name for product in productDDL track by product.id">
+                                                    ng-options="product as product.name for product in po.supplier.products track by product.id">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             </select>
                                         </div>
@@ -583,7 +583,6 @@
     <script type="application/javascript">
         var app = angular.module('poModule', ['fcsa-number']);
         app.controller('poController', ['$scope', function ($scope) {
-            $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
 

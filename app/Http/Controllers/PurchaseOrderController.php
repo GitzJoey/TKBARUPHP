@@ -130,12 +130,11 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@revise]');
 
         $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
-            'supplier.bankAccounts.bank', 'supplier.products', 'vendorTrucking', 'warehouse')->find($id);
-        $productDDL = Product::with('productUnits.unit')->get();
+            'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'vendorTrucking', 'warehouse')->find($id);
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
 
-        return view('purchase_order.revise', compact('currentPo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL'));
+        return view('purchase_order.revise', compact('currentPo', 'warehouseDDL', 'vendorTruckingDDL'));
     }
 
     public function saveRevision(Request $request, $id)
