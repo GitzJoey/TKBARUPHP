@@ -258,7 +258,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <textarea id="inputRemarks" name="remarks" class="form-control"
-                                                  rows="5">{{ $currentPo->remarks }}</textarea>
+                                                  rows="5" readonly>{{ $currentPo->remarks }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -291,7 +291,7 @@
                                                 <td class="text-center">{{ $paymentTypeDLL[$payment->type] }}</td>
                                                 <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
                                                 <td class="text-center">{{ $cashPaymentStatusDLL[$payment->status] }}</td>
-                                                <td class="text-center">{{ $payment->total_amount }}</td>
+                                                <td class="text-center">{{ number_format($payment->total_amount, 2) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
