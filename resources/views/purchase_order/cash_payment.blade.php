@@ -331,40 +331,46 @@
                     </div>
                     <div class="box-body">
                         <div class="row">
-                            <div class="form-group">
-                                <label for="inputPaymentType"
-                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_type')</label>
-                                <div class="col-sm-4">
-                                    <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.$paymentType)">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="inputPaymentDate"
-                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_date')</label>
-                                <div class="col-sm-4">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <input type="text" class="form-control" id="inputPaymentDate"
-                                               name="payment_date" data-parsley-required="true">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputPaymentType"
+                                           class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_type')</label>
+                                    <div class="col-sm-4">
+                                        <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.$paymentType)">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group">
-                                <label for="inputPaymentAmount"
-                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_amount')</label>
-                                <div class="col-sm-4">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            Rp
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputPaymentDate"
+                                           class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_date')</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control" id="inputPaymentDate"
+                                                   name="payment_date" data-parsley-required="true">
                                         </div>
-                                        <input type="text" class="form-control" id="inputPaymentAmount"
-                                               name="total_amount" data-parsley-required="true">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputPaymentAmount"
+                                           class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_amount')</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                Rp
+                                            </div>
+                                            <input type="text" class="form-control" id="inputPaymentAmount"
+                                                   name="total_amount" data-parsley-required="true">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
