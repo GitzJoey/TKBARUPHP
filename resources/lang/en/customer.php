@@ -193,8 +193,11 @@ return [
             ],
             'table' => [
                 'header' => [
-                    'so' => 'Sales Order',
-                    'items_detail' => 'Items',
+                    'so_code' => 'Sales Code',
+                    'shipping_date' => 'Shipping Date',
+                    'deliver_date' => 'Deliver Date',
+                    'confirm_receive_date' => 'Confirm Receive Date',
+                    'status' => 'Status',
                     'items' => [
                         'product_name' => 'Product Name',
                         'brutto' => 'Brutto',
