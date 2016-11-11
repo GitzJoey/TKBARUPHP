@@ -112,7 +112,7 @@ return [
                 'name' => '',
                 'address' => '',
                 'tax_id' => '',
-                'phone' => '',
+                'status' => '',
                 'remarks' => '',
             ],
         ],

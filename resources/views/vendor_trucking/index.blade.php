@@ -44,7 +44,7 @@
                             <td>{{ $item->tax_id }}</td>
                             <td class="text-center">@lang('lookup.' . $item->status)</td>
                             <td>{{ $item->remarks }}</td>
-                            <td class="text-center" width="20%">
+                            <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.master.vendor.trucking.show', $item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.master.vendor.trucking.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.vendor.trucking.delete', $item->hId()], 'style'=>'display:inline'])  !!}

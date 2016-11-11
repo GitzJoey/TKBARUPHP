@@ -57,7 +57,7 @@
                             <td class="text-center">@lang('lookup.' . $item->is_default )</td>
                             <td class="text-center">@lang('lookup.' . $item->status)</td>
                             <td>{{ $item->remarks }}</td>
-                            <td class="text-center" width="20%">
+                            <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.admin.store.show', $item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.admin.store.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.store.delete', $item->hId()], 'style'=>'display:inline'])  !!}

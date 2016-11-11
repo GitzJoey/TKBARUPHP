@@ -42,7 +42,7 @@
                         <td>{{ $phoneProvider->prefix }}</td>
                         <td>@lang('lookup.'.$phoneProvider->status)</td>
                         <td>{{ $phoneProvider->remarks }}</td>
-                        <td class="text-center" width="20%">
+                        <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.admin.phone_provider.show', $phoneProvider->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.admin.phone_provider.edit', $phoneProvider->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.phone_provider.delete', $phoneProvider->hId()], 'style'=>'display:inline'])  !!}

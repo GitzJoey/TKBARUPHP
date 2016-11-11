@@ -40,7 +40,7 @@
                             <td>{{ $item->short_code }}</td>
                             <td>{{ $item->description }}</td>
                             <td class="text-center">@lang('lookup.' . $item->status)</td>
-                            <td class="text-center" width="20%">
+                            <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.master.producttype.show', $item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.master.producttype.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.producttype.delete', $item->hId()], 'style'=>'display:inline'])  !!}

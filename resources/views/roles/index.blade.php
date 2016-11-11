@@ -44,7 +44,7 @@
                                 @endforeach
                             </select>
                         </td>
-                        <td class="text-center" width="20%">
+                        <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.admin.roles.show', $role->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.admin.roles.edit', $role->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.roles.delete', $role->hId()], 'style'=>'display:inline'])  !!}

@@ -71,7 +71,7 @@ return [
                 'name' => 'Nama',
                 'address' => 'Alamat',
                 'tax_id' => 'NPWP',
-                'phone' => 'Telepon',
+                'status' => 'Status',
                 'remarks' => 'Keterangan',
             ],
         ],

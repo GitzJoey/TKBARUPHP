@@ -32,7 +32,7 @@
                     <th class="text-center">@lang('warehouse.index.table.header.phone_num')</th>
                     <th class="text-center">@lang('warehouse.index.table.header.status')</th>
                     <th class="text-center">@lang('warehouse.index.table.header.remarks')</th>
-                    <th class="text-center">&nbsp;</th>
+                    <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,7 +43,7 @@
                         <td class="text-center">{{ $w->phone_num }}</td>
                         <td class="text-center">@lang('lookup.' . $w->status)</td>
                         <td>{{ $w->remarks }}</td>
-                        <td class="text-center" width="20%">
+                        <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.master.warehouse.show', $w->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.master.warehouse.edit', $w->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.warehouse.delete', $w->hId()], 'style'=>'display:inline'])  !!}

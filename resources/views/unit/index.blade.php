@@ -40,7 +40,7 @@
                             <td>{{ $unit->symbol }}</td>
                             <td>@lang('lookup.'.$unit->status)</td>
                             <td>{{ $unit->remarks }}</td>
-                            <td class="text-center" width="20%">
+                            <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.admin.unit.show', $unit->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.admin.unit.edit', $unit->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.unit.delete', $unit->hId()], 'style'=>'display:inline'])  !!}

@@ -49,14 +49,14 @@
                             </td>
                             <td>{{ $item->store->name }}</td>
                             <td>@lang('lookup.'.$item->userDetail()->pluck('type')->first())</td>
-                            <td class="text-center">
+                            <td class="text-center" width="10%">
                                 @if(!is_null($item->userDetail()->pluck('allow_login')->first()))
                                     <span class="fa fa-check-square-o fa-fw"></span>
                                 @else
                                     <span class="fa fa-square-o fa-fw"></span>
                                 @endif
                             </td>
-                            <td class="text-center" width="20%">
+                            <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.admin.user.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.user.delete', $item->hId()], 'style'=>'display:inline'])  !!}

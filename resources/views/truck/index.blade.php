@@ -42,7 +42,7 @@
                         <td>{{ $truck->driver }}</td>
                         <td>@lang('lookup.' . $truck->status)</td>
                         <td>{{ $truck->remarks }}</td>
-                        <td class="text-center" width="20%">
+                        <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.master.truck.show', $truck->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.master.truck.edit', $truck->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.truck.delete', $truck->hId()], 'style'=>'display:inline'])  !!}

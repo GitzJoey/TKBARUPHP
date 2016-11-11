@@ -33,7 +33,7 @@
                     <th class="text-center">@lang('bank.index.table.header.branch_code')</th>
                     <th class="text-center">@lang('bank.index.table.header.status')</th>
                     <th class="text-center">@lang('bank.index.table.header.remarks')</th>
-                    <th class="text-center">&nbsp;</th>
+                    <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,7 +45,7 @@
                         <td class="text-center">{{ $bank->branch_code }}</td>
                         <td class="text-center">@lang('lookup.' . $bank->status)</td>
                         <td>{{ $bank->remarks }}</td>
-                        <td class="text-center" width="20%">
+                        <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.master.bank.show', $bank->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.master.bank.edit', $bank->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.bank.delete', $bank->hId()], 'style'=>'display:inline'])  !!}

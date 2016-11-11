@@ -71,7 +71,7 @@ return [
                 'name' => 'Name',
                 'address' => 'Address',
                 'tax_id' => 'Tax ID',
-                'phone' => 'Phone',
+                'status' => 'Status',
                 'remarks' => 'Remarks',
             ],
         ],

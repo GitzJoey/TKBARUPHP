@@ -38,13 +38,13 @@
                 <tbody>
                 @foreach ($productlist as $key => $product)
                     <tr>
-                        <td>{{ $product->type->name }}</td>
-                        <td>{{ $product->name }}</td>
-                        <td class="text-center">{{ $product->short_code }}</td>
-                        <td>{{ $product->description }}</td>
-                        <td class="text-center">@lang('lookup.'.$product->status)</td>
-                        <td>{{ $product->remarks }}</td>
-                        <td class="text-center" width="20%">
+                        <td width="10%">{{ $product->type->name }}</td>
+                        <td width="20%">{{ $product->name }}</td>
+                        <td width="10%" class="text-center">{{ $product->short_code }}</td>
+                        <td width="20%">{{ $product->description }}</td>
+                        <td width="10%" class="text-center">@lang('lookup.'.$product->status)</td>
+                        <td width="15%">{{ $product->remarks }}</td>
+                        <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.master.product.show', $product->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.master.product.edit', $product->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.product.delete', $product->hId()], 'style'=>'display:inline'])  !!}
