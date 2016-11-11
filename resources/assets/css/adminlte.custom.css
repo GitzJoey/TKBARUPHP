@@ -34,3 +34,7 @@ table td span.help-block {
 ol.breadcrumb {
     margin-right: 20px;
 }
+
+.parsley-asterisk {
+    color: red;
+}

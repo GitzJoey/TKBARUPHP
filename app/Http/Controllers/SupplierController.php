@@ -135,9 +135,7 @@ class SupplierController extends Controller
             return redirect(route('db.master.supplier'));
         }
 
-        dd($request['productSelected']);
-
-        $supplier->bankAccouns()->detach();
+        $supplier->bankAccounts()->detach();
 
         for ($i = 0; $i < count($request['bank']); $i++) {
             $ba = new BankAccount();

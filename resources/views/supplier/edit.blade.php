@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('supplier.edit.header.title')</h3>
         </div>
-        {!! Form::model($supplier, ['method' => 'PATCH','route' => ['db.master.supplier.edit', $supplier->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($supplier, ['id' => 'supplierForm', 'method' => 'PATCH', 'route' => ['db.master.supplier.edit', $supplier->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
             <div ng-app="supplierModule" ng-controller="supplierController">
                 <div class="box-body">
@@ -35,18 +35,18 @@
                         <div class="col-md-12">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#tab_supplier" class="active" data-toggle="tab">@lang('supplier.edit.tab.supplier')</a></li>
-                                    <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.edit.tab.pic')</a></li>
-                                    <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.edit.tab.bank_account')</a></li>
+                                    <li><a href="#tab_supplier" class="active" data-toggle="tab">@lang('supplier.edit.tab.supplier')&nbsp;<span id="suppDataTabError" class="parsley-asterisk hidden">*</span></a></li>
+                                    <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.edit.tab.pic')&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
+                                    <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
                                     <li><a href="#tab_product" data-toggle="tab">@lang('supplier.edit.tab.product')</a></li>
-                                    <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.edit.tab.settings')</a></li>
+                                    <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.edit.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_supplier">
                                         <div class="form-group">
                                             <label for="inputName" class="col-sm-2 control-label">@lang('supplier.field.name')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputName" name="name" type="text" class="form-control" value="{{ $supplier->name }}" placeholder="@lang('supplier.field.name')" data-parsley-required="true">
+                                                <input id="inputName" name="name" type="text" class="form-control" value="{{ $supplier->name }}" placeholder="@lang('supplier.field.name')" data-parsley-required="true" data-parsley-group="tab_supp">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -77,7 +77,7 @@
                                         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                                             <label for="inputStatus" class="col-sm-2 control-label">@lang('supplier.field.status')</label>
                                             <div class="col-sm-10">
-                                                {{ Form::select('status', $statusDDL, $supplier->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                                                {{ Form::select('status', $statusDDL, $supplier->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-group' => 'tab_supp')) }}
                                                 <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                                             </div>
                                         </div>
@@ -109,13 +109,13 @@
                                                             <div class="form-group">
                                                                 <label for="inputFirstName" class="col-sm-2 control-label">@lang('supplier.field.first_name')</label>
                                                                 <div class="col-sm-10">
-                                                                    <input id="inputFirstName" type="text" name="first_name[]" class="form-control" ng-model="profile.first_name" placeholder="@lang('supplier.field.first_name')">
+                                                                    <input id="inputFirstName" type="text" name="first_name[]" class="form-control" ng-model="profile.first_name" placeholder="@lang('supplier.field.first_name')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="inputLastName" class="col-sm-2 control-label">@lang('supplier.field.last_name')</label>
                                                                 <div class="col-sm-10">
-                                                                    <input id="inputLastName" type="text" name="last_name[]" class="form-control" ng-model="profile.last_name" placeholder="@lang('supplier.field.last_name')">
+                                                                    <input id="inputLastName" type="text" name="last_name[]" class="form-control" ng-model="profile.last_name" placeholder="@lang('supplier.field.last_name')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -127,7 +127,7 @@
                                                             <div class="form-group">
                                                                 <label for="inputICNum" class="col-sm-2 control-label">@lang('supplier.field.ic_num')</label>
                                                                 <div class="col-sm-10">
-                                                                    <input id="inputICNum" type="text" name="ic_num[]" class="form-control" ng-model="profile.ic_num" placeholder="@lang('supplier.field.ic_num')">
+                                                                    <input id="inputICNum" type="text" name="ic_num[]" class="form-control" ng-model="profile.ic_num" placeholder="@lang('supplier.field.ic_num')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -149,11 +149,12 @@
                                                                                         ng-init="phone_provider = { id: ph.phone_provider_id }"
                                                                                         ng-model="phone_provider"
                                                                                         ng-change="ph.phone_provider_id = phone_provider.id"
-                                                                                        ng-options="p as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
+                                                                                        ng-options="p as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id"
+                                                                                        data-parsley-required="true" data-parsley-group="tab_pic">
                                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 </select>
                                                                             </td>
-                                                                            <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number"></td>
+                                                                            <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
                                                                             <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="ph.remarks"></td>
                                                                             <td class="text-center">
                                                                                 <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
@@ -195,12 +196,13 @@
                                                             ng-init="bank_list = { id: bank.bank_id }"
                                                             ng-model="bank_list"
                                                             ng-change="bank.bank_id = bank_list.id"
-                                                            ng-options="b as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id">
+                                                            ng-options="b as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
+                                                            data-parsley-required="true" data-parsley-group="tab_bank">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number">
+                                                    <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
@@ -241,7 +243,7 @@
                                         <div class="form-group">
                                             <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" value="{{ $supplier->payment_due_day }}" class="form-control">
+                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" value="{{ $supplier->payment_due_day }}" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
                                             </div>
                                         </div>
                                     </div>
@@ -253,7 +255,6 @@
                         <div class="col-md-10 col-md-offset-2">
                             <a href="{{ route('db.master.supplier') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
                             <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-
                         </div>
                     </div>
                 </div>
@@ -325,5 +326,37 @@
                 $scope.profiles[parentIndex].phone_numbers.splice(idx, 1);
             };
         }]);
+
+        $(document).ready(function() {
+            $.listen('parsley:field:validate', function() {
+                validateFront();
+            });
+
+            var validateFront = function () {
+                if (true === $('#supplierForm').parsley().isValid("tab_supp", false)) {
+                    $('#suppDataTabError').addClass('hidden');
+                } else {
+                    $('#suppDataTabError').removeClass('hidden');
+                }
+
+                if (true === $('#supplierForm').parsley().isValid("tab_pic", false)) {
+                    $('#picTabError').addClass('hidden');
+                } else {
+                    $('#picTabError').removeClass('hidden');
+                }
+
+                if (true === $('#supplierForm').parsley().isValid("tab_bank", false)) {
+                    $('#bankAccountTabError').addClass('hidden');
+                } else {
+                    $('#bankAccountTabError').removeClass('hidden');
+                }
+
+                if (true === $('#supplierForm').parsley().isValid("tab_setting", false)) {
+                    $('#settingsTabError').addClass('hidden');
+                } else {
+                    $('#settingsTabError').removeClass('hidden');
+                }
+            };
+        });
     </script>
 @endsection

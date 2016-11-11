@@ -32,6 +32,7 @@ class CustomerTableSeeder extends Seeder
             $customer->fax_num = '0000000000';
             $customer->tax_id = '123-123-123-123-123';
             $customer->price_level_id = 1;
+            $customer->status = 'STATUS.ACTIVE';
             $customer->store_id = 1;
 
             $customer->save();
