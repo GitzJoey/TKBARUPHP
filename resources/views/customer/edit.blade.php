@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('customer.edit.header.title')</h3>
         </div>
-        {!! Form::model($customer, ['method' => 'PATCH','route' => ['db.master.customer.edit', $customer->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($customer, ['id' => 'customerForm', 'method' => 'PATCH', 'route' => ['db.master.customer.edit', $customer->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
             <div ng-app="customerModule" ng-controller="customerController">
                 <div class="box-body">
@@ -35,17 +35,17 @@
                         <div class="col-md-12">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#tab_customer" data-toggle="tab">@lang('customer.edit.tab.customer')</a></li>
-                                    <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')</a></li>
-                                    <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.edit.tab.bank_account')</a></li>
-                                    <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')</a></li>
+                                    <li class="active"><a href="#tab_customer" data-toggle="tab">@lang('customer.edit.tab.customer')&nbsp;<span id="custDataTabError" class="parsley-asterisk hidden">*</span></a></li>
+                                    <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
+                                    <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
+                                    <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_customer">
                                         <div class="form-group">
                                             <label for="inputName" class="col-sm-2 control-label">@lang('customer.field.name')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputName" name="name" type="text" class="form-control" value="{{ $customer->name }}" placeholder="@lang('customer.field.name')" data-parsley-required="true">
+                                                <input id="inputName" name="name" type="text" class="form-control" value="{{ $customer->name }}" placeholder="@lang('customer.field.name')" data-parsley-required="true" data-parsley-group="tab_cust">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@
                                         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                                             <label for="inputStatus" class="col-sm-2 control-label">@lang('customer.field.status')</label>
                                             <div class="col-sm-10">
-                                                {{ Form::select('status', $statusDDL, $customer->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                                                {{ Form::select('status', $statusDDL, $customer->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-group' => 'tab_cust')) }}
                                                 <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                                             </div>
                                         </div>
@@ -108,13 +108,13 @@
                                                             <div class="form-group">
                                                                 <label for="inputFirstName" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
                                                                 <div class="col-sm-10">
-                                                                    <input id="inputFirstName" type="text" name="first_name[]" class="form-control" ng-model="profile.first_name" placeholder="@lang('customer.field.first_name')">
+                                                                    <input id="inputFirstName" type="text" name="first_name[]" class="form-control" ng-model="profile.first_name" placeholder="@lang('customer.field.first_name')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="inputLastName" class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
                                                                 <div class="col-sm-10">
-                                                                    <input id="inputLastName" type="text" name="last_name[]" class="form-control" ng-model="profile.last_name" placeholder="@lang('customer.field.last_name')">
+                                                                    <input id="inputLastName" type="text" name="last_name[]" class="form-control" ng-model="profile.last_name" placeholder="@lang('customer.field.last_name')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -126,7 +126,7 @@
                                                             <div class="form-group">
                                                                 <label for="inputICNum" class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
                                                                 <div class="col-sm-10">
-                                                                    <input id="inputICNum" type="text" name="ic_num[]" class="form-control" ng-model="profile.ic_num" placeholder="@lang('customer.field.ic_num')">
+                                                                    <input id="inputICNum" type="text" name="ic_num[]" class="form-control" ng-model="profile.ic_num" placeholder="@lang('customer.field.ic_num')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -148,11 +148,12 @@
                                                                                         ng-init="phone_provider = { id: ph.phone_provider_id }"
                                                                                         ng-model="phone_provider"
                                                                                         ng-change="ph.phone_provider_id = phone_provider.id"
-                                                                                        ng-options="p as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id">
+                                                                                        ng-options="p as p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id"
+                                                                                        data-parsley-required="true" data-parsley-group="tab_pic">
                                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 </select>
                                                                             </td>
-                                                                            <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number"></td>
+                                                                            <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
                                                                             <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="ph.remarks"></td>
                                                                             <td class="text-center">
                                                                                 <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
@@ -178,101 +179,47 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="tab_bank_account">
-                                        <div class="box-group" id="accordion_bankaccount">
-                                            <div class="panel box box-default">
-                                                <div class="box-header with-border">
-                                                    <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseBankAccountLists" data-toggle="collapse" data-parent="#accordion_bankaccount">
-                                                            @lang('customer.edit.tab.header.bank_lists')
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="panel-collapse collapse" id="collapseBankAccountLists" aria-expanded="false">
-                                                    <div class="box-body">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                            <tr>
-                                                                <th class="text-center">@lang('customer.edit.table_bank.header.bank')</th>
-                                                                <th class="text-center">@lang('customer.edit.table_bank.header.account_number')</th>
-                                                                <th class="text-center">@lang('customer.edit.table_bank.header.remarks')</th>
-                                                                <th class="text-center">@lang('labels.ACTION')</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr ng-repeat="bank in banks">
-                                                                <td>
-                                                                    <div ng-repeat="b in bankDDL | filter:{'id': bank.bank_id }:true">
-                                                                        @{{ b.name }}&nbsp;(@{{ b.short_name }})
-                                                                    </div>
-                                                                    <input type="hidden" name="bank[]" value="@{{ bank.bank_id }}">
-                                                                </td>
-                                                                <td>
-                                                                    @{{ bank.account_number }}
-                                                                    <input type="hidden" name="account_number[]" value="@{{ bank.account_number }}">
-                                                                </td>
-                                                                <td>
-                                                                    @{{ bank.remarks }}
-                                                                    <input type="hidden" name="bank_remarks[]" value="@{{ bank.remarks }}">
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel box box-default">
-                                                <div class="box-header with-border">
-                                                    <h4 class="box-title">
-                                                        <a class="collapsed" aria-expanded="false" href="#collapseBankAccountInputs" data-toggle="collapse" data-parent="#accordion_bankaccount">
-                                                            @lang('customer.edit.tab.header.bank_inputs')
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div class="panel-collapse collapse" id="collapseBankAccountInputs" aria-expanded="false">
-                                                    <div class="box-body">
-                                                        <div class="form-group">
-                                                            <label for="inputBank" class="col-sm-2 control-label">@lang('customer.field.bank')</label>
-                                                            <div class="col-sm-10">
-                                                                <select id="inputBank" class="form-control"
-                                                                        ng-model="inputBank.bank"
-                                                                        ng-options="b.name + ' (' + b.short_name + ')' for b in bankDDL">
-                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputBankAccount" class="col-sm-2 control-label">@lang('customer.field.bank_account')</label>
-                                                            <div class="col-sm-10">
-                                                                <input id="inputBankAccount" type="text" class="form-control" ng-model="inputBank.bank_account" placeholder="@lang('customer.field.bank_account')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputRemarks" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
-                                                            <div class="col-sm-10">
-                                                                <input id="inputRemarks" type="text" class="form-control" ng-model="inputBank.remarks" placeholder="@lang('customer.field.remarks')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputBankButtons" class="col-sm-2 control-label">&nbsp;</label>
-                                                            <div class="col-sm-10">
-                                                                <button class="btn btn-xs btn-default" type="button" ng-click="resetInputBank()">@lang('buttons.reset_button')</button>
-                                                                <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
+                                                <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
+                                                <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
+                                                <th class="text-center">@lang('labels.ACTION')</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="bank in banks">
+                                                <td>
+                                                    <select class="form-control"
+                                                            name="bank[]"
+                                                            ng-model="bank.bank_id"
+                                                            ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
+                                                            data-parsley-required="true" data-parsley-group="tab_bank">
+                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
                                     </div>
                                     <div class="tab-pane" id="tab_settings">
                                         <div class="form-group">
                                             <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
                                             <div class="col-sm-10">
                                                 <select name="price_level" class="form-control" ng-model="pricelevel"
-                                                        ng-options="pp.name + ' (' + pp.description + ')' for pp in pricelevelDDL track by pp.id">
+                                                        ng-options="pp.name + ' (' + pp.description + ')' for pp in pricelevelDDL track by pp.id"
+                                                        data-parsley-required="true" data-parsley-group="tab_setting">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                 </select>
                                             </div>
@@ -280,7 +227,7 @@
                                         <div class="form-group">
                                             <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" value="{{ $customer->payment_due_day }}" class="form-control">
+                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" value="{{ $customer->payment_due_day }}" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
                                             </div>
                                         </div>
                                     </div>
@@ -312,10 +259,9 @@
 
             $scope.addNewBank = function() {
                 $scope.banks.push({
-                    'bank_id': $scope.inputBank.bank.id,
-                    'bank_name': $scope.inputBank.bank.name + ' (' + $scope.inputBank.bank.short_name + ')',
-                    'account_number': $scope.inputBank.bank_account,
-                    'remarks': $scope.inputBank.remarks
+                    'bank_id': '',
+                    'account_number': '',
+                    'remarks': ''
                 });
             };
 
@@ -358,5 +304,37 @@
                 $scope.profiles[parentIndex].phone_numbers.splice(idx, 1);
             };
         }]);
+
+        $(document).ready(function() {
+            $.listen('parsley:field:validate', function() {
+                validateFront();
+            });
+
+            var validateFront = function () {
+                if (true === $('#customerForm').parsley().isValid("tab_cust", false)) {
+                    $('#custDataTabError').addClass('hidden');
+                } else {
+                    $('#custDataTabError').removeClass('hidden');
+                }
+
+                if (true === $('#customerForm').parsley().isValid("tab_pic", false)) {
+                    $('#picTabError').addClass('hidden');
+                } else {
+                    $('#picTabError').removeClass('hidden');
+                }
+
+                if (true === $('#customerForm').parsley().isValid("tab_bank", false)) {
+                    $('#bankAccountTabError').addClass('hidden');
+                } else {
+                    $('#bankAccountTabError').removeClass('hidden');
+                }
+
+                if (true === $('#customerForm').parsley().isValid("tab_setting", false)) {
+                    $('#settingsTabError').addClass('hidden');
+                } else {
+                    $('#settingsTabError').removeClass('hidden');
+                }
+            };
+        });
     </script>
 @endsection

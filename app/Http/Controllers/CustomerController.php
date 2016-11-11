@@ -58,9 +58,7 @@ class CustomerController extends Controller
     {
         $validator = Validator::make($data->all(), [
             'name' => 'required|string|max:255',
-            'address' => 'required|string',
-            'city' => 'required|string|max:255',
-            'tax_id' => 'required|string|max:255',
+            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -76,6 +74,7 @@ class CustomerController extends Controller
             $customer->remarks = $data['remarks'];
             $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
             $customer->price_level_id = $data['price_level'];
+            $customer->status = $data['status'];
 
             $customer->save();
 
@@ -171,6 +170,7 @@ class CustomerController extends Controller
         $customer->remarks = $data['remarks'];
         $customer->price_level_id = empty($data['price_level']) ? 0 : $data['price_level'];
         $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
+        $customer->status = $data['status'];
 
         $customer->save();
 
