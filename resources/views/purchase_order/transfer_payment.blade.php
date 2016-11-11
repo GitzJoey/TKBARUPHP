@@ -1,17 +1,17 @@
 @extends('layouts.adminlte.master')
 
 @section('title')
-    @lang('purchase_order.payment.cash.title')
+    @lang('purchase_order.payment.transfer.title')
 @endsection
 
 @section('page_title')
-    <span class="fa fa-money fa-fw"></span>&nbsp;@lang('purchase_order.payment.cash.page_title')
+    <span class="fa fa-money fa-fw"></span>&nbsp;@lang('purchase_order.payment.transfer.page_title')
 @endsection
 @section('page_title_desc')
-    @lang('purchase_order.payment.cash.page_title_desc')
+    @lang('purchase_order.payment.transfer.page_title_desc')
 @endsection
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('purchase_order_payment_cash', $currentPo->hId()) !!}
+    {!! Breadcrumbs::render('purchase_order_payment_transfer', $currentPo->hId()) !!}
 @endsection
 
 @section('content')
@@ -27,18 +27,18 @@
     @endif
 
     <div ng-app="poModule" ng-controller="poController">
-        {!! Form::model($currentPo, ['method' => 'POST','route' => ['db.po.payment.cash', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($currentPo, ['method' => 'POST','route' => ['db.po.payment.transfer', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         {{ csrf_field() }}
         <div class="row">
             <div class="col-md-5">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.supplier')</h3>
+                        <h3 class="box-title">@lang('purchase_order.payment.transfer.box.supplier')</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label for="inputSupplierType"
-                                   class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.supplier_type')</label>
+                                   class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.supplier_type')</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" readonly
                                        value="@lang('lookup.'.$currentPo->supplier_type)">
@@ -47,7 +47,7 @@
                         @if($currentPo->supplier_type == 'SUPPLIERTYPE.R')
                             <div class="form-group">
                                 <label for="inputSupplierId"
-                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.supplier_name')</label>
+                                       class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.supplier_name')</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" readonly
                                            value="{{ $currentPo->supplier->name }}">
@@ -61,7 +61,7 @@
                         @else
                             <div class="form-group">
                                 <label for="inputSupplierName"
-                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.supplier_name')</label>
+                                       class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.supplier_name')</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly
                                            value="{{ $currentPo->walk_in_supplier }}">
@@ -69,7 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputSupplierDetails"
-                                       class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.supplier_details')</label>
+                                       class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.supplier_details')</label>
                                 <div class="col-sm-10">
                                         <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_details }}
                                         </textarea>
@@ -82,19 +82,19 @@
             <div class="col-md-4">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.purchase_order_detail')</h3>
+                        <h3 class="box-title">@lang('purchase_order.payment.transfer.box.purchase_order_detail')</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label for="inputPoCode"
-                                   class="col-sm-2 control-label">@lang('purchase_order.payment.cash.po_code')</label>
+                                   class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.po_code')</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" readonly value="{{ $currentPo->code }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPoType"
-                                   class="col-sm-2 control-label">@lang('purchase_order.payment.cash.po_type')</label>
+                                   class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.po_type')</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" readonly
                                        value="@lang('lookup.'.$currentPo->po_type)">
@@ -102,7 +102,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputPoDate"
-                                   class="col-sm-2 control-label">@lang('purchase_order.payment.cash.po_date')</label>
+                                   class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.po_date')</label>
                             <div class="col-sm-10">
                                 <div class="input-group date">
                                     <div class="input-group-addon">
@@ -115,7 +115,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputPoStatus"
-                                   class="col-sm-2 control-label">@lang('purchase_order.payment.cash.po_status')</label>
+                                   class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.po_status')</label>
                             <div class="col-sm-10">
                                 <label class="control-label control-label-normal">@lang('lookup.'.$currentPo->status)</label>
                             </div>
@@ -131,33 +131,33 @@
             <div class="col-md-9">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.shipping')</h3>
+                        <h3 class="box-title">@lang('purchase_order.payment.transfer.box.shipping')</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label for="inputShippingDate"
-                                   class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.shipping_date')</label>
+                                   class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.shipping_date')</label>
                             <div class="col-sm-5">
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-                                        <input type="text" class="form-control" name="shipping_date" readonly
-                                               value="{{ $currentPo->shipping_date->format('d-m-Y') }}"
-                                               data-parsley-required="true">
+                                    <input type="text" class="form-control" name="shipping_date" readonly
+                                           value="{{ $currentPo->shipping_date->format('d-m-Y') }}"
+                                           data-parsley-required="true">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputWarehouse"
-                                   class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.warehouse')</label>
+                                   class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.warehouse')</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" readonly value="{{ $currentPo->warehouse->name }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputVendorTrucking"
-                                   class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.vendor_trucking')</label>
+                                   class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.vendor_trucking')</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" readonly
                                        value="{{ empty($currentPo->vendorTrucking->name) ? '':$currentPo->vendorTrucking->name }}">
@@ -175,7 +175,7 @@
             <div class="col-md-11">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.transactions')</h3>
+                        <h3 class="box-title">@lang('purchase_order.payment.transfer.box.transactions')</h3>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -183,16 +183,16 @@
                                 <table id="itemsListTable" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th width="30%">@lang('purchase_order.payment.cash.table.item.header.product_name')</th>
+                                        <th width="30%">@lang('purchase_order.payment.transfer.table.item.header.product_name')</th>
                                         <th width="15%"
-                                            class="text-center">@lang('purchase_order.payment.cash.table.item.header.header.quantity')</th>
+                                            class="text-center">@lang('purchase_order.payment.transfer.table.item.header.header.quantity')</th>
                                         <th width="15%"
-                                            class="text-center">@lang('purchase_order.payment.cash.table.item.header.unit')</th>
+                                            class="text-center">@lang('purchase_order.payment.transfer.table.item.header.unit')</th>
                                         <th width="15%"
-                                            class="text-center">@lang('purchase_order.payment.cash.table.item.header.price_unit')</th>
+                                            class="text-center">@lang('purchase_order.payment.transfer.table.item.header.price_unit')</th>
                                         <th width="5%">&nbsp;</th>
                                         <th width="20%"
-                                            class="text-center">@lang('purchase_order.payment.cash.table.item.header.total_price')</th>
+                                            class="text-center">@lang('purchase_order.payment.transfer.table.item.header.total_price')</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -229,7 +229,7 @@
                                     <tbody>
                                     <tr>
                                         <td width="80%"
-                                            class="text-right">@lang('purchase_order.payment.cash.table.total.body.total')</td>
+                                            class="text-right">@lang('purchase_order.payment.transfer.table.total.body.total')</td>
                                         <td width="20%" class="text-right">
                                             <span class="control-label-normal">@{{ grandTotal() | number }}</span>
                                         </td>
@@ -249,7 +249,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.remarks')</h3>
+                        <h3 class="box-title">@lang('purchase_order.payment.transfer.box.remarks')</h3>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -270,7 +270,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.payment_history')</h3>
+                        <h3 class="box-title">@lang('purchase_order.payment.transfer.box.payment_history')</h3>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -278,21 +278,21 @@
                                 <table id="paymentHistoryTable" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th width="25%" class="text-center">@lang('purchase_order.payment.cash.table.payments.header.payment_type')</th>
-                                        <th width="25%" class="text-center">@lang('purchase_order.payment.cash.table.payments.header.payment_date')</th>
-                                        <th width="25%" class="text-center">@lang('purchase_order.payment.cash.table.payments.header.payment_status')</th>
-                                        <th width="25%" class="text-center">@lang('purchase_order.payment.cash.table.payments.header.payment_amount')</th>
+                                        <th width="25%" class="text-center">@lang('purchase_order.payment.transfer.table.payments.header.payment_type')</th>
+                                        <th width="25%" class="text-center">@lang('purchase_order.payment.transfer.table.payments.header.payment_date')</th>
+                                        <th width="25%" class="text-center">@lang('purchase_order.payment.transfer.table.payments.header.payment_status')</th>
+                                        <th width="25%" class="text-center">@lang('purchase_order.payment.transfer.table.payments.header.payment_amount')</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($currentPo->payments as $key => $payment)
-                                            <tr>
-                                                <td class="text-center">{{ $paymentTypeDDL[$payment->type] }}</td>
-                                                <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
-                                                <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                                <td class="text-center">{{ number_format($payment->total_amount, 2) }}</td>
-                                            </tr>
-                                        @endforeach
+                                    @foreach ($currentPo->payments as $key => $payment)
+                                        <tr>
+                                            <td class="text-center">{{ $paymentTypeDDL[$payment->type] }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
+                                            <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
+                                            <td class="text-center">{{ number_format($payment->total_amount, 2) }}</td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -302,13 +302,13 @@
                                 <table id="paymentSummaryTable" class="table table-bordered">
                                     <tbody>
                                     <tr>
-                                        <td class="text-right">@lang('purchase_order.payment.cash.table.total.body.paid_amount')</td>
+                                        <td class="text-right">@lang('purchase_order.payment.transfer.table.total.body.paid_amount')</td>
                                         <td width="25%" class="text-right">
                                             <span class="control-label-normal">{{ number_format($currentPo->totalAmountPaid(), 2) }}</span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="text-right">@lang('purchase_order.payment.cash.table.total.body.to_be_paid_amount')</td>
+                                        <td class="text-right">@lang('purchase_order.payment.transfer.table.total.body.to_be_paid_amount')</td>
                                         <td width="25%" class="text-right">
                                             <span class="control-label-normal">
                                                 {{ number_format($currentPo->totalAmount() - $currentPo->totalAmountPaid(), 2) }}
@@ -327,14 +327,14 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.payment.cash.box.payment')</h3>
+                        <h3 class="box-title">@lang('purchase_order.payment.transfer.box.payment')</h3>
                     </div>
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="inputPaymentType"
-                                           class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_type')</label>
+                                           class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_type')</label>
                                     <div class="col-sm-4">
                                         <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.$paymentType)">
                                     </div>
@@ -344,8 +344,24 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">Bank</label>
+                                    <div class="col-sm-4">
+                                        @foreach( $bankDDL as $key => $bank)
+                                            <div class="radio">
+                                                <label>
+                                                    <input id="bank_{{ $key }}" name="bank" value="{{ $bank->id }}" type="radio" {{ $key == 0 ? 'selected' : '' }}>
+                                                    {{ $bank->name }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="inputPaymentDate"
-                                           class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_date')</label>
+                                           class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_date')</label>
                                     <div class="col-sm-4">
                                         <div class="input-group date">
                                             <div class="input-group-addon">
@@ -355,6 +371,17 @@
                                                    name="payment_date" data-parsley-required="true">
                                         </div>
                                     </div>
+                                    <label for="inputEffectiveDate"
+                                           class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.effective_date')</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control" id="inputEffectiveDate"
+                                                   name="effective_date" data-parsley-required="true">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -362,7 +389,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="inputPaymentAmount"
-                                           class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_amount')</label>
+                                           class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_amount')</label>
                                     <div class="col-sm-4">
                                         <div class="input-group date">
                                             <div class="input-group-addon">
@@ -667,12 +694,27 @@
             }
         }]);
 
-        $("#inputPaymentDate").daterangepicker({
-            locale: {
-                format: 'DD-MM-YYYY'
-            },
-            singleDatePicker: true,
-            showDropdowns: true
+        $(function () {
+            $('input[type="checkbox"], input[type="radio"]').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue'
+            });
+
+            $("#inputPaymentDate").daterangepicker({
+                locale: {
+                    format: 'DD-MM-YYYY'
+                },
+                singleDatePicker: true,
+                showDropdowns: true
+            });
+
+            $("#inputEffectiveDate").daterangepicker({
+                locale: {
+                    format: 'DD-MM-YYYY'
+                },
+                singleDatePicker: true,
+                showDropdowns: true
+            });
         });
     </script>
 @endsection

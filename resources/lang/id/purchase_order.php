@@ -118,6 +118,64 @@ return [
                     ]
                 ]
             ],
+        ],
+        'transfer' => [
+            'field' => [
+                'supplier_type' => 'Tipe',
+                'supplier_name' => 'Nama',
+                'supplier_details' => 'Detail',
+                'shipping_date' => 'Tanggal',
+                'warehouse' => 'Gudang',
+                'vendor_trucking' => 'Penyedia Angkutan',
+                'payment_type' => 'Tipe Pembayaran',
+                'payment_date' => 'Tanggal Pembayaran',
+                'payment_amount' => 'Jumlah Pembayaran',
+                'effective_date' => 'Tanggal Efektif'
+            ],
+            'po_code' => 'Kode',
+            'po_type' => 'Tipe',
+            'po_date' => 'Tanggal',
+            'po_status' => 'Status',
+            'title' => 'Pembayaran Transfer Pembelian',
+            'page_title' => 'Pembayaran Transfer Pembelian',
+            'page_title_desc' => 'Buat pembayaran transfer untuk pembelian',
+            'box' => [
+                'supplier' => 'Supplier',
+                'purchase_order_detail' => 'Detail',
+                'shipping' => 'Pengiriman',
+                'transactions' => 'Transaksi',
+                'remarks' => 'Catatan',
+                'payment_history' => 'Catatan Pembayaran',
+                'payment' => 'Pembayaran'
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Produk',
+                        'header' => [
+                            'quantity' => 'Jumlah'
+                        ],
+                        'unit' => 'Satuan',
+                        'price_unit' => 'Harga Satuan',
+                        'total_price' => 'Total Harga'
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Jumlah Total',
+                        'paid_amount' => 'Total',
+                        'to_be_paid_amount' => 'Kurang'
+                    ],
+                ],
+                'payments' => [
+                    'header' => [
+                        'payment_type' => 'Tipe Pembayaran',
+                        'payment_date' => 'Tanggal Pembayaran',
+                        'payment_amount' => 'Jumlah Pembayaran',
+                        'payment_status' => 'Status Pembayaran'
+                    ]
+                ]
+            ],
         ]
     ],
     'revise' => [
