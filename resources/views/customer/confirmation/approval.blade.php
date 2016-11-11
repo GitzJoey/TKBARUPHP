@@ -36,19 +36,19 @@
                     <th>@lang('customer.confirmation.approval.table.header.deliver_date')</th>
                     <th>@lang('customer.confirmation.approval.table.header.confirm_receive_date')</th>
                     <th>@lang('customer.confirmation.approval.table.header.status')</th>
-                    <th>@lang('labels.ACTION')</th>
+                    <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($solist as $key => $so)
                     <tr class="accordion-toggle" data-toggle="collapse" data-target="#row{{ $so->index }}">
-                        <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
+                        <td class="text-center"><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
                         <td>{{ $so->code }}</td>
                         <td>{{ $so->shipping_date->format('d-m-Y') }}</td>
-                        <td>{{ $so->items()->first()->deliver()->first()->deliver_date->format('d-m-Y') }}</td>
+                        <td>{{ $so->items()->first()->delivers()->first()->deliver_date->format('d-m-Y') }}</td>
                         <td></td>
                         <td>@lang('lookup.'.$so->status)</td>
-                        <td>
+                        <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.customer.approval.approve', $so->hId()) }}"><span class="fa fa-check fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.customer.approval.reject', $so->hId()) }}"><span class="fa fa-close fa-fw"></span></a>
                         </td>
@@ -56,6 +56,13 @@
                     <tr>
                         <td colspan="12" class="hiddenRow" style="padding-left: 15px; padding-top: 15px;">
                             <div class="accordian-body collapse" id="row{{ $so->index }}">
+                                {{ $so->code }}<br/>
+                                @if ($so->customer_type == 'CUSTOMERTYPE.WI')
+                                    {{ $so->walk_in_cust }}<br/>
+                                    {{ $so->walk_in_cust_detail }}
+                                @else
+                                    {{ $so->customer->name }}
+                                @endif
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -79,56 +86,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th width="25%" class="text-center">@lang('customer.confirmation.approval.table.header.so')</th>
-                    <th width="65%" class="text-center" colspan="5">@lang('customer.confirmation.approval.table.header.items_detail')</th>
-                    <th width="10%" class="text-center">@lang('labels.ACTION')</th>
-                </tr>
-                <tr>
-                    <th class="text-center"></th>
-                    <th class="text-center">@lang('customer.confirmation.approval.table.header.items.product_name')</th>
-                    <th class="text-center">@lang('customer.confirmation.approval.table.header.items.brutto')</th>
-                    <th class="text-center">@lang('customer.confirmation.approval.table.header.items.netto')</th>
-                    <th class="text-center">@lang('customer.confirmation.approval.table.header.items.tare')</th>
-                    <th class="text-center">@lang('customer.confirmation.approval.table.header.items.remarks')</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($solist as $key => $so)
-                    <tr>
-                        <td>
-                            {{ $so->code }}<br/>
-                            @foreach ($so->items as $i)
-                                {{ $i->delivers()->first()->deliver_date->format('d-m-Y') }}
-                            @endforeach
-                            <br/>
-                        </td>
-                        <td>
-                            @foreach ($so->items as $i)
-                                {{ $i->product()->first()->name }}<br/>
-                            @endforeach
-                        </td>
-                        <td class="text-center">
-                            @foreach ($so->items as $i)
-                                {{ $i->brutto }}<br/>
-                            @endforeach
-                        </td>
-                        <td class="text-center">
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td class="text-center valign-middle" width="20%">
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.customer.approval.approve', $so->hId()) }}"><span class="fa fa-check fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.customer.approval.reject', $so->hId()) }}"><span class="fa fa-close fa-fw"></span></a>
                         </td>
                     </tr>
                 @endforeach

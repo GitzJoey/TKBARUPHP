@@ -34,6 +34,7 @@ return [
     'SOSTATUS.RJT' => 'Rejected',
     'SOSTATUS.D' => 'Draft',
     'SOSTATUS.C' => 'Closed',
+    'SOSTATUS.WCC' => 'Waiting Customer Confirmation',
     'POTYPE.S' => 'Standard PO',
     'POSTATUS.WP' => 'Waiting Payment',
     'POSTATUS.WA' => 'Waiting Arrival',
