@@ -51,12 +51,14 @@
                             </td>
                             <td class="text-center">{{ $so->shipping_date }}</td>
                             <td class="text-center">{{ $soStatusDDL[$so->status] }}</td>
-                            <td class="text-center" width="20%">
+                            <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.so.revise', $so->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>
                                 @if($so->status == 'SOSTATUS.WD')
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.so.reject', $so->hId()], 'style'=>'display:inline'])  !!}
                                     <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button"><span class="fa fa-close fa-fw"></span></button>
                                 {!! Form::close() !!}
+                                @else
+                                    <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button" disabled><span class="fa fa-close fa-fw"></span></button>
                                 @endif
                             </td>
                         </tr>
