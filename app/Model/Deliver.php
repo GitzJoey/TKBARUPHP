@@ -54,6 +54,10 @@ use Vinkla\Hashids\Facades\Hashids;
  * @mixin \Eloquent
  * @property \Carbon\Carbon $confirm_receive_date
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereConfirmReceiveDate($value)
+ * @property string $license_plate
+ * @property string $remarks
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereLicensePlate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereRemarks($value)
  */
 class Deliver extends Model
 {

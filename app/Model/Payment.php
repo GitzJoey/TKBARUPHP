@@ -6,6 +6,43 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * App\Model\Payment
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property \Carbon\Carbon $payment_date
+ * @property float $total_amount
+ * @property string $status
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property integer $payment_detail_id
+ * @property string $payment_detail_type
+ * @property integer $payable_id
+ * @property string $payable_type
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payment_detail
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payable
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePaymentDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereTotalAmount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePaymentDetailId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePaymentDetailType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePayableId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePayableType($value)
+ * @mixin \Eloquent
+ */
 class Payment extends Model
 {
     use SoftDeletes;
