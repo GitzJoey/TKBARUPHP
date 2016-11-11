@@ -18,407 +18,407 @@ class PermissionTableSeeder extends Seeder
         $permission = [
             [
                 'name' => 'admin.user-list',
-                'display_name' => 'Display User Listing',
+                'display_name' => '[User] Display User Listing',
                 'description' => 'See only Listing Of User'
             ],
             [
                 'name' => 'admin.user-create',
-                'display_name' => 'Create User',
+                'display_name' => '[User] Create User',
                 'description' => 'Create New User'
             ],
             [
                 'name' => 'admin.user-edit',
-                'display_name' => 'Edit User',
+                'display_name' => '[User] Edit User',
                 'description' => 'Edit User'
             ],
             [
                 'name' => 'admin.user-delete',
-                'display_name' => 'Delete User',
+                'display_name' => '[User] Delete User',
                 'description' => 'Delete User'
             ],
             [
                 'name' => 'admin.role-list',
-                'display_name' => 'Display Role Listing',
+                'display_name' => '[Role] Display Role Listing',
                 'description' => 'See only Listing Of Role'
             ],
             [
                 'name' => 'admin.role-create',
-                'display_name' => 'Create Role',
+                'display_name' => '[Role] Create Role',
                 'description' => 'Create New Role'
             ],
             [
                 'name' => 'admin.role-edit',
-                'display_name' => 'Edit Role',
+                'display_name' => '[Role] Edit Role',
                 'description' => 'Edit Role'
             ],
             [
                 'name' => 'admin.role-delete',
-                'display_name' => 'Delete Role',
+                'display_name' => '[Role] Delete Role',
                 'description' => 'Delete Role'
             ],
             [
                 'name' => 'admin.store-list',
-                'display_name' => 'Display Store Listing',
+                'display_name' => '[Store] Display Store Listing',
                 'description' => 'See only Listing Of Store'
             ],
             [
                 'name' => 'admin.store-create',
-                'display_name' => 'Create Store',
+                'display_name' => '[Store] Create Store',
                 'description' => 'Create New Store'
             ],
             [
                 'name' => 'admin.store-edit',
-                'display_name' => 'Edit Store',
+                'display_name' => '[Store] Edit Store',
                 'description' => 'Edit Store'
             ],
             [
                 'name' => 'admin.store-delete',
-                'display_name' => 'Delete Store',
+                'display_name' => '[Store] Delete Store',
                 'description' => 'Delete Store'
             ],
             [
                 'name' => 'admin.unit-list',
-                'display_name' => 'Display Unit Listing',
+                'display_name' => '[Unit] Display Unit Listing',
                 'description' => 'See only Listing Of Unit'
             ],
             [
                 'name' => 'admin.unit-create',
-                'display_name' => 'Create Unit',
+                'display_name' => '[Unit] Create Unit',
                 'description' => 'Create New Unit'
             ],
             [
                 'name' => 'admin.unit-edit',
-                'display_name' => 'Edit Unit',
+                'display_name' => '[Unit] Edit Unit',
                 'description' => 'Edit Unit'
             ],
             [
                 'name' => 'admin.unit-delete',
-                'display_name' => 'Delete Unit',
+                'display_name' => '[Unit] Delete Unit',
                 'description' => 'Delete Unit'
             ],
             [
                 'name' => 'admin.settings-list',
-                'display_name' => 'Display Settings Listing',
+                'display_name' => '[Settings] Display Settings Listing',
                 'description' => 'See only Listing Of Settings'
             ],
             [
                 'name' => 'admin.settings-edit',
-                'display_name' => 'Edit Settings',
+                'display_name' => '[Settings] Edit Settings',
                 'description' => 'Edit Settings'
             ],
             [
                 'name' => 'admin.phoneprovider-list',
-                'display_name' => 'Display Phone Provider Listing',
+                'display_name' => '[Phone Provider] Display Phone Provider Listing',
                 'description' => 'See only Listing Of Phone Provider'
             ],
             [
                 'name' => 'admin.phoneprovider-create',
-                'display_name' => 'Create Phone Provider',
+                'display_name' => '[Phone Provider] Create Phone Provider',
                 'description' => 'Create New Phone Provider'
             ],
             [
                 'name' => 'admin.phoneprovider-edit',
-                'display_name' => 'Edit Phone Provider',
+                'display_name' => '[Phone Provider] Edit Phone Provider',
                 'description' => 'Edit Phone Provider'
             ],
             [
                 'name' => 'admin.phoneprovider-delete',
-                'display_name' => 'Delete Phone Provider',
+                'display_name' => '[Phone Provider] Delete Phone Provider',
                 'description' => 'Delete Phone Provider'
             ],
             [
                 'name' => 'admin.smsservice-list',
-                'display_name' => 'List SMS',
+                'display_name' => '[SMS] List SMS',
                 'description' => 'Show the inbox and outbox of SMS'
             ],
             [
                 'name' => 'admin.smsservice-modem',
-                'display_name' => 'Change Modem Settings',
+                'display_name' => '[SMS] Change Modem Settings',
                 'description' => 'Change Modem Settings'
             ],
             [
                 'name' => 'admin.smsservice-send',
-                'display_name' => 'Send SMS',
+                'display_name' => '[SMS] Send SMS',
                 'description' => 'Enable Send SMS'
             ],
             [
                 'name' => 'master.customer-list',
-                'display_name' => 'Display Customer Listing',
+                'display_name' => '[Customer] Display Customer Listing',
                 'description' => 'See only Listing Of Customer'
             ],
             [
                 'name' => 'master.customer-create',
-                'display_name' => 'Create Customer',
+                'display_name' => '[Customer] Create Customer',
                 'description' => 'Create New Customer'
             ],
             [
                 'name' => 'master.customer-edit',
-                'display_name' => 'Edit Customer',
+                'display_name' => '[Customer] Edit Customer',
                 'description' => 'Edit Customer'
             ],
             [
                 'name' => 'master.customer-delete',
-                'display_name' => 'Delete Customer',
+                'display_name' => '[Customer] Delete Customer',
                 'description' => 'Delete Customer'
             ],
             [
                 'name' => 'master.supplier-list',
-                'display_name' => 'Display Supplier Listing',
+                'display_name' => '[Supplier] Display Supplier Listing',
                 'description' => 'See only Listing Of Supplier'
             ],
             [
                 'name' => 'master.supplier-create',
-                'display_name' => 'Create Supplier',
+                'display_name' => '[Supplier] Create Supplier',
                 'description' => 'Create New Supplier'
             ],
             [
                 'name' => 'master.supplier-edit',
-                'display_name' => 'Edit Supplier',
+                'display_name' => '[Supplier] Edit Supplier',
                 'description' => 'Edit Supplier'
             ],
             [
                 'name' => 'master.supplier-delete',
-                'display_name' => 'Delete Supplier',
+                'display_name' => '[Supplier] Delete Supplier',
                 'description' => 'Delete Supplier'
             ],
             [
                 'name' => 'master.product-list',
-                'display_name' => 'Display Product Listing',
+                'display_name' => '[Product] Display Product Listing',
                 'description' => 'See only Listing Of Product'
             ],
             [
                 'name' => 'master.product-create',
-                'display_name' => 'Create Product',
+                'display_name' => '[Product] Create Product',
                 'description' => 'Create New Product'
             ],
             [
                 'name' => 'master.product-edit',
-                'display_name' => 'Edit Product',
+                'display_name' => '[Product] Edit Product',
                 'description' => 'Edit Product'
             ],
             [
                 'name' => 'master.product-delete',
-                'display_name' => 'Delete Product',
+                'display_name' => '[Product] Delete Product',
                 'description' => 'Delete Product'
             ],
             [
                 'name' => 'master.product.producttype-list',
-                'display_name' => 'Display Product Type Listing',
+                'display_name' => '[Product Type] Display Product Type Listing',
                 'description' => 'See only Listing Of Product Type'
             ],
             [
                 'name' => 'master.product.producttype-create',
-                'display_name' => 'Create Product Type',
+                'display_name' => '[Product Type] Create Product Type',
                 'description' => 'Create New Product Type'
             ],
             [
                 'name' => 'master.product.producttype-edit',
-                'display_name' => 'Edit Product Type',
+                'display_name' => '[Product Type] Edit Product Type',
                 'description' => 'Edit Product Type'
             ],
             [
                 'name' => 'master.product.producttype-delete',
-                'display_name' => 'Delete Product Type',
+                'display_name' => '[Product Type] Delete Product Type',
                 'description' => 'Delete Product Type'
             ],
             [
                 'name' => 'master.warehouse-list',
-                'display_name' => 'Display Warehouse Listing',
+                'display_name' => '[Warehouse] Display Warehouse Listing',
                 'description' => 'See only Listing Of Warehouse'
             ],
             [
                 'name' => 'master.warehouse-create',
-                'display_name' => 'Create Warehouse',
+                'display_name' => '[Warehouse] Create Warehouse',
                 'description' => 'Create New Warehouse'
             ],
             [
                 'name' => 'master.warehouse-edit',
-                'display_name' => 'Edit Warehouse',
+                'display_name' => '[Warehouse] Edit Warehouse',
                 'description' => 'Edit Warehouse'
             ],
             [
                 'name' => 'master.warehouse-delete',
-                'display_name' => 'Delete Warehouse',
+                'display_name' => '[Warehouse] Delete Warehouse',
                 'description' => 'Delete Warehouse'
             ],
             [
                 'name' => 'master.bank-list',
-                'display_name' => 'Display Bank Listing',
+                'display_name' => '[Bank] Display Bank Listing',
                 'description' => 'See only Listing Of Bank'
             ],
             [
                 'name' => 'master.bank-create',
-                'display_name' => 'Create Bank',
+                'display_name' => '[Bank] Create Bank',
                 'description' => 'Create New Bank'
             ],
             [
                 'name' => 'master.bank-edit',
-                'display_name' => 'Edit Bank',
+                'display_name' => '[Bank] Edit Bank',
                 'description' => 'Edit Bank'
             ],
             [
                 'name' => 'master.bank-delete',
-                'display_name' => 'Delete Bank',
+                'display_name' => '[Bank] Delete Bank',
                 'description' => 'Delete Bank'
             ],
             [
                 'name' => 'master.truck-list',
-                'display_name' => 'Display Truck Listing',
+                'display_name' => '[Truck] Display Truck Listing',
                 'description' => 'See only Listing Of Truck'
             ],
             [
                 'name' => 'master.truck-create',
-                'display_name' => 'Create Truck',
+                'display_name' => '[Truck] Create Truck',
                 'description' => 'Create New Truck'
             ],
             [
                 'name' => 'master.truck-edit',
-                'display_name' => 'Edit Truck',
+                'display_name' => '[Truck] Edit Truck',
                 'description' => 'Edit Truck'
             ],
             [
                 'name' => 'master.truck-delete',
-                'display_name' => 'Delete Truck',
+                'display_name' => '[Truck] Delete Truck',
                 'description' => 'Delete Truck'
             ],
             [
                 'name' => 'master.vendor.truck-list',
-                'display_name' => 'Display Vendor Truck Listing',
+                'display_name' => '[Vendor Trucking] Display Vendor Truck Listing',
                 'description' => 'See only Listing Of Vendor Truck'
             ],
             [
                 'name' => 'master.vendor.truck-create',
-                'display_name' => 'Create Vendor Truck',
+                'display_name' => '[Vendor Trucking] Create Vendor Truck',
                 'description' => 'Create New Vendor Truck'
             ],
             [
                 'name' => 'master.vendor.truck-edit',
-                'display_name' => 'Edit Vendor Truck',
+                'display_name' => '[Vendor Trucking] Edit Vendor Truck',
                 'description' => 'Edit Vendor Truck'
             ],
             [
                 'name' => 'master.vendor.truck-delete',
-                'display_name' => 'Delete Vendor Truck',
+                'display_name' => '[Vendor Trucking] Delete Vendor Truck',
                 'description' => 'Delete Vendor Truck'
             ],
             [
                 'name' => 'po.po-create',
-                'display_name' => 'Create PO',
+                'display_name' => '[Purchase Order] Create PO',
                 'description' => 'Enable Create PO'
             ],
             [
                 'name' => 'po.po-revise',
-                'display_name' => 'Revise PO',
+                'display_name' => '[Purchase Order] Revise PO',
                 'description' => 'Enable Revise PO'
             ],
             [
                 'name' => 'po.po-payment',
-                'display_name' => 'Payment PO',
+                'display_name' => '[Purchase Order] Payment PO',
                 'description' => 'Enable Payment PO'
             ],
             [
                 'name' => 'so.so-create',
-                'display_name' => 'Create SO',
+                'display_name' => '[Sales Order] Create SO',
                 'description' => 'Enable Create SO'
             ],
             [
                 'name' => 'so.so-revise',
-                'display_name' => 'Revise SO',
+                'display_name' => '[Sales Order] Revise SO',
                 'description' => 'Enable Revise SO'
             ],
             [
                 'name' => 'so.so-payment',
-                'display_name' => 'Payment SO',
+                'display_name' => '[Sales Order] Payment SO',
                 'description' => 'Enable Payment SO'
             ],
             [
                 'name' => 'so.so-copy',
-                'display_name' => 'SO Copy',
+                'display_name' => '[Sales Order] SO Copy',
                 'description' => 'Enable SO Copy'
             ],
             [
                 'name' => 'price.todayprice-list',
-                'display_name' => 'Display Today Price Listing',
+                'display_name' => '[Today Price] Display Today Price Listing',
                 'description' => 'See only Listing Of Today Price'
             ],
             [
                 'name' => 'price.todayprice-create',
-                'display_name' => 'Create New Today Price',
+                'display_name' => '[Today Price] Create New Today Price',
                 'description' => 'Create New Today Price'
             ],
             [
                 'name' => 'price.pricelevel-list',
-                'display_name' => 'Display Price Level Listing',
+                'display_name' => '[Price Level] Display Price Level Listing',
                 'description' => 'See only Listing Of Price Level'
             ],
             [
                 'name' => 'price.pricelevel-create',
-                'display_name' => 'Create Price Level',
+                'display_name' => '[Price Level] Create Price Level',
                 'description' => 'Create New Price Level'
             ],
             [
                 'name' => 'price.pricelevel-edit',
-                'display_name' => 'Edit Price Level',
+                'display_name' => '[Price Level] Edit Price Level',
                 'description' => 'Edit Price Level'
             ],
             [
                 'name' => 'price.pricelevel-delete',
-                'display_name' => 'Delete Price Level',
+                'display_name' => '[Price Level] Delete Price Level',
                 'description' => 'Delete Price Level'
             ],
             [
                 'name' => 'warehouse.inflow-input',
-                'display_name' => 'Input Warehouse Inflow',
+                'display_name' => '[Warehouse Inflow] Input Warehouse Inflow',
                 'description' => 'Enable Input Warehouse Inflow'
             ],
             [
                 'name' => 'warehouse.outflow-input',
-                'display_name' => 'Input Warehouse Outflow',
+                'display_name' => '[Warehouse Outflow] Input Warehouse Outflow',
                 'description' => 'Enable Input Warehouse Outflow'
             ],
             [
                 'name' => 'warehouse.stockopname',
-                'display_name' => 'Input Stock Opname',
+                'display_name' => '[Warehouse Stock Opname] Input Stock Opname',
                 'description' => 'Enable Input Stock Opname'
             ],
             [
                 'name' => 'bank.upload',
-                'display_name' => 'Upload Bank Data',
+                'display_name' => '[Bank] Upload Bank Data',
                 'description' => 'Enable Upload Bank Data'
             ],
             [
                 'name' => 'bank.consolidate',
-                'display_name' => 'Consolidate Bank Data',
+                'display_name' => '[Bank] Consolidate Bank Data',
                 'description' => 'Enable Consolidate Bank Data'
             ],
             [
                 'name' => 'customer.confirmation',
-                'display_name' => 'Customer Confirmation',
+                'display_name' => '[Customer] Customer Confirmation',
                 'description' => 'Enable Customer Confirmation'
             ],
             [
                 'name' => 'customer.approval',
-                'display_name' => 'Customer Approval',
+                'display_name' => '[Customer] Customer Approval',
                 'description' => 'Enable Customer Approval'
             ],
             [
                 'name' => 'truck.maintenance-list',
-                'display_name' => 'Display Truck Maintenance Listing',
+                'display_name' => '[Truck Maintenance] Display Truck Maintenance Listing',
                 'description' => 'See only Listing Of Truck Maintenance'
             ],
             [
                 'name' => 'truck.maintenance-create',
-                'display_name' => 'Create Truck Maintenance',
+                'display_name' => '[Truck Maintenance] Create Truck Maintenance',
                 'description' => 'Create New Truck Maintenance'
             ],
             [
                 'name' => 'truck.maintenance-edit',
-                'display_name' => 'Edit Truck Maintenance',
+                'display_name' => '[Truck Maintenance] Edit Truck Maintenance',
                 'description' => 'Edit Truck Maintenance'
             ],
             [
                 'name' => 'truck.maintenance-delete',
-                'display_name' => 'Delete Truck Maintenance',
+                'display_name' => '[Truck Maintenance] Delete Truck Maintenance',
                 'description' => 'Delete Truck Maintenance'
             ],
         ];
