@@ -21,6 +21,7 @@ class CreateGirosTable extends Migration
             $table->date('effective_date')->nullable();
             $table->decimal('amount', 19, 2)->default(0);
             $table->string('printed_name')->nullable();
+            $table->string('status')->nullable();
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
