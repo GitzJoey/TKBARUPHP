@@ -8,6 +8,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Model\Role;
+use App\Model\Lookup;
 
 class ReportController extends Controller
 {
@@ -38,6 +41,9 @@ class ReportController extends Controller
 
     public function report_admin()
     {
-        return view('report.admin');
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $rolesDDL = Role::get()->pluck('display_name', 'name');
+
+        return view('report.admin', compact('statusDDL', 'rolesDDL'));
     }
 }
