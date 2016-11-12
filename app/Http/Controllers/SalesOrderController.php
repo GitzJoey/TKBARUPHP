@@ -24,6 +24,7 @@ use App\Util\SOCodeGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class SalesOrderController extends Controller
 {
@@ -71,11 +72,17 @@ class SalesOrderController extends Controller
         if(isset($submitIndex)) {
 
             $validationRules = [
-                'so_code.' . $submitIndex => 'required|string|max:255',
-                'sales_type.' . $submitIndex => 'required|string|max:255',
-                'so_created.' . $submitIndex => 'required|string|max:255',
+                'so_code.' . $submitIndex       => 'required|string|max:255',
+                'sales_type.' . $submitIndex    => 'required|string|max:255',
+                'so_created.' . $submitIndex    => 'required|string|max:255',
                 'shipping_date.' . $submitIndex => 'required|string|max:255',
                 'customer_type.' . $submitIndex => 'required|string|max:255'
+            ];
+
+            $validationMessages = [
+                'customer_id.' . $submitIndex . '.required' => 'Customer on tab ' . ($submitIndex + 1) . ' is required.',
+                'walk_in_customer.' . $submitIndex . '.required' => 'Customer on tab ' . ($submitIndex + 1) . ' is required.',
+                'walk_in_customer_details.' . $submitIndex . '.required' => 'Customer Details on tab ' . ($submitIndex + 1) . ' is required.'
             ];
 
             if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R') {
@@ -97,7 +104,7 @@ class SalesOrderController extends Controller
             Log::info('SalesOrderController@store walk_in_cust_detail : ' . $request->input("walk_in_customer_details.$submitIndex"));
 
 
-            $this->validate($request, $validationRules);
+            Validator::make($request->all(), $validationRules, $validationMessages)->validate();
 
             Log::info('SalesOrderController@store submitted SO is valid');
 
