@@ -279,9 +279,9 @@
                                                 <tbody>
                                                 @foreach ($currentSo->payments as $key => $payment)
                                                     <tr>
-                                                        <td class="text-center">{{ $paymentTypeDLL[$payment->type] }}</td>
+                                                        <td class="text-center">{{ $paymentTypeDDL[$payment->type] }}</td>
                                                         <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
-                                                        <td class="text-center">{{ $cashPaymentStatusDLL[$payment->status] }}</td>
+                                                        <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
                                                         <td class="text-center">{{ number_format($payment->total_amount, 2) }}</td>
                                                     </tr>
                                                 @endforeach
@@ -327,7 +327,7 @@
                                             <label for="inputPaymentType"
                                                    class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.payment_type')</label>
                                             <div class="col-sm-4">
-                                                <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.'PAYMENTTYPE.C')">
+                                                <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.$paymentType)">
                                             </div>
                                         </div>
                                     </div>

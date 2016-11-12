@@ -16,10 +16,12 @@ use App\Model\Payment;
 use App\Model\Product;
 use App\Model\ProductUnit;
 use App\Model\Supplier;
+use App\Model\TransferPayment;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
 
+use App\Services\PurchaseOrderService;
 use Auth;
 use Illuminate\Http\Request;
 use App\Util\POCodeGenerator;
@@ -27,8 +29,11 @@ use Illuminate\Support\Facades\Log;
 
 class PurchaseOrderController extends Controller
 {
-    public function __construct()
+    private $purchaseOrderService;
+
+    public function __construct(PurchaseOrderService $purchaseOrderService)
     {
+        $this->purchaseOrderService = $purchaseOrderService;
         $this->middleware('auth');
     }
 
@@ -68,50 +73,7 @@ class PurchaseOrderController extends Controller
             'supplier_type' => 'required|string|max:255',
         ]);
 
-        if ($request->input('supplier_type') == 'SUPPLIERTYPE.R'){
-            $supplier_id = empty($request->input('supplier_id')) ? 0 : $request->input('supplier_id');
-            $walk_in_supplier = '';
-            $walk_in_supplier_detail = '';
-        } else {
-            $supplier_id = 0;
-            $walk_in_supplier = $request->input('walk_in_supplier');
-            $walk_in_supplier_detail = $request->input('walk_in_supplier_detail');
-        }
-
-        $params = [
-            'code' => $request->input('code'),
-            'po_type' => $request->input('po_type'),
-            'po_created' => date('Y-m-d', strtotime($request->input('po_created'))),
-            'shipping_date' => date('Y-m-d', strtotime($request->input('shipping_date'))),
-            'supplier_type' => $request->input('supplier_type'),
-            'walk_in_supplier' => $walk_in_supplier,
-            'walk_in_supplier_detail' => $walk_in_supplier_detail,
-            'remarks' => $request->input('remarks'),
-            'status' => Lookup::whereCode('POSTATUS.WA')->first()->code,
-            'supplier_id' => $supplier_id,
-            'vendor_trucking_id' => empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id'),
-            'warehouse_id' => $request->input('warehouse_id'),
-            'store_id' => Auth::user()->store_id
-        ];
-
-        $po = PurchaseOrder::create($params);
-
-        for ($i = 0; $i < count($request->input('product_id')); $i++) {
-            $item = new Item();
-            $item->product_id = $request->input("product_id.$i");
-            $item->store_id = Auth::user()->store_id;
-            $item->selected_unit_id = $request->input("selected_unit_id.$i");
-            $item->base_unit_id = $request->input("base_unit_id.$i");
-            $item->conversion_value = ProductUnit::where([
-                'product_id' => $item->product_id,
-                'unit_id' => $item->selected_unit_id
-            ])->first()->conversion_value;
-            $item->quantity = $request->input("quantity.$i");
-            $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
-            $item->to_base_quantity = $item->quantity * $item->conversion_value;
-
-            $po->items()->save($item);
-        }
+        $createdPO = $this->purchaseOrderService->createPO($request);
 
         if (!empty($request->input('submitcreate'))) {
             return redirect()->action('PurchaseOrderController@create');
@@ -144,43 +106,7 @@ class PurchaseOrderController extends Controller
 
     public function saveRevision(Request $request, $id)
     {
-        // Get current PO
-        $currentPo = PurchaseOrder::with('items')->find($id);
-
-        // Get ID of current PO's items
-        $poItemsId = $currentPo->items->map(function ($item) {
-            return $item->id;
-        })->all();
-
-        // Get the id of removed items
-        $poItemsToBeDeleted = array_diff($poItemsId, $request->input('item_id'));
-
-        // Remove the item that removed on the revise page
-        Item::destroy($poItemsToBeDeleted);
-
-        $currentPo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
-        $currentPo->warehouse_id = $request->input('warehouse_id');
-        $currentPo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
-        $currentPo->remarks = $request->input('remarks');
-
-        for ($i = 0; $i < count($request->input('item_id')); $i++) {
-            $item = Item::findOrNew($request->input("item_id.$i"));
-            $item->product_id = $request->input("product_id.$i");
-            $item->store_id = Auth::user()->store_id;
-            $item->selected_unit_id = $request->input("selected_unit_id.$i");
-            $item->base_unit_id = $request->input("base_unit_id.$i");
-            $item->conversion_value = ProductUnit::where([
-                'product_id' => $item->product_id,
-                'unit_id' => $item->selected_unit_id
-            ])->first()->conversion_value;
-            $item->quantity = $request->input("quantity.$i");
-            $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
-            $item->to_base_quantity = $item->quantity * $item->conversion_value;
-
-            $currentPo->items()->save($item);
-        }
-
-        $currentPo->save();
+        $revisedPO = $this->purchaseOrderService->revisePO($request, $id);
 
         return redirect(route('db.po.revise.index'));
     }
@@ -203,7 +129,7 @@ class PurchaseOrderController extends Controller
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products', 'supplier.products.type',
             'vendorTrucking', 'warehouse')->find($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
-        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRANSFERPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.C';
         
@@ -246,7 +172,7 @@ class PurchaseOrderController extends Controller
             'vendorTrucking', 'warehouse')->find($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $bankDDL = Bank::all(['id', 'name']);
-        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRANSFERPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.T';
 
@@ -257,34 +183,33 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@saveTransferPayment]');
 
-        $cashPayment = new CashPayment();
-        $cashPayment->save();
+        $transferPayment = new TransferPayment();
+        $transferPayment->bank_from_id = $request->input('bank_from');
+        $transferPayment->bank_to_id = $request->input('bank_to');
+        $transferPayment->effective_date = date('Y-m-d', strtotime($request->input('effective_date')));
+        $transferPayment->save();
 
         $paymentParam = [
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
             'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
-            'status' => Lookup::whereCode('CASHPAYMENTSTATUS.C')->first()->code,
-            'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
+            'status' => Lookup::whereCode('TRFPAYMENTSTATUS.UNCONFIRMED')->first()->code,
+            'type' => Lookup::whereCode('PAYMENTTYPE.T')->first()->code
         ];
 
         $payment = Payment::create($paymentParam);
 
-        $cashPayment->payment()->save($payment);
+        $transferPayment->payment()->save($payment);
 
         $currentPo = PurchaseOrder::find($id);
 
         $currentPo->payments()->save($payment);
-
-        $currentPo->updatePaymentStatus();
 
         return redirect(route('db.po.payment.index'));
     }
     
     public function delete(Request $request, $id)
     {
-        $po = PurchaseOrder::find($id);
-        $po->status = 'POSTATUS.RJT';
-        $po->save();
+        $this->purchaseOrderService->rejectPO($request, $id);
 
         return redirect(route('db.po.revise.index'));
     }

@@ -130,7 +130,9 @@ return [
                 'payment_type' => 'Payment Type',
                 'payment_date' => 'Payment Date',
                 'payment_amount' => 'Payment Amount',
-                'effective_date' => 'Effective Date'
+                'effective_date' => 'Effective Date',
+                'bank_from' => 'Bank From',
+                'bank_to' => 'Bank To'
             ],
             'po_code' => 'Code',
             'po_type' => 'Type',
