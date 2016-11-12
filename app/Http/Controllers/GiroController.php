@@ -8,6 +8,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Validator;
+use Illuminate\Http\Request;
 use Vinkla\Hashids\Facades\Hashids;
 
 use App\Model\Bank;
@@ -24,6 +27,7 @@ class GiroController extends Controller
     public function index()
     {
         $girolist = Giro::paginate(10);
+
         return view('giro.index', compact('girolist'));
     }
 
@@ -55,7 +59,7 @@ class GiroController extends Controller
         } else {
             Giro::create([
                 'store_id' => Auth::user()->store->id,
-                'bank_id' => 0,
+                'bank_id' => $data['bank'],
                 'serial_number' => $data['serial_number'],
                 'effective_date' => date('Y-m-d', strtotime($data->input('effective_date '))),
                 'amount' => $data['amount'],

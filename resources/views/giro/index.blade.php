@@ -39,12 +39,12 @@
                 <tbody>
                 @foreach ($girolist as $key => $giro)
                     <tr>
-                        <td class="text-center">{{ $giro->bank->name }}</td>
+                        <td class="text-center">{{ $giro->bank()->first()->name }}</td>
                         <td class="text-center">{{ $giro->serial_number }}</td>
                         <td>{{ $giro->amount }}</td>
                         <td>{{ $giro->printed_name }}</td>
                         <td>@lang('lookup.' . $giro->status)</td>
-                        <td>{{ $truck->remarks }}</td>
+                        <td>{{ $giro->remarks }}</td>
                         <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.bank.giro.show', $giro->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.bank.giro.edit', $giro->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
