@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Bank;
+use App\Model\BankAccount;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -45,10 +47,11 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@create] ');
 
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
 
-        return view('store.create', compact('statusDDL', 'yesnoDDL'));
+        return view('store.create', compact('statusDDL', 'yesnoDDL', 'bankDDL'));
     }
 
     public function store(Request $data)
@@ -78,7 +81,7 @@ class StoreController extends Controller
             $this->resetIsDefault();
         }
 
-        Store::create([
+        $store = Store::create([
             'name' => $data['name'],
             'address' => $data['address'],
             'phone_num' => $data['phone_num'],
@@ -89,6 +92,15 @@ class StoreController extends Controller
             'image_filename' => $imageName,
             'remarks' => empty($data['remarks']) ? '' : $data['remarks']
         ]);
+
+        for ($i = 0; $i < count($data['bank']); $i++) {
+            $ba = new BankAccount();
+            $ba->bank_id = $data["bank"][$i];
+            $ba->account_number = $data["account_number"][$i];
+            $ba->remarks = $data["bank_remarks"][$i];
+
+            $store->bankAccounts()->save($ba);
+        }
 
         return redirect(route('db.admin.store'));
     }
