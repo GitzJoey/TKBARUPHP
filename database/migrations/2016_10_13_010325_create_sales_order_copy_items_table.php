@@ -19,10 +19,10 @@ class CreateSalesOrderCopyItemsTable extends Migration
             $table->unsignedBigInteger('product_id')->default(0);
             $table->unsignedBigInteger('selected_unit_id')->default(0);
             $table->unsignedBigInteger('base_unit_id')->default(0);
-            $table->decimal('conversion_value')->default(0);
-            $table->decimal('quantity')->default(0);
-            $table->decimal('price')->default(0);
-            $table->decimal('to_base_quantity')->default(0);
+            $table->decimal('conversion_value', 19, 2)->default(0);
+            $table->decimal('quantity', 19, 2)->default(0);
+            $table->decimal('price', 19, 2)->default(0);
+            $table->decimal('to_base_quantity', 19, 2)->default(0);
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);

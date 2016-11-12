@@ -94,6 +94,7 @@ class SalesOrderController extends Controller
             Log::info('SalesOrderController@store walk_in_cust : '.$request->input("walk_in_customer.$submitIndex"));
             Log::info('SalesOrderController@store walk_in_cust_detail : '.$request->input("walk_in_customer_details.$submitIndex"));
 
+
             $this->validate($request, $validationRules);
 
             Log::info('SalesOrderController@store submitted SO is valid');

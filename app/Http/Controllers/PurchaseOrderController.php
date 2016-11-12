@@ -219,7 +219,7 @@ class PurchaseOrderController extends Controller
 
         $paymentParam = [
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
-            'total_amount' => $request->input('total_amount'),
+            'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
             'status' => Lookup::whereCode('CASHPAYMENTSTATUS.C')->first()->code,
             'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
         ];
