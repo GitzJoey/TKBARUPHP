@@ -295,7 +295,7 @@
                                                     <td class="text-center">{{ $paymentTypeDDL[$payment->type] }}</td>
                                                     <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
                                                     <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                                    <td class="text-center">{{ number_format($payment->total_amount, 2) }}</td>
+                                                    <td class="text-right">{{ number_format($payment->total_amount, 2) }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

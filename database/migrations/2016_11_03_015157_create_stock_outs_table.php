@@ -15,12 +15,12 @@ class CreateStockOutsTable extends Migration
     {
         Schema::create('stock_outs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('store_id');
-            $table->unsignedBigInteger('so_id');
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('stock_id');
-            $table->unsignedBigInteger('warehouse_id');
-            $table->decimal('quantity');
+            $table->unsignedBigInteger('store_id')->default(0);
+            $table->unsignedBigInteger('so_id')->default(0);
+            $table->unsignedBigInteger('product_id')->default(0);
+            $table->unsignedBigInteger('stock_id')->default(0);
+            $table->unsignedBigInteger('warehouse_id')->default(0);
+            $table->decimal('quantity', 19, 2)->default(0);
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);

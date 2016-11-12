@@ -18,7 +18,7 @@ class CreateGirosTable extends Migration
             $table->unsignedBigInteger('bank_id')->default(0);
             $table->string('serial_number')->nullable();
             $table->date('effective_date')->nullable();
-            $table->decimal('amount')->default(0);
+            $table->decimal('amount', 19, 2)->default(0);
             $table->string('printed_name')->nullable();
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);

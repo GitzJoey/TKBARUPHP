@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->string('payable_type')->nullable();
             $table->string('payment_detail_type')->nullable();
             $table->date('payment_date')->nullable();
-            $table->decimal('total_amount')->default(0);
+            $table->decimal('total_amount', 19, 2)->default(0);
             $table->string('status')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
