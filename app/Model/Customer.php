@@ -91,12 +91,12 @@ class Customer extends Model
 
     public function profiles()
     {
-        return $this->belongsToMany('App\Model\Profile', 'customer_pic', 'customer_id', 'profile_id');
+        return $this->morphMany('App\Model\Profile', 'owner');
     }
 
     public function bankAccounts()
     {
-        return $this->belongsToMany('App\Model\BankAccount', 'customer_bank_account', 'customer_id', 'bank_account_id');
+        return $this->morphMany('App\Model\BankAccount', 'owner');
     }
 
     public function priceLevel()

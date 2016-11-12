@@ -73,6 +73,7 @@ class Profile extends Model
         'updated_at',
         'deleted_by',
         'deleted_at',
+        'owner_type'
     ];
 
     public function user()
@@ -85,14 +86,8 @@ class Profile extends Model
         return $this->hasMany('App\Model\PhoneNumber');
     }
 
-    public function customers()
-    {
-        return $this->belongsToMany('App\Model\Customer', 'customer_pic', 'profile_id', 'customer_id');
-    }
-
-    public function suppliers()
-    {
-        return $this->belongsToMany('App\Model\Supplier', 'supplier_pic', 'profile_id', 'supplier_id');
+    public function owner(){
+        return $this->morphTo();
     }
 
     public static function boot()

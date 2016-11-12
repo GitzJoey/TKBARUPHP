@@ -65,21 +65,16 @@ class BankAccount extends Model
         'updated_at',
         'deleted_by',
         'deleted_at',
+        'owner_type'
     ];
-
-    public function suppliers()
-    {
-        return $this->belongsToMany('App\Model\Supplier', 'supplier_bank_account');
-    }
 
     public function bank()
     {
         return $this->belongsTo('App\Model\Bank', 'bank_id');
     }
 
-    public function customers()
-    {
-        return $this->belongsToMany('App\Model\Customer', 'customer_bank_account', 'customer_id', 'bank_account_id');
+    public function owner(){
+        return $this->morphTo();
     }
 
     public static function boot()

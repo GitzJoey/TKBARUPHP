@@ -96,12 +96,12 @@ class Supplier extends Model
 
     public function profiles()
     {
-        return $this->belongsToMany('App\Model\Profile', 'supplier_pic', 'supplier_id', 'profile_id');
+        return $this->morphMany('App\Model\Profile', 'owner');
     }
 
     public function bankAccounts()
     {
-        return $this->belongsToMany('App\Model\BankAccount', 'supplier_bank_account', 'supplier_id', 'bank_account_id');
+        return $this->morphMany('App\Model\BankAccount', 'owner');
     }
 
     public function products()

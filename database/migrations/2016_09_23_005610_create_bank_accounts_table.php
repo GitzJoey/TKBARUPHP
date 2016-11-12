@@ -16,8 +16,10 @@ class CreateBankAccountsTable extends Migration
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('bank_id')->default(0);
+            $table->unsignedBigInteger('owner_id')->default(0);
             $table->string('account_number')->nullable();
             $table->string('remarks')->nullable();
+            $table->string('owner_type')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);

@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
  */
 
 /**
+ * A service class which provide some service for purchase order operation such as creation, revision and rejection.
+ *
  * Interface PurchaseOrderService
  * @package App\Services
  */
