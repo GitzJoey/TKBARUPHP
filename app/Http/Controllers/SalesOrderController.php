@@ -66,33 +66,35 @@ class SalesOrderController extends Controller
         Log::info("SalesOrderController@store submitIndex = $submitIndex");
         Log::info("SalesOrderController@store cancelIndex = $cancelIndex");
 
-        if(isset($submitIndex)){
+        $this->storeToSession($request);
+
+        if(isset($submitIndex)) {
 
             $validationRules = [
-                'so_code.'.$submitIndex => 'required|string|max:255',
-                'sales_type.'.$submitIndex => 'required|string|max:255',
-                'so_created.'.$submitIndex => 'required|string|max:255',
-                'shipping_date.'.$submitIndex => 'required|string|max:255',
-                'customer_type.'.$submitIndex => 'required|string|max:255'
+                'so_code.' . $submitIndex => 'required|string|max:255',
+                'sales_type.' . $submitIndex => 'required|string|max:255',
+                'so_created.' . $submitIndex => 'required|string|max:255',
+                'shipping_date.' . $submitIndex => 'required|string|max:255',
+                'customer_type.' . $submitIndex => 'required|string|max:255'
             ];
 
-            if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R'){
-                $customer_id = empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex");
+            if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R') {
+                $customer_id = empty($request->input("customer_id.$submitIndex")) ? 0 : $request->input("customer_id.$submitIndex");
                 $walk_in_cust = '';
                 $walk_in_cust_detail = '';
-                $validationRules['customer_id.'.$submitIndex] = 'required';
+                $validationRules['customer_id.' . $submitIndex] = 'required';
             } else {
                 $customer_id = 0;
                 $walk_in_cust = $request->input("walk_in_customer.$submitIndex");
                 $walk_in_cust_detail = $request->input("walk_in_customer_details.$submitIndex");
-                $validationRules['walk_in_customer.'.$submitIndex] = 'required|string|max:255';
-                $validationRules['walk_in_customer_details.'.$submitIndex] = 'required|string|max:255';
+                $validationRules['walk_in_customer.' . $submitIndex] = 'required|string|max:255';
+                $validationRules['walk_in_customer_details.' . $submitIndex] = 'required|string|max:255';
             }
 
             Log::info('SalesOrderController@store Before validation ');
-            Log::info('SalesOrderController@store customer_id : '.$request->input("customer_id.$submitIndex"));
-            Log::info('SalesOrderController@store walk_in_cust : '.$request->input("walk_in_customer.$submitIndex"));
-            Log::info('SalesOrderController@store walk_in_cust_detail : '.$request->input("walk_in_customer_details.$submitIndex"));
+            Log::info('SalesOrderController@store customer_id : ' . $request->input("customer_id.$submitIndex"));
+            Log::info('SalesOrderController@store walk_in_cust : ' . $request->input("walk_in_customer.$submitIndex"));
+            Log::info('SalesOrderController@store walk_in_cust_detail : ' . $request->input("walk_in_customer_details.$submitIndex"));
 
 
             $this->validate($request, $validationRules);
@@ -117,32 +119,33 @@ class SalesOrderController extends Controller
 
             $so = SalesOrder::create($params);
 
-            for ($j = 0; $j < count($request->input("so_$submitIndex"."_product_id")); $j++) {
+            for ($j = 0; $j < count($request->input("so_$submitIndex" . "_product_id")); $j++) {
                 $item = new Item();
-                $item->product_id = $request->input("so_$submitIndex"."_product_id.$j");
-                $item->stock_id = empty($request->input("so_$submitIndex"."_stock_id.$j")) ? 0 : $request->input("so_$submitIndex"."_stock_id.$j");
+                $item->product_id = $request->input("so_$submitIndex" . "_product_id.$j");
+                $item->stock_id = empty($request->input("so_$submitIndex" . "_stock_id.$j")) ? 0 : $request->input("so_$submitIndex" . "_stock_id.$j");
                 $item->store_id = Auth::user()->store_id;
-                $item->selected_unit_id = $request->input("so_$submitIndex"."_selected_unit_id.$j");
-                $item->base_unit_id = $request->input("so_$submitIndex"."_base_unit_id.$j");
+                $item->selected_unit_id = $request->input("so_$submitIndex" . "_selected_unit_id.$j");
+                $item->base_unit_id = $request->input("so_$submitIndex" . "_base_unit_id.$j");
                 $item->conversion_value = ProductUnit::where([
                     'product_id' => $item->product_id,
                     'unit_id' => $item->selected_unit_id
                 ])->first()->conversion_value;
-                $item->quantity = $request->input("so_$submitIndex"."_quantity.$j");
-                $item->price = floatval(str_replace(',', '', $request->input("so_$submitIndex"."_price.$j")));
+                $item->quantity = $request->input("so_$submitIndex" . "_quantity.$j");
+                $item->price = floatval(str_replace(',', '', $request->input("so_$submitIndex" . "_price.$j")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $so->items()->save($item);
             }
-        }
 
-        //Always save to session.
-        //Save all SOs except the SO to be submitted or cancelled (indicated from it's index).
-        //If it is a submission, get the index from submitIndex
-        //If it is cancellation, get the index from cancelIndex
-        //If there is no index to be excluded, it's mean all SOs must be saved as draft.
-        // (negative index means there is no exclusion)
-        $this->storeToSession($request, isset($submitIndex) ? $submitIndex : isset($cancelIndex) ? $cancelIndex : -1);
+            $userSOs = session('userSOs');
+            $userSOs->splice($submitIndex, 1);
+            session(['userSOs' => $userSOs]);
+        }
+        elseif (isset($cancelIndex)){
+            $userSOs = session('userSOs');
+            $userSOs->splice($cancelIndex, 1);
+            session(['userSOs' => $userSOs]);
+        }
 
         if(count($request->input('so_code')) > 1)
             return redirect(route('db.so.create'));
@@ -283,14 +286,11 @@ class SalesOrderController extends Controller
         return redirect(route('db.so.revise.index'));
     }
 
-    private function storeToSession(Request $request, $filteredIndex)
+    private function storeToSession(Request $request)
     {
-        Log::info("Filtered index : $filteredIndex");
-
         $SOs = [];
 
         for($i = 0; $i < count($request->input('so_code')); $i++){
-            if($i != $filteredIndex){
                 $items = [];
                 for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
                     $items[] = [
@@ -338,7 +338,6 @@ class SalesOrderController extends Controller
                     'items' => $items
                 ];
             }
-        }
 
         session(['userSOs' => collect($SOs)]);
     }
