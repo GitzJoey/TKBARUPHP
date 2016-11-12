@@ -544,25 +544,30 @@
                                                 </table>
                                             </div>
                                             <div class="tab-pane" id="tab_product">
-                                                <div class="box-group" id="accordion_product">
-                                                    <div class="panel box box-default">
-                                                        <div class="box-header with-border">
-                                                            <h4 class="box-title">
-                                                                <a class="collapsed" aria-expanded="false"
-                                                                   href="#collapseProductLists" data-toggle="collapse"
-                                                                   data-parent="#accordion_product">
-                                                                    @lang('supplier.create.tab.header.bank_lists')
-                                                                </a>
-                                                            </h4>
-                                                        </div>
-                                                        <div class="panel-collapse collapse" id="collapseProductLists"
-                                                             aria-expanded="false">
-                                                            <div class="box-body">
-                                                                ...
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th class="text-center">@lang('supplier.create.table_prod.header.type')</th>
+                                                        <th class="text-center">@lang('supplier.create.table_prod.header.name')</th>
+                                                        <th class="text-center">@lang('supplier.create.table_prod.header.short_code')</th>
+                                                        <th class="text-center">@lang('supplier.create.table_prod.header.description')</th>
+                                                        <th class="text-center">@lang('supplier.create.table_prod.header.remarks')</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ng-repeat="p in po.supplier.products">
+                                                        <td class="text-center">
+                                                            <input type="checkbox" checked disabled>
+                                                        </td>
+                                                        <td>@{{ p.type.name }}</td>
+                                                        <td>@{{ p.name }}</td>
+                                                        <td>@{{ p.short_code }}</td>
+                                                        <td>@{{ p.description }}</td>
+                                                        <td>@{{ p.remarks }}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

@@ -35,6 +35,7 @@ return [
     'SOSTATUS.D' => 'Draft',
     'SOSTATUS.C' => 'Closed',
     'SOSTATUS.WCC' => 'Waiting Customer Confirmation',
+    'SOSTATUS.WAPPV' => 'Waiting Approval',
     'POTYPE.S' => 'Standard PO',
     'POSTATUS.WP' => 'Waiting Payment',
     'POSTATUS.WA' => 'Waiting Arrival',

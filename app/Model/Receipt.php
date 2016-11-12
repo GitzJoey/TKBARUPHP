@@ -79,6 +79,15 @@ class Receipt extends Model
         'store_id'
     ];
 
+    protected $hidden = [
+        'created_by',
+        'created_at',
+        'updated_by',
+        'updated_at',
+        'deleted_by',
+        'deleted_at',
+    ];
+
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);

@@ -52,6 +52,15 @@ class PhoneNumber extends Model
 
     protected $fillable = ['phone_provider_id', 'number', 'status', 'remarks'];
 
+    protected $hidden = [
+        'created_by',
+        'created_at',
+        'updated_by',
+        'updated_at',
+        'deleted_by',
+        'deleted_at',
+    ];
+
     public function profile()
     {
         $this->belongsTo('App\Model\Profile');

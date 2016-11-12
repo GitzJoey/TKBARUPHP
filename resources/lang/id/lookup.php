@@ -25,6 +25,7 @@ return [
     'SOSTATUS.D' => 'Draf',
     'SOSTATUS.C' => 'Selesai',
     'SOSTATUS.WCC' => 'Menunggu Konfirmasi Pelanggan',
+    'SOSTATUS.WAPPV' => 'Menunggu Persetujuan',
     'POTYPE.S' => 'Pembelian Biasa',
     'POSTATUS.WP' => 'Menunggu Pembayaran',
     'POSTATUS.WA' => 'Menunggu Kedatangan',

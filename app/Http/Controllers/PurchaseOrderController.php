@@ -36,7 +36,7 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@create] ');
 
-        $supplierDDL = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'products.productUnits.unit')->get();
+        $supplierDDL = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'products.productUnits.unit', 'products.type')->get();
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code']);
