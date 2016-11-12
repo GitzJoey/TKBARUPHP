@@ -35,7 +35,7 @@
                         <div class="col-md-12">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#tab_supplier" class="active" data-toggle="tab">@lang('supplier.edit.tab.supplier')&nbsp;<span id="suppDataTabError" class="parsley-asterisk hidden">*</span></a></li>
+                                    <li class="active"><a href="#tab_supplier" class="active" data-toggle="tab">@lang('supplier.edit.tab.supplier')&nbsp;<span id="suppDataTabError" class="parsley-asterisk hidden">*</span></a></li>
                                     <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.edit.tab.pic')&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
                                     <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
                                     <li><a href="#tab_product" data-toggle="tab">@lang('supplier.edit.tab.product')</a></li>

@@ -193,7 +193,8 @@
                                                 <td>
                                                     <select class="form-control"
                                                             name="bank[]"
-                                                            ng-model="bank.bank_id"
+                                                            ng-init="bank_list = { id: bank.bank_id }"
+                                                            ng-model="bank_list"
                                                             ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
                                                             data-parsley-required="true" data-parsley-group="tab_bank">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>

@@ -38,16 +38,16 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">@lang('phone_provider.field.short_name')</label>
+                    <label for="inputShortName" class="col-sm-2 control-label">@lang('phone_provider.field.short_name')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="short_name" name="short_name" placeholder="@lang('phone_provider.field.short_name')">
+                        <input type="text" class="form-control" id="inputShortName" name="short_name" placeholder="@lang('phone_provider.field.short_name')">
                         <span class="help-block">{{ $errors->has('short_name') ? $errors->first('short_name') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputRoles" class="col-sm-2 control-label">@lang('phone_provider.field.prefix')</label>
+                    <label for="inputPrefix" class="col-sm-2 control-label">@lang('phone_provider.field.prefix')</label>
                     <div class="col-sm-10">
-                        <input id="prefix" name="prefix" type="text" class="form-control" placeholder="@lang('phone_provider.field.prefix')">
+                        <input id="inputPrefix" name="prefix" type="text" class="form-control" placeholder="@lang('phone_provider.field.prefix')">
                         <span class="help-block">{{ $errors->has('prefix') ? $errors->first('prefix') : '' }}</span>
                     </div>
                 </div>
