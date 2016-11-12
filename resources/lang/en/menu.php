@@ -25,6 +25,7 @@ return [
     'item.bank' => 'Bank',
     'item.bank_upload' => 'Upload',
     'item.bank_consolidate' => 'Consolidate',
+    'item.bank_giro' => 'Giro',
     'item.customer' => 'Customer',
     'item.customer_confirm' => 'Confirmation',
     'item.customer_approval' => 'Approval',

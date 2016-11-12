@@ -113,7 +113,7 @@ return [
             'page_title' => 'Pembayaran Penjualan',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Daftar Penjualan'
+                'title' => 'Daftar Penjualan',
             ],
             'table' => [
                 'header' => [
@@ -122,9 +122,11 @@ return [
                     'supplier' => 'Pelanggan',
                     'total' => 'Total',
                     'paid' => 'Bayar',
-                    'rest' => 'Kurang'
-                ]
-            ]
+                    'rest' => 'Kurang',
+                    'customer' => '',
+                    'so_date' => '',
+                ],
+            ],
         ],
         'cash' => [
             'field' => [
@@ -136,7 +138,7 @@ return [
                 'vendor_trucking' => 'Penyedia Angkutan',
                 'payment_type' => 'Tipe Pembayaran',
                 'payment_date' => 'Tanggal Pembayaran',
-                'payment_amount' => 'Jumlah Pembayaran'
+                'payment_amount' => 'Jumlah Pembayaran',
             ],
             'so_code' => 'Kode',
             'so_type' => 'Tipe',
@@ -152,25 +154,25 @@ return [
                 'transactions' => 'Transaksi',
                 'remarks' => 'Catatan',
                 'payment_history' => 'Catatan Pembayaran',
-                'payment' => 'Pembayaran'
+                'payment' => 'Pembayaran',
             ],
             'table' => [
                 'item' => [
                     'header' => [
                         'product_name' => 'Produk',
                         'header' => [
-                            'quantity' => 'Jumlah'
+                            'quantity' => 'Jumlah',
                         ],
                         'unit' => 'Satuan',
                         'price_unit' => 'Harga Satuan',
-                        'total_price' => 'Total Harga'
+                        'total_price' => 'Total Harga',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Jumlah Total',
                         'paid_amount' => 'Total',
-                        'to_be_paid_amount' => 'Kurang'
+                        'to_be_paid_amount' => 'Kurang',
                     ],
                 ],
                 'payments' => [
@@ -178,10 +180,10 @@ return [
                         'payment_type' => 'Tipe Pembayaran',
                         'payment_date' => 'Tanggal Pembayaran',
                         'payment_amount' => 'Jumlah Pembayaran',
-                        'payment_status' => 'Status Pembayaran'
-                    ]
-                ]
+                        'payment_status' => 'Status Pembayaran',
+                    ],
+                ],
             ],
-        ]
+        ],
     ],
 ];

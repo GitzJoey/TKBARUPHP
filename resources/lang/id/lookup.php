@@ -8,6 +8,11 @@ return [
     'USERTYPE.U' => 'Pengguna',
     'USERTYPE.O' => 'Pemilik',
     'USERTYPE.A' => 'Administrator',
+    'USERTYPE.DR' => 'Pengemudi',
+    'USERTYPE.FD' => 'Pelayan',
+    'USERTYPE.FIN' => 'Keuangan',
+    'USERTYPE.C' => 'Pelanggan',
+    'USERTYPE.S' => 'Supplier',
     'TRUCKTYPE.OIL_8T' => 'Truck Minyak 8T',
     'TRUCKTYPE.CARGO_8T' => 'Truck Barang 8T',
     'TRUCKTYPE.CARGO_25T' => 'Truck Barang 25T',
@@ -46,11 +51,4 @@ return [
     'CUSTOMERTYPE.WI' => 'Pelanggan Baru',
     'PRICELEVELTYPE.INC' => 'Kenaikan Nilai',
     'PRICELEVELTYPE.PCT' => 'Kenaikan Persentase',
-    'USERTYPE' => [
-        'DR' => '',
-        'FD' => '',
-        'FIN' => '',
-        'C' => '',
-        'S' => '',
-    ],
 ];

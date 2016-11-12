@@ -130,7 +130,8 @@
                 </li>
             @endif
             @if(Entrust::can('bank.upload') OR
-                Entrust::can('bank.consolidate'))
+                Entrust::can('bank.consolidate') OR
+                Entrust::can('bank.giro'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.bank') || Active::checkRoutePattern('db.bank.*')) }}">
                     <a href="#"><i class="fa fa-bank fa-fw"></i><span>&nbsp;@lang('menu.item.bank')</span>
                         <span class="pull-right-container">
@@ -146,6 +147,11 @@
                         @if(Entrust::can('bank.consolidate'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.bank.consolidate')) }}">
                                 <a href="#"><i class="fa fa-compress fa-fw"></i>&nbsp;@lang('menu.item.bank_consolidate')</a>
+                            </li>
+                        @endif
+                        @if(Entrust::can('bank.giro'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.bank.giro') || Active::checkRoutePattern('db.bank.giro.*')) }}">
+                                <a href="#"><i class="fa fa-book fa-fw"></i>&nbsp;@lang('menu.item.bank_giro')</a>
                             </li>
                         @endif
                     </ul>

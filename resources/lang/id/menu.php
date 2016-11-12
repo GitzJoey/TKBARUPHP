@@ -25,6 +25,7 @@ return [
     'item.bank' => 'Bank',
     'item.bank_upload' => 'Upload',
     'item.bank_consolidate' => 'Konsolidasi',
+    'item.bank_giro' => 'Giro',
     'item.customer' => 'Pelanggan',
     'item.customer_confirm' => 'Konfirmasi',
     'item.customer_approval' => 'Persetujuan',

@@ -392,6 +392,26 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Enable Consolidate Bank Data'
             ],
             [
+                'name' => 'bank.giro',
+                'display_name' => '[Bank Giro] Display Giro Listing',
+                'description' => 'See only Listing Of Giro'
+            ],
+            [
+                'name' => 'bank.giro-create',
+                'display_name' => '[Bank Giro] Create Giro',
+                'description' => 'Create Giro'
+            ],
+            [
+                'name' => 'bank.giro-edit',
+                'display_name' => '[Bank Giro] Edit Giro',
+                'description' => 'Edit Giro'
+            ],
+            [
+                'name' => 'bank.giro-delete',
+                'display_name' => '[Bank Giro] Delete Giro',
+                'description' => 'Delete Giro'
+            ],
+            [
                 'name' => 'customer.confirmation',
                 'display_name' => '[Customer] Customer Confirmation',
                 'description' => 'Enable Customer Confirmation'

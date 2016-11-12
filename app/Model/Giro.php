@@ -39,10 +39,27 @@ use Illuminate\Support\Facades\Auth;
  */
 class Giro extends Model
 {
-
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    protected $fillable = [
+        'bank_id',
+        'serial_number',
+        'effective_date',
+        'amount',
+        'printed_name',
+        'remarks'
+    ];
+
+    protected $hidden = [
+        'created_by',
+        'created_at',
+        'updated_by',
+        'updated_at',
+        'deleted_by',
+        'deleted_at',
+    ];
 
     public static function boot()
     {
