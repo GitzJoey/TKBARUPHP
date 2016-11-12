@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-giro fa-fw"></span>&nbsp;@lang('giro.index.page_title')
+    <span class="fa fa-book fa-fw"></span>&nbsp;@lang('giro.index.page_title')
 @endsection
 @section('page_title_desc')
     @lang('giro.index.page_title_desc')
@@ -58,7 +58,7 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.master.truck.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
+            <a class="btn btn-success" href="{{ route('db.bank.giro.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $girolist->render() !!}
         </div>
     </div>

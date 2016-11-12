@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-giro fa-fw"></span>&nbsp;@lang('giro.edit.page_title')
+    <span class="fa fa-book fa-fw"></span>&nbsp;@lang('giro.edit.page_title')
 @endsection
 
 @section('page_title_desc')
@@ -59,7 +59,7 @@
                 <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
                     <label for="inputAmount" class="col-sm-2 control-label">@lang('giro.field.amount')</label>
                     <div class="col-sm-10">
-                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('giro.field.amount')">
+                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('giro.field.amount')" data-parsley-required="true" data-parsley-type="number">
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>
                 </div>

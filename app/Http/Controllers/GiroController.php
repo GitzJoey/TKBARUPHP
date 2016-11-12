@@ -12,6 +12,7 @@ use Vinkla\Hashids\Facades\Hashids;
 
 use App\Model\Bank;
 use App\Model\Giro;
+use App\Model\Lookup;
 
 class GiroController extends Controller
 {
@@ -34,7 +35,7 @@ class GiroController extends Controller
 
     public function create()
     {
-        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get();
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->pluck('name', 'id');
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
         return view('giro.create', compact('statusDDL', 'bankDDL'));
@@ -70,7 +71,7 @@ class GiroController extends Controller
     {
         $giro = Giro::find($id);
 
-        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get();
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->pluck('name', 'id');
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
         return view('giro.edit', compact('giro', 'statusDDL', 'bankDDL'));
