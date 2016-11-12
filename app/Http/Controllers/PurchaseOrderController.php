@@ -16,6 +16,7 @@ use App\Model\Payment;
 use App\Model\Product;
 use App\Model\ProductUnit;
 use App\Model\Supplier;
+use App\Model\TransferPayment;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
@@ -203,7 +204,7 @@ class PurchaseOrderController extends Controller
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products', 'supplier.products.type',
             'vendorTrucking', 'warehouse')->find($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
-        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRANSFERPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.C';
         
@@ -246,7 +247,7 @@ class PurchaseOrderController extends Controller
             'vendorTrucking', 'warehouse')->find($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $bankDDL = Bank::all(['id', 'name']);
-        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRANSFERPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.T';
 
@@ -257,19 +258,22 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@saveTransferPayment]');
 
-        $cashPayment = new CashPayment();
-        $cashPayment->save();
+        $transferPayment = new TransferPayment();
+        $transferPayment->bank_from_id = $request->input('bank_from');
+        $transferPayment->bank_to_id = $request->input('bank_to');
+        $transferPayment->effective_date = date('Y-m-d', strtotime($request->input('effective_date')));
+        $transferPayment->save();
 
         $paymentParam = [
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
             'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
-            'status' => Lookup::whereCode('CASHPAYMENTSTATUS.C')->first()->code,
-            'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
+            'status' => Lookup::whereCode('TRFPAYMENTSTATUS.UNCONFIRMED')->first()->code,
+            'type' => Lookup::whereCode('PAYMENTTYPE.T')->first()->code
         ];
 
         $payment = Payment::create($paymentParam);
 
-        $cashPayment->payment()->save($payment);
+        $transferPayment->payment()->save($payment);
 
         $currentPo = PurchaseOrder::find($id);
 

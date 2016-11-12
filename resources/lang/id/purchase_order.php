@@ -130,7 +130,9 @@ return [
                 'payment_type' => 'Tipe Pembayaran',
                 'payment_date' => 'Tanggal Pembayaran',
                 'payment_amount' => 'Jumlah Pembayaran',
-                'effective_date' => 'Tanggal Efektif'
+                'effective_date' => 'Tanggal Efektif',
+                'bank_from' => 'Bank Asal',
+                'bank_to' => 'Bank Tujuan'
             ],
             'po_code' => 'Kode',
             'po_type' => 'Tipe',
