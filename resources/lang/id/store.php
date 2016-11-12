@@ -8,6 +8,17 @@ return [
         'header' => [
             'title' => 'Tambah Toko',
         ],
+        'tab' => [
+            'store' => 'Data Toko',
+            'bank_account' => 'Rekening Bank',
+        ],
+        'table_bank' => [
+            'header' => [
+                'bank' => 'Bank',
+                'account_number' => 'Nomor Rekening',
+                'remarks' => 'Catatan',
+            ],
+        ],
     ],
     'field' => [
         'name' => 'Nama',

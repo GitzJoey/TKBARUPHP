@@ -8,6 +8,17 @@ return [
         'header' => [
             'title' => 'Create Store',
         ],
+        'tab' => [
+            'store' => 'Store Data',
+            'bank_account' => 'Bank Account',
+        ],
+        'table_bank' => [
+            'header' => [
+                'bank' => 'Bank',
+                'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
     ],
     'field' => [
         'name' => 'Name',
