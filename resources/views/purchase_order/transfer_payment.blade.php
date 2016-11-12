@@ -362,7 +362,7 @@
                                         @foreach( $bankDDL as $key => $bank)
                                             <div class="radio">
                                                 <label class="noleftpadding">
-                                                    <input id="bank_{{ $key }}" name="bank_from" value="{{ $bank->id }}"
+                                                    <input id="bank_from_{{ $key }}" name="bank_from" value="{{ $bank->id }}"
                                                            type="radio" {{ empty($key) ? 'checked="checked" data-parsley-required="true"' : '' }}>
                                                     {{ $bank->name }}</label>
                                             </div>
@@ -373,7 +373,7 @@
                                         @foreach( $bankDDL as $key => $bank)
                                             <div class="radio">
                                                 <label class="noleftpadding">
-                                                    <input id="bank_{{ $key }}" name="bank_to" value="{{ $bank->id }}"
+                                                    <input id="bank_to_{{ $key }}" name="bank_to" value="{{ $bank->id }}"
                                                            type="radio" {{ empty($key) ? 'checked="checked" data-parsley-required="true"' : '' }}>
                                                     {{ $bank->name }}</label>
                                             </div>

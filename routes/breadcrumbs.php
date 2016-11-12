@@ -84,3 +84,8 @@ Breadcrumbs::register('sales_order_payment_cash', function ($breadcrumbs, $soId)
     $breadcrumbs->parent('sales_order_payment');
     $breadcrumbs->push('Cash Payment', route('db.so.payment.cash', $soId));
 });
+
+Breadcrumbs::register('sales_order_payment_transfer', function ($breadcrumbs, $soId){
+    $breadcrumbs->parent('sales_order_payment');
+    $breadcrumbs->push('Transfer Payment', route('db.so.payment.transfer', $soId));
+});

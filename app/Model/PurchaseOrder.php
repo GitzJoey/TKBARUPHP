@@ -147,7 +147,9 @@ class PurchaseOrder extends Model
 
     public function totalAmountPaid()
     {
-        return $this->payments->sum('total_amount');
+        return $this->payments->filter(function ($payment, $key){
+            return $payment->status !== 'TRFPAYMENTSTATUS.UNCONFIRMED';
+        })->sum('total_amount');
     }
 
     public function updatePaymentStatus()
