@@ -15,6 +15,7 @@ class CreateGirosTable extends Migration
     {
         Schema::create('giros', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('bank_id')->default(0);
             $table->string('serial_number')->nullable();
             $table->date('effective_date')->nullable();

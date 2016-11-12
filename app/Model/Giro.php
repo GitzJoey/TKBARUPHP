@@ -2,9 +2,10 @@
 
 namespace App\Model;
 
+use Auth;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Model\Giro
@@ -60,6 +61,21 @@ class Giro extends Model
         'deleted_by',
         'deleted_at',
     ];
+
+    public function hId()
+    {
+        return HashIds::encode($this->attributes['id']);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store', 'store_id');
+    }
+
+    public function bank()
+    {
+        return $this->belongsTo('App\Model\Bank', 'bank_id');
+    }
 
     public static function boot()
     {

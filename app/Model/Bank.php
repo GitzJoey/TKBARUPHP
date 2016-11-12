@@ -87,6 +87,11 @@ class Bank extends Model
         return $this->hasMany('App\Model\BankAccount', 'bank_id');
     }
 
+    public function Giros()
+    {
+        return $this->hasMany('App\Model\Giro', 'bank_id');
+    }
+
     public static function boot()
     {
         parent::boot();

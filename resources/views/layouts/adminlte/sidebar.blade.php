@@ -151,7 +151,7 @@
                         @endif
                         @if(Entrust::can('bank.giro'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.bank.giro') || Active::checkRoutePattern('db.bank.giro.*')) }}">
-                                <a href="#"><i class="fa fa-book fa-fw"></i>&nbsp;@lang('menu.item.bank_giro')</a>
+                                <a href="{{ route('db.bank.giro') }}"><i class="fa fa-book fa-fw"></i>&nbsp;@lang('menu.item.bank_giro')</a>
                             </li>
                         @endif
                     </ul>
