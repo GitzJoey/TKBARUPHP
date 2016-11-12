@@ -62,19 +62,41 @@ class SalesOrderController extends Controller
         $submitIndex = $request->input('submit');
         $cancelIndex = $request->input('cancel');
 
+        Log::info('SalesOrderController@store SO tab count = '.count($request->input('so_code')));
         Log::info("SalesOrderController@store submitIndex = $submitIndex");
         Log::info("SalesOrderController@store cancelIndex = $cancelIndex");
 
         if(isset($submitIndex)){
+
+            $validationRules = [
+                'so_code.'.$submitIndex => 'required|string|max:255',
+                'sales_type.'.$submitIndex => 'required|string|max:255',
+                'so_created.'.$submitIndex => 'required|string|max:255',
+                'shipping_date.'.$submitIndex => 'required|string|max:255',
+                'customer_type.'.$submitIndex => 'required|string|max:255'
+            ];
+
             if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R'){
                 $customer_id = empty($request->input("customer_id.$submitIndex")) ? 0 :$request->input("customer_id.$submitIndex");
                 $walk_in_cust = '';
                 $walk_in_cust_detail = '';
+                $validationRules['customer_id.'.$submitIndex] = 'required';
             } else {
                 $customer_id = 0;
                 $walk_in_cust = $request->input("walk_in_customer.$submitIndex");
                 $walk_in_cust_detail = $request->input("walk_in_customer_details.$submitIndex");
+                $validationRules['walk_in_customer.'.$submitIndex] = 'required|string|max:255';
+                $validationRules['walk_in_customer_details.'.$submitIndex] = 'required|string|max:255';
             }
+
+            Log::info('SalesOrderController@store Before validation ');
+            Log::info('SalesOrderController@store customer_id : '.$request->input("customer_id.$submitIndex"));
+            Log::info('SalesOrderController@store walk_in_cust : '.$request->input("walk_in_customer.$submitIndex"));
+            Log::info('SalesOrderController@store walk_in_cust_detail : '.$request->input("walk_in_customer_details.$submitIndex"));
+
+            $this->validate($request, $validationRules);
+
+            Log::info('SalesOrderController@store submitted SO is valid');
 
             $params = [
                 'customer_type' => $request->input("customer_type.$submitIndex"),

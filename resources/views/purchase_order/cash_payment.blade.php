@@ -374,7 +374,7 @@
                                                     Rp
                                                 </div>
                                                 <input type="text" class="form-control" id="inputPaymentAmount"
-                                                       name="total_amount" data-parsley-required="true" fcsa-number>
+                                                       name="total_amount" ng-model="total_amount" data-parsley-required="true" fcsa-number>
                                             </div>
                                         </div>
                                     </div>
