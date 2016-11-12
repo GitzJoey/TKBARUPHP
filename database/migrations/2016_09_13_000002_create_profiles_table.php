@@ -17,11 +17,13 @@ Class CreateProfilesTable extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->default(0);
+            $table->unsignedBigInteger('owner_id')->default(0);
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('address')->nullable();
             $table->string('ic_num')->nullable();
             $table->string('image_filename')->nullable();
+            $table->string('owner_type')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);
