@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('settings.edit.header.title')</h3>
         </div>
-        {!! Form::model($settings, ['method' => 'PATCH','route' => ['db.admin.settings.edit', $settings->hId()], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($settings, ['method' => 'PATCH', 'route' => ['db.admin.settings.edit', $settings->hId()], 'class' => 'form-horizontal']) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputUserId" class="col-sm-2 control-label">@lang('settings.field.user_id')</label>

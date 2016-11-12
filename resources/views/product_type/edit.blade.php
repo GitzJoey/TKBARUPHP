@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('product_type.edit.header.title')</h3>
         </div>
-        {!! Form::model($prodtype, ['method' => 'PATCH','route' => ['db.master.producttype.edit', $prodtype->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'true']) !!}
+        {!! Form::model($prodtype, ['method' => 'PATCH', 'route' => ['db.master.producttype.edit', $prodtype->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'true']) !!}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputName" class="col-sm-2 control-label">@lang('product_type.field.name')</label>

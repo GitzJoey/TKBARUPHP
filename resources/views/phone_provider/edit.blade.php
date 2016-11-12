@@ -28,7 +28,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('phone_provider.edit.header.title')</h3>
         </div>
-        {!! Form::model($phoneProvider, ['method' => 'PATCH','route' => ['db.admin.phone_provider.edit', $phoneProvider->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'true']) !!}
+        {!! Form::model($phoneProvider, ['method' => 'PATCH', 'route' => ['db.admin.phone_provider.edit', $phoneProvider->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'true']) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('phone_provider.field.name')</label>

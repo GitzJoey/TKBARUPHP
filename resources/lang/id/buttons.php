@@ -17,15 +17,4 @@ return [
     'make_copy_button' => 'Buat Duplikat',
     'send_button' => 'Kirim',
     'reject_button' => 'Tolak',
-    'create' => [
-        'cancel' => '',
-        'save' => '',
-    ],
-    'edit' => [
-        'save' => '',
-        'cancel' => '',
-    ],
-    'show' => [
-        'cancel' => '',
-    ],
 ];

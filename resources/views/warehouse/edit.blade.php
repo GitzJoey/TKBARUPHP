@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('warehouse.edit.header.title')</h3>
         </div>
-        {!! Form::model($warehouse, ['method' => 'PATCH','route' => ['db.master.warehouse.edit', $warehouse->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($warehouse, ['method' => 'PATCH', 'route' => ['db.master.warehouse.edit', $warehouse->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         <div class="box-body">
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>

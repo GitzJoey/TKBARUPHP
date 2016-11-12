@@ -113,7 +113,11 @@ class PurchaseOrderController extends Controller
             $po->items()->save($item);
         }
 
-        return redirect(route('db'));
+        if (!empty($request->input('submitcreate'))) {
+            return redirect()->action('PurchaseOrderController@create');
+        } else {
+            return redirect(route('db'));
+        }
     }
 
     public function index()
@@ -131,7 +135,7 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@revise]');
 
         $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
-            'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'vendorTrucking', 'warehouse')->find($id);
+            'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type', 'vendorTrucking', 'warehouse')->find($id);
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
 
@@ -196,7 +200,7 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@createCashPayment]');
 
         $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
-            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
+            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products', 'supplier.products.type',
             'vendorTrucking', 'warehouse')->find($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRANSFERPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])

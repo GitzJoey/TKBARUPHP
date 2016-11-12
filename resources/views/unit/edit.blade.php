@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('unit.edit.header.title')</h3>
         </div>
-        {!! Form::model($unit, ['method' => 'PATCH','route' => ['db.admin.unit.edit', $unit->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($unit, ['method' => 'PATCH', 'route' => ['db.admin.unit.edit', $unit->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputUnitName" class="col-sm-2 control-label">@lang('unit.field.name')</label>

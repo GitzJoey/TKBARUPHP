@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('price_level.edit.header.title')</h3>
         </div>
-        {!! Form::model($pricelevel, ['method' => 'PATCH','route' => ['db.price.price_level.edit', $pricelevel->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($pricelevel, ['method' => 'PATCH', 'route' => ['db.price.price_level.edit', $pricelevel->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="box-body">
                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">

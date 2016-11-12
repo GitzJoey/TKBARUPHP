@@ -27,7 +27,7 @@
     @endif
 
     <div ng-app="soModule" ng-controller="soController">
-        {!! Form::model($currentSo, ['method' => 'PATCH','route' => ['db.so.revise', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($currentSo, ['method' => 'PATCH', 'route' => ['db.so.revise', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         {{ csrf_field() }}
         <div class="box-body">
             <div class="row">

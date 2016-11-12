@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('store.edit.header.title')</h3>
         </div>
-        {!! Form::model($store, ['method' => 'PATCH','route' => ['db.admin.store.edit', $store->hId()], 'class' => 'form-horizontal', 'data-parsley-required' => 'true']) !!}
+        {!! Form::model($store, ['method' => 'PATCH', 'route' => ['db.admin.store.edit', $store->hId()], 'class' => 'form-horizontal', 'data-parsley-required' => 'true']) !!}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputStoreName" class="col-sm-2 control-label">@lang('store.field.name')</label>

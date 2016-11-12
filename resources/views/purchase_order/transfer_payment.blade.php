@@ -27,7 +27,7 @@
     @endif
 
     <div ng-app="poModule" ng-controller="poController">
-        {!! Form::model($currentPo, ['method' => 'POST','route' => ['db.po.payment.transfer', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.transfer', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-10">

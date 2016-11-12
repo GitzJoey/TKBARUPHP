@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('vendor_trucking.edit.header.title')</h3>
         </div>
-        {!! Form::model($vt, ['method' => 'PATCH','route' => ['db.master.vendor.trucking.edit', $vt->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($vt, ['method' => 'PATCH', 'route' => ['db.master.vendor.trucking.edit', $vt->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     <label for="inputStoreName" class="col-sm-2 control-label">@lang('vendor_trucking.field.name')</label>

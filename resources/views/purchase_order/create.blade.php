@@ -324,9 +324,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-7 col-offset-md-5">
+                <div class="col-md-8 col-offset-md-4">
                     <div class="btn-toolbar">
-                        <button id="submitButton" type="submit"
+                        <button id="submitAndCreateButton" type="submit"
+                                class="btn btn-primary pull-right" name="submitcreate" value="create_new">@lang('buttons.submit_button')&nbsp;&amp;&nbsp;@lang('buttons.create_new_button')</button>
+                        <button id="submitButton" type="submit" name="submit"
                                 class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
                         <a id="printButton" href="#" target="_blank"
                            class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;

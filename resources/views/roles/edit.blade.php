@@ -28,7 +28,7 @@
             <h3 class="box-title">@lang('role.edit.header.title')</h3>
         </div>
 
-        {!! Form::model($role, ['method' => 'PATCH','route' => ['db.admin.roles.edit', $role->hId()], 'class' => 'form-horizontal']) !!}
+        {!! Form::model($role, ['method' => 'PATCH', 'route' => ['db.admin.roles.edit', $role->hId()], 'class' => 'form-horizontal']) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">@lang('role.field.name')</label>

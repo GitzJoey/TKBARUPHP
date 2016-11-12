@@ -17,15 +17,4 @@ return [
     'make_copy_button' => 'Make Copy',
     'send_button' => 'Send',
     'reject_button' => 'Reject',
-    'create' => [
-        'cancel' => '',
-        'save' => '',
-    ],
-    'edit' => [
-        'save' => '',
-        'cancel' => '',
-    ],
-    'show' => [
-        'cancel' => '',
-    ],
 ];
