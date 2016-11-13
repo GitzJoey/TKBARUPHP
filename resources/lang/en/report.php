@@ -29,6 +29,27 @@ return [
         'title' => 'Report Management',
         'page_title' => 'Master Data',
         'page_title_desc' => '',
+        'header' => [
+            'customer' => 'Customer',
+            'supplier' => 'Supplier',
+            'product' => 'Product',
+            'product_type' => 'Product Type',
+            'bank' => 'Bank',
+            'warehouse' => 'Warehouse',
+            'truck' => 'Truck',
+            'truck_maintenance' => 'Truck Maintenance',
+            'vendor_trucking' => 'Vendor Trucking',
+        ],
+        'field' => [
+            'name' => 'Name',
+            'profile_name' => 'Profile Name',
+            'bank_account' => 'Bank Accounts',
+            'short_code' => 'Short Code',
+            'short_name' => 'Short Name',
+            'branch' => 'Branch',
+            'branch_code' => 'Branch Code',
+            'plate_number' => 'Plate Number',
+        ],
     ],
     'monitoring' => [
         'title' => 'Report Management',
@@ -42,7 +63,7 @@ return [
     ],
     'transaction' => [
         'title' => 'Report Management',
-        'page_title' => '',
+        'page_title' => 'Transactions',
         'page_title_desc' => '',
     ],
 ];

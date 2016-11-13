@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Model\Role;
+use App\Model\Truck;
 use App\Model\Lookup;
 
 class ReportController extends Controller
@@ -36,7 +37,9 @@ class ReportController extends Controller
 
     public function report_master()
     {
-        return view('report.master');
+        $trucklist = Truck::get()->pluck('plate_number', 'id');
+
+        return view('report.master', compact('trucklist'));
     }
 
     public function report_admin()

@@ -34,28 +34,28 @@
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">@lang('bank.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="name" name="name" type="text" class="form-control" placeholder="@lang('bank.field.name')" data-parsley-required="true">
+                        <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('bank.field.name')" data-parsley-required="true">
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputShortName" class="col-sm-2 control-label">@lang('bank.field.short_name')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="short_name" name="short_name" placeholder="@lang('bank.field.short_name')">
+                        <input type="text" class="form-control" id="inputShortName" name="short_name" placeholder="@lang('bank.field.short_name')">
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputBranch" class="col-sm-2 control-label">@lang('bank.field.branch')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="branch" name="branch" placeholder="@lang('bank.field.branch')">
+                        <input type="text" class="form-control" id="inputBranch" name="branch" placeholder="@lang('bank.field.branch')">
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputBranch" class="col-sm-2 control-label">@lang('bank.field.branch_code')</label>
+                    <label for="inputBranchCode" class="col-sm-2 control-label">@lang('bank.field.branch_code')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="branch_code" name="branch_code" placeholder="@lang('bank.field.branch_code')">
+                        <input type="text" class="form-control" id="inputBranchCode" name="branch_code" placeholder="@lang('bank.field.branch_code')">
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <label for="inputRemarks" class="col-sm-2 control-label">@lang('bank.field.remarks')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('bank.field.remarks')">
+                        <input type="text" class="form-control" id="inputRemarks" name="remarks" placeholder="@lang('bank.field.remarks')">
                     </div>
                 </div>
             </div>
