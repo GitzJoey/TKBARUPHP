@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2016-11-11.
+    * Generated on 2016-11-13.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -137,6 +137,7 @@ namespace PHPSTORM_META {
             'auth.password' instanceof \Illuminate\Auth\Passwords\PasswordBrokerManager,
             'auth.password.broker' instanceof \Illuminate\Auth\Passwords\PasswordBroker,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
+            'App\Services\PurchaseOrderService' instanceof \App\Services\Implementation\PurchaseOrderServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -271,6 +272,7 @@ namespace PHPSTORM_META {
             'auth.password' instanceof \Illuminate\Auth\Passwords\PasswordBrokerManager,
             'auth.password.broker' instanceof \Illuminate\Auth\Passwords\PasswordBroker,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
+            'App\Services\PurchaseOrderService' instanceof \App\Services\Implementation\PurchaseOrderServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -405,6 +407,7 @@ namespace PHPSTORM_META {
             'auth.password' instanceof \Illuminate\Auth\Passwords\PasswordBrokerManager,
             'auth.password.broker' instanceof \Illuminate\Auth\Passwords\PasswordBroker,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
+            'App\Services\PurchaseOrderService' instanceof \App\Services\Implementation\PurchaseOrderServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -539,6 +542,7 @@ namespace PHPSTORM_META {
             'auth.password' instanceof \Illuminate\Auth\Passwords\PasswordBrokerManager,
             'auth.password.broker' instanceof \Illuminate\Auth\Passwords\PasswordBroker,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
+            'App\Services\PurchaseOrderService' instanceof \App\Services\Implementation\PurchaseOrderServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,

@@ -39,6 +39,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property-read \App\Role $role
  * @property-read \App\UserDetail $userDetail
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Settings[] $settings
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
  */
 class User extends Authenticatable
 {

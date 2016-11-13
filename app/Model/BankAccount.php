@@ -43,6 +43,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Supplier[] $suppliers
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Customer[] $customers
+ * @property integer $owner_id
+ * @property string $owner_type
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereOwnerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereOwnerType($value)
  */
 class BankAccount extends Model
 {
