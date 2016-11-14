@@ -110,6 +110,13 @@ class PurchaseOrderController extends Controller
         return redirect(route('db.po.revise.index'));
     }
 
+    public function delete(Request $request, $id)
+    {
+        $this->purchaseOrderService->rejectPO($request, $id);
+
+        return redirect(route('db.po.revise.index'));
+    }
+
     public function paymentIndex()
     {
         Log::info('[PurchaseOrderController@paymentIndex]');
@@ -209,12 +216,5 @@ class PurchaseOrderController extends Controller
         $currentPo->payments()->save($payment);
 
         return redirect(route('db.po.payment.index'));
-    }
-
-    public function delete(Request $request, $id)
-    {
-        $this->purchaseOrderService->rejectPO($request, $id);
-
-        return redirect(route('db.po.revise.index'));
     }
 }

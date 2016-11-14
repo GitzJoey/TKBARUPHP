@@ -81,7 +81,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      * only it's items price can be changed. The revised(modified) purchase order will be returned.
      *
      * @param Request $request request which contains values from revise form to revise the purchase order.
-     * @param $id the id of purchase order to be revised.
+     * @param int $id the id of purchase order to be revised.
      * @return PurchaseOrder
      */
     public function revisePO(Request $request, $id)
@@ -131,7 +131,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      * Reject a purchase order. Only purchase orders with status waiting for arrival can be rejected.
      *
      * @param Request $request request which contains values for purchase order rejection.
-     * @param $id the id of purchase order to be rejected.
+     * @param int $id the id of purchase order to be rejected.
      * @return void
      */
     public function rejectPO(Request $request, $id)
