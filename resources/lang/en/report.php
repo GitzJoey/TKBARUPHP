@@ -1,29 +1,69 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Sugito
- * Date: 9/26/2016
- * Time: 7:27 PM
- */
+<?php 
+
 return [
-    'transaction.title' => 'Report Management',
-    'transaction.page_title' => 'Transaction',
-    'transaction.page_title_desc' => '',
-    'transaction.header.title' => 'Transaction',
-    'monitoring.title' => 'Report Management',
-    'monitoring.page_title' => 'Monitoring',
-    'monitoring.page_title_desc' => '',
-    'monitoring.header.title' => 'Monitoring',
-    'tax.title' => 'Report Management',
-    'tax.page_title' => 'Tax Report',
-    'tax.page_title_desc' => '',
-    'tax.header.title' => 'Tax Report',
-    'master.title' => 'Report Management',
-    'master.page_title' => 'Master Data',
-    'master.page_title_desc' => '',
-    'master.header.title' => 'Master Data',
-    'admin.title' => 'Report Management',
-    'admin.page_title' => 'Admin Data',
-    'admin.page_title_desc' => '',
-    'admin.header.title' => 'Admin Data',
+    'admin' => [
+        'title' => 'Report Management',
+        'page_title' => 'Admin Data',
+        'page_title_desc' => '',
+        'header' => [
+            'user' => 'User',
+            'role' => 'Role',
+            'store' => 'Store',
+            'unit' => 'Unit',
+            'phone_provider' => 'Phone Provider',
+            'settings' => 'Settings',
+        ],
+        'field' => [
+            'user' => 'User',
+            'email' => 'Email',
+            'role' => 'Role',
+            'profile' => 'Profile',
+            'name' => 'Name',
+            'permission' => 'Permission',
+            'tax_id' => 'Tax ID',
+            'symbol' => 'Symbol',
+            'short_name' => 'Short Name',
+        ],
+    ],
+    'master' => [
+        'title' => 'Report Management',
+        'page_title' => 'Master Data',
+        'page_title_desc' => '',
+        'header' => [
+            'customer' => 'Customer',
+            'supplier' => 'Supplier',
+            'product' => 'Product',
+            'product_type' => 'Product Type',
+            'bank' => 'Bank',
+            'warehouse' => 'Warehouse',
+            'truck' => 'Truck',
+            'truck_maintenance' => 'Truck Maintenance',
+            'vendor_trucking' => 'Vendor Trucking',
+        ],
+        'field' => [
+            'name' => 'Name',
+            'profile_name' => 'Profile Name',
+            'bank_account' => 'Bank Accounts',
+            'short_code' => 'Short Code',
+            'short_name' => 'Short Name',
+            'branch' => 'Branch',
+            'branch_code' => 'Branch Code',
+            'plate_number' => 'Plate Number',
+        ],
+    ],
+    'monitoring' => [
+        'title' => 'Report Management',
+        'page_title' => 'Monitoring',
+        'page_title_desc' => '',
+    ],
+    'tax' => [
+        'title' => 'Report Management',
+        'page_title' => 'Tax Report',
+        'page_title_desc' => '',
+    ],
+    'transaction' => [
+        'title' => 'Report Management',
+        'page_title' => 'Transactions',
+        'page_title_desc' => '',
+    ],
 ];

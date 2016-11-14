@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="name" name="name" type="text" class="form-control" placeholder="@lang('warehouse.field.name')" data-parsley-required="true">
+                        <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('warehouse.field.name')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>

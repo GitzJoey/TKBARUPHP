@@ -38,7 +38,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@show] $id: ' . $id);
 
-        $store = Store::find($id);
+        $store = Store::with('bankAccounts.bank')->where('id', '=', $id)->first();
 
         return view('store.show')->with('store', $store);
     }
@@ -121,12 +121,13 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@edit] $id:' . $id);
 
-        $store = Store::find($id);
+        $store = Store::with('bankAccounts.bank')->where('id', '=' , $id)->first();
 
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
 
-        return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL'));
+        return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL', 'bankDDL'));
     }
 
     public function update($id, Request $data)
@@ -146,6 +147,17 @@ class StoreController extends Controller
 
         if ($data['is_default'] == 'YESNOSELECT.YES') {
             $this->resetIsDefault();
+        }
+
+        $store->bankAccounts()->delete();
+
+        for ($i = 0; $i < count($data['bank']); $i++) {
+            $ba = new BankAccount();
+            $ba->bank_id = $data["bank"][$i];
+            $ba->account_number = $data["account_number"][$i];
+            $ba->remarks = $data["bank_remarks"][$i];
+
+            $store->bankAccounts()->save($ba);
         }
 
         $store->name = $data['name'];
@@ -168,18 +180,18 @@ class StoreController extends Controller
 
         $store = Store::find($id);
 
-        $validator = Validator::extend('isdefault', function($field, $value, $parameters){
-            return $value == 'YESNOSELECT.YES' ? false:true;
+        $validator = Validator::extend('isdefault', function ($field, $value, $parameters) {
+            return $value == 'YESNOSELECT.YES' ? false : true;
         });
 
         $inputs = array(
             'is_default' => $store->is_default
         );
 
-        $rules = array('is_default'=>'isdefault');
+        $rules = array('is_default' => 'isdefault');
 
         $messages = array(
-            'isdefault'=>'Default Store cannot be deleted'
+            'isdefault' => 'Default Store cannot be deleted'
         );
 
         $validator = Validator::make($inputs, $rules, $messages);
@@ -187,6 +199,7 @@ class StoreController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.admin.store'))->withErrors($validator);
         } else {
+            $store->bankAccounts()->delete();
             $store->delete();
         }
 

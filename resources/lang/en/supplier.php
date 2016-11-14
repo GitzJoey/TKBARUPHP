@@ -41,6 +41,15 @@ return [
                 'remarks' => 'Remarks',
             ],
         ],
+        'table' => [
+            'header' => [
+                'type' => '',
+                'name' => '',
+                'short_code' => '',
+                'description' => '',
+                'remarks' => '',
+            ],
+        ],
     ],
     'field' => [
         'name' => 'Name',
@@ -97,6 +106,15 @@ return [
                 'short_code' => 'Short Code',
                 'description' => 'Description',
                 'remarks' => 'Remarks',
+            ],
+        ],
+        'table_prod' => [
+            'header' => [
+                'type' => '',
+                'name' => '',
+                'short_code' => '',
+                'description' => '',
+                'remarks' => '',
             ],
         ],
     ],

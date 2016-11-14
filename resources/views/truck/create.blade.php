@@ -33,7 +33,7 @@
                 <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
                     <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.field.plate_number')</label>
                     <div class="col-sm-10">
-                        <input id="plate_number" name="plate_number" type="text" class="form-control" placeholder="@lang('truck.field.plate_number')" data-parsley-required="true">
+                        <input id="inputPlateNumber" name="plate_number" type="text" class="form-control" placeholder="@lang('truck.field.plate_number')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('plate_number') ? $errors->first('plate_number') : '' }}</span>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control" id="inspection_date" name="inspection_date" data-parsley-required="true">
+                            <input type="text" class="form-control" id="inputInspectionDate" name="inspection_date" data-parsley-required="true">
                         </div>
                         <span class="help-block">{{ $errors->has('inspection_date') ? $errors->first('inspection_date') : '' }}</span>
                     </div>
@@ -52,7 +52,7 @@
                 <div class="form-group {{ $errors->has('driver') ? 'has-error' : '' }}">
                     <label for="inputDriver" class="col-sm-2 control-label">@lang('truck.field.driver')</label>
                     <div class="col-sm-10">
-                        <input id="driver" name="driver" type="text" class="form-control" placeholder="@lang('truck.field.driver')">
+                        <input id="inputDriver" name="driver" type="text" class="form-control" placeholder="@lang('truck.field.driver')">
                         <span class="help-block">{{ $errors->has('driver') ? $errors->first('driver') : '' }}</span>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
                     <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.field.remarks')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('truck.field.remarks')">
+                        <input type="text" class="form-control" id="inputRemarks" name="remarks" placeholder="@lang('truck.field.remarks')">
                         <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $("#inspection_date").daterangepicker({
+        $("#inputInspectionDate").daterangepicker({
             locale: {
                 format: 'DD-MM-YYYY'
             },

@@ -42,6 +42,8 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePayableId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePayableType($value)
  * @mixin \Eloquent
+ * @property string $type
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereType($value)
  */
 class Payment extends Model
 {

@@ -49,6 +49,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PhoneNumber[] $phoneNumbers
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Supplier[] $suppliers
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Customer[] $customers
+ * @property integer $owner_id
+ * @property string $owner_type
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereOwnerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereOwnerType($value)
  */
 class Profile extends Model
 {

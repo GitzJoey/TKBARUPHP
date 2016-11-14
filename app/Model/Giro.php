@@ -37,6 +37,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property integer $store_id
+ * @property string $status
+ * @property-read \App\Model\Store $store
+ * @property-read \App\Model\Bank $bank
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereStatus($value)
  */
 class Giro extends Model
 {

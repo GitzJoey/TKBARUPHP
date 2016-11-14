@@ -113,7 +113,7 @@ return [
             'page_title' => 'Sales Order Payment',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Sales Order List'
+                'title' => 'Sales Order List',
             ],
             'table' => [
                 'header' => [
@@ -122,9 +122,11 @@ return [
                     'customer' => 'Customer',
                     'total' => 'Total Amount',
                     'paid' => 'Paid Amount',
-                    'rest' => 'Rest Amount'
-                ]
-            ]
+                    'rest' => 'Rest Amount',
+                    'po_date' => '',
+                    'supplier' => '',
+                ],
+            ],
         ],
         'cash' => [
             'field' => [
@@ -136,7 +138,7 @@ return [
                 'vendor_trucking' => 'Vendor Trucking',
                 'payment_type' => 'Payment Type',
                 'payment_date' => 'Payment Date',
-                'payment_amount' => 'Payment Amount'
+                'payment_amount' => 'Payment Amount',
             ],
             'so_code' => 'Code',
             'so_type' => 'Type',
@@ -152,25 +154,25 @@ return [
                 'transactions' => 'Transaction',
                 'remarks' => 'Remarks',
                 'payment_history' => 'Payment History',
-                'payment' => 'Payment'
+                'payment' => 'Payment',
             ],
             'table' => [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product',
                         'header' => [
-                            'quantity' => 'Quantity'
+                            'quantity' => 'Quantity',
                         ],
                         'unit' => 'UoM',
                         'price_unit' => 'Price',
-                        'total_price' => 'Total Price'
+                        'total_price' => 'Total Price',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Total Amount',
                         'paid_amount' => 'Paid Amount',
-                        'to_be_paid_amount' => 'Rest Amount'
+                        'to_be_paid_amount' => 'Rest Amount',
                     ],
                 ],
                 'payments' => [
@@ -178,9 +180,9 @@ return [
                         'payment_type' => 'Payment Type',
                         'payment_date' => 'Payment Date',
                         'payment_amount' => 'Payment Amount',
-                        'payment_status' => 'Payment Status'
-                    ]
-                ]
+                        'payment_status' => 'Payment Status',
+                    ],
+                ],
             ],
         ],
         'transfer' => [
@@ -196,7 +198,7 @@ return [
                 'payment_amount' => 'Payment Amount',
                 'effective_date' => 'Effective Date',
                 'bank_from' => 'Bank From',
-                'bank_to' => 'Bank To'
+                'bank_to' => 'Bank To',
             ],
             'so_code' => 'Code',
             'so_type' => 'Type',
@@ -212,25 +214,25 @@ return [
                 'transactions' => 'Transaction',
                 'remarks' => 'Remarks',
                 'payment_history' => 'Payment History',
-                'payment' => 'Payment'
+                'payment' => 'Payment',
             ],
             'table' => [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product',
                         'header' => [
-                            'quantity' => 'Quantity'
+                            'quantity' => 'Quantity',
                         ],
                         'unit' => 'UoM',
                         'price_unit' => 'Price',
-                        'total_price' => 'Total Price'
+                        'total_price' => 'Total Price',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Total Amount',
                         'paid_amount' => 'Paid Amount',
-                        'to_be_paid_amount' => 'Rest Amount'
+                        'to_be_paid_amount' => 'Rest Amount',
                     ],
                 ],
                 'payments' => [
@@ -238,10 +240,10 @@ return [
                         'payment_type' => 'Payment Type',
                         'payment_date' => 'Payment Date',
                         'payment_amount' => 'Payment Amount',
-                        'payment_status' => 'Payment Status'
-                    ]
-                ]
+                        'payment_status' => 'Payment Status',
+                    ],
+                ],
             ],
-        ]
+        ],
     ],
 ];
