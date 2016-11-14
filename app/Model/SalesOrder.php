@@ -142,6 +142,27 @@ class SalesOrder extends Model
         return $this->morphMany('App\Model\Payment', 'payable');
     }
 
+    public function cashPayments()
+    {
+        return $this->payments->filter(function ($payment){
+            return $payment->type === 'PAYMENTTYPE.C';
+        });
+    }
+
+    public function transferPayments()
+    {
+        return $this->payments->filter(function ($payment){
+            return $payment->type === 'PAYMENTTYPE.T';
+        });
+    }
+
+    public function giroPayments()
+    {
+        return $this->payments->filter(function ($payment){
+            return $payment->type === 'PAYMENTTYPE.G';
+        });
+    }
+
     public function totalAmount()
     {
         return $this->items->map(function($item, $key){

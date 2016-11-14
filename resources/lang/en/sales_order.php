@@ -181,6 +181,12 @@ return [
                         'payment_date' => 'Payment Date',
                         'payment_amount' => 'Payment Amount',
                         'payment_status' => 'Payment Status',
+                        'effective_date' => 'Effective Date',
+                        'account_from' => 'Account From',
+                        'account_to' => 'Account To',
+                        'cash' => 'Cash',
+                        'transfer' => 'Transfer',
+                        'giro' => 'Giro'
                     ],
                 ],
             ],

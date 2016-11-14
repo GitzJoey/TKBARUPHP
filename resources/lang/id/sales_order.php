@@ -181,6 +181,12 @@ return [
                         'payment_date' => 'Tanggal Pembayaran',
                         'payment_amount' => 'Jumlah Pembayaran',
                         'payment_status' => 'Status Pembayaran',
+                        'effective_date' => 'Tanggal Efektif',
+                        'account_from' => 'Rekening Pengirim',
+                        'account_to' => 'Rekening Tujuan',
+                        'cash' => 'Tunai',
+                        'transfer' => 'Transfer',
+                        'giro' => 'Giro'
                     ],
                 ],
             ],
