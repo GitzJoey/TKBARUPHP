@@ -24,6 +24,16 @@ class TransferPayment extends Payment
         return $this->morphOne('App\Model\Payment', 'payment_detail');
     }
 
+    public function bankAccountFrom()
+    {
+        return $this->belongsTo('App\Model\BankAccount');
+    }
+
+    public function bankAccountTo()
+    {
+        return $this->belongsTo('App\Model\BankAccount');
+    }
+
     public static function boot()
     {
         static::creating(function ($model) {
