@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Bank;
 use App\Model\CashPayment;
 use App\Model\Lookup;
 use App\Model\Payment;
@@ -71,7 +70,7 @@ class PurchaseOrderController extends Controller
             'supplier_type' => 'required|string|max:255',
         ]);
 
-        $createdPO = $this->purchaseOrderService->createPO($request);
+        $this->purchaseOrderService->createPO($request);
 
         if (!empty($request->input('submitcreate'))) {
             return redirect()->action('PurchaseOrderController@create');
@@ -105,7 +104,7 @@ class PurchaseOrderController extends Controller
 
     public function saveRevision(Request $request, $id)
     {
-        $revisedPO = $this->purchaseOrderService->revisePO($request, $id);
+        $this->purchaseOrderService->revisePO($request, $id);
 
         return redirect(route('db.po.revise.index'));
     }
@@ -174,6 +173,7 @@ class PurchaseOrderController extends Controller
     public function createTransferPayment($id)
     {
         Log::info('[PurchaseOrderController@createTransferPayment]');
+
         $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
         $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',

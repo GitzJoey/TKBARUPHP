@@ -11,14 +11,12 @@ namespace App\Http\Controllers;
 use App\Model\Bank;
 use App\Model\CashPayment;
 use App\Model\Customer;
-use App\Model\Item;
 use App\Model\Lookup;
 use App\Model\Payment;
 use App\Model\Product;
-use App\Model\ProductUnit;
-use App\Model\PurchaseOrder;
 use App\Model\SalesOrder;
 use App\Model\Stock;
+use App\Model\Store;
 use App\Model\TransferPayment;
 use App\Model\VendorTrucking;
 use App\Model\Warehouse;
@@ -71,12 +69,12 @@ class SalesOrderController extends Controller
 
         $this->salesOrderService->storeToSession($request);
 
-        if(isset($submitIndex)) {
+        if (isset($submitIndex)) {
 
             $validationRules = [
-                'so_code.' . $submitIndex       => 'required|string|max:255',
-                'sales_type.' . $submitIndex    => 'required|string|max:255',
-                'so_created.' . $submitIndex    => 'required|string|max:255',
+                'so_code.' . $submitIndex => 'required|string|max:255',
+                'sales_type.' . $submitIndex => 'required|string|max:255',
+                'so_created.' . $submitIndex => 'required|string|max:255',
                 'shipping_date.' . $submitIndex => 'required|string|max:255',
                 'customer_type.' . $submitIndex => 'required|string|max:255'
             ];
@@ -97,15 +95,15 @@ class SalesOrderController extends Controller
             Validator::make($request->all(), $validationRules, $validationMessages)->validate();
 
             $this->salesOrderService->createSO($request, $submitIndex);
-        }
-        elseif (isset($cancelIndex)){
+        } elseif (isset($cancelIndex)) {
             $this->salesOrderService->cancelSO($cancelIndex);
         }
 
-        if(count($request->input('so_code')) > 1)
+        if (count($request->input('so_code')) > 1) {
             return redirect(route('db.so.create'));
-        else
+        } else {
             return redirect(route('db'));
+        }
     }
 
     public function index()
@@ -131,10 +129,12 @@ class SalesOrderController extends Controller
             ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
         $customerDDL = [];
         if ($currentSo->customer_id != 0) {
-            $customerDDL = Customer::with('bankAccounts', 'profiles.phoneNumbers.provider')->where('id', '=', $currentSo->customer->id)->get();
+            $customerDDL = Customer::with('bankAccounts', 'profiles.phoneNumbers.provider')->where('id', '=',
+                $currentSo->customer->id)->get();
         }
 
-        return view('sales_order.revise', compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL', 'customerDDL'));
+        return view('sales_order.revise',
+            compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL', 'customerDDL'));
     }
 
     public function saveRevision(Request $request, $id)
@@ -173,7 +173,8 @@ class SalesOrderController extends Controller
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.C';
 
-        return view('sales_order.cash_payment', compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType'));
+        return view('sales_order.cash_payment',
+            compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType'));
     }
 
     public function saveCashPayment(Request $request, $id)
@@ -207,16 +208,20 @@ class SalesOrderController extends Controller
     {
         Log::info('[SalesOrderController@createTransferPayment]');
 
+        $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
         $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
             'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank', 'vendorTrucking',
             'warehouse')->find($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
-        $bankDDL = Bank::all(['id', 'name']);
+        $storeBankAccounts = $currentStore->bankAccounts;
+        $customerBankAccounts = empty($currentSo->customer) ? collect([]) : $currentSo->customer->bankAccounts;
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.T';
 
-        return view('sales_order.transfer_payment', compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'bankDDL'));
+        return view('sales_order.transfer_payment',
+            compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'storeBankAccounts',
+                'customerBankAccounts'));
     }
 
     public function saveTransferPayment(Request $request, $id)
@@ -224,8 +229,8 @@ class SalesOrderController extends Controller
         Log::info('[SalesOrderController@saveTransferPayment]');
 
         $transferPayment = new TransferPayment();
-        $transferPayment->bank_from_id = $request->input('bank_from');
-        $transferPayment->bank_to_id = $request->input('bank_to');
+        $transferPayment->bank_account_from_id = empty($request->input('bank_account_from')) ? 0 : $request->input('bank_account_from');
+        $transferPayment->bank_account_to_id = empty($request->input('bank_account_to')) ? 0 : $request->input('bank_account_to');
         $transferPayment->effective_date = date('Y-m-d', strtotime($request->input('effective_date')));
         $transferPayment->save();
 
