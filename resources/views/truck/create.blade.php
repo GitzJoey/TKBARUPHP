@@ -30,6 +30,13 @@
         <form class="form-horizontal" action="{{ route('db.master.truck.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
+                <div class="form-group {{ $errors->has('truck_type') ? 'has-error' : '' }}">
+                    <label for="inputTruckType" class="col-sm-2 control-label">@lang('truck.field.truck_type')</label>
+                    <div class="col-sm-10">
+                        {{ Form::select('truck_type', $truckTypeDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        <span class="help-block">{{ $errors->has('truck_type') ? $errors->first('truck_type') : '' }}</span>
+                    </div>
+                </div>
                 <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
                     <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.field.plate_number')</label>
                     <div class="col-sm-10">

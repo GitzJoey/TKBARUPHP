@@ -10,6 +10,7 @@ return [
         ],
     ],
     'field' => [
+        'truck_type' => 'Tipe Truk',
         'plate_number' => 'Plat Nomor',
         'inspection_date' => 'Tanggal Inspeksi',
         'driver' => 'Pengemudi',
@@ -33,6 +34,7 @@ return [
         ],
         'table' => [
             'header' => [
+                'truck_type' => 'Tipe Truk',
                 'plate_number' => 'Plat Nomor',
                 'inspection_date' => 'Tanggal Inspeksi',
                 'driver' => 'Pengemudi',

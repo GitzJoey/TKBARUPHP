@@ -16,6 +16,7 @@ class CreateTrucksTable extends Migration
         Schema::create('trucks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
+            $table->string('type')->nullable();
             $table->string('plate_number')->nullable();
             $table->unique('plate_number');
             $table->date('inspection_date')->nullable();

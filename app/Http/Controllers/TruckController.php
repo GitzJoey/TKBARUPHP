@@ -32,14 +32,18 @@ class TruckController extends Controller
     public function show($id)
     {
         $truck = Truck::find($id);
-        return view('truck.show')->with('truck', $truck);
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $truckTypeDDL = Lookup::where('category', '=', 'TRUCKTYPE')->get()->pluck('description', 'code');
+
+        return view('truck.show', compact('statusDDL', 'truckTypeDDL'))->with('truck', $truck);
     }
 
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $truckTypeDDL = Lookup::where('category', '=', 'TRUCKTYPE')->get()->pluck('description', 'code');
 
-        return view('truck.create', compact('statusDDL'));
+        return view('truck.create', compact('statusDDL', 'truckTypeDDL'));
     }
 
     public function store(Request $data)
@@ -56,6 +60,7 @@ class TruckController extends Controller
         } else {
             Truck::create([
                 'store_id' => Auth::user()->store->id,
+                'type' => $data['truck_type'],
                 'plate_number' => $data['plate_number'],
                 'inspection_date' => date('Y-m-d', strtotime($data->input('inspection_date '))),
                 'driver' => $data['driver'],
@@ -71,8 +76,9 @@ class TruckController extends Controller
         $truck = Truck::find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $truckTypeDDL = Lookup::where('category', '=', 'TRUCKTYPE')->get()->pluck('description', 'code');
 
-        return view('truck.edit', compact('truck', 'statusDDL'));
+        return view('truck.edit', compact('truck', 'statusDDL', 'truckTypeDDL'));
     }
 
     public function update($id, Request $req)
