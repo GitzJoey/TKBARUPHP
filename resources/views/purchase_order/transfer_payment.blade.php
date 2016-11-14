@@ -359,25 +359,23 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.bank_from')</label>
                                     <div class="col-sm-4">
-                                        @foreach( $bankDDL as $key => $bank)
-                                            <div class="radio">
-                                                <label class="noleftpadding">
-                                                    <input id="bank_from_{{ $key }}" name="bank_from" value="{{ $bank->id }}"
-                                                           type="radio" {{ empty($key) ? 'checked="checked" data-parsley-required="true"' : '' }}>
-                                                    {{ $bank->name }}</label>
-                                            </div>
-                                        @endforeach
+                                        <select id="inputBankAccountFrom"
+                                                name="bank_account_from"
+                                                class="form-control"
+                                                ng-model="bankAccountFrom"
+                                                ng-options="bankAccountFrom as (bankAccountFrom.account_number + ' ' + bankAccountFrom.bank.short_name) for bankAccountFrom in storeBankAccounts track by bankAccountFrom.id">
+                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                        </select>
                                     </div>
                                     <label class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.bank_to')</label>
                                     <div class="col-sm-4">
-                                        @foreach( $bankDDL as $key => $bank)
-                                            <div class="radio">
-                                                <label class="noleftpadding">
-                                                    <input id="bank_to_{{ $key }}" name="bank_to" value="{{ $bank->id }}"
-                                                           type="radio" {{ empty($key) ? 'checked="checked" data-parsley-required="true"' : '' }}>
-                                                    {{ $bank->name }}</label>
-                                            </div>
-                                        @endforeach
+                                        <select id="inputBankAccountTo"
+                                                name="bank_account_to"
+                                                class="form-control"
+                                                ng-model="bankAccountTo"
+                                                ng-options="bankAccountTo as (bankAccountTo.account_number + ' ' + bankAccountTo.bank.short_name) for bankAccountTo in supplierBankAccounts track by bankAccountTo.id">
+                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -680,6 +678,8 @@
         var app = angular.module('poModule', ['fcsa-number']);
         app.controller('poController', ['$scope', function ($scope) {
             var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
+            $scope.storeBankAccounts = JSON.parse('{!! htmlspecialchars_decode($storeBankAccounts) !!}');
+            $scope.supplierBankAccounts = JSON.parse('{!! htmlspecialchars_decode($supplierBankAccounts) !!}');
 
             $scope.po = {
                 supplier: currentPo.supplier,

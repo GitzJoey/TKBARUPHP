@@ -16,8 +16,8 @@ class CreateTransferPaymentsTable extends Migration
         Schema::create('transfer_payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('effective_date')->nullable();
-            $table->unsignedBigInteger('bank_from_id')->default(0);
-            $table->unsignedBigInteger('bank_to_id')->default(0);
+            $table->unsignedBigInteger('bank_account_from_id')->default(0);
+            $table->unsignedBigInteger('bank_account_to_id')->default(0);
         });
     }
 
