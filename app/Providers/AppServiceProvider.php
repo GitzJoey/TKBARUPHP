@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Services\Implementation\PurchaseOrderServiceImpl;
+use App\Services\Implementation\SalesOrderServiceImpl;
 use App\Services\PurchaseOrderService;
+use App\Services\SalesOrderService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(PurchaseOrderService::class, function (){
             return new PurchaseOrderServiceImpl();
         });
+
+        $this->app->singleton(SalesOrderService::class, function (){
+            return new SalesOrderServiceImpl();
+        });
     }
 
     /**
@@ -39,6 +45,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['App\Services\PurchaseOrderService'];
+        return [
+            'App\Services\PurchaseOrderService',
+            'App\Services\SalesOrderService'
+        ];
     }
 }

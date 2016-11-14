@@ -8,23 +8,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Bank;
 use App\Model\CashPayment;
-use App\Model\Item;
 use App\Model\Lookup;
 use App\Model\Payment;
-use App\Model\Product;
-use App\Model\ProductUnit;
+use App\Model\PurchaseOrder;
+use App\Model\Store;
 use App\Model\Supplier;
 use App\Model\TransferPayment;
-use App\Model\Warehouse;
-use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
-
+use App\Model\Warehouse;
 use App\Services\PurchaseOrderService;
+use App\Util\POCodeGenerator;
 use Auth;
 use Illuminate\Http\Request;
-use App\Util\POCodeGenerator;
 use Illuminate\Support\Facades\Log;
 
 class PurchaseOrderController extends Controller
@@ -41,7 +37,8 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@create] ');
 
-        $supplierDDL = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'products.productUnits.unit', 'products.type')->get();
+        $supplierDDL = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank',
+            'products.productUnits.unit', 'products.type')->get();
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code']);
@@ -73,7 +70,7 @@ class PurchaseOrderController extends Controller
             'supplier_type' => 'required|string|max:255',
         ]);
 
-        $createdPO = $this->purchaseOrderService->createPO($request);
+        $this->purchaseOrderService->createPO($request);
 
         if (!empty($request->input('submitcreate'))) {
             return redirect()->action('PurchaseOrderController@create');
@@ -97,7 +94,8 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@revise]');
 
         $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
-            'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type', 'vendorTrucking', 'warehouse')->find($id);
+            'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type',
+            'vendorTrucking', 'warehouse')->find($id);
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
 
@@ -106,7 +104,14 @@ class PurchaseOrderController extends Controller
 
     public function saveRevision(Request $request, $id)
     {
-        $revisedPO = $this->purchaseOrderService->revisePO($request, $id);
+        $this->purchaseOrderService->revisePO($request, $id);
+
+        return redirect(route('db.po.revise.index'));
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $this->purchaseOrderService->rejectPO($request, $id);
 
         return redirect(route('db.po.revise.index'));
     }
@@ -126,14 +131,16 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@createCashPayment]');
 
         $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
-            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products', 'supplier.products.type',
+            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
+            'supplier.products.type',
             'vendorTrucking', 'warehouse')->find($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.C';
-        
-        return view('purchase_order.cash_payment', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType'));
+
+        return view('purchase_order.cash_payment',
+            compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType'));
     }
 
     public function saveCashPayment(Request $request, $id)
@@ -167,16 +174,20 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@createTransferPayment]');
 
+        $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
         $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
             'vendorTrucking', 'warehouse')->find($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
-        $bankDDL = Bank::all(['id', 'name']);
+        $storeBankAccounts = $currentStore->bankAccounts;
+        $supplierBankAccounts = is_null($currentPo->supplier) ? collect([]) : $currentPo->supplier->bankAccounts;
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.T';
 
-        return view('purchase_order.transfer_payment', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'bankDDL'));
+        return view('purchase_order.transfer_payment',
+            compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'bankDDL', 'storeBankAccounts',
+                'supplierBankAccounts'));
     }
 
     public function saveTransferPayment(Request $request, $id)
@@ -184,8 +195,8 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@saveTransferPayment]');
 
         $transferPayment = new TransferPayment();
-        $transferPayment->bank_from_id = $request->input('bank_from');
-        $transferPayment->bank_to_id = $request->input('bank_to');
+        $transferPayment->bank_account_from_id = empty($request->input('bank_account_from')) ? 0 : $request->input('bank_account_from');
+        $transferPayment->bank_account_to_id = empty($request->input('bank_account_to')) ? 0 : $request->input('bank_account_to');
         $transferPayment->effective_date = date('Y-m-d', strtotime($request->input('effective_date')));
         $transferPayment->save();
 
@@ -205,12 +216,5 @@ class PurchaseOrderController extends Controller
         $currentPo->payments()->save($payment);
 
         return redirect(route('db.po.payment.index'));
-    }
-    
-    public function delete(Request $request, $id)
-    {
-        $this->purchaseOrderService->rejectPO($request, $id);
-
-        return redirect(route('db.po.revise.index'));
     }
 }
