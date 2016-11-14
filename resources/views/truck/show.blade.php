@@ -29,6 +29,12 @@
             <form class="form-horizontal">
                 <div class="box-body">
                     <div class="form-group">
+                        <label for="inputTruckType" class="col-sm-2 control-label">@lang('truck.field.truck_type')</label>
+                        <div class="col-sm-10">
+                            <span class="control-label-normal">@lang('lookup.'.$truck->type)</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truck.field.plate_number')</label>
                         <div class="col-sm-10">
                             <label id="plateNumber" class="control-label">

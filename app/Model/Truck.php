@@ -56,6 +56,7 @@ class Truck extends Model
 
     protected $fillable = [
         'store_id',
+        'type',
         'plate_number',
         'inspection_date',
         'driver',

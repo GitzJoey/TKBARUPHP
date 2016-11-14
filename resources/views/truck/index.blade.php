@@ -26,6 +26,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th class="text-center">@lang('truck.index.table.header.truck_type')</th>
                     <th class="text-center">@lang('truck.index.table.header.plate_number')</th>
                     <th class="text-center">@lang('truck.index.table.header.inspection_date')</th>
                     <th class="text-center">@lang('truck.index.table.header.driver')</th>
@@ -37,6 +38,7 @@
                 <tbody>
                 @foreach ($trucklist as $key => $truck)
                     <tr>
+                        <td>@lang('lookup.'.$truck->type)</td>
                         <td class="text-center">{{ $truck->plate_number }}</td>
                         <td class="text-center">{{ $truck->inspection_date }}</td>
                         <td>{{ $truck->driver }}</td>

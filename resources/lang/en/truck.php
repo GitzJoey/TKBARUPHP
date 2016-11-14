@@ -10,6 +10,7 @@ return [
         ],
     ],
     'field' => [
+        'truck_type' => 'Truck Type',
         'plate_number' => 'Plate Number',
         'inspection_date' => 'Inspection Date',
         'driver' => 'Driver',
@@ -33,6 +34,7 @@ return [
         ],
         'table' => [
             'header' => [
+                'truck_type' => 'Truck Type',
                 'plate_number' => 'Plate Number',
                 'inspection_date' => 'Inspection Date',
                 'driver' => 'Driver',
