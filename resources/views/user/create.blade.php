@@ -127,8 +127,13 @@
             });
 
             $('#profileDDL').change(function(val) {
-                alert(val);
-                $('#userTypeDDL').val();
+                if ($('#profileDDL option:selected').text().indexOf('[Supplier]') != -1) {
+                    $('#userTypeDDL').val('USERTYPE.S');
+                } else if ($('#profileDDL option:selected').text().indexOf('[Customer]') != -1) {
+                    $('#userTypeDDL').val('USERTYPE.C');
+                } else {
+                    $('#userTypeDDL').val('');
+                }
             });
         });
     </script>

@@ -77,7 +77,7 @@
                 <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('type', $usertypeDDL, $user->userDetail()->pluck('type')->first(), array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('type', $usertypeDDL, $user->userDetail()->pluck('type')->first(), array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'id' => 'userTypeDDL')) }}
                         <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
@@ -147,6 +147,16 @@
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'
+            });
+
+            $('#profileDDL').change(function(val) {
+                if ($('#profileDDL option:selected').text().indexOf('[Supplier]') != -1) {
+                    $('#userTypeDDL').val('USERTYPE.S');
+                } else if ($('#profileDDL option:selected').text().indexOf('[Customer]') != -1) {
+                    $('#userTypeDDL').val('USERTYPE.C');
+                } else {
+                    $('#userTypeDDL').val('');
+                }
             });
         });
     </script>
