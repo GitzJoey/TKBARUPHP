@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="inputRoles" class="col-sm-2 control-label">@lang('user.field.roles')</label>
                         <div class="col-sm-10">
-                            <label id="inputEmail" class="control-label control-label-normal">
+                            <label id="inputEmail" class="control-label">
                                 <span class="control-label-normal">{{ $user->roles()->first()->display_name }}</span>
                             </label>
                         </div>
@@ -46,7 +46,9 @@
                     <div class="form-group">
                         <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
                         <div class="col-sm-10">
-                            <span class="control-label-normal">{{ $user->userDetail->type }}</span>
+                            <label id="inputUserType" class="control-label">
+                                <span class="control-label-normal">@lang('lookup.'.$user->userDetail->type)</span>
+                            </label>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
@@ -72,13 +74,17 @@
                     <div class="form-group">
                         <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                         <div class="col-sm-10">
-                            <span class="control-label-normal">
-                                @if (!is_null($user->profile))
-                                    @if (!empty($user->profile->suppliers()->first()->id))
-                                    @else
+                            <label id="inputLinkProfiles" class="control-label">
+                                <span class="control-label-normal">
+                                    @if (!is_null($user->profile))
+                                        @if ($user->profile->owner_type == 'App\Model\Supplier')
+                                            [Supplier]&nbsp;Name:&nbsp;{{ $user->profile->owner->name }}&nbsp;PIC:&nbsp;{{ $user->profile->first_name }}&nbsp;{{ $user->profile->last_name }}
+                                        @else
+                                            [Customer]&nbsp;Name:&nbsp;{{ $user->profile->owner->name }}&nbsp;PIC:&nbsp;{{ $user->profile->first_name }}&nbsp;{{ $user->profile->last_name }}
+                                        @endif
                                     @endif
-                                @endif
-                            </span>
+                                </span>
+                            </label>
                         </div>
                     </div>
                 </div>
