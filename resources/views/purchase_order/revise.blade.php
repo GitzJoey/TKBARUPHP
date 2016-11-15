@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <label for="inputSupplierType"
                                            class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_type')</label>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control" readonly
                                                value="@lang('lookup.'.$currentPo->supplier_type)">
                                     </div>

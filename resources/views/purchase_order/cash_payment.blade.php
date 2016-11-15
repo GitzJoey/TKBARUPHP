@@ -44,7 +44,7 @@
                                 <div class="form-group">
                                     <label for="inputPaymentType"
                                            class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_type')</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-8">
                                         <input id="inputPaymentType" type="text" class="form-control" readonly
                                                value="@lang('lookup.'.$paymentType)">
                                     </div>

@@ -185,21 +185,15 @@
             for(var i = 0; i < PO.items.length; i++){
                 $scope.inflow.receipts.push({
                     item: PO.items[i],
-                    selected_unit: _.find(PO.items[i].product.product_units, getSelectedUnit(PO.items[i].selected_unit_id)),
-                    brutto: parseFloat(PO.items[i].quantity).toFixed(0),
-                    netto: parseFloat(PO.items[i].quantity).toFixed(0),
-                    tare: 0
+                    selected_unit: '',
+                    brutto: '',
+                    netto: '',
+                    tare: ''
                 });
             }
 
             $scope.removeReceipt = function (index) {
                 $scope.inflow.receipts.splice(index, 1);
-            }
-
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
-                }
             }
         }]);
 

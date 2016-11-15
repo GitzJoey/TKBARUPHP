@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         <label for="inputSupplierType"
                                                class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_type')</label>
-                                        <div class="col-sm-5">
+                                        <div class="col-sm-8">
                                             <select id="inputSupplierType" data-parsley-required="true"
                                                     name="supplier_type"
                                                     class="form-control"

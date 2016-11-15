@@ -57,7 +57,7 @@
                             <td class="text-center">@{{ po.po_created }}</td>
                             <td class="text-center">@{{ po.supplier.name }}</td>
                             <td class="text-center">@{{ po.shipping_date }}</td>
-                            <td class="text-center" width="20%">
+                            <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow') }}/@{{ po.id }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
