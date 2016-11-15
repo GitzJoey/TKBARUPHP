@@ -49,7 +49,7 @@ class UserController extends Controller
         $rolesDDL = Role::get()->pluck('display_name', 'name');
         $storeDDL = Store::get()->pluck('name', 'id');
         $usertypeDDL = Lookup::whereCategory('USERTYPE')->pluck('description', 'code');
-        $profiles = Profile::with('suppliers', 'customers')->where('user_id', '=', 0)->get();
+        $profiles = Profile::where('user_id', '=', 0)->get();
 
         return view('user.create', compact('rolesDDL', 'storeDDL', 'usertypeDDL', 'profiles'));
     }
@@ -95,7 +95,7 @@ class UserController extends Controller
         $rolesDDL = Role::get()->pluck('display_name', 'name');
         $storeDDL = Store::get()->pluck('name', 'id');
         $usertypeDDL = Lookup::whereCategory('USERTYPE')->pluck('description', 'code');
-        $profiles = Profile::with('suppliers', 'customers')->where('user_id', '=', 0)->orWhere('user_id', '=', $user->id)->get();
+        $profiles = Profile::where('user_id', '=', 0)->orWhere('user_id', '=', $user->id)->get();
 
         return view('user.edit', compact('user', 'storeDDL', 'rolesDDL', 'usertypeDDL', 'profiles'));
     }

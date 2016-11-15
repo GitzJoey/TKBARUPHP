@@ -98,38 +98,34 @@
                 <div class="form-group">
                     <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
                     <div class="col-sm-10">
-                        @if (!empty($user->profile()->pluck('id')->first()))
-                            <select name="link_profile" class="form-control">
-                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                @foreach($profiles as $p)
-                                    @if (!empty($p->suppliers()->first()->id))
-                                        @if ($user->profile()->pluck('id')->first() == $p->id)
-                                            <option value="{{ $p->id }}" selected>[Supplier] Name: {{ $p->suppliers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                        <select id="profileDDL" name="link_profile" class="form-control">
+                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                            @if (!is_null($user->profile))
+                                @foreach ($profiles as $p)
+                                    @if ($p->owner_type == 'App\Model\Supplier')
+                                        @if ($user->profile->id == $p->id)
+                                            <option value="{{ $p->id }}" selected>[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                         @else
-                                            <option value="{{ $p->id }}">[Supplier] Name: {{ $p->suppliers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                         @endif
                                     @else
-                                        @if ($user->profile()->pluck('id')->first() == $p->id)
-                                            <option value="{{ $p->id }}" selected>[Customer] Name: {{ $p->customers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                        @if ($user->profile->id == $p->id)
+                                            <option value="{{ $p->id }}" selected>[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                         @else
-                                            <option value="{{ $p->id }}">[Customer] Name: {{ $p->customers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                         @endif
                                     @endif
                                 @endforeach
-                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                            </select>
-                        @else
-                            <select name="link_profile" class="form-control">
-                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                @foreach($profiles as $p)
-                                    @if (!empty($p->suppliers()->first()->id))
-                                        <option value="{{ $p->id }}">[Supplier] Name: {{ $p->suppliers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }} 5</option>
+                            @else
+                                @foreach ($profiles as $p)
+                                    @if ($p->owner_type == 'App\Model\Supplier')
+                                        <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                     @else
-                                        <option value="{{ $p->id }}">[Customer] Name: {{ $p->customers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }} 6</option>
+                                        <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
-                        @endif
+                            @endif
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">

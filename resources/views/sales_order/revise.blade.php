@@ -398,7 +398,7 @@
                     product: currentSo.items[i].product,
                     base_unit: _.find(currentSo.items[i].product.product_units, isBase),
                     selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
-                    quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
+                    quantity: currentSo.items[i].quantity % 1 != 0 ? parseFloat(currentSo.items[i].quantity).toFixed(1) : parseFloat(currentSo.items[i].quantity).toFixed(0),
                     price: parseFloat(currentSo.items[i].price).toFixed(0)
                 });
             }
