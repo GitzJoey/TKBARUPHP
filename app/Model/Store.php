@@ -109,6 +109,11 @@ class Store extends Model
         return $this->morphMany('App\Model\BankAccount', 'owner');
     }
 
+    public function giros()
+    {
+        return $this->hasMany('App\Model\Giro');
+    }
+
     public static function boot()
     {
         parent::boot();

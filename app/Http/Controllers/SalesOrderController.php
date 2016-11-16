@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Bank;
 use App\Model\CashPayment;
 use App\Model\Customer;
 use App\Model\Lookup;
