@@ -12,6 +12,8 @@ return [
             'unit' => '',
             'phone_provider' => '',
             'settings' => '',
+            'purchase_order' => '',
+            'sales_order' => '',
         ],
         'field' => [
             'user' => '',
@@ -65,5 +67,20 @@ return [
         'title' => '',
         'page_title' => '',
         'page_title_desc' => '',
+        'header' => [
+            'purchase_order' => '',
+            'sales_order' => '',
+        ],
+        'field' => [
+            'po_code' => '',
+            'po_date' => '',
+            'shipping_date' => '',
+            'receipt_date' => '',
+            'supplier' => '',
+            'so_code' => '',
+            'so_date' => '',
+            'deliver_date' => '',
+            'customer' => '',
+        ],
     ],
 ];

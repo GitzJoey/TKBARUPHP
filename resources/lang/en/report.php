@@ -12,6 +12,8 @@ return [
             'unit' => 'Unit',
             'phone_provider' => 'Phone Provider',
             'settings' => 'Settings',
+            'purchase_order' => '',
+            'sales_order' => '',
         ],
         'field' => [
             'user' => 'User',
@@ -65,5 +67,20 @@ return [
         'title' => 'Report Management',
         'page_title' => 'Transactions',
         'page_title_desc' => '',
+        'header' => [
+            'purchase_order' => 'Purchase Order',
+            'sales_order' => 'Sales Order',
+        ],
+        'field' => [
+            'po_code' => 'PO Code',
+            'po_date' => 'PO Date',
+            'shipping_date' => 'Shipping Date',
+            'receipt_date' => 'Receipt Date',
+            'supplier' => 'Supplier',
+            'so_code' => 'SO Code',
+            'so_date' => 'SO Date',
+            'deliver_date' => 'Deliver Date',
+            'customer' => 'Customer',
+        ],
     ],
 ];
