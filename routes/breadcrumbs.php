@@ -94,3 +94,8 @@ Breadcrumbs::register('sales_order_payment_transfer', function ($breadcrumbs, $s
     $breadcrumbs->parent('sales_order_payment');
     $breadcrumbs->push('Transfer Payment', route('db.so.payment.transfer', $soId));
 });
+
+Breadcrumbs::register('sales_order_payment_giro', function ($breadcrumbs, $soId){
+    $breadcrumbs->parent('sales_order_payment');
+    $breadcrumbs->push('Giro Payment', route('db.so.payment.giro', $soId));
+});

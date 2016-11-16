@@ -173,7 +173,9 @@ class SalesOrder extends Model
     public function totalAmountPaid()
     {
         return $this->payments->filter(function ($payment, $key){
-            return $payment->status !== 'TRFPAYMENTSTATUS.UNCONFIRMED';
+            return $payment->status !== 'TRFPAYMENTSTATUS.UNCONFIRMED'
+            && $payment->status !== 'GIROPAYMENTSTATUS.WE'
+            && $payment->status !== 'PAYMENTTYPE.FR';
         })->sum('total_amount');
     }
 
