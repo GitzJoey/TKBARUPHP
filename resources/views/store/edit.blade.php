@@ -27,7 +27,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('store.edit.header.title')</h3>
         </div>
-        {!! Form::model($store, ['method' => 'PATCH', 'route' => ['db.admin.store.edit', $store->hId()], 'class' => 'form-horizontal', 'data-parsley-required' => 'true']) !!}
+        {!! Form::model($store, ['id' => 'storeForm', 'method' => 'PATCH', 'route' => ['db.admin.store.edit', $store->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div ng-app="storeModule" ng-controller="storeController">
                 <div class="box-body">
                     <div class="row">
@@ -42,7 +42,7 @@
                                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                             <label for="inputStoreName" class="col-sm-2 control-label">@lang('store.field.name')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputStoreName" name="name" type="text" class="form-control" value="{{ $store->name }}" placeholder="Name" data-parsley-required="true">
+                                                <input id="inputStoreName" name="name" type="text" class="form-control" value="{{ $store->name }}" placeholder="Name" data-parsley-required="true" data-parsley-group="tab_store">
                                                 <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                                             </div>
                                         </div>
@@ -85,14 +85,14 @@
                                         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                                             <label for="inputStatus" class="col-sm-2 control-label">@lang('store.field.status')</label>
                                             <div class="col-sm-10">
-                                                {{ Form::select('status', $statusDDL, null, array('id' => 'statusSelect', 'class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                                                {{ Form::select('status', $statusDDL, null, array('id' => 'statusSelect', 'class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-group' => 'tab_store')) }}
                                                 <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                                             </div>
                                         </div>
                                         <div class="form-group {{ $errors->has('is_default') ? 'has-error' : '' }}">
                                             <label for="inputIsDefault" class="col-sm-2 control-label">@lang('store.field.default')</label>
                                             <div class="col-sm-10">
-                                                {{ Form::select('is_default', $yesnoDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-checkactive' => '#statusSelect')) }}
+                                                {{ Form::select('is_default', $yesnoDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-checkactive' => '#statusSelect', 'data-parsley-group' => 'tab_store')) }}
                                                 <span class="help-block">{{ $errors->has('is_default') ? $errors->first('is_default') : '' }}</span>&nbsp;
                                             </div>
                                         </div>
@@ -177,6 +177,26 @@
                 $scope.banks.splice(idx, 1);
             };
         }]);
+
+        $(document).ready(function() {
+            $.listen('parsley:field:validate', function() {
+                validateFront();
+            });
+
+            var validateFront = function () {
+                if (true === $('#storeForm').parsley().isValid("tab_store", false)) {
+                    $('#storeDataTabError').addClass('hidden');
+                } else {
+                    $('#storeDataTabError').removeClass('hidden');
+                }
+
+                if (true === $('#storeForm').parsley().isValid("tab_bank", false)) {
+                    $('#bankAccountTabError').addClass('hidden');
+                } else {
+                    $('#bankAccountTabError').removeClass('hidden');
+                }
+            };
+        });
 
         window.Parsley.addValidator('checkactive', function (value, statusDDL) {
             if (value == 'YESNOSELECT.YES') {

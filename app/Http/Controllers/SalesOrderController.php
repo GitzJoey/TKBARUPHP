@@ -21,6 +21,8 @@ use App\Model\VendorTrucking;
 use App\Model\Warehouse;
 use App\Services\SalesOrderService;
 use App\Util\SOCodeGenerator;
+
+use App;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -78,11 +80,21 @@ class SalesOrderController extends Controller
                 'customer_type.' . $submitIndex => 'required|string|max:255'
             ];
 
-            $validationMessages = [
-                'customer_id.' . $submitIndex . '.required' => 'Customer on tab ' . ($submitIndex + 1) . ' is required.',
-                'walk_in_customer.' . $submitIndex . '.required' => 'Customer on tab ' . ($submitIndex + 1) . ' is required.',
-                'walk_in_customer_details.' . $submitIndex . '.required' => 'Customer Details on tab ' . ($submitIndex + 1) . ' is required.'
-            ];
+            $validationMessages = [];
+
+            if (App::getLocale() == 'id') {
+                $validationMessages = [
+                    'customer_id.' . $submitIndex . '.required' => 'Pelanggan di tab ' . ($submitIndex + 1) . ' wajib diisi.',
+                    'walk_in_customer.' . $submitIndex . '.required' => 'Pelanggan di tab ' . ($submitIndex + 1) . ' wajib diisi.',
+                    'walk_in_customer_details.' . $submitIndex . '.required' => 'Data pelanggan di tab ' . ($submitIndex + 1) . ' wajib diisi.'
+                ];
+            } else {
+                $validationMessages = [
+                    'customer_id.' . $submitIndex . '.required' => 'Customer on tab ' . ($submitIndex + 1) . ' is required.',
+                    'walk_in_customer.' . $submitIndex . '.required' => 'Customer on tab ' . ($submitIndex + 1) . ' is required.',
+                    'walk_in_customer_details.' . $submitIndex . '.required' => 'Customer Details on tab ' . ($submitIndex + 1) . ' is required.'
+                ];
+            }
 
             if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R') {
                 $validationRules['customer_id.' . $submitIndex] = 'required';

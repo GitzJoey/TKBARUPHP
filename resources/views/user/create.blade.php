@@ -96,10 +96,10 @@
                         <select id="profileDDL" name="link_profile" class="form-control">
                             <option value="">@lang('labels.PLEASE_SELECT')</option>
                             @foreach($profiles as $p)
-                                @if (!empty($p->suppliers()->first()->id))
-                                    <option value="{{ $p->id }}">[Supplier] Name: {{ $p->suppliers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                @if ($p->owner_type == 'App\Model\Supplier')
+                                    <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                 @else
-                                    <option value="{{ $p->id }}">[Customer] Name: {{ $p->customers()->first()->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                    <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -127,8 +127,13 @@
             });
 
             $('#profileDDL').change(function(val) {
-                alert(val);
-                $('#userTypeDDL').val();
+                if ($('#profileDDL option:selected').text().indexOf('[Supplier]') != -1) {
+                    $('#userTypeDDL').val('USERTYPE.S');
+                } else if ($('#profileDDL option:selected').text().indexOf('[Customer]') != -1) {
+                    $('#userTypeDDL').val('USERTYPE.C');
+                } else {
+                    $('#userTypeDDL').val('');
+                }
             });
         });
     </script>

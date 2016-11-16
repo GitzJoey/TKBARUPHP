@@ -169,7 +169,7 @@
                 $scope.outflow.delivers.push({
                     item: SO.items[i],
                     selected_unit: _.find(SO.items[i].product.product_units, getSelectedUnit(SO.items[i].selected_unit_id)),
-                    brutto: parseFloat(SO.items[i].quantity).toFixed(0)
+                    brutto: SO.items[i].quantity % 1 != 0 ? parseFloat(SO.items[i].quantity).toFixed(1) : parseFloat(SO.items[i].quantity).toFixed(0)
                 });
             }
 
