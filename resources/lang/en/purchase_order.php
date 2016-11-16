@@ -120,7 +120,10 @@ return [
                         'account_to' => 'Account To',
                         'cash' => 'Cash',
                         'transfer' => 'Transfer',
-                        'giro' => 'Giro'
+                        'giro' => 'Giro',
+                        'bank' => 'Bank',
+                        'serial_number' => 'Serial Number',
+                        'printed_name' => 'Printed Name',
                     ]
                 ]
             ],

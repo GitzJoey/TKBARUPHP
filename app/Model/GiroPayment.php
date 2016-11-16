@@ -22,6 +22,11 @@ class GiroPayment extends Payment
         return $this->morphOne('App\Model\Payment', 'payment_detail');
     }
 
+    public function giro()
+    {
+        return $this->belongsTo('App\Model\Giro');
+    }
+
     public static function boot()
     {
         static::creating(function ($model) {
