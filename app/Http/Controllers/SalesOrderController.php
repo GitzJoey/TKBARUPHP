@@ -8,8 +8,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Bank;
 use App\Model\CashPayment;
 use App\Model\Customer;
+use App\Model\Giro;
+use App\Model\GiroPayment;
 use App\Model\Lookup;
 use App\Model\Payment;
 use App\Model\Product;
@@ -255,6 +258,62 @@ class SalesOrderController extends Controller
         $payment = Payment::create($paymentParam);
 
         $transferPayment->payment()->save($payment);
+
+        $currentSo = SalesOrder::find($id);
+
+        $currentSo->payments()->save($payment);
+
+        return redirect(route('db.so.payment.index'));
+    }
+
+    public function createGiroPayment($id)
+    {
+        Log::info('[SalesOrderController@createGiroPayment]');
+
+        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
+            'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank',
+            'vendorTrucking', 'warehouse')->find($id);
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['id', 'name']);
+        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+            ->get()->pluck('description', 'code');
+        $paymentType = 'PAYMENTTYPE.G';
+
+        return view('sales_order.giro_payment',
+            compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'bankDDL'));
+    }
+
+    public function saveGiroPayment(Request $request, $id)
+    {
+        Log::info('[SalesOrderController@saveGiroPayment]');
+
+        $giroParam = [
+            'store_id' => Auth::user()->store_id,
+            'bank_id' => $request->input('bank_id'),
+            'serial_number' => $request->input('serial_number'),
+            'effective_date' => date('Y-m-d', strtotime($request->input('effective_date'))),
+            'amount' => floatval(str_replace(',', '', $request->input('amount'))),
+            'printed_name' => $request->input('printed_name'),
+            'status' => 'GIROPAYMENTSTATUS.WE',
+            'remarks' => $request->input('remarks')
+        ];
+
+        $giro = Giro::create($giroParam);
+
+        $giroPayment = new GiroPayment();
+        $giroPayment->giro_id = $giro->id;
+        $giroPayment->save();
+
+        $paymentParam = [
+            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
+            'total_amount' => floatval(str_replace(',', '', $request->input('amount'))),
+            'status' => Lookup::whereCode('GIROPAYMENTSTATUS.WE')->first()->code,
+            'type' => Lookup::whereCode('PAYMENTTYPE.G')->first()->code
+        ];
+
+        $payment = Payment::create($paymentParam);
+
+        $giroPayment->payment()->save($payment);
 
         $currentSo = SalesOrder::find($id);
 

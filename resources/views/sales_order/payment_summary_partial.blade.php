@@ -306,6 +306,49 @@
                 </div>
             @endif
             @if(count($currentSo->giroPayments()) > 0)
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="giroPaymentHistoryTable" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th colspan="7"
+                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.giro')</th>
+                                </tr>
+                                <tr>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_date')</th>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.effective_date')</th>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.bank')</th>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.serial_number')</th>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.printed_name')</th>
+                                    <th width="10%"
+                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_status')</th>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_amount')</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($currentSo->giroPayments() as $key => $payment)
+                                    <tr>
+                                        <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
+                                        <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_detail->giro->effective_date)) }}</td>
+                                        <td class="text-center">{{ $payment->payment_detail->giro->bank->name }}</td>
+                                        <td class="text-center">{{ $payment->payment_detail->giro->serial_number }}</td>
+                                        <td class="text-center">{{ $payment->payment_detail->giro->printed_name }}</td>
+                                        <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
+                                        <td class="text-right">{{ number_format($payment->total_amount, 2) }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             @endif
             <div class="box-body">
                 <div class="row">
