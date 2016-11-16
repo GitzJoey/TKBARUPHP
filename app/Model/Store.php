@@ -109,6 +109,18 @@ class Store extends Model
         return $this->morphMany('App\Model\BankAccount', 'owner');
     }
 
+    public function giros()
+    {
+        return $this->hasMany('App\Model\Giro');
+    }
+
+    public function availableGiros()
+    {
+        return $this->giros->filter(function ($giro){
+            return $giro->status === 'STATUS.ACTIVE';
+        });
+    }
+
     public static function boot()
     {
         parent::boot();

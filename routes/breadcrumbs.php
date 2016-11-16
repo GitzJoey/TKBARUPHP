@@ -40,6 +40,11 @@ Breadcrumbs::register('purchase_order_payment_transfer', function ($breadcrumbs,
     $breadcrumbs->push('Transfer Payment', route('db.po.payment.transfer', $poId));
 });
 
+Breadcrumbs::register('purchase_order_payment_giro', function ($breadcrumbs, $poId){
+    $breadcrumbs->parent('purchase_order_payment');
+    $breadcrumbs->push('Giro Payment', route('db.po.payment.giro', $poId));
+});
+
 Breadcrumbs::register('inflow', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push('Inflow', route('db.warehouse.inflow.index'));

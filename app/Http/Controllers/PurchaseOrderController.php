@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Bank;
 use App\Model\CashPayment;
 use App\Model\Lookup;
 use App\Model\Payment;
@@ -186,13 +187,60 @@ class PurchaseOrderController extends Controller
         $paymentType = 'PAYMENTTYPE.T';
 
         return view('purchase_order.transfer_payment',
-            compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'bankDDL', 'storeBankAccounts',
+            compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'storeBankAccounts',
                 'supplierBankAccounts'));
     }
 
     public function saveTransferPayment(Request $request, $id)
     {
         Log::info('[PurchaseOrderController@saveTransferPayment]');
+
+        $transferPayment = new TransferPayment();
+        $transferPayment->bank_account_from_id = empty($request->input('bank_account_from')) ? 0 : $request->input('bank_account_from');
+        $transferPayment->bank_account_to_id = empty($request->input('bank_account_to')) ? 0 : $request->input('bank_account_to');
+        $transferPayment->effective_date = date('Y-m-d', strtotime($request->input('effective_date')));
+        $transferPayment->save();
+
+        $paymentParam = [
+            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
+            'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
+            'status' => Lookup::whereCode('TRFPAYMENTSTATUS.UNCONFIRMED')->first()->code,
+            'type' => Lookup::whereCode('PAYMENTTYPE.T')->first()->code
+        ];
+
+        $payment = Payment::create($paymentParam);
+
+        $transferPayment->payment()->save($payment);
+
+        $currentPo = PurchaseOrder::find($id);
+
+        $currentPo->payments()->save($payment);
+
+        return redirect(route('db.po.payment.index'));
+    }
+
+    public function createGiroPayment($id)
+    {
+        Log::info('[PurchaseOrderController@createGiroPayment]');
+
+        $currentStore = Store::find(Auth::user()->store_id);
+        $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
+            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
+            'vendorTrucking', 'warehouse')->find($id);
+        $availableGiros = $currentStore->availableGiros();
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['id', 'name']);
+        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+            ->get()->pluck('description', 'code');
+        $paymentType = 'PAYMENTTYPE.G';
+
+        return view('purchase_order.giro_payment',
+            compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'availableGiros', 'bankDDL'));
+    }
+
+    public function saveGiroPayment(Request $request, $id)
+    {
+        Log::info('[PurchaseOrderController@createGiroPayment]');
 
         $transferPayment = new TransferPayment();
         $transferPayment->bank_account_from_id = empty($request->input('bank_account_from')) ? 0 : $request->input('bank_account_from');
