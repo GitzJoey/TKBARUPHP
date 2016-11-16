@@ -41,6 +41,7 @@
                     <tr>
                         <td class="text-center">{{ $giro->bank()->first()->name }}</td>
                         <td class="text-center">{{ $giro->serial_number }}</td>
+                        <td>{{ date('d-m-Y', strtotime($giro->effective_date)) }}</td>
                         <td>{{ $giro->amount }}</td>
                         <td>{{ $giro->printed_name }}</td>
                         <td>@lang('lookup.' . $giro->status)</td>

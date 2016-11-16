@@ -51,11 +51,13 @@ class Giro extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
+        'store_id',
         'bank_id',
         'serial_number',
         'effective_date',
         'amount',
         'printed_name',
+        'status',
         'remarks'
     ];
 

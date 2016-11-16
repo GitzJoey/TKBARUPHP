@@ -61,7 +61,7 @@ class GiroController extends Controller
                 'store_id' => Auth::user()->store->id,
                 'bank_id' => $data['bank'],
                 'serial_number' => $data['serial_number'],
-                'effective_date' => date('Y-m-d', strtotime($data->input('effective_date '))),
+                'effective_date' => date('Y-m-d', strtotime($data->input('effective_date'))),
                 'amount' => $data['amount'],
                 'printed_name' => $data['printed_name'],
                 'status' => $data['status'],
@@ -90,9 +90,18 @@ class GiroController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('db.bank.giro.edit'))->withInput()->withErrors($validator);
+            return redirect(route('db.bank.giro.edit', $id))->withInput()->withErrors($validator);
         } else {
-            Giro::find($id)->update($req->all());
+            $giro = Giro::find($id);
+
+            $giro->bank_id = $req['bank'];
+            $giro->serial_number = $req['serial_number'];
+            $giro->effective_date = date('Y-m-d', strtotime($req['effective_date']));
+            $giro->amount = $req['amount'];
+            $giro->status = $req['status'];
+            $giro->remarks = $req['remarks'];
+
+            $giro->save();
 
             return redirect(route('db.bank.giro'));
         }

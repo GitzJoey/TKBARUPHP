@@ -69,7 +69,7 @@
                         @endif
                         @if(Entrust::can('so.so-copy'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.so.copy') || Active::checkRoutePattern('db.so.copy.*')) }}">
-                                <a href="#"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a>
+                                <a href="{{ route('db.so.copy.index') }}"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a>
                             </li>
                         @endif
                     </ul>
