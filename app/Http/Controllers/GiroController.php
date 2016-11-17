@@ -40,9 +40,8 @@ class GiroController extends Controller
     public function create()
     {
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->pluck('name', 'id');
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('giro.create', compact('statusDDL', 'bankDDL'));
+        return view('giro.create', compact('bankDDL'));
     }
 
     public function store(Request $data)
@@ -51,7 +50,6 @@ class GiroController extends Controller
             'bank' => 'required|string|max:255',
             'effective_date' => 'required|string|max:255',
             'serial_number' => 'required|string|max:255',
-            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -64,7 +62,7 @@ class GiroController extends Controller
                 'effective_date' => date('Y-m-d', strtotime($data->input('effective_date'))),
                 'amount' => $data['amount'],
                 'printed_name' => $data['printed_name'],
-                'status' => $data['status'],
+                'status' => 'GIROPAYMENTSTATUS.NEW',
                 'remarks' => $data['remarks']
             ]);
             return redirect(route('db.bank.giro'));
@@ -76,9 +74,8 @@ class GiroController extends Controller
         $giro = Giro::find($id);
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->pluck('name', 'id');
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
-        return view('giro.edit', compact('giro', 'statusDDL', 'bankDDL'));
+        return view('giro.edit', compact('giro', 'bankDDL'));
     }
 
     public function update($id, Request $req)
@@ -86,7 +83,6 @@ class GiroController extends Controller
         $validator = Validator::make($req->all(), [
             'serial_number' => 'required|string|max:255',
             'effective_date' => 'required|string|max:255',
-            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -98,7 +94,6 @@ class GiroController extends Controller
             $giro->serial_number = $req['serial_number'];
             $giro->effective_date = date('Y-m-d', strtotime($req['effective_date']));
             $giro->amount = $req['amount'];
-            $giro->status = $req['status'];
             $giro->remarks = $req['remarks'];
 
             $giro->save();

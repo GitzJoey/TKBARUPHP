@@ -39,6 +39,7 @@ return [
     'PAYMENTTYPE.T' => 'Transfer',
     'PAYMENTTYPE.G' => 'Giro',
     'PAYMENTTYPE.C' => 'Cash',
+    'GIROPAYMENTSTATUS.NEW' => 'New',
     'GIROPAYMENTSTATUS.WE' => 'Waiting Effective Date',
     'GIROPAYMENTSTATUS.F' => 'Failed',
     'GIROPAYMENTSTATUS.FR' => 'Failed & Returned',

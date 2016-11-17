@@ -39,6 +39,7 @@ return [
     'PAYMENTTYPE.T' => 'Transfer',
     'PAYMENTTYPE.G' => 'Giro',
     'PAYMENTTYPE.C' => 'Cash',
+    'GIROPAYMENTSTATUS.NEW' => 'Baru',
     'GIROPAYMENTSTATUS.WE' => 'Menuggu Tgl Cair',
     'GIROPAYMENTSTATUS.F' => 'Failed',
     'GIROPAYMENTSTATUS.FR' => 'Failed & Returned',

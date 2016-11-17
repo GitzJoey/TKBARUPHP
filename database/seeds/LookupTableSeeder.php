@@ -195,6 +195,11 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'TRFPAYMENTSTATUS',
             ],
             [
+                'code' => 'GIROPAYMENTSTATUS.NEW',
+                'description' => 'New',
+                'category' => 'GIROPAYMENTSTATUS',
+            ],
+            [
                 'code' => 'GIROPAYMENTSTATUS.WE',
                 'description' => 'Waiting Effective Date',
                 'category' => 'GIROPAYMENTSTATUS',

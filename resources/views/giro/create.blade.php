@@ -74,7 +74,7 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('giro.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        <input id="inputStatus" name="status" type="text" class="form-control" value="@lang('lookup.' . 'GIROPAYMENTSTATUS.NEW')" readonly>
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
