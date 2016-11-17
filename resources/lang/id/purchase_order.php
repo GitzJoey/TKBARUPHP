@@ -49,7 +49,7 @@ return [
             'page_title' => 'Pembayaran Pembelian',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Daftar Pembelian'
+                'title' => 'Daftar Pembelian',
             ],
             'table' => [
                 'header' => [
@@ -58,9 +58,9 @@ return [
                     'supplier' => 'Supplier',
                     'total' => 'Total',
                     'paid' => 'Bayar',
-                    'rest' => 'Kurang'
-                ]
-            ]
+                    'rest' => 'Kurang',
+                ],
+            ],
         ],
         'cash' => [
             'field' => [
@@ -72,7 +72,7 @@ return [
                 'vendor_trucking' => 'Penyedia Angkutan',
                 'payment_type' => 'Tipe Pembayaran',
                 'payment_date' => 'Tanggal Pembayaran',
-                'payment_amount' => 'Jumlah Pembayaran'
+                'payment_amount' => 'Jumlah Pembayaran',
             ],
             'po_code' => 'Kode',
             'po_type' => 'Tipe',
@@ -88,25 +88,25 @@ return [
                 'transactions' => 'Transaksi',
                 'remarks' => 'Catatan',
                 'payment_history' => 'Catatan Pembayaran',
-                'payment' => 'Pembayaran'
+                'payment' => 'Pembayaran',
             ],
             'table' => [
                 'item' => [
                     'header' => [
                         'product_name' => 'Produk',
                         'header' => [
-                            'quantity' => 'Jumlah'
+                            'quantity' => 'Jumlah',
                         ],
                         'unit' => 'Satuan',
                         'price_unit' => 'Harga Satuan',
-                        'total_price' => 'Total Harga'
+                        'total_price' => 'Total Harga',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Jumlah Total',
                         'paid_amount' => 'Total',
-                        'to_be_paid_amount' => 'Kurang'
+                        'to_be_paid_amount' => 'Kurang',
                     ],
                 ],
                 'payments' => [
@@ -120,9 +120,12 @@ return [
                         'account_to' => 'Rekening Tujuan',
                         'cash' => 'Tunai',
                         'transfer' => 'Transfer',
-                        'giro' => 'Giro'
-                    ]
-                ]
+                        'giro' => 'Giro',
+                        'bank' => '',
+                        'serial_number' => '',
+                        'printed_name' => '',
+                    ],
+                ],
             ],
         ],
         'transfer' => [
@@ -138,7 +141,7 @@ return [
                 'payment_amount' => 'Jumlah Pembayaran',
                 'effective_date' => 'Tanggal Efektif',
                 'bank_from' => 'Bank Asal',
-                'bank_to' => 'Bank Tujuan'
+                'bank_to' => 'Bank Tujuan',
             ],
             'po_code' => 'Kode',
             'po_type' => 'Tipe',
@@ -154,25 +157,25 @@ return [
                 'transactions' => 'Transaksi',
                 'remarks' => 'Catatan',
                 'payment_history' => 'Catatan Pembayaran',
-                'payment' => 'Pembayaran'
+                'payment' => 'Pembayaran',
             ],
             'table' => [
                 'item' => [
                     'header' => [
                         'product_name' => 'Produk',
                         'header' => [
-                            'quantity' => 'Jumlah'
+                            'quantity' => 'Jumlah',
                         ],
                         'unit' => 'Satuan',
                         'price_unit' => 'Harga Satuan',
-                        'total_price' => 'Total Harga'
+                        'total_price' => 'Total Harga',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Jumlah Total',
                         'paid_amount' => 'Total',
-                        'to_be_paid_amount' => 'Kurang'
+                        'to_be_paid_amount' => 'Kurang',
                     ],
                 ],
                 'payments' => [
@@ -180,11 +183,77 @@ return [
                         'payment_type' => 'Tipe Pembayaran',
                         'payment_date' => 'Tanggal Pembayaran',
                         'payment_amount' => 'Jumlah Pembayaran',
-                        'payment_status' => 'Status Pembayaran'
-                    ]
-                ]
+                        'payment_status' => 'Status Pembayaran',
+                    ],
+                ],
             ],
-        ]
+        ],
+        'giro' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'payment' => '',
+                'supplier' => '',
+                'purchase_order_detail' => '',
+                'shipping' => '',
+                'transactions' => '',
+                'remarks' => '',
+                'payment_history' => '',
+            ],
+            'field' => [
+                'payment_type' => '',
+                'giro' => '',
+                'label' => [
+                    'new_giro' => '',
+                ],
+                'bank' => '',
+                'serial_number' => '',
+                'payment_date' => '',
+                'effective_date' => '',
+                'payment_amount' => '',
+                'printed_name' => '',
+                'remarks' => '',
+                'supplier_type' => '',
+                'supplier_name' => '',
+                'supplier_details' => '',
+                'shipping_date' => '',
+                'warehouse' => '',
+                'vendor_trucking' => '',
+            ],
+            'po_code' => '',
+            'po_type' => '',
+            'po_date' => '',
+            'po_status' => '',
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'header' => [
+                            'quantity' => '',
+                        ],
+                        'unit' => '',
+                        'price_unit' => '',
+                        'total_price' => '',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => '',
+                        'paid_amount' => '',
+                        'to_be_paid_amount' => '',
+                    ],
+                ],
+                'payments' => [
+                    'header' => [
+                        'payment_type' => '',
+                        'payment_date' => '',
+                        'payment_amount' => '',
+                        'payment_status' => '',
+                    ],
+                ],
+            ],
+        ],
     ],
     'revise' => [
         'field' => [
@@ -232,7 +301,7 @@ return [
             'page_title' => 'Revisi Pembelian',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Daftar Pembelian'
+                'title' => 'Daftar Pembelian',
             ],
             'table' => [
                 'header' => [
@@ -240,9 +309,9 @@ return [
                     'po_date' => 'Tanggal Dibuat',
                     'supplier' => 'Supplier',
                     'shipping_date' => 'Tanggal Pengiriman',
-                    'status' => 'Status'
-                ]
-            ]
-        ]
+                    'status' => 'Status',
+                ],
+            ],
+        ],
     ],
 ];

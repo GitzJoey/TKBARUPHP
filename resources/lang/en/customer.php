@@ -209,4 +209,52 @@ return [
             ],
         ],
     ],
+    'payment' => [
+        'index' => [
+            'title' => 'Payment',
+            'page_title' => 'Payment',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Sales Order Lists',
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'so_date' => 'Sales Date',
+                    'total' => 'Total',
+                    'paid' => 'Paid',
+                    'rest' => 'Rest',
+                ],
+            ],
+        ],
+        'cash' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'payment' => '',
+            ],
+            'field' => [
+                'payment_type' => '',
+                'payment_date' => '',
+                'payment_amount' => '',
+            ],
+        ],
+        'transfer' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'payment' => '',
+            ],
+            'field' => [
+                'payment_type' => '',
+                'bank_from' => '',
+                'bank_to' => '',
+                'payment_date' => '',
+                'effective_date' => '',
+                'payment_amount' => '',
+            ],
+        ],
+    ],
 ];

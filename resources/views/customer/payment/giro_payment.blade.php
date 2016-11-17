@@ -27,7 +27,7 @@
     @endif
 
     <div ng-app="soModule" ng-controller="soController">
-        {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.giro', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.customer.payment.giro', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
             @include('sales_order.payment_summary_partial')

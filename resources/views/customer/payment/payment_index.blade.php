@@ -7,11 +7,9 @@
 @section('page_title')
     <span class="fa fa-calculator fa-fw"></span>&nbsp;@lang('customer.payment.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('customer.payment.index.page_title_desc')
-@endsection
-@section('breadcrumbs')
-    {!! Breadcrumbs::render('sales_order_payment') !!}
 @endsection
 
 @section('content')
@@ -19,6 +17,11 @@
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
+    @elseif($message = Session::get('info'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+        {{ Session::forget('info') }}
     @endif
 
     <div class="box box-info">
@@ -30,7 +33,6 @@
                 <thead>
                 <tr>
                     <th class="text-center">@lang('customer.payment.index.table.header.code')</th>
-                    <th class="text-center">@lang('customer.payment.index.table.header.customer')</th>
                     <th class="text-center">@lang('customer.payment.index.table.header.so_date')</th>
                     <th class="text-center">@lang('customer.payment.index.table.header.total')</th>
                     <th class="text-center">@lang('customer.payment.index.table.header.paid')</th>
@@ -42,7 +44,6 @@
                 @foreach ($salesOrders as $key => $so)
                     <tr>
                         <td class="text-center">{{ $so->code }}</td>
-                        <td class="text-center">{{ $so->customer->name }}</td>
                         <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
                         <td class="text-center">{{ number_format($so->totalAmount(), 0) }}</td>
                         <td class="text-center">{{ number_format($so->totalAmountPaid(), 0) }}</td>
@@ -58,8 +59,4 @@
             </table>
         </div>
     </div>
-@endsection
-@section('custom_js')
-    <script type="application/javascript">
-    </script>
 @endsection

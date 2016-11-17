@@ -28,6 +28,7 @@ return [
     'item.bank_giro' => 'Giro',
     'item.customer' => 'Customer',
     'item.customer_confirm' => 'Confirmation',
+    'item.customer_payment' => 'Payment',
     'item.customer_approval' => 'Approval',
     'item.truck' => 'Truck',
     'item.truck_maintenance' => 'Maintenance',
