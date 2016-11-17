@@ -28,6 +28,7 @@ return [
     'item.bank_giro' => 'Giro',
     'item.customer' => 'Pelanggan',
     'item.customer_confirm' => 'Konfirmasi',
+    'item.customer_payment' => 'Pembayaran',
     'item.customer_approval' => 'Persetujuan',
     'item.truck' => 'Truck',
     'item.truck_maintenance' => 'Maintenance',

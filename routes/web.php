@@ -207,6 +207,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::get('/dashboard/customer/confirmation/confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
     Route::patch('/dashboard/customer/confirmation/confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
 
+    Route::get('/dashboard/customer/payment', 'CustomerController@paymentIndex')->name('db.customer.payment.index');
+    Route::get('/dashboard/customer/payment/cash/{id}', 'CustomerController@paymentCashCustomer')->name('db.customer.payment.cash');
+    Route::post('/dashboard/customer/payment/cash/{id}', 'CustomerController@storePaymentCashCustomer');
+    Route::get('/dashboard/customer/payment/transfer/{id}', 'CustomerController@paymentTransferCustomer')->name('db.customer.payment.transfer');
+    Route::post('/dashboard/customer/payment/transfer/{id}', 'CustomerController@storePaymentTransferCustomer');
+    Route::get('/dashboard/customer/payment/giro/{id}', 'CustomerController@paymentGiroCustomer')->name('db.customer.payment.giro');
+    Route::post('/dashboard/customer/payment/giro/{id}', 'CustomerController@storePaymentGiroCustomer');
+
+
     Route::get('/dashboard/customer/approval', 'CustomerController@approvalIndex')->name('db.customer.approval.index');
     Route::get('/dashboard/customer/approval/approve/{id}', 'CustomerController@approval')->name('db.customer.approval.approve');
     Route::get('/dashboard/customer/approval/reject/{id}', 'CustomerController@reject')->name('db.customer.approval.reject');

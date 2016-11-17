@@ -1,14 +1,14 @@
 @extends('layouts.adminlte.master')
 
 @section('title')
-    @lang('sales_order.payment.transfer.title')
+    @lang('customer.payment.transfer.title')
 @endsection
 
 @section('page_title')
-    <span class="fa fa-money fa-fw"></span>&nbsp;@lang('sales_order.payment.transfer.page_title')
+    <span class="fa fa-money fa-fw"></span>&nbsp;@lang('customer.payment.transfer.page_title')
 @endsection
 @section('page_title_desc')
-    @lang('sales_order.payment.transfer.page_title_desc')
+    @lang('customer.payment.transfer.page_title_desc')
 @endsection
 @section('breadcrumbs')
     {!! Breadcrumbs::render('sales_order_payment_transfer', $currentSo->hId()) !!}
@@ -27,7 +27,7 @@
     @endif
 
     <div ng-app="soModule" ng-controller="soController">
-        {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.transfer', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.customer.payment.transfer', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
             @include('sales_order.payment_summary_partial')
@@ -38,14 +38,14 @@
                         <div class="col-md-12">
                             <div class="box box-info">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">@lang('sales_order.payment.transfer.box.payment')</h3>
+                                    <h3 class="box-title">@lang('customer.payment.transfer.box.payment')</h3>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="inputPaymentType"
-                                                       class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.payment_type')</label>
+                                                       class="col-sm-2 control-label">@lang('customer.payment.transfer.field.payment_type')</label>
                                                 <div class="col-sm-4">
                                                     <input id="inputPaymentType" type="text" class="form-control" readonly
                                                            value="@lang('lookup.'.$paymentType)">
@@ -56,7 +56,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.bank_from')</label>
+                                                <label class="col-sm-2 control-label">@lang('customer.payment.transfer.field.bank_from')</label>
                                                 <div class="col-sm-4">
                                                     <select id="inputBankAccountFrom"
                                                             name="bank_account_from"
@@ -66,7 +66,7 @@
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                     </select>
                                                 </div>
-                                                <label class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.bank_to')</label>
+                                                <label class="col-sm-2 control-label">@lang('customer.payment.transfer.field.bank_to')</label>
                                                 <div class="col-sm-4">
                                                     <select id="inputBankAccountTo"
                                                             name="bank_account_to"
@@ -83,7 +83,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="inputPaymentDate"
-                                                       class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.payment_date')</label>
+                                                       class="col-sm-2 control-label">@lang('customer.payment.transfer.field.payment_date')</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group date">
                                                         <div class="input-group-addon">
@@ -94,7 +94,7 @@
                                                     </div>
                                                 </div>
                                                 <label for="inputEffectiveDate"
-                                                       class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.effective_date')</label>
+                                                       class="col-sm-2 control-label">@lang('customer.payment.transfer.field.effective_date')</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group date">
                                                         <div class="input-group-addon">
@@ -111,7 +111,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="inputPaymentAmount"
-                                                       class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.payment_amount')</label>
+                                                       class="col-sm-2 control-label">@lang('customer.payment.transfer.field.payment_amount')</label>
                                                 <div class="col-sm-4">
                                                     <div class="input-group date">
                                                         <div class="input-group-addon">

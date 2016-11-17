@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Bank;
+use App\Model\Store;
 use App\Model\Lookup;
 use App\Model\Profile;
 use App\Model\Deliver;
@@ -14,10 +15,10 @@ use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
 
 use Auth;
-use Illuminate\Support\Facades\Log;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Vinkla\Hashids\Facades\Hashids;
 
 class CustomerController extends Controller
@@ -293,6 +294,65 @@ class CustomerController extends Controller
 
 
         return redirect()->route('db.customer.approval.index');
+    }
+
+    public function paymentIndex(Request $req)
+    {
+        $salesOrders = [];
+        if(!is_null(Auth::user()->profile)) {
+            $salesOrders = SalesOrder::whereCustomerId(Auth::user()->profile->owner->id)->where('status', '=', 'STATUS.WP');
+        } else {
+            $req->session()->flash('info', 'This User ID are not associated with any customer.');
+        }
+
+        return view('customer.payment.payment_index', compact('salesOrders'));
+    }
+
+    public function paymentCashCustomer($id)
+    {
+        $currentSo = [];
+
+        return view('customer.payment.cash_payment', compact('currentSo'));
+    }
+
+    public function storePaymentCashCustomer($id, Request $request)
+    {
+
+        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+    }
+
+    public function paymentTransferCustomer($id)
+    {
+        $currentSo = [];
+
+        $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
+        $storeBankAccounts = $currentStore->bankAccounts;
+        $customerBankAccounts = empty($currentSo->customer) ? collect([]) : $currentSo->customer->bankAccounts;
+
+        return view('customer.payment.transfer_payment', compact('currentSo', 'storeBankAccounts', 'customerBankAccounts'));
+    }
+
+    public function storePaymentTransferCustomer($id, Request $request)
+    {
+
+        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+    }
+
+    public function paymentGiroCustomer($id)
+    {
+        $currentSo = [];
+
+        $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
+        $storeBankAccounts = $currentStore->bankAccounts;
+        $customerBankAccounts = empty($currentSo->customer) ? collect([]) : $currentSo->customer->bankAccounts;
+
+        return view('customer.payment.giro_payment', compact('currentSo', 'storeBankAccounts', 'customerBankAccounts'));
+    }
+
+    public function storePaymentGiroCustomer($id, Request $request)
+    {
+
+        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
     }
 
     public function searchCustomers($param = "")

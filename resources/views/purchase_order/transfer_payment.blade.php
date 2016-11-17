@@ -28,96 +28,97 @@
 
     <div ng-app="poModule" ng-controller="poController">
         {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.transfer', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
-        {{ csrf_field() }}
+            {{ csrf_field() }}
 
-        @include('purchase_order.payment_summary_partial')
+            @include('purchase_order.payment_summary_partial')
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.payment.transfer.box.payment')</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputPaymentType"
-                                           class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_type')</label>
-                                    <div class="col-sm-8">
-                                        <input id="inputPaymentType" type="text" class="form-control" readonly
-                                               value="@lang('lookup.'.$paymentType)">
-                                    </div>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.payment.transfer.box.payment')</h3>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.bank_from')</label>
-                                    <div class="col-sm-4">
-                                        <select id="inputBankAccountFrom"
-                                                name="bank_account_from"
-                                                class="form-control"
-                                                ng-model="bankAccountFrom"
-                                                ng-options="bankAccountFrom as (bankAccountFrom.account_number + ' ' + bankAccountFrom.bank.short_name) for bankAccountFrom in storeBankAccounts track by bankAccountFrom.id">
-                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                        </select>
-                                    </div>
-                                    <label class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.bank_to')</label>
-                                    <div class="col-sm-4">
-                                        <select id="inputBankAccountTo"
-                                                name="bank_account_to"
-                                                class="form-control"
-                                                ng-model="bankAccountTo"
-                                                ng-options="bankAccountTo as (bankAccountTo.account_number + ' ' + bankAccountTo.bank.short_name) for bankAccountTo in supplierBankAccounts track by bankAccountTo.id">
-                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputPaymentDate"
-                                           class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_date')</label>
-                                    <div class="col-sm-4">
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control" id="inputPaymentDate"
-                                                   name="payment_date" data-parsley-required="true">
-                                        </div>
-                                    </div>
-                                    <label for="inputEffectiveDate"
-                                           class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.effective_date')</label>
-                                    <div class="col-sm-4">
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control" id="inputEffectiveDate"
-                                                   name="effective_date" data-parsley-required="true">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputPaymentType"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_type')</label>
+                                        <div class="col-sm-8">
+                                            <input id="inputPaymentType" type="text" class="form-control" readonly
+                                                   value="@lang('lookup.'.$paymentType)">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputPaymentAmount"
-                                           class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_amount')</label>
-                                    <div class="col-sm-4">
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                Rp
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.bank_from')</label>
+                                        <div class="col-sm-4">
+                                            <select id="inputBankAccountFrom"
+                                                    name="bank_account_from"
+                                                    class="form-control"
+                                                    ng-model="bankAccountFrom"
+                                                    ng-options="bankAccountFrom as (bankAccountFrom.account_number + ' ' + bankAccountFrom.bank.short_name) for bankAccountFrom in storeBankAccounts track by bankAccountFrom.id">
+                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.bank_to')</label>
+                                        <div class="col-sm-4">
+                                            <select id="inputBankAccountTo"
+                                                    name="bank_account_to"
+                                                    class="form-control"
+                                                    ng-model="bankAccountTo"
+                                                    ng-options="bankAccountTo as (bankAccountTo.account_number + ' ' + bankAccountTo.bank.short_name) for bankAccountTo in supplierBankAccounts track by bankAccountTo.id">
+                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputPaymentDate"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_date')</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control" id="inputPaymentDate"
+                                                       name="payment_date" data-parsley-required="true">
                                             </div>
-                                            <input type="text" class="form-control" id="inputPaymentAmount"
-                                                   name="total_amount" ng-model="total_amount"
-                                                   data-parsley-required="true" fcsa-number>
+                                        </div>
+                                        <label for="inputEffectiveDate"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.effective_date')</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control" id="inputEffectiveDate"
+                                                       name="effective_date" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputPaymentAmount"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_amount')</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    Rp
+                                                </div>
+                                                <input type="text" class="form-control" id="inputPaymentAmount"
+                                                       name="total_amount" ng-model="total_amount"
+                                                       data-parsley-required="true" fcsa-number>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -126,18 +127,17 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7 col-offset-md-5">
-                <div class="btn-toolbar">
-                    <button id="submitButton" type="submit"
-                            class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
-                    &nbsp;&nbsp;&nbsp;
-                    <a id="cancelButton" href="{{ route('db.po.payment.index') }}" class="btn btn-primary pull-right"
-                       role="button">@lang('buttons.cancel_button')</a>
+            <div class="row">
+                <div class="col-md-7 col-offset-md-5">
+                    <div class="btn-toolbar">
+                        <button id="submitButton" type="submit"
+                                class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <a id="cancelButton" href="{{ route('db.po.payment.index') }}" class="btn btn-primary pull-right"
+                           role="button">@lang('buttons.cancel_button')</a>
+                    </div>
                 </div>
             </div>
-        </div>
         {!! Form::close() !!}
 
         @include('purchase_order.supplier_details_partial')
@@ -171,8 +171,8 @@
                     product: currentPo.items[i].product,
                     base_unit: _.find(currentPo.items[i].product.product_units, isBase),
                     selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
-                    quantity: currentPo.items[i].quantity,
-                    price: currentPo.items[i].price
+                    quantity: currentPo.items[i].quantity % 1 != 0 ? parseFloat(currentPo.items[i].quantity).toFixed(2):parseFloat(currentPo.items[i].quantity).toFixed(0),
+                    price: currentPo.items[i].price % 1  != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0)
                 });
             }
 

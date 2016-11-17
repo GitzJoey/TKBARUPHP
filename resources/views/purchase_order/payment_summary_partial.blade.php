@@ -273,7 +273,7 @@
                                     <tr>
                                         <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
                                         <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                        <td class="text-right">{{ number_format($payment->total_amount, 2) }}</td>
+                                        <td class="text-right">{{ number_format($payment->total_amount, 0) }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -319,7 +319,7 @@
                                                                                    : $payment->payment_detail->bankAccountTo->bank->short_name
                                                                                    . ' - ' . $payment->payment_detail->bankAccountTo->account_number }}</td>
                                         <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                        <td class="text-right">{{ number_format($payment->total_amount, 2) }}</td>
+                                        <td class="text-right">{{ number_format($payment->total_amount, 0) }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -364,7 +364,7 @@
                                         <td class="text-center">{{ $payment->payment_detail->giro->serial_number }}</td>
                                         <td class="text-center">{{ $payment->payment_detail->giro->printed_name }}</td>
                                         <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                        <td class="text-right">{{ number_format($payment->total_amount, 2) }}</td>
+                                        <td class="text-right">{{ number_format($payment->total_amount, 0) }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -381,14 +381,14 @@
                             <tr>
                                 <td class="text-right">@lang('purchase_order.payment.cash.table.total.body.paid_amount')</td>
                                 <td width="25%" class="text-right">
-                                    <span class="control-label-normal">{{ number_format($currentPo->totalAmountPaid(), 2) }}</span>
+                                    <span class="control-label-normal">{{ number_format($currentPo->totalAmountPaid(), 0) }}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="text-right">@lang('purchase_order.payment.cash.table.total.body.to_be_paid_amount')</td>
                                 <td width="25%" class="text-right">
                                                 <span class="control-label-normal">
-                                                    {{ number_format($currentPo->totalAmount() - $currentPo->totalAmountPaid(), 2) }}
+                                                    {{ number_format($currentPo->totalAmount() - $currentPo->totalAmountPaid(), 0) }}
                                                 </span>
                                 </td>
                             </tr>

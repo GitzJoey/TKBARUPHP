@@ -27,7 +27,7 @@
     @endif
 
     <div ng-app="soModule" ng-controller="soController">
-        {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.giro', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.customer.payment.giro', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
             @include('sales_order.payment_summary_partial')
@@ -51,26 +51,26 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputGiroBank"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.bank')</label>
-                                    <div class="col-sm-4">
-                                        <select id="inputGiro"
-                                                name="bank_id"
-                                                class="form-control"
-                                                ng-model="giro.bank" data-parsley-required="true"
-                                                ng-options="bank as bank.name for bank in bankDDL track by bank.id">
-                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                        </select>
-                                    </div>
-                                    <label for="inputGiroSerialNumber"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
-                                    <div class="col-sm-4">
-                                        <input id="inputGiroSerialNumber" name="serial_number" type="text"
-                                               class="form-control" data-parsley-required="true">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputGiroBank"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.bank')</label>
+                                        <div class="col-sm-4">
+                                            <select id="inputGiro"
+                                                    name="bank_id"
+                                                    class="form-control"
+                                                    ng-model="giro.bank"
+                                                    ng-options="bank as bank.name for bank in bankDDL track by bank.id">
+                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                            </select>
+                                        </div>
+                                        <label for="inputGiroSerialNumber"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
+                                        <div class="col-sm-4">
+                                            <input id="inputGiroSerialNumber" name="serial_number" type="text"
+                                                   class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -50,10 +50,10 @@
                             @endif
                         </td>
                         <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
-                        <td class="text-center">{{ number_format($so->totalAmount(), 2) }}</td>
-                        <td class="text-center">{{ number_format($so->totalAmountPaid(), 2) }}</td>
-                        <td class="text-center">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 2) }}</td>
-                        <td class="text-center" width="20%">
+                        <td class="text-center">{{ number_format($so->totalAmount(), 0) }}</td>
+                        <td class="text-center">{{ number_format($so->totalAmountPaid(), 0) }}</td>
+                        <td class="text-center">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 0) }}</td>
+                        <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.cash', $so->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.transfer', $so->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.giro', $so->hId()) }}" title="Giro"><span class="fa fa-book fa-fw"></span></a>

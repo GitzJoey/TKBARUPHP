@@ -186,7 +186,10 @@ return [
                         'account_to' => 'Rekening Tujuan',
                         'cash' => 'Tunai',
                         'transfer' => 'Transfer',
-                        'giro' => 'Giro'
+                        'giro' => 'Giro',
+                        'bank' => '',
+                        'serial_number' => '',
+                        'printed_name' => '',
                     ],
                 ],
             ],
@@ -204,7 +207,7 @@ return [
                 'payment_amount' => 'Jumlah Pembayaran',
                 'effective_date' => 'Tanggal Efektif',
                 'bank_from' => 'Bank Asal',
-                'bank_to' => 'Bank Tujuan'
+                'bank_to' => 'Bank Tujuan',
             ],
             'so_code' => 'Kode',
             'so_type' => 'Tipe',
@@ -250,6 +253,68 @@ return [
                     ],
                 ],
             ],
-        ]
+        ],
+        'giro' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'payment' => '',
+                'customer' => '',
+                'sales_order_detail' => '',
+                'shipping' => '',
+                'transactions' => '',
+                'remarks' => '',
+                'payment_history' => '',
+            ],
+            'field' => [
+                'payment_type' => '',
+                'bank' => '',
+                'serial_number' => '',
+                'payment_date' => '',
+                'effective_date' => '',
+                'payment_amount' => '',
+                'printed_name' => '',
+                'remarks' => '',
+                'customer_type' => '',
+                'customer_name' => '',
+                'customer_details' => '',
+                'shipping_date' => '',
+                'warehouse' => '',
+                'vendor_trucking' => '',
+            ],
+            'so_code' => '',
+            'so_type' => '',
+            'so_date' => '',
+            'so_status' => '',
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'header' => [
+                            'quantity' => '',
+                        ],
+                        'unit' => '',
+                        'price_unit' => '',
+                        'total_price' => '',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => '',
+                        'paid_amount' => '',
+                        'to_be_paid_amount' => '',
+                    ],
+                ],
+                'payments' => [
+                    'header' => [
+                        'payment_type' => '',
+                        'payment_date' => '',
+                        'payment_amount' => '',
+                        'payment_status' => '',
+                    ],
+                ],
+            ],
+        ],
     ],
 ];

@@ -417,6 +417,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Enable Customer Confirmation'
             ],
             [
+                'name' => 'customer.payment',
+                'display_name' => '[Customer] Customer Payment',
+                'description' => 'Enable Customer Payment'
+            ],
+            [
                 'name' => 'customer.approval',
                 'display_name' => '[Customer] Customer Approval',
                 'description' => 'Enable Customer Approval'

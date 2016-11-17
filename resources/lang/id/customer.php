@@ -209,4 +209,52 @@ return [
             ],
         ],
     ],
+    'payment' => [
+        'index' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'code' => '',
+                    'so_date' => '',
+                    'total' => '',
+                    'paid' => '',
+                    'rest' => '',
+                ],
+            ],
+        ],
+        'cash' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'payment' => '',
+            ],
+            'field' => [
+                'payment_type' => '',
+                'payment_date' => '',
+                'payment_amount' => '',
+            ],
+        ],
+        'transfer' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'payment' => '',
+            ],
+            'field' => [
+                'payment_type' => '',
+                'bank_from' => '',
+                'bank_to' => '',
+                'payment_date' => '',
+                'effective_date' => '',
+                'payment_amount' => '',
+            ],
+        ],
+    ],
 ];
