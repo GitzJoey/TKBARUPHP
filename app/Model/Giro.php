@@ -85,6 +85,11 @@ class Giro extends Model
         return $this->belongsTo('App\Model\Bank', 'bank_id');
     }
 
+    public function giroPayment()
+    {
+        return $this->hasOne('App\Model\GiroPayment');
+    }
+
     public static function boot()
     {
         parent::boot();

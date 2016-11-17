@@ -40,7 +40,7 @@
                 <div class="form-group {{ $errors->has('serial_number') ? 'has-error' : '' }}">
                     <label for="inputSerialNumber" class="col-sm-2 control-label">@lang('giro.field.serial_number')</label>
                     <div class="col-sm-10">
-                        <input id="inputSerialNumber" name="serial_number" type="text" value="{{ old($giro->serial_number) }}"class="form-control" placeholder="@lang('giro.field.serial_number')">
+                        <input id="inputSerialNumber" name="serial_number" type="text" value="{{ $giro->serial_number }}"class="form-control" placeholder="@lang('giro.field.serial_number')">
                         <span class="help-block">{{ $errors->has('serial_number') ? $errors->first('serial_number') : '' }}</span>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('giro.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, $giro->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        <input id="inputStatus" name="status" type="text" class="form-control" value="@lang('lookup.' . $giro->status)" readonly>
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>

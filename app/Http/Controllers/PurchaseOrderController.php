@@ -225,13 +225,10 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@createGiroPayment]');
 
-        $currentStore = Store::with('giros.bank')->find(Auth::user()->store_id);
         $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
             'vendorTrucking', 'warehouse')->find($id);
-        $availableGiros = $currentStore->giros->filter(function ($giro){
-            return $giro->status === 'STATUS.ACTIVE';
-        });
+        $availableGiros = Giro::with('bank')->doesntHave('giroPayment')->whereStatus('GIROPAYMENTSTATUS.NEW')->get();
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['id', 'name']);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
@@ -248,33 +245,13 @@ class PurchaseOrderController extends Controller
 
         $giroId = $request->input("giro_id");
 
-        if(!empty($giroId)){
-            $giro = Giro::find($giroId);
-            $giro->status = 'GIROPAYMENTSTATUS.WE';
-            $giro->save();
+        $giro = Giro::find($giroId);
+        $giro->status = 'GIROPAYMENTSTATUS.WE';
+        $giro->save();
 
-            $giroPayment = new GiroPayment();
-            $giroPayment->giro_id = $giroId;
-            $giroPayment->save();
-        }
-        else {
-            $giroParam = [
-                'store_id' => Auth::user()->store_id,
-                'bank_id' => $request->input('bank_id'),
-                'serial_number' => $request->input('serial_number'),
-                'effective_date' => date('Y-m-d', strtotime($request->input('effective_date'))),
-                'amount' => floatval(str_replace(',', '', $request->input('amount'))),
-                'printed_name' => $request->input('printed_name'),
-                'status' => 'GIROPAYMENTSTATUS.WE',
-                'remarks' => $request->input('remarks')
-            ];
-
-            $giro = Giro::create($giroParam);
-
-            $giroPayment = new GiroPayment();
-            $giroPayment->giro_id = $giro->id;
-            $giroPayment->save();
-        }
+        $giroPayment = new GiroPayment();
+        $giroPayment->giro_id = $giroId;
+        $giroPayment->save();
 
         $paymentParam = [
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),

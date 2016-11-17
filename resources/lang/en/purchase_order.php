@@ -189,6 +189,18 @@ return [
             ],
         ],
         'giro' => [
+            'title' => 'Purchase Order Giro Payment',
+            'page_title' => 'Purchase Order Giro Payment',
+            'page_title_desc' => 'Create giro payment for purchase order',
+            'box' => [
+                'supplier' => 'Supplier',
+                'purchase_order_detail' => 'Detail',
+                'shipping' => 'Shipping',
+                'transactions' => 'Transaction',
+                'remarks' => 'Remarks',
+                'payment_history' => 'Payment History',
+                'payment' => 'Payment'
+            ],
             'field' => [
                 'supplier_type' => 'Type',
                 'supplier_name' => 'Name',
@@ -205,26 +217,11 @@ return [
                 'effective_date' => 'Effective Date',
                 'printed_name' => 'Printed Name',
                 'remarks' => 'Remarks',
-                'label' => [
-                    'new_giro' => 'New Giro'
-                ]
             ],
             'po_code' => 'Code',
             'po_type' => 'Type',
             'po_date' => 'Date',
             'po_status' => 'Status',
-            'title' => 'Purchase Order Giro Payment',
-            'page_title' => 'Purchase Order Giro Payment',
-            'page_title_desc' => 'Create giro payment for purchase order',
-            'box' => [
-                'supplier' => 'Supplier',
-                'purchase_order_detail' => 'Detail',
-                'shipping' => 'Shipping',
-                'transactions' => 'Transaction',
-                'remarks' => 'Remarks',
-                'payment_history' => 'Payment History',
-                'payment' => 'Payment'
-            ],
             'table' => [
                 'item' => [
                     'header' => [
