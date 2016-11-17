@@ -210,8 +210,8 @@
                     product: currentPo.items[i].product,
                     base_unit: _.find(currentPo.items[i].product.product_units, isBase),
                     selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
-                    quantity: currentPo.items[i].quantity,
-                    price: currentPo.items[i].price
+                    quantity: currentPo.items[i].quantity % 1 != 0 ? parseFloat(currentPo.items[i].quantity).toFixed(2):parseFloat(currentPo.items[i].quantity).toFixed(0),
+                    price: currentPo.items[i].price % 1 != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0)
                 });
             }
 
