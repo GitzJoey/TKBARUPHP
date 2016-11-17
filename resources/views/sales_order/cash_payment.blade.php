@@ -29,11 +29,11 @@
     <div ng-app="soModule" ng-controller="soController">
         {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.cash', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
+
+            @include('sales_order.payment_summary_partial')
+
             <div class="row">
-                <div class="col-md-11">
-
-                    @include('sales_order.payment_summary_partial')
-
+                <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="box box-info">
@@ -74,8 +74,8 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input type="text" class="form-control" id="inputPaymentAmount"
-                                                           name="total_amount" data-parsley-required="true">
+                                                    <input type="text" class="form-control" id="inputPaymentAmount" ng-model="total_amount"
+                                                           name="total_amount" data-parsley-required="true" fcsa-number>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,17 +93,6 @@
                                 <a id="cancelButton" href="{{ route('db.so.payment.index') }}" class="btn btn-primary pull-right"
                                    role="button">@lang('buttons.cancel_button')</a>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                        </div>
-                        <div class="box-body">
-                            @for ($i = 0; $i < 65; $i++)
-                                <br/>
-                            @endfor
                         </div>
                     </div>
                 </div>

@@ -28,109 +28,110 @@
 
     <div ng-app="soModule" ng-controller="soController">
         {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.giro', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
-        {{ csrf_field() }}
+            {{ csrf_field() }}
 
-        @include('sales_order.payment_summary_partial')
+            @include('sales_order.payment_summary_partial')
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('sales_order.payment.giro.box.payment')</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputPaymentType"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_type')</label>
-                                    <div class="col-sm-4">
-                                        <input id="inputPaymentType" type="text" class="form-control" readonly
-                                               value="@lang('lookup.'.$paymentType)">
-                                    </div>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('sales_order.payment.giro.box.payment')</h3>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputGiroBank"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.bank')</label>
-                                    <div class="col-sm-4">
-                                        <select id="inputGiro"
-                                                name="bank_id"
-                                                class="form-control"
-                                                ng-model="giro.bank"
-                                                ng-options="bank as bank.name for bank in bankDDL track by bank.id">
-                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                        </select>
-                                    </div>
-                                    <label for="inputGiroSerialNumber"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
-                                    <div class="col-sm-4">
-                                        <input id="inputGiroSerialNumber" name="serial_number" type="text"
-                                               class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputPaymentDate"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_date')</label>
-                                    <div class="col-sm-4">
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control" id="inputPaymentDate"
-                                                   name="payment_date" data-parsley-required="true">
-                                        </div>
-                                    </div>
-                                    <label for="inputEffectiveDate"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.effective_date')</label>
-                                    <div class="col-sm-4">
-                                        <div class="input-group date">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control" id="inputEffectiveDate"
-                                                   ng-value="giro.effective_date"
-                                                   name="effective_date" data-parsley-required="true">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputPaymentType"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_type')</label>
+                                        <div class="col-sm-4">
+                                            <input id="inputPaymentType" type="text" class="form-control" readonly
+                                                   value="@lang('lookup.'.$paymentType)">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputAmount"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_amount')</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="inputAmount" ng-value="giro.amount" fcsa-number
-                                               name="amount" ng-model="amount" data-parsley-required="true">
-                                    </div>
-                                    <label for="inputPrintedName"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.printed_name')</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="inputPrintedName"
-                                               ng-value="giro.printed_name"
-                                               name="printed_name" data-parsley-required="true">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputGiroBank"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.bank')</label>
+                                        <div class="col-sm-4">
+                                            <select id="inputGiro"
+                                                    name="bank_id"
+                                                    class="form-control"
+                                                    ng-model="giro.bank"
+                                                    ng-options="bank as bank.name for bank in bankDDL track by bank.id">
+                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                            </select>
+                                        </div>
+                                        <label for="inputGiroSerialNumber"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
+                                        <div class="col-sm-4">
+                                            <input id="inputGiroSerialNumber" name="serial_number" type="text"
+                                                   class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="inputGiroRemarks"
-                                           class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.remarks')</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputGiroRemarks"
-                                               ng-value="giro.remarks"
-                                               name="remarks" data-parsley-required="true">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputPaymentDate"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_date')</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control" id="inputPaymentDate"
+                                                       name="payment_date" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                        <label for="inputEffectiveDate"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.effective_date')</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group date">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control" id="inputEffectiveDate"
+                                                       ng-value="giro.effective_date"
+                                                       name="effective_date" data-parsley-required="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputAmount"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_amount')</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputAmount" ng-value="giro.amount" fcsa-number
+                                                   name="amount" ng-model="amount" data-parsley-required="true">
+                                        </div>
+                                        <label for="inputPrintedName"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.printed_name')</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputPrintedName"
+                                                   ng-value="giro.printed_name"
+                                                   name="printed_name" data-parsley-required="true">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputGiroRemarks"
+                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.remarks')</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputGiroRemarks"
+                                                   ng-value="giro.remarks"
+                                                   name="remarks" data-parsley-required="true">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -138,18 +139,17 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7 col-offset-md-5">
-                <div class="btn-toolbar">
-                    <button id="submitButton" type="submit"
-                            class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
-                    &nbsp;&nbsp;&nbsp;
-                    <a id="cancelButton" href="{{ route('db.so.payment.index') }}" class="btn btn-primary pull-right"
-                       role="button">@lang('buttons.cancel_button')</a>
+            <div class="row">
+                <div class="col-md-7 col-offset-md-5">
+                    <div class="btn-toolbar">
+                        <button id="submitButton" type="submit"
+                                class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <a id="cancelButton" href="{{ route('db.so.payment.index') }}" class="btn btn-primary pull-right"
+                           role="button">@lang('buttons.cancel_button')</a>
+                    </div>
                 </div>
             </div>
-        </div>
         {!! Form::close() !!}
     </div>
 @endsection
