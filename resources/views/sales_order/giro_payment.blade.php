@@ -60,7 +60,7 @@
                                         <select id="inputGiro"
                                                 name="bank_id"
                                                 class="form-control"
-                                                ng-model="giro.bank"
+                                                ng-model="giro.bank" data-parsley-required="true"
                                                 ng-options="bank as bank.name for bank in bankDDL track by bank.id">
                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
                                         </select>
@@ -69,7 +69,7 @@
                                            class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
                                     <div class="col-sm-4">
                                         <input id="inputGiroSerialNumber" name="serial_number" type="text"
-                                               class="form-control">
+                                               class="form-control" data-parsley-required="true">
                                     </div>
                                 </div>
                             </div>
