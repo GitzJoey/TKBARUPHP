@@ -248,7 +248,7 @@ class PurchaseOrderController extends Controller
 
         $giroId = $request->input("giro_id");
 
-        if(isset($giroId)){
+        if(!empty($giroId)){
             $giro = Giro::find($giroId);
             $giro->status = 'GIROPAYMENTSTATUS.WE';
             $giro->save();
