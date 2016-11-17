@@ -60,9 +60,10 @@
                                         <select id="inputGiro"
                                                 name="giro_id"
                                                 class="form-control"
-                                                ng-model="giro"
-                                                ng-options="giro as (giro.bank.short_name + ' ' + giro.serial_number + ' ' + giro.printed_name) for giro in availableGiros track by giro.id">
-                                            <option value="">@lang('purchase_order.payment.giro.field.label.new_giro')</option>
+                                                ng-model="giro" data-parsley-required="true"
+                                                ng-options="giro as (giro.bank.short_name + ' ' + giro.serial_number + ' ' + giro.printed_name)
+                                                for giro in availableGiros track by giro.id">
+                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
                                         </select>
                                     </div>
                                 </div>
@@ -74,26 +75,14 @@
                                     <label for="inputGiroBank"
                                            class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.bank')</label>
                                     <div class="col-sm-4">
-                                        <div ng-if="giro == null">
-                                            <select id="inputGiro"
-                                                    name="bank_id"
-                                                    class="form-control"
-                                                    ng-model="giro.bank"
-                                                    ng-options="bank as bank.name for bank in bankDDL track by bank.id">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            </select>
-                                        </div>
-                                        <div ng-if="giro != null">
-                                            <input id="inputGiroBank" type="text" class="form-control" readonly
-                                                   ng-value="$parent.giro.bank.name">
-                                        </div>
+                                        <input id="inputGiroBank" type="text" class="form-control" readonly
+                                               ng-value="giro.bank.name">
                                     </div>
                                     <label for="inputGiroSerialNumber"
                                            class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.serial_number')</label>
                                     <div class="col-sm-4">
                                         <input id="inputGiroSerialNumber" name="serial_number" type="text"
-                                               class="form-control" ng-value="giro.serial_number"
-                                               ng-readonly="giro != null">
+                                               class="form-control" ng-value="giro.serial_number" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -120,10 +109,8 @@
                                                 <i class="fa fa-calendar"></i>
                                             </div>
                                             <input type="text" class="form-control" id="inputEffectiveDate"
-                                                   ng-value="giro.effective_date"
-                                                   name="effective_date" data-parsley-required="true"
-                                                   ng-disabled="giro != null">
-                                            <input ng-if="giro != null " type="hidden" name="effective_date" ng-value="$parent.giro.effective_date">
+                                                   ng-model="giro.effective_date"
+                                                   name="effective_date" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -135,16 +122,16 @@
                                     <label for="inputAmount"
                                            class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.payment_amount')</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="inputAmount" ng-value="giro.amount" fcsa-number
-                                               name="amount" ng-model="amount" data-parsley-required="true" ng-readonly="giro != null">
+                                        <input type="text" class="form-control" id="inputAmount" ng-value="giro.amount"
+                                               fcsa-number
+                                               name="amount" ng-model="amount" readonly>
                                     </div>
                                     <label for="inputPrintedName"
                                            class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.printed_name')</label>
                                     <div class="col-sm-4">
                                         <input type="text" class="form-control" id="inputPrintedName"
                                                ng-value="giro.printed_name"
-                                               name="printed_name" data-parsley-required="true"
-                                               ng-readonly="giro != null">
+                                               name="printed_name" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +144,7 @@
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="inputGiroRemarks"
                                                ng-value="giro.remarks"
-                                               name="remarks" data-parsley-required="true" ng-readonly="giro != null">
+                                               name="remarks" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +176,11 @@
         app.controller('poController', ['$scope', function ($scope) {
             var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
             $scope.availableGiros = JSON.parse('{!! htmlspecialchars_decode($availableGiros) !!}');
+            _.forEach($scope.availableGiros, function (giro) {
+                giro.effective_date = moment(giro.effective_date).format('DD-MM-YYYY');
+            });
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
+            console.log($scope.availableGiros);
 
             $scope.po = {
                 supplier: currentPo.supplier,
