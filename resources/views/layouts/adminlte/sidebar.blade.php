@@ -158,6 +158,7 @@
                 </li>
             @endif
             @if(Entrust::can('customer.confirmation') OR
+                Entrust::can('customer.payment') OR
                 Entrust::can('customer.approval'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.customer.confirmation.*') || Active::checkRoutePattern('db.customer.approval.*')) }}">
                     <a href="#"><i class="fa fa-smile-o fa-fw"></i><span>&nbsp;@lang('menu.item.customer')</span>
@@ -169,6 +170,11 @@
                         @if(Entrust::can('customer.confirmation'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.customer.confirmation.*')) }}">
                                 <a href="{{ route('db.customer.confirmation.index') }}"><i class="fa fa-check fa-fw"></i>&nbsp;@lang('menu.item.customer_confirm')</a>
+                            </li>
+                        @endif
+                        @if(Entrust::can('customer.payment'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.customer.payment.*')) }}">
+                                <a href="{{ route('db.customer.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.customer_payment')</a>
                             </li>
                         @endif
                         @if(Entrust::can('customer.approval'))

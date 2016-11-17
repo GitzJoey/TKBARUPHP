@@ -295,6 +295,54 @@ class CustomerController extends Controller
         return redirect()->route('db.customer.approval.index');
     }
 
+    public function paymentIndex()
+    {
+        $customerId = Auth::user()->profile->owner->id;
+        $salesOrders = [];
+
+        if (!empty($customerId)) {
+            $salesOrders = SalesOrder::whereCustomerId($customerId)->where('status', '=', 'STATUS.WP');
+        }
+
+        return view('customer.payment.payment_index', compact('salesorders'));
+    }
+
+    public function paymentCashCustomer($id)
+    {
+        
+        return view('customer.payment.cash_payment');
+    }
+
+    public function storePaymentCashCustomer($id, Request $request)
+    {
+
+        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+    }
+
+    public function paymentTransferCustomer($id)
+    {
+
+        return view('customer.payment.transfer_payment');
+    }
+
+    public function storePaymentTransferCustomer($id, Request $request)
+    {
+
+        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+    }
+
+    public function paymentGiroCustomer($id)
+    {
+
+        return view('customer.payment.giro_payment');
+    }
+
+    public function storePaymentGiroCustomer($id, Request $request)
+    {
+
+        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+    }
+
     public function searchCustomers($param = "")
     {
         Log::info("CustomerController@searchCustomers\nparam : $param");
