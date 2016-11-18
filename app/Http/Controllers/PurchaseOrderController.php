@@ -228,7 +228,7 @@ class PurchaseOrderController extends Controller
         $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
             'vendorTrucking', 'warehouse')->find($id);
-        $availableGiros = Giro::with('bank')->doesntHave('giroPayment')->whereStatus('GIROPAYMENTSTATUS.NEW')->get();
+        $availableGiros = Giro::with('bank')->doesntHave('giroPayment')->get();
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['id', 'name']);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
