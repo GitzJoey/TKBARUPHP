@@ -42,9 +42,9 @@
                         <td class="text-center">{{ $giro->bank()->first()->name }}</td>
                         <td class="text-center">{{ $giro->serial_number }}</td>
                         <td>{{ date('d-m-Y', strtotime($giro->effective_date)) }}</td>
-                        <td>{{ $giro->amount }}</td>
+                        <td class="text-right">{{ number_format($giro->amount, 0) }}</td>
                         <td>{{ $giro->printed_name }}</td>
-                        <td>@lang('lookup.' . $giro->status)</td>
+                        <td class="text-center">@lang('lookup.' . $giro->status)</td>
                         <td>{{ $giro->remarks }}</td>
                         <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.bank.giro.show', $giro->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
