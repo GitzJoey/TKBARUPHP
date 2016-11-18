@@ -125,6 +125,7 @@
                                        value="{{ $currentPo->warehouse->name }}">
                             </div>
                         </div>
+                        <hr>
                         <div class="form-group">
                             <label for="inputVendorTrucking"
                                    class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.vendor_trucking')</label>

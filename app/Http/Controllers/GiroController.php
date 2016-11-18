@@ -33,8 +33,8 @@ class GiroController extends Controller
 
     public function show($id)
     {
-        $giro = Truck::find($id);
-        return view('giro.show')->with('truck', $giro);
+        $giro = Giro::find($id);
+        return view('giro.show')->with('giro', $giro);
     }
 
     public function create()

@@ -86,10 +86,18 @@
                     <div class="col-sm-10">
                         <div class="checkbox icheck">
                             <label>
-                                @if (boolval($user->userDetail()->pluck('allow_login')->first()))
-                                    <input type="checkbox" name="allow_login" checked>&nbsp;
+                                @if (empty(old('allow_login')))
+                                    @if (boolval($user->userDetail()->pluck('allow_login')->first()))
+                                        <input type="checkbox" name="allow_login" checked>&nbsp;
+                                    @else
+                                        <input type="checkbox" name="allow_login">&nbsp;
+                                    @endif
                                 @else
-                                    <input type="checkbox" name="allow_login">&nbsp;
+                                    @if (old('allow_login') == 'on')
+                                        <input type="checkbox" name="allow_login" checked>&nbsp;
+                                    @else
+                                        <input type="checkbox" name="allow_login">&nbsp;
+                                    @endif
                                 @endif
                             </label>
                         </div>
@@ -100,28 +108,38 @@
                     <div class="col-sm-10">
                         <select id="profileDDL" name="link_profile" class="form-control">
                             <option value="">@lang('labels.PLEASE_SELECT')</option>
-                            @if (!is_null($user->profile))
-                                @foreach ($profiles as $p)
-                                    @if ($p->owner_type == 'App\Model\Supplier')
-                                        @if ($user->profile->id == $p->id)
-                                            <option value="{{ $p->id }}" selected>[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                            @if (empty(old('link_profile')))
+                                @if (!is_null($user->profile))
+                                    @foreach ($profiles as $p)
+                                        @if ($p->owner_type == 'App\Model\Supplier')
+                                            @if ($user->profile->id == $p->id)
+                                                <option value="{{ $p->id }}" selected>[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            @else
+                                                <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            @endif
                                         @else
-                                            <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            @if ($user->profile->id == $p->id)
+                                                <option value="{{ $p->id }}" selected>[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            @else
+                                                <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            @endif
                                         @endif
-                                    @else
-                                        @if ($user->profile->id == $p->id)
-                                            <option value="{{ $p->id }}" selected>[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                    @endforeach
+                                @else
+                                    @foreach ($profiles as $p)
+                                        @if ($p->owner_type == 'App\Model\Supplier')
+                                            <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                         @else
                                             <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                         @endif
-                                    @endif
-                                @endforeach
+                                    @endforeach
+                                @endif
                             @else
                                 @foreach ($profiles as $p)
                                     @if ($p->owner_type == 'App\Model\Supplier')
-                                        <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                        <option value="{{ $p->id }}" {{ old('link_profile') == $p->id ? 'selected':'' }}>[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                     @else
-                                        <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                        <option value="{{ $p->id }}" {{ old('link_profile') == $p->id ? 'selected':'' }}>[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                     @endif
                                 @endforeach
                             @endif

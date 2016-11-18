@@ -59,267 +59,277 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-7">
-                                            <div class="box box-info">
-                                                <div class="box-header with-border">
-                                                    <h3 class="box-title">@lang('sales_order.create.box.customer')</h3>
-                                                </div>
-                                                <div class="box-body">
-                                                    <div class="form-group">
-                                                        <label for="inputCustomerType_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_type')</label>
-                                                        <div class="col-sm-5">
-                                                            <select id="inputCustomerType_@{{ $index + 1 }}" data-parsley-required="true"
-                                                                    class="form-control"
-                                                                    name="customer_type[]"
-                                                                    ng-model="so.customer_type"
-                                                                    ng-options="customerType as customerType.description for customerType in customerTypeDDL track by customerType.code">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                            </select>
+                                        <div class="col-md-11">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="box box-info">
+                                                        <div class="box-header with-border">
+                                                            <h3 class="box-title">@lang('sales_order.create.box.customer')</h3>
                                                         </div>
-                                                    </div>
-                                                    <div ng-show="so.customer_type.code == 'CUSTOMERTYPE.R'">
-                                                        <div class="form-group">
-                                                            <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
-                                                            <div class="col-sm-7">
-                                                                <ui-select ng-model="so.customer"
-                                                                           spinner-enabled="true">
-                                                                    <ui-select-match placeholder="Choose customer..."
-                                                                                     allow-clear="true">@{{$select.selected.name}}</ui-select-match>
-                                                                    <ui-select-choices repeat="customer in customerDDL track by customer.id"
-                                                                                       refresh="refreshCustomers($select.search)"
-                                                                                       refresh-delay="0">
-                                                                        <span ng-bind="customer.name"></span>
-                                                                    </ui-select-choices>
-                                                                </ui-select>
-                                                                <input type="hidden" name="customer_id[]" ng-value="so.customer.id" >
+                                                        <div class="box-body">
+                                                            <div class="form-group">
+                                                                <label for="inputCustomerType_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_type')</label>
+                                                                <div class="col-sm-5">
+                                                                    <select id="inputCustomerType_@{{ $index + 1 }}" data-parsley-required="true"
+                                                                            class="form-control"
+                                                                            name="customer_type[]"
+                                                                            ng-model="so.customer_type"
+                                                                            ng-options="customerType as customerType.description for customerType in customerTypeDDL track by customerType.code">
+                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div ng-show="so.customer_type.code == 'CUSTOMERTYPE.WI'">
-                                                        <div class="form-group">
-                                                            <label for="inputCustomerName_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
-                                                            <div class="col-sm-9">
-                                                                <input type="text" class="form-control" id="inputCustomerName_@{{ $index + 1 }}"
-                                                                       name="walk_in_customer[]" placeholder="Customer Name"
-                                                                       ng-model="so.walk_in_cust">
+                                                            <div ng-show="so.customer_type.code == 'CUSTOMERTYPE.R'">
+                                                                <div class="form-group">
+                                                                    <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                                    <div class="col-sm-7">
+                                                                        <ui-select ng-model="so.customer"
+                                                                                   spinner-enabled="true">
+                                                                            <ui-select-match placeholder="Choose customer..."
+                                                                                             allow-clear="true">@{{$select.selected.name}}</ui-select-match>
+                                                                            <ui-select-choices repeat="customer in customerDDL track by customer.id"
+                                                                                               refresh="refreshCustomers($select.search)"
+                                                                                               refresh-delay="0">
+                                                                                <span ng-bind="customer.name"></span>
+                                                                            </ui-select-choices>
+                                                                        </ui-select>
+                                                                        <input type="hidden" name="customer_id[]" ng-value="so.customer.id" >
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputCustomerDetails_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_details')</label>
-                                                            <div class="col-sm-9">
+                                                            <div ng-show="so.customer_type.code == 'CUSTOMERTYPE.WI'">
+                                                                <div class="form-group">
+                                                                    <label for="inputCustomerName_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control" id="inputCustomerName_@{{ $index + 1 }}"
+                                                                               name="walk_in_customer[]" placeholder="Customer Name"
+                                                                               ng-model="so.walk_in_cust">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputCustomerDetails_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_details')</label>
+                                                                    <div class="col-sm-9">
                                                                 <textarea id="inputCustomerDetails_@{{ $index + 1 }}" class="form-control"
                                                                           rows="5" name="walk_in_customer_details[]"
                                                                           ng-model="so.walk_in_cust_details"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="box box-info">
-                                                <div class="box-header with-border">
-                                                    <h3 class="box-title">@lang('sales_order.create.box.purchase_order_detail')</h3>
-                                                </div>
-                                                <div class="box-body">
-                                                    <div class="form-group">
-                                                        <label for="inputSoCode_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_code')</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="inputSoCode_@{{ $index + 1 }}"
-                                                                   name="so_code[]" placeholder="SO Code" readonly
-                                                                   ng-model="so.so_code">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="inputSoType_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_type')</label>
-                                                        <div class="col-sm-10">
-                                                            <select id="inputSoType_@{{ $index + 1 }}" data-parsley-required="true"
-                                                                    class="form-control"
-                                                                    name="sales_type[]"
-                                                                    ng-model="so.sales_type"
-                                                                    ng-options="salesType as salesType.description for salesType in soTypeDDL track by salesType.code">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="inputSoDate_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_date')</label>
-                                                        <div class="col-sm-10">
-                                                            <div class="input-group date">
-                                                                <div class="input-group-addon">
-                                                                    <i class="fa fa-calendar"></i>
+                                                                    </div>
                                                                 </div>
-                                                                <input type="text" class="form-control inputSoDate" id="inputSoDate_@{{ $index + 1 }}"
-                                                                       name="so_created[]" ng-model="so.so_created" data-parsley-required="true">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="inputSoStatus_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_status')</label>
-                                                        <div class="col-sm-10">
-                                                            <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="box box-info">
+                                                        <div class="box-header with-border">
+                                                            <h3 class="box-title">@lang('sales_order.create.box.purchase_order_detail')</h3>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <div class="box box-info">
-                                                <div class="box-header with-border">
-                                                    <h3 class="box-title">@lang('sales_order.create.box.shipping')</h3>
-                                                </div>
-                                                <div class="box-body">
-                                                    <div class="form-group">
-                                                        <label for="inputShippingDate_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
-                                                        <div class="col-sm-9">
-                                                            <div class="input-group date">
-                                                                <div class="input-group-addon">
-                                                                    <i class="fa fa-calendar"></i>
+                                                        <div class="box-body">
+                                                            <div class="form-group">
+                                                                <label for="inputSoCode_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_code')</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control" id="inputSoCode_@{{ $index + 1 }}"
+                                                                           name="so_code[]" placeholder="SO Code" readonly
+                                                                           ng-model="so.so_code">
                                                                 </div>
-                                                                <input type="text" class="form-control inputShippingDate" id="inputShippingDate_@{{ $index + 1 }}"
-                                                                       name="shipping_date[]" ng-model="so.shipping_date" data-parsley-required="true">
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="inputWarehouse_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
-                                                        <div class="col-sm-9">
-                                                            <select id="inputWarehouse_@{{ $index + 1 }}" data-parsley-required="true"
-                                                                    name="warehouse_id[]"
-                                                                    class="form-control"
-                                                                    ng-model="so.warehouse"
-                                                                    ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="inputVendorTrucking_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
-                                                        <div class="col-sm-9">
-                                                            <select id="inputVendorTrucking_@{{ $index + 1 }}"
-                                                                    name="vendor_trucking_id[]"
-                                                                    class="form-control"
-                                                                    ng-model="so.vendorTrucking"
-                                                                    ng-options="vendorTrucking as vendorTrucking.name for vendorTrucking in vendorTruckingDDL track by vendorTrucking.id">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                            </select>
+                                                            <div class="form-group">
+                                                                <label for="inputSoType_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_type')</label>
+                                                                <div class="col-sm-10">
+                                                                    <select id="inputSoType_@{{ $index + 1 }}" data-parsley-required="true"
+                                                                            class="form-control"
+                                                                            name="sales_type[]"
+                                                                            ng-model="so.sales_type"
+                                                                            ng-options="salesType as salesType.description for salesType in soTypeDDL track by salesType.code">
+                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputSoDate_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_date')</label>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group date">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </div>
+                                                                        <input type="text" class="form-control inputSoDate" id="inputSoDate_@{{ $index + 1 }}"
+                                                                               name="so_created[]" ng-model="so.so_created" data-parsley-required="true">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputSoStatus_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_status')</label>
+                                                                <div class="col-sm-10">
+                                                                    <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="box box-info">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="box box-info">
-                                                <div class="box-header with-border">
-                                                    <h3 class="box-title">@lang('sales_order.create.box.transactions')</h3>
-                                                </div>
-                                                <div class="box-body">
-                                                    <div class="row">
-                                                        <div ng-show="so.sales_type.code == 'SOTYPE.SVC'">
-                                                            <div class="col-md-11">
-                                                                <select id="inputProduct_@{{ $index + 1 }}"
-                                                                        class="form-control"
-                                                                        ng-model="so.product"
-                                                                        ng-options="product as product.name for product in productDDL track by product.id">
-                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-primary btn-md"
-                                                                        ng-click="insertProduct($index, so.product)"><span class="fa fa-plus"/></button>
-                                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="box box-info">
+                                                        <div class="box-header with-border">
+                                                            <h3 class="box-title">@lang('sales_order.create.box.shipping')</h3>
                                                         </div>
-                                                        <div ng-show="so.sales_type.code == 'SOTYPE.S'">
-                                                            <div class="col-md-11">
-                                                                <select id="inputStock_@{{ $index + 1 }}"
-                                                                        class="form-control"
-                                                                        ng-model="so.stock"
-                                                                        ng-options="stock as stock.product.name for stock in stocksDDL track by stock.id">
-                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                </select>
+                                                        <div class="box-body">
+                                                            <div class="form-group">
+                                                                <label for="inputShippingDate_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
+                                                                <div class="col-sm-9">
+                                                                    <div class="input-group date">
+                                                                        <div class="input-group-addon">
+                                                                            <i class="fa fa-calendar"></i>
+                                                                        </div>
+                                                                        <input type="text" class="form-control inputShippingDate" id="inputShippingDate_@{{ $index + 1 }}"
+                                                                               name="shipping_date[]" ng-model="so.shipping_date" data-parsley-required="true">
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-primary btn-md"
-                                                                        ng-click="insertStock($index, so.stock)"><span class="fa fa-plus"/></button>
+                                                            <div class="form-group">
+                                                                <label for="inputWarehouse_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
+                                                                <div class="col-sm-9">
+                                                                    <select id="inputWarehouse_@{{ $index + 1 }}" data-parsley-required="true"
+                                                                            name="warehouse_id[]"
+                                                                            class="form-control"
+                                                                            ng-model="so.warehouse"
+                                                                            ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
+                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputVendorTrucking_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
+                                                                <div class="col-sm-9">
+                                                                    <select id="inputVendorTrucking_@{{ $index + 1 }}"
+                                                                            name="vendor_trucking_id[]"
+                                                                            class="form-control"
+                                                                            ng-model="so.vendorTrucking"
+                                                                            ng-options="vendorTrucking as vendorTrucking.name for vendorTrucking in vendorTruckingDDL track by vendorTrucking.id">
+                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <table id="itemsListTable" class="table table-bordered table-hover">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
-                                                                    <th width="15%">@lang('sales_order.create.table.item.header.header.quantity')</th>
-                                                                    <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.unit')</th>
-                                                                    <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.price_unit')</th>
-                                                                    <th width="5%">&nbsp;</th>
-                                                                    <th width="20%" class="text-right">@lang('sales_order.create.table.item.header.total_price')</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr ng-repeat="item in so.items">
-                                                                    <input type="hidden" name="so_@{{ $parent.$index }}_product_id[]" ng-value="item.product.id">
-                                                                    <input type="hidden" name="so_@{{ $parent.$index }}_stock_id[]" ng-value="item.stock_id">
-                                                                    <input type="hidden" name="so_@{{ $parent.$index }}_base_unit_id[]" ng-value="item.base_unit.unit.id">
-                                                                    <td class="valign-middle">@{{ item.product.name }}</td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_quantity[]"
-                                                                               ng-model="item.quantity" data-parsley-required="true"
-                                                                               data-parsley-type="number">
-                                                                    </td>
-                                                                    <td>
-                                                                        <select name="so_@{{ $parent.$index }}_selected_unit_id[]" data-parsley-required="true"
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="box box-info">
+                                                        <div class="box-header with-border">
+                                                            <h3 class="box-title">@lang('sales_order.create.box.transactions')</h3>
+                                                        </div>
+                                                        <div class="box-body">
+                                                            <div class="row">
+                                                                <div ng-show="so.sales_type.code == 'SOTYPE.SVC'">
+                                                                    <div class="col-md-11">
+                                                                        <select id="inputProduct_@{{ $index + 1 }}"
                                                                                 class="form-control"
-                                                                                ng-model="item.selected_unit"
-                                                                                data-parsley-required="true"
-                                                                                ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
+                                                                                ng-model="so.product"
+                                                                                ng-options="product as product.name for product in productDDL track by product.id">
                                                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                         </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_price[]"
-                                                                               ng-model="item.price" data-parsley-required="true"
-                                                                               data-parsley-pattern="^\d+(,\d+)?$" fcsa-number>
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-danger btn-md"
-                                                                                ng-click="removeItem($parent.$index, $index)"><span class="fa fa-minus"/>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td class="text-right valign-middle">
-                                                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <button type="button" class="btn btn-primary btn-md"
+                                                                                ng-click="insertProduct($index, so.product)"><span class="fa fa-plus"/></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div ng-show="so.sales_type.code == 'SOTYPE.S'">
+                                                                    <div class="col-md-11">
+                                                                        <select id="inputStock_@{{ $index + 1 }}"
+                                                                                class="form-control"
+                                                                                ng-model="so.stock"
+                                                                                ng-options="stock as stock.product.name for stock in stocksDDL track by stock.id">
+                                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <button type="button" class="btn btn-primary btn-md"
+                                                                                ng-click="insertStock($index, so.stock)"><span class="fa fa-plus"/></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table id="itemsListTable" class="table table-bordered table-hover">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
+                                                                            <th width="15%">@lang('sales_order.create.table.item.header.header.quantity')</th>
+                                                                            <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.unit')</th>
+                                                                            <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.price_unit')</th>
+                                                                            <th width="5%">&nbsp;</th>
+                                                                            <th width="20%" class="text-right">@lang('sales_order.create.table.item.header.total_price')</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr ng-repeat="item in so.items">
+                                                                            <input type="hidden" name="so_@{{ $parent.$index }}_product_id[]" ng-value="item.product.id">
+                                                                            <input type="hidden" name="so_@{{ $parent.$index }}_stock_id[]" ng-value="item.stock_id">
+                                                                            <input type="hidden" name="so_@{{ $parent.$index }}_base_unit_id[]" ng-value="item.base_unit.unit.id">
+                                                                            <td class="valign-middle">@{{ item.product.name }}</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_quantity[]"
+                                                                                       ng-model="item.quantity" data-parsley-required="true"
+                                                                                       data-parsley-type="number">
+                                                                            </td>
+                                                                            <td>
+                                                                                <select name="so_@{{ $parent.$index }}_selected_unit_id[]" data-parsley-required="true"
+                                                                                        class="form-control"
+                                                                                        ng-model="item.selected_unit"
+                                                                                        data-parsley-required="true"
+                                                                                        ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
+                                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_price[]"
+                                                                                       ng-model="item.price" data-parsley-required="true"
+                                                                                       data-parsley-pattern="^\d+(,\d+)?$" fcsa-number>
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <button type="button" class="btn btn-danger btn-md"
+                                                                                        ng-click="removeItem($parent.$index, $index)"><span class="fa fa-minus"/>
+                                                                                </button>
+                                                                            </td>
+                                                                            <td class="text-right valign-middle">
+                                                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table id="itemsTotalListTable_@{{ $index + 1 }}" class="table table-bordered">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td width="80%"
+                                                                                class="text-right">@lang('sales_order.create.table.total.body.total')</td>
+                                                                            <td width="20%" class="text-right">
+                                                                                <span class="control-label-normal">@{{ grandTotal($index) | number }}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <table id="itemsTotalListTable_@{{ $index + 1 }}" class="table table-bordered">
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td width="80%"
-                                                                        class="text-right">@lang('sales_order.create.table.total.body.total')</td>
-                                                                    <td width="20%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ grandTotal($index) | number }}</span>
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
+                                                </div>
+                                                <div class="box-body">
+                                                    @for ($i = 0; $i < 40; $i++)
+                                                        <br/>
+                                                    @endfor
                                                 </div>
                                             </div>
                                         </div>

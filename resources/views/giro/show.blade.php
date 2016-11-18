@@ -39,7 +39,15 @@
                         <label for="inputEffectiveDate" class="col-sm-2 control-label">@lang('giro.field.effective_date')</label>
                         <div class="col-sm-10">
                             <label id="inputEffectiveDate" class="control-label control-label-normal">
-                                <span class="control-label-normal">{{ $giro->effective_date->format('d-m-Y') }}</span>
+                                <span class="control-label-normal">{{ date('d-m-Y', strtotime($giro->effective_date)) }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPrintedName" class="col-sm-2 control-label">@lang('giro.field.printed_name')</label>
+                        <div class="col-sm-10">
+                            <label id="inputPrintedName" class="control-label">
+                                <span class="control-label-normal">{{ $giro->printed_name }}</span>
                             </label>
                         </div>
                     </div>
