@@ -135,7 +135,7 @@
                                 <button id="submitButton" type="submit"
                                         class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
                                 &nbsp;&nbsp;&nbsp;
-                                <a id="cancelButton" href="{{ route('db.so.payment.index') }}"
+                                <a id="cancelButton" href="{{ route('db.customer.payment.index') }}"
                                    class="btn btn-primary pull-right"
                                    role="button">@lang('buttons.cancel_button')</a>
                             </div>

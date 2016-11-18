@@ -300,7 +300,7 @@ class CustomerController extends Controller
     {
         $salesOrders = [];
         if(!is_null(Auth::user()->profile)) {
-            $salesOrders = SalesOrder::whereCustomerId(Auth::user()->profile->owner->id)->where('status', '=', 'STATUS.WP');
+            $salesOrders = SalesOrder::whereCustomerId(Auth::user()->profile->owner->id)->where('status', '=', 'SOSTATUS.WP')->get();
         } else {
             $req->session()->flash('info', 'This User ID are not associated with any customer.');
         }
@@ -310,9 +310,16 @@ class CustomerController extends Controller
 
     public function paymentCashCustomer($id)
     {
-        $currentSo = [];
+        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
+            'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank', 'vendorTrucking',
+            'warehouse')->find($id);
+        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+            ->get()->pluck('description', 'code');
+        $paymentType = 'PAYMENTTYPE.C';
 
-        return view('customer.payment.cash_payment', compact('currentSo'));
+        return view('customer.payment.cash_payment',
+            compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType'));
     }
 
     public function storePaymentCashCustomer($id, Request $request)
@@ -323,13 +330,20 @@ class CustomerController extends Controller
 
     public function paymentTransferCustomer($id)
     {
-        $currentSo = [];
-
         $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
+        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
+            'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank', 'vendorTrucking',
+            'warehouse')->find($id);
+        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $storeBankAccounts = $currentStore->bankAccounts;
         $customerBankAccounts = empty($currentSo->customer) ? collect([]) : $currentSo->customer->bankAccounts;
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+            ->get()->pluck('description', 'code');
+        $paymentType = 'PAYMENTTYPE.T';
 
-        return view('customer.payment.transfer_payment', compact('currentSo', 'storeBankAccounts', 'customerBankAccounts'));
+        return view('customer.payment.transfer_payment',
+            compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'storeBankAccounts',
+                'customerBankAccounts'));
     }
 
     public function storePaymentTransferCustomer($id, Request $request)
@@ -340,13 +354,17 @@ class CustomerController extends Controller
 
     public function paymentGiroCustomer($id)
     {
-        $currentSo = [];
+        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
+            'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank',
+            'vendorTrucking', 'warehouse')->find($id);
+        $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['id', 'name']);
+        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+            ->get()->pluck('description', 'code');
+        $paymentType = 'PAYMENTTYPE.G';
 
-        $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
-        $storeBankAccounts = $currentStore->bankAccounts;
-        $customerBankAccounts = empty($currentSo->customer) ? collect([]) : $currentSo->customer->bankAccounts;
-
-        return view('customer.payment.giro_payment', compact('currentSo', 'storeBankAccounts', 'customerBankAccounts'));
+        return view('customer.payment.giro_payment',
+            compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'bankDDL'));
     }
 
     public function storePaymentGiroCustomer($id, Request $request)
