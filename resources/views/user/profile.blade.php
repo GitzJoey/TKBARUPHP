@@ -12,5 +12,26 @@
 @endsection
 
 @section('content')
-    Profile
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@lang('user.profile.header.title')</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-2">
+                    <img src="{{ asset('images/blank.png') }}" class="img-rounded" alt="User Image">
+                </div>
+                <div class="col-md-5 col-md-offset-3">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>@lang('user.profile.field.username')</td>
+                                <td>{{ Auth::user()->name }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-money fa-fw"></span>&nbsp;@lang('purchase_order.payment.transfer.page_title')
+    <span class="fa fa-send fa-fw"></span>&nbsp;@lang('purchase_order.payment.transfer.page_title')
 @endsection
 @section('page_title_desc')
     @lang('purchase_order.payment.transfer.page_title_desc')
