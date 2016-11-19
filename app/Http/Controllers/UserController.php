@@ -126,8 +126,10 @@ class UserController extends Controller
             $lastp->save();
         }
 
-        $p = Profile::whereId($req['link_profile'])->first();
-        $usr->profile()->save($p);
+        if (!empty($req['link_profile'])) {
+            $p = Profile::whereId($req['link_profile'])->first();
+            $usr->profile()->save($p);
+        }
 
         $usr->userDetail->type = $req['type'];
         $usr->userDetail->allow_login = boolval($req['allow_login']);

@@ -33,9 +33,7 @@ return [
             'item' => [
                 'header' => [
                     'product_name' => 'Product Name',
-                    'header' => [
-                        'quantity' => 'Quantity',
-                    ],
+                    'quantity' => 'Quantity',
                     'unit' => 'UoM',
                     'price_unit' => 'Price',
                     'total_price' => 'Total Price',
@@ -75,9 +73,7 @@ return [
             'item' => [
                 'header' => [
                     'product_name' => 'Product Name',
-                    'header' => [
-                        'quantity' => 'Quantity',
-                    ],
+                    'quantity' => 'Quantity',
                     'unit' => 'UoM',
                     'price_unit' => 'Price',
                     'total_price' => 'Total Price',
@@ -160,12 +156,10 @@ return [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product',
-                        'header' => [
-                            'quantity' => 'Quantity',
-                        ],
                         'unit' => 'UoM',
                         'price_unit' => 'Price',
                         'total_price' => 'Total Price',
+                        'quantity' => '',
                     ],
                 ],
                 'total' => [
@@ -229,12 +223,10 @@ return [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product',
-                        'header' => [
-                            'quantity' => 'Quantity',
-                        ],
                         'unit' => 'UoM',
                         'price_unit' => 'Price',
                         'total_price' => 'Total Price',
+                        'quantity' => '',
                     ],
                 ],
                 'total' => [
@@ -291,12 +283,10 @@ return [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product',
-                        'header' => [
-                            'quantity' => 'Quantity',
-                        ],
                         'unit' => 'UoM',
                         'price_unit' => 'Price',
                         'total_price' => 'Total Price',
+                        'quantity' => '',
                     ],
                 ],
                 'total' => [

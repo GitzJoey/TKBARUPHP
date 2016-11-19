@@ -4,12 +4,12 @@
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('sales_order.payment.cash.box.customer')</h3>
+                        <h3 class="box-title">@lang('customer.payment.cash.box.customer')</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label for="inputCustomerType"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.customer_type')</label>
+                                   class="col-sm-2 control-label">@lang('customer.payment.cash.field.customer_type')</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" readonly
                                        value="@lang('lookup.'.$currentSo->customer_type)">
@@ -18,7 +18,7 @@
                         @if($currentSo->customer_type == 'CUSTOMERTYPE.R')
                             <div class="form-group">
                                 <label for="inputCustomerId"
-                                       class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.customer_name')</label>
+                                       class="col-sm-2 control-label">@lang('customer.payment.cash.field.customer_name')</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" readonly
                                            value="{{ $currentSo->customer->name }}">
@@ -32,7 +32,7 @@
                         @else
                             <div class="form-group">
                                 <label for="inputCustomerName"
-                                       class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.customer_name')</label>
+                                       class="col-sm-2 control-label">@lang('customer.payment.cash.field.customer_name')</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly
                                            value="{{ $currentSo->walk_in_cust }}">
@@ -40,7 +40,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="inputCustomerDetails"
-                                       class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.customer_details')</label>
+                                       class="col-sm-2 control-label">@lang('customer.payment.cash.field.customer_details')</label>
                                 <div class="col-sm-10">
                                 <textarea class="form-control" rows="5" readonly>{{ $currentSo->walk_in_cust_detail }}
                                 </textarea>
@@ -53,19 +53,19 @@
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('sales_order.payment.cash.box.sales_order_detail')</h3>
+                        <h3 class="box-title">@lang('customer.payment.cash.box.sales_order_detail')</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label for="inputSoCode"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.so_code')</label>
+                                   class="col-sm-2 control-label">@lang('customer.payment.cash.so_code')</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" readonly value="{{ $currentSo->code }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputSoType"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.so_type')</label>
+                                   class="col-sm-2 control-label">@lang('customer.payment.cash.so_type')</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" readonly
                                        value="@lang('lookup.'.$currentSo->so_type)">
@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputSoDate"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.so_date')</label>
+                                   class="col-sm-2 control-label">@lang('customer.payment.cash.so_date')</label>
                             <div class="col-sm-10">
                                 <div class="input-group date">
                                     <div class="input-group-addon">
@@ -86,7 +86,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputSoStatus"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.so_status')</label>
+                                   class="col-sm-2 control-label">@lang('customer.payment.cash.so_status')</label>
                             <div class="col-sm-10">
                                 <label class="control-label control-label-normal">@lang('lookup.'.$currentSo->status)</label>
                             </div>
@@ -99,12 +99,12 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('sales_order.payment.cash.box.shipping')</h3>
+                        <h3 class="box-title">@lang('customer.payment.cash.box.shipping')</h3>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label for="inputShippingDate"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.shipping_date')</label>
+                                   class="col-sm-2 control-label">@lang('customer.payment.cash.field.shipping_date')</label>
                             <div class="col-sm-5">
                                 <div class="input-group date">
                                     <div class="input-group-addon">
@@ -118,7 +118,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputWarehouse"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.warehouse')</label>
+                                   class="col-sm-2 control-label">@lang('customer.payment.cash.field.warehouse')</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" readonly
                                        value="{{ $currentSo->warehouse->name }}">
@@ -126,7 +126,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inputVendorTrucking"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.vendor_trucking')</label>
+                                   class="col-sm-2 control-label">@lang('customer.payment.cash.field.vendor_trucking')</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" readonly
                                        value="{{ empty($currentSo->vendorTrucking->name) ? '':$currentSo->vendorTrucking->name }}">
@@ -140,7 +140,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('sales_order.payment.cash.box.transactions')</h3>
+                        <h3 class="box-title">@lang('customer.payment.cash.box.transactions')</h3>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -148,16 +148,16 @@
                                 <table id="itemsListTable" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th width="30%">@lang('sales_order.payment.cash.table.item.header.product_name')</th>
+                                        <th width="30%">@lang('customer.payment.cash.table.item.header.product_name')</th>
                                         <th width="15%"
-                                            class="text-center">@lang('sales_order.payment.cash.table.item.header.header.quantity')</th>
+                                            class="text-center">@lang('customer.payment.cash.table.item.header.quantity')</th>
                                         <th width="15%"
-                                            class="text-center">@lang('sales_order.payment.cash.table.item.header.unit')</th>
+                                            class="text-center">@lang('customer.payment.cash.table.item.header.unit')</th>
                                         <th width="15%"
-                                            class="text-center">@lang('sales_order.payment.cash.table.item.header.price_unit')</th>
+                                            class="text-center">@lang('customer.payment.cash.table.item.header.price_unit')</th>
                                         <th width="5%">&nbsp;</th>
                                         <th width="20%"
-                                            class="text-center">@lang('sales_order.payment.cash.table.item.header.total_price')</th>
+                                            class="text-center">@lang('customer.payment.cash.table.item.header.total_price')</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -193,7 +193,7 @@
                                     <tbody>
                                     <tr>
                                         <td width="80%"
-                                            class="text-right">@lang('sales_order.payment.cash.table.total.body.total')</td>
+                                            class="text-right">@lang('customer.payment.cash.table.total.body.total')</td>
                                         <td width="20%" class="text-right">
                                             <span class="control-label-normal">@{{ grandTotal() | number }}</span>
                                         </td>
@@ -223,7 +223,7 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">@lang('sales_order.payment.cash.box.remarks')</h3>
+                <h3 class="box-title">@lang('customer.payment.cash.box.remarks')</h3>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -244,7 +244,7 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">@lang('sales_order.payment.cash.box.payment_history')</h3>
+                <h3 class="box-title">@lang('customer.payment.cash.box.payment_history')</h3>
             </div>
             @if(count($currentSo->cashPayments()) > 0)
                 <div class="box-body">
@@ -253,15 +253,15 @@
                             <table id="cashPaymentHistoryTable" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th colspan="3" class="text-center">@lang('sales_order.payment.cash.table.payments.header.cash')</th>
+                                    <th colspan="3" class="text-center">@lang('customer.payment.cash.table.payments.header.cash')</th>
                                 </tr>
                                 <tr>
                                     <th width="25%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_date')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_date')</th>
                                     <th width="25%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_status')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_status')</th>
                                     <th width="25%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_amount')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_amount')</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -285,18 +285,18 @@
                             <table id="transferPaymentHistoryTable" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th colspan="6" class="text-center">@lang('sales_order.payment.cash.table.payments.header.transfer')</th>
+                                    <th colspan="6" class="text-center">@lang('customer.payment.cash.table.payments.header.transfer')</th>
                                 </tr>
                                 <tr>
                                     <th width="10%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_date')</th>
-                                    <th width="10%" class="text-center">@lang('sales_order.payment.cash.table.payments.header.effective_date')</th>
-                                    <th width="20%" class="text-center">@lang('sales_order.payment.cash.table.payments.header.account_from')</th>
-                                    <th width="20%" class="text-center">@lang('sales_order.payment.cash.table.payments.header.account_to')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_date')</th>
+                                    <th width="10%" class="text-center">@lang('customer.payment.cash.table.payments.header.effective_date')</th>
+                                    <th width="20%" class="text-center">@lang('customer.payment.cash.table.payments.header.account_from')</th>
+                                    <th width="20%" class="text-center">@lang('customer.payment.cash.table.payments.header.account_to')</th>
                                     <th width="20%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_status')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_status')</th>
                                     <th width="20%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_amount')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_amount')</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -328,23 +328,23 @@
                                 <thead>
                                 <tr>
                                     <th colspan="7"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.giro')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.giro')</th>
                                 </tr>
                                 <tr>
                                     <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_date')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_date')</th>
                                     <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.effective_date')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.effective_date')</th>
                                     <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.bank')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.bank')</th>
                                     <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.serial_number')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.serial_number')</th>
                                     <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.printed_name')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.printed_name')</th>
                                     <th width="10%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_status')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_status')</th>
                                     <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.cash.table.payments.header.payment_amount')</th>
+                                        class="text-center">@lang('customer.payment.cash.table.payments.header.payment_amount')</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -371,13 +371,13 @@
                         <table id="paymentSummaryTable" class="table table-bordered">
                             <tbody>
                             <tr>
-                                <td class="text-right">@lang('sales_order.payment.cash.table.total.body.paid_amount')</td>
+                                <td class="text-right">@lang('customer.payment.cash.table.total.body.paid_amount')</td>
                                 <td width="25%" class="text-right">
                                     <span class="control-label-normal">{{ number_format($currentSo->totalAmountPaid(), 0) }}</span>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-right">@lang('sales_order.payment.cash.table.total.body.to_be_paid_amount')</td>
+                                <td class="text-right">@lang('customer.payment.cash.table.total.body.to_be_paid_amount')</td>
                                 <td width="25%" class="text-right">
                                         <span class="control-label-normal">
                                             {{ number_format($currentSo->totalAmount() - $currentSo->totalAmountPaid(), 0) }}

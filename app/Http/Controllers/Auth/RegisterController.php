@@ -71,13 +71,14 @@ class RegisterController extends Controller
         $usr->email = $data['email'];
         $usr->password = bcrypt($data['password']);
 
-        $usr->store_id = 1;
+        $usr->store_id = Store::whereIsDefault(true)->first()->id;
 
         $usr->save();
 
         $usr->roles()->attach(Role::where('name', '=', 'r_user')->get());
 
         $userdetail = new UserDetail();
+        $userdetail->allow_login = true;
         $userdetail->type = Lookup::whereCode('USERTYPE.U')->first()->code;
         $usr->userDetail()->save($userdetail);
 

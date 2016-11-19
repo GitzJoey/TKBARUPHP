@@ -10,7 +10,7 @@ return [
             'purchase_order_detail' => 'Purchase Order Detail',
             'shipping' => 'Shipping',
             'transactions' => 'Transactions',
-            'remarks' => 'Remarks'
+            'remarks' => 'Remarks',
         ],
         'field' => [
             'supplier_type' => 'Type',
@@ -18,7 +18,7 @@ return [
             'supplier_details' => 'Details',
             'shipping_date' => 'Date',
             'warehouse' => 'Warehouse',
-            'vendor_trucking' => 'Vendor Trucking'
+            'vendor_trucking' => 'Vendor Trucking',
         ],
         'po_code' => 'Code',
         'po_type' => 'Type',
@@ -28,19 +28,17 @@ return [
             'item' => [
                 'header' => [
                     'product_name' => 'Product Name',
-                    'header' => [
-                        'quantity' => 'Quantity'
-                    ],
+                    'quantity' => 'Quantity',
                     'unit' => 'UoM',
                     'price_unit' => 'Price',
-                    'total_price' => 'Total Price'
+                    'total_price' => 'Total Price',
                 ],
             ],
             'total' => [
                 'body' => [
-                    'total' => 'Total Amount'
-                ]
-            ]
+                    'total' => 'Total Amount',
+                ],
+            ],
         ],
     ],
     'payment' => [
@@ -49,7 +47,7 @@ return [
             'page_title' => 'Purchase Order Payment',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Purchase Order List'
+                'title' => 'Purchase Order List',
             ],
             'table' => [
                 'header' => [
@@ -58,9 +56,9 @@ return [
                     'supplier' => 'Supplier',
                     'total' => 'Total Amount',
                     'paid' => 'Paid Amount',
-                    'rest' => 'Rest Amount'
-                ]
-            ]
+                    'rest' => 'Rest Amount',
+                ],
+            ],
         ],
         'cash' => [
             'field' => [
@@ -72,7 +70,7 @@ return [
                 'vendor_trucking' => 'Vendor Trucking',
                 'payment_type' => 'Payment Type',
                 'payment_date' => 'Payment Date',
-                'payment_amount' => 'Payment Amount'
+                'payment_amount' => 'Payment Amount',
             ],
             'po_code' => 'Code',
             'po_type' => 'Type',
@@ -88,25 +86,23 @@ return [
                 'transactions' => 'Transaction',
                 'remarks' => 'Remarks',
                 'payment_history' => 'Payment History',
-                'payment' => 'Payment'
+                'payment' => 'Payment',
             ],
             'table' => [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product',
-                        'header' => [
-                            'quantity' => 'Quantity'
-                        ],
+                        'quantity' => '',
                         'unit' => 'UoM',
                         'price_unit' => 'Price',
-                        'total_price' => 'Total Price'
+                        'total_price' => 'Total Price',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Total Amount',
                         'paid_amount' => 'Paid Amount',
-                        'to_be_paid_amount' => 'Rest Amount'
+                        'to_be_paid_amount' => 'Rest Amount',
                     ],
                 ],
                 'payments' => [
@@ -124,8 +120,8 @@ return [
                         'bank' => 'Bank',
                         'serial_number' => 'Serial Number',
                         'printed_name' => 'Printed Name',
-                    ]
-                ]
+                    ],
+                ],
             ],
         ],
         'transfer' => [
@@ -141,7 +137,7 @@ return [
                 'payment_amount' => 'Payment Amount',
                 'effective_date' => 'Effective Date',
                 'bank_from' => 'Bank From',
-                'bank_to' => 'Bank To'
+                'bank_to' => 'Bank To',
             ],
             'po_code' => 'Code',
             'po_type' => 'Type',
@@ -157,25 +153,25 @@ return [
                 'transactions' => 'Transaction',
                 'remarks' => 'Remarks',
                 'payment_history' => 'Payment History',
-                'payment' => 'Payment'
+                'payment' => 'Payment',
             ],
             'table' => [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product',
                         'header' => [
-                            'quantity' => 'Quantity'
+                            'quantity' => 'Quantity',
                         ],
                         'unit' => 'UoM',
                         'price_unit' => 'Price',
-                        'total_price' => 'Total Price'
+                        'total_price' => 'Total Price',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Total Amount',
                         'paid_amount' => 'Paid Amount',
-                        'to_be_paid_amount' => 'Rest Amount'
+                        'to_be_paid_amount' => 'Rest Amount',
                     ],
                 ],
                 'payments' => [
@@ -183,9 +179,9 @@ return [
                         'payment_type' => 'Payment Type',
                         'payment_date' => 'Payment Date',
                         'payment_amount' => 'Payment Amount',
-                        'payment_status' => 'Payment Status'
-                    ]
-                ]
+                        'payment_status' => 'Payment Status',
+                    ],
+                ],
             ],
         ],
         'giro' => [
@@ -199,7 +195,7 @@ return [
                 'transactions' => 'Transaction',
                 'remarks' => 'Remarks',
                 'payment_history' => 'Payment History',
-                'payment' => 'Payment'
+                'payment' => 'Payment',
             ],
             'field' => [
                 'supplier_type' => 'Type',
@@ -226,19 +222,17 @@ return [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product',
-                        'header' => [
-                            'quantity' => 'Quantity'
-                        ],
+                        'quantity' => 'Quantity',
                         'unit' => 'UoM',
                         'price_unit' => 'Price',
-                        'total_price' => 'Total Price'
+                        'total_price' => 'Total Price',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Total Amount',
                         'paid_amount' => 'Paid Amount',
-                        'to_be_paid_amount' => 'Rest Amount'
+                        'to_be_paid_amount' => 'Rest Amount',
                     ],
                 ],
                 'payments' => [
@@ -246,11 +240,11 @@ return [
                         'payment_type' => 'Payment Type',
                         'payment_date' => 'Payment Date',
                         'payment_amount' => 'Payment Amount',
-                        'payment_status' => 'Payment Status'
-                    ]
-                ]
+                        'payment_status' => 'Payment Status',
+                    ],
+                ],
             ],
-        ]
+        ],
     ],
     'revise' => [
         'field' => [
@@ -259,7 +253,7 @@ return [
             'supplier_details' => 'Details',
             'shipping_date' => 'Date',
             'warehouse' => 'Warehouse',
-            'vendor_trucking' => 'Vendor Trucking'
+            'vendor_trucking' => 'Vendor Trucking',
         ],
         'po_code' => 'Code',
         'po_type' => 'Type',
@@ -273,23 +267,21 @@ return [
             'purchase_order_detail' => 'Detail',
             'shipping' => 'Shipping',
             'transactions' => 'Transaction',
-            'remarks' => 'Remarks'
+            'remarks' => 'Remarks',
         ],
         'table' => [
             'item' => [
                 'header' => [
                     'product_name' => 'Product',
-                    'header' => [
-                        'quantity' => 'Quantity'
-                    ],
+                    'quantity' => 'Quantity',
                     'unit' => 'UoM',
                     'price_unit' => 'Price',
-                    'total_price' => 'Total Price'
+                    'total_price' => 'Total Price',
                 ],
             ],
             'total' => [
                 'body' => [
-                    'total' => 'Total Amount'
+                    'total' => 'Total Amount',
                 ],
             ],
         ],
@@ -298,7 +290,7 @@ return [
             'page_title' => 'Revise Purchase Order',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Purchase Order List'
+                'title' => 'Purchase Order List',
             ],
             'table' => [
                 'header' => [
@@ -306,9 +298,9 @@ return [
                     'po_date' => 'Created Date',
                     'supplier' => 'Supplier',
                     'shipping_date' => 'Shipping Date',
-                    'status' => 'Status'
-                ]
-            ]
-        ]
-    ]
+                    'status' => 'Status',
+                ],
+            ],
+        ],
+    ],
 ];

@@ -33,9 +33,7 @@ return [
             'item' => [
                 'header' => [
                     'product_name' => 'Nama Produk',
-                    'header' => [
-                        'quantity' => 'Jumlah',
-                    ],
+                    'quantity' => 'Jumlah',
                     'unit' => 'Satuan',
                     'price_unit' => 'Harga Satuan',
                     'total_price' => 'Total Harga',
@@ -75,9 +73,7 @@ return [
             'item' => [
                 'header' => [
                     'product_name' => 'Nama Produk',
-                    'header' => [
-                        'quantity' => 'Jumlah',
-                    ],
+                    'quantity' => 'Jumlah',
                     'unit' => 'Satuan',
                     'price_unit' => 'Harga',
                     'total_price' => 'Total Harga',
@@ -160,9 +156,7 @@ return [
                 'item' => [
                     'header' => [
                         'product_name' => 'Produk',
-                        'header' => [
-                            'quantity' => 'Jumlah',
-                        ],
+                        'quantity' => '',
                         'unit' => 'Satuan',
                         'price_unit' => 'Harga Satuan',
                         'total_price' => 'Total Harga',
@@ -229,9 +223,7 @@ return [
                 'item' => [
                     'header' => [
                         'product_name' => 'Produk',
-                        'header' => [
-                            'quantity' => 'Jumlah',
-                        ],
+                        'quantity' => 'Jumlah',
                         'unit' => 'Satuan',
                         'price_unit' => 'Harga Satuan',
                         'total_price' => 'Total Harga',
@@ -291,9 +283,7 @@ return [
                 'item' => [
                     'header' => [
                         'product_name' => 'Nama Produk',
-                        'header' => [
-                            'quantity' => 'Jumlah',
-                        ],
+                        'quantity' => 'Jumlah',
                         'unit' => 'Satuan',
                         'price_unit' => 'Harga Satuan',
                         'total_price' => 'Total Harga',
