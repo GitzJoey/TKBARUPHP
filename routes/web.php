@@ -169,7 +169,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::delete('/dashboard/master/bank/edit/{id}', 'BankController@delete')->name('db.master.bank.delete');;
 
     Route::get('/dashboard/bank/upload', 'BankController@upload')->name('db.bank.upload');
-    Route::post('/dashboard/bank/upload/{id}', 'BankController@store');
+    Route::post('/dashboard/bank/upload/{id}', 'BankController@storeUpload');
 
     Route::get('/dashboard/bank/giro', 'GiroController@index')->name('db.bank.giro');
     Route::get('/dashboard/bank/giro/show/{id}', 'GiroController@show')->name('db.bank.giro.show');;

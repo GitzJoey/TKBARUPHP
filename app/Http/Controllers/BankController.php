@@ -74,7 +74,19 @@ class BankController extends Controller
     public function upload()
     {
         $bankDDL = Bank::get()->pluck('name', 'id');
-        return view('bank.upload', compact('bankDDL'));
+        $uploadBankList = [];
+
+        return view('bank.upload', compact('bankDDL', 'uploadBankList'));
+    }
+
+    public function storeUpload($id, Request $data)
+    {
+        $validator = Validator::make($data->all(), [
+            'name' => 'required|string|max:255',
+            'file_path' => 'required|mimes:csv,txt',
+        ]);
+
+
     }
 
     public function edit($id)
