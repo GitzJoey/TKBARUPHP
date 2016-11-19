@@ -15,6 +15,14 @@ namespace App\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TransferPayment whereBankFromId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TransferPayment whereBankToId($value)
  * @mixin \Eloquent
+ * @property integer $bank_account_from_id
+ * @property integer $bank_account_to_id
+ * @property-read \App\Model\BankAccount $bankAccountFrom
+ * @property-read \App\Model\BankAccount $bankAccountTo
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payment_detail
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payable
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TransferPayment whereBankAccountFromId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TransferPayment whereBankAccountToId($value)
  */
 class TransferPayment extends Payment
 {

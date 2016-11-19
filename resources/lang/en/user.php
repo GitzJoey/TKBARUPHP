@@ -54,12 +54,12 @@ return [
             'title' => '',
         ],
         'field' => [
-            'username' => '',
-            'email' => '',
-            'role' => '',
-            'type' => '',
-            'allow_login' => '',
-            'link_profile' => '',
+            'username' => 'User Name',
+            'email' => 'Eamil',
+            'role' => 'Role',
+            'type' => 'Type',
+            'allow_login' => 'Allow Login',
+            'link_profile' => 'Link Profile',
         ],
     ],
     'show' => [

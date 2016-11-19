@@ -13,6 +13,7 @@ namespace App\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\GiroPayment whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\GiroPayment whereGiroId($value)
  * @mixin \Eloquent
+ * @property-read \App\Model\Giro $giro
  */
 class GiroPayment extends Payment
 {

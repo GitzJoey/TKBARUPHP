@@ -21,12 +21,12 @@
                 <div class="col-md-3">
                     <img src="{{ asset('images/blank.png') }}" class="img-rounded" alt="User Image">
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-7">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th width="15%">&nbsp;</th>
-                                <th width="85%">&nbsp;</th>
+                                <th width="25%">&nbsp;</th>
+                                <th width="75%">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                             </tr>
                             <tr>
                                 <td>@lang('user.profile.field.role')</td>
-                                <td>{{ Auth::user()->role->name }}</td>
+                                <td>{{ Auth::user()->roles()->first()->display_name }}</td>
                             </tr>
                             <tr>
                                 <td>@lang('user.profile.field.type')</td>
@@ -49,17 +49,41 @@
                             <tr>
                                 <td>@lang('user.profile.field.allow_login')</td>
                                 <td>
+                                    <div class="checkbox icheck">
+                                        <label>
+                                            <input id="inputAllowLogin" type="checkbox" {{ boolval(Auth::user()->userDetail->allow_login) ? 'checked':'' }} disabled>
+                                        </label>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>@lang('user.profile.field.link_profile')</td>
                                 <td>
+                                    @if (!empty(Auth::user()->profile->owner))
+                                        {{ Auth::user()->profile->owner->name }}
+                                    @else
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <br>
+                    <button class="btn btn-default">@lang('buttons.change_password_button')</button>
+                    <button class="btn btn-default">@lang('buttons.reset_password_button')</button>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="text/javascript">
+        $(function () {
+            $('#inputAllowLogin').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
 @endsection
