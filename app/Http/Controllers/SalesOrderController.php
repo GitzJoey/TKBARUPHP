@@ -294,7 +294,7 @@ class SalesOrderController extends Controller
             'effective_date' => date('Y-m-d', strtotime($request->input('effective_date'))),
             'amount' => floatval(str_replace(',', '', $request->input('amount'))),
             'printed_name' => $request->input('printed_name'),
-            'status' => 'GIROPAYMENTSTATUS.WE',
+            'status' => 'GIROSTATUS.N',
             'remarks' => $request->input('remarks')
         ];
 
