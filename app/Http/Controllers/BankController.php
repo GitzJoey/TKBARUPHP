@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Storage;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -82,14 +83,19 @@ class BankController extends Controller
     public function storeUpload(Request $data)
     {
         $validator = Validator::make($data->all(), [
-            //'name' => 'required|string|max:255',
-            //'file_path' => 'required|mimes:csv,txt',
+            'name' => 'required|string|max:255',
+            'file_path' => 'required|mimes:csv,txt|size:max:999',
         ]);
 
-        $data->session()->flash('success', 'Upload success.');
-        $id = 1;
 
-        return redirect()->action('BankController@upload', [$id]);
+        if ($data->hasFile('file_path')) {
+            Storage::disk('file_upload')->put($data->file('file_path')->getClientOriginalName(), $data->file('file_path'));
+        }
+
+        $data->session()->flash('success', 'Upload success.');
+
+
+        return redirect()->action('BankController@upload');
     }
 
     public function edit($id)
