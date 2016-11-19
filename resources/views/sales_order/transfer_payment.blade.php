@@ -5,11 +5,13 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-money fa-fw"></span>&nbsp;@lang('sales_order.payment.transfer.page_title')
+    <span class="fa fa-send fa-fw"></span>&nbsp;@lang('sales_order.payment.transfer.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('sales_order.payment.transfer.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('sales_order_payment_transfer', $currentSo->hId()) !!}
 @endsection

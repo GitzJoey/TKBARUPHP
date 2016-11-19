@@ -74,7 +74,7 @@
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('giro.field.status')</label>
                     <div class="col-sm-10">
-                        <input id="inputStatus" name="status" type="text" class="form-control" value="@lang('lookup.' . 'GIROSTATUS.N')" readonly>
+                        <input id="inputStatus" name="status" type="text" class="form-control" value="@lang('lookup.GIROSTATUS.N')" readonly>
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>

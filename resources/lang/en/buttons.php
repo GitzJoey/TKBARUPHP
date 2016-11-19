@@ -12,6 +12,7 @@ return [
     'print_preview_button' => 'Print',
     'maintenance_button' => 'Maintenance',
     'change_password_button' => 'Change Password',
+    'reset_password_button' => 'Reset Password',
     'back_button' => 'Back',
     'reset_button' => 'Reset',
     'make_copy_button' => 'Make Copy',

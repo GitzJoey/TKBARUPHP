@@ -229,7 +229,7 @@
                                             <tr>
                                                 <th width="30%">@lang('purchase_order.revise.table.item.header.product_name')</th>
                                                 <th width="15%"
-                                                    class="text-center">@lang('purchase_order.revise.table.item.header.header.quantity')</th>
+                                                    class="text-center">@lang('purchase_order.revise.table.item.header.quantity')</th>
                                                 <th width="15%"
                                                     class="text-center">@lang('purchase_order.revise.table.item.header.unit')</th>
                                                 <th width="15%"

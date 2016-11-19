@@ -50,6 +50,17 @@ return [
         'title' => 'User',
         'page_title' => 'User Profile',
         'page_title_desc' => '',
+        'header' => [
+            'title' => '',
+        ],
+        'field' => [
+            'username' => 'User Name',
+            'email' => 'Eamil',
+            'role' => 'Role',
+            'type' => 'Type',
+            'allow_login' => 'Allow Login',
+            'link_profile' => 'Link Profile',
+        ],
     ],
     'show' => [
         'title' => 'User',

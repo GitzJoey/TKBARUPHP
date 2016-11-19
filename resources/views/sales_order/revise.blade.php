@@ -244,7 +244,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th width="30%">@lang('sales_order.revise.table.item.header.product_name')</th>
-                                                    <th width="15%">@lang('sales_order.revise.table.item.header.header.quantity')</th>
+                                                    <th width="15%">@lang('sales_order.revise.table.item.header.quantity')</th>
                                                     <th width="15%"
                                                         class="text-right">@lang('sales_order.revise.table.item.header.unit')</th>
                                                     <th width="15%"

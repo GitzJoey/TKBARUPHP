@@ -23,7 +23,13 @@
                             <ul class="menu">
                                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                     <li>
-                                        <a rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">{{ $properties['native'] }}</a>
+                                        <a rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
+                                            @if (App::getLocale() == $localeCode)
+                                                <strong>{{ $properties['native'] }}</strong>
+                                            @else
+                                                {{ $properties['native'] }}
+                                            @endif
+                                        </a>
                                     </li>
                                 @endforeach
                             </ul>

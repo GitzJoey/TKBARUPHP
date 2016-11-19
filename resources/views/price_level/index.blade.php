@@ -38,13 +38,13 @@
                 <tbody>
                     @foreach ($pricelevel as $key => $item)
                         <tr>
-                            <td>{{ $item->type }}</td>
+                            <td>@lang('lookup.'.$item->type)</td>
                             <td>{{ $item->weight}}</td>
                             <td>{{ $item->name}}</td>
                             <td>{{ $item->description}}</td>
                             <td></td>
                             <td class="text-center">@lang('lookup.' . $item->status)</td>
-                            <td class="text-center" width="20%">
+                            <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.price.price_level.show', $item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.price.price_level.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['db.price.price_level.delete', $item->hId()], 'style'=>'display:inline'])  !!}
