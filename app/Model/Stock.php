@@ -66,6 +66,11 @@ class Stock extends Model
         return $this->belongsTo('App\Model\Product', 'product_id');
     }
 
+    public function prices()
+    {
+        return $this->hasMany('App\Model\Price');
+    }
+
     public static function boot()
     {
         parent::boot();

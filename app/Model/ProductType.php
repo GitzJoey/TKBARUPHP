@@ -80,6 +80,11 @@ class ProductType extends Model
         return $this->hasMany('App\Model\Product', 'product_type_id');
     }
 
+    public function stocks()
+    {
+        return $this->hasManyThrough('App\Model\Stock', 'App\Model\Product');
+    }
+
     public static function boot()
     {
         parent::boot();

@@ -238,6 +238,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::patch('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@update');
     Route::delete('/dashboard/price/price_level/edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
 
+    Route::get('/dashboard/price/today', 'PriceController@index')->name('db.price.today');
+    Route::get('/dashboard/price/category/{id}', 'PriceController@editCategoryPrice')->name('db.price.category');
+    Route::post('/dashboard/price/category/{id}', 'PriceController@updateCategoryPrice');
+    Route::get('/dashboard/price/stock/{id}', 'PriceController@editStockPrice')->name('db.price.stock');
+    Route::post('/dashboard/price/stock/{id}', 'PriceController@updateStockPrice');
+
     Route::get('/dashboard/report/trx', 'ReportController@report_trx')->name('db.report.transaction');
     Route::get('/dashboard/report/mon', 'ReportController@report_mon')->name('db.report.monitoring');
     Route::get('/dashboard/report/tax', 'ReportController@report_tax')->name('db.report.tax');
