@@ -56,7 +56,22 @@ return [
         'page_title' => 'Bank',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Upload Bank',
+            'title' => [
+                'upload' => '',
+                'history' => '',
+            ],
+        ],
+        'field' => [
+            'bank' => '',
+            'file' => '',
+        ],
+        'table' => [
+            'header' => [
+                'bank' => '',
+                'upload_date' => '',
+                'file_name' => '',
+                'status' => '',
+            ],
         ],
     ],
 ];

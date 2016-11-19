@@ -9,8 +9,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use DateTime;
 use Validator;
+use App\Http\Requests;
 use Illuminate\Http\Request;
 
 use App\Model\Bank;
@@ -79,14 +79,17 @@ class BankController extends Controller
         return view('bank.upload', compact('bankDDL', 'uploadBankList'));
     }
 
-    public function storeUpload($id, Request $data)
+    public function storeUpload(Request $data)
     {
         $validator = Validator::make($data->all(), [
-            'name' => 'required|string|max:255',
-            'file_path' => 'required|mimes:csv,txt',
+            //'name' => 'required|string|max:255',
+            //'file_path' => 'required|mimes:csv,txt',
         ]);
 
+        $data->session()->flash('success', 'Upload success.');
+        $id = 1;
 
+        return redirect()->action('BankController@upload', [$id]);
     }
 
     public function edit($id)

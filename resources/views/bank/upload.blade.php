@@ -13,6 +13,17 @@
 @endsection
 
 @section('content')
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @elseif ($message = Session::get('danger'))
+        <div class="alert alert-danger">
+            <p>{{ $message }}</p>
+        </div>
+        {{ Session::forget('info') }}
+    @endif
+
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">@lang('bank.upload.header.title.upload')</h3>
@@ -22,15 +33,15 @@
             <div class="box-body">
                 <div class="box-body">
                     <div class="form-group {{ $errors->has('bank') ? 'has-error' : '' }}">
-                        <label for="inputBank" class="col-sm-2 control-label">@lang('bank.upload.field.name')</label>
-                        <div class="col-sm-10">
+                        <label for="inputBank" class="col-sm-2 control-label">@lang('bank.upload.field.bank')</label>
+                        <div class="col-sm-5">
                             {{ Form::select('bank', $bankDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                             <span class="help-block">{{ $errors->has('bank') ? $errors->first('bank') : '' }}</span>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('file_path') ? 'has-error' : '' }}">
-                        <label for="inputFilePath" class="col-sm-2 control-label">&nbsp;</label>
-                        <div class="col-sm-10">
+                        <label for="inputFilePath" class="col-sm-2 control-label">@lang('bank.upload.field.file')</label>
+                        <div class="col-sm-5">
                             <input id="inputFilePath" name="file_path" type="file" class="form-control">
                             <span class="help-block">{{ $errors->has('file_path') ? $errors->first('file_path') : '' }}</span>
                         </div>

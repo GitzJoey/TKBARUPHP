@@ -256,7 +256,7 @@ class CustomerController extends Controller
         $so->status = 'POSTATUS.WAPPV';
         $so->save();
 
-        return redirect()->action('App\Http\Controllers\CustomerController@confirmSalesOrder', [$id]);
+        return redirect()->action('CustomerController@confirmSalesOrder', [$id]);
     }
 
     public function approvalIndex()
