@@ -7,16 +7,9 @@
 @section('page_title')
     <span class="fa fa-cubes fa-fw"></span>&nbsp;@lang('product.create.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('product.create.page_title_desc')
-@endsection
-
-@section('custom_css')
-    <style type="text/css">
-        table thead {
-            background-color: lightgray;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -141,6 +134,7 @@
                     </div>
                 </div>
             </div>
+            <div class="box-footer"></div>
         </form>
     </div>
 @endsection

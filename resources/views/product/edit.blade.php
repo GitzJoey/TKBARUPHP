@@ -123,6 +123,7 @@
                     </div>
                 </div>
             </div>
+            <div class="box-footer"></div>
         {!! Form::close() !!}
     </div>
 @endsection
@@ -131,7 +132,7 @@
     <script type="application/javascript">
         var app = angular.module("addUnitModule", []);
         app.controller("addUnit", ['$scope', function($scope) {
-            $scope.units = JSON.parse('{!! $product->getProductUnitJSON() !!}');
+            $scope.units = JSON.parse('{!! $product->getProductUnitsJSON() !!}');
 
             $scope.addNew = function(unit) {
                 $scope.units.push({

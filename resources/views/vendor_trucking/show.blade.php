@@ -87,5 +87,6 @@
                 </div>
             </form>
         </div>
+        <div class="box-footer"></div>
     </div>
 @endsection

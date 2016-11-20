@@ -4,18 +4,10 @@
     @lang('truck.show.title')
 @endsection
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
-@endsection
-
 @section('page_title')
     <span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;@lang('truck.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('truck.show.page_title_desc')
 @endsection
@@ -74,8 +66,6 @@
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="box-footer">
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
@@ -83,6 +73,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="box-footer"></div>
             </form>
         </div>
     </div>

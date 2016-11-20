@@ -154,6 +154,7 @@
                     </div>
                 </div>
             </div>
+            <div class="box-footer"></div>
         </form>
     </div>
 @endsection

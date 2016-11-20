@@ -65,8 +65,6 @@
                         <input type="text" class="form-control" id="inputRemarks" name="remarks" placeholder="@lang('warehouse.field.remarks')">
                     </div>
                 </div>
-            </div>
-            <div class="box-footer">
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
@@ -75,6 +73,7 @@
                     </div>
                 </div>
             </div>
+            <div class="box-footer"></div>
         </form>
     </div>
 @endsection
