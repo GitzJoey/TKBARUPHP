@@ -7,6 +7,7 @@
 @section('page_title')
     <span class="fa fa-table fa-fw"></span>&nbsp;@lang('price_level.create.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('price_level.create.page_title_desc')
 @endsection

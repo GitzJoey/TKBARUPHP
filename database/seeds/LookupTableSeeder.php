@@ -195,11 +195,6 @@ class CreateLookupTableSeeder extends Seeder
                 'category' => 'TRFPAYMENTSTATUS',
             ],
             [
-                'code' => 'GIROPAYMENTSTATUS.NEW',
-                'description' => 'New',
-                'category' => 'GIROPAYMENTSTATUS',
-            ],
-            [
                 'code' => 'GIROPAYMENTSTATUS.WE',
                 'description' => 'Waiting Effective Date',
                 'category' => 'GIROPAYMENTSTATUS',
@@ -278,6 +273,21 @@ class CreateLookupTableSeeder extends Seeder
                 'code' => 'PRICELEVELTYPE.PCT',
                 'description' => 'Percentage Value',
                 'category' => 'PRICELEVELTYPE',
+            ],
+            [
+                'code' => 'GIROSTATUS.N',
+                'description' => 'New',
+                'category' => 'GIROSTATUS',
+            ],
+            [
+                'code' => 'GIROSTATUS.UP',
+                'description' => 'Used for Payment',
+                'category' => 'GIROSTATUS',
+            ],
+            [
+                'code' => 'GIROSTATUS.R',
+                'description' => 'Returned',
+                'category' => 'GIROSTATUS',
             ],
         ];
         foreach ($lookup as $key => $value) {

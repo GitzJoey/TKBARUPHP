@@ -11,6 +11,7 @@ namespace App\Model;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * App\Stocks
@@ -61,9 +62,19 @@ class Stock extends Model
         'warehouse_id'
     ];
 
+    public function hId()
+    {
+        return HashIds::encode($this->attributes['id']);
+    }
+
     public function product()
     {
         return $this->belongsTo('App\Model\Product', 'product_id');
+    }
+
+    public function prices()
+    {
+        return $this->hasMany('App\Model\Price');
     }
 
     public static function boot()

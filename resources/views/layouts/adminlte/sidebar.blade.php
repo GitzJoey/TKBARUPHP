@@ -90,7 +90,7 @@
                     <ul class="treeview-menu">
                         @if(Entrust::can('price.todayprice-list') OR
                             Entrust::can('price.todayprice-create'))
-                            <li><a href="#"><i class="fa fa-barcode fa-fw"></i>&nbsp;@lang('menu.item.price_todayprice')</a></li>
+                            <li><a href="{{ route('db.price.today') }}"><i class="fa fa-barcode fa-fw"></i>&nbsp;@lang('menu.item.price_todayprice')</a></li>
                         @endif
                         @if(Entrust::can('price.pricelevel-list') OR
                             Entrust::can('price.pricelevel-create') OR

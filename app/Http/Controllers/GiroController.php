@@ -11,11 +11,9 @@ namespace App\Http\Controllers;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
-use Vinkla\Hashids\Facades\Hashids;
 
 use App\Model\Bank;
 use App\Model\Giro;
-use App\Model\Lookup;
 
 class GiroController extends Controller
 {
@@ -62,7 +60,7 @@ class GiroController extends Controller
                 'effective_date' => date('Y-m-d', strtotime($data->input('effective_date'))),
                 'amount' => $data['amount'],
                 'printed_name' => $data['printed_name'],
-                'status' => 'GIROPAYMENTSTATUS.NEW',
+                'status' => 'GIROSTATUS.N',
                 'remarks' => $data['remarks']
             ]);
             return redirect(route('db.bank.giro'));
