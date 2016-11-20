@@ -359,7 +359,7 @@
 
             function isBase(unit) {
                 return unit.is_base == 1;
-            };
+            }
 
             $scope.grandTotal = function () {
                 var result = 0;

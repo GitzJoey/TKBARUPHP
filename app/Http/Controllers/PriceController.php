@@ -9,7 +9,6 @@ use App\Model\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class PriceController extends Controller
 {
@@ -56,30 +55,47 @@ class PriceController extends Controller
 
         $prices = collect([]);
 
-        $priceLevels->each(function ($priceLevel) use($prices, $stocks, $request){
-            $stocks->each(function ($stock) use($prices, $priceLevel, $request){
+        $stocks->each(function ($stock) use($prices, $priceLevels, $request){
+            $priceLevels->each(function ($priceLevel) use($prices, $stock, $request){
                 $prices->push([
                     'store_id'           => Auth::user()->store_id,
                     'stock_id'          => $stock->id,
                     'price_level_id'    => $priceLevel->id,
                     'input_date'        => $request->input('input_date'),
                     'market_price'      => $request->input('market_price'),
-                    'price'             => $request->input('market_price') + $priceLevel->increment_value,
-                    'status'            => 'PRICESTATUS.NEW'
+                    'price'             => $request->input('price_'.$priceLevel->hId()),
                 ]);
             });
         });
 
-        Log::info($prices);
+        Price::insert($prices->toArray());
     }
 
     public function editStockPrice($id)
     {
+        $currentStock = Stock::find($id);
+        $priceLevels = PriceLevel::all(['id', 'increment_value']);
 
+        return view('db.price.stock', compact('currentStock', 'priceLevels'));
     }
 
     public function updateStockPrice(Request $request, $id)
     {
+        $priceLevels = PriceLevel::all(['id', 'increment_value']);
 
+        $prices = collect([]);
+
+        $priceLevels->each(function ($priceLevel) use($prices, $request, $id){
+            $prices->push([
+                'store_id'           => Auth::user()->store_id,
+                'stock_id'          => $id,
+                'price_level_id'    => $priceLevel->id,
+                'input_date'        => $request->input('input_date'),
+                'market_price'      => $request->input('market_price'),
+                'price'             => $request->input('market_price') + $priceLevel->increment_value,
+            ]);
+        });
+
+        Price::insert($prices->toArray());
     }
 }

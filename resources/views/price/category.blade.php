@@ -65,19 +65,20 @@
                             <label class="col-sm-2 control-label">@lang('price.category.field.price')</label>
                         </div>
                     </div>
-                    <div class="row" ng-repeat="priceLevel in priceLevels">
-                        <div class="form-group">
-                            <label for="inputPrice@{{ $index }}"
-                                   class="col-sm-2 control-label">@{{ priceLevel.name }}</label>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control text-right" name="price[]"
-                                       data-parsley-required="true"
-                                       data-parsley-pattern="^\d+(,\d+)?$" id="inputPrice@{{ $index }}"
-                                       fcsa-number ng-model="price"
-                                       ng-value="market_price > 0 ? priceLevel.increment_value + market_price : 0"/>
+                    @foreach($priceLevels as $key => $priceLevel)
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="inputPrice_{{ $priceLevel->hId() }}"
+                                       class="col-sm-2 control-label">{{ $priceLevel->name }}</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control text-right" name="price_{{ $priceLevel->hId() }}"
+                                           data-parsley-required="true"
+                                           data-parsley-pattern="^\d+(,\d+)?$" id="inputPrice_{{ $priceLevel->hId() }}"
+                                           fcsa-number ng-model="price"/>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-toolbar">
@@ -98,8 +99,12 @@
     <script type="application/javascript">
         var app = angular.module('categoryPriceModule', ['fcsa-number']);
         app.controller("categoryPriceController", ['$scope', function ($scope) {
-            $scope.priceLevels = JSON.parse('{!! htmlspecialchars_decode($priceLevels) !!}');
+
         }]);
+
+        var priceLeves = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
+
+        console.log(priceLeves);
 
         $(function () {
             $("#inputDate").daterangepicker({
