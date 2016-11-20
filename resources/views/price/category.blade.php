@@ -55,7 +55,7 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control text-right" name="market_price"
                                        data-parsley-required="true"
-                                       data-parsley-pattern="^\d+(,\d+)?$" id="inputMarketPrice" fcsa-number
+                                       data-parsley-pattern="^\d+(,\d+)?\.?\d*$" id="inputMarketPrice" fcsa-number
                                        ng-model="market_price"/>
                             </div>
                         </div>
@@ -72,9 +72,8 @@
                                        class="col-sm-2 control-label">{{ $priceLevel->name }}</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control text-right" name="price[]"
-                                           data-parsley-required="true"
-                                           data-parsley-pattern="^\d+(,\d+)?$" id="inputPrice_{{ $key }}"
-                                           fcsa-number ng-model="price{{ $key }}">
+                                           data-parsley-required="true" data-parsley-pattern="^\d+(,\d+)?\.?\d*$"
+                                           fcsa-number ng-model="price{{ $key }}" id="inputPrice_{{ $key }}">
                                 </div>
                             </div>
                         </div>
@@ -139,7 +138,7 @@
 
                 console.log('Calculated price : ' + price);
 
-                priceInput.val(price);
+                priceInput.val(numeral(price).format('0,0.00'));
             }
         }
 

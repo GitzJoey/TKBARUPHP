@@ -55,7 +55,7 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control text-right" name="market_price"
                                        data-parsley-required="true"
-                                       data-parsley-pattern="^\d+(,\d+)?$" id="inputMarketPrice" fcsa-number
+                                       data-parsley-pattern="^\d+(,\d+)?\.?\d*$" id="inputMarketPrice" fcsa-number
                                        ng-model="market_price"/>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control text-right" name="price[]"
                                            data-parsley-required="true"
-                                           data-parsley-pattern="^\d+(,\d+)?$" id="inputPrice_{{ $key }}"
+                                           data-parsley-pattern="^\d+(,\d+)?\.?\d*$" id="inputPrice_{{ $key }}"
                                            fcsa-number ng-model="price{{ $key }}"/>
                                 </div>
                             </div>
@@ -113,14 +113,14 @@
 
             console.log('Updating price inputs...');
 
-            if($.isNumeric(marketPrice))
+            if ($.isNumeric(marketPrice))
                 marketPrice = parseFloat(marketPrice);
             else
                 marketPrice = 0;
 
             console.log('Inputed market price : ' + marketPrice);
 
-            for(var i = 0; i < priceLevels.length; i++){
+            for (var i = 0; i < priceLevels.length; i++) {
                 console.log('Price level ' + (i + 1));
 
                 var priceInput = $("#inputPrice_" + i);
@@ -129,18 +129,18 @@
 
                 console.log('Price level type : ' + priceLevel.type);
 
-                if(priceLevel.type === 'PRICELEVELTYPE.INC'){
+                if (priceLevel.type === 'PRICELEVELTYPE.INC') {
                     console.log('Increment value : ' + priceLevel.increment_value);
                     price = parseFloat(priceLevel.increment_value) + marketPrice;
                 }
-                else{
+                else {
                     console.log('Percentage value : ' + priceLevel.percentage_value);
                     price = parseFloat(priceLevel.percentage_value) * marketPrice + marketPrice;
                 }
 
                 console.log('Calculated price : ' + price);
 
-                priceInput.val(price);
+                priceInput.val(numeral(price).format('0,0.00'));
             }
         }
 
