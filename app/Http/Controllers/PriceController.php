@@ -63,7 +63,7 @@ class PriceController extends Controller
         $stocks->each(function ($stock) use($prices, $priceLevels, $request){
             $priceLevels->each(function ($priceLevel, $key) use($prices, $stock, $request){
                 $prices->push([
-                    'store_id'           => Auth::user()->store_id,
+                    'store_id'          => Auth::user()->store_id,
                     'stock_id'          => $stock->id,
                     'price_level_id'    => $priceLevel->id,
                     'input_date'        => date('Y-m-d', strtotime($request->input('input_date'))),
@@ -81,7 +81,7 @@ class PriceController extends Controller
     public function editStockPrice($id)
     {
         $currentStock = Stock::find($id);
-        $priceLevels = PriceLevel::all(['id', 'name', 'increment_value']);
+        $priceLevels = PriceLevel::all();
 
         return view('price.stock', compact('currentStock', 'priceLevels'));
     }
