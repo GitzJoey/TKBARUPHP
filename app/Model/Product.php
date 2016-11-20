@@ -106,7 +106,7 @@ class Product extends Model
     {
         $pu = array();
 
-        foreach ($this->getProductUnit as $produnit) {
+        foreach ($this->productUnits as $produnit) {
             array_push($pu, array(
                 'unit_id' => (string)$produnit->unit_id,
                 'is_base' => empty($produnit->is_base) ? false : true,

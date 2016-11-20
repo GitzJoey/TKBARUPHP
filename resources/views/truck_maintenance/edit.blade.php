@@ -73,8 +73,6 @@
                         <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
                     </div>
                 </div>
-            </div>
-            <div class="box-footer">
                 <div class="form-group">
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
@@ -83,6 +81,7 @@
                     </div>
                 </div>
             </div>
+            <div class="box-footer"></div>
         {!! Form::close() !!}
     </div>
 @endsection

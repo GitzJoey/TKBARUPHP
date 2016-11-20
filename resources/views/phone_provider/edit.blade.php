@@ -4,10 +4,10 @@
     @lang('phone_provider.edit.title')
 @endsection
 
-
 @section('page_title')
     <span class="glyphicon glyphicon-phone"></span>&nbsp;@lang('phone_provider.edit.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('phone_provider.edit.page_title_desc')
 @endsection

@@ -7,6 +7,7 @@
 @section('page_title')
     <span class="fa fa-cube fa-fw"></span>&nbsp;@lang('product_type.create.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('product_type.create.page_title_desc')
 @endsection
@@ -57,8 +58,6 @@
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
-            </div>
-            <div class="box-footer">
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
@@ -67,6 +66,7 @@
                     </div>
                 </div>
             </div>
+            <div class="box-footer"></div>
         </form>
     </div>
 @endsection
