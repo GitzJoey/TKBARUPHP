@@ -71,7 +71,7 @@ class RegisterController extends Controller
         $usr->email = $data['email'];
         $usr->password = bcrypt($data['password']);
 
-        $usr->store_id = Store::whereIsDefault(true)->first()->id;
+        $usr->store_id = Store::whereIsDefault('YESNOSELECT.YES')->first()->id;
 
         $usr->save();
 
