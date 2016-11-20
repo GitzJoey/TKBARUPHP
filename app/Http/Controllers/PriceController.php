@@ -6,6 +6,7 @@ use App\Model\Price;
 use App\Model\PriceLevel;
 use App\Model\ProductType;
 use App\Model\Stock;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +20,17 @@ class PriceController extends Controller
 
     public function index()
     {
-        $productCategories = ProductType::with('stocks.prices')->get();
+        $productCategories = ProductType::with(
+            [
+                'stocks.prices' => function($query){
+                    $query->where('input_date', '>=', Carbon::today()->subDays(5))
+                          ->orderBy('input_date', 'desc')
+                          ->orderBy('price_level_id', 'asc');
+                }
+            ]
+        )->whereHas('stocks', function ($query){
+            $query->where('current_quantity', '>', 0);
+        })->get();
         $priceLevels = PriceLevel::all(['id', 'name']);
 
         return view('price.index', compact('productCategories', 'priceLevels'));
