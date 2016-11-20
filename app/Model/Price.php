@@ -5,6 +5,7 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Price extends Model
 {
@@ -21,6 +22,11 @@ class Price extends Model
         'price',
         'status'
     ];
+
+    public function hId()
+    {
+        return HashIds::encode($this->attributes['id']);
+    }
 
     public static function boot()
     {

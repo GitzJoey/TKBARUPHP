@@ -68,13 +68,13 @@
                     @foreach($priceLevels as $key => $priceLevel)
                         <div class="row">
                             <div class="form-group">
-                                <label for="inputPrice_{{ $priceLevel->hId() }}"
+                                <label for="inputPrice_{{ $key }}"
                                        class="col-sm-2 control-label">{{ $priceLevel->name }}</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control text-right" name="price_{{ $priceLevel->hId() }}"
+                                    <input type="text" class="form-control text-right" name="price[]"
                                            data-parsley-required="true"
-                                           data-parsley-pattern="^\d+(,\d+)?$" id="inputPrice_{{ $priceLevel->hId() }}"
-                                           fcsa-number ng-model="price"/>
+                                           data-parsley-pattern="^\d+(,\d+)?$" id="inputPrice_{{ $key }}"
+                                           fcsa-number ng-model="price{{ $key }}"/>
                                 </div>
                             </div>
                         </div>
@@ -101,10 +101,6 @@
         app.controller("categoryPriceController", ['$scope', function ($scope) {
 
         }]);
-
-        var priceLeves = JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}');
-
-        console.log(priceLeves);
 
         $(function () {
             $("#inputDate").daterangepicker({
