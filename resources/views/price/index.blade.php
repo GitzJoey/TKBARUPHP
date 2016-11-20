@@ -54,9 +54,9 @@
                                     <td class="text-center">{{
                                             $stock->prices->first(function ($price, $key) use($priceLevel, $stock){
                                                 return $price->price_level_id === $priceLevel->id && $price->input_date == $stock->prices->first()->input_date;
-                                            }) ? $stock->prices->first(function ($price, $key) use($priceLevel, $stock){
+                                            }) ? number_format($stock->prices->first(function ($price, $key) use($priceLevel, $stock){
                                                 return $price->price_level_id === $priceLevel->id && $price->input_date == $stock->prices->first()->input_date;
-                                            })->price : '-'
+                                            })->price, 2) : '-'
                                          }}
                                     </td>
                                 @endforeach

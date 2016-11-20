@@ -67,8 +67,8 @@ class PriceController extends Controller
                     'stock_id'          => $stock->id,
                     'price_level_id'    => $priceLevel->id,
                     'input_date'        => date('Y-m-d', strtotime($request->input('input_date'))),
-                    'market_price'      => $request->input('market_price'),
-                    'price'             => $request->input("price.$key"),
+                    'market_price'      => floatval(str_replace(',', '', $request->input('market_price'))),
+                    'price'             => floatval(str_replace(',', '', $request->input("price.$key"))),
                 ]);
             });
         });
@@ -98,8 +98,8 @@ class PriceController extends Controller
                 'stock_id'          => $id,
                 'price_level_id'    => $priceLevel->id,
                 'input_date'        => date('Y-m-d', strtotime($request->input('input_date'))),
-                'market_price'      => $request->input('market_price'),
-                'price'             => $request->input("price.$key"),
+                'market_price'      => floatval(str_replace(',', '', $request->input('market_price'))),
+                'price'             => floatval(str_replace(',', '', $request->input("price.$key"))),
             ]);
         });
 

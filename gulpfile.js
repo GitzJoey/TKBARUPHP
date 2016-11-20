@@ -47,6 +47,7 @@ elixir(function (mix) {
         './node_modules/lodash/lodash.min.js',
         './node_modules/jquery-gotop/src/jquery.gotop.min.js',
         './node_modules/angular-fcsa-number/src/fcsaNumber.min.js',
+        './node_modules/numeral/min/numeral.min.js',
         './resources/assets/js/adminlte.custom.js'
     ], 'public/adminlte/js/app.js')
     .copy('node_modules/bootstrap/fonts', 'public/adminlte/fonts')

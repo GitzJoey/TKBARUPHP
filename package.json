@@ -28,10 +28,10 @@
     "gulp": "^3.9.1",
     "icheck": "^1.0.2",
     "ionicons": "^3.0.0",
-    "jquery": "^3.1.0",
     "jquery-gotop": "^1.1.2",
     "moment": "^2.15.2",
     "parsleyjs": "^2.5.0",
-    "ui-select": "^0.19.4"
+    "ui-select": "^0.19.4",
+    "numeral" : "^1.5.3"
   }
 }
