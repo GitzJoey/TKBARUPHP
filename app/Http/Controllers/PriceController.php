@@ -43,7 +43,7 @@ class PriceController extends Controller
     public function editCategoryPrice($id)
     {
         $currentProductType = ProductType::find($id);
-        $priceLevels = PriceLevel::all(['id', 'name', 'increment_value']);
+        $priceLevels = PriceLevel::all();
 
         return view('price.category', compact('currentProductType', 'priceLevels'));
     }
