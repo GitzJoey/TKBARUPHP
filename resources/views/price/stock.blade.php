@@ -4,6 +4,10 @@
     @lang('price.stock.title')
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/bootstrap-datetimepicker.min.css') }}">
+@endsection
+
 @section('page_title')
     <span class="fa fa-barcode fa-fw"></span>&nbsp;@lang('price.stock.page_title')
 @endsection
@@ -157,4 +161,5 @@
             });
         });
     </script>
+    <script type="application/javascript" src="{{ asset('adminlte/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection
