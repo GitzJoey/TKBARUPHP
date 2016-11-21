@@ -45,6 +45,9 @@
                                 @foreach($priceLevels as $key => $priceLevel)
                                     <td class="text-center">-</td>
                                 @endforeach
+                                <td class="text-center">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('db.price.stock', $stock->hId()) }}">Update</a>
+                                </td>
                             </tr>
                         @else
                             <tr>
