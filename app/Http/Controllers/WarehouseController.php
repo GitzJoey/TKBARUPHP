@@ -5,13 +5,16 @@
  * Date: 9/21/2016
  * Time: 4:35 PM
  */
+
 namespace App\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
 
+use App\Model\Unit;
 use App\Model\Lookup;
 use App\Model\Warehouse;
+use App\Model\WarehouseSection;
 
 class WarehouseController extends Controller
 {
@@ -28,15 +31,17 @@ class WarehouseController extends Controller
 
     public function show($id)
     {
-        $warehouse = Warehouse::find($id);
+        $warehouse = Warehouse::with('sections.capacityUnit')->find($id);
+
         return view('warehouse.show')->with('warehouse', $warehouse);
     }
 
     public function create()
     {
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
-        return view('warehouse.create', compact('statusDDL'));
+        return view('warehouse.create', compact('statusDDL', 'unitDDL'));
     }
 
     public function store(Request $data)
@@ -48,36 +53,79 @@ class WarehouseController extends Controller
             'status' => 'required',
         ]);
 
-        Warehouse::create([
-            'store_id' => Auth::user()->store->id,
-            'name' => $data['name'],
-            'address' => $data['address'],
-            'phone_num' => $data['phone_num'],
-            'status' => $data['status'],
-            'remarks' => $data['remarks']
-        ]);
+        $warehouse = new Warehouse();
+
+        $warehouse->store_id = Auth::user()->store->id;
+        $warehouse->name = $data['name'];
+        $warehouse->address = $data['address'];
+        $warehouse->phone_num = $data['phone_num'];
+        $warehouse->status = $data['status'];
+        $warehouse->remarks = $data['remarks'];
+        $warehouse->save();
+
+        for ($i = 0; $i < count($data['section_name']); $i++) {
+            $ws = new WarehouseSection();
+
+            $ws->store_id = Auth::user()->store->id;
+            $ws->name = $data['section_name'][$i];
+            $ws->position = $data['section_position'][$i];
+            $ws->capacity = $data['section_capacity'][$i];
+            $ws->capacity_unit_id = $data['section_capacity_unit'][$i];
+            $ws->remarks = empty($data['section_remarks'][$i]) ? '' : $data['section_remarks'][$i];
+
+            $warehouse->sections()->save($ws);
+        }
 
         return redirect(route('db.master.warehouse'));
     }
 
     public function edit($id)
     {
-        $warehouse = Warehouse::find($id);
+        $warehouse = Warehouse::with('sections')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
-        return view('warehouse.edit', compact('warehouse', 'statusDDL'));
+        return view('warehouse.edit', compact('warehouse', 'statusDDL', 'unitDDL'));
     }
 
-    public function update($id, Request $req)
+    public function update($id, Request $data)
     {
-        Warehouse::find($id)->update($req->all());
+        $warehouse = Warehouse::find($id);
+
+        $warehouse->sections()->delete();
+
+        for ($i = 0; $i < count($data['section_name']); $i++) {
+            $ws = new WarehouseSection();
+
+            $ws->store_id = Auth::user()->store->id;
+            $ws->name = $data['section_name'][$i];
+            $ws->position = $data['section_position'][$i];
+            $ws->capacity = $data['section_capacity'][$i];
+            $ws->capacity_unit_id = $data['section_capacity_unit'][$i];
+            $ws->remarks = empty($data['section_remarks'][$i]) ? '' : $data['section_remarks'][$i];
+
+            $warehouse->sections()->save($ws);
+        }
+
+        $warehouse->store_id = Auth::user()->store->id;
+        $warehouse->name = $data['name'];
+        $warehouse->address = $data['address'];
+        $warehouse->phone_num = $data['phone_num'];
+        $warehouse->status = $data['status'];
+        $warehouse->remarks = $data['remarks'];
+
+        $warehouse->save();
+
         return redirect(route('db.master.warehouse'));
     }
 
     public function delete($id)
     {
-        Warehouse::find($id)->delete();
+        $warehouse = Warehouse::find($id);
+        $warehouse->sections()->delete();
+        $warehouse->delete();
+
         return redirect(route('db.master.warehouse'));
     }
 }

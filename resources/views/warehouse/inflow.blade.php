@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span>&nbsp;@lang('warehouse.inflow.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('warehouse.inflow.index.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('inflow') !!}
 @endsection
@@ -21,7 +23,7 @@
         </div>
     @endif
 
-    <div ng-app="warehouseModule" ng-controller="warehouseController">
+    <div ng-app="warehouseInflowModule" ng-controller="warehouseInflowController">
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('warehouse.inflow.index.header.warehouse')</h3>
@@ -69,8 +71,8 @@
 @endsection
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('warehouseModule', []);
-        app.controller('warehouseController', ['$scope', '$http', function($scope, $http) {
+        var app = angular.module('warehouseInflowModule', []);
+        app.controller('warehouseInflowController', ['$scope', '$http', function($scope, $http) {
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
 
             $scope.POs = [];

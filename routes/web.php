@@ -70,8 +70,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::post('/dashboard/so/payment/{id}/transfer', 'SalesOrderController@saveTransferPayment');
     Route::get('/dashboard/so/payment/{id}/giro', 'SalesOrderController@createGiroPayment')->name('db.so.payment.giro');
     Route::post('/dashboard/so/payment/{id}/giro', 'SalesOrderController@saveGiroPayment');
-    Route::get('/dashboard/so/copy', 'SalesOrderController@indexSO')->name('db.so.copy.index');
-    Route::get('/dashboard/so/copy/{id}', 'SalesOrderController@copySO')->name('db.so.copy');
+    Route::get('/dashboard/so/copy/{code?}', 'SalesOrderController@copySO')->name('db.so.copy.index');
     Route::patch('/dashboard/so/copy/{id}', 'SalesOrderController@saveSOCopy');
 
     Route::get('/dashboard/admin/user', 'UserController@index')->name('db.admin.user');
@@ -214,7 +213,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::post('/dashboard/customer/payment/transfer/{id}', 'CustomerController@storePaymentTransferCustomer');
     Route::get('/dashboard/customer/payment/giro/{id}', 'CustomerController@paymentGiroCustomer')->name('db.customer.payment.giro');
     Route::post('/dashboard/customer/payment/giro/{id}', 'CustomerController@storePaymentGiroCustomer');
-
 
     Route::get('/dashboard/customer/approval', 'CustomerController@approvalIndex')->name('db.customer.approval.index');
     Route::get('/dashboard/customer/approval/approve/{id}', 'CustomerController@approval')->name('db.customer.approval.approve');

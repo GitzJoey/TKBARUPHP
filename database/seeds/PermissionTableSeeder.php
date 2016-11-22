@@ -317,6 +317,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Enable Payment PO'
             ],
             [
+                'name' => 'po.po-copy',
+                'display_name' => '[Purchase Order] PO Copy',
+                'description' => 'Enable PO Copy'
+            ],
+            [
                 'name' => 'so.so-create',
                 'display_name' => '[Sales Order] Create SO',
                 'description' => 'Enable Create SO'

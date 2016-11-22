@@ -29,47 +29,118 @@
             <h3 class="box-title">@lang('warehouse.edit.header.title')</h3>
         </div>
         {!! Form::model($warehouse, ['method' => 'PATCH', 'route' => ['db.master.warehouse.edit', $warehouse->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
-        <div class="box-body">
-            <div class="form-group">
-                <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>
-                <div class="col-sm-10">
-                    <input id="inputName" name="name" type="text" class="form-control" value="{{ $warehouse->name }}" placeholder="Name" data-parsley-required="true">
+            <div ng-app="warehouseModule" ng-controller="warehouseController">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>
+                        <div class="col-sm-10">
+                            <input id="inputName" name="name" type="text" class="form-control" value="{{ $warehouse->name }}" placeholder="Name" data-parsley-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-sm-2 control-label">@lang('warehouse.field.address')</label>
+                        <div class="col-sm-10">
+                            <input id="inputAddress" name="address" type="text" class="form-control" value="{{ $warehouse->address }}" placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPhoneNum" class="col-sm-2 control-label">@lang('warehouse.field.phone_num')</label>
+                        <div class="col-sm-10">
+                            <input id="inputPhoneNum" name="phone_num" type="text" class="form-control" value="{{ $warehouse->phone_num}}" placeholder="Phone Number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSection" class="col-sm-2 control-label">@lang('warehouse.field.section')</label>
+                        <div class="col-sm-10">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>@lang('warehouse.edit.table.header.name')</th>
+                                        <th>@lang('warehouse.edit.table.header.position')</th>
+                                        <th>@lang('warehouse.edit.table.header.capacity')</th>
+                                        <th>@lang('warehouse.edit.table.header.capacity_unit')</th>
+                                        <th>@lang('warehouse.edit.table.header.remarks')</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="c in sections">
+                                        <td><input type="text" class="form-control" ng-model="c.name" name="section_name[]" data-parsley-required="true"/></td>
+                                        <td><input type="text" class="form-control" ng-model="c.position" name="section_position[]" data-parsley-required="true"/></td>
+                                        <td><input type="text" class="form-control" ng-model="c.capacity" name="section_capacity[]" data-parsley-required="true" data-parsley-type="number"/></td>
+                                        <td>
+                                            <select class="form-control"
+                                                    name="section_capacity_unit[]"
+                                                    ng-model="c.capacity_unit_id"
+                                                    ng-options="u.id as u.unit_name for u in unitDDL track by u.id"
+                                                    data-parsley-required="true">
+                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="form-control" ng-model="c.remarks" name="section_remarks[]"/></td>
+                                        <td class="text-center valign-middle">
+                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelected($index)">
+                                                <span class="fa fa-close fa-fw"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5">
+                                            <button type="button" class="btn btn-xs btn-default" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('bank.field.status')</label>
+                        <div class="col-sm-10">
+                            {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                            <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('bank.field.remarks')</label>
+                        <div class="col-sm-10">
+                            <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $warehouse->remarks }}" placeholder="Remarks">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputButton" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="{{ route('db.master.warehouse') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                        </div>
+                    </div>
                 </div>
+                <div class="box-footer"></div>
             </div>
-            <div class="form-group">
-                <label for="inputAddress" class="col-sm-2 control-label">@lang('warehouse.field.address')</label>
-                <div class="col-sm-10">
-                    <input id="inputAddress" name="address" type="text" class="form-control" value="{{ $warehouse->address }}" placeholder="Address">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPhoneNum" class="col-sm-2 control-label">@lang('warehouse.field.phone_num')</label>
-                <div class="col-sm-10">
-                    <input id="inputPhoneNum" name="phone_num" type="text" class="form-control" value="{{ $warehouse->phone_num}}" placeholder="Phone Number">
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                <label for="inputStatus" class="col-sm-2 control-label">@lang('bank.field.status')</label>
-                <div class="col-sm-10">
-                    {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                    <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputRemarks" class="col-sm-2 control-label">@lang('bank.field.remarks')</label>
-                <div class="col-sm-10">
-                    <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $warehouse->remarks }}" placeholder="Remarks">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputButton" class="col-sm-2 control-label"></label>
-                <div class="col-sm-10">
-                    <a href="{{ route('db.master.warehouse') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                    <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                </div>
-            </div>
-        </div>
-        <div class="box-footer"></div>
         {!! Form::close() !!}
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        var app = angular.module("warehouseModule", []);
+        app.controller("warehouseController", ['$scope', function($scope) {
+            $scope.unitDDL = JSON.parse('{!! htmlspecialchars_decode($unitDDL) !!}');
+            $scope.sections = JSON.parse('{!! htmlspecialchars_decode($warehouse->sections) !!}');
+
+            $scope.addNew = function (unit) {
+                $scope.sections.push({
+                    'name': '',
+                    'position': '',
+                    'capacity': 0,
+                    'remarks': ''
+                });
+            };
+
+            $scope.removeSelected = function (idx) {
+                $scope.sections.splice(idx, 1);
+            };
+        }]);
+    </script>
 @endsection

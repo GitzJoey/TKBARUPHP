@@ -15,7 +15,8 @@
             <li class="header">&nbsp;</li>
             @if(Entrust::can('po.po-create') OR
                 Entrust::can('po.po-revise') OR
-                Entrust::can('po.po-payment'))
+                Entrust::can('po.po-payment') OR
+                Entrust::can('po.po-copy'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.po.*')) }}">
                     <a href="#"><i class="fa fa-truck fa-fw"></i><span>&nbsp;@lang('menu.item.po')</span>
                         <span class="pull-right-container">
@@ -36,6 +37,11 @@
                         @if(Entrust::can('po.po-payment'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.po.payment') || Active::checkRoutePattern('db.po.payment.*')) }}">
                                 <a href="{{ route('db.po.payment.index') }}"><i class="fa fa-calculator fa-fw"></i>&nbsp;@lang('menu.item.po_payment')</a>
+                            </li>
+                        @endif
+                        @if(Entrust::can('po.po-copy'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.po.copy') || Active::checkRoutePattern('db.po.copy.*')) }}">
+                                <a href="{{ route('db.po.copy.index') }}"><i class="fa fa-copy fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_copy')</a>
                             </li>
                         @endif
                     </ul>

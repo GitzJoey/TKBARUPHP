@@ -7,7 +7,8 @@ return [
             'page_title' => 'Inflow',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Inflow'
+                'warehouse' => 'Warehouse',
+                'purchase_order' => 'Purchase Order',
             ],
             'table' => [
                 'header' => [
@@ -15,13 +16,9 @@ return [
                     'po_date' => 'Created Date',
                     'supplier' => 'Supplier',
                     'shipping_date' => 'Shipping Date',
-                    'status' => 'Status'
-                ]
+                    'status' => 'Status',
+                ],
             ],
-            'header' => [
-                'warehouse' => 'Warehouse',
-                'purchase_order' => 'Purchase Order'
-            ]
         ],
         'receipt' => [
             'title' => 'Receipt',
@@ -29,7 +26,7 @@ return [
             'page_title_desc' => '',
             'box' => [
                 'receipt' => 'Receipt',
-                'items' => 'Items'
+                'items' => 'Items',
             ],
             'field' => [
                 'warehouse' => 'Warehouse',
@@ -37,7 +34,7 @@ return [
                 'shipping_date' => 'Shipping Date',
                 'receipt_date' => 'Receipt Date',
                 'vendor_trucking' => 'Vendor Trucking',
-                'license_plate' => 'License Plate'
+                'license_plate' => 'License Plate',
             ],
             'table' => [
                 'item' => [
@@ -46,11 +43,11 @@ return [
                         'unit' => 'UoM',
                         'brutto' => 'Brutto',
                         'netto' => 'Netto',
-                        'tare' => 'Tare'
-                    ]
-                ]
-            ]
-        ]
+                        'tare' => 'Tare',
+                    ],
+                ],
+            ],
+        ],
     ],
     'outflow' => [
         'index' => [
@@ -60,7 +57,7 @@ return [
             'header' => [
                 'title' => 'Outflow',
                 'warehouse' => 'Warehouse',
-                'sales_order' => 'Sales Order'
+                'sales_order' => 'Sales Order',
             ],
             'table' => [
                 'header' => [
@@ -68,9 +65,9 @@ return [
                     'so_date' => 'Created Date',
                     'customer' => 'Customer',
                     'shipping_date' => 'Shipping Date',
-                    'status' => 'Status'
-                ]
-            ]
+                    'status' => 'Status',
+                ],
+            ],
         ],
         'deliver' => [
             'title' => 'Deliver',
@@ -78,7 +75,7 @@ return [
             'page_title_desc' => '',
             'box' => [
                 'deliver' => 'Deliver',
-                'items' => 'Items'
+                'items' => 'Items',
             ],
             'field' => [
                 'warehouse' => 'Warehouse',
@@ -86,18 +83,18 @@ return [
                 'shipping_date' => 'Shipping Date',
                 'deliver_date' => 'Deliver Date',
                 'vendor_trucking' => 'Vendor Trucking',
-                'license_plate' => 'License Plate'
+                'license_plate' => 'License Plate',
             ],
             'table' => [
                 'item' => [
                     'header' => [
                         'product_name' => 'Product Name',
                         'unit' => 'UoM',
-                        'brutto' => 'Brutto'
-                    ]
-                ]
-            ]
-        ]
+                        'brutto' => 'Brutto',
+                    ],
+                ],
+            ],
+        ],
     ],
     'create' => [
         'title' => 'Warehouse',
@@ -106,6 +103,14 @@ return [
         'header' => [
             'title' => 'Create Warehouse',
         ],
+        'table' => [
+            'header' => [
+                'name' => 'Name',
+                'position' => 'Position',
+                'capacity' => 'Capacity',
+                'remarks' => 'Remarks',
+            ],
+        ],
     ],
     'field' => [
         'name' => 'Name',
@@ -113,6 +118,7 @@ return [
         'phone_num' => 'Phone Number',
         'status' => 'Status',
         'remarks' => 'Remarks',
+        'section' => 'Sections',
     ],
     'edit' => [
         'title' => 'Warehouse',
@@ -120,6 +126,14 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Edit Warehouse',
+        ],
+        'table' => [
+            'header' => [
+                'name' => 'Name',
+                'position' => 'Position',
+                'capacity' => 'Capacity',
+                'remarks' => 'Remarks',
+            ],
         ],
     ],
     'index' => [
@@ -145,6 +159,14 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Show Warehouse',
+        ],
+        'table' => [
+            'header' => [
+                'name' => 'Name',
+                'position' => 'Position',
+                'capacity' => 'Capacity',
+                'remarks' => 'Remarks',
+            ],
         ],
     ],
 ];

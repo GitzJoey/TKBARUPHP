@@ -321,4 +321,15 @@ class SalesOrderController extends Controller
 
         return redirect(route('db.so.payment.index'));
     }
+
+    public function copySO($code = null)
+    {
+        $copylist = [];
+
+        if (!$code) {
+
+        }
+
+        return view('sales_order.copy_index', compact('copylist'));
+    }
 }

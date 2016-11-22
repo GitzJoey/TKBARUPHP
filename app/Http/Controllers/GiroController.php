@@ -58,7 +58,7 @@ class GiroController extends Controller
                 'bank_id' => $data['bank'],
                 'serial_number' => $data['serial_number'],
                 'effective_date' => date('Y-m-d', strtotime($data->input('effective_date'))),
-                'amount' => $data['amount'],
+                'amount' => floatval(str_replace(',', '', $data['amount'])),
                 'printed_name' => $data['printed_name'],
                 'status' => 'GIROSTATUS.N',
                 'remarks' => $data['remarks']
@@ -91,7 +91,7 @@ class GiroController extends Controller
             $giro->bank_id = $req['bank'];
             $giro->serial_number = $req['serial_number'];
             $giro->effective_date = date('Y-m-d', strtotime($req['effective_date']));
-            $giro->amount = $req['amount'];
+            $giro->amount = floatval(str_replace(',', '', $req['amount']));
             $giro->remarks = $req['remarks'];
 
             $giro->save();

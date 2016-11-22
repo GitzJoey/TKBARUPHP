@@ -91,6 +91,11 @@ class Warehouse extends Model
         return $this->hasMany('App\Model\PurchaseOrder');
     }
 
+    public function sections()
+    {
+        return $this->hasMany('App\Model\WarehouseSection');
+    }
+
     public static function boot()
     {
         parent::boot();

@@ -45,6 +45,32 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputSection" class="col-sm-2 control-label">@lang('warehouse.field.section')</label>
+                        <div class="col-sm-10">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>@lang('warehouse.show.table.header.name')</th>
+                                        <th>@lang('warehouse.show.table.header.position')</th>
+                                        <th>@lang('warehouse.show.table.header.capacity')</th>
+                                        <th>@lang('warehouse.show.table.header.remarks')</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($warehouse->sections as $key => $s)
+                                        <tr>
+                                            <td>{{ $s->name }}</td>
+                                            <td>{{ $s->position }}</td>
+                                            <td>{{ $s->capacity }}</td>
+                                            <td>{{ $s->remarks }}</td>
+                                            <td class="text-center"></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('warehouse.field.status')</label>
                         <div class="col-sm-10">
                             <label id="status" class="control-label control-label-normal">

@@ -83,6 +83,11 @@ class Unit extends Model
         return $this->hasMany('App\Model\ProductUnit', 'unit_id');
     }
 
+    public function capacityUnits()
+    {
+        return $this->hasMany('App\Model\WarehouseSection', 'capacity_unit_id');
+    }
+
     public static function boot()
     {
         parent::boot();
