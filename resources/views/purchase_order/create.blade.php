@@ -4,6 +4,10 @@
     @lang('purchase_order.create.title')
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/bootstrap-datetimepicker.min.css') }}">
+@endsection
+
 @section('page_title')
     <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('purchase_order.create.page_title')
 @endsection
@@ -392,25 +396,16 @@
                 radioClass: 'iradio_square-blue'
             });
 
-            $("#inputPoDate").daterangepicker({
-                timePicker: true,
-                timePickerIncrement: 15,
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
+            $("#inputPoDate").datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
             });
 
-            $("#inputShippingDate").daterangepicker({
-                timePicker: true,
-                timePickerIncrement: 15,
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
+            $("#inputShippingDate").datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
             });
         });
     </script>
+    <script type="application/javascript" src="{{ asset('adminlte/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection

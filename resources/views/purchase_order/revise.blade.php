@@ -4,12 +4,18 @@
     @lang('purchase_order.revise.title')
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/bootstrap-datetimepicker.min.css') }}">
+@endsection
+
 @section('page_title')
     <span class="fa fa-code-fork fa-rotate-180 fa-fw"></span>&nbsp;@lang('purchase_order.revise.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('purchase_order.revise.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('revise_purchase_order', $currentPo->hId()) !!}
 @endsection
@@ -432,15 +438,11 @@
                 radioClass: 'iradio_square-blue'
             });
 
-            $("#inputShippingDate").daterangepicker(
-                    {
-                        locale: {
-                            format: 'DD-MM-YYYY'
-                        },
-                        singleDatePicker: true,
-                        showDropdowns: true
-                    }
-            );
+            $("#inputShippingDate").datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
+            });
         });
     </script>
+    <script type="application/javascript" src="{{ asset('adminlte/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection

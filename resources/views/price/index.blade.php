@@ -4,9 +4,20 @@
     @lang('price.index.title')
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/tooltipster.bundle.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/tooltipster-sideTip-shadow.min.css') }}">
+    <style>
+        .price_history {
+            display: none;
+        }
+    </style>
+@endsection
+
 @section('page_title')
     <span class="fa fa-barcode fa-fw"></span>&nbsp;@lang('price.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('price.index.page_title_desc')
 @endsection
@@ -23,7 +34,8 @@
             <div class="box-header with-border">
                 <h3 class="box-title">{{ $productCategory->name }}</h3>
                 @if(!empty($productCategory->stocks))
-                    <a id="updateCategoryPriceButton" class="btn btn-primary pull-right" href="{{ route('db.price.category', $productCategory->hId()) }}">Update</a>
+                    <a id="updateCategoryPriceButton" class="btn btn-primary pull-right"
+                       href="{{ route('db.price.category', $productCategory->hId()) }}">Update</a>
                 @endif
             </div>
             <div class="box-body">
@@ -39,44 +51,51 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($productCategory->stocks as $stockKey => $stock)
-                            @if(count($stock->prices) == 0)
-                                <tr>
-                                    <td>{{  $stock->product->name }}</td>
+                    @foreach($productCategory->stocks as $stockKey => $stock)
+                        @if(count($stock->prices) == 0)
+                            <tr>
+                                <td><span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
+                                          class="tooltips">{!! $stock->product->name !!}</span></td>
+                                <td class="text-center">-</td>
+                                @foreach($priceLevels as $priceLevelKey => $priceLevel)
                                     <td class="text-center">-</td>
-                                    @foreach($priceLevels as $priceLevelKey => $priceLevel)
-                                        <td class="text-center">-</td>
-                                    @endforeach
-                                    <td class="text-center">
-                                        <a class="btn btn-xs btn-primary" href="{{ route('db.price.stock', $stock->hId()) }}">Update</a>
-                                    </td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <td>{{  $stock->product->name }}</td>
-                                    <td class="text-center">{{ $stock->prices->first()->input_date }}</td>
-                                    @foreach($priceLevels as $priceLevelKey => $priceLevel)
-                                        <td class="text-center">{{
+                                @endforeach
+                                <td class="text-center">
+                                    <a class="btn btn-xs btn-primary"
+                                       href="{{ route('db.price.stock', $stock->hId()) }}">Update</a>
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td><span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
+                                          class="tooltips">{!! $stock->product->name !!}</span></td>
+                                <td class="text-center">{{ $stock->prices->first()->input_date }}</td>
+                                @foreach($priceLevels as $priceLevelKey => $priceLevel)
+                                    <td class="text-center">{{
                                                 $stock->prices->first(function ($price, $priceLevelKey) use($priceLevel, $stock){
                                                     return $price->price_level_id === $priceLevel->id && $price->input_date == $stock->prices->first()->input_date;
                                                 }) ? number_format($stock->prices->first(function ($price, $priceLevelKey) use($priceLevel, $stock){
                                                     return $price->price_level_id === $priceLevel->id && $price->input_date == $stock->prices->first()->input_date;
                                                 })->price, 2) : '-'
                                              }}
-                                        </td>
-                                    @endforeach
-                                    <td class="text-center">
-                                        <a class="btn btn-xs btn-primary" href="{{ route('db.price.stock', $stock->hId()) }}">Update</a>
                                     </td>
-                                </tr>
-                            @endif
-                        @endforeach
+                                @endforeach
+                                <td class="text-center">
+                                    <a class="btn btn-xs btn-primary"
+                                       href="{{ route('db.price.stock', $stock->hId()) }}">Update</a>
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
                     </tbody>
                 </table>
 
-                @foreach($productCategory->stocks as $stockKey => $stock)
-                    <div id="category_{{ $categoryKey }}_stock_{{ $stockKey }}_history" style="width:100%; height:300px;"></div>
-                @endforeach
+                <div class="price_history">
+                    @foreach($productCategory->stocks as $stockKey => $stock)
+                        <div id="category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
+                             style="width:50%; height:300px;"></div>
+                    @endforeach
+                </div>
             </div>
         </div>
     @endforeach
@@ -84,73 +103,83 @@
 
 @section('custom_js')
     <script type="application/javascript">
+        $(document).ready(function () {
+            $('.tooltips').tooltipster({
+                theme: 'tooltipster-shadow',
+                interactive: true,
+                side: ['right', 'left', 'top', 'bottom']
+            });
+        });
+
         $(function () {
             @foreach($productCategories as $categoryKey => $productCategory)
                 @if(!empty($productCategory->stocks))
                     @foreach($productCategory->stocks as $stockKey => $stock)
                         Highcharts.chart('category_{{ $categoryKey }}_stock_{{ $stockKey }}_history', {
-                            chart: {
-                                type: 'spline'
-                            },
-                            title: {
-                                text: '{{ $stock->product->name }}',
-                                x: -20 //center
-                            },
-                            subtitle: {
-                                text: 'Price History',
-                                x: -20
-                            },
-                            xAxis: {
-                                type: 'datetime',
-                                tickInterval: moment.duration(0.5, 'minutes').asMilliseconds()
-                            },
-                            yAxis: {
-                                title: {
-                                    text: 'Price (IDR)'
-                                },
-                                plotLines: [{
-                                    value: 0,
-                                    width: 1,
-                                    color: '#808080'
-                                }],
-                                min: 0
-                            },
-                            plotOptions: {
-                                spline: {
-                                    marker: {
-                                        enabled: true
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                valuePrefix: 'Rp. '
-                            },
-                            legend: {
-                                layout: 'vertical',
-                                align: 'right',
-                                verticalAlign: 'middle',
-                                borderWidth: 0
-                            },
-                            series: [
-                                @foreach($priceLevels as $priceLevelKey => $priceLevel)
-                                {
-                                    name: '{{ $priceLevel->name }}',
-                                    pointInterval:  moment.duration(0.5, 'minutes').asMilliseconds(),
-                                    data: [
-                                        @foreach($stock->prices as $priceKey => $price)
-                                            @if($price->price_level_id === $priceLevel->id)
-                                                [moment.utc('{{ $price->input_date }}', 'YYYY-MM-DD HH:mm:ss').valueOf(), {{ $price->price }}],
-                                            @endif
-                                        @endforeach
-                                    ]
-                                },
-                                @endforeach
-                            ]
-                        });
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: '{{ $stock->product->name }}',
+                    x: -20 //center
+                },
+                subtitle: {
+                    text: 'Price History',
+                    x: -20
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickInterval: moment.duration(0.5, 'minutes').asMilliseconds()
+                },
+                yAxis: {
+                    title: {
+                        text: 'Price (IDR)'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }],
+                    tickInterval: 500,
+                    min: 0
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            enabled: true
+                        }
+                    }
+                },
+                tooltip: {
+                    valuePrefix: 'Rp. '
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: [
+                        @foreach($priceLevels as $priceLevelKey => $priceLevel)
+                    {
+                        name: '{{ $priceLevel->name }}',
+                        pointInterval: moment.duration(0.5, 'minutes').asMilliseconds(),
+                        data: [
+                                @foreach($stock->prices as $priceKey => $price)
+                                @if($price->price_level_id === $priceLevel->id)
+                            [moment.utc('{{ $price->input_date }}', 'YYYY-MM-DD HH:mm:ss').valueOf(), {{ $price->price }}],
+                            @endif
+                            @endforeach
+                        ]
+                    },
                     @endforeach
-                @endif
+                ]
+            });
+            @endforeach
+            @endif
             @endforeach
         });
     </script>
     <script type="application/javascript" src="{{ asset('adminlte/js/highcharts.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/js/tooltipster.bundle.min.js') }}"></script>
 @endsection
