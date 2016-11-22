@@ -4,6 +4,10 @@
     @lang('price.category.title')
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/bootstrap-datetimepicker.min.css') }}">
+@endsection
+
 @section('page_title')
     <span class="fa fa-barcode fa-fw"></span>&nbsp;@lang('price.category.page_title')
 @endsection
@@ -63,21 +67,22 @@
                     <div class="row">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">@lang('price.category.field.price')</label>
-                        </div>
-                    </div>
-                    @foreach($priceLevels as $key => $priceLevel)
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="inputPrice_{{ $key }}"
-                                       class="col-sm-2 control-label">{{ $priceLevel->name }}</label>
-                                <div class="col-sm-4">
+                            @foreach($priceLevels as $key => $priceLevel)
+                                <div class="col-sm-2">
                                     <input type="text" class="form-control text-right" name="price[]"
                                            data-parsley-required="true" data-parsley-pattern="^\d+(,\d+)?\.?\d*$"
-                                           fcsa-number ng-model="price{{ $key }}" id="inputPrice_{{ $key }}">
+                                           fcsa-number ng-model="price{{ $key }}" id="inputPrice_{{ $key }}"
+                                           aria-describedby="helpBlock">
+                                    <span id="helpBlock" class="help-block" title="{{ 'Type : ' . Lang::get('lookup.' . $priceLevel->type) . '&#013;' .
+                                        ($priceLevel->type === 'PRICELEVELTYPE.INC' ?
+                                        'Value : ' . $priceLevel->increment_value :
+                                        'Value : ' . $priceLevel->percentage_value . '%') }}">
+                                        {{ $priceLevel->name }}
+                                    </span>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-toolbar">
@@ -111,14 +116,14 @@
 
             console.log('Updating price inputs...');
 
-            if($.isNumeric(marketPrice))
+            if ($.isNumeric(marketPrice))
                 marketPrice = parseFloat(marketPrice);
             else
                 marketPrice = 0;
 
             console.log('Inputed market price : ' + marketPrice);
 
-            for(var i = 0; i < priceLevels.length; i++){
+            for (var i = 0; i < priceLevels.length; i++) {
                 console.log('Price level ' + (i + 1));
 
                 var priceInput = $("#inputPrice_" + i);
@@ -127,32 +132,27 @@
 
                 console.log('Price level type : ' + priceLevel.type);
 
-                if(priceLevel.type === 'PRICELEVELTYPE.INC'){
+                if (priceLevel.type === 'PRICELEVELTYPE.INC') {
                     console.log('Increment value : ' + priceLevel.increment_value);
                     price = parseFloat(priceLevel.increment_value) + marketPrice;
                 }
-                else{
+                else {
                     console.log('Percentage value : ' + priceLevel.percentage_value);
                     price = parseFloat(priceLevel.percentage_value) * marketPrice + marketPrice;
                 }
 
                 console.log('Calculated price : ' + price);
 
-                priceInput.val(numeral(price).format('0,0.00'));
+                priceInput.val(numeral(price).format('0,0'));
             }
         }
 
         $(function () {
-            $("#inputDate").daterangepicker({
-                useCurrent: false,
-                timePicker: true,
-                timePickerIncrement: 15,
-                locale: {
-                    format: 'DD-MM-YYYY hh:mm'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
+            $("#inputDate").datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
             });
         });
     </script>
+    <script type="application/javascript" src="{{ asset('adminlte/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection

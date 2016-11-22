@@ -51,8 +51,8 @@ class SalesOrderServiceImpl implements SalesOrderService
             'walk_in_cust_detail' => $walk_in_cust_detail,
             'code' => $request->input("so_code.$index"),
             'so_type' => $request->input("sales_type.$index"),
-            'so_created' => date('Y-m-d', strtotime($request->input("so_created.$index"))),
-            'shipping_date' => date('Y-m-d', strtotime($request->input("shipping_date.$index"))),
+            'so_created' => date('Y-m-d H:i:s', strtotime($request->input("so_created.$index"))),
+            'shipping_date' => date('Y-m-d H:i:s', strtotime($request->input("shipping_date.$index"))),
             'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
             'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$index")) ? 0 : $request->input("vendor_trucking_id.$index"),
             'warehouse_id' => $request->input("warehouse_id.$index"),
@@ -129,7 +129,7 @@ class SalesOrderServiceImpl implements SalesOrderService
         Item::destroy($soItemsToBeDeleted);
 
         $currentSo->warehouse_id = $request->input('warehouse_id');
-        $currentSo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
+        $currentSo->shipping_date = date('Y-m-d H:i:s', strtotime($request->input('shipping_date')));
         $currentSo->remarks = $request->input('remarks');
         $currentSo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
 

@@ -9,6 +9,7 @@ use App\Model\PurchaseOrder;
 use App\Services\PurchaseOrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Created by PhpStorm.
@@ -40,8 +41,8 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
         $params = [
             'code' => $request->input('code'),
             'po_type' => $request->input('po_type'),
-            'po_created' => date('Y-m-d', strtotime($request->input('po_created'))),
-            'shipping_date' => date('Y-m-d', strtotime($request->input('shipping_date'))),
+            'po_created' => date('Y-m-d H:i:s', strtotime($request->input('po_created'))),
+            'shipping_date' => date('Y-m-d H:i:s', strtotime($request->input('shipping_date'))),
             'supplier_type' => $request->input('supplier_type'),
             'walk_in_supplier' => $walk_in_supplier,
             'walk_in_supplier_detail' => $walk_in_supplier_detail,
@@ -100,7 +101,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
         // Remove the item that removed on the revise page
         Item::destroy($poItemsToBeDeleted);
 
-        $currentPo->shipping_date = date('Y-m-d', strtotime($request->input('shipping_date')));
+        $currentPo->shipping_date = date('Y-m-d H:i:s', strtotime($request->input('shipping_date')));
         $currentPo->warehouse_id = $request->input('warehouse_id');
         $currentPo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
         $currentPo->remarks = $request->input('remarks');

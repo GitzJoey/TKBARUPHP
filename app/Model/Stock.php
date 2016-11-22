@@ -9,6 +9,7 @@
 namespace App\Model;
 
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Vinkla\Hashids\Facades\Hashids;
@@ -75,6 +76,12 @@ class Stock extends Model
     public function prices()
     {
         return $this->hasMany('App\Model\Price');
+    }
+
+    //TODO : Move this to separate class
+    public function latestPrices()
+    {
+        return Price::groupBy('input_date')->havingRaw('input_date = min(input_date)')->get();
     }
 
     public static function boot()

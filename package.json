@@ -32,6 +32,10 @@
     "moment": "^2.15.2",
     "parsleyjs": "^2.5.0",
     "ui-select": "^0.19.4",
-    "numeral" : "^1.5.3"
+    "numeral" : "^1.5.3",
+    "fullcalendar": "^3.0.1 ",
+    "highcharts": "^5.0.3 ",
+    "eonasdan-bootstrap-datetimepicker ": "^4.17.43",
+    "tooltipster": "^4.1.6"
   }
 }

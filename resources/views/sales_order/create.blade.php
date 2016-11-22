@@ -4,12 +4,18 @@
     @lang('sales_order.create.title')
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/bootstrap-datetimepicker.min.css') }}">
+@endsection
+
 @section('page_title')
     <span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;@lang('sales_order.create.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('sales_order.create.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('create_sales_order') !!}
 @endsection
@@ -388,7 +394,6 @@
         app.controller("soController", ['$scope', '$http', function($scope, $http) {
             $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
             $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');
-            {{--$scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');--}}
             $scope.customerDDL = [];
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
@@ -415,28 +420,14 @@
                 SOs.push(so);
 
                 $(function () {
-                    $(".inputSoDate").daterangepicker(
-                            {
-                                timePicker: true,
-                                timePickerIncrement: 15,
-                                locale: {
-                                    format: 'DD-MM-YYYY'
-                                },
-                                singleDatePicker: true,
-                                showDropdowns: true
-                            }
-                    );
-                    $(".inputShippingDate").daterangepicker(
-                            {
-                                timePicker: true,
-                                timePickerIncrement: 15,
-                                locale: {
-                                    format: 'DD-MM-YYYY'
-                                },
-                                singleDatePicker: true,
-                                showDropdowns: true
-                            }
-                    );
+                    $(".inputSoDate").datetimepicker({
+                        format: "DD-MM-YYYY hh:mm A",
+                        defaultDate: moment()
+                    });
+                    $(".inputShippingDate").datetimepicker({
+                        format: "DD-MM-YYYY hh:mm A",
+                        defaultDate: moment()
+                    });
                 });
             };
 
@@ -494,4 +485,5 @@
             }
         }]);
     </script>
+    <script type="application/javascript" src="{{ asset('adminlte/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection
