@@ -56,6 +56,14 @@ return [
         'header' => [
             'title' => 'Tambah Gudang',
         ],
+        'table' => [
+            'header' => [
+                'name' => '',
+                'position' => '',
+                'capacity' => '',
+                'remarks' => '',
+            ],
+        ],
     ],
     'field' => [
         'name' => 'Nama',
@@ -63,6 +71,7 @@ return [
         'phone_num' => 'Telepon',
         'status' => 'Status',
         'remarks' => 'Keterangan',
+        'section' => '',
     ],
     'edit' => [
         'title' => 'Gudang',
@@ -70,6 +79,14 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Ubah Gudang',
+        ],
+        'table' => [
+            'header' => [
+                'name' => '',
+                'position' => '',
+                'capacity' => '',
+                'remarks' => '',
+            ],
         ],
     ],
     'index' => [
@@ -95,6 +112,14 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Tampilan Gudang',
+        ],
+        'table' => [
+            'header' => [
+                'name' => '',
+                'position' => '',
+                'capacity' => '',
+                'remarks' => '',
+            ],
         ],
     ],
     'outflow' => [

@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Sugito
- * Date: 9/16/2016
- * Time: 2:25 PM
- */
+<?php 
+
 return [
     'item.po' => 'Pembelian',
     'item.po_new' => 'Pembelian Baru',
@@ -59,4 +54,7 @@ return [
     'item.adm_sms_in' => 'SMS Inbox',
     'item.adm_sms_out' => 'SMS Out',
     'item.adm_modem' => 'Modem',
+    'item' => [
+        'po_copy' => '',
+    ],
 ];

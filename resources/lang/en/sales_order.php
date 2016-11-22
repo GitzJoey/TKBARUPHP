@@ -307,4 +307,21 @@ return [
             ],
         ],
     ],
+    'copy' => [
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => '',
+        ],
+        'table' => [
+            'header' => [
+                'copy_code' => '',
+                'remarks' => '',
+            ],
+        ],
+    ],
+    'field' => [
+        'so_code' => '',
+    ],
 ];
