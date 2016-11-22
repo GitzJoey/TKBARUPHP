@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-code-fork fa-fw"></span>&nbsp;@lang('sales_order.revise.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('sales_order.revise.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('revise_sales_order', $currentSo->hId()) !!}
 @endsection
