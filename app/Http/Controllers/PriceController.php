@@ -27,13 +27,12 @@ class PriceController extends Controller
                 },
                 'stocks.prices' => function($query){
                     $query->where('input_date', '>=', Carbon::today()->subDays(5))
-                          ->orderBy('input_date', 'desc')
+                          ->orderBy('input_date', 'asc')
                           ->orderBy('price_level_id', 'asc');
                 }
             ]
-        )->whereHas('stocks', function ($query){
-            $query->where('current_quantity', '>', 0);
-        })->get();
+        )->get();
+
 
         $priceLevels = PriceLevel::all(['id', 'name']);
 
@@ -66,7 +65,7 @@ class PriceController extends Controller
                     'store_id'          => Auth::user()->store_id,
                     'stock_id'          => $stock->id,
                     'price_level_id'    => $priceLevel->id,
-                    'input_date'        => date('Y-m-d', strtotime($request->input('input_date'))),
+                    'input_date'        => date('Y-m-d H:i', strtotime($request->input('input_date'))),
                     'market_price'      => floatval(str_replace(',', '', $request->input('market_price'))),
                     'price'             => floatval(str_replace(',', '', $request->input("price.$key"))),
                 ]);
@@ -97,7 +96,7 @@ class PriceController extends Controller
                 'store_id'           => Auth::user()->store_id,
                 'stock_id'          => $id,
                 'price_level_id'    => $priceLevel->id,
-                'input_date'        => date('Y-m-d', strtotime($request->input('input_date'))),
+                'input_date'        => date('Y-m-d H:i', strtotime($request->input('input_date'))),
                 'market_price'      => floatval(str_replace(',', '', $request->input('market_price'))),
                 'price'             => floatval(str_replace(',', '', $request->input("price.$key"))),
             ]);
