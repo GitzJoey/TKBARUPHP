@@ -44,6 +44,14 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputAmount" class="col-sm-2 control-label">@lang('giro.field.amount')</label>
+                        <div class="col-sm-10">
+                            <label id="inputAmount" class="control-label">
+                                <span class="control-label-normal">{{ number_format($giro->amount, 0) }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputPrintedName" class="col-sm-2 control-label">@lang('giro.field.printed_name')</label>
                         <div class="col-sm-10">
                             <label id="inputPrintedName" class="control-label">
