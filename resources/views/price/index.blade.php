@@ -122,7 +122,7 @@
                     x: -20
                 },
                 subtitle: {
-                    text: 'Price History in last 5 days',
+                    text: 'Price in last 5 days',
                     x: -20
                 },
                 xAxis: {

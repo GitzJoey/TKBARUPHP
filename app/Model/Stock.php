@@ -90,17 +90,19 @@ class Stock extends Model
 
     public function latestPrices()
     {
-        return Price::join(DB::raw('
+        $user = Auth::user();
+        return Price::join(DB::raw("
             (
                 SELECT MAX(input_date) AS input_date	
-                FROM prices group by stock_id, store_id
+                FROM prices 
+                WHERE stock_id = $this->id AND store_id = $user->store_id
             ) max
-        '), function($join)
+        "), function($join)
         {
             $join->on('prices.input_date', '=', 'max.input_date');
         })
         ->where('stock_id', '=', $this->id)
-        ->where('stock_id', '=', Auth::user()->store_id)
+        ->where('store_id', '=', $user->store_id)
         ->orderBy('price_level_id')
         ->get();
     }
