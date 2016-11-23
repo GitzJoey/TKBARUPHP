@@ -83,46 +83,40 @@ class Stock extends Model
     {
         return Price::where('input_date', '>=', Carbon::today()->subDays(5))
             ->where('stock_id', '=', $this->id)
-            ->where('store_id', '=', Auth::user()->store_id)
             ->orderBy('input_date', 'asc')
             ->orderBy('price_level_id', 'asc')->get();
     }
 
     public function latestPrices()
     {
-        $user = Auth::user();
         return Price::join(DB::raw("
             (
                 SELECT MAX(input_date) AS input_date	
                 FROM prices 
-                WHERE stock_id = $this->id AND store_id = $user->store_id
+                WHERE stock_id = $this->id
             ) max
         "), function($join)
         {
             $join->on('prices.input_date', '=', 'max.input_date');
         })
         ->where('stock_id', '=', $this->id)
-        ->where('store_id', '=', $user->store_id)
         ->orderBy('price_level_id')
         ->get();
     }
 
     public function todayPrices()
     {
-        $user = Auth::user();
         return Price::join(DB::raw("
             (
                 SELECT MAX(input_date) AS max_input_date	
                 FROM prices 
                 WHERE stock_id = $this->id 
-                AND store_id = $user->store_id
             ) max
         "), function($join)
         {
             $join->on('prices.input_date', '=', 'max.max_input_date');
         })
             ->where('stock_id', '=', $this->id)
-            ->where('store_id', '=', $user->store_id)
             ->whereDate('input_date', '=', Carbon::today()->toDateString())
             ->orderBy('price_level_id')
             ->get();

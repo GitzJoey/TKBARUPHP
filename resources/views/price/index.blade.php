@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                     @foreach($productCategory->stocks as $stockKey => $stock)
-                        @if(count($stock->todayPrices()) == 0)
+                        @if(count($stock->latestPrices()) == 0)
                             <tr>
                                 <td><span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
                                           class="tooltips">{{ $stock->product->name }}</span></td>
@@ -69,10 +69,10 @@
                             <tr>
                                 <td><span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
                                           class="tooltips">{{ $stock->product->name }}</span></td>
-                                <td class="text-center">{{ $stock->todayPrices()->first()->input_date }}</td>
+                                <td class="text-center">{{ $stock->latestPrices()->first()->input_date }}</td>
                                 @foreach($priceLevels as $priceLevelKey => $priceLevel)
                                     <td class="text-center">{{
-                                                number_format($stock->todayPrices()->first(function ($price) use($priceLevel){
+                                                number_format($stock->latestPrices()->first(function ($price) use($priceLevel){
                                                     return $price->price_level_id === $priceLevel->id;
                                                 })->price)
                                             }}
