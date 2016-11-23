@@ -66,7 +66,7 @@ class PriceController extends Controller
             });
         });
 
-        Price::insert($prices->toArray());
+        Price::saveAll($prices);
 
         return redirect(route('db.price.today'));
     }
@@ -96,7 +96,7 @@ class PriceController extends Controller
             ]);
         });
 
-        Price::insert($prices->toArray());
+        Price::saveAll($prices);
 
         return redirect(route('db.price.today'));
     }

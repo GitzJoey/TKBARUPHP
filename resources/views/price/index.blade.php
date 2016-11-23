@@ -127,7 +127,7 @@
                 },
                 xAxis: {
                     type: 'datetime',
-                    tickInterval: moment.duration(0.5, 'minutes').asMilliseconds()
+                    tickInterval: moment.duration(1, 'hours').asMilliseconds()
                 },
                 yAxis: {
                     title: {
@@ -148,7 +148,8 @@
                     }
                 },
                 tooltip: {
-                    pointFormat: "Rp. {point.y:,.0f}",
+                    valuePrefix: "Rp. ",
+                    crosshairs: [true]
                 },
                 legend: {
                     layout: 'vertical',
@@ -160,7 +161,7 @@
                         @foreach($priceLevels as $priceLevelKey => $priceLevel)
                     {
                         name: '{{ $priceLevel->name }}',
-                        pointInterval: moment.duration(0.5, 'minutes').asMilliseconds(),
+                        pointInterval: moment.duration(1, 'hours').asMilliseconds(),
                         data: [
                                 @foreach($stock->priceHistory() as $priceKey => $price)
                                 @if($price->price_level_id === $priceLevel->id)

@@ -83,6 +83,7 @@ class Stock extends Model
     {
         return Price::where('input_date', '>=', Carbon::today()->subDays(5))
             ->where('stock_id', '=', $this->id)
+            ->where('store_id', '=', Auth::user()->store_id)
             ->orderBy('input_date', 'asc')
             ->orderBy('price_level_id', 'asc')->get();
     }
@@ -99,6 +100,7 @@ class Stock extends Model
             $join->on('prices.input_date', '=', 'max.input_date');
         })
         ->where('stock_id', '=', $this->id)
+        ->where('stock_id', '=', Auth::user()->store_id)
         ->orderBy('price_level_id')
         ->get();
     }

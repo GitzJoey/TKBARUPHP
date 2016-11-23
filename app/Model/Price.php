@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use Carbon\Carbon;
+use Doctrine\Common\Collections\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +28,28 @@ class Price extends Model
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    /**
+     * Bulk save prices
+     *
+     * @param Collection $prices collection of prices to be saved.
+     * @return boolean
+     */
+    public static function saveAll($prices)
+    {
+        $now = Carbon::now();
+        $user = Auth::user();
+        $prices = $prices->map(function ($data) use ($now, $user) {
+            return array_merge([
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ], $data);
+        })->all();
+
+        return Price::insert($prices);
     }
 
     public static function boot()
