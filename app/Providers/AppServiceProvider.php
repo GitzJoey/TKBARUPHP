@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Services\Implementation\PurchaseOrderServiceImpl;
 use App\Services\Implementation\SalesOrderServiceImpl;
+use App\Services\Implementation\StockServiceImpl;
 use App\Services\PurchaseOrderService;
 use App\Services\SalesOrderService;
+use App\Services\StockService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,6 +38,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SalesOrderService::class, function (){
             return new SalesOrderServiceImpl();
         });
+
+        $this->app->singleton(StockService::class, function (){
+            return new StockServiceImpl();
+        });
     }
 
     /**
@@ -47,7 +53,8 @@ class AppServiceProvider extends ServiceProvider
     {
         return [
             'App\Services\PurchaseOrderService',
-            'App\Services\SalesOrderService'
+            'App\Services\SalesOrderService',
+            'App\Services\StockService'
         ];
     }
 }

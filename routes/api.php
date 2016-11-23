@@ -38,7 +38,7 @@ Route::group(['prefix' => 'warehouse'], function ()
     });
 });
 
-Route::group(['prefix' => 'search'], function ()
+Route::group(['prefix' => 'customer'], function ()
 {
-    Route::get('customers/{param?}', 'CustomerController@searchCustomers')->name('api.search.customers');
+    Route::get('search/{param?}', 'CustomerController@searchCustomers')->name('api.customer.search');
 });

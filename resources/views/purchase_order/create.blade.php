@@ -29,7 +29,7 @@
             </ul>
         </div>
     @endif
-    <div ng-app="poModule" ng-controller="poController">
+    <div ng-app="poModule" ng-controller="poController" ng-cloak>
         <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="row">

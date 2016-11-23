@@ -31,7 +31,7 @@
             </ul>
         </div>
     @endif
-    <div ng-app="soModule" ng-controller="soController">
+    <div ng-app="soModule" ng-controller="soController" ng-cloak>
         <form class="form-horizontal" id="so-form" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
             <div class="box-body">
@@ -85,7 +85,7 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <div ng-show="so.customer_type.code == 'CUSTOMERTYPE.R'">
+                                                            <div ng-show="so.customer_type.code === 'CUSTOMERTYPE.R'">
                                                                 <div class="form-group">
                                                                     <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-7">
@@ -103,7 +103,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div ng-show="so.customer_type.code == 'CUSTOMERTYPE.WI'">
+                                                            <div ng-show="so.customer_type.code === 'CUSTOMERTYPE.WI'">
                                                                 <div class="form-group">
                                                                     <label for="inputCustomerName_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-9">
@@ -227,7 +227,7 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="row">
-                                                                <div ng-show="so.sales_type.code == 'SOTYPE.SVC'">
+                                                                <div ng-show="so.sales_type.code === 'SOTYPE.SVC'">
                                                                     <div class="col-md-11">
                                                                         <select id="inputProduct_@{{ $index + 1 }}"
                                                                                 class="form-control"
@@ -293,7 +293,7 @@
                                                                             <td>
                                                                                 <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_price[]"
                                                                                        ng-model="item.price" data-parsley-required="true"
-                                                                                       data-parsley-pattern="^\d+(,\d+)?$" fcsa-number>
+                                                                                       data-parsley-pattern="^\d+(,\d+)*$" fcsa-number>
                                                                             </td>
                                                                             <td class="text-center">
                                                                                 <button type="button" class="btn btn-danger btn-md"
@@ -461,6 +461,10 @@
             };
 
             $scope.insertStock = function (index, stock) {
+                var stock_price = stock.today_prices.find(function(price){
+                    return price.price_level_id === $scope.SOs[index].customer.price_level_id;
+                });
+
                 $scope.SOs[index].items.push({
                     stock_id: stock.id,
                     product: stock.product,
@@ -469,7 +473,7 @@
                     },
                     base_unit: _.find(stock.product.product_units, isBase),
                     quantity: 0,
-                    price: 0
+                    price: stock_price ? stock_price.price : 0
                 });
             };
 
@@ -478,7 +482,7 @@
             };
 
             $scope.refreshCustomers = function (param) {
-                return $http.get('{{ route('api.search.customers') }}/' + param)
+                return $http.get('{{ route('api.customer.search') }}/' + param)
                         .then(function (response) {
                             $scope.customerDDL = response.data;
                         });
