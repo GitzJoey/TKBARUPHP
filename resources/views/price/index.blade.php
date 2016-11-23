@@ -52,13 +52,13 @@
                     </thead>
                     <tbody>
                     @foreach($productCategory->stocks as $stockKey => $stock)
-                        @if(count($stock->prices) == 0)
+                        @if(count($stock->priceHistory()) == 0)
                             <tr>
                                 <td><span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
                                           class="tooltips">{!! $stock->product->name !!}</span></td>
                                 <td class="text-center">-</td>
                                 @foreach($priceLevels as $priceLevelKey => $priceLevel)
-                                    <td class="text-center">-</td>
+                                    <td class="text-center">0</td>
                                 @endforeach
                                 <td class="text-center">
                                     <a class="btn btn-xs btn-primary"
@@ -69,15 +69,13 @@
                             <tr>
                                 <td><span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
                                           class="tooltips">{!! $stock->product->name !!}</span></td>
-                                <td class="text-center">{{ $stock->prices->first()->input_date }}</td>
+                                <td class="text-center">{{ $stock->latestPrices()->first()->input_date }}</td>
                                 @foreach($priceLevels as $priceLevelKey => $priceLevel)
                                     <td class="text-center">{{
-                                                $stock->prices->first(function ($price, $priceLevelKey) use($priceLevel, $stock){
-                                                    return $price->price_level_id === $priceLevel->id && $price->input_date == $stock->prices->first()->input_date;
-                                                }) ? number_format($stock->prices->first(function ($price, $priceLevelKey) use($priceLevel, $stock){
-                                                    return $price->price_level_id === $priceLevel->id && $price->input_date == $stock->prices->first()->input_date;
-                                                })->price, 2) : '-'
-                                             }}
+                                                number_format($stock->latestPrices()->first(function ($price) use($priceLevel){
+                                                    return $price->price_level_id === $priceLevel->id;
+                                                })->price)
+                                            }}
                                     </td>
                                 @endforeach
                                 <td class="text-center">
@@ -121,10 +119,10 @@
                 },
                 title: {
                     text: '{{ $stock->product->name }}',
-                    x: -20 //center
+                    x: -20
                 },
                 subtitle: {
-                    text: 'Price History',
+                    text: 'Price History in last 5 days',
                     x: -20
                 },
                 xAxis: {
@@ -140,7 +138,6 @@
                         width: 1,
                         color: '#808080'
                     }],
-                    tickInterval: 500,
                     min: 0
                 },
                 plotOptions: {
@@ -151,7 +148,7 @@
                     }
                 },
                 tooltip: {
-                    valuePrefix: 'Rp. '
+                    pointFormat: "Rp. {point.y:,.0f}",
                 },
                 legend: {
                     layout: 'vertical',
@@ -165,7 +162,7 @@
                         name: '{{ $priceLevel->name }}',
                         pointInterval: moment.duration(0.5, 'minutes').asMilliseconds(),
                         data: [
-                                @foreach($stock->prices as $priceKey => $price)
+                                @foreach($stock->priceHistory() as $priceKey => $price)
                                 @if($price->price_level_id === $priceLevel->id)
                             [moment.utc('{{ $price->input_date }}', 'YYYY-MM-DD HH:mm:ss').valueOf(), {{ $price->price }}],
                             @endif

@@ -24,15 +24,9 @@ class PriceController extends Controller
             [
                 'stocks' => function($query){
                     $query->where('current_quantity', '>', 0);
-                },
-                'stocks.prices' => function($query){
-                    $query->where('input_date', '>=', Carbon::today()->subDays(5))
-                          ->orderBy('input_date', 'asc')
-                          ->orderBy('price_level_id', 'asc');
                 }
             ]
         )->get();
-
 
         $priceLevels = PriceLevel::all(['id', 'name']);
 
