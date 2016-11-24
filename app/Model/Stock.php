@@ -12,6 +12,7 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
 
 /**
@@ -78,10 +79,47 @@ class Stock extends Model
         return $this->hasMany('App\Model\Price');
     }
 
-    //TODO : Move this to separate class
+    public function priceHistory()
+    {
+        return Price::where('input_date', '>=', Carbon::today()->subDays(5))
+            ->where('stock_id', '=', $this->id)
+            ->orderBy('input_date', 'asc')
+            ->orderBy('price_level_id', 'asc')->get();
+    }
+
     public function latestPrices()
     {
-        return Price::groupBy('input_date')->havingRaw('input_date = min(input_date)')->get();
+        return Price::join(DB::raw("
+            (
+                SELECT MAX(input_date) AS input_date	
+                FROM prices 
+                WHERE stock_id = $this->id
+            ) max
+        "), function($join)
+        {
+            $join->on('prices.input_date', '=', 'max.input_date');
+        })
+        ->where('stock_id', '=', $this->id)
+        ->orderBy('price_level_id')
+        ->get();
+    }
+
+    public function todayPrices()
+    {
+        return Price::join(DB::raw("
+            (
+                SELECT MAX(input_date) AS max_input_date	
+                FROM prices 
+                WHERE stock_id = $this->id 
+            ) max
+        "), function($join)
+        {
+            $join->on('prices.input_date', '=', 'max.max_input_date');
+        })
+            ->where('stock_id', '=', $this->id)
+            ->whereDate('input_date', '=', Carbon::today()->toDateString())
+            ->orderBy('price_level_id')
+            ->get();
     }
 
     public static function boot()

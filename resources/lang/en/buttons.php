@@ -18,4 +18,5 @@ return [
     'make_copy_button' => 'Make Copy',
     'send_button' => 'Send',
     'reject_button' => 'Reject',
+    'update_button' => 'Update'
 ];

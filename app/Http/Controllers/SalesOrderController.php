@@ -23,6 +23,7 @@ use App\Model\TransferPayment;
 use App\Model\VendorTrucking;
 use App\Model\Warehouse;
 use App\Services\SalesOrderService;
+use App\Services\StockService;
 use App\Util\SOCodeGenerator;
 
 use App;
@@ -34,10 +35,14 @@ use Illuminate\Support\Facades\Validator;
 class SalesOrderController extends Controller
 {
     private $salesOrderService;
+    private $stockService;
 
-    public function __construct(SalesOrderService $salesOrderService)
+    public function __construct(
+        SalesOrderService $salesOrderService,
+        StockService $stockService)
     {
         $this->salesOrderService = $salesOrderService;
+        $this->stockService = $stockService;
         $this->middleware('auth');
     }
 
@@ -45,23 +50,19 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@create');
 
-        $customerDDL = Customer::all(['id', 'name']);
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $productDDL = Product::with('productUnits.unit')->get();
-        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
-            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
+        $stocksDDL = $this->stockService->getStocksForSO();
         $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get(['code', 'description']);
         $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get(['code', 'description']);
         $soCode = SOCodeGenerator::generateSOCode();
-        $soStatusDraft = Lookup::where('category', '=', 'SOSTATUS')->get(['description', 'code'])->where('code', '=',
-            'SOSTATUS.D');
+        $soStatusDraft = Lookup::where('code', '=', 'SOSTATUS.D')->get(['description', 'code']);
 
         $userSOs = session('userSOs', collect([]));
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL',
-            'productDDL', 'stocksDDL', 'vendorTruckingDDL', 'customerDDL'
-            , 'soCode', 'soStatusDraft', 'userSOs'));
+            'productDDL', 'stocksDDL', 'vendorTruckingDDL', 'soCode', 'soStatusDraft', 'userSOs'));
     }
 
     public function store(Request $request)
@@ -139,13 +140,8 @@ class SalesOrderController extends Controller
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $productDDL = Product::with('productUnits.unit')->get();
-        $stocksDDL = Stock::with('product.productUnits.unit')->orderBy('product_id', 'asc')
-            ->orderBy('created_at', 'asc')->where('current_quantity', '>', 0)->get();
-        $customerDDL = [];
-        if ($currentSo->customer_id != 0) {
-            $customerDDL = Customer::with('bankAccounts', 'profiles.phoneNumbers.provider')->where('id', '=',
-                $currentSo->customer->id)->get();
-        }
+        $stocksDDL = $this->stockService->getStocksForSO();
+        $customerDDL = collect([$currentSo->customer->toArray()]);
 
         return view('sales_order.revise',
             compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL', 'customerDDL'));

@@ -32,7 +32,7 @@
         </div>
     @endif
 
-    <div ng-app="poModule" ng-controller="poController">
+    <div ng-app="poModule" ng-controller="poController" ng-cloak>
         {!! Form::model($currentPo, ['method' => 'PATCH', 'route' => ['db.po.revise', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         {{ csrf_field() }}
         <div class="row">

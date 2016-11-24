@@ -77,7 +77,7 @@
                                         ($priceLevel->type === 'PRICELEVELTYPE.INC' ?
                                         'Value : ' . $priceLevel->increment_value :
                                         'Value : ' . $priceLevel->percentage_value . '%') }}">
-                                        {{ $priceLevel->name }}
+                                        @lang('price.category.price_level.' . $priceLevel->name)
                                     </span>
                                 </div>
                             @endforeach

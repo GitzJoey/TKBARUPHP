@@ -32,7 +32,7 @@
         </div>
     @endif
 
-    <div ng-app="soModule" ng-controller="soController">
+    <div ng-app="soModule" ng-controller="soController" ng-cloak>
         {!! Form::model($currentSo, ['method' => 'PATCH', 'route' => ['db.so.revise', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
             <div class="row">
@@ -387,11 +387,8 @@
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
             $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
             $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
-            $scope.customerDDL = JSON.parse('{!! empty($customerDDL) ? '[]' : htmlspecialchars_decode($customerDDL) !!}');
-
+            $scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');
             var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
-
-            console.log(currentSo);
 
             $scope.so = {
                 customer: currentSo.customer,

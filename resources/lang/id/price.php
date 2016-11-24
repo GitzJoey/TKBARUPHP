@@ -8,9 +8,25 @@ return [
         'table' => [
             'header' => [
                 'stock_name' => 'Nama Stok',
-                'input_date' => 'Berlaku Sejak'
+                'input_date' => 'Berlaku Sejak',
+                'price_level' => [
+                    'RETAIL' => 'Retail',
+                    'WHOLESALE 1' => 'Wholesale 1',
+                    'WHOLESALE 2' => 'Wholesale 2',
+                ],
             ],
         ],
+        'price_history' => [
+            'chart' => [
+                'subtitle' => 'Harga di 5 hari terakhir',
+                'price' => 'Harga (IDR)',
+                'price_level' => [
+                    'RETAIL' => 'Retail',
+                    'WHOLESALE 1' => 'Wholesale 1',
+                    'WHOLESALE 2' => 'Wholesale 2',
+                ],
+            ]
+        ]
     ],
     'category' => [
         'title' => 'Harga Kategori Produk',
@@ -24,6 +40,11 @@ return [
             'market_price' => 'Harga Pasar',
             'price' => 'Harga'
         ],
+        'price_level' => [
+            'RETAIL' => 'Retail',
+            'WHOLESALE 1' => 'Wholesale 1',
+            'WHOLESALE 2' => 'Wholesale 2',
+        ],
     ],
     'stock' => [
         'title' => 'Harga Stok',
@@ -36,6 +57,11 @@ return [
             'input_date' => 'Tanggal Input',
             'market_price' => 'Harga Pasar',
             'price' => 'Harga'
+        ],
+        'price_level' => [
+            'RETAIL' => 'Retail',
+            'WHOLESALE 1' => 'Wholesale 1',
+            'WHOLESALE 2' => 'Wholesale 2',
         ],
     ],
 ];
