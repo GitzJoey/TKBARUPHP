@@ -13,6 +13,42 @@ use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Model\WarehouseSection
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property integer $warehouse_id
+ * @property string $name
+ * @property string $position
+ * @property integer $capacity
+ * @property integer $capacity_unit_id
+ * @property string $remarks
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read mixed $hid
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
+ * @property-read \App\Model\Unit $capacityUnit
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection wherePosition($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereCapacity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereCapacityUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class WarehouseSection extends Model
 {
     use SoftDeletes;

@@ -46,6 +46,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Price[] $prices
  */
 class Stock extends Model
 {

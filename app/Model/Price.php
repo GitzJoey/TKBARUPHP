@@ -9,6 +9,39 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Vinkla\Hashids\Facades\Hashids;
 
+/**
+ * App\Model\Price
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property integer $stock_id
+ * @property integer $price_level_id
+ * @property \Carbon\Carbon $input_date
+ * @property float $market_price
+ * @property float $price
+ * @property string $status
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereStockId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price wherePriceLevelId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereInputDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereMarketPrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class Price extends Model
 {
     use SoftDeletes;

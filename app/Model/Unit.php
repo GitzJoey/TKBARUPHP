@@ -43,6 +43,7 @@ use App\Model\ProductUnit;
  * @method static \Illuminate\Database\Query\Builder|\App\Unit whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Unit whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ProductUnit[] $productUnits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\WarehouseSection[] $capacityUnits
  */
 class Unit extends Model
 {
