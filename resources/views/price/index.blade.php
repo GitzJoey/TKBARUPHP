@@ -29,11 +29,21 @@
         </div>
     @endif
 
+    @if(count($productCategories) == 0)
+        <div class="box box-info">
+            <div class="box-body">
+                <div>
+                    There are no stocks yet.
+                </div>
+            </div>
+        </div>
+    @endif
+
     @foreach($productCategories as $categoryKey => $productCategory)
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ $productCategory->name }}</h3>
-                @if(!empty($productCategory->stocks))
+                @if(count($productCategory->stocks) != 0)
                     <a id="updateCategoryPriceButton" class="btn btn-primary pull-right"
                        href="{{ route('db.price.category', $productCategory->hId()) }}">@lang('buttons.update_button')</a>
                 @endif
@@ -54,8 +64,12 @@
                     @foreach($productCategory->stocks as $stockKey => $stock)
                         @if(count($stock->latestPrices()) == 0)
                             <tr>
-                                <td><span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
-                                          class="tooltips">{{ $stock->product->name }}</span></td>
+                                <td>
+                                    {{ $stock->product->name }}
+                                    <span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history" class="tooltips">
+                                        <button type="button" class="btn btn-xs btn-info pull-right"><span class="fa fa-info-circle fa-fw"></span></button>
+                                    </span>
+                                </td>
                                 <td class="text-center">-</td>
                                 @foreach($priceLevels as $priceLevelKey => $priceLevel)
                                     <td class="text-center">0</td>
@@ -67,8 +81,12 @@
                             </tr>
                         @else
                             <tr>
-                                <td><span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history"
-                                          class="tooltips">{{ $stock->product->name }}</span></td>
+                                <td>
+                                    {{ $stock->product->name }}
+                                    <span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history" class="tooltips">
+                                        <button type="button" class="btn btn-xs btn-info pull-right"><span class="fa fa-info-circle fa-fw"></span></button>
+                                    </span>
+                                </td>
                                 <td class="text-center">{{ $stock->latestPrices()->first()->input_date }}</td>
                                 @foreach($priceLevels as $priceLevelKey => $priceLevel)
                                     <td class="text-center">{{
@@ -158,19 +176,28 @@
                                 borderWidth: 0
                             },
                             series: [
-                                    @foreach($priceLevels as $priceLevelKey => $priceLevel)
+                                @foreach($priceLevels as $priceLevelKey => $priceLevel)
+                                    {
+                                        name: '@lang('price.index.price_history.chart.price_level.' . $priceLevel->name)',
+                                        pointInterval: moment.duration(1, 'hours').asMilliseconds(),
+                                        data: [
+                                            @foreach($stock->priceHistory() as $priceKey => $price)
+                                                @if($price->price_level_id === $priceLevel->id)
+                                                    [moment.utc('{{ $price->input_date }}', 'YYYY-MM-DD HH:mm:ss').valueOf(), {{ $price->price }}],
+                                                @endif
+                                            @endforeach
+                                        ]
+                                    },
+                                @endforeach
                                 {
-                                    name: '@lang('price.index.price_history.chart.price_level.' . $priceLevel->name)',
+                                    name: 'Market Price',
                                     pointInterval: moment.duration(1, 'hours').asMilliseconds(),
                                     data: [
-                                            @foreach($stock->priceHistory() as $priceKey => $price)
-                                            @if($price->price_level_id === $priceLevel->id)
-                                        [moment.utc('{{ $price->input_date }}', 'YYYY-MM-DD HH:mm:ss').valueOf(), {{ $price->price }}],
-                                        @endif
+                                        @foreach($stock->priceHistory()->unique('input_date')->values() as $priceKey => $price)
+                                            [moment.utc('{{ $price->input_date }}', 'YYYY-MM-DD HH:mm:ss').valueOf(), {{ $price->market_price }}],
                                         @endforeach
                                     ]
-                                },
-                                @endforeach
+                                }
                             ]
                         });
                     @endforeach

@@ -17,9 +17,7 @@ Class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->default(0);
-            $table->unique('user_id');
             $table->string('skey')->nullable();
-            $table->unique('skey');
             $table->string('value')->nullable();
         });
     }

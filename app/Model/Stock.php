@@ -82,7 +82,7 @@ class Stock extends Model
 
     public function priceHistory()
     {
-        return Price::where('input_date', '>=', Carbon::today()->subDays(5))
+        return Price::where('input_date', '>=', Carbon::today()->subDays(10))
             ->where('stock_id', '=', $this->id)
             ->orderBy('input_date', 'asc')
             ->orderBy('price_level_id', 'asc')->get();
