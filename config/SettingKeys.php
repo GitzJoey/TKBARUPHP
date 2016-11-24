@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Created by PhpStorm.
+ * User: Sugito
+ * Date: 11/24/2016
+ * Time: 2:22 PM
+ */
+class SettingKeys
+{
+    const DATE_FORMAT = 'SETTINGDATEFORMAT';
+    const TIME_FORMAT = 'SETTINGTIMEFORMAT';
+    const TIME_1224H = 'SETTINGTIME1224FORMAT';
+    const THOUSAND_SEPARATOR = 'SETTINGTHOUSANDSEPARATOR';
+    const DECIMAL_SEPARATOR = 'SETTINGDECIMALSEPARATOR';
+    const DECIMAL_DIGIT = 'MONEY.DECIMAL_SEPARATOR';
+}

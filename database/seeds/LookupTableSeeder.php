@@ -289,6 +289,56 @@ class CreateLookupTableSeeder extends Seeder
                 'description' => 'Returned',
                 'category' => 'GIROSTATUS',
             ],
+            [
+                'code' => 'SETTINGDATEFORMAT.DD-MM-YYYY',
+                'description' => 'DD-MM-YYYY',
+                'category' => 'SETTINGDATEFORMAT',
+            ],
+            [
+                'code' => 'SETTINGDATEFORMAT.DD_MMM_YYYY',
+                'description' => 'DD MMM YYYY',
+                'category' => 'SETTINGDATEFORMAT',
+            ],
+            [
+                'code' => 'SETTINGTIMEFORMAT.HH:MM',
+                'description' => 'HH:MM',
+                'category' => 'SETTINGTIMEFORMAT',
+            ],
+            [
+                'code' => 'SETTINGTIMEFORMAT.HH:MM:SS',
+                'description' => 'HH:MM:SS',
+                'category' => 'SETTINGTIMEFORMAT',
+            ],
+            [
+                'code' => 'SETTINGTIME1224FORMAT.12',
+                'description' => '12 Hour',
+                'category' => 'SETTINGTIME1224FORMAT',
+            ],
+            [
+                'code' => 'SETTINGTIME1224FORMAT.24',
+                'description' => '24 Hour',
+                'category' => 'SETTINGTIME1224FORMAT',
+            ],
+            [
+                'code' => 'SETTINGTHOUSANDSEPARATOR.COMMA',
+                'description' => 'Comma Separated',
+                'category' => 'SETTINGTHOUSANDSEPARATOR',
+            ],
+            [
+                'code' => 'SETTINGTHOUSANDSEPARATOR.NONE',
+                'description' => 'No Separator',
+                'category' => 'SETTINGTHOUSANDSEPARATOR',
+            ],
+            [
+                'code' => 'SETTINGDECIMALSEPARATOR.DOT',
+                'description' => 'Dot Separated',
+                'category' => 'SETTINGDECIMALSEPARATOR',
+            ],
+            [
+                'code' => 'SETTINGDECIMALSEPARATOR.NONE',
+                'description' => 'No Separator',
+                'category' => 'SETTINGTHOUSANDSEPARATOR',
+            ]
         ];
         foreach ($lookup as $key => $value) {
             Lookup::create($value);

@@ -18,4 +18,6 @@ return [
     'make_copy_button' => 'Buat Duplikat',
     'send_button' => 'Kirim',
     'reject_button' => 'Tolak',
+    'update_button' => 'Update',
+    'apply_button' => 'Apply'
 ];

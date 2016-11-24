@@ -39,10 +39,8 @@ class Setting extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'category',
         'skey',
-        'value',
-        'description'
+        'value'
     ];
 
     public function hId()

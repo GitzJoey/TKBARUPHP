@@ -18,10 +18,28 @@ class SettingsTableSeeder extends Seeder
         $settings = [
             [
                 'user_id' => 0,
-                'category' => 'DUMMY',
-                'skey' => 'DUMMY.setting_dummy',
+                'skey' => 'DATE.DATE_FORMAT',
+                'value' => 'dd-MM-yyyy',
+            ],
+            [
+                'user_id' => 0,
+                'skey' => 'TIME.TIME_FORMAT',
+                'value' => 'hh:mm',
+            ],
+            [
+                'user_id' => 0,
+                'skey' => 'TIME.24HOUR',
                 'value' => '1',
-                'description' => 'Dummy Settings'
+            ],
+            [
+                'user_id' => 0,
+                'skey' => 'MONEY.THOUSAND_SEPARATOR',
+                'value' => ',',
+            ],
+            [
+                'user_id' => 0,
+                'skey' => 'MONEY.DECIMAL_DIGIT',
+                'value' => '2',
             ]
         ];
         foreach ($settings as $key => $value) {

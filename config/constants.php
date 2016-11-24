@@ -20,5 +20,13 @@ return [
 
     'TRXCODE' => [
         'LENGTH' => 6,
-    ]
+    ],
+
+    'CONSTANT_LOOKUP_CODE' => [
+
+    ],
+
+    'CONSTANT_SETTING_KEY' => [
+
+    ],
 ];

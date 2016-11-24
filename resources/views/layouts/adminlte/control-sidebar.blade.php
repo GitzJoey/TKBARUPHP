@@ -1,58 +1,61 @@
 <aside class="control-sidebar control-sidebar-dark">
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-        <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li class="active"><a href="#control-sidebar-activity-tab" data-toggle="tab"><i class="fa fa-heartbeat"></i></a></li>
         <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">Recent Activity</h3>
-            <ul class="control-sidebar-menu">
-                <li>
-                    <a href="#">
-                        <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                            <p>Will be 23 on April 24th</p>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-
-            <h3 class="control-sidebar-heading">Tasks Progress</h3>
-            <ul class="control-sidebar-menu">
-                <li>
-                    <a href="#">
-                        <h4 class="control-sidebar-subheading">
-                            Custom Template Design
-                            <span class="pull-right-container">
-                  <span class="label label-danger pull-right">70%</span>
-                </span>
-                        </h4>
-
-                        <div class="progress progress-xxs">
-                            <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+        <div class="tab-pane active" id="control-sidebar-activity-tab">
+            <h3 class="control-sidebar-heading">@lang('control_sidebar.tab.recent_activity')</h3>
         </div>
 
-        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
         <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
-                <h3 class="control-sidebar-heading">General Settings</h3>
+                <h3 class="control-sidebar-heading">@lang('control_sidebar.tab.general_settings')</h3>
 
                 <div class="form-group">
+                    <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.date_format')</label>
+                    <select class="form-control">
+                        <option>DD-MM-YYYY</option>
+                        <option>DD MMM YYYY</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.time_format')</label>
+                    <select class="form-control">
+                        <option>HH:mm</option>
+                        <option>HH:mm:ss</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label class="control-sidebar-subheading">
-                        Report panel usage
+                        @lang('control_sidebar.settings.field.24hour')
                         <input type="checkbox" class="pull-right" checked>
                     </label>
-
-                    <p>
-                        Some information about this general settings option
-                    </p>
+                </div>
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.thousand_separator')</label>
+                    <select class="form-control">
+                        <option>Comma</option>
+                        <option>Dot</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.decimal_separator')</label>
+                    <select class="form-control">
+                        <option>Comma</option>
+                        <option>Dot</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.decimal_digit')</label>
+                    <select class="form-control">
+                        <option>0</option>
+                        <option>2</option>
+                    </select>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <button type="button" class="btn btn-xs btn-default">@lang('buttons.apply_button')</button>
                 </div>
             </form>
         </div>
