@@ -53,11 +53,11 @@
 
         <script type="application/javascript">
             window.onload = function () {
-                $("#loader-container").fadeIn("fast");
+                $("#loader-container").fadeIn("slow");
             }
 
             $(document).ready(function () {
-                $("#loader-container").fadeOut("fast");
+                $("#loader-container").fadeOut("slow");
             });
 
             window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
