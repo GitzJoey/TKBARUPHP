@@ -71,12 +71,12 @@
                                     <tr ng-repeat="c in sections">
                                         <td><input type="text" class="form-control" ng-model="c.name" name="section_name[]" data-parsley-required="true"/></td>
                                         <td><input type="text" class="form-control" ng-model="c.position" name="section_position[]" data-parsley-required="true"/></td>
-                                        <td><input type="text" class="form-control" ng-model="c.capacity" name="section_capacity[]" data-parsley-required="true" data-parsley-type="number"/></td>
+                                        <td><input type="text" class="form-control text-right" ng-model="c.capacity" name="section_capacity[]" data-parsley-required="true" data-parsley-type="number"/></td>
                                         <td>
                                             <select class="form-control"
                                                     name="section_capacity_unit[]"
                                                     ng-model="c.capacity_unit_id"
-                                                    ng-options="u.id as u.unit_name for u in unitDDL track by u.id"
+                                                    ng-options="key as value for (key, value) in unitDDL track by key"
                                                     data-parsley-required="true">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             </select>

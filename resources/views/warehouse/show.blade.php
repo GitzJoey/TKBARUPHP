@@ -54,7 +54,6 @@
                                         <th>@lang('warehouse.show.table.header.position')</th>
                                         <th>@lang('warehouse.show.table.header.capacity')</th>
                                         <th>@lang('warehouse.show.table.header.remarks')</th>
-                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,8 +63,8 @@
                                             <td>{{ $s->position }}</td>
                                             <td>{{ $s->capacity }}</td>
                                             <td>{{ $s->remarks }}</td>
-                                            <td class="text-center"></td>
                                         </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

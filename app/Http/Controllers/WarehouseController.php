@@ -84,7 +84,7 @@ class WarehouseController extends Controller
         $warehouse = Warehouse::with('sections')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
+        $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
 
         return view('warehouse.edit', compact('warehouse', 'statusDDL', 'unitDDL'));
     }

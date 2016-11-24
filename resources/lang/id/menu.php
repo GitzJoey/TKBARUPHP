@@ -5,6 +5,7 @@ return [
     'item.po_new' => 'Pembelian Baru',
     'item.po_revise' => 'Revisi',
     'item.po_payment' => 'Pembayaran',
+    'item.po_copy' => 'Duplikat',
     'item.so' => 'Penjualan',
     'item.so_new' => 'Penjualan Baru',
     'item.so_revise' => 'Revisi',

@@ -71,8 +71,10 @@
                                         <td>
                                             <select class="form-control"
                                                     name="section_capacity_unit[]"
-                                                    ng-model="c.capacity_unit_id"
-                                                    ng-options="u.id as u.unit_name for u in unitDDL track by u.id"
+                                                    ng-init="capacity_unit = { id: c.capacity_unit_id }"
+                                                    ng-model="capacity_unit"
+                                                    ng-change="c.capacity_unit_id = capacity_unit.id"
+                                                    ng-options="u.id as u.name + ' (' + u.symbol + ')' for u in unitDDL track by u.id"
                                                     data-parsley-required="true">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             </select>

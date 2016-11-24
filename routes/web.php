@@ -51,6 +51,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::post('/dashboard/po/payment/{id}/transfer', 'PurchaseOrderController@saveTransferPayment');
     Route::get('/dashboard/po/payment/{id}/giro', 'PurchaseOrderController@createGiroPayment')->name('db.po.payment.giro');
     Route::post('/dashboard/po/payment/{id}/giro', 'PurchaseOrderController@saveGiroPayment');
+    Route::get('/dashboard/po/copy/{code?}', 'PurchaseOrderController@copyPO')->name('db.po.copy.index');
+    Route::patch('/dashboard/po/copy/{id}', 'PurchaseOrderController@savePOCopy');
 
     Route::get('/dashboard/so/create', 'SalesOrderController@create')->name('db.so.create');
     Route::post('/dashboard/so/create', 'SalesOrderController@store');
