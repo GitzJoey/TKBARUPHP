@@ -51,7 +51,6 @@ elixir(function (mix) {
         './node_modules/modernizr/bin/modernizr',
         './resources/assets/js/adminlte.custom.js'
     ], 'public/adminlte/js/app.js')
-    .copy('resources/assets/images', 'public/adminlte/css/images')
     .copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
     .copy('node_modules/fullcalendar/dist/fullcalendar.min.js', 'public/adminlte/js')
     .copy('node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js', 'public/adminlte/js')
