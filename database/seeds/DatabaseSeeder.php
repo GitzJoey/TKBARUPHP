@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CreateLookupTableSeeder::class);
 
         /* DUMMY DATA */
-        if (Config::get('APP_ENV') != 'production') {
+        if (App::environment('local', 'dev')) {
             $this->call(BankTableSeeder::class);
             $this->call(ProductTableSeeder::class);
             $this->call(ProductTypeTableSeeder::class);
