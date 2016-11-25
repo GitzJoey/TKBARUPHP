@@ -119,3 +119,9 @@ ol.breadcrumb {
     z-index: 9999;
     background-color: rgba(0,0,0, 0.3);
 }
+
+.price-history-helper {
+    font-style: italic;
+    font-size: 90%;
+    padding-bottom: 4px;
+}

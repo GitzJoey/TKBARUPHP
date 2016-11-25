@@ -18,7 +18,7 @@ return [
         ],
         'price_history' => [
             'chart' => [
-                'subtitle' => 'Harga di 5 hari terakhir',
+                'subtitle' => 'Harga di 10 hari terakhir',
                 'price' => 'Harga (IDR)',
                 'price_level' => [
                     'RETAIL' => 'Retail',

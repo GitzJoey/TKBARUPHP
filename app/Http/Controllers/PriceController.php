@@ -26,7 +26,9 @@ class PriceController extends Controller
                     $query->where('current_quantity', '>', 0);
                 }
             ]
-        )->get();
+        )->whereHas('stocks', function ($query){
+            $query->where('current_quantity', '>', 0);
+        })->get();
 
         $priceLevels = PriceLevel::all(['id', 'name']);
 

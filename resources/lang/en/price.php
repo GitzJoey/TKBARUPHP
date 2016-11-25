@@ -18,7 +18,7 @@ return [
         ],
         'price_history' => [
             'chart' => [
-                'subtitle' => 'Prices in last 5 days',
+                'subtitle' => 'Prices in last 10 days',
                 'price' => 'Price (IDR)',
                 'price_level' => [
                     'RETAIL' => 'Retail',
