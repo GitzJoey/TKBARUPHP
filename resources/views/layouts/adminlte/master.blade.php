@@ -77,6 +77,57 @@
                 }, 1000);
             }
             timeout();
+
+            var my_skins = [
+                "skin-blue",
+                "skin-black",
+                "skin-red",
+                "skin-yellow",
+                "skin-purple",
+                "skin-green",
+                "skin-blue-light",
+                "skin-black-light",
+                "skin-red-light",
+                "skin-yellow-light",
+                "skin-purple-light",
+                "skin-green-light"
+            ];
+
+            $('a[id^="btn_skin"]').click(function(e) {
+                e.preventDefault();
+
+                $.each(my_skins, function(i) {
+                    $('body').removeClass(my_skins[i]);
+                });
+
+                $('body').addClass($(this).attr('data-skin'));
+
+                store('skin', $(this).attr('data-skin'));
+            });
+
+            $('input[id^="cbx_settings_"]').click(function(e) {
+                var button = $(this).attr('id');
+
+                if (button == '') {
+
+                }
+            })
+
+            function store(name, val) {
+                if (typeof (Storage) !== "undefined") {
+                    localStorage.setItem(name, val);
+                } else {
+                    window.alert('Please use a modern browser to properly view this template!');
+                }
+            }
+
+            function get(name) {
+                if (typeof (Storage) !== "undefined") {
+                    return localStorage.getItem(name);
+                } else {
+                    window.alert('Please use a modern browser to properly view this template!');
+                }
+            }
         </script>
 
         @yield('custom_js')
