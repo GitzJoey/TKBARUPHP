@@ -108,8 +108,21 @@
             $('input[id^="cbx_settings_"]').click(function(e) {
                 var button = $(this).attr('id');
 
-                if (button == '') {
+                if (button == 'cbx_settings_toggleRightSidebarSkin') {
+                    var sidebar = $("aside.control-sidebar");
+                    var skinList = $("#skinList");
 
+                    if (sidebar.hasClass("control-sidebar-dark")) {
+                        sidebar.removeClass("control-sidebar-dark");
+                        sidebar.addClass("control-sidebar-light");
+                        skinList.removeClass("control-sidebar-skin-bg-dark");
+                        skinList.addClass("control-sidebar-skin-bg-light");
+                    } else {
+                        sidebar.removeClass("control-sidebar-light");
+                        sidebar.addClass("control-sidebar-dark");
+                        skinList.removeClass("control-sidebar-skin-bg-light");
+                        skinList.addClass("control-sidebar-skin-bg-dark");
+                    }
                 }
             })
 
@@ -127,6 +140,20 @@
                 } else {
                     window.alert('Please use a modern browser to properly view this template!');
                 }
+            }
+
+            function change_layout(cls) {
+                $("body").toggleClass(cls);
+                $.AdminLTE.layout.fixSidebar();
+
+                if (cls == "layout-boxed")
+                    $.AdminLTE.controlSidebar._fix($(".control-sidebar-bg"));
+                if ($('body').hasClass('fixed') && cls == 'fixed') {
+                    $.AdminLTE.pushMenu.expandOnHover();
+                    $.AdminLTE.layout.activate();
+                }
+                $.AdminLTE.controlSidebar._fix($(".control-sidebar-bg"));
+                $.AdminLTE.controlSidebar._fix($(".control-sidebar"));
             }
         </script>
 

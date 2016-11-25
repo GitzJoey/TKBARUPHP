@@ -50,7 +50,7 @@
 
             <h4 class='control-sidebar-heading'>Skins</h4>
 
-            <ul class="list-unstyled clearfix" style="background-color: dimgrey;">
+            <ul id="skinList" class="list-unstyled clearfix control-sidebar-skin-bg-dark">
                 <li style="float:left; width: 33.33333%; padding: 5px;">
                     <a id="btn_skin-blue" href='#' data-skin='skin-blue' style='display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)' class='clearfix full-opacity-hover'>
                         <div><span style='display:block; width: 20%; float: left; height: 7px; background: #367fa9;'></span><span class='bg-light-blue' style='display:block; width: 80%; float: left; height: 7px;'></span></div>

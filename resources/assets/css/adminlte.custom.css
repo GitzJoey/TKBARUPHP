@@ -125,3 +125,11 @@ ol.breadcrumb {
     font-size: 90%;
     padding-bottom: 4px;
 }
+
+.control-sidebar-skin-bg-dark {
+    background-color: dimgray;
+}
+
+.control-sidebar-skin-bg-light {
+    background-color: transparent;
+}
