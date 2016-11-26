@@ -155,6 +155,25 @@
                 $.AdminLTE.controlSidebar._fix($(".control-sidebar-bg"));
                 $.AdminLTE.controlSidebar._fix($(".control-sidebar"));
             }
+
+            $("#cbx_settings_toggleRightSidebarSlide").on('click', function () {
+                change_layout($(this).data('controlsidebar'));
+
+                var slide = $.AdminLTE.options.controlSidebarOptions.slide;
+
+                $.AdminLTE.options.controlSidebarOptions.slide = slide;
+
+                if (!slide) $('.control-sidebar').removeClass('control-sidebar-open');
+            });
+
+            $("[data-enable='expandOnHover']").on('click', function () {
+                $(this).attr('disabled', true);
+
+                $.AdminLTE.pushMenu.expandOnHover();
+
+                if (!$('body').hasClass('sidebar-collapse'))
+                    $("[data-layout='sidebar-collapse']").click();
+            });
         </script>
 
         @yield('custom_js')
