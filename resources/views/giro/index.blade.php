@@ -33,6 +33,7 @@
                     <th class="text-center">@lang('giro.index.table.header.printed_name')</th>
                     <th class="text-center">@lang('giro.index.table.header.status')</th>
                     <th class="text-center">@lang('giro.index.table.header.remarks')</th>
+                    <th></th>
                     <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
                 </thead>
@@ -46,6 +47,7 @@
                         <td>{{ $giro->printed_name }}</td>
                         <td class="text-center">@lang('lookup.' . $giro->status)</td>
                         <td>{{ $giro->remarks }}</td>
+                        <td><a id="override_confirm_button" class="btn btn-xs btn-primary" href="{{ route('db.bank.giro.override_confirm', $giro->hId()) }}"><span class="fa fa-tag fa-fw"></span></a></td>
                         <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.bank.giro.show', $giro->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.bank.giro.edit', $giro->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
@@ -67,4 +69,24 @@
             {!! $girolist->render() !!}
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $('#override_confirm_button').on('click',function(e){
+            e.preventDefault();
+            var form = $(this).parents('form');
+            swal({
+                title: "Are you sure?",
+                text: "Override this giro as confirmed?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, Cancel!",
+                closeOnConfirm: false
+            }, function(isConfirm){
+                if (isConfirm) form.submit();
+            });
+        });
+    </script>
 @endsection

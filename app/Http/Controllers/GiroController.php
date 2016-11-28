@@ -106,4 +106,10 @@ class GiroController extends Controller
 
         return redirect(route('db.bank.giro'));
     }
+
+    public function overrideConfirm($id)
+    {
+
+        return redirect(route('db.bank.giro'));
+    }
 }
