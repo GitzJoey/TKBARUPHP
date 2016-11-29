@@ -48,11 +48,14 @@
                         <td class="text-center">@lang('lookup.' . $giro->status)</td>
                         <td>{{ $giro->remarks }}</td>
                         <td class="text-center">
+                            @if($giro->status != 'GIROSTATUS.UP')
+                                <button id="override_confirm_button" type="submit" class="btn btn-xs btn-danger" disabled><span class="fa fa-flash fa-fw"></span></button>
+                            @else
                             {!! Form::open(['method' => 'POST', 'route' => ['db.bank.giro.override_confirm', $giro->hId()], 'style'=>'display:inline'])  !!}
                                 <button id="override_confirm_button" type="submit" class="btn btn-xs btn-danger"><span class="fa fa-flash fa-fw"></span></button>
                             {!! Form::close() !!}
+                            @endif
                         </td>
-
                         <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.bank.giro.show', $giro->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.bank.giro.edit', $giro->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
