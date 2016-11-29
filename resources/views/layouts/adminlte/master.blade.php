@@ -72,10 +72,10 @@
             function timeout() {
                 setTimeout(function () {
                     sessionTimeout = (sessionTimeout - 1000);
-                    if (sessionTimeout >= 0) {
-                        $('#timeoutCount').text(sessionTimeout / 1000);
+                    if (sessionTimeout >= 30000) {
+                        $('#timeoutCount').text(moment.duration(sessionTimeout).hours() + ':' + moment.duration(sessionTimeout).minutes() + ":" + moment.duration(sessionTimeout).seconds());
                     } else {
-                        window.location.href = ctxpath + "/logout";
+                        document.getElementById('logout-form').submit();
                     }
                     timeout();
                 }, 1000);
