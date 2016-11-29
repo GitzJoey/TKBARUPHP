@@ -68,12 +68,12 @@
 
             $('#goTop').goTop();
 
-            var sessionTimeout = parseInt('{{ Config::get('session.lifetime') }}') * 60 * 1000;
+            var sessionTimeout = parseInt('{{ Config::get('session.lifetime') }}') * 60;
             function timeout() {
                 setTimeout(function () {
-                    sessionTimeout = (sessionTimeout - 1000);
-                    if (sessionTimeout >= 30000) {
-                        $('#timeoutCount').text(moment.duration(sessionTimeout).hours() + ':' + moment.duration(sessionTimeout).minutes() + ":" + moment.duration(sessionTimeout).seconds());
+                    sessionTimeout = (sessionTimeout - 1);
+                    if (sessionTimeout >= 30) {
+                        $('#timeoutCount').text(moment.duration(sessionTimeout, 'seconds').format('h:mm:ss'));
                     } else {
                         document.getElementById('logout-form').submit();
                     }
