@@ -20,12 +20,13 @@ class CreatePurchaseOrdersTable extends Migration
             $table->unsignedBigInteger('warehouse_id')->default(0);
             $table->unsignedBigInteger('vendor_trucking_id')->default(0);
             $table->string('code')->nullable();
-            $table->string('po_type')->nullable();
             $table->dateTime('po_created')->nullable();
+            $table->string('po_type')->nullable();
             $table->dateTime('shipping_date')->nullable();
             $table->string('supplier_type')->nullable();
             $table->string('walk_in_supplier')->nullable();
             $table->string('walk_in_supplier_detail')->nullable();
+            $table->string('article_code')->nullable();
             $table->string('remarks')->nullable();
             $table->string('status')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);

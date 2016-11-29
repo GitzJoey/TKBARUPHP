@@ -32,11 +32,11 @@
             {{ csrf_field() }}
             <div ng-app="giroModule" ng-controller="giroController">
                 <div class="box-body">
-                    <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
+                    <div class="form-group {{ $errors->has('bank') ? 'has-error' : '' }}">
                         <label for="inputBank" class="col-sm-2 control-label">@lang('giro.field.bank')</label>
                         <div class="col-sm-10">
                             {{ Form::select('bank', $bankDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                            <span class="help-block">{{ $errors->has('plate_number') ? $errors->first('plate_number') : '' }}</span>
+                            <span class="help-block">{{ $errors->has('bank') ? $errors->first('bank') : '' }}</span>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('serial_number') ? 'has-error' : '' }}">

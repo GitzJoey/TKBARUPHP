@@ -263,7 +263,11 @@
                 Entrust::can('master.vendor.truck-list') OR
                 Entrust::can('master.vendor.truck-create') OR
                 Entrust::can('master.vendor.truck-edit') OR
-                Entrust::can('master.vendor.truck-delete'))
+                Entrust::can('master.vendor.truck-delete') OR
+                Entrust::can('master.expense_template-list') OR
+                Entrust::can('master.expense_template-create') OR
+                Entrust::can('master.expense_template-edit') OR
+                Entrust::can('master.expense_template-delete'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.master.*')) }}">
                     <a href="#"><i class="fa fa-file-text-o fa-fw"></i><span>&nbsp;@lang('menu.item.master')</span>
                         <span class="pull-right-container">
@@ -357,6 +361,14 @@
                                 </ul>
                             </li>
                         @endif
+                            @if(Entrust::can('master.expense_template-list') OR
+                                Entrust::can('master.expense_template-create') OR
+                                Entrust::can('master.expense_template-edit') OR
+                                Entrust::can('master.expense_template-delete'))
+                                <li class="{{ active_class(Active::checkRoutePattern('db.master.expense_template') || Active::checkRoutePattern('db.master.expense_template.*')) }}">
+                                    <a href="{{ route('db.master.expense_template') }}"><i class="fa fa-ticket fa-fw"></i>&nbsp;@lang('menu.item.master_expense_template')</a>
+                                </li>
+                            @endif
                     </ul>
                 </li>
             @endif

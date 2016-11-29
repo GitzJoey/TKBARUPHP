@@ -29,7 +29,7 @@ class CreateDeliversTable extends Migration
             $table->decimal('tare', 19, 2)->default(0);
             $table->decimal('base_tare', 19, 2)->default(0);
             $table->string('license_plate')->nullable();
-            $table->string('remarks')->nullable();
+            $table->string('article_code')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);

@@ -54,4 +54,6 @@ return [
     'CUSTOMERTYPE.WI' => 'Pelanggan Baru',
     'PRICELEVELTYPE.INC' => 'Kenaikan Nilai',
     'PRICELEVELTYPE.PCT' => 'Kenaikan Persentase',
+    'EXPENSETYPE.ADD' => 'Menambah Nilai',
+    'EXPENSETYPE.SUB' => 'Mengurangi Nilai',
 ];

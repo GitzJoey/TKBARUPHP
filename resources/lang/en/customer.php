@@ -13,6 +13,7 @@ return [
             'pic' => 'Person In Charge',
             'bank_account' => 'Bank Account',
             'settings' => 'Settings',
+            'expenses' => 'Default Expenses',
             'header' => [
                 'bank_lists' => 'Bank Account Lists',
                 'bank_inputs' => 'Create New Bank Account',
@@ -29,6 +30,14 @@ return [
             'header' => [
                 'bank' => 'Bank',
                 'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Name',
+                'type' => 'Type',
+                'amount' => 'Amount',
                 'remarks' => 'Remarks',
             ],
         ],
@@ -120,6 +129,7 @@ return [
             'pic' => 'Person In Charge',
             'bank_account' => 'Bank Account',
             'settings' => 'Settings',
+            'expenses' => 'Default Expenses',
             'header' => [
                 'bank_lists' => 'Bank Account Lists',
             ],
@@ -135,6 +145,14 @@ return [
             'header' => [
                 'bank' => 'Bank',
                 'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Name',
+                'type' => 'Type',
+                'amount' => 'Amount',
                 'remarks' => 'Remarks',
             ],
         ],

@@ -179,8 +179,7 @@
             _.forEach($scope.availableGiros, function (giro) {
                 giro.effective_date = moment(giro.effective_date).format('DD-MM-YYYY');
             });
-            $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
-            console.log($scope.availableGiros);
+            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
 
             $scope.po = {
                 supplier: currentPo.supplier,
@@ -192,7 +191,8 @@
                 vendorTrucking: {
                     id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
                     name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
-                }
+                },
+                expenses: []
             };
 
             for (var i = 0; i < currentPo.items.length; i++) {
@@ -206,10 +206,35 @@
                 });
             }
 
+            for (var i = 0; i < currentPo.expenses.length; i++) {
+                var type = _.find($scope.expenseTypes, function (type) {
+                    return type.code === currentPo.expenses[i].type;
+                });
+
+                $scope.po.expenses.push({
+                    id: currentPo.expenses[i].id,
+                    name: currentPo.expenses[i].name,
+                    type: {
+                        code: currentPo.expenses[i].type,
+                        description: type ? type.description : ''
+                    },
+                    amount: currentPo.expenses[i].amount,
+                    remarks: currentPo.expenses[i].remarks
+                });
+            }
+
             $scope.grandTotal = function () {
                 var result = 0;
                 angular.forEach($scope.po.items, function (item, key) {
                     result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                });
+                return result;
+            };
+
+            $scope.expenseTotal = function () {
+                var result = 0;
+                angular.forEach($scope.po.expenses, function (expense, key) {
+                    result += parseInt(expense.amount);
                 });
                 return result;
             };

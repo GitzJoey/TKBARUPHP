@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Bank;
+use App\Model\ExpenseTemplate;
 use App\Model\Store;
 use App\Model\Lookup;
 use App\Model\Profile;
@@ -36,7 +37,7 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank')->find($id);
+        $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank', 'expenseTemplates')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
@@ -51,8 +52,9 @@ class CustomerController extends Controller
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
+        $expenseTemplates = ExpenseTemplate::all();
 
-        return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL'));
+        return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates'));
     }
 
     public function store(Request $data)
@@ -107,20 +109,23 @@ class CustomerController extends Controller
                 }
             }
 
+            $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+
             return redirect(route('db.master.customer'));
         }
     }
 
     public function edit($id)
     {
-        $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank')->find($id);
+        $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank', 'expenseTemplates')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
+        $expenseTemplates = ExpenseTemplate::all();
 
-        return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL'));
+        return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates'));
     }
 
     public function update($id, Request $data)
@@ -174,6 +179,8 @@ class CustomerController extends Controller
         $customer->status = $data['status'];
 
         $customer->save();
+
+        $customer->expenseTemplates()->sync($data->input('expense_template_id'));
 
         return redirect(route('db.master.customer'));
     }

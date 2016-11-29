@@ -161,9 +161,19 @@ class PurchaseOrder extends Model
 
     public function totalAmount()
     {
-        return $this->items->map(function($item, $key){
+        $itemAmounts = $this->items->map(function($item){
             return $item->price * $item->to_base_quantity;
-        })->sum();
+        });
+
+        $itemTotalAmount = count($itemAmounts) > 0 ? $itemAmounts->sum() : 0;
+
+        $expenseAmounts = $this->expenses->map(function ($expense){
+            return $expense->amount;
+        });
+
+        $expenseTotalAmount = count($expenseAmounts) > 0 ? $expenseAmounts->sum() : 0;
+
+        return $itemTotalAmount + $expenseTotalAmount;
     }
 
     public function totalAmountPaid()
@@ -181,6 +191,11 @@ class PurchaseOrder extends Model
             $this->status = "POSTATUS.C";
 
         $this->save();
+    }
+
+    public function expenses()
+    {
+        return $this->morphMany('App\Model\Expense', 'expensable');
     }
 
     public static function boot()

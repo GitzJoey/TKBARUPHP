@@ -338,6 +338,16 @@ class CreateLookupTableSeeder extends Seeder
                 'code' => 'SETTINGDECIMALSEPARATOR.NONE',
                 'description' => 'No Separator',
                 'category' => 'SETTINGTHOUSANDSEPARATOR',
+            ],
+            [
+                'code' => 'EXPENSETYPE.ADD',
+                'description' => 'Adding value',
+                'category' => 'EXPENSETYPE',
+            ],
+            [
+                'code' => 'EXPENSETYPE.SUB',
+                'description' => 'Subtracting value',
+                'category' => 'EXPENSETYPE',
             ]
         ];
         foreach ($lookup as $key => $value) {

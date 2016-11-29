@@ -14,6 +14,7 @@ return [
             'bank_account' => 'Bank Account',
             'product' => 'Product List',
             'settings' => 'Settings',
+            'expenses' => 'Default Expenses',
             'header' => [
                 'bank_lists' => '',
             ],
@@ -38,6 +39,14 @@ return [
                 'name' => 'Name',
                 'short_code' => 'Short Code',
                 'description' => 'Description',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Name',
+                'type' => 'Type',
+                'amount' => 'Amount',
                 'remarks' => 'Remarks',
             ],
         ],
@@ -80,6 +89,7 @@ return [
             'bank_account' => 'Bank Account',
             'product' => 'Product List',
             'settings' => 'Settings',
+            'expenses' => 'Default Expenses',
             'header' => [
                 'bank_lists' => '',
                 'bank_inputs' => '',
@@ -96,6 +106,14 @@ return [
             'header' => [
                 'bank' => 'Bank',
                 'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Name',
+                'type' => 'Type',
+                'amount' => 'Amount',
                 'remarks' => 'Remarks',
             ],
         ],
@@ -148,6 +166,7 @@ return [
             'bank_account' => 'Bank Account',
             'product' => 'Product Lists',
             'settings' => 'Settings',
+            'expenses' => 'Default Expenses',
         ],
         'table_phone' => [
             'header' => [
@@ -160,6 +179,14 @@ return [
             'header' => [
                 'bank' => 'Bank',
                 'account_number' => 'Account Number',
+                'remarks' => 'Remarks',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Name',
+                'type' => 'Type',
+                'amount' => 'Amount',
                 'remarks' => 'Remarks',
             ],
         ],

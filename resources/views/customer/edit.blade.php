@@ -37,6 +37,7 @@
                             <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.create.tab.expenses')&nbsp;<span id="expensesTabError" class="parsley-asterisk hidden">*</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_customer">
@@ -230,6 +231,53 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane" id="tab_expenses">
+                                <div class="form-group">
+                                    <div class="col-md-11">
+                                        <select id="inputExpense"
+                                                class="form-control"
+                                                ng-model="expense"
+                                                ng-options="expense as expense.name for expense in expenseTemplates track by expense.id">
+                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="btn btn-primary btn-md"
+                                                ng-click="addExpense(expense)"><span class="fa fa-plus"/></button>
+                                    </div>
+                                </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.name')</th>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.type')</th>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.amount')</th>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.remarks')</th>
+                                        <th class="text-center">@lang('labels.ACTION')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="expense in expenses">
+                                        <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
+                                        <td class="text-center valign-middle">
+                                            @{{ expense.name }}
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            @{{ expense.type }}
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            @{{ expense.amount }}
+                                        </td>
+                                        <td class="valign-middle">
+                                            @{{ expense.remarks }}
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            <button type="button" class="btn btn-xs btn-danger" ng-click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -252,9 +300,13 @@
         app.controller("customerController", ['$scope', function($scope) {
             $scope.banks = JSON.parse('{!! empty(htmlspecialchars_decode($customer->bankAccounts)) ? '[]':htmlspecialchars_decode($customer->bankAccounts) !!}');
             $scope.profiles = JSON.parse('{!! empty(htmlspecialchars_decode($customer->profiles)) ? '[]':htmlspecialchars_decode($customer->profiles) !!}');
+            $scope.expenses = JSON.parse('{!! empty(htmlspecialchars_decode($customer->expenseTemplates)) ? '[]':htmlspecialchars_decode($customer->expenseTemplates) !!}');
             $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
             $scope.pricelevelDDL = JSON.parse('{!! htmlspecialchars_decode($priceLevelDDL) !!}');
+            $scope.expenseTemplates = JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}');
+
+            console.log($scope.expenses);
 
             $scope.addNewBank = function() {
                 $scope.banks.push({
@@ -302,6 +354,20 @@
             $scope.removeSelectedPhone = function(parentIndex, idx) {
                 $scope.profiles[parentIndex].phone_numbers.splice(idx, 1);
             };
+
+            $scope.addExpense = function(expense) {
+                $scope.expenses.push({
+                    id: expense.id,
+                    name: expense.name,
+                    type: expense.type,
+                    amount: numeral(expense.amount).format('0,0'),
+                    remarks: expense.remarks
+                });
+            };
+
+            $scope.removeSelectedExpense = function(idx) {
+                $scope.expenses.splice(idx, 1);
+            };
         }]);
 
         $(document).ready(function() {
@@ -332,6 +398,12 @@
                     $('#settingsTabError').addClass('hidden');
                 } else {
                     $('#settingsTabError').removeClass('hidden');
+                }
+
+                if (true === $('#customerForm').parsley().isValid("tab_expense", false)) {
+                    $('#expensesTabError').addClass('hidden');
+                } else {
+                    $('#expensesTabError').removeClass('hidden');
                 }
             };
         });

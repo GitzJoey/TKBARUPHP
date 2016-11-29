@@ -52,13 +52,17 @@
         <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
 
         <script type="application/javascript">
+            $(document).ready(function () {
+                var container = $("#loader-container");
+                container.on('click', function () {
+                    $(this).fadeOut("slow");
+                });
+                container.fadeOut("slow");
+            });
+
             window.onload = function () {
                 $("#loader-container").fadeIn("slow");
-            }
-
-            $(document).ready(function () {
-                $("#loader-container").fadeOut("slow");
-            });
+            };
 
             window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
 

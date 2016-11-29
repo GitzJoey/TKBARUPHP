@@ -13,6 +13,7 @@ return [
             'pic' => 'Penanggung Jawab',
             'bank_account' => 'Akun Bank',
             'settings' => 'Pengaturan',
+            'expenses' => 'Biaya Default',
             'header' => [
                 'bank_lists' => 'Daftar Akun Bank',
                 'bank_inputs' => 'Tambah Akun Bank',
@@ -39,6 +40,14 @@ return [
                 'bank' => 'Bank',
                 'account_number' => 'Nomor Akun',
                 'remarks' => 'Keterangan',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Nama',
+                'type' => 'Tipe',
+                'amount' => 'Nilai',
+                'remarks' => 'Catatan',
             ],
         ],
     ],
@@ -120,6 +129,7 @@ return [
             'pic' => '',
             'bank_account' => '',
             'settings' => '',
+            'expenses' => 'Biaya Default',
             'header' => [
                 'bank_lists' => '',
             ],
@@ -136,6 +146,14 @@ return [
                 'bank' => '',
                 'account_number' => '',
                 'remarks' => '',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Nama',
+                'type' => 'Tipe',
+                'amount' => 'Nilai',
+                'remarks' => 'Catatan',
             ],
         ],
     ],

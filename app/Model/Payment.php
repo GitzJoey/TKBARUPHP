@@ -62,6 +62,11 @@ class Payment extends Model
         return $this->morphTo();
     }
 
+    /**
+     * May return relation to PurchaseOrder or SalesOrder
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
     public function payable()
     {
         return $this->morphTo();

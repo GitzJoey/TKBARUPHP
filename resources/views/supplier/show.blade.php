@@ -46,6 +46,7 @@
                         <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.show.tab.bank_account')</a></li>
                         <li><a href="#tab_product" data-toggle="tab">@lang('supplier.show.tab.product')</a></li>
                         <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.show.tab.settings')</a></li>
+                        <li><a href="#tab_expenses" data-toggle="tab">@lang('supplier.show.tab.expenses')</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_customer">
@@ -203,6 +204,36 @@
                                     </label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="tab-pane" id="tab_expenses">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">@lang('supplier.show.table_expense.header.name')</th>
+                                    <th class="text-center">@lang('supplier.show.table_expense.header.type')</th>
+                                    <th class="text-center">@lang('supplier.show.table_expense.header.amount')</th>
+                                    <th class="text-center">@lang('supplier.show.table_expense.header.remarks')</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($supplier->expenseTemplates as $key => $expenseTemplate)
+                                        <tr>
+                                            <td class="text-center valign-middle">
+                                                {{ $expenseTemplate->name }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                {{ $expenseTemplate->type }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                {{ number_format($expenseTemplate->amount) }}
+                                            </td>
+                                            <td class="valign-middle">
+                                                {{ $expenseTemplate->remarks }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

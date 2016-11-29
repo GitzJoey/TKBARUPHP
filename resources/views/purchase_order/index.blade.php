@@ -66,6 +66,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="box-footer clearfix">
+            {!! $purchaseOrders->render() !!}
+        </div>
     </div>
 @endsection
 @section('custom_js')

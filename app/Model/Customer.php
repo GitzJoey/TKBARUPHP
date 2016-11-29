@@ -109,6 +109,11 @@ class Customer extends Model
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
+    public function expenseTemplates()
+    {
+        return $this->belongsToMany('App\Model\ExpenseTemplate', 'customer_expense_template');
+    }
+
     public static function boot()
     {
         parent::boot();

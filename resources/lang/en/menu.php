@@ -44,6 +44,7 @@ return [
     'item.master_truck' => 'Truck',
     'item.master_vendor' => 'Vendor',
     'item.master_vendor_trucking' => 'Trucking',
+    'item.master_expense_template' => 'Expense Template',
     'item.adm' => 'Admin Menu',
     'item.adm_user' => 'User',
     'item.adm_store' => 'Store',

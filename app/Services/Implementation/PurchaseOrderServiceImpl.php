@@ -2,6 +2,7 @@
 
 namespace App\Services\Implementation;
 
+use App\Model\Expense;
 use App\Model\Item;
 use App\Model\Lookup;
 use App\Model\ProductUnit;
@@ -73,6 +74,16 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             $po->items()->save($item);
         }
 
+        for($i = 0; $i < count($request->input('expense_name')); $i++){
+            $expense = new Expense();
+            $expense->name = $request->input("expense_name.$i");
+            $expense->type = $request->input("expense_type.$i");
+            $expense->amount = floatval(str_replace(',', '', $request->input("expense_amount.$i")));
+            $expense->remarks = $request->input("expense_remarks.$i");
+
+            $po->expenses()->save($expense);
+        }
+
         return $po;
     }
 
@@ -90,7 +101,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
         // Get current PO
         $currentPo = PurchaseOrder::with('items')->find($id);
 
-        // Get ID of current PO's items
+        // Get IDs of current PO's items
         $poItemsId = $currentPo->items->map(function ($item) {
             return $item->id;
         })->all();
@@ -98,7 +109,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
         // Get the id of removed items
         $poItemsToBeDeleted = array_diff($poItemsId, $request->input('item_id'));
 
-        // Remove the item that removed on the revise page
+        // Remove the items that removed on the revise page
         Item::destroy($poItemsToBeDeleted);
 
         $currentPo->shipping_date = date('Y-m-d H:i:s', strtotime($request->input('shipping_date')));
@@ -121,6 +132,27 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
             $currentPo->items()->save($item);
+        }
+
+        // Get IDs of current PO's expenses
+        $poExpensesId = $currentPo->expenses->map(function ($expense) {
+            return $expense->id;
+        })->all();
+
+        // Get the id of removed expenses
+        $poExpensesToBeDeleted = array_diff($poExpensesId, $request->input('expense_id'));
+
+        // Remove the expenses that removed on the revise page
+        Expense::destroy($poExpensesToBeDeleted);
+
+        for($i = 0; $i < count($request->input('expense_id')); $i++){
+            $expense = Expense::findOrNew($request->input("expense_id.$i"));
+            $expense->name = $request->input("expense_name.$i");
+            $expense->type = $request->input("expense_type.$i");
+            $expense->amount = floatval(str_replace(',', '', $request->input("expense_amount.$i")));
+            $expense->remarks = $request->input("expense_remarks.$i");
+
+            $currentPo->expenses()->save($expense);
         }
 
         $currentPo->save();

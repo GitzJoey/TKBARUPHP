@@ -302,6 +302,26 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Delete Vendor Truck'
             ],
             [
+                'name' => 'master.expense_template-list',
+                'display_name' => '[Expense Template] Display Expense Template Listing',
+                'description' => 'See only Listing Of Expense Template'
+            ],
+            [
+                'name' => 'master.expense_template-create',
+                'display_name' => '[Expense Template] Create Expense Template',
+                'description' => 'Create New Expense Template'
+            ],
+            [
+                'name' => 'master.expense_template-edit',
+                'display_name' => '[Expense Template] Edit Expense Template',
+                'description' => 'Edit Expense Template'
+            ],
+            [
+                'name' => 'master.expense_template-delete',
+                'display_name' => '[Expense Template] Delete Expense Template',
+                'description' => 'Delete Expense Template'
+            ],
+            [
                 'name' => 'po.po-create',
                 'display_name' => '[Purchase Order] Create PO',
                 'description' => 'Enable Create PO'

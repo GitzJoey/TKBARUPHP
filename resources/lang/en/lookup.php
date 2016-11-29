@@ -54,4 +54,6 @@ return [
     'CUSTOMERTYPE.WI' => 'Walk In Customer',
     'PRICELEVELTYPE.INC' => 'Increment Value',
     'PRICELEVELTYPE.PCT' => 'Percentage Value',
+    'EXPENSETYPE.ADD' => 'Add Value',
+    'EXPENSETYPE.SUB' => 'Subtract Value',
 ];

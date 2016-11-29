@@ -44,6 +44,7 @@ return [
     'item.master_truck' => 'Truck',
     'item.master_vendor' => 'Penyedia',
     'item.master_vendor_trucking' => 'Angkutan',
+    'item.master_expense_template' => 'Template Biaya',
     'item.adm' => 'Admin Menu',
     'item.adm_user' => 'Pengguna',
     'item.adm_store' => 'Toko',

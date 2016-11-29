@@ -14,6 +14,7 @@ return [
             'bank_account' => '',
             'product' => '',
             'settings' => '',
+            'expenses' => 'Biaya Default',
             'header' => [
                 'bank_lists' => '',
             ],
@@ -50,6 +51,14 @@ return [
                 'remarks' => '',
             ],
         ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Nama',
+                'type' => 'Tipe',
+                'amount' => 'Nilai',
+                'remarks' => 'Catatan',
+            ],
+        ],
     ],
     'field' => [
         'name' => '',
@@ -80,6 +89,7 @@ return [
             'bank_account' => '',
             'product' => '',
             'settings' => '',
+            'expenses' => 'Biaya Default',
             'header' => [
                 'bank_lists' => '',
                 'bank_inputs' => '',
@@ -106,6 +116,14 @@ return [
                 'short_code' => 'Short Code',
                 'description' => 'Description',
                 'remarks' => 'Remarks',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Nama',
+                'type' => 'Tipe',
+                'amount' => 'Nilai',
+                'remarks' => 'Catatan',
             ],
         ],
         'table' => [
@@ -148,6 +166,7 @@ return [
             'bank_account' => '',
             'product' => '',
             'settings' => '',
+            'expenses' => 'Biaya Default',
         ],
         'table_phone' => [
             'header' => [
@@ -161,6 +180,14 @@ return [
                 'bank' => '',
                 'account_number' => '',
                 'remarks' => '',
+            ],
+        ],
+        'table_expense' => [
+            'header' => [
+                'name' => 'Nama',
+                'type' => 'Tipe',
+                'amount' => 'Nilai',
+                'remarks' => 'Catatan',
             ],
         ],
     ],

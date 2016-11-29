@@ -21,11 +21,12 @@ class CreateSalesOrdersTable extends Migration
             $table->unsignedBigInteger('vendor_trucking_id')->default(0);
             $table->string('code')->nullable();
             $table->dateTime('so_created')->nullable();
+            $table->string('so_type')->nullable();
             $table->dateTime('shipping_date')->nullable();
             $table->string('customer_type')->nullable();
             $table->string('walk_in_cust')->nullable();
             $table->string('walk_in_cust_detail')->nullable();
-            $table->string('so_type')->nullable();
+            $table->string('article_code')->nullable();
             $table->string('status')->nullable();
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);

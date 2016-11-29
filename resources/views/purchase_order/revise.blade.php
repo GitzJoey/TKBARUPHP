@@ -312,6 +312,93 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">@lang('purchase_order.create.box.expenses')</h3>
+                                @if($currentPo->status == 'POSTATUS.WA')
+                                    <button type="button" class="btn btn-primary btn-md pull-right"
+                                            ng-click="insertExpense()"><span class="fa fa-plus"/></button>
+                                @endif
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="expensesListTable" class="table table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th width="22%">@lang('purchase_order.create.table.expense.header.name')</th>
+                                                <th width="22%"
+                                                    class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
+                                                <th width="22%"
+                                                    class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
+                                                <th width="22%"
+                                                    class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
+                                                <th width="12%">&nbsp;</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="expense in po.expenses">
+                                                <td>
+                                                    <input type="hidden" name="expense_id[]" ng-value="expense.id" />
+                                                    <input name="expense_name[]" type="text" class="form-control" ng-model="expense.name"
+                                                           data-parsley-required="true" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }} />
+                                                </td>
+                                                <td>
+                                                    @if($currentPo->status == 'POSTATUS.WA')
+                                                        <select name="expense_type[]" data-parsley-required="true"
+                                                                class="form-control" ng-model="expense.type"
+                                                                ng-options="expenseType as expenseType.description for expenseType in expenseTypes track by expenseType.code">
+                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        </select>
+                                                    @else
+                                                        <input type="text" class="form-control" readonly
+                                                               value="@{{ expense.type.description }}">
+                                                        <input type="hidden" name="expense_type[]"
+                                                               ng-value="expense.type.code"/>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <input name="expense_amount[]" type="text" class="form-control text-right"
+                                                           ng-model="expense.amount" data-parsley-required="true"
+                                                           data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
+                                                </td>
+                                                <td>
+                                                    <input name="expense_remarks[]" type="text" class="form-control" ng-model="expense.remarks"
+                                                           data-parsley-required="true" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
+                                                </td>
+                                                <td class="text-center">
+                                                    @if($currentPo->status == 'POSTATUS.WA')
+                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                ng-click="removeExpense($index)"><span class="fa fa-minus"/>
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="expensesTotalListTable" class="table table-bordered">
+                                            <tbody>
+                                            <tr>
+                                                <td width="80%"
+                                                    class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal">@{{ expenseTotal() | number }}</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-2">
                 <div class="box box-info">
@@ -371,6 +458,7 @@
         app.controller('poController', ['$scope', function ($scope) {
             $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
             $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
+            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
 
             var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
 
@@ -384,7 +472,8 @@
                 vendorTrucking: {
                     id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
                     name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
-                }
+                },
+                expenses: []
             };
 
             for (var i = 0; i < currentPo.items.length; i++) {
@@ -398,10 +487,35 @@
                 });
             }
 
+            for (var i = 0; i < currentPo.expenses.length; i++) {
+                var type = _.find($scope.expenseTypes, function (type) {
+                    return type.code === currentPo.expenses[i].type;
+                });
+
+                $scope.po.expenses.push({
+                    id: currentPo.expenses[i].id,
+                    name: currentPo.expenses[i].name,
+                    type: {
+                        code: currentPo.expenses[i].type,
+                        description: type ? type.description : ''
+                    },
+                    amount: currentPo.expenses[i].amount,
+                    remarks: currentPo.expenses[i].remarks
+                });
+            }
+
             $scope.grandTotal = function () {
                 var result = 0;
                 angular.forEach($scope.po.items, function (item, key) {
                     result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                });
+                return result;
+            };
+
+            $scope.expenseTotal = function () {
+                var result = 0;
+                angular.forEach($scope.po.expenses, function (expense, key) {
+                    result += parseInt(expense.amount);
                 });
                 return result;
             };
@@ -419,7 +533,7 @@
 
             $scope.removeItem = function (index) {
                 $scope.po.items.splice(index, 1);
-            }
+            };
 
             function getSelectedUnit(selectedUnitId) {
                 return function (element) {
@@ -430,6 +544,18 @@
             function isBase(unit) {
                 return unit.is_base == 1;
             }
+            $scope.insertExpense = function () {
+                $scope.po.expenses.push({
+                    name: '',
+                    type: '',
+                    amount: 0,
+                    remarks: ''
+                });
+            };
+
+            $scope.removeExpense = function (index) {
+                $scope.po.expenses.splice(index, 1);
+            };
         }]);
 
         $(function () {

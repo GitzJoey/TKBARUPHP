@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSuppliersTable extends Migration
+class CreateExpensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,14 @@ class CreateSuppliersTable extends Migration
      */
     public function up()
     {
-        Schema::create('suppliers', function ( Blueprint $table) {
+        Schema::create('expenses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('store_id')->default(0);
-            $table->string('sign_code')->nullable();
+            $table->unsignedBigInteger('expensable_id');
             $table->string('name')->nullable();
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->string('fax_num')->nullable();
-            $table->string('tax_id')->nullable();
-            $table->integer('payment_due_day')->default(0);
-            $table->string('status')->nullable();
+            $table->string('type')->nullable();
+            $table->decimal('amount', 19, 2)->default(0);
             $table->string('remarks')->nullable();
+            $table->string('expensable_type')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);
@@ -41,6 +36,6 @@ class CreateSuppliersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('suppliers');
+        Schema::dropIfExists('expenses');
     }
 }

@@ -187,6 +187,10 @@ class SalesOrder extends Model
         $this->save();
     }
 
+    public function expenses(){
+        return $this->morphMany('App\Model\Expense', 'expensable');
+    }
+
     public static function boot()
     {
         parent::boot();
