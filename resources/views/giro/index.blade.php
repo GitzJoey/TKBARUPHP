@@ -47,7 +47,12 @@
                         <td>{{ $giro->printed_name }}</td>
                         <td class="text-center">@lang('lookup.' . $giro->status)</td>
                         <td>{{ $giro->remarks }}</td>
-                        <td><a id="override_confirm_button" class="btn btn-xs btn-primary" href="{{ route('db.bank.giro.override_confirm', $giro->hId()) }}"><span class="fa fa-tag fa-fw"></span></a></td>
+                        <td class="text-center">
+                            {!! Form::open(['method' => 'POST', 'route' => ['db.bank.giro.override_confirm', $giro->hId()], 'style'=>'display:inline'])  !!}
+                                <button id="override_confirm_button" type="submit" class="btn btn-xs btn-danger"><span class="fa fa-flash fa-fw"></span></button>
+                            {!! Form::close() !!}
+                        </td>
+
                         <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.bank.giro.show', $giro->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.bank.giro.edit', $giro->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
@@ -82,7 +87,7 @@
                 type: "error",
                 showCancelButton: true,
                 confirmButtonClass: "btn-danger",
-                confirmButtonText: "Yes, Cancel!",
+                confirmButtonText: "Confirmed!",
                 closeOnConfirm: false
             }, function(isConfirm){
                 if (isConfirm) form.submit();
