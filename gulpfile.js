@@ -52,18 +52,19 @@ elixir(function (mix) {
         './node_modules/modernizr/bin/modernizr',
         './resources/assets/js/adminlte.custom.js'
     ], 'public/adminlte/js/app.js')
-    .copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
-    .copy('node_modules/fullcalendar/dist/fullcalendar.min.js', 'public/adminlte/js')
-    .copy('node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js', 'public/adminlte/js')
-    .copy('node_modules/tooltipster/dist/js/tooltipster.bundle.min.js', 'public/adminlte/js')
-    .copy('node_modules/bootstrap/fonts', 'public/adminlte/fonts')
-    .copy('node_modules/font-awesome/fonts', 'public/adminlte/fonts')
-    .copy('node_modules/ionicons/dist/fonts', 'public/adminlte/fonts')
-    .copy('node_modules/icheck/skins/square/blue.png', 'public/adminlte/css')
-    .copy('node_modules/icheck/skins/square/blue@2x.png', 'public/adminlte/css')
-    .copy('node_modules/highcharts/css/highcharts.css', 'public/adminlte/css')
-    .copy('node_modules/fullcalendar/dist/fullcalendar.min.css', 'public/adminlte/css')
-    .copy('node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css', 'public/adminlte/css')
-    .copy('node_modules/tooltipster/dist/css/tooltipster.bundle.min.css', 'public/adminlte/css')
-    .copy('node_modules/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css', 'public/adminlte/css');
+        .copy('node_modules/admin-lte/dist/img/boxed-bg.jpg', 'public/adminlte/img')
+        .copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
+        .copy('node_modules/fullcalendar/dist/fullcalendar.min.js', 'public/adminlte/js')
+        .copy('node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js', 'public/adminlte/js')
+        .copy('node_modules/tooltipster/dist/js/tooltipster.bundle.min.js', 'public/adminlte/js')
+        .copy('node_modules/bootstrap/fonts', 'public/adminlte/fonts')
+        .copy('node_modules/font-awesome/fonts', 'public/adminlte/fonts')
+        .copy('node_modules/ionicons/dist/fonts', 'public/adminlte/fonts')
+        .copy('node_modules/icheck/skins/square/blue.png', 'public/adminlte/css')
+        .copy('node_modules/icheck/skins/square/blue@2x.png', 'public/adminlte/css')
+        .copy('node_modules/highcharts/css/highcharts.css', 'public/adminlte/css')
+        .copy('node_modules/fullcalendar/dist/fullcalendar.min.css', 'public/adminlte/css')
+        .copy('node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css', 'public/adminlte/css')
+        .copy('node_modules/tooltipster/dist/css/tooltipster.bundle.min.css', 'public/adminlte/css')
+        .copy('node_modules/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css', 'public/adminlte/css');
 });

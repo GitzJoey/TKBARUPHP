@@ -11,6 +11,7 @@ return [
             'shipping' => 'Pengiriman',
             'transactions' => 'Transaksi',
             'remarks' => 'Catatan',
+            'expenses' => '',
         ],
         'field' => [
             'supplier_type' => 'Tipe',
@@ -37,6 +38,14 @@ return [
             'total' => [
                 'body' => [
                     'total' => 'Jumlah Total',
+                ],
+            ],
+            'expense' => [
+                'header' => [
+                    'name' => '',
+                    'type' => '',
+                    'amount' => '',
+                    'remarks' => '',
                 ],
             ],
         ],
@@ -96,7 +105,6 @@ return [
                         'unit' => 'Satuan',
                         'price_unit' => 'Harga Satuan',
                         'total_price' => 'Total Harga',
-
                     ],
                 ],
                 'total' => [

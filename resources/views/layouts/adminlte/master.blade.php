@@ -179,6 +179,16 @@
                 }
             });
 
+            $('#cbx_settings_boxedLayout').click(function() {
+                if ($(this).is(':checked')) {
+                    change_layout('layout-boxed');
+                    store('layout-boxed', true)
+                } else {
+                    change_layout('fixed');
+                    store('layout-boxed', false)
+                }
+            });
+
             $(".main-sidebar").hover(function(){
                 var screenWidth = $.AdminLTE.options.screenSizes.sm - 1;
 
