@@ -160,6 +160,16 @@
                 $.AdminLTE.controlSidebar._fix($(".control-sidebar"));
             }
 
+            $('#cbx_settings_toggleSidebar').click(function() {
+                if ($(this).is(':checked')) {
+                    $("body").addClass('sidebar-collapse');
+                    store('toggle_sidebar', true);
+                } else {
+                    $("body").removeClass('sidebar-collapse');
+                    store('toggle_sidebar', false);
+                }
+            });
+
             $("#cbx_settings_toggleRightSidebarSlide").on('click', function () {
                 change_layout($(this).data('controlsidebar'));
 
