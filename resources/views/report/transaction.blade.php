@@ -20,8 +20,8 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.transaction.header.purchase_order')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputPOCode" class="col-sm-3 control-label">@lang('report.transaction.field.po_code')</label>
                                 <div class="col-sm-9">
@@ -53,10 +53,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="col-md-6">

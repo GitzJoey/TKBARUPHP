@@ -20,8 +20,8 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.admin.header.user')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputUser_User" class="col-sm-2 control-label">@lang('report.admin.field.user')</label>
                                 <div class="col-sm-10">
@@ -47,17 +47,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.admin.header.role')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputRole_Name" class="col-sm-2 control-label">@lang('report.admin.field.name')</label>
                                 <div class="col-sm-10">
@@ -71,17 +71,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.admin.header.store')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputStore_Name" class="col-sm-2 control-label">@lang('report.admin.field.name')</label>
                                 <div class="col-sm-10">
@@ -95,10 +95,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="col-md-6">
@@ -106,8 +106,8 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.admin.header.unit')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputUnit_Name" class="col-sm-2 control-label">@lang('report.admin.field.name')</label>
                                 <div class="col-sm-10">
@@ -121,17 +121,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.admin.header.phone_provider')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputPhoneProvider_Name" class="col-sm-2 control-label">@lang('report.admin.field.name')</label>
                                 <div class="col-sm-10">
@@ -145,17 +145,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.admin.header.settings')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputSettings_User" class="col-sm-2 control-label">@lang('report.admin.field.user')</label>
                                 <div class="col-sm-10">
@@ -163,10 +163,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

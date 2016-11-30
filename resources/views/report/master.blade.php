@@ -20,8 +20,8 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.master.header.customer')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputCustomer_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
                                 <div class="col-sm-9">
@@ -42,17 +42,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.master.header.supplier')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputSupplier_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
                                 <div class="col-sm-9">
@@ -73,17 +73,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.master.header.product')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputProduct_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
                                 <div class="col-sm-9">
@@ -97,17 +97,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.master.header.product_type')</h3>
                     </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                    <form action="" method="post" class="form-horizontal">
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputProductUnit_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
                                 <div class="col-sm-9">
@@ -122,10 +122,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="col-md-6">
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                     </div>
                 </div>
                 <div class="box box-info">
@@ -181,7 +181,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                     </div>
                 </div>
                 <div class="box box-info">
@@ -199,7 +199,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                     </div>
                 </div>
                 <div class="box box-info">
@@ -217,7 +217,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                     </div>
                 </div>
                 <div class="box box-info">
@@ -235,7 +235,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="button" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                     </div>
                 </div>
             </div>
