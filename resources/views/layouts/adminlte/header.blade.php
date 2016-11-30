@@ -12,7 +12,7 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li>
-                    <a class="disabled" id="timeoutCount"></a>
+                    <a class="disabled" id="timeoutCount" title="Timeout Remaining"></a>
                 </li>
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -54,16 +54,16 @@
                         <li class="user-body">
                             <div class="row">
                                 <div class="col-xs-12 text-center">
-                                    <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}">{{ Auth::user()->name }}<br><small>Owner</small></a>
+                                    <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}">{{ Auth::user()->name }}<br><small>@lang('lookup.'.Auth::user()->userDetail->type)</small></a>
                                 </div>
                             </div>
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}" class="btn btn-default btn-flat">@lang('buttons.profile_butotn')</a>
                             </div>
                             <div class="pull-right">
-                                <a href="/logout" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>
+                                <a href="/logout" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('buttons.logout_button')</a>
                                 <form id="logout-form" action="{{ url('/logout') }}" method="POST">{{ csrf_field() }}</form>
                             </div>
                         </li>

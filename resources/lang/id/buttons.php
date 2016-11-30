@@ -19,5 +19,6 @@ return [
     'send_button' => 'Kirim',
     'reject_button' => 'Tolak',
     'update_button' => 'Update',
-    'apply_button' => 'Apply'
+    'apply_button' => 'Apply',
+    'profile_button' => 'Profil'
 ];

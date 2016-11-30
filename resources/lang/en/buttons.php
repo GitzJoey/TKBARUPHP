@@ -19,5 +19,6 @@ return [
     'send_button' => 'Send',
     'reject_button' => 'Reject',
     'update_button' => 'Update',
-    'apply_button' => 'Apply'
+    'apply_button' => 'Apply',
+    'profile_button' => 'Profile'
 ];
