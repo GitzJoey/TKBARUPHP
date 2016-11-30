@@ -8,7 +8,6 @@
 
 namespace App\Services\Implementation;
 
-
 use App\Model\Customer;
 use App\Model\Item;
 use App\Model\Lookup;

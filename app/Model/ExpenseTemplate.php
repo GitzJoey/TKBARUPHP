@@ -7,6 +7,33 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Vinkla\Hashids\Facades\Hashids;
 
+/**
+ * App\Model\ExpenseTemplate
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $type
+ * @property float $amount
+ * @property string $remarks
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereAmount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class ExpenseTemplate extends Model
 {
     use SoftDeletes;

@@ -10,6 +10,8 @@ namespace App\Services\Implementation;
 
 use App\Model\Setting;
 
+use App\Services\SettingService;
+
 class SettingServiceImpl implements SettingService
 {
     public function generateDefaultSettings()

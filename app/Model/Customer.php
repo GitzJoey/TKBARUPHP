@@ -53,6 +53,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Model\Store $store
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer wherePriceLevelId($value)
+ * @property string $sign_code
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ExpenseTemplate[] $expenseTemplates
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereSignCode($value)
  */
 class Customer extends Model
 {

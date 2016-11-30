@@ -64,6 +64,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereWarehouseId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Receipt[] $receipts
+ * @property string $article_code
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Expense[] $expenses
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereArticleCode($value)
  */
 class PurchaseOrder extends Model
 {

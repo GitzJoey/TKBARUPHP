@@ -67,6 +67,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereVendorTruckingId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Deliver[] $delivers
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Payment[] $payments
+ * @property string $article_code
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Expense[] $expenses
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereArticleCode($value)
  */
 class SalesOrder extends Model
 {

@@ -54,6 +54,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereConversionValue($value)
  * @property string $license_plate
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereLicensePlate($value)
+ * @property string $article_code
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereArticleCode($value)
  */
 class Receipt extends Model
 {

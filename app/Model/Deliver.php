@@ -58,6 +58,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @property string $remarks
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereLicensePlate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereRemarks($value)
+ * @property string $article_code
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereArticleCode($value)
  */
 class Deliver extends Model
 {
