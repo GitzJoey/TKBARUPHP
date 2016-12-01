@@ -10,14 +10,19 @@ use App\Model\Payment;
 use App\Model\SalesOrder;
 use App\Model\Store;
 use App\Model\TransferPayment;
+use App\Services\Implementation\SalesOrderPaymentServiceImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class SalesOrderPaymentController extends Controller
 {
+    private $paymentService;
+
     public function __construct()
     {
+        //TODO : move this to service provider and make it as singleton
+        $this->paymentService = new SalesOrderPaymentServiceImpl();
         $this->middleware('auth');
     }
 

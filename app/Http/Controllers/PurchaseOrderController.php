@@ -8,31 +8,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Bank;
-use App\Model\CashPayment;
-use App\Model\Giro;
-use App\Model\GiroPayment;
 use App\Model\Lookup;
-use App\Model\Payment;
 use App\Model\PurchaseOrder;
-use App\Model\Store;
-use App\Model\Supplier;
-use App\Model\TransferPayment;
 use App\Model\VendorTrucking;
 use App\Model\Warehouse;
 use App\Services\PurchaseOrderService;
+use App\Services\SupplierService;
 use App\Util\POCodeGenerator;
-use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class PurchaseOrderController extends Controller
 {
     private $purchaseOrderService;
+    private $supplierService;
 
-    public function __construct(PurchaseOrderService $purchaseOrderService)
+    public function __construct(PurchaseOrderService $purchaseOrderService, SupplierService $supplierService)
     {
         $this->purchaseOrderService = $purchaseOrderService;
+        $this->supplierService = $supplierService;
         $this->middleware('auth');
     }
 
@@ -40,15 +34,14 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@create] ');
 
-        $supplierDDL = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank',
-            'products.productUnits.unit', 'products.type', 'expenseTemplates')->get();
+        $supplierDDL = $this->supplierService->getSuppliersForCreatePO();
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code']);
         $supplierTypeDDL = Lookup::where('category', '=', 'SUPPLIERTYPE')->get(['description', 'code']);
-        $poCode = POCodeGenerator::generatePOCode();
         $poStatusDraft = Lookup::where('code', '=', 'POSTATUS.D')->get(['description', 'code']);
         $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $poCode = POCodeGenerator::generatePOCode();
 
         return view('purchase_order.create', compact('supplierDDL', 'warehouseDDL', 'vendorTruckingDDL',
             'supplierTypeDDL', 'poTypeDDL', 'unitDDL', 'poStatusDraft', 'poCode', 'expenseTypes'));
@@ -80,7 +73,7 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@index]');
 
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])
-            ->paginate(2);
+            ->paginate(10);
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
         return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL'));
@@ -90,9 +83,7 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@revise]');
 
-        $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
-            'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type',
-            'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
+        $currentPo = $this->purchaseOrderService->getPOForRevise($id);
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);

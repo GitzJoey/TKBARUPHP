@@ -8,18 +8,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Bank;
-use App\Model\CashPayment;
-use App\Model\Customer;
-use App\Model\Giro;
-use App\Model\GiroPayment;
 use App\Model\Lookup;
-use App\Model\Payment;
 use App\Model\Product;
 use App\Model\SalesOrder;
-use App\Model\Stock;
-use App\Model\Store;
-use App\Model\TransferPayment;
 use App\Model\VendorTrucking;
 use App\Model\Warehouse;
 use App\Services\SalesOrderService;
@@ -28,7 +19,6 @@ use App\Util\SOCodeGenerator;
 
 use App;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -50,15 +40,15 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@create');
 
+        $stocksDDL = $this->stockService->getStocksForSO();
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $productDDL = Product::with('productUnits.unit')->get();
-        $stocksDDL = $this->stockService->getStocksForSO();
         $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get(['code', 'description']);
         $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get(['code', 'description']);
-        $soCode = SOCodeGenerator::generateSOCode();
         $soStatusDraft = Lookup::where('code', '=', 'SOSTATUS.D')->get(['description', 'code']);
         $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $soCode = SOCodeGenerator::generateSOCode();
 
         $userSOs = session('userSOs', collect([]));
 
@@ -126,7 +116,8 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@index');
 
-        $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])->get();
+        $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])
+            ->paginate(10);
         $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
 
         return view('sales_order.index', compact('salesOrders', 'soStatusDDL'));
@@ -136,8 +127,7 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@revise');
 
-        $currentSo = SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
-            'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse')->find($id);
+        $currentSo = $this->salesOrderService->getSOForRevise($id);
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $productDDL = Product::with('productUnits.unit')->get();

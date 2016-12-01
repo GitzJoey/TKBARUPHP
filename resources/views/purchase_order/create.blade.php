@@ -11,9 +11,11 @@
 @section('page_title')
     <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('purchase_order.create.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('purchase_order.create.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('create_purchase_order') !!}
 @endsection
@@ -29,8 +31,10 @@
             </ul>
         </div>
     @endif
+
     <div ng-app="poModule" ng-controller="poController" ng-cloak>
-        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" data-parsley-validate="parsley">
+        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post"
+              data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-10">
@@ -69,7 +73,8 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-2">
-                                                <button id="supplierDetailButton" type="button" class="btn btn-primary btn-sm"
+                                                <button id="supplierDetailButton" type="button"
+                                                        class="btn btn-primary btn-sm"
                                                         data-toggle="modal" data-target="#supplierDetailModal"><span
                                                             class="fa fa-info-circle fa-lg"></span></button>
                                             </div>
@@ -132,7 +137,8 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control" id="inputPoDate" name="po_created"
+                                                <input type="text" class="form-control" id="inputPoDate"
+                                                       name="po_created"
                                                        ng-model="po.poCreated" data-parsley-required="true">
                                             </div>
                                         </div>
@@ -156,7 +162,8 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label for="inputShippingDate" class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
+                                        <label for="inputShippingDate"
+                                               class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
                                         <div class="col-sm-5">
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
@@ -232,7 +239,8 @@
                                         </div>
                                         <div class="col-md-1">
                                             <button type="button" class="btn btn-primary btn-md"
-                                                    ng-click="insertItem(po.product)"><span class="fa fa-plus"/></button>
+                                                    ng-click="insertItem(po.product)"><span class="fa fa-plus"/>
+                                            </button>
                                         </div>
                                     </div>
                                     <hr>
@@ -256,10 +264,12 @@
                                                 <tbody>
                                                 <tr ng-repeat="item in po.items">
                                                     <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                                    <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
+                                                    <input type="hidden" name="base_unit_id[]"
+                                                           ng-value="item.base_unit.unit.id">
                                                     <td class="valign-middle">@{{ item.product.name }}</td>
                                                     <td>
-                                                        <input type="text" class="form-control text-right" name="quantity[]"
+                                                        <input type="text" class="form-control text-right"
+                                                               name="quantity[]"
                                                                ng-model="item.quantity" data-parsley-required="true"
                                                                data-parsley-type="number">
                                                     </td>
@@ -273,13 +283,15 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control text-right" name="price[]"
+                                                        <input type="text" class="form-control text-right"
+                                                               name="price[]"
                                                                ng-model="item.price" data-parsley-required="true"
                                                                data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
                                                     </td>
                                                     <td class="text-center">
                                                         <button type="button" class="btn btn-danger btn-md"
-                                                                ng-click="removeItem($index)"><span class="fa fa-minus"/>
+                                                                ng-click="removeItem($index)"><span
+                                                                    class="fa fa-minus"></span>
                                                         </button>
                                                     </td>
                                                     <td class="text-right valign-middle">
@@ -322,45 +334,47 @@
                                         <div class="col-md-12">
                                             <table id="expensesListTable" class="table table-bordered table-hover">
                                                 <thead>
-                                                    <tr>
-                                                        <th width="30%">@lang('purchase_order.create.table.expense.header.name')</th>
-                                                        <th width="20%"
-                                                            class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
-                                                        <th width="25%"
-                                                            class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
-                                                        <th width="5%">&nbsp;</th>
-                                                        <th width="20%"
-                                                            class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
-                                                    </tr>
+                                                <tr>
+                                                    <th width="30%">@lang('purchase_order.create.table.expense.header.name')</th>
+                                                    <th width="20%"
+                                                        class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
+                                                    <th width="25%"
+                                                        class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
+                                                    <th width="5%">&nbsp;</th>
+                                                    <th width="20%"
+                                                        class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="expense in po.expenses">
-                                                        <td>
-                                                            <input name="expense_name[]" type="text" class="form-control"
-                                                                   ng-model="expense.name" data-parsley-required="true">
-                                                        </td>
-                                                        <td>
-                                                            <select name="expense_type[]" data-parsley-required="true"
-                                                                    class="form-control" ng-model="expense.type"
-                                                                    ng-options="expenseType as expenseType.description for expenseType in expenseTypes track by expenseType.code">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <input name="expense_remarks[]" type="text" class="form-control"
-                                                                   ng-model="expense.remarks"/>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <button type="button" class="btn btn-danger btn-md"
-                                                                    ng-click="removeExpense($index)"><span class="fa fa-minus"/>
-                                                            </button>
-                                                        </td>
-                                                        <td>
-                                                            <input name="expense_amount[]" type="text" class="form-control text-right"
-                                                                   ng-model="expense.amount" data-parsley-required="true"
-                                                                   data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
-                                                        </td>
-                                                    </tr>
+                                                <tr ng-repeat="expense in po.expenses">
+                                                    <td>
+                                                        <input name="expense_name[]" type="text" class="form-control"
+                                                               ng-model="expense.name" data-parsley-required="true">
+                                                    </td>
+                                                    <td>
+                                                        <select name="expense_type[]" data-parsley-required="true"
+                                                                class="form-control" ng-model="expense.type"
+                                                                ng-options="expenseType as expenseType.description for expenseType in expenseTypes track by expenseType.code">
+                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input name="expense_remarks[]" type="text" class="form-control"
+                                                               ng-model="expense.remarks"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                ng-click="removeExpense($index)"><span
+                                                                    class="fa fa-minus"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <input name="expense_amount[]" type="text"
+                                                               class="form-control text-right"
+                                                               ng-model="expense.amount" data-parsley-required="true"
+                                                               data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number/>
+                                                    </td>
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -423,7 +437,9 @@
                 <div class="col-md-8 col-offset-md-4">
                     <div class="btn-toolbar">
                         <button id="submitAndCreateButton" type="submit"
-                                class="btn btn-primary pull-right" name="submitcreate" value="create_new">@lang('buttons.submit_button')&nbsp;&amp;&nbsp;@lang('buttons.create_new_button')</button>
+                                class="btn btn-primary pull-right" name="submitcreate"
+                                value="create_new">@lang('buttons.submit_button')
+                            &nbsp;&amp;&nbsp;@lang('buttons.create_new_button')</button>
                         <button id="submitButton" type="submit" name="submit"
                                 class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
                         <a id="printButton" href="#" target="_blank"
@@ -470,7 +486,7 @@
             $scope.expenseTotal = function () {
                 var result = 0;
                 angular.forEach($scope.po.expenses, function (expense, key) {
-                    if(expense.type.code === 'EXPENSETYPE.ADD')
+                    if (expense.type.code === 'EXPENSETYPE.ADD')
                         result += parseInt(numeral().unformat(expense.amount));
                     else
                         result -= parseInt(numeral().unformat(expense.amount));
@@ -482,7 +498,7 @@
                 $scope.po.items.push({
                     product: product,
                     selected_unit: {
-                      conversion_value: 1
+                        conversion_value: 1
                     },
                     base_unit: _.find(product.product_units, isBase),
                     quantity: 0,
@@ -495,9 +511,9 @@
             };
 
             $scope.insertDefaultExpense = function (supplier) {
-                if(supplier){
+                if (supplier) {
                     $scope.po.expenses = [];
-                    for(var i = 0; i < supplier.expense_templates.length; i++){
+                    for (var i = 0; i < supplier.expense_templates.length; i++) {
                         $scope.po.expenses.push({
                             name: supplier.expense_templates[i].name,
                             type: {
@@ -508,7 +524,7 @@
                         });
                     }
                 }
-                else{
+                else {
                     $scope.po.expenses = [];
                 }
             };

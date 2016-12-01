@@ -48,7 +48,7 @@ class Expense extends Model
     protected $table = 'expenses';
 
     protected $fillable = [
-        'name', 'type', 'amount', 'remarks'
+        'name', 'type', 'amount', 'remarks', 'internal_expense'
     ];
 
     protected $hidden = [

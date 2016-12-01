@@ -387,7 +387,7 @@
                                                 <td>
                                                     <input name="expense_amount[]" type="text" class="form-control text-right"
                                                            ng-model="expense.amount" data-parsley-required="true"
-                                                           data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
+                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number/>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -530,7 +530,7 @@
             $scope.expenseTotal = function () {
                 var result = 0;
                 angular.forEach($scope.po.expenses, function (expense, key) {
-                    if(expense.type === 'EXPENSETYPE.ADD')
+                    if(expense.type.code === 'EXPENSETYPE.ADD')
                         result += parseInt(numeral().unformat(expense.amount));
                     else
                         result -= parseInt(numeral().unformat(expense.amount));

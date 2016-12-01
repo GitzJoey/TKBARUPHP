@@ -8,9 +8,9 @@ use App\Model\Lookup;
 use App\Model\ProductUnit;
 use App\Model\PurchaseOrder;
 use App\Services\PurchaseOrderService;
+use Doctrine\Common\Collections\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Created by PhpStorm.
@@ -85,6 +85,19 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
         }
 
         return $po;
+    }
+
+    /**
+     * Get purchase order to be revised.
+     *
+     * @param int $id id of purchase order to be revised.
+     * @return PurchaseOrder purchase order to be revised.
+     */
+    public function getPOForRevise($id)
+    {
+        return PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
+            'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type',
+            'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
     }
 
     /**
@@ -176,5 +189,43 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
         $po = PurchaseOrder::find($id);
         $po->status = 'POSTATUS.RJT';
         $po->save();
+    }
+
+    /**
+     * Get purchase order which items want to be received.
+     *
+     * @param int $poId id of purchase order which items want to be received.
+     * @return PurchaseOrder purchase order which items want to be received.
+     */
+    public function getPOForReceipt($poId)
+    {
+        return PurchaseOrder::with('items.product.productUnits.unit')->find($poId);
+    }
+
+    /**
+     * Get all purchase order which belongs to warehouse with given id.
+     *
+     * @param int $warehouseId id of warehouse owning the purchase order(s).
+     * @return Collection purchase orders of given warehouse.
+     */
+    public function getWarehousePO($warehouseId)
+    {
+        return PurchaseOrder::with('supplier')
+            ->where('status', '=', 'POSTATUS.WA')
+            ->where('warehouse_id', '=', $warehouseId)
+            ->get();
+    }
+
+    /**
+     * Get a purchase order with it's details related to payment.
+     *
+     * @param int $poId id of purchase order.
+     * @return PurchaseOrder
+     */
+    public function getPOForPayment($poId)
+    {
+        return PurchaseOrder::with('payments', 'items.product.productUnits.unit',
+            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
+            'supplier.products.type', 'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($poId);
     }
 }

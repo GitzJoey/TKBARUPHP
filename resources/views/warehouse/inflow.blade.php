@@ -69,6 +69,7 @@
         </div>
     </div>
 @endsection
+
 @section('custom_js')
     <script type="application/javascript">
         var app = angular.module('warehouseInflowModule', []);

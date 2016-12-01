@@ -354,7 +354,7 @@
                                                         <div class="box-header with-border">
                                                             <h3 class="box-title">@lang('sales_order.create.box.expenses')</h3>
                                                             <button type="button" class="btn btn-primary btn-xs pull-right"
-                                                                    ng-click="insertExpense($index)"><span class="fa fa-plus fa-fw"/></button>
+                                                                    ng-click="insertExpense($index)"><span class="fa fa-plus fa-fw"></span></button>
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="row">
@@ -397,7 +397,7 @@
                                                                             <td>
                                                                                 <input name="so_@{{ $parent.$index }}_expense_amount[]" type="text" class="form-control text-right"
                                                                                        ng-model="expense.amount" data-parsley-required="true"
-                                                                                       data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
+                                                                                       data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number/>
                                                                             </td>
                                                                         </tr>
                                                                         </tbody>
@@ -572,7 +572,7 @@
             };
 
             $scope.insertStock = function (index, stock) {
-                var stock_price = stock.today_prices.find(function(price){
+                var stock_price = _.find(stock.today_prices, function (price) {
                     return price.price_level_id === $scope.SOs[index].customer.price_level_id;
                 });
 

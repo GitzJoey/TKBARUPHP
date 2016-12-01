@@ -10,14 +10,23 @@ use App\Model\Payment;
 use App\Model\PurchaseOrder;
 use App\Model\Store;
 use App\Model\TransferPayment;
+use App\Services\Implementation\PurchaseOrderPaymentServiceImpl;
+use App\Services\PurchaseOrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class PurchaseOrderPaymentController extends Controller
 {
-    public function __construct()
+
+    private $purchaseOrderService;
+    private $paymentService;
+
+    public function __construct(PurchaseOrderService $purchaseOrderService)
     {
+        $this->purchaseOrderService = $purchaseOrderService;
+        //TODO : move this to service provider and make it as singleton
+        $this->paymentService = new PurchaseOrderPaymentServiceImpl();
         $this->middleware('auth');
     }
 
@@ -25,16 +34,14 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@paymentIndex]');
 
-        $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')->get();
+        $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')->paginate(10);
         $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
 
         return view('purchase_order.payment.payment_index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
     public function paymentHistory($id){
-        $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
-            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
-            'supplier.products.type', 'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
+        $currentPo = $currentPo = $this->purchaseOrderService->getPOForPayment($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
@@ -48,9 +55,7 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@createCashPayment]');
 
-        $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
-            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
-            'supplier.products.type', 'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
+        $currentPo = $this->purchaseOrderService->getPOForPayment($id);
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
@@ -92,21 +97,18 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@createTransferPayment]');
 
+        $currentPo = $this->purchaseOrderService->getPOForPayment($id);
         $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
-        $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
-            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
-            'supplier.products.type', 'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $storeBankAccounts = $currentStore->bankAccounts;
         $supplierBankAccounts = is_null($currentPo->supplier) ? collect([]) : $currentPo->supplier->bankAccounts;
+        $paymentType = 'PAYMENTTYPE.T';
+        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
-        $paymentType = 'PAYMENTTYPE.T';
         $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
 
-        return view('purchase_order.payment.transfer_payment',
-            compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'storeBankAccounts',
-                'supplierBankAccounts', 'expenseTypes'));
+        return view('purchase_order.payment.transfer_payment', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL',
+            'paymentType', 'storeBankAccounts', 'supplierBankAccounts', 'expenseTypes'));
     }
 
     public function saveTransferPayment(Request $request, $id)
@@ -141,9 +143,7 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@createGiroPayment]');
 
-        $currentPo = PurchaseOrder::with('payments', 'items.product.productUnits.unit',
-            'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
-            'supplier.products.type', 'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
+        $currentPo = $currentPo = $this->purchaseOrderService->getPOForPayment($id);
         $availableGiros = Giro::with('bank')->where('status', '=', 'GIROSTATUS.N')->get();
         $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
@@ -151,9 +151,8 @@ class PurchaseOrderPaymentController extends Controller
         $paymentType = 'PAYMENTTYPE.G';
         $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
 
-        return view('purchase_order.payment.giro_payment',
-            compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'availableGiros', 'bankDDL',
-                'expenseTypes'));
+        return view('purchase_order.payment.giro_payment', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL',
+            'paymentType', 'availableGiros', 'bankDDL', 'expenseTypes'));
     }
 
     public function saveGiroPayment(Request $request, $id)

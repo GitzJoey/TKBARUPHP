@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-code-fork fa-rotate-180 fa-fw"></span>&nbsp;@lang('purchase_order.revise.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('purchase_order.revise.index.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('purchase_order') !!}
 @endsection
@@ -52,13 +54,16 @@
                         <td class="text-center">{{ $po->shipping_date }}</td>
                         <td class="text-center">{{ $poStatusDDL[$po->status] }}</td>
                         <td class="text-center" width="10%">
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.po.revise', $po->hId()) }}" title="Revise"><span class="fa fa-pencil fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.po.revise', $po->hId()) }}"
+                               title="Revise"><span class="fa fa-pencil fa-fw"></span></a>
                             @if($po->status == 'POSTATUS.WA')
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.po.reject', $po->hId()], 'style'=>'display:inline'])  !!}
-                                <button type="submit" class="btn btn-xs btn-danger" title="Reject" id="delete_button"><span class="fa fa-close fa-fw"></span></button>
-                            {!! Form::close() !!}
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.po.reject', $po->hId()], 'style'=>'display:inline'])  !!}
+                                <button type="submit" class="btn btn-xs btn-danger" title="Reject" id="delete_button">
+                                    <span class="fa fa-close fa-fw"></span></button>
+                                {!! Form::close() !!}
                             @else
-                                <button type="submit" class="btn btn-xs btn-danger" title="Reject" id="delete_button" disabled><span class="fa fa-close fa-fw"></span></button>
+                                <button type="submit" class="btn btn-xs btn-danger" title="Reject" id="delete_button"
+                                        disabled><span class="fa fa-close fa-fw"></span></button>
                             @endif
                         </td>
                     </tr>
@@ -71,20 +76,22 @@
         </div>
     </div>
 @endsection
+
 @section('custom_js')
     <script type="application/javascript">
-        $('#delete_button').on('click',function(e){
+        $('#delete_button').on('click', function (e) {
             e.preventDefault();
             var form = $(this).parents('form');
             swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this purchase order.",
+                title: "@lang('messages.alert.delete.purchase_order.title')",
+                text: "@lang('messages.alert.delete.purchase_order.text')",
                 type: "error",
                 showCancelButton: true,
                 confirmButtonClass: "btn-danger",
-                confirmButtonText: "Yes, reject it!",
+                confirmButtonText: "@lang('buttons.reject_button')",
+                cancelButtonText: "@lang('buttons.cancel_button')",
                 closeOnConfirm: false
-            }, function(isConfirm){
+            }, function (isConfirm) {
                 if (isConfirm) form.submit();
             });
         });

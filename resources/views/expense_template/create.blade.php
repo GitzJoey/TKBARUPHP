@@ -70,6 +70,11 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <label class="checkbox-inline"><input type="checkbox" name="internal_expense" value="">&nbsp;@lang('expense_template.field.internal_expense')</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-8">
                             <a href="{{ route('db.master.expense_template') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
@@ -85,6 +90,13 @@
 
 @section('custom_js')
     <script type="application/javascript">
+        $(function () {
+            $('input[type="checkbox"], input[type="radio"]').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue'
+            });
+        });
+
         var app = angular.module('expenseTemplateModule', ['fcsa-number']);
         app.controller("expenseTemplateController", ['$scope', function ($scope) {
         }]);

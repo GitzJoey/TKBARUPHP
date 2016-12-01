@@ -192,7 +192,7 @@
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
                                                    ng-model="item.price" data-parsley-required="true"
-                                                   data-parsley-type="number"
+                                                   data-parsley-type="number" fcsa-number
                                                    readonly>
                                         </td>
                                         <td class="text-right valign-middle">
@@ -247,20 +247,23 @@
                                     <tbody>
                                     <tr ng-repeat="expense in po.expenses">
                                         <td>
-                                            <input name="expense_name[]" type="text" class="form-control" ng-model="expense.name"
-                                                   readonly />
+                                            <input name="expense_name[]" type="text" class="form-control"
+                                                   ng-model="expense.name"
+                                                   readonly>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" value="@{{ expense.type.description }}" readonly />
+                                            <input type="text" class="form-control"
+                                                   value="@{{ expense.type.description }}" readonly>
                                         </td>
                                         <td>
-                                            <input name="expense_remarks[]" type="text" class="form-control" ng-model="expense.remarks"
-                                                   readonly />
+                                            <input name="expense_remarks[]" type="text" class="form-control"
+                                                   ng-model="expense.remarks"
+                                                   readonly>
                                         </td>
                                         <td></td>
                                         <td>
                                             <input name="expense_amount[]" type="text" class="form-control text-right"
-                                                   ng-model="expense.amount" fcsa-number readonly/>
+                                                   ng-model="expense.amount" fcsa-number readonly>
                                         </td>
                                     </tr>
                                     </tbody>

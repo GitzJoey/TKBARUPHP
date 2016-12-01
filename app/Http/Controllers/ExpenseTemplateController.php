@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\ExpenseTemplate;
 use App\Model\Lookup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ExpenseTemplateController extends Controller
 {
@@ -29,11 +30,14 @@ class ExpenseTemplateController extends Controller
 
     public function store(Request $request)
     {
+        Log::info($request);
+
         ExpenseTemplate::create([
             'name' => $request->input('name'),
             'type' => $request->input('type'),
             'amount' => floatval(str_replace(',', '', $request->input('amount'))),
             'remarks' => $request->input('remarks'),
+            'internal_expense' => is_null($request->input('internal_expense')) ? false : true
         ]);
 
         return redirect(route('db.master.expense_template'));

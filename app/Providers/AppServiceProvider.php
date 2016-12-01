@@ -2,12 +2,19 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\PurchaseOrderPaymentController;
+use App\Services\Implementation\InflowServiceImpl;
+use App\Services\Implementation\PurchaseOrderPaymentServiceImpl;
 use App\Services\Implementation\PurchaseOrderServiceImpl;
 use App\Services\Implementation\SalesOrderServiceImpl;
 use App\Services\Implementation\StockServiceImpl;
+use App\Services\Implementation\SupplierServiceImpl;
+use App\Services\InflowService;
+use App\Services\PaymentService;
 use App\Services\PurchaseOrderService;
 use App\Services\SalesOrderService;
 use App\Services\StockService;
+use App\Services\SupplierService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -42,6 +49,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(StockService::class, function (){
             return new StockServiceImpl();
         });
+
+        $this->app->singleton(SupplierService::class, function (){
+            return new SupplierServiceImpl();
+        });
+
+        $this->app->singleton(InflowService::class, function (){
+            return new InflowServiceImpl();
+        });
     }
 
     /**
@@ -54,7 +69,10 @@ class AppServiceProvider extends ServiceProvider
         return [
             'App\Services\PurchaseOrderService',
             'App\Services\SalesOrderService',
-            'App\Services\StockService'
+            'App\Services\StockService',
+            'App\Services\SupplierService',
+            'App\Services\InflowService',
+            'App\Services\PaymentService'
         ];
     }
 }

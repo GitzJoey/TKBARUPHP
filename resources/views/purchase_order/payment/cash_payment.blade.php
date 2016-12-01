@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-money fa-fw"></span>&nbsp;@lang('purchase_order.payment.cash.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('purchase_order.payment.cash.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('purchase_order_payment_cash', $currentPo->hId()) !!}
 @endsection

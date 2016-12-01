@@ -112,6 +112,18 @@ class SalesOrderServiceImpl implements SalesOrderService
     }
 
     /**
+     * Get sales order to be revised.
+     *
+     * @param int $id id of sales order to be revised.
+     * @return SalesOrder sales order to be revised.
+     */
+    public function getSOForRevise($id)
+    {
+        return SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
+            'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse')->find($id);
+    }
+
+    /**
      * Revise(modify) a sales order. If the sales order is still waiting for arrival, it's warehouse,
      * vendor trucking, shipping date and items can be changed. But, if it is already waiting for payment,
      * only it's items price can be changed. The revised(modified) sales order will be returned.
@@ -204,7 +216,7 @@ class SalesOrderServiceImpl implements SalesOrderService
     /**
      * Store sales orders sent from the request to user session as a collection.
      * @param Request $request request which contains values for sales orders
-     * @return Collection
+     * @return void
      */
     public function storeToSession(Request $request){
         $SOs = [];

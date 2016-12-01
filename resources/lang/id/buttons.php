@@ -20,6 +20,5 @@ return [
     'reject_button' => 'Tolak',
     'update_button' => 'Update',
     'apply_button' => 'Apply',
-    'profile_button' => 'Profil',
     'close_button' => 'Tutup',
 ];

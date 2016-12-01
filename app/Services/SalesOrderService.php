@@ -44,6 +44,14 @@ interface SalesOrderService
     public function cancelSO($index);
 
     /**
+     * Get sales order to be revised.
+     *
+     * @param int $id id of sales order to be revised.
+     * @return SalesOrder sales order to be revised.
+     */
+    public function getSOForRevise($id);
+
+    /**
      * Revise(modify) a sales order. If the sales order is still waiting for arrival, it's warehouse,
      * vendor trucking, shipping date and items can be changed. But, if it is already waiting for payment,
      * only it's items price can be changed. The revised(modified) sales order will be returned.
