@@ -190,7 +190,7 @@
                         code: currentPo.expenses[i].type,
                         description: type ? type.description : ''
                     },
-                    amount: currentPo.expenses[i].amount,
+                    amount: parseFloat(currentPo.expenses[i].amount).toFixed(0),
                     remarks: currentPo.expenses[i].remarks
                 });
             }

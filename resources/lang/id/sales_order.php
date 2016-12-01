@@ -17,6 +17,7 @@ return [
             'remarks' => 'Catatan',
             'customer' => 'Pelanggan',
             'purchase_order_detail' => '',
+            'expenses' => '',
         ],
         'field' => [
             'customer_type' => 'Tipe',
@@ -43,6 +44,14 @@ return [
             'total' => [
                 'body' => [
                     'total' => 'Jumlah Total',
+                ],
+            ],
+            'expense' => [
+                'header' => [
+                    'name' => '',
+                    'type' => '',
+                    'remarks' => '',
+                    'amount' => '',
                 ],
             ],
         ],

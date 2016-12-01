@@ -18,6 +18,7 @@ return [
                 'bank_lists' => 'Bank Account Lists',
                 'bank_inputs' => 'Create New Bank Account',
             ],
+            'product' => '',
         ],
         'table_phone' => [
             'header' => [
@@ -48,6 +49,15 @@ return [
                     'account_number' => 'Account Number',
                     'remarks' => 'Remarks',
                 ],
+            ],
+        ],
+        'table_prod' => [
+            'header' => [
+                'type' => '',
+                'name' => '',
+                'short_code' => '',
+                'description' => '',
+                'remarks' => '',
             ],
         ],
     ],

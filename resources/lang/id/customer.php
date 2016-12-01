@@ -18,6 +18,7 @@ return [
                 'bank_lists' => 'Daftar Akun Bank',
                 'bank_inputs' => 'Tambah Akun Bank',
             ],
+            'product' => '',
         ],
         'table_phone' => [
             'header' => [
@@ -48,6 +49,15 @@ return [
                 'type' => 'Tipe',
                 'amount' => 'Nilai',
                 'remarks' => 'Catatan',
+            ],
+        ],
+        'table_prod' => [
+            'header' => [
+                'type' => '',
+                'name' => '',
+                'short_code' => '',
+                'description' => '',
+                'remarks' => '',
             ],
         ],
     ],

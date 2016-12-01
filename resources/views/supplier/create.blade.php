@@ -37,8 +37,8 @@
                             <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.create.tab.pic')&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.create.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_product" data-toggle="tab">@lang('supplier.create.tab.product')</a></li>
-                            <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.create.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_expenses" data-toggle="tab">@lang('supplier.create.tab.expenses')&nbsp;<span id="expensesTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.create.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_supplier">
@@ -234,14 +234,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="tab-pane" id="tab_settings">
-                                <div class="form-group">
-                                    <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
-                                    </div>
-                                </div>
-                            </div>
                             <div class="tab-pane" id="tab_expenses">
                                 <div class="form-group">
                                     <div class="col-md-11">
@@ -288,6 +280,14 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="tab-pane" id="tab_settings">
+                                <div class="form-group">
+                                    <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
+                                    <div class="col-sm-10">
+                                        <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

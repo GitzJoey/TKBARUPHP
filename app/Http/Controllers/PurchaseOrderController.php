@@ -92,7 +92,7 @@ class PurchaseOrderController extends Controller
 
         $currentPo = PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
             'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type',
-            'vendorTrucking', 'warehouse', 'expenses')->find($id);
+            'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);

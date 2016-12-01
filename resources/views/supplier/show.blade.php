@@ -7,17 +7,9 @@
 @section('page_title')
     <span class="fa fa-building-o fa-fw"></span>&nbsp;@lang('supplier.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('supplier.show.page_title_desc')
-@endsection
-
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -45,8 +37,8 @@
                         <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.show.tab.pic')</a></li>
                         <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.show.tab.bank_account')</a></li>
                         <li><a href="#tab_product" data-toggle="tab">@lang('supplier.show.tab.product')</a></li>
-                        <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.show.tab.settings')</a></li>
                         <li><a href="#tab_expenses" data-toggle="tab">@lang('supplier.show.tab.expenses')</a></li>
+                        <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.show.tab.settings')</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_customer">
@@ -195,16 +187,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="tab-pane" id="tab_settings">
-                            <div class="form-group">
-                                <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
-                                <div class="col-sm-10">
-                                    <label id="inputPaymentDueDay" class="control-label">
-                                        <span class="control-label-normal">{{ $supplier->payment_due_day }}</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
                         <div class="tab-pane" id="tab_expenses">
                             <table class="table table-bordered">
                                 <thead>
@@ -234,6 +216,16 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="tab-pane" id="tab_settings">
+                            <div class="form-group">
+                                <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
+                                <div class="col-sm-10">
+                                    <label id="inputPaymentDueDay" class="control-label">
+                                        <span class="control-label-normal">{{ $supplier->payment_due_day }}</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

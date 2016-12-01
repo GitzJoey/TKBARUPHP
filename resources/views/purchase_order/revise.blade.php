@@ -95,14 +95,14 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputPoCode"
-                                           class="col-sm-2 control-label">@lang('purchase_order.revise.po_code')</label>
+                                           class="col-sm-2 control-label">@lang('purchase_order.revise.field.po_code')</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" readonly value="{{ $currentPo->code }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPoType"
-                                           class="col-sm-2 control-label">@lang('purchase_order.revise.po_type')</label>
+                                           class="col-sm-2 control-label">@lang('purchase_order.revise.field.po_type')</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" readonly
                                                value="@lang('lookup.'.$currentPo->po_type)">
@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPoDate"
-                                           class="col-sm-2 control-label">@lang('purchase_order.revise.po_date')</label>
+                                           class="col-sm-2 control-label">@lang('purchase_order.revise.field.po_date')</label>
                                     <div class="col-sm-10">
                                         <div class="input-group date">
                                             <div class="input-group-addon">
@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPoStatus"
-                                           class="col-sm-2 control-label">@lang('purchase_order.revise.po_status')</label>
+                                           class="col-sm-2 control-label">@lang('purchase_order.revise.field.po_status')</label>
                                     <div class="col-sm-10">
                                         <label class="control-label control-label-normal">@lang('lookup.'.$currentPo->status)</label>
                                     </div>
@@ -210,7 +210,7 @@
                     <div class="box-header with-border">
                     </div>
                     <div class="box-body">
-                        @for ($i = 0; $i < 35; $i++)
+                        @for ($i = 0; $i < 23; $i++)
                             <br/>
                         @endfor
                     </div>
@@ -420,7 +420,7 @@
                         <h3 class="box-title">@lang('purchase_order.revise.box.transaction_summary')</h3>
                     </div>
                     <div class="box-body">
-                        @for ($i = 0; $i < 40; $i++)
+                        @for ($i = 0; $i < 25; $i++)
                             <br/>
                         @endfor
                     </div>
