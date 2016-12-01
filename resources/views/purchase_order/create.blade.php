@@ -199,6 +199,21 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                        </div>
+                        <div class="box-body">
+                            @for ($i = 0; $i < 25; $i++)
+                                <br/>
+                            @endfor
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="box box-info">
@@ -299,8 +314,8 @@
                             <div class="box box-info">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">@lang('purchase_order.create.box.expenses')</h3>
-                                    <button type="button" class="btn btn-primary btn-md pull-right"
-                                            ng-click="insertExpense()"><span class="fa fa-plus"/></button>
+                                    <button type="button" class="btn btn-primary btn-xs pull-right"
+                                            ng-click="insertExpense()"><span class="fa fa-plus fa-fw"/></button>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
@@ -308,14 +323,14 @@
                                             <table id="expensesListTable" class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th width="22%">@lang('purchase_order.create.table.expense.header.name')</th>
-                                                        <th width="22%"
+                                                        <th width="30%">@lang('purchase_order.create.table.expense.header.name')</th>
+                                                        <th width="20%"
                                                             class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
-                                                        <th width="22%"
-                                                            class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
-                                                        <th width="22%"
+                                                        <th width="25%"
                                                             class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
-                                                        <th width="12%">&nbsp;</th>
+                                                        <th width="5%">&nbsp;</th>
+                                                        <th width="20%"
+                                                            class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -332,18 +347,18 @@
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <input name="expense_amount[]" type="text" class="form-control text-right"
-                                                                   ng-model="expense.amount" data-parsley-required="true"
-                                                                   data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
-                                                        </td>
-                                                        <td>
                                                             <input name="expense_remarks[]" type="text" class="form-control"
-                                                                   ng-model="expense.remarks" data-parsley-required="true"/>
+                                                                   ng-model="expense.remarks"/>
                                                         </td>
                                                         <td class="text-center">
                                                             <button type="button" class="btn btn-danger btn-md"
                                                                     ng-click="removeExpense($index)"><span class="fa fa-minus"/>
                                                             </button>
+                                                        </td>
+                                                        <td>
+                                                            <input name="expense_amount[]" type="text" class="form-control text-right"
+                                                                   ng-model="expense.amount" data-parsley-required="true"
+                                                                   data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -370,12 +385,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="box box-info">
                         <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.create.box.transaction_summary')</h3>
                         </div>
                         <div class="box-body">
-                            @for ($i = 0; $i < 40; $i++)
+                            @for ($i = 0; $i < 25; $i++)
                                 <br/>
                             @endfor
                         </div>

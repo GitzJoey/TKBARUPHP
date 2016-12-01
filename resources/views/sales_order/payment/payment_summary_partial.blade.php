@@ -9,8 +9,8 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="inputCustomerType"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.customer_type')</label>
-                            <div class="col-sm-5">
+                                   class="col-sm-4 control-label">@lang('sales_order.payment.cash.field.customer_type')</label>
+                            <div class="col-sm-6">
                                 <input type="text" class="form-control" readonly
                                        value="@lang('lookup.'.$currentSo->customer_type)">
                             </div>
@@ -18,8 +18,8 @@
                         @if($currentSo->customer_type == 'CUSTOMERTYPE.R')
                             <div class="form-group">
                                 <label for="inputCustomerId"
-                                       class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.customer_name')</label>
-                                <div class="col-sm-8">
+                                       class="col-sm-4 control-label">@lang('sales_order.payment.cash.field.customer_name')</label>
+                                <div class="col-sm-6">
                                     <input type="text" class="form-control" readonly
                                            value="{{ $currentSo->customer->name }}">
                                 </div>
@@ -32,16 +32,16 @@
                         @else
                             <div class="form-group">
                                 <label for="inputCustomerName"
-                                       class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.customer_name')</label>
-                                <div class="col-sm-10">
+                                       class="col-sm-4 control-label">@lang('sales_order.payment.cash.field.customer_name')</label>
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control" readonly
                                            value="{{ $currentSo->walk_in_cust }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputCustomerDetails"
-                                       class="col-sm-2 control-label">@lang('sales_order.payment.cash.field.customer_details')</label>
-                                <div class="col-sm-10">
+                                       class="col-sm-4 control-label">@lang('sales_order.payment.cash.field.customer_details')</label>
+                                <div class="col-sm-8">
                                 <textarea class="form-control" rows="5" readonly>{{ $currentSo->walk_in_cust_detail }}
                                 </textarea>
                                 </div>
@@ -58,23 +58,23 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label for="inputSoCode"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.so_code')</label>
-                            <div class="col-sm-10">
+                                   class="col-sm-3 control-label">@lang('sales_order.payment.cash.so_code')</label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" readonly value="{{ $currentSo->code }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputSoType"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.so_type')</label>
-                            <div class="col-sm-10">
+                                   class="col-sm-3 control-label">@lang('sales_order.payment.cash.so_type')</label>
+                            <div class="col-sm-9">
                                 <input type="text" class="form-control" readonly
                                        value="@lang('lookup.'.$currentSo->so_type)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputSoDate"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.so_date')</label>
-                            <div class="col-sm-10">
+                                   class="col-sm-3 control-label">@lang('sales_order.payment.cash.so_date')</label>
+                            <div class="col-sm-9">
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
@@ -86,8 +86,8 @@
                         </div>
                         <div class="form-group">
                             <label for="inputSoStatus"
-                                   class="col-sm-2 control-label">@lang('sales_order.payment.cash.so_status')</label>
-                            <div class="col-sm-10">
+                                   class="col-sm-3 control-label">@lang('sales_order.payment.cash.so_status')</label>
+                            <div class="col-sm-9">
                                 <label class="control-label control-label-normal">@lang('lookup.'.$currentSo->status)</label>
                             </div>
                         </div>

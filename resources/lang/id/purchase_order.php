@@ -10,6 +10,7 @@ return [
             'purchase_order_detail' => 'Detil Pembelian',
             'shipping' => 'Pengiriman',
             'transactions' => 'Transaksi',
+            'transaction_summary' => 'Total Transaksi',
             'remarks' => 'Catatan',
             'expenses' => '',
         ],

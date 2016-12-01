@@ -74,8 +74,8 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="form-group">
-                                                                <label for="inputCustomerType_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_type')</label>
-                                                                <div class="col-sm-5">
+                                                                <label for="inputCustomerType_@{{ $index + 1 }}" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_type')</label>
+                                                                <div class="col-sm-6">
                                                                     <select id="inputCustomerType_@{{ $index + 1 }}" data-parsley-required="true"
                                                                             class="form-control"
                                                                             name="customer_type[]"
@@ -87,8 +87,8 @@
                                                             </div>
                                                             <div ng-show="so.customer_type.code === 'CUSTOMERTYPE.R'">
                                                                 <div class="form-group">
-                                                                    <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
-                                                                    <div class="col-sm-7">
+                                                                    <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                                    <div class="col-sm-6">
                                                                         <ui-select ng-model="so.customer"
                                                                                    spinner-enabled="true"
                                                                                    ng-change="insertDefaultExpense($index, so.customer)">
@@ -102,20 +102,25 @@
                                                                         </ui-select>
                                                                         <input type="hidden" name="customer_id[]" ng-value="so.customer.id" >
                                                                     </div>
+                                                                    <div class="col-sm-2">
+                                                                        <button id="customerDetailButton" type="button" class="btn btn-primary btn-sm"
+                                                                                data-toggle="modal" data-target="#customerDetailModal"><span
+                                                                                    class="fa fa-info-circle fa-lg"></span></button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div ng-show="so.customer_type.code === 'CUSTOMERTYPE.WI'">
                                                                 <div class="form-group">
-                                                                    <label for="inputCustomerName_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputCustomerName_@{{ $index + 1 }}" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                                    <div class="col-sm-8">
                                                                         <input type="text" class="form-control" id="inputCustomerName_@{{ $index + 1 }}"
                                                                                name="walk_in_customer[]" placeholder="Customer Name"
                                                                                ng-model="so.walk_in_cust">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="inputCustomerDetails_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_details')</label>
-                                                                    <div class="col-sm-9">
+                                                                    <label for="inputCustomerDetails_@{{ $index + 1 }}" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_details')</label>
+                                                                    <div class="col-sm-8">
                                                                 <textarea id="inputCustomerDetails_@{{ $index + 1 }}" class="form-control"
                                                                           rows="5" name="walk_in_customer_details[]"
                                                                           ng-model="so.walk_in_cust_details"></textarea>
@@ -132,16 +137,16 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="form-group">
-                                                                <label for="inputSoCode_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_code')</label>
-                                                                <div class="col-sm-10">
+                                                                <label for="inputSoCode_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.so_code')</label>
+                                                                <div class="col-sm-9">
                                                                     <input type="text" class="form-control" id="inputSoCode_@{{ $index + 1 }}"
                                                                            name="so_code[]" placeholder="SO Code" readonly
                                                                            ng-model="so.so_code">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputSoType_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_type')</label>
-                                                                <div class="col-sm-10">
+                                                                <label for="inputSoType_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
+                                                                <div class="col-sm-9">
                                                                     <select id="inputSoType_@{{ $index + 1 }}" data-parsley-required="true"
                                                                             class="form-control"
                                                                             name="sales_type[]"
@@ -152,8 +157,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputSoDate_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_date')</label>
-                                                                <div class="col-sm-10">
+                                                                <label for="inputSoDate_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.so_date')</label>
+                                                                <div class="col-sm-9">
                                                                     <div class="input-group date">
                                                                         <div class="input-group-addon">
                                                                             <i class="fa fa-calendar"></i>
@@ -164,8 +169,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputSoStatus_@{{ $index + 1 }}" class="col-sm-2 control-label">@lang('sales_order.create.so_status')</label>
-                                                                <div class="col-sm-10">
+                                                                <label for="inputSoStatus_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.so_status')</label>
+                                                                <div class="col-sm-9">
                                                                     <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
                                                                 </div>
                                                             </div>
@@ -220,6 +225,21 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
+                                                </div>
+                                                <div class="box-body">
+                                                    @for ($i = 0; $i < 23; $i++)
+                                                        <br/>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-9">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="box box-info">
@@ -333,8 +353,8 @@
                                                     <div class="box box-info">
                                                         <div class="box-header with-border">
                                                             <h3 class="box-title">@lang('sales_order.create.box.expenses')</h3>
-                                                            <button type="button" class="btn btn-primary btn-md pull-right"
-                                                                    ng-click="insertExpense($index)"><span class="fa fa-plus"/></button>
+                                                            <button type="button" class="btn btn-primary btn-xs pull-right"
+                                                                    ng-click="insertExpense($index)"><span class="fa fa-plus fa-fw"/></button>
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="row">
@@ -342,14 +362,14 @@
                                                                     <table id="expensesListTable_@{{ $index + 1 }}" class="table table-bordered table-hover">
                                                                         <thead>
                                                                         <tr>
-                                                                            <th width="22%">@lang('sales_order.create.table.expense.header.name')</th>
-                                                                            <th width="22%"
+                                                                            <th width="30%">@lang('sales_order.create.table.expense.header.name')</th>
+                                                                            <th width="20%"
                                                                                 class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
-                                                                            <th width="22%"
-                                                                                class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
-                                                                            <th width="22%"
+                                                                            <th width="25%"
                                                                                 class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
-                                                                            <th width="12%">&nbsp;</th>
+                                                                            <th width="5%">&nbsp;</th>
+                                                                            <th width="20%"
+                                                                                class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -366,11 +386,6 @@
                                                                                 </select>
                                                                             </td>
                                                                             <td>
-                                                                                <input name="so_@{{ $parent.$index }}_expense_amount[]" type="text" class="form-control text-right"
-                                                                                       ng-model="expense.amount" data-parsley-required="true"
-                                                                                       data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
-                                                                            </td>
-                                                                            <td>
                                                                                 <input name="so_@{{ $parent.$index }}_expense_remarks[]" type="text" class="form-control"
                                                                                        ng-model="expense.remarks" data-parsley-required="true"/>
                                                                             </td>
@@ -378,6 +393,11 @@
                                                                                 <button type="button" class="btn btn-danger btn-md"
                                                                                         ng-click="removeExpense($parent.$index, $index)"><span class="fa fa-minus"/>
                                                                                 </button>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input name="so_@{{ $parent.$index }}_expense_amount[]" type="text" class="form-control text-right"
+                                                                                       ng-model="expense.amount" data-parsley-required="true"
+                                                                                       data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
                                                                             </td>
                                                                         </tr>
                                                                         </tbody>
@@ -404,12 +424,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-3">
                                             <div class="box box-info">
                                                 <div class="box-header with-border">
+                                                    <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                                                 </div>
                                                 <div class="box-body">
-                                                    @for ($i = 0; $i < 40; $i++)
+                                                    @for ($i = 0; $i < 25; $i++)
                                                         <br/>
                                                     @endfor
                                                 </div>
@@ -453,6 +474,7 @@
                 </div>
             </div>
         </form>
+        @include('sales_order.customer_details_partial')
     </div>
 @endsection
 

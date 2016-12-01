@@ -10,6 +10,7 @@ return [
             'purchase_order_detail' => 'Purchase Order Detail',
             'shipping' => 'Shipping',
             'transactions' => 'Transactions',
+            'transaction_summary' => 'Transaction Summary',
             'expenses' => 'Expenses',
             'remarks' => 'Remarks',
         ],

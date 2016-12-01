@@ -60,7 +60,7 @@
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}" class="btn btn-default btn-flat">@lang('buttons.profile_butotn')</a>
+                                <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}" class="btn btn-default btn-flat">@lang('buttons.profile_button')</a>
                             </div>
                             <div class="pull-right">
                                 <a href="/logout" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('buttons.logout_button')</a>

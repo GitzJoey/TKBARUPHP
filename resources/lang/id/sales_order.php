@@ -13,6 +13,7 @@ return [
             'sales_order_detail' => 'Detail',
             'shipping' => 'Pengiriman',
             'transactions' => 'Transaksi',
+            'transaction_summary' => 'Total Transaksi',
             'remarks' => 'Catatan',
             'customer' => 'Pelanggan',
             'purchase_order_detail' => '',

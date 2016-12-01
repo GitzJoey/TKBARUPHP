@@ -98,6 +98,7 @@
                 </div>
             </div>
         {!! Form::close() !!}
+        @include('sales_order.customer_details_partial')
     </div>
 @endsection
 
