@@ -1,17 +1,17 @@
 @extends('layouts.adminlte.master')
 
 @section('title')
-    @lang('purchase_order.payment.transfer.title')
+    @lang('purchase_order.payment.giro.title')
 @endsection
 
 @section('page_title')
-    <span class="fa fa-send fa-fw"></span>&nbsp;@lang('purchase_order.payment.transfer.page_title')
+    <span class="fa fa-book fa-fw"></span>&nbsp;@lang('purchase_order.payment.giro.page_title')
 @endsection
 @section('page_title_desc')
-    @lang('purchase_order.payment.transfer.page_title_desc')
+    @lang('purchase_order.payment.giro.page_title_desc')
 @endsection
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('purchase_order_payment_transfer', $currentPo->hId()) !!}
+    {!! Breadcrumbs::render('purchase_order_payment_giro', $currentPo->hId()) !!}
 @endsection
 
 @section('content')
@@ -27,24 +27,24 @@
     @endif
 
     <div ng-app="poModule" ng-controller="poController">
-        {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.transfer', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.giro', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
-            @include('purchase_order.payment_summary_partial')
+            @include('purchase_order.payment.payment_summary_partial')
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">@lang('purchase_order.payment.transfer.box.payment')</h3>
+                            <h3 class="box-title">@lang('purchase_order.payment.giro.box.payment')</h3>
                         </div>
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="inputPaymentType"
-                                               class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_type')</label>
-                                        <div class="col-sm-8">
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.payment_type')</label>
+                                        <div class="col-sm-4">
                                             <input id="inputPaymentType" type="text" class="form-control" readonly
                                                    value="@lang('lookup.'.$paymentType)">
                                         </div>
@@ -54,23 +54,15 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.bank_from')</label>
+                                        <label for="inputGiro"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.giro')</label>
                                         <div class="col-sm-4">
-                                            <select id="inputBankAccountFrom"
-                                                    name="bank_account_from"
+                                            <select id="inputGiro"
+                                                    name="giro_id"
                                                     class="form-control"
-                                                    ng-model="bankAccountFrom"
-                                                    ng-options="bankAccountFrom as (bankAccountFrom.account_number + ' ' + bankAccountFrom.bank.short_name) for bankAccountFrom in storeBankAccounts track by bankAccountFrom.id">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.bank_to')</label>
-                                        <div class="col-sm-4">
-                                            <select id="inputBankAccountTo"
-                                                    name="bank_account_to"
-                                                    class="form-control"
-                                                    ng-model="bankAccountTo"
-                                                    ng-options="bankAccountTo as (bankAccountTo.account_number + ' ' + bankAccountTo.bank.short_name) for bankAccountTo in supplierBankAccounts track by bankAccountTo.id">
+                                                    ng-model="giro" data-parsley-required="true"
+                                                    ng-options="giro as (giro.bank.short_name + ' ' + giro.serial_number + ' ' + giro.printed_name)
+                                                    for giro in availableGiros track by giro.id">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             </select>
                                         </div>
@@ -80,8 +72,26 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <label for="inputGiroBank"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.bank')</label>
+                                        <div class="col-sm-4">
+                                            <input id="inputGiroBank" type="text" class="form-control" readonly
+                                                   ng-value="giro.bank.name">
+                                        </div>
+                                        <label for="inputGiroSerialNumber"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.serial_number')</label>
+                                        <div class="col-sm-4">
+                                            <input id="inputGiroSerialNumber" name="serial_number" type="text"
+                                                   class="form-control" ng-value="giro.serial_number" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         <label for="inputPaymentDate"
-                                               class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_date')</label>
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.payment_date')</label>
                                         <div class="col-sm-4">
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
@@ -92,14 +102,15 @@
                                             </div>
                                         </div>
                                         <label for="inputEffectiveDate"
-                                               class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.effective_date')</label>
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.effective_date')</label>
                                         <div class="col-sm-4">
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                                 <input type="text" class="form-control" id="inputEffectiveDate"
-                                                       name="effective_date" data-parsley-required="true">
+                                                       ng-model="giro.effective_date"
+                                                       name="effective_date" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -108,17 +119,32 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="inputPaymentAmount"
-                                               class="col-sm-2 control-label">@lang('purchase_order.payment.transfer.field.payment_amount')</label>
+                                        <label for="inputAmount"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.payment_amount')</label>
                                         <div class="col-sm-4">
-                                            <div class="input-group date">
-                                                <div class="input-group-addon">
-                                                    Rp
-                                                </div>
-                                                <input type="text" class="form-control" id="inputPaymentAmount"
-                                                       name="total_amount" ng-model="total_amount"
-                                                       data-parsley-required="true" fcsa-number>
-                                            </div>
+                                            <input type="text" class="form-control" id="inputAmount" ng-value="giro.amount"
+                                                   fcsa-number
+                                                   name="amount" ng-model="amount" readonly>
+                                        </div>
+                                        <label for="inputPrintedName"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.printed_name')</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="inputPrintedName"
+                                                   ng-value="giro.printed_name"
+                                                   name="printed_name" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="inputGiroRemarks"
+                                               class="col-sm-2 control-label">@lang('purchase_order.payment.giro.field.remarks')</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="inputGiroRemarks"
+                                                   ng-value="giro.remarks"
+                                                   name="remarks" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -149,8 +175,10 @@
         var app = angular.module('poModule', ['fcsa-number']);
         app.controller('poController', ['$scope', function ($scope) {
             var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
-            $scope.storeBankAccounts = JSON.parse('{!! htmlspecialchars_decode($storeBankAccounts) !!}');
-            $scope.supplierBankAccounts = JSON.parse('{!! htmlspecialchars_decode($supplierBankAccounts) !!}');
+            $scope.availableGiros = JSON.parse('{!! htmlspecialchars_decode($availableGiros) !!}');
+            _.forEach($scope.availableGiros, function (giro) {
+                giro.effective_date = moment(giro.effective_date).format('DD-MM-YYYY');
+            });
             $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
 
             $scope.po = {
@@ -174,7 +202,7 @@
                     base_unit: _.find(currentPo.items[i].product.product_units, isBase),
                     selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
                     quantity: currentPo.items[i].quantity % 1 != 0 ? parseFloat(currentPo.items[i].quantity).toFixed(2):parseFloat(currentPo.items[i].quantity).toFixed(0),
-                    price: currentPo.items[i].price % 1  != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0)
+                    price: currentPo.items[i].price % 1 != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0)
                 });
             }
 

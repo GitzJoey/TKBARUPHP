@@ -106,8 +106,10 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             return $item->id;
         })->all();
 
+        $inputtedItemId = $request->input('item_id');
+
         // Get the id of removed items
-        $poItemsToBeDeleted = array_diff($poItemsId, $request->input('item_id'));
+        $poItemsToBeDeleted = array_diff($poItemsId, isset($inputtedItemId) ? $inputtedItemId : []);
 
         // Remove the items that removed on the revise page
         Item::destroy($poItemsToBeDeleted);
@@ -139,8 +141,10 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             return $expense->id;
         })->all();
 
+        $inputtedExpenseId = $request->input('expense_id');
+
         // Get the id of removed expenses
-        $poExpensesToBeDeleted = array_diff($poExpensesId, $request->input('expense_id'));
+        $poExpensesToBeDeleted = array_diff($poExpensesId, isset($inputtedExpenseId) ? $inputtedExpenseId : []);
 
         // Remove the expenses that removed on the revise page
         Expense::destroy($poExpensesToBeDeleted);

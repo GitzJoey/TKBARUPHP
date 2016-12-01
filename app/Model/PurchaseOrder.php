@@ -171,7 +171,7 @@ class PurchaseOrder extends Model
         $itemTotalAmount = count($itemAmounts) > 0 ? $itemAmounts->sum() : 0;
 
         $expenseAmounts = $this->expenses->map(function ($expense){
-            return $expense->amount;
+            return $expense->type === 'EXPENSETYPE.ADD' ? $expense->amount : ($expense->amount * -1);
         });
 
         $expenseTotalAmount = count($expenseAmounts) > 0 ? $expenseAmounts->sum() : 0;

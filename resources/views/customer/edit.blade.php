@@ -107,6 +107,7 @@
                                                     <div class="form-group">
                                                         <label for="inputFirstName" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
                                                         <div class="col-sm-10">
+                                                            <input type="hidden" name="profile_id[]" ng-value="profile.id">
                                                             <input id="inputFirstName" type="text" name="first_name[]" class="form-control" ng-model="profile.first_name" placeholder="@lang('customer.field.first_name')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                         </div>
                                                     </div>
@@ -143,6 +144,7 @@
                                                                 <tbody>
                                                                 <tr ng-repeat="ph in profile.phone_numbers">
                                                                     <td>
+                                                                        <input type="hidden" name="profile_@{{ $parent.$index }}_phone_number_id[]" ng-value="ph.id">
                                                                         <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
                                                                                 ng-init="phone_provider = { id: ph.phone_provider_id }"
                                                                                 ng-model="phone_provider"
@@ -190,6 +192,7 @@
                                     <tbody>
                                     <tr ng-repeat="bank in banks">
                                         <td>
+                                            <input type="hidden" name="bank_account_id[]" ng-value="bank.id">
                                             <select class="form-control"
                                                     name="bank[]"
                                                     ng-init="bank_list = { id: bank.bank_id }"
@@ -305,8 +308,6 @@
             $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
             $scope.pricelevelDDL = JSON.parse('{!! htmlspecialchars_decode($priceLevelDDL) !!}');
             $scope.expenseTemplates = JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}');
-
-            console.log($scope.expenses);
 
             $scope.addNewBank = function() {
                 $scope.banks.push({

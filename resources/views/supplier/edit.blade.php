@@ -326,7 +326,6 @@
             $scope.productSelected = JSON.parse('{!! json_encode($productSelected) !!}');
 
             $scope.toInt = function(val) {
-                console.log(val, parseInt(val,10));
                 return parseInt(val,10);
             };
 
@@ -334,7 +333,7 @@
                 $scope.banks.push({
                     'bank_id': '',
                     'account_number': '',
-                    'remarks': '',
+                    'remarks': ''
                 });
             };
 

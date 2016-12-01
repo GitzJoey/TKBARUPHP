@@ -515,7 +515,10 @@
             $scope.expenseTotal = function () {
                 var result = 0;
                 angular.forEach($scope.po.expenses, function (expense, key) {
-                    result += parseInt(expense.amount);
+                    if(expense.type === 'EXPENSETYPE.ADD')
+                        result += parseInt(numeral().unformat(expense.amount));
+                    else
+                        result -= parseInt(numeral().unformat(expense.amount));
                 });
                 return result;
             };
@@ -544,6 +547,7 @@
             function isBase(unit) {
                 return unit.is_base == 1;
             }
+
             $scope.insertExpense = function () {
                 $scope.po.expenses.push({
                     name: '',

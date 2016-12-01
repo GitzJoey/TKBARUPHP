@@ -136,10 +136,19 @@ class CustomerController extends Controller
             return redirect(route('db.master.customer'));
         }
 
-        $customer->bankAccounts()->detach();
+        $customerBankAccountIds = $customer->bankAccounts->map(function ($bankAccount){
+            return $bankAccount->id;
+        })->all();
+
+        $inputtedBankAccountId = $data->input('bank_account_id');
+
+        $customerBankAccountsToBeDeleted = array_diff($customerBankAccountIds, isset($inputtedBankAccountId) ?
+            $inputtedBankAccountId : []);
+
+        BankAccount::destroy($customerBankAccountsToBeDeleted);
 
         for ($i = 0; $i < count($data['bank']); $i++) {
-            $ba = new BankAccount();
+            $ba = BankAccount::findOrNew($data['bank_account_id'][$i]);
             $ba->bank_id = $data["bank"][$i];
             $ba->account_number = $data["account_number"][$i];
             $ba->remarks = $data["bank_remarks"][$i];
@@ -147,10 +156,19 @@ class CustomerController extends Controller
             $customer->bankAccounts()->save($ba);
         }
 
-        $customer->profiles()->detach();
+        $customerProfileIds = $customer->profiles->map(function ($profile) {
+            return $profile->id;
+        })->all();
+
+        $inputtedProfileId = $data->input('profile_id');
+
+        $customerProfilesToBeDeleted = array_diff($customerProfileIds, isset($inputtedProfileId) ?
+            $inputtedProfileId : []);
+
+        Profile::destroy($customerProfilesToBeDeleted);
 
         for ($i = 0; $i < count($data['first_name']); $i++) {
-            $pa = new Profile();
+            $pa = Profile::with('phoneNumbers')->findOrNew($data['profile_id'][$i]);
             $pa->first_name = $data["first_name"][$i];
             $pa->last_name = $data["last_name"][$i];
             $pa->address = $data["profile_address"][$i];
@@ -158,8 +176,19 @@ class CustomerController extends Controller
 
             $customer->profiles()->save($pa);
 
+            $profilePhoneNumberIds = $pa->phoneNumbers->map(function ($phoneNumber) {
+                return $phoneNumber->id;
+            })->all();
+
+            $inputtedPhoneNumberId = $data->input('profile_' . $i . '_phone_number_id');
+
+            $profilePhoneNumbersToBeDeleted = array_diff($profilePhoneNumberIds,
+                isset($inputtedPhoneNumberId) ? $inputtedPhoneNumberId : []);
+
+            PhoneNumber::destroy($profilePhoneNumbersToBeDeleted);
+
             for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
-                $ph = new PhoneNumber();
+                $ph = PhoneNumber::findOrNew($data['profile_' . $i . '_phone_number_id'][$j]);
                 $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
                 $ph->number = $data['profile_' . $i . '_phone_number'][$j];
                 $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
@@ -190,14 +219,6 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
 
         if ($customer) {
-            $customer->bankAccounts()->delete();
-
-            foreach ($customer->getProfiles as $prof) {
-                $prof->phoneNumber()->delete();
-            }
-
-            $customer->profiles()->delete();
-
             $customer->delete();
         }
 
@@ -387,7 +408,7 @@ class CustomerController extends Controller
         if(empty($param))
             return collect([]);
 
-        return Customer::with('profiles')->where('name', 'like', "%$param%")
+        return Customer::with('profiles', 'expenseTemplates')->where('name', 'like', "%$param%")
             ->orWhereHas('profiles', function ($query) use ($param)
             {
                 $query->where('first_name', 'like', "%$param%")

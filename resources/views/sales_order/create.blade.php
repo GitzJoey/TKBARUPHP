@@ -90,7 +90,8 @@
                                                                     <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-7">
                                                                         <ui-select ng-model="so.customer"
-                                                                                   spinner-enabled="true">
+                                                                                   spinner-enabled="true"
+                                                                                   ng-change="insertDefaultExpense($index, so.customer)">
                                                                             <ui-select-match placeholder="Choose customer..."
                                                                                              allow-clear="true">@{{$select.selected.name}}</ui-select-match>
                                                                             <ui-select-choices repeat="customer in customerDDL track by customer.id"
@@ -259,7 +260,7 @@
                                                             <hr>
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <table id="itemsListTable" class="table table-bordered table-hover">
+                                                                    <table id="itemsListTable_@{{ $index + 1 }}" class="table table-bordered table-hover">
                                                                         <thead>
                                                                         <tr>
                                                                             <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
@@ -317,6 +318,81 @@
                                                                                 class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                             <td width="20%" class="text-right">
                                                                                 <span class="control-label-normal">@{{ grandTotal($index) | number }}</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="box box-info">
+                                                        <div class="box-header with-border">
+                                                            <h3 class="box-title">@lang('sales_order.create.box.expenses')</h3>
+                                                            <button type="button" class="btn btn-primary btn-md pull-right"
+                                                                    ng-click="insertExpense($index)"><span class="fa fa-plus"/></button>
+                                                        </div>
+                                                        <div class="box-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table id="expensesListTable_@{{ $index + 1 }}" class="table table-bordered table-hover">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th width="22%">@lang('sales_order.create.table.expense.header.name')</th>
+                                                                            <th width="22%"
+                                                                                class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
+                                                                            <th width="22%"
+                                                                                class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
+                                                                            <th width="22%"
+                                                                                class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
+                                                                            <th width="12%">&nbsp;</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr ng-repeat="expense in so.expenses">
+                                                                            <td>
+                                                                                <input name="so_@{{ $parent.$index }}_expense_name[]" type="text" class="form-control"
+                                                                                       ng-model="expense.name" data-parsley-required="true">
+                                                                            </td>
+                                                                            <td>
+                                                                                <select name="so_@{{ $parent.$index }}_expense_type[]" data-parsley-required="true"
+                                                                                        class="form-control" ng-model="expense.type"
+                                                                                        ng-options="expenseType as expenseType.description for expenseType in expenseTypes track by expenseType.code">
+                                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input name="so_@{{ $parent.$index }}_expense_amount[]" type="text" class="form-control text-right"
+                                                                                       ng-model="expense.amount" data-parsley-required="true"
+                                                                                       data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input name="so_@{{ $parent.$index }}_expense_remarks[]" type="text" class="form-control"
+                                                                                       ng-model="expense.remarks" data-parsley-required="true"/>
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <button type="button" class="btn btn-danger btn-md"
+                                                                                        ng-click="removeExpense($parent.$index, $index)"><span class="fa fa-minus"/>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <table id="expensesTotalListTable_@{{ $index + 1 }}" class="table table-bordered">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td width="80%"
+                                                                                class="text-right">@lang('sales_order.create.table.total.body.total')</td>
+                                                                            <td width="20%" class="text-right">
+                                                                                <span class="control-label-normal">@{{ expenseTotal($index) | number }}</span>
                                                                             </td>
                                                                         </tr>
                                                                         </tbody>
@@ -401,6 +477,7 @@
             $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
             $scope.SOs = JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}');
             $scope.defaultTabLabel = '@lang('sales_order.create.tab.sales')';
+            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
 
             $scope.setSOCode = function(so){
                 $http.get('{{ route('api.so.code') }}').success(function(data){
@@ -414,7 +491,8 @@
                 var so = {
                     so_code: '',
                     customer_type: '',
-                    items : []
+                    items : [],
+                    expenses: []
                 };
                 $scope.setSOCode(so);
                 SOs.push(so);
@@ -439,6 +517,17 @@
                 var result = 0;
                 angular.forEach($scope.SOs[index].items, function (item, key) {
                     result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                });
+                return result;
+            };
+
+            $scope.expenseTotal = function (index) {
+                var result = 0;
+                angular.forEach($scope.SOs[index].expenses, function (expense, key) {
+                    if(expense.type.code === 'EXPENSETYPE.ADD')
+                        result += parseInt(numeral().unformat(expense.amount));
+                    else
+                        result -= parseInt(numeral().unformat(expense.amount));
                 });
                 return result;
             };
@@ -481,12 +570,44 @@
                 $scope.SOs[SOIndex].items.splice(index, 1);
             };
 
+            $scope.insertDefaultExpense = function (SOIndex, customer) {
+                if(customer){
+                    $scope.SOs[SOIndex].expenses = [];
+                    for(var i = 0; i < customer.expense_templates.length; i++){
+                        $scope.SOs[SOIndex].expenses.push({
+                            name: customer.expense_templates[i].name,
+                            type: {
+                                code: customer.expense_templates[i].type
+                            },
+                            amount: numeral(customer.expense_templates[i].amount).format('0,0'),
+                            remarks: customer.expense_templates[i].remarks
+                        });
+                    }
+                }
+                else{
+                    $scope.SOs[SOIndex].expenses = [];
+                }
+            };
+
+            $scope.insertExpense = function (index) {
+                $scope.SOs[index].expenses.push({
+                    name: '',
+                    type: '',
+                    amount: 0,
+                    remarks: ''
+                });
+            };
+
+            $scope.removeExpense = function (SOIndex, index) {
+                $scope.SOs[SOIndex].expenses.splice(index, 1);
+            };
+
             $scope.refreshCustomers = function (param) {
                 return $http.get('{{ route('api.customer.search') }}/' + param)
                         .then(function (response) {
                             $scope.customerDDL = response.data;
                         });
-            }
+            };
         }]);
     </script>
     <script type="application/javascript" src="{{ asset('adminlte/js/bootstrap-datetimepicker.min.js') }}"></script>

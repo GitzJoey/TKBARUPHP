@@ -9,6 +9,7 @@
 namespace App\Services\Implementation;
 
 use App\Model\Customer;
+use App\Model\Expense;
 use App\Model\Item;
 use App\Model\Lookup;
 use App\Model\Product;
@@ -77,6 +78,14 @@ class SalesOrderServiceImpl implements SalesOrderService
             $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
             $so->items()->save($item);
+        }
+
+        for ($j = 0; $j < count($request->input("so_$index" . "_expense_name")); $j++) {
+            $expense = new Expense();
+            $expense->name = $request->input("so_$index" . "_expense_name.$j");
+            $expense->type = $request->input("so_$index" . "_expense_type.$j");
+            $expense->amount = floatval(str_replace(',', '', $request->input("so_$index" . "_expense_amount.$j")));
+            $expense->remarks = $request->input("so_$index" . "_expense_remarks.$j");
         }
 
         $userSOs = session('userSOs');
@@ -150,6 +159,29 @@ class SalesOrderServiceImpl implements SalesOrderService
             $currentSo->items()->save($item);
         }
 
+        // Get IDs of current SO's expenses
+        $soExpensesId = $currentSo->expenses->map(function ($expense) {
+            return $expense->id;
+        })->all();
+
+        $inputtedExpenseId = $request->input('expense_id');
+
+        // Get the id of removed expenses
+        $soExpensesToBeDeleted = array_diff($soExpensesId, isset($inputtedExpenseId) ? $inputtedExpenseId : []);
+
+        // Remove the expenses that removed on the revise page
+        Expense::destroy($soExpensesToBeDeleted);
+
+        for($i = 0; $i < count($request->input('expense_id')); $i++){
+            $expense = Expense::findOrNew($request->input("expense_id.$i"));
+            $expense->name = $request->input("expense_name.$i");
+            $expense->type = $request->input("expense_type.$i");
+            $expense->amount = floatval(str_replace(',', '', $request->input("expense_amount.$i")));
+            $expense->remarks = $request->input("expense_remarks.$i");
+
+            $currentSo->expenses()->save($expense);
+        }
+
         $currentSo->save();
 
         return $currentSo;
@@ -202,6 +234,18 @@ class SalesOrderServiceImpl implements SalesOrderService
                 ];
             }
 
+            $expenses = [];
+            for ($j = 0; $j < count($request->input("so_$i"."_expense_name")); $j++) {
+                $expenses[]  = [
+                    'name' => $request->input("so_$i"."_expense_name.$j"),
+                    'type' => [
+                        'code' => $request->input("so_$i"."_expense_type.$j")
+                    ],
+                    'amount' => floatval(str_replace(',', '', $request->input("so_$i"."_expense_amount.$j"))),
+                    'remarks' => $request->input("so_$i"."_expense_remarks.$j")
+                ];
+            }
+
             $SOs[] = [
                 'customer_type' => [
                     'code' => $request->input("customer_type.$i")
@@ -222,7 +266,8 @@ class SalesOrderServiceImpl implements SalesOrderService
                     'id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i")
                 ],
                 'remarks' => $request->input("remarks.$i"),
-                'items' => $items
+                'items' => $items,
+                'expenses' => $expenses
             ];
         }
 

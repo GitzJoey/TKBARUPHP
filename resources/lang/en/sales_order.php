@@ -13,6 +13,7 @@ return [
             'purchase_order_detail' => 'Detail',
             'shipping' => 'Shipping',
             'transactions' => 'Transactions',
+            'expenses' => 'Expenses',
             'remarks' => 'Remarks',
             'customer' => 'Customer',
             'sales_order_detail' => '',
@@ -37,6 +38,14 @@ return [
                     'unit' => 'UoM',
                     'price_unit' => 'Price',
                     'total_price' => 'Total Price',
+                ],
+            ],
+            'expense' => [
+                'header' => [
+                    'name' => 'Name',
+                    'type' => 'Type',
+                    'amount' => 'Amount',
+                    'remarks' => 'Remarks',
                 ],
             ],
             'total' => [

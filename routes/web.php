@@ -21,9 +21,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
-{
-    Route::bind('id', function($id) {
+Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+    Route::bind('id', function ($id) {
         if (!is_numeric($id)) {
             return Hashids::decode($id)[0];
         } else {
@@ -31,10 +30,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
         }
     });
 
-    Route::group(['prefix' => 'dashboard'], function (){
+    Route::group(['prefix' => 'dashboard'], function () {
         Route::get('', 'DashboardController@index')->name('db');
 
-        Route::group(['prefix' => 'po'], function (){
+        Route::group(['prefix' => 'po'], function () {
             Route::get('create', 'PurchaseOrderController@create')->name('db.po.create');
             Route::post('create', 'PurchaseOrderController@store');
             Route::get('revise', 'PurchaseOrderController@index')->name('db.po.revise.index');
@@ -42,23 +41,23 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
             Route::patch('revise/{id}', 'PurchaseOrderController@saveRevision');
             Route::delete('reject/{id}', 'PurchaseOrderController@delete')->name('db.po.reject');
 
-            Route::group(['prefix' => 'payment'], function (){
-                Route::get('', 'PurchaseOrderController@paymentIndex')->name('db.po.payment.index');
-                Route::get('{id}', 'PurchaseOrderController@paymentHistory')->name('db.po.payment.history');
-                Route::get('{id}/cash', 'PurchaseOrderController@createCashPayment')->name('db.po.payment.cash');
-                Route::post('{id}/cash', 'PurchaseOrderController@saveCashPayment');
-                Route::get('{id}/transfer', 'PurchaseOrderController@createTransferPayment')
+            Route::group(['prefix' => 'payment'], function () {
+                Route::get('', 'PurchaseOrderPaymentController@paymentIndex')->name('db.po.payment.index');
+                Route::get('{id}', 'PurchaseOrderPaymentController@paymentHistory')->name('db.po.payment.history');
+                Route::get('{id}/cash', 'PurchaseOrderPaymentController@createCashPayment')->name('db.po.payment.cash');
+                Route::post('{id}/cash', 'PurchaseOrderPaymentController@saveCashPayment');
+                Route::get('{id}/transfer', 'PurchaseOrderPaymentController@createTransferPayment')
                     ->name('db.po.payment.transfer');
-                Route::post('{id}/transfer', 'PurchaseOrderController@saveTransferPayment');
-                Route::get('{id}/giro', 'PurchaseOrderController@createGiroPayment')->name('db.po.payment.giro');
-                Route::post('{id}/giro', 'PurchaseOrderController@saveGiroPayment');
+                Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment');
+                Route::get('{id}/giro', 'PurchaseOrderPaymentController@createGiroPayment')->name('db.po.payment.giro');
+                Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment');
             });
 
             Route::get('copy/{code?}', 'PurchaseOrderController@copyPO')->name('db.po.copy.index');
             Route::patch('copy/{id}', 'PurchaseOrderController@savePOCopy');
         });
 
-        Route::group(['prefix' => 'so'], function (){
+        Route::group(['prefix' => 'so'], function () {
             Route::get('create', 'SalesOrderController@create')->name('db.so.create');
             Route::post('create', 'SalesOrderController@store');
             Route::get('revise', 'SalesOrderController@index')->name('db.so.revise.index');
@@ -66,24 +65,24 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
             Route::patch('revise/{id}', 'SalesOrderController@saveRevision');
             Route::delete('reject/{id}', 'SalesOrderController@delete')->name('db.so.reject');
 
-            Route::group(['prefix' => 'payment'], function (){
-                Route::get('', 'SalesOrderController@paymentIndex')->name('db.so.payment.index');
-                Route::get('{id}', 'SalesOrderController@paymentHistory')->name('db.so.payment.history');
-                Route::get('{id}/cash', 'SalesOrderController@createCashPayment')->name('db.so.payment.cash');
-                Route::post('{id}/cash', 'SalesOrderController@saveCashPayment');
-                Route::get('{id}/transfer', 'SalesOrderController@createTransferPayment')
+            Route::group(['prefix' => 'payment'], function () {
+                Route::get('', 'SalesOrderPaymentController@paymentIndex')->name('db.so.payment.index');
+                Route::get('{id}', 'SalesOrderPaymentController@paymentHistory')->name('db.so.payment.history');
+                Route::get('{id}/cash', 'SalesOrderPaymentController@createCashPayment')->name('db.so.payment.cash');
+                Route::post('{id}/cash', 'SalesOrderPaymentController@saveCashPayment');
+                Route::get('{id}/transfer', 'SalesOrderPaymentController@createTransferPayment')
                     ->name('db.so.payment.transfer');
-                Route::post('{id}/transfer', 'SalesOrderController@saveTransferPayment');
-                Route::get('{id}/giro', 'SalesOrderController@createGiroPayment')->name('db.so.payment.giro');
-                Route::post('{id}/giro', 'SalesOrderController@saveGiroPayment');
+                Route::post('{id}/transfer', 'SalesOrderPaymentController@saveTransferPayment');
+                Route::get('{id}/giro', 'SalesOrderPaymentController@createGiroPayment')->name('db.so.payment.giro');
+                Route::post('{id}/giro', 'SalesOrderPaymentController@saveGiroPayment');
             });
 
             Route::get('copy/{code?}', 'SalesOrderController@copySO')->name('db.so.copy.index');
             Route::patch('copy/{id}', 'SalesOrderController@saveSOCopy');
         });
 
-        Route::group(['prefix' => 'admin'], function (){
-            Route::group(['prefix' => 'user'], function (){
+        Route::group(['prefix' => 'admin'], function () {
+            Route::group(['prefix' => 'user'], function () {
                 Route::get('', 'UserController@index')->name('db.admin.user');
                 Route::get('show/{id}', 'UserController@show')->name('db.admin.user.show');
                 Route::get('create', 'UserController@create')->name('db.admin.user.create');
@@ -93,7 +92,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'UserController@delete')->name('db.admin.user.delete');
             });
 
-            Route::group(['prefix' => 'roles'], function (){
+            Route::group(['prefix' => 'roles'], function () {
                 Route::get('', 'RolesController@index')->name('db.admin.roles');
                 Route::get('show/{id}', 'RolesController@show')->name('db.admin.roles.show');
                 Route::get('create', 'RolesController@create')->name('db.admin.roles.create');
@@ -103,7 +102,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'RolesController@delete')->name('db.admin.roles.delete');
             });
 
-            Route::group(['prefix' => 'store'], function (){
+            Route::group(['prefix' => 'store'], function () {
                 Route::get('', 'StoreController@index')->name('db.admin.store');
                 Route::get('show/{id}', 'StoreController@show')->name('db.admin.store.show');
                 Route::get('create', 'StoreController@create')->name('db.admin.store.create');
@@ -113,7 +112,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'StoreController@delete')->name('db.admin.store.delete');
             });
 
-            Route::group(['prefix' => 'unit'], function (){
+            Route::group(['prefix' => 'unit'], function () {
                 Route::get('', 'UnitController@index')->name('db.admin.unit');
                 Route::get('show/{id}', 'UnitController@show')->name('db.admin.unit.show');
                 Route::get('create', 'UnitController@create')->name('db.admin.unit.create');
@@ -123,7 +122,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
             });
 
-            Route::group(['prefix' => 'phone'], function (){
+            Route::group(['prefix' => 'phone'], function () {
                 Route::get('provider', 'PhoneProviderController@index')->name('db.admin.phone_provider');
                 Route::get('provider/show/{id}', 'PhoneProviderController@show')->name('db.admin.phone_provider.show');
                 Route::get('provider/create', 'PhoneProviderController@create')->name('db.admin.phone_provider.create');
@@ -133,15 +132,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('provider/edit/{id}', 'PhoneProviderController@delete')->name('db.admin.phone_provider.delete');
             });
 
-            Route::group(['prefix' => 'settings'], function (){
+            Route::group(['prefix' => 'settings'], function () {
                 Route::get('', 'SettingsController@index')->name('db.admin.settings');
                 Route::get('edit/{id}', 'SettingsController@edit')->name('db.admin.settings.edit');
                 Route::patch('edit/{id}', 'SettingsController@update');
             });
         });
 
-        Route::group(['prefix' => 'master'], function (){
-            Route::group(['prefix' => 'customer'], function (){
+        Route::group(['prefix' => 'master'], function () {
+            Route::group(['prefix' => 'customer'], function () {
                 Route::get('', 'CustomerController@index')->name('db.master.customer');
                 Route::get('show/{id}', 'CustomerController@show')->name('db.master.customer.show');
                 Route::get('create', 'CustomerController@create')->name('db.master.customer.create');
@@ -151,7 +150,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'CustomerController@delete')->name('db.master.customer.delete');
             });
 
-            Route::group(['prefix' => 'supplier'], function (){
+            Route::group(['prefix' => 'supplier'], function () {
                 Route::get('', 'SupplierController@index')->name('db.master.supplier');
                 Route::get('show/{id}', 'SupplierController@show')->name('db.master.supplier.show');
                 Route::get('create', 'SupplierController@create')->name('db.master.supplier.create');
@@ -161,7 +160,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'SupplierController@delete')->name('db.master.supplier.delete');
             });
 
-            Route::group(['prefix' => 'product'], function (){
+            Route::group(['prefix' => 'product'], function () {
                 Route::get('', 'ProductController@index')->name('db.master.product');
                 Route::get('show/{id}', 'ProductController@show')->name('db.master.product.show');
                 Route::get('create', 'ProductController@create')->name('db.master.product.create');
@@ -171,7 +170,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'ProductController@delete')->name('db.master.product.delete');
             });
 
-            Route::group(['prefix' => 'producttype'], function (){
+            Route::group(['prefix' => 'producttype'], function () {
                 Route::get('', 'ProductTypeController@index')->name('db.master.producttype');
                 Route::get('show/{id}', 'ProductTypeController@show')->name('db.master.producttype.show');
                 Route::get('create', 'ProductTypeController@create')->name('db.master.producttype.create');
@@ -181,7 +180,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'ProductTypeController@delete')->name('db.master.producttype.delete');
             });
 
-            Route::group(['prefix' => 'warehouse'], function (){
+            Route::group(['prefix' => 'warehouse'], function () {
                 Route::get('', 'WarehouseController@index')->name('db.master.warehouse');
                 Route::get('show/{id}', 'WarehouseController@show')->name('db.master.warehouse.show');
                 Route::get('create', 'WarehouseController@create')->name('db.master.warehouse.create');
@@ -191,7 +190,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'WarehouseController@delete')->name('db.master.warehouse.delete');
             });
 
-            Route::group(['prefix' => 'bank'], function (){
+            Route::group(['prefix' => 'bank'], function () {
                 Route::get('', 'BankController@index')->name('db.master.bank');
                 Route::get('show/{id}', 'BankController@show')->name('db.master.bank.show');
                 Route::get('create', 'BankController@create')->name('db.master.bank.create');
@@ -201,7 +200,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'BankController@delete')->name('db.master.bank.delete');
             });
 
-            Route::group(['prefix' => 'truck'], function (){
+            Route::group(['prefix' => 'truck'], function () {
                 Route::get('', 'TruckController@index')->name('db.master.truck');
                 Route::get('show/{id}', 'TruckController@show')->name('db.master.truck.show');
                 Route::get('create', 'TruckController@create')->name('db.master.truck.create');
@@ -211,7 +210,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
             });
 
-            Route::group(['prefix' => 'vendor'], function (){
+            Route::group(['prefix' => 'vendor'], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
                 Route::get('trucking/create', 'VendorTruckingController@create')->name('db.master.vendor.trucking.create');
@@ -221,7 +220,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::delete('trucking/edit/{id}', 'VendorTruckingController@delete')->name('db.master.vendor.trucking.delete');
             });
 
-            Route::group(['prefix' => 'expense_template'], function (){
+            Route::group(['prefix' => 'expense_template'], function () {
                 Route::get('', 'ExpenseTemplateController@index')->name('db.master.expense_template');
                 Route::get('show/{id}', 'ExpenseTemplateController@show')->name('db.master.expense_template.show');
                 Route::get('create', 'ExpenseTemplateController@create')->name('db.master.expense_template.create');
@@ -232,11 +231,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
             });
         });
 
-        Route::group(['prefix' => 'bank'], function (){
+        Route::group(['prefix' => 'bank'], function () {
             Route::get('upload', 'BankController@upload')->name('db.bank.upload');
             Route::post('upload', 'BankController@storeUpload');
 
-            Route::group(['prefix' => 'giro'], function (){
+            Route::group(['prefix' => 'giro'], function () {
                 Route::get('', 'GiroController@index')->name('db.bank.giro');
                 Route::get('show/{id}', 'GiroController@show')->name('db.bank.giro.show');
                 Route::get('create', 'GiroController@create')->name('db.bank.giro.create');
@@ -244,12 +243,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::get('edit/{id}', 'GiroController@edit')->name('db.bank.giro.edit');
                 Route::patch('edit/{id}', 'GiroController@update');
                 Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
-
                 route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
             });
         });
 
-        Route::group(['prefix' => 'truck'], function (){
+        Route::group(['prefix' => 'truck'], function () {
             Route::get('maintenance', 'TruckMaintenanceController@index')->name('db.truck.maintenance');
             Route::get('maintenance/show/{id}', 'TruckMaintenanceController@show')->name('db.truck.maintenance.show');
             Route::get('maintenance/create', 'TruckMaintenanceController@create')->name('db.truck.maintenance.create');
@@ -258,7 +256,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
             Route::patch('maintenance/edit/{id}', 'TruckMaintenanceController@update');
         });
 
-        Route::group(['prefix' => 'customer'], function (){
+        Route::group(['prefix' => 'customer'], function () {
             Route::get('confirmation', 'CustomerController@confirmationIndex')->name('db.customer.confirmation.index');
             Route::get('confirmation/{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.customer');
             Route::get('confirmation/confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
@@ -277,7 +275,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
             Route::get('approval/reject/{id}', 'CustomerController@reject')->name('db.customer.approval.reject');
         });
 
-        Route::group(['prefix' => 'warehouse'], function (){
+        Route::group(['prefix' => 'warehouse'], function () {
             Route::get('inflow', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
             Route::get('inflow/receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
             Route::post('inflow/receipt/{id?}', 'WarehouseInflowController@saveReceipt');
@@ -289,8 +287,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
             Route::get('stockopname', 'WarehouseController@stockopname')->name('db.warehouse.stockopname.index');
         });
 
-        Route::group(['prefix' => 'price'], function (){
-            Route::group(['prefix' => 'price_level'], function (){
+        Route::group(['prefix' => 'price'], function () {
+            Route::group(['prefix' => 'price_level'], function () {
                 Route::get('', 'PriceLevelController@index')->name('db.price.price_level');
                 Route::get('show/{id}', 'PriceLevelController@show')->name('db.price.price_level.show');
                 Route::get('create', 'PriceLevelController@create')->name('db.price.price_level.create');
@@ -307,7 +305,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
             Route::post('stock/{id}', 'PriceController@updateStockPrice');
         });
 
-        Route::group(['prefix' => 'report'], function (){
+        Route::group(['prefix' => 'report'], function () {
             Route::group(['prefix' => 'trx'], function () {
                 Route::get('', 'ReportController@report_trx')->name('db.report.transaction');
             });
@@ -342,7 +340,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
                 Route::post('phone_provider', 'ReportController@generatePhoneProviderReport')->name('db.report.admin.phone_provider');
             });
         });
-        
+
         Route::get('user/profile/{id}', 'UserController@profile')->name('db.user.profile.show');
 
         Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('db.logs');

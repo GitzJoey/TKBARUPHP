@@ -206,6 +206,68 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@lang('purchase_order.create.box.expenses')</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="expensesListTable" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th width="22%">@lang('purchase_order.create.table.expense.header.name')</th>
+                                        <th width="22%"
+                                            class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
+                                        <th width="22%"
+                                            class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
+                                        <th width="22%"
+                                            class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="expense in so.expenses">
+                                        <td>
+                                            <input name="expense_name[]" type="text" class="form-control" ng-model="expense.name"
+                                                   readonly />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" value="@{{ expense.type.description }}" readonly />
+                                        </td>
+                                        <td>
+                                            <input name="expense_amount[]" type="text" class="form-control text-right"
+                                                   ng-model="expense.amount" fcsa-number readonly/>
+                                        </td>
+                                        <td>
+                                            <input name="expense_remarks[]" type="text" class="form-control" ng-model="expense.remarks"
+                                                   readonly />
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="expensesTotalListTable" class="table table-bordered">
+                                    <tbody>
+                                    <tr>
+                                        <td width="80%"
+                                            class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                        <td width="20%" class="text-right">
+                                            <span class="control-label-normal">@{{ expenseTotal() | number }}</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-1">
         <div class="box box-info">

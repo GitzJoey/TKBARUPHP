@@ -30,7 +30,7 @@
         {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.cash', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
-            @include('sales_order.payment_summary_partial')
+            @include('sales_order.payment.payment_summary_partial')
 
             <div class="row">
                 <div class="col-md-12">
@@ -105,6 +105,8 @@
     <script type="application/javascript">
         var app = angular.module("soModule", ['fcsa-number']);
         app.controller("soController", ['$scope', function ($scope) {
+            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
+
             var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
 
             $scope.so = {
@@ -117,7 +119,8 @@
                 vendorTrucking: {
                     id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
                     name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
-                }
+                },
+                expenses: []
             };
 
             for (var i = 0; i < currentSo.items.length; i++) {
@@ -131,10 +134,35 @@
                 });
             }
 
+            for (var i = 0; i < currentSo.expenses.length; i++) {
+                var type = _.find($scope.expenseTypes, function (type) {
+                    return type.code === currentSo.expenses[i].type;
+                });
+
+                $scope.so.expenses.push({
+                    id: currentSo.expenses[i].id,
+                    name: currentSo.expenses[i].name,
+                    type: {
+                        code: currentSo.expenses[i].type,
+                        description: type ? type.description : ''
+                    },
+                    amount: currentSo.expenses[i].amount,
+                    remarks: currentSo.expenses[i].remarks
+                });
+            }
+
             $scope.grandTotal = function () {
                 var result = 0;
                 angular.forEach($scope.so.items, function (item, key) {
                     result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                });
+                return result;
+            };
+
+            $scope.expenseTotal = function () {
+                var result = 0;
+                angular.forEach($scope.so.expenses, function (expense, key) {
+                    result += parseInt(expense.amount);
                 });
                 return result;
             };

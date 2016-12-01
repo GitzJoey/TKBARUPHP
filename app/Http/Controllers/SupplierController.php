@@ -8,19 +8,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\ExpenseTemplate;
-use Auth;
-use Illuminate\Http\Request;
-
 use App\Model\Bank;
-use App\Model\Lookup;
-use App\Model\Profile;
-use App\Model\Product;
-use App\Model\Supplier;
 use App\Model\BankAccount;
+use App\Model\ExpenseTemplate;
+use App\Model\Lookup;
 use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
+use App\Model\Product;
+use App\Model\Profile;
+use App\Model\Supplier;
 use App\Model\SupplierSetting;
+use Auth;
+use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
@@ -37,14 +36,17 @@ class SupplierController extends Controller
 
     public function show($id)
     {
-        $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'expenseTemplates')->find($id);
+        $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank',
+            'expenseTemplates')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $productList = Product::whereStatus('STATUS.ACTIVE')->get();
 
-        return view('supplier.show', compact('supplier', 'products', 'pics', 'phone_provider', 'banks', 'bank_account', 'statusDDL', 'productList'));
+        return view('supplier.show',
+            compact('supplier', 'products', 'pics', 'phone_provider', 'banks', 'bank_account', 'statusDDL',
+                'productList'));
     }
 
     public function create()
@@ -55,7 +57,8 @@ class SupplierController extends Controller
         $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get();
         $expenseTemplates = ExpenseTemplate::all();
 
-        return view('supplier.create', compact('bankDDL', 'statusDDL', 'providerDDL', 'productList', 'expenseTemplates'));
+        return view('supplier.create',
+            compact('bankDDL', 'statusDDL', 'providerDDL', 'productList', 'expenseTemplates'));
     }
 
     public function store(Request $request)
@@ -108,7 +111,7 @@ class SupplierController extends Controller
             }
         }
 
-        for($i = 0; $i < count($request['productSelected']); $i++) {
+        for ($i = 0; $i < count($request['productSelected']); $i++) {
             $pr = Product::whereId($request['productSelected'][$i])->first();
             $supplier->products()->save($pr);
         }
@@ -120,16 +123,19 @@ class SupplierController extends Controller
 
     public function edit($id)
     {
-        $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'products', 'expenseTemplates')->find($id);
+        $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'products',
+            'expenseTemplates')->find($id);
 
         $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get();
-        $productSelected = array_fill_keys($supplier->products()->pluck('products.id')->toArray(),true);
+        $productSelected = array_fill_keys($supplier->products()->pluck('products.id')->toArray(), true);
         $expenseTemplates = ExpenseTemplate::all();
 
-        return view('supplier.edit', compact('supplier', 'bankDDL', 'statusDDL', 'providerDDL', 'productList', 'productSelected', 'expenseTemplates'));
+        return view('supplier.edit',
+            compact('supplier', 'bankDDL', 'statusDDL', 'providerDDL', 'productList', 'productSelected',
+                'expenseTemplates'));
     }
 
     public function update($id, Request $request)
@@ -140,11 +146,14 @@ class SupplierController extends Controller
             return redirect(route('db.master.supplier'));
         }
 
-        $supplierBankAccountIds = $supplier->bankAccounts->map(function ($bankAccount){
+        $supplierBankAccountIds = $supplier->bankAccounts->map(function ($bankAccount) {
             return $bankAccount->id;
         })->all();
 
-        $supplierBankAccountsToBeDeleted = array_diff($supplierBankAccountIds, $request->input('bank_account_id'));
+        $inputtedBankAccountId = $request->input('bank_account_id');
+
+        $supplierBankAccountsToBeDeleted = array_diff($supplierBankAccountIds, isset($inputtedBankAccountId) ?
+            $inputtedBankAccountId : []);
 
         BankAccount::destroy($supplierBankAccountsToBeDeleted);
 
@@ -157,11 +166,14 @@ class SupplierController extends Controller
             $supplier->bankAccounts()->save($ba);
         }
 
-        $supplierProfileIds = $supplier->profiles->map(function ($profile){
+        $supplierProfileIds = $supplier->profiles->map(function ($profile) {
             return $profile->id;
         })->all();
 
-        $supplierProfilesToBeDeleted = array_diff($supplierProfileIds, $request->input('profile_id'));
+        $inputtedProfileId = $request->input('profile_id');
+
+        $supplierProfilesToBeDeleted = array_diff($supplierProfileIds, isset($inputtedProfileId) ?
+            $inputtedProfileId : []);
 
         Profile::destroy($supplierProfilesToBeDeleted);
 
@@ -174,11 +186,14 @@ class SupplierController extends Controller
 
             $supplier->profiles()->save($pa);
 
-            $profilePhoneNumberIds = $pa->phoneNumbers->map(function ($phoneNumber){
+            $profilePhoneNumberIds = $pa->phoneNumbers->map(function ($phoneNumber) {
                 return $phoneNumber->id;
             })->all();
 
-            $profilePhoneNumbersToBeDeleted = array_diff($profilePhoneNumberIds, $request->input('profile_' . $i . '_phone_number_id'));
+            $inputtedPhoneNumberId = $request->input('profile_' . $i . '_phone_number_id');
+
+            $profilePhoneNumbersToBeDeleted = array_diff($profilePhoneNumberIds,
+                isset($inputtedPhoneNumberId) ? $inputtedPhoneNumberId : []);
 
             PhoneNumber::destroy($profilePhoneNumbersToBeDeleted);
 
@@ -195,7 +210,7 @@ class SupplierController extends Controller
 
         $supplier->products()->detach();
 
-        for($i = 0; $i < count($request['productSelected']); $i++) {
+        for ($i = 0; $i < count($request['productSelected']); $i++) {
             $pr = Product::whereId($request['productSelected'][$i])->first();
             $supplier->products()->save($pr);
         }
@@ -221,8 +236,6 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::findOrFail($id);
 
-        $supplier->bankAccounts()->detach();
-        $supplier->profiles()->detach();
         $supplier->delete();
 
         return redirect(route('db.master.supplier'));

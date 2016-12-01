@@ -32,7 +32,7 @@
         {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.customer.payment.transfer', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
-            @include('sales_order.payment_summary_partial')
+            @include('sales_order.payment.payment_summary_partial')
 
             <div class="row">
                 <div class="col-md-12">

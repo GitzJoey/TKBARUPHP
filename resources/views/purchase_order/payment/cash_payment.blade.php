@@ -30,7 +30,7 @@
         {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.cash', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
-            @include('purchase_order.payment_summary_partial')
+            @include('purchase_order.payment.payment_summary_partial')
 
             <div class="row">
                 <div class="col-md-12">

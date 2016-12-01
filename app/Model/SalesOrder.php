@@ -168,9 +168,19 @@ class SalesOrder extends Model
 
     public function totalAmount()
     {
-        return $this->items->map(function($item, $key){
+        $itemAmounts = $this->items->map(function($item){
             return $item->price * $item->to_base_quantity;
-        })->sum();
+        });
+
+        $itemTotalAmount = count($itemAmounts) > 0 ? $itemAmounts->sum() : 0;
+
+        $expenseAmounts = $this->expenses->map(function ($expense){
+            return $expense->type === 'EXPENSETYPE.ADD' ? $expense->amount : ($expense->amount * -1);
+        });
+
+        $expenseTotalAmount = count($expenseAmounts) > 0 ? $expenseAmounts->sum() : 0;
+
+        return $itemTotalAmount + $expenseTotalAmount;
     }
 
     public function totalAmountPaid()
