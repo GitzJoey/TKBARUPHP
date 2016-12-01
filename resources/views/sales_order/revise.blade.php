@@ -391,8 +391,7 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <input name="expense_remarks[]" type="text" class="form-control" ng-model="expense.remarks"
-                                                               data-parsley-required="true" {{ $currentSo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
+                                                        <input name="expense_remarks[]" type="text" class="form-control" ng-model="expense.remarks" {{ $currentSo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
                                                     </td>
                                                     <td class="text-center">
                                                         @if($currentSo->status == 'POSTATUS.WA')

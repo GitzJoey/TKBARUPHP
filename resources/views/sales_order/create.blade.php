@@ -387,7 +387,7 @@
                                                                             </td>
                                                                             <td>
                                                                                 <input name="so_@{{ $parent.$index }}_expense_remarks[]" type="text" class="form-control"
-                                                                                       ng-model="expense.remarks" data-parsley-required="true"/>
+                                                                                       ng-model="expense.remarks"/>
                                                                             </td>
                                                                             <td class="text-center">
                                                                                 <button type="button" class="btn btn-danger btn-md"
