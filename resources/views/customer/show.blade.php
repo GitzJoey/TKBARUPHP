@@ -36,8 +36,8 @@
                         <li><a href="#tab_customer" data-toggle="tab">@lang('customer.show.tab.customer')</a></li>
                         <li><a href="#tab_pic" data-toggle="tab">@lang('customer.show.tab.pic')</a></li>
                         <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.show.tab.bank_account')</a></li>
-                        <li><a href="#tab_settings" data-toggle="tab">@lang('customer.show.tab.settings')</a></li>
                         <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.show.tab.expenses')</a></li>
+                        <li><a href="#tab_settings" data-toggle="tab">@lang('customer.show.tab.settings')</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_customer">
@@ -142,20 +142,20 @@
                                                     <div class="col-sm-10">
                                                         <table class="table table-bordered">
                                                             <thead>
-                                                            <tr>
-                                                                <th>@lang('customer.show.table_phone.header.provider')</th>
-                                                                <th>@lang('customer.show.table_phone.header.number')</th>
-                                                                <th>@lang('customer.show.table_phone.header.remarks')</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th>@lang('customer.show.table_phone.header.provider')</th>
+                                                                    <th>@lang('customer.show.table_phone.header.number')</th>
+                                                                    <th>@lang('customer.show.table_phone.header.remarks')</th>
+                                                                </tr>
                                                             </thead>
                                                             <tbody>
-                                                            @foreach($profile->phoneNumbers as $phone)
-                                                                <tr>
-                                                                    <td>{{ $phone->provider->name }}</td>
-                                                                    <td>{{ $phone->number }}</td>
-                                                                    <td>{{ $phone->remarks }}</td>
-                                                                </tr>
-                                                            @endforeach
+                                                                @foreach($profile->phoneNumbers as $phone)
+                                                                    <tr>
+                                                                        <td>{{ $phone->provider->name }}</td>
+                                                                        <td>{{ $phone->number }}</td>
+                                                                        <td>{{ $phone->remarks }}</td>
+                                                                    </tr>
+                                                                @endforeach
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -180,20 +180,20 @@
                                         <div class="box-body">
                                             <table class="table table-bordered">
                                                 <thead>
-                                                <tr>
-                                                    <th class="text-center">@lang('customer.show.table_bank.header.bank')</th>
-                                                    <th class="text-center">@lang('customer.show.table_bank.header.account_number')</th>
-                                                    <th class="text-center">@lang('customer.show.table_bank.header.remarks')</th>
-                                                </tr>
+                                                    <tr>
+                                                        <th class="text-center">@lang('customer.show.table_bank.header.bank')</th>
+                                                        <th class="text-center">@lang('customer.show.table_bank.header.account_number')</th>
+                                                        <th class="text-center">@lang('customer.show.table_bank.header.remarks')</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach($customer->bankAccounts as $ba)
-                                                    <tr>
-                                                        <td>{{ $ba->bank->name }}&nbsp;({{ $ba->bank->name }})</td>
-                                                        <td>{{ $ba->account_number }}</td>
-                                                        <td>{{ $ba->remarks }}</td>
-                                                    </tr>
-                                                @endforeach
+                                                    @foreach($customer->bankAccounts as $ba)
+                                                        <tr>
+                                                            <td>{{ $ba->bank->name }}&nbsp;({{ $ba->bank->name }})</td>
+                                                            <td>{{ $ba->account_number }}</td>
+                                                            <td>{{ $ba->remarks }}</td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -201,31 +201,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="tab_settings">
-                            <div class="form-group">
-                                <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
-                                <div class="col-sm-10">
-                                    <span class="control-label-normal">{{ $customer->priceLevel }}</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
-                                <div class="col-sm-10">
-                                    <label id="inputPaymentDueDay" class="control-label">
-                                        <span class="control-label-normal">{{ $customer->payment_due_day }}</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
                         <div class="tab-pane" id="tab_expenses">
                             <table class="table table-bordered">
                                 <thead>
-                                <tr>
-                                    <th class="text-center">@lang('customer.show.table_expense.header.name')</th>
-                                    <th class="text-center">@lang('customer.show.table_expense.header.type')</th>
-                                    <th class="text-center">@lang('customer.show.table_expense.header.amount')</th>
-                                    <th class="text-center">@lang('customer.show.table_expense.header.remarks')</th>
-                                </tr>
+                                    <tr>
+                                        <th class="text-center">@lang('customer.show.table_expense.header.name')</th>
+                                        <th class="text-center">@lang('customer.show.table_expense.header.type')</th>
+                                        <th class="text-center">@lang('customer.show.table_expense.header.amount')</th>
+                                        <th class="text-center">@lang('customer.show.table_expense.header.remarks')</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($customer->expenseTemplates as $key => $expenseTemplate)
@@ -246,6 +230,24 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="tab-pane" id="tab_settings">
+                            <div class="form-group">
+                                <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
+                                <div class="col-sm-10">
+                                    <label class="control-label">
+                                        <span class="control-label-normal">{{ $customer->priceLevel->name }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
+                                <div class="col-sm-10">
+                                    <label id="inputPaymentDueDay" class="control-label">
+                                        <span class="control-label-normal">{{ $customer->payment_due_day }}</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

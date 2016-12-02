@@ -36,8 +36,8 @@
                             <li class="active"><a href="#tab_customer" data-toggle="tab">@lang('customer.edit.tab.customer')&nbsp;<span id="custDataTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
-                            <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.create.tab.expenses')&nbsp;<span id="expensesTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_customer">
@@ -216,24 +216,6 @@
                                 </table>
                                 <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
                             </div>
-                            <div class="tab-pane" id="tab_settings">
-                                <div class="form-group">
-                                    <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
-                                    <div class="col-sm-10">
-                                        <select name="price_level" class="form-control" ng-model="pricelevel"
-                                                ng-options="pp.name + ' (' + pp.description + ')' for pp in pricelevelDDL track by pp.id"
-                                                data-parsley-required="true" data-parsley-group="tab_setting">
-                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputPaymentDueDay" name="payment_due_day" type="text" value="{{ $customer->payment_due_day }}" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
-                                    </div>
-                                </div>
-                            </div>
                             <div class="tab-pane" id="tab_expenses">
                                 <div class="form-group">
                                     <div class="col-md-11">
@@ -280,6 +262,24 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="tab-pane" id="tab_settings">
+                                <div class="form-group">
+                                    <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
+                                    <div class="col-sm-10">
+                                        <select name="price_level" class="form-control" ng-model="pricelevel"
+                                                ng-options="pp.name + ' (' + pp.description + ')' for pp in pricelevelDDL track by pp.id"
+                                                data-parsley-required="true" data-parsley-group="tab_setting">
+                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
+                                    <div class="col-sm-10">
+                                        <input id="inputPaymentDueDay" name="payment_due_day" type="text" value="{{ $customer->payment_due_day }}" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

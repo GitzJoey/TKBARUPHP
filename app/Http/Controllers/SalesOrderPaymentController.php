@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Giro;
 use App\Model\Bank;
 use App\Model\CashPayment;
 use App\Model\GiroPayment;
