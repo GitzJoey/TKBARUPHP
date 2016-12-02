@@ -8,7 +8,6 @@
 
 namespace App\Services\Implementation;
 
-
 use App\Model\Stock;
 use App\Services\StockService;
 use Doctrine\Common\Collections\Collection;

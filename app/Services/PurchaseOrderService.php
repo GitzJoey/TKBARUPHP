@@ -1,17 +1,16 @@
 <?php
-
-namespace App\Services;
-
-use App\Model\PurchaseOrder;
-use Doctrine\Common\Collections\Collection;
-use Illuminate\Http\Request;
-
 /**
  * Created by PhpStorm.
  * User: miftah.fathudin
  * Date: 11/13/2016
  * Time: 2:18 AM
  */
+
+namespace App\Services;
+
+use App\Model\PurchaseOrder;
+use Doctrine\Common\Collections\Collection;
+use Illuminate\Http\Request;
 
 /**
  * A service class which provide some service for purchase order operation such as creation, revision and rejection.

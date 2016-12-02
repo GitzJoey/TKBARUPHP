@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-
 use App\Model\SalesOrder;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;

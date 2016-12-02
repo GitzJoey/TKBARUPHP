@@ -8,8 +8,6 @@
 
 namespace App\Services;
 
-
-
 use Doctrine\Common\Collections\Collection;
 
 interface SupplierService
