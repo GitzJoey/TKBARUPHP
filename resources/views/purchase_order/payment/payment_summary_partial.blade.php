@@ -191,8 +191,8 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
-                                                   ng-model="item.price" data-parsley-required="true"
-                                                   fcsa-number readonly>
+                                                   ng-model="item.price" data-parsley-required="true" fcsa-number
+                                                   readonly>
                                         </td>
                                         <td class="text-right valign-middle">
                                             @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}

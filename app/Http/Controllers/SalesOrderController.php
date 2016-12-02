@@ -133,9 +133,11 @@ class SalesOrderController extends Controller
         $productDDL = Product::with('productUnits.unit')->get();
         $stocksDDL = $this->stockService->getStocksForSO();
         $customerDDL = collect([$currentSo->customer->toArray()]);
+        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
 
         return view('sales_order.revise',
-            compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL', 'customerDDL'));
+            compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL', 'customerDDL',
+                'expenseTypes'));
     }
 
     public function saveRevision(Request $request, $id)
