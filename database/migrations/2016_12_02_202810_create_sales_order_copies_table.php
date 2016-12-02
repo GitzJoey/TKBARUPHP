@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSalesOrderCopyTable extends Migration
+class CreateSalesOrderCopiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,15 +17,20 @@ class CreateSalesOrderCopyTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('customer_id')->default(0);
-            $table->unsignedBigInteger('vendor_truck_id')->default(0);
-            $table->unsignedBigInteger('sales_order_id')->default(0);
+            $table->unsignedBigInteger('warehouse_id')->default(0);
+            $table->unsignedBigInteger('vendor_trucking_id')->default(0);
+            $table->unsignedBigInteger('main_so_id')->default(0);
+            $table->string('main_so_code')->nullable();
             $table->string('code')->nullable();
             $table->dateTime('so_created')->nullable();
+            $table->string('so_type')->nullable();
             $table->dateTime('shipping_date')->nullable();
             $table->string('customer_type')->nullable();
+            $table->string('walk_in_cust')->nullable();
             $table->string('walk_in_cust_detail')->nullable();
-            $table->string('so_type')->nullable();
+            $table->string('article_code')->nullable();
             $table->string('status')->nullable();
+            $table->string('main_so_remarks')->nullable();
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
@@ -42,6 +47,6 @@ class CreateSalesOrderCopyTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sales_order_copies');
+        Schema::dropIfExists('sales_order_copies');
     }
 }

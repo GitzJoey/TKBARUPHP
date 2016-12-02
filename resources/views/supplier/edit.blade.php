@@ -262,8 +262,9 @@
                                         <th class="text-center">@lang('supplier.edit.table_expense.header.name')</th>
                                         <th class="text-center">@lang('supplier.edit.table_expense.header.type')</th>
                                         <th class="text-center">@lang('supplier.edit.table_expense.header.amount')</th>
+                                        <th class="text-center">@lang('supplier.edit.table_expense.header.internal_expense')</th>
                                         <th class="text-center">@lang('supplier.edit.table_expense.header.remarks')</th>
-                                        <th class="text-center">@lang('labels.ACTION')</th>
+                                        <th class="text-center">&nbsp;</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -277,6 +278,9 @@
                                         </td>
                                         <td class="text-center valign-middle">
                                             @{{ expense.amount }}
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            @{{ expense.is_internal_expense }}
                                         </td>
                                         <td class="valign-middle">
                                             @{{ expense.remarks }}
@@ -324,6 +328,24 @@
             $scope.expenseTemplates = JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}');
             $scope.productList = JSON.parse('{!! htmlspecialchars_decode($productList) !!}');
             $scope.productSelected = JSON.parse('{!! json_encode($productSelected) !!}');
+
+            _.forEach($scope.expenses, function (expense, index) {
+                if(expense.is_internal_expense){
+                    expense.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
+                }
+                else{
+                    expense.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
+                }
+            });
+
+            _.forEach($scope.expenseTemplates, function (expenseTemplate, index) {
+                if(expenseTemplate.is_internal_expense){
+                    expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
+                }
+                else{
+                    expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
+                }
+            });
 
             $scope.toInt = function(val) {
                 return parseInt(val,10);
@@ -382,6 +404,7 @@
                     name: expense.name,
                     type: expense.type,
                     amount: numeral(expense.amount).format('0,0'),
+                    is_internal_expense: expense.is_internal_expense,
                     remarks: expense.remarks
                 });
             };

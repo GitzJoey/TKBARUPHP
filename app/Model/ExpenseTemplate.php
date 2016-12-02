@@ -43,7 +43,7 @@ class ExpenseTemplate extends Model
     protected $table = 'expense_templates';
 
     protected $fillable = [
-        'name', 'type', 'amount', 'remarks', 'internal_expense'
+        'name', 'type', 'amount', 'remarks', 'is_internal_expense'
     ];
 
     public function hId()

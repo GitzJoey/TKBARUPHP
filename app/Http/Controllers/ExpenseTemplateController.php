@@ -37,7 +37,7 @@ class ExpenseTemplateController extends Controller
             'type' => $request->input('type'),
             'amount' => floatval(str_replace(',', '', $request->input('amount'))),
             'remarks' => $request->input('remarks'),
-            'internal_expense' => is_null($request->input('internal_expense')) ? false : true
+            'is_internal_expense' => $request->has('is_internal_expense') ? true : false
         ]);
 
         return redirect(route('db.master.expense_template'));
@@ -67,6 +67,7 @@ class ExpenseTemplateController extends Controller
         $expenseTemplate->type = $request->input('type');
         $expenseTemplate->amount = floatval(str_replace(',', '', $request->input('amount')));
         $expenseTemplate->remarks = $request->input('remarks');
+        $expenseTemplate->is_internal_expense = $request->has('is_internal_expense') ? true : false;
 
         $expenseTemplate->save();
 

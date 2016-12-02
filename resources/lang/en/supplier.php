@@ -48,6 +48,7 @@ return [
                 'type' => 'Type',
                 'amount' => 'Amount',
                 'remarks' => 'Remarks',
+                'internal_expense' => 'Internal Expense'
             ],
         ],
         'table' => [
@@ -115,6 +116,7 @@ return [
                 'type' => 'Type',
                 'amount' => 'Amount',
                 'remarks' => 'Remarks',
+                'internal_expense' => 'Internal Expense'
             ],
         ],
         'table' => [
@@ -188,6 +190,7 @@ return [
                 'type' => 'Type',
                 'amount' => 'Amount',
                 'remarks' => 'Remarks',
+                'internal_expense' => 'Internal Expense'
             ],
         ],
     ],

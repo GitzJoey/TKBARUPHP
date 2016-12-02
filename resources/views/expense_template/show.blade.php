@@ -52,6 +52,20 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputIsInternalExpense" class="col-sm-2 control-label">@lang('expense_template.field.internal_expense')</label>
+                        <div class="col-sm-10">
+                            <label id="inputIsInternalExpense" class="control-label">
+                                <span class="control-label-normal">
+                                    @if($expenseTemplate->is_internal_expense)
+                                        @lang('lookup.YESNOSELECT.YES')
+                                    @else
+                                        @lang('lookup.YESNOSELECT.NO')
+                                    @endif
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
                             <a href="{{ route('db.master.expense_template') }}" class="btn btn-default">@lang('buttons.back_button')</a>

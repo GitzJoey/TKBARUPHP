@@ -13,7 +13,8 @@ return [
                 'name' => 'Name',
                 'type' => 'Type',
                 'amount' => 'Amount',
-                'remarks' => 'Remarks'
+                'remarks' => 'Remarks',
+                'internal_expense' => 'Internal Expense'
             ]
         ]
     ],

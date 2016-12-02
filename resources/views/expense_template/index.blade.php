@@ -29,6 +29,7 @@
                     <th class="text-center">@lang('expense_template.index.table.header.name')</th>
                     <th class="text-center">@lang('expense_template.index.table.header.type')</th>
                     <th class="text-center">@lang('expense_template.index.table.header.amount')</th>
+                    <th class="text-center">@lang('expense_template.index.table.header.internal_expense')</th>
                     <th class="text-center">@lang('expense_template.index.table.header.remarks')</th>
                     <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
@@ -39,7 +40,14 @@
                         <td width="20%" class="valign-middle">{{ $expenseTemplate->name }}</td>
                         <td width="20%" class="text-center valign-middle">@lang('lookup.' . $expenseTemplate->type)</td>
                         <td width="20%" class="text-center valign-middle">{{ number_format($expenseTemplate->amount) }}</td>
-                        <td width="30%" class="valign-middle">{{ $expenseTemplate->remarks }}</td>
+                        <td width="10%" class="text-center valign-middle">
+                            @if($expenseTemplate->is_internal_expense)
+                                @lang('lookup.YESNOSELECT.YES')
+                            @else
+                                @lang('lookup.YESNOSELECT.NO')
+                            @endif
+                        </td>
+                        <td width="20%" class="valign-middle">{{ $expenseTemplate->remarks }}</td>
                         <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.master.expense_template.show', $expenseTemplate->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.master.expense_template.edit', $expenseTemplate->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>

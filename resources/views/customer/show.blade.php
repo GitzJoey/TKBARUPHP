@@ -208,6 +208,7 @@
                                         <th class="text-center">@lang('customer.show.table_expense.header.name')</th>
                                         <th class="text-center">@lang('customer.show.table_expense.header.type')</th>
                                         <th class="text-center">@lang('customer.show.table_expense.header.amount')</th>
+                                        <th class="text-center">@lang('customer.show.table_expense.header.internal_expense')</th>
                                         <th class="text-center">@lang('customer.show.table_expense.header.remarks')</th>
                                     </tr>
                                 </thead>
@@ -222,6 +223,13 @@
                                             </td>
                                             <td class="text-center valign-middle">
                                                 {{ number_format($expenseTemplate->amount) }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @if($expenseTemplate->is_internal_expense)
+                                                    @lang('lookup.YESNOSELECT.YES')
+                                                @else
+                                                    @lang('lookup.YESNOSELECT.NO')
+                                                @endif
                                             </td>
                                             <td class="valign-middle">
                                                 {{ $expenseTemplate->remarks }}
