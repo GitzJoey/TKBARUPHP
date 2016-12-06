@@ -8,10 +8,10 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
+use Doctrine\Common\Collections\Collection;
 
 use App\Model\SalesOrderCopy;
-use Doctrine\Common\Collections\Collection;
-use Illuminate\Http\Request;
 
 interface SalesOrderCopyService
 {

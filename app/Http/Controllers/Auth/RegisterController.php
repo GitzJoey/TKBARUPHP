@@ -76,7 +76,17 @@ class RegisterController extends Controller
         $usr->email = $data['email'];
         $usr->password = bcrypt($data['password']);
 
-        $usr->store_id = Store::whereIsDefault('YESNOSELECT.YES')->first()->id;
+        if (!empty($data['store_name'])) {
+            $id = $this->storeService->createDefaultStore($data['store_name']);
+            $usr->store_id = $id;
+        } else if (!empty($data['store_id'])) {
+            $usr->store_id = $data['store_id'];
+        } else if (!empty($data['picked_store_id'])) {
+            $this->storeService->setDefaultStore($data['picked_store_id']);
+            $usr->store_id = $data['picked_store_id'];
+        } else {
+
+        }
 
         $usr->save();
 
@@ -97,7 +107,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $store_mode = '';
-        $storeDDL = [];
+        $storeDDL = $this->storeService->getAllStore();
         $store_id = 0;
 
         if ($this->storeService->isEmptyStoreTable()) {
@@ -110,6 +120,8 @@ class RegisterController extends Controller
                 $store_mode = 'store_pick'; //this should never happen
             }
         }
+
+        $store_mode = 'store_pick';
 
         return view('auth.register', compact('store_mode', 'storeDDL', 'store_id'));
     }

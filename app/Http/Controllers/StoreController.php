@@ -8,20 +8,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Bank;
-use App\Model\BankAccount;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
 
+use App\Model\Bank;
 use App\Model\Store;
 use App\Model\Lookup;
+use App\Model\BankAccount;
+
+use App\Services\StoreService;
 
 class StoreController extends Controller
 {
-    public function __construct()
+    private $storeService;
+
+    public function __construct(StoreService $storeService)
     {
+        $this->storeService = $storeService;
         $this->middleware('auth');
     }
 
@@ -29,7 +34,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@index] ');
 
-        $store = Store::paginate(10);
+        $store = $this->storeService->getAllStorePaginated(10);
 
         return view('store.index', compact('store'));
     }
@@ -38,7 +43,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@show] $id: ' . $id);
 
-        $store = Store::with('bankAccounts.bank')->where('id', '=', $id)->first();
+        $store = $this->storeService->getStore($id);
 
         return view('store.show')->with('store', $store);
     }
