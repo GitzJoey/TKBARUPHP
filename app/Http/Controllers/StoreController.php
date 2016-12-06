@@ -34,7 +34,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@index] ');
 
-        $store = $this->storeService->getAllStorePaginated(10);
+        $store = Store::paginate(10);
 
         return view('store.index', compact('store'));
     }
@@ -43,7 +43,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@show] $id: ' . $id);
 
-        $store = $this->storeService->getStore($id);
+        $store = Store::find($id);
 
         return view('store.show')->with('store', $store);
     }

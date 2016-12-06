@@ -18,7 +18,7 @@
                 @if ($store_mode == 'create')
                     <div class="form-group has-feedback {{ $errors->has('store_name') ? ' has-error' : '' }}">
                         <input id="store_name" name="store_name" type="text" class="form-control" placeholder="Store name">
-                        <span class="fa fa-umbrella fa-fw form-control-feedback"></span>
+                        <span class="fa fa-umbrella form-control-feedback"></span>
                         @if ($errors->has('store_name'))
                             <span class="help-block"><strong>{{ $errors->first('store_name') }}</strong></span>
                         @endif

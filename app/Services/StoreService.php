@@ -14,12 +14,6 @@ interface StoreService
 {
     public function getAllStore();
 
-    public function getStore($id);
-
-    public function saveStore(Request $request);
-
-    public function getAllStorePaginated($viewPerPage);
-
     public function isEmptyStoreTable();
 
     public function defaultStorePresent();

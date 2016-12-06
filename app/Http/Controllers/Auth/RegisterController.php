@@ -115,13 +115,11 @@ class RegisterController extends Controller
         } else {
             if ($this->storeService->defaultStorePresent()) {
                 $store_mode = 'use_default';
-                $store_id = $this->storeService->getDefaultStore();
+                $store_id = $this->storeService->getDefaultStore()->id;
             } else {
                 $store_mode = 'store_pick'; //this should never happen
             }
         }
-
-        $store_mode = 'store_pick';
 
         return view('auth.register', compact('store_mode', 'storeDDL', 'store_id'));
     }

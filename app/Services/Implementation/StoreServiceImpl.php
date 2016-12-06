@@ -23,23 +23,11 @@ class StoreServiceImpl implements StoreService
         return $store;
     }
 
-    public function getAllStorePaginated($viewPerPage)
-    {
-        $store = Store::paginate($viewPerPage);
-
-        return $store;
-    }
-
     public function getStore($id)
     {
         $store = Store::with('bankAccounts.bank')->where('id', '=', $id)->first();
 
         return $store;
-    }
-
-    public function saveStore(Request $data)
-    {
-
     }
 
     public function isEmptyStoreTable()
@@ -54,7 +42,7 @@ class StoreServiceImpl implements StoreService
     {
         $store = $this->getDefaultStore();
 
-        if ($store) return true;
+        if (!is_null($store)) return true;
         else return false;
     }
 
@@ -87,6 +75,8 @@ class StoreServiceImpl implements StoreService
     {
         $store = new Store();
         $store->name = $storeName;
+        $store->status = 'STATUS.ACTIVE';
+        $store->is_default = 'YESNOSELECT.YES';
 
         $store->save();
 
