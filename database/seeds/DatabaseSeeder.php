@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
-        $this->call(DefaultStoreTableSeeder::class);
         $this->call(DefaultListUnitTableSeeder::class);
         $this->call(PhoneProviderTableSeeder::class);
         $this->call(CreateLookupTableSeeder::class);
 
         /* DUMMY DATA */
         if (App::environment('local', 'dev')) {
+            $this->call(DefaultStoreTableSeeder::class);
             $this->call(BankTableSeeder::class);
             $this->call(ProductTableSeeder::class);
             $this->call(ProductTypeTableSeeder::class);
