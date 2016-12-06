@@ -15,7 +15,14 @@
 
             <form role="form" method="post" action="{{ url('/register') }}">
                 {{ csrf_field() }}
-
+                <div class="form-group has-feedback {{ $errors->has('store_name') ? ' has-error' : '' }}">
+                    <input id="store_name" name="store_name" type="text" class="form-control" placeholder="Store name">
+                    <span class="fa fa-umbrella fa-fw form-control-feedback"></span>
+                    @if ($errors->has('store_name'))
+                        <span class="help-block"><strong>{{ $errors->first('store_name') }}</strong></span>
+                    @endif
+                </div>
+                <hr>
                 <div class="form-group has-feedback {{ $errors->has('name') ? ' has-error' : '' }}">
                     <input id="name" name="name" type="text" class="form-control" placeholder="Full name">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>

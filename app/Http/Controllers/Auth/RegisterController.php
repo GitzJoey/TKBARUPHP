@@ -12,6 +12,8 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use App\Service\StoreService;
+
 class RegisterController extends Controller
 {
     /*
@@ -27,6 +29,8 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    private $storeService;
+
     /**
      * Where to redirect users after login / registration.
      *
@@ -39,8 +43,9 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(StoreService $storeService)
     {
+        $this->storeService = $storeService;
         $this->middleware('guest');
     }
 
@@ -83,5 +88,25 @@ class RegisterController extends Controller
         $usr->userDetail()->save($userdetail);
 
         return $usr;
+    }
+
+    /**
+     * Override the RegistersUsers@showRegistrationForm
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        $store_mode = '';
+        if ($this->storeService->isEmptyStoreTable()) {
+            $store_mode = 'create_store';
+        } else {
+            if ($this->storeService->defaultStorePresent()) {
+                $store_mode = 'use_default_store';
+            } else {
+                $store_mode = 'store_pick'; //this should never happen
+            }
+        }
+
+        return view('auth.register')->with('store_mode');
     }
 }

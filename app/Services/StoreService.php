@@ -10,6 +10,8 @@ namespace App\Service;
 
 interface StoreService
 {
+    public function isEmptyStoreTable();
+
     public function defaultStorePresent();
 
     public function createDefaultStore();
