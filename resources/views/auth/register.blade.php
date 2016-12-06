@@ -13,7 +13,7 @@
         <div class="register-box-body">
             <p class="login-box-msg">Register a new membership</p>
 
-            <form role="form" method="post" action="{{ url('/register') }}">
+            <form id="registerForm" role="form" method="post" action="{{ url('/register') }}" data-parsley-validate="parsley">
                 {{ csrf_field() }}
                 @if ($store_mode == 'create')
                     <div class="form-group has-feedback {{ $errors->has('store_name') ? ' has-error' : '' }}">
@@ -68,8 +68,9 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox"> I agree to the <a href="#">terms</a>
+                                <input id="terms" type="checkbox" data-parsley-required="true" data-parsley-errors-container="#checkbox_req"> I agree to the <a href="#">terms</a>
                             </label>
+                            <span id="checkbox_req" class="help-block has-error"></span>
                         </div>
                     </div>
                     <div class="col-xs-4">
