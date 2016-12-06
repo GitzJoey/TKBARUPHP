@@ -11,7 +11,7 @@ use Illuminate\Database\Seeder;
 
 use App\Model\Lookup;
 
-class CreateLookupTableSeeder extends Seeder
+class LookupTableSeeder extends Seeder
 {
     public function run()
     {
