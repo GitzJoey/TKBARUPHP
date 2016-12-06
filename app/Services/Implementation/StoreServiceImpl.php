@@ -8,6 +8,8 @@
 
 namespace App\Services\Implementation;
 
+use Illuminate\Http\Request;
+
 use App\Model\Store;
 
 use App\Services\StoreService;
@@ -33,6 +35,11 @@ class StoreServiceImpl implements StoreService
         $store = Store::with('bankAccounts.bank')->where('id', '=', $id)->first();
 
         return $store;
+    }
+
+    public function saveStore(Request $data)
+    {
+
     }
 
     public function isEmptyStoreTable()
