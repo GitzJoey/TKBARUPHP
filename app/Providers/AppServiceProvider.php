@@ -22,7 +22,7 @@ use App\Services\SalesOrderCopyService;
 use App\Services\SalesOrderService;
 use App\Services\StockService;
 use App\Services\SupplierService;
-use App\Service\StoreService;
+use App\Services\StoreService;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -71,7 +71,7 @@ class AppServiceProvider extends ServiceProvider
             return new PurchaseOrderCopyServiceImpl();
         });
 
-        $this->app->singleton(salesOrderCopyService::class, function (){
+        $this->app->singleton(SalesOrderCopyService::class, function (){
             return new salesOrderCopyServiceImpl();
         });
 

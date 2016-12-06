@@ -24,16 +24,21 @@ class StoreServiceImpl implements StoreService
 
     public function defaultStorePresent()
     {
-        $store = Store::whereIsDefault('YESNOSELECTION.YES')->get()-first();
+        $store = $this->getDefaultStore();
 
         if ($store) return true;
         else return false;
     }
 
-    public function createDefaultStore($store_name)
+    public function getDefaultStore()
+    {
+        return Store::whereIsDefault('YESNOSELECT.YES')->get()->first();
+    }
+
+    public function createDefaultStore($storeName)
     {
         $store = new Store();
-        $store->name = $store_name;
+        $store->name = $storeName;
 
         $store->save();
 

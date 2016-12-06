@@ -6,7 +6,7 @@
  * Time: 9:13 PM
  */
 
-namespace App\Service;
+namespace App\Services;
 
 interface StoreService
 {
@@ -14,5 +14,7 @@ interface StoreService
 
     public function defaultStorePresent();
 
-    public function createDefaultStore();
+    public function getDefaultStore();
+
+    public function createDefaultStore($storeName);
 }

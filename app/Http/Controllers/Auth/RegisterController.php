@@ -12,7 +12,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-use App\Service\StoreService;
+use App\Services\StoreService;
 
 class RegisterController extends Controller
 {
@@ -97,16 +97,20 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $store_mode = '';
+        $storeDDL = [];
+        $store_id = 0;
+
         if ($this->storeService->isEmptyStoreTable()) {
-            $store_mode = 'create_store';
+            $store_mode = 'create';
         } else {
             if ($this->storeService->defaultStorePresent()) {
-                $store_mode = 'use_default_store';
+                $store_mode = 'use_default';
+                $store_id = $this->storeService->getDefaultStore();
             } else {
                 $store_mode = 'store_pick'; //this should never happen
             }
         }
 
-        return view('auth.register')->with('store_mode');
+        return view('auth.register', compact('store_mode', 'storeDDL', 'store_id'));
     }
 }
