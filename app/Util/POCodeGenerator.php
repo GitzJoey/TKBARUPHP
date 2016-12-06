@@ -39,7 +39,7 @@ class POCodeGenerator implements StringGenerator
         return strtoupper($generatedString);
     }
 
-    public static function generatePOCode()
+    public static function generateCode()
     {
         $result = '';
 

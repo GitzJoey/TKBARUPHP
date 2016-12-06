@@ -48,7 +48,7 @@ class SalesOrderController extends Controller
         $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get(['code', 'description']);
         $soStatusDraft = Lookup::where('code', '=', 'SOSTATUS.D')->get(['description', 'code']);
         $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
-        $soCode = SOCodeGenerator::generateSOCode();
+        $soCode = SOCodeGenerator::generateCode();
 
         $userSOs = session('userSOs', collect([]));
 

@@ -32,7 +32,7 @@ class SOCodeGenerator implements StringGenerator
         return strtoupper($generatedString);
     }
 
-    public static function generateSOCode()
+    public static function generateCode()
     {
         $result = '';
 

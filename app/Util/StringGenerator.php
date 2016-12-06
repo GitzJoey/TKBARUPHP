@@ -18,7 +18,7 @@ namespace App\Util;
 interface StringGenerator
 {
     /**
-     * @param $length the length of the generated string
+     * @param int $length the length of the generated string
      * @return string generated string with specified length
      */
     public static function generateWithLength($length);

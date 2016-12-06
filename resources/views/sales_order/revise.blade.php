@@ -197,7 +197,7 @@
                                             <input type="text" class="form-control" readonly
                                                    value="{{ empty($currentSo->vendorTrucking->name) ? '':$currentSo->vendorTrucking->name }}">
                                             <input type="hidden" name="vendor_trucking_id"
-                                                   value="{{ empty($currentPo->vendorTrucking->id) ? '':$currentPo->vendorTrucking->id }}">
+                                                   value="{{ empty($currentSo->vendorTrucking->id) ? '':$currentSo->vendorTrucking->id }}">
                                         @endif
                                     </div>
                                 </div>
@@ -351,8 +351,8 @@
                     <div class="col-md-12">
                         <div class="box box-info">
                             <div class="box-header with-border">
-                                <h3 class="box-title">@lang('purchase_order.create.box.expenses')</h3>
-                                @if($currentSo->status == 'POSTATUS.WA')
+                                <h3 class="box-title">@lang('sales_order.revise.box.expenses')</h3>
+                                @if($currentSo->status == 'SOSTATUS.WD')
                                     <button type="button" class="btn btn-primary btn-xs pull-right"
                                             ng-click="insertExpense()"><span class="fa fa-plus fa-fw"/></button>
                                 @endif
@@ -363,14 +363,14 @@
                                         <table id="expensesListTable" class="table table-bordered table-hover">
                                             <thead>
                                             <tr>
-                                                <th width="30%">@lang('purchase_order.create.table.expense.header.name')</th>
+                                                <th width="30%">@lang('sales_order.revise.table.expense.header.name')</th>
                                                 <th width="20%"
-                                                    class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
+                                                    class="text-center">@lang('sales_order.revise.table.expense.header.type')</th>
                                                 <th width="25%"
-                                                    class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
+                                                    class="text-center">@lang('sales_order.revise.table.expense.header.remarks')</th>
                                                 <th width="5%">&nbsp;</th>
                                                 <th width="20%"
-                                                    class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
+                                                    class="text-center">@lang('sales_order.revise.table.expense.header.amount')</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -379,10 +379,10 @@
                                                     <input type="hidden" name="expense_id[]" ng-value="expense.id"/>
                                                     <input name="expense_name[]" type="text" class="form-control"
                                                            ng-model="expense.name"
-                                                           data-parsley-required="true" {{ $currentSo->status == 'POSTATUS.WA' ? '' : 'readonly' }} />
+                                                           data-parsley-required="true" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
                                                 </td>
                                                 <td>
-                                                    @if($currentSo->status == 'POSTATUS.WA')
+                                                    @if($currentSo->status == 'SOSTATUS.WD')
                                                         <select name="expense_type[]" data-parsley-required="true"
                                                                 class="form-control" ng-model="expense.type"
                                                                 ng-options="expenseType as expenseType.description for expenseType in expenseTypes track by expenseType.code">
@@ -397,10 +397,10 @@
                                                 </td>
                                                 <td>
                                                     <input name="expense_remarks[]" type="text" class="form-control"
-                                                           ng-model="expense.remarks" {{ $currentSo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
+                                                           ng-model="expense.remarks" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}/>
                                                 </td>
                                                 <td class="text-center">
-                                                    @if($currentSo->status == 'POSTATUS.WA')
+                                                    @if($currentSo->status == 'SOSTATUS.WD')
                                                         <button type="button" class="btn btn-danger btn-md"
                                                                 ng-click="removeExpense($index)"><span
                                                                     class="fa fa-minus"></span>
@@ -424,7 +424,7 @@
                                             <tbody>
                                             <tr>
                                                 <td width="80%"
-                                                    class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                                    class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
                                                     <span class="control-label-normal">@{{ expenseTotal() | number }}</span>
                                                 </td>
@@ -441,7 +441,7 @@
             <div class="col-md-3">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">@lang('purchase_order.create.box.transaction_summary')</h3>
+                        <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                     </div>
                     <div class="box-body">
                         @for ($i = 0; $i < 23; $i++)
@@ -557,7 +557,7 @@
             $scope.expenseTotal = function () {
                 var result = 0;
                 angular.forEach($scope.so.expenses, function (expense, key) {
-                    if (expense.type === 'EXPENSETYPE.ADD')
+                    if (expense.type.code === 'EXPENSETYPE.ADD')
                         result += parseInt(numeral().unformat(expense.amount));
                     else
                         result -= parseInt(numeral().unformat(expense.amount));

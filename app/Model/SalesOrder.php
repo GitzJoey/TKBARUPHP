@@ -204,6 +204,11 @@ class SalesOrder extends Model
         return $this->morphMany('App\Model\Expense', 'expensable');
     }
 
+    public function copies()
+    {
+        return $this->hasMany('App\Model\SalesOrderCopy', 'main_so_id');
+    }
+
     public static function boot()
     {
         parent::boot();

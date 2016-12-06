@@ -201,6 +201,11 @@ class PurchaseOrder extends Model
         return $this->morphMany('App\Model\Expense', 'expensable');
     }
 
+    public function copies()
+    {
+        return $this->hasMany('App\Model\PurchaseOrderCopy', 'main_po_id');
+    }
+
     public static function boot()
     {
         parent::boot();

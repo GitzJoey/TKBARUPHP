@@ -18,11 +18,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::get('/po/code', function (){
-    return \App\Util\POCodeGenerator::generatePOCode();
+    return \App\Util\POCodeGenerator::generateCode();
 })->name('api.po.code');
 
 Route::get('/so/code', function (){
-    return \App\Util\SOCodeGenerator::generateSOCode();
+    return \App\Util\SOCodeGenerator::generateCode();
 })->name('api.so.code');
 
 Route::group(['prefix' => 'warehouse'], function ()

@@ -57,7 +57,7 @@ return [
             'page_title' => 'Revise Purchase Order',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Purchase Order Lists',
+                'title' => 'List of Purchase Order',
             ],
             'table' => [
                 'header' => [
@@ -156,7 +156,7 @@ return [
             'page_title' => 'PO Payment',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Purchase Order Lists',
+                'title' => 'List of Purchase Order',
             ],
             'table' => [
                 'header' => [
@@ -251,6 +251,123 @@ return [
                 'payment_amount' => 'Amount',
             ],
         ],
+    ],
+    'copy' => [
+        'search' => [
+            'title' => 'Purchase Order Copy',
+            'page_title' => 'Purchase Order Copy',
+            'page_title_desc' => '',
+            'header' => [
+                'search' => 'Search'
+            ],
+            'po_not_found' => "Purchase order with code ':code' not found."
+        ],
+        'index' => [
+            'title' => 'Purchase Order Copy',
+            'page_title' => 'Purchase Order Copy',
+            'page_title_desc' => '',
+            'header' => [
+                'search' => 'Search',
+                'title' => 'List of Purchase Order Copy',
+            ],
+            'po_not_found' => "Purchase order with code ':code' not found.",
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'po_date' => 'Date',
+                    'supplier' => 'Supplier',
+                    'shipping_date' => 'Shipping Date',
+                ],
+            ],
+        ],
+        'create' => [
+            'title' => 'Create PO Copy',
+            'page_title' => 'Create PO Copy',
+            'page_title_desc' => 'Create a new copy of purchase order',
+            'box' => [
+                'supplier' => 'Supplier',
+                'purchase_order_detail' => 'Purchase Order Detail',
+                'shipping' => 'Shipping',
+                'transactions' => 'Transactions',
+                'expenses' => 'Expenses',
+                'transaction_summary' => 'Transaction Summary',
+                'remarks' => 'Remarks',
+                'po_copy_remarks' => 'PO Copy Remarks',
+            ],
+            'field' => [
+                'supplier_type' => 'Type',
+                'supplier_name' => 'Name',
+                'supplier_details' => 'Details',
+                'po_code' => 'PO Code',
+                'po_copy_code' => 'PO Copy Code',
+                'po_type' => 'Type',
+                'po_date' => 'Date',
+                'po_status' => 'Status',
+                'shipping_date' => 'Shipping Date',
+                'warehouse' => 'Warehouse',
+                'vendor_trucking' => 'Vendor Trucking',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Product Name',
+                        'quantity' => 'Quantity',
+                        'unit' => 'Unit',
+                        'price_unit' => 'Price',
+                        'total_price' => 'Total Price',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total Amount',
+                    ],
+                ],
+            ],
+        ],
+        'edit' => [
+            'title' => 'Edit PO Copy',
+            'page_title' => 'Edit PO Copy',
+            'page_title_desc' => 'Edit a copy of purchase order',
+            'box' => [
+                'supplier' => 'Supplier',
+                'purchase_order_detail' => 'Purchase Order Detail',
+                'shipping' => 'Shipping',
+                'transactions' => 'Transactions',
+                'expenses' => 'Expenses',
+                'transaction_summary' => 'Transaction Summary',
+                'remarks' => 'Remarks',
+                'po_copy_remarks' => 'PO Copy Remarks',
+            ],
+            'field' => [
+                'supplier_type' => 'Type',
+                'supplier_name' => 'Name',
+                'supplier_details' => 'Details',
+                'po_code' => 'PO Code',
+                'po_copy_code' => 'PO Copy Code',
+                'po_type' => 'Type',
+                'po_date' => 'Date',
+                'po_status' => 'Status',
+                'shipping_date' => 'Shipping Date',
+                'warehouse' => 'Warehouse',
+                'vendor_trucking' => 'Vendor Trucking',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Product Name',
+                        'quantity' => 'Quantity',
+                        'unit' => 'Unit',
+                        'price_unit' => 'Price',
+                        'total_price' => 'Total Price',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total Amount',
+                    ],
+                ],
+            ],
+        ]
     ],
     'partial' => [
         'supplier' => [

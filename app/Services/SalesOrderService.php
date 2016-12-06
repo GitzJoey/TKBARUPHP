@@ -77,4 +77,11 @@ interface SalesOrderService
      */
     public function storeToSession(Request $request);
 
+    /**
+     * Get a sales order with given code to be copied.
+     *
+     * @param string $soCode code of sales order to be copied.
+     * @return SalesOrder sales order to be copied.
+     */
+    public function getSOForCopy($soCode);
 }

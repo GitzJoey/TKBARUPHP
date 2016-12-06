@@ -66,6 +66,7 @@ return [
             'shipping' => 'Shipping',
             'transactions' => 'Transactions',
             'remarks' => 'Remarks',
+            'expenses' => 'Expenses',
         ],
         'field' => [
             'customer_type' => 'Customer Type',
@@ -87,6 +88,14 @@ return [
                     'unit' => 'UoM',
                     'price_unit' => 'Price',
                     'total_price' => 'Total Price',
+                ],
+            ],
+            'expense' => [
+                'header' => [
+                    'name' => 'Name',
+                    'type' => 'Type',
+                    'amount' => 'Amount',
+                    'remarks' => 'Remarks',
                 ],
             ],
             'total' => [
@@ -318,16 +327,117 @@ return [
         ],
     ],
     'copy' => [
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => '',
-        ],
-        'table' => [
+        'search' => [
+            'title' => 'Sales Order Copy',
+            'page_title' => 'Sales Order Copy',
+            'page_title_desc' => '',
             'header' => [
-                'copy_code' => '',
-                'remarks' => '',
+                'search' => 'Search'
+            ],
+            'so_not_found' => "Sales order with code ':code' not found."
+        ],
+        'index' => [
+            'title' => 'Sales Order Copy',
+            'page_title' => 'Sales Order Copy',
+            'page_title_desc' => '',
+            'header' => [
+                'search' => 'Search',
+                'title' => 'List of Sales Order Copy',
+            ],
+            'po_not_found' => "Sales order with code ':code' not found.",
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'so_date' => 'Date',
+                    'customer' => 'Customer',
+                    'shipping_date' => 'Shipping Date',
+                ],
+            ],
+        ],
+        'create' => [
+            'title' => 'Create SO Copy',
+            'page_title' => 'Create SO Copy',
+            'page_title_desc' => 'Create a new copy of sales order',
+            'box' => [
+                'customer' => 'Customer',
+                'sales_order_detail' => 'Sales Order Detail',
+                'shipping' => 'Shipping',
+                'transactions' => 'Transactions',
+                'transaction_summary' => 'Transaction Summary',
+                'remarks' => 'Remarks',
+                'so_copy_remarks' => 'SO Copy Remarks',
+            ],
+            'field' => [
+                'customer_type' => 'Type',
+                'customer_name' => 'Name',
+                'customer_details' => 'Details',
+                'so_code' => 'SO Code',
+                'so_copy_code' => 'SO Copy Code',
+                'so_type' => 'Type',
+                'so_date' => 'Date',
+                'so_status' => 'Status',
+                'shipping_date' => 'Shipping Date',
+                'warehouse' => 'Warehouse',
+                'vendor_trucking' => 'Vendor Trucking',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Product Name',
+                        'quantity' => 'Quantity',
+                        'unit' => 'Unit',
+                        'price_unit' => 'Price',
+                        'total_price' => 'Total Price',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total Amount',
+                    ],
+                ],
+            ],
+        ],
+        'edit' => [
+            'title' => 'Edit SO Copy',
+            'page_title' => 'Edit SO Copy',
+            'page_title_desc' => 'Edit a copy of sales order',
+            'box' => [
+                'customer' => 'Customer',
+                'sales_order_detail' => 'Sales Order Detail',
+                'shipping' => 'Shipping',
+                'transactions' => 'Transactions',
+                'transaction_summary' => 'Transaction Summary',
+                'remarks' => 'Remarks',
+                'so_copy_remarks' => 'SO Copy Remarks',
+            ],
+            'field' => [
+                'customer_type' => 'Type',
+                'customer_name' => 'Name',
+                'customer_details' => 'Details',
+                'so_code' => 'SO Code',
+                'so_copy_code' => 'SO Copy Code',
+                'so_type' => 'Type',
+                'so_date' => 'Date',
+                'so_status' => 'Status',
+                'shipping_date' => 'Shipping Date',
+                'warehouse' => 'Warehouse',
+                'vendor_trucking' => 'Vendor Trucking',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => 'Product Name',
+                        'quantity' => 'Quantity',
+                        'unit' => 'Unit',
+                        'price_unit' => 'Price',
+                        'total_price' => 'Total Price',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total Amount',
+                    ],
+                ],
             ],
         ],
     ],

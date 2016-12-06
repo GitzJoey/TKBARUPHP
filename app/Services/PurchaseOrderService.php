@@ -79,4 +79,12 @@ interface PurchaseOrderService
      * @return PurchaseOrder
      */
     public function getPOForPayment($poId);
+
+    /**
+     * Get purchase order to be copied.
+     *
+     * @param string $poCode code of purchase order.
+     * @return PurchaseOrder
+     */
+    public function getPOForCopy($poCode);
 }

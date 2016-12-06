@@ -53,8 +53,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment');
             });
 
-            Route::get('copy/{code?}', 'PurchaseOrderController@copyPO')->name('db.po.copy.index');
-            Route::patch('copy/{id}', 'PurchaseOrderController@savePOCopy');
+            Route::group(['prefix' => 'copy'], function () {
+                Route::get('', 'PurchaseOrderCopyController@search')->name('db.po.copy');
+                Route::get('{code?}', 'PurchaseOrderCopyController@index')->name('db.po.copy.index');
+                Route::get('{code}/create', 'PurchaseOrderCopyController@create')->name('db.po.copy.create');
+                Route::post('{code}/create', 'PurchaseOrderCopyController@store');
+                Route::get('{code}/edit/{id}', 'PurchaseOrderCopyController@edit')->name('db.po.copy.edit');
+                Route::patch('{code}/edit/{id}', 'PurchaseOrderCopyController@update');
+                Route::delete('{code}/delete/{id}', 'PurchaseOrderCopyController@delete')->name('db.po.copy.delete');
+            });
         });
 
         Route::group(['prefix' => 'so'], function () {
@@ -77,8 +84,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('{id}/giro', 'SalesOrderPaymentController@saveGiroPayment');
             });
 
-            Route::get('copy/{code?}', 'SalesOrderController@copySO')->name('db.so.copy.index');
-            Route::patch('copy/{id}', 'SalesOrderController@saveSOCopy');
+            Route::group(['prefix' => 'copy'], function () {
+                Route::get('', 'SalesOrderCopyController@search')->name('db.so.copy');
+                Route::get('{code?}', 'SalesOrderCopyController@index')->name('db.so.copy.index');
+                Route::get('{code}/create', 'SalesOrderCopyController@create')->name('db.so.copy.create');
+                Route::post('{code}/create', 'SalesOrderCopyController@store');
+                Route::get('{code}/edit/{id}', 'SalesOrderCopyController@edit')->name('db.so.copy.edit');
+                Route::patch('{code}/edit/{id}', 'SalesOrderCopyController@update');
+                Route::delete('{code}/delete/{id}', 'SalesOrderCopyController@delete')->name('db.so.copy.delete');
+            });
         });
 
         Route::group(['prefix' => 'admin'], function () {

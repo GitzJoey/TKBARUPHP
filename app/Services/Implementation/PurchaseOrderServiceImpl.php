@@ -228,4 +228,17 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
             'supplier.products.type', 'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($poId);
     }
+
+    /**
+     * Get purchase order to be copied.
+     *
+     * @param string $poCode code of purchase order to be copied.
+     * @return PurchaseOrder
+     */
+    public function getPOForCopy($poCode)
+    {
+        return PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
+            'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type',
+            'supplier.expenseTemplates', 'vendorTrucking', 'warehouse')->where('code', '=', $poCode)->first();
+    }
 }

@@ -120,7 +120,7 @@ class SalesOrderServiceImpl implements SalesOrderService
     public function getSOForRevise($id)
     {
         return SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
-            'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse')->find($id);
+            'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
     }
 
     /**
@@ -284,5 +284,17 @@ class SalesOrderServiceImpl implements SalesOrderService
         }
 
         session(['userSOs' => collect($SOs)]);
+    }
+
+    /**
+     * Get a sales order with given code to be copied.
+     *
+     * @param string $soCode code of sales order to be copied.
+     * @return SalesOrder sales order to be copied.
+     */
+    public function getSOForCopy($soCode)
+    {
+        return SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
+            'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse')->where('code', '=', $soCode)->first();
     }
 }

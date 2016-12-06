@@ -41,7 +41,7 @@
                         @endif
                         @if(Entrust::can('po.po-copy'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.po.copy') || Active::checkRoutePattern('db.po.copy.*')) }}">
-                                <a href="{{ route('db.po.copy.index') }}"><i class="fa fa-copy fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_copy')</a>
+                                <a href="{{ route('db.po.copy') }}"><i class="fa fa-copy fa-rotate-180 fa-fw"></i>&nbsp;@lang('menu.item.po_copy')</a>
                             </li>
                         @endif
                     </ul>
@@ -75,7 +75,7 @@
                         @endif
                         @if(Entrust::can('so.so-copy'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.so.copy') || Active::checkRoutePattern('db.so.copy.*')) }}">
-                                <a href="{{ route('db.so.copy.index') }}"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a>
+                                <a href="{{ route('db.so.copy') }}"><i class="fa fa-copy fa-fw"></i>&nbsp;@lang('menu.item.so_copy')</a>
                             </li>
                         @endif
                     </ul>

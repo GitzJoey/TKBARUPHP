@@ -4,14 +4,18 @@ namespace App\Providers;
 
 use App\Http\Controllers\PurchaseOrderPaymentController;
 use App\Services\Implementation\InflowServiceImpl;
+use App\Services\Implementation\PurchaseOrderCopyServiceImpl;
 use App\Services\Implementation\PurchaseOrderPaymentServiceImpl;
 use App\Services\Implementation\PurchaseOrderServiceImpl;
+use App\Services\Implementation\SalesOrderCopyServiceImpl;
 use App\Services\Implementation\SalesOrderServiceImpl;
 use App\Services\Implementation\StockServiceImpl;
 use App\Services\Implementation\SupplierServiceImpl;
 use App\Services\InflowService;
 use App\Services\PaymentService;
+use App\Services\PurchaseOrderCopyService;
 use App\Services\PurchaseOrderService;
+use App\Services\SalesOrderCopyService;
 use App\Services\SalesOrderService;
 use App\Services\StockService;
 use App\Services\SupplierService;
@@ -57,6 +61,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(InflowService::class, function (){
             return new InflowServiceImpl();
         });
+
+        $this->app->singleton(PurchaseOrderCopyService::class, function (){
+            return new PurchaseOrderCopyServiceImpl();
+        });
+
+        $this->app->singleton(salesOrderCopyService::class, function (){
+            return new salesOrderCopyServiceImpl();
+        });
     }
 
     /**
@@ -72,7 +84,9 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\StockService',
             'App\Services\SupplierService',
             'App\Services\InflowService',
-            'App\Services\PaymentService'
+            'App\Services\PaymentService',
+            'App\Services\PurchaseOrderCopyService',
+            'App\Services\SalesOrderCopyService'
         ];
     }
 }
