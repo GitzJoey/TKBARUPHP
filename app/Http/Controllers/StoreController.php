@@ -83,7 +83,7 @@ class StoreController extends Controller
         }
 
         if ($data['is_default'] == 'YESNOSELECT.YES') {
-            $this->resetIsDefault();
+            $this->storeService->resetIsDefault();
         }
 
         $store = Store::create([
@@ -108,18 +108,6 @@ class StoreController extends Controller
         }
 
         return redirect(route('db.admin.store'));
-    }
-
-    private function resetIsDefault()
-    {
-        Log::info('[StoreController@changeIsDefault] ');
-
-        $store = Store::whereIsDefault('YESNOSELECT.YES')->get();
-
-        foreach ($store as $s) {
-            $s->is_default = Lookup::whereCode('YESNOSELECT.NO')->first()->code;
-            $s->save();
-        }
     }
 
     public function edit($id)
@@ -151,7 +139,7 @@ class StoreController extends Controller
         }
 
         if ($data['is_default'] == 'YESNOSELECT.YES') {
-            $this->resetIsDefault();
+            $this->storeService->resetIsDefault();
         }
 
         $store->bankAccounts()->delete();

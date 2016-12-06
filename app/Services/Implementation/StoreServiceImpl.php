@@ -73,10 +73,8 @@ class StoreServiceImpl implements StoreService
         $store->save();
     }
 
-    private function resetIsDefault()
+    public function resetIsDefault()
     {
-        Log::info('[StoreController@changeIsDefault] ');
-
         $store = Store::whereIsDefault('YESNOSELECT.YES')->get();
 
         foreach ($store as $s) {
