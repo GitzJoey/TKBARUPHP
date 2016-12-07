@@ -83,4 +83,13 @@ return [
             'customer' => '',
         ],
     ],
+    'template' => [
+        'warehouse' => [
+            'report_name' => 'Laporan Gudang',
+            'parameter' => [
+                'name' => 'Nama'
+            ],
+            'footer' => 'Dicetak oleh :user pada :date'
+        ]
+    ]
 ];

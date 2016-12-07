@@ -83,4 +83,13 @@ return [
             'customer' => 'Customer',
         ],
     ],
+    'template' => [
+        'warehouse' => [
+            'report_name' => 'Warehouse Report',
+            'parameter' => [
+                'name' => 'Name'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ]
+    ]
 ];
