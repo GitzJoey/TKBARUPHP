@@ -166,24 +166,25 @@
                         <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                     </div>
                 </div>
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.warehouse')</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
+                <form action="{{ route('db.report.master.warehouse') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.warehouse')</h3>
+                        </div>
+                        <div class="box-body">
                             <div class="form-group">
                                 <label for="inputWarehouse_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
                                 <div class="col-sm-9">
-                                    <input id="inputWarehouse_Name" type="text" class="form-control" placeholder="@lang('report.master.field.name')">
+                                    <input id="inputWarehouse_Name" type="text" name="name" class="form-control" placeholder="@lang('report.master.field.name')">
                                 </div>
                             </div>
                         </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
                     </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
-                </div>
+                </form>
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.master.header.truck')</h3>
