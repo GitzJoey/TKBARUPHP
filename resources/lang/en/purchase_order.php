@@ -258,9 +258,12 @@ return [
             'page_title' => 'Purchase Order Copy',
             'page_title_desc' => '',
             'header' => [
-                'search' => 'Search'
+                'search' => 'Search',
             ],
-            'po_not_found' => "Purchase order with code ':code' not found."
+            'po_not_found' => 'Purchase order with code \':code\' not found.',
+            '" ' => [
+                ' Session::get('error' => '',
+            ],
         ],
         'index' => [
             'title' => 'Purchase Order Copy',
@@ -270,7 +273,7 @@ return [
                 'search' => 'Search',
                 'title' => 'List of Purchase Order Copy',
             ],
-            'po_not_found' => "Purchase order with code ':code' not found.",
+            'po_not_found' => 'Purchase order with code \':code\' not found.',
             'table' => [
                 'header' => [
                     'code' => 'Code',
@@ -367,7 +370,7 @@ return [
                     ],
                 ],
             ],
-        ]
+        ],
     ],
     'partial' => [
         'supplier' => [

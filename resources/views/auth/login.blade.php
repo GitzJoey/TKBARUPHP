@@ -11,7 +11,7 @@
         </div>
 
         <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">@lang('login.title')</p>
 
             <form role="form" method="post" action="{{ url('/login') }}">
                 {{ csrf_field() }}
@@ -34,12 +34,12 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" name="remember"> Remember Me
+                                <input type="checkbox" name="remember"> @lang('login.remember_me')
                             </label>
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('buttons.login_button')</button>
                     </div>
                 </div>
             </form>
@@ -52,7 +52,7 @@
             -->
             <hr/>
             <a href="#">I forgot my password</a><br>
-            <a href="/register" class="text-center">Register a new membership</a>
+            <a href="/register" class="text-center">@lang('login.register.new')</a>
 
         </div>
     </div>
@@ -67,8 +67,6 @@
                 increaseArea: '20%'
             });
         });
-
-        window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token(),]); ?>
     </script>
     </body>
 @endsection

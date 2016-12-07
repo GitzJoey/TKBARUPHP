@@ -49,6 +49,7 @@ return [
                 'type' => 'Tipe',
                 'amount' => 'Nilai',
                 'remarks' => 'Catatan',
+                'internal_expense' => '',
             ],
         ],
         'table_prod' => [
@@ -164,6 +165,7 @@ return [
                 'type' => 'Tipe',
                 'amount' => 'Nilai',
                 'remarks' => 'Catatan',
+                'internal_expense' => '',
             ],
         ],
     ],

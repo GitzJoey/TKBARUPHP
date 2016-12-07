@@ -66,6 +66,7 @@ return [
             'shipping' => 'Pengiriman',
             'transactions' => 'Transaksi',
             'remarks' => 'Catatan',
+            'expenses' => '',
         ],
         'field' => [
             'customer_type' => 'Tipe Pelanggan',
@@ -92,6 +93,14 @@ return [
             'total' => [
                 'body' => [
                     'total' => 'Jumlah Total',
+                ],
+            ],
+            'expense' => [
+                'header' => [
+                    'name' => '',
+                    'type' => '',
+                    'remarks' => '',
+                    'amount' => '',
                 ],
             ],
         ],
@@ -330,8 +339,123 @@ return [
                 'remarks' => '',
             ],
         ],
+        'create' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'customer' => '',
+                'sales_order_detail' => '',
+                'shipping' => '',
+                'transactions' => '',
+                'remarks' => '',
+                'so_copy_remarks' => '',
+            ],
+            'field' => [
+                'customer_type' => '',
+                'customer_name' => '',
+                'customer_details' => '',
+                'so_code' => '',
+                'so_copy_code' => '',
+                'so_type' => '',
+                'so_date' => '',
+                'shipping_date' => '',
+                'warehouse' => '',
+                'vendor_trucking' => '',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'quantity' => '',
+                        'unit' => '',
+                        'price_unit' => '',
+                        'total_price' => '',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => '',
+                    ],
+                ],
+            ],
+        ],
+        'edit' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'customer' => '',
+                'sales_order_detail' => '',
+                'shipping' => '',
+                'transactions' => '',
+                'remarks' => '',
+                'so_copy_remarks' => '',
+            ],
+            'field' => [
+                'customer_type' => '',
+                'customer_name' => '',
+                'customer_details' => '',
+                'so_code' => '',
+                'so_copy_code' => '',
+                'so_type' => '',
+                'so_date' => '',
+                'shipping_date' => '',
+                'warehouse' => '',
+                'vendor_trucking' => '',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'quantity' => '',
+                        'unit' => '',
+                        'price_unit' => '',
+                        'total_price' => '',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => '',
+                    ],
+                ],
+            ],
+        ],
+        'index' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'search' => '',
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'code' => '',
+                    'so_date' => '',
+                    'customer' => '',
+                    'shipping_date' => '',
+                ],
+            ],
+        ],
+        'search' => [
+            '" ' => [
+                ' Session::get('error' => '',
+            ],
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'search' => '',
+            ],
+        ],
     ],
     'field' => [
         'so_code' => '',
+    ],
+    'edit' => [
+        'box' => [
+            'transaction_summary' => '',
+        ],
     ],
 ];

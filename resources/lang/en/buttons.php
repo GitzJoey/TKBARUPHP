@@ -21,4 +21,5 @@ return [
     'update_button' => 'Update',
     'apply_button' => 'Apply',
     'close_button' => 'Close',
+    'register_button' => 'Register'
 ];

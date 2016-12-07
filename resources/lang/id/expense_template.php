@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 return [
     'index' => [
@@ -6,23 +6,24 @@ return [
         'page_title' => 'Template Biaya',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Daftar Template Biaya'
+            'title' => 'Daftar Template Biaya',
         ],
         'table' => [
             'header' => [
                 'name' => 'Nama',
                 'type' => 'Tipe',
                 'amount' => 'Jumlah',
-                'remarks' => 'Catatan'
-            ]
-        ]
+                'remarks' => 'Catatan',
+                'internal_expense' => '',
+            ],
+        ],
     ],
     'create' => [
         'title' => 'Buat Template Biaya',
         'page_title' => 'Buat Template Biaya',
         'page_title_desc' => 'Buat template biaya baru',
         'header' => [
-            'title' => 'Buat Template Biaya'
+            'title' => 'Buat Template Biaya',
         ],
     ],
     'show' => [
@@ -30,7 +31,7 @@ return [
         'page_title' => 'Detail Template Biaya',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Detail Template Biaya'
+            'title' => 'Detail Template Biaya',
         ],
     ],
     'edit' => [
@@ -38,7 +39,7 @@ return [
         'page_title' => 'Ubah Template Biaya',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Ubah Template Biaya'
+            'title' => 'Ubah Template Biaya',
         ],
     ],
     'field' => [
@@ -46,5 +47,6 @@ return [
         'type' => 'Tipe',
         'amount' => 'Jumlah',
         'remarks' => 'Catatan',
+        'internal_expense' => '',
     ],
 ];

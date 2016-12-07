@@ -11,13 +11,13 @@
         </div>
 
         <div class="register-box-body">
-            <p class="login-box-msg">Register a new membership</p>
+            <p class="login-box-msg">@lang('login.register.title')</p>
 
             <form id="registerForm" role="form" method="post" action="{{ url('/register') }}" data-parsley-validate="parsley">
                 {{ csrf_field() }}
                 @if ($store_mode == 'create')
                     <div class="form-group has-feedback {{ $errors->has('store_name') ? ' has-error' : '' }}">
-                        <input id="store_name" name="store_name" type="text" class="form-control" placeholder="Store name">
+                        <input id="store_name" name="store_name" type="text" class="form-control" placeholder="{{ trans('login.register.store_name') }}">
                         <span class="fa fa-umbrella form-control-feedback"></span>
                         @if ($errors->has('store_name'))
                             <span class="help-block"><strong>{{ $errors->first('store_name') }}</strong></span>
@@ -36,21 +36,21 @@
                 @else
                 @endif
                 <div class="form-group has-feedback {{ $errors->has('name') ? ' has-error' : '' }}">
-                    <input id="name" name="name" type="text" class="form-control" placeholder="Full name">
+                    <input id="name" name="name" type="text" class="form-control" placeholder="{{ trans('login.register.full_name') }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('name'))
                         <span class="help-block"><strong>{{ $errors->first('name') }}</strong></span>
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input id="email" name="email" type="email" class="form-control" placeholder="Email">
+                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ trans('login.register.email') }}">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
                         <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
-                    <input id="password" name="password" type="password" class="form-control" placeholder="Password">
+                    <input id="password" name="password" type="password" class="form-control" placeholder="{{ trans('login.register.password') }}">
                     <span class="glyphicon glyphicon-lock form-control-feedback">
                     </span>
                     @if ($errors->has('password'))
@@ -58,7 +58,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                    <input id="password-confirm" name="password_confirmation" type="password" class="form-control" placeholder="Retype password">
+                    <input id="password-confirm" name="password_confirmation" type="password" class="form-control" placeholder="{{ trans('login.register.retype_password') }}">
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                     @if ($errors->has('password_confirmation'))
                         <span class="help-block"><strong>{{ $errors->first('password_confirmation') }}</strong></span>
@@ -68,13 +68,13 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input id="terms" type="checkbox" data-parsley-required="true" data-parsley-errors-container="#checkbox_req"> I agree to the <a href="#">terms</a>
                             </label>
+                            <input id="terms" type="checkbox" data-parsley-required="true" data-parsley-errors-container="#checkbox_req"> @lang('login.register.agree_1')<a href="#" data-toggle="modal" data-target="#termsModal">@lang('login.register.agree_2')</a>
                             <span id="checkbox_req" class="help-block has-error"></span>
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('buttons.register_button')</button>
                     </div>
                 </div>
             </form>
@@ -86,7 +86,27 @@
             </div>
             -->
             <hr/>
-            <a href="/login" class="text-center">I already have a membership</a>
+            <a href="/login" class="text-center">@lang('login.register.already_member')</a>
+        </div>
+    </div>
+
+    <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="termsModalLabel">@lang('login.register.terms_and_cond')</h4>
+                </div>
+                <div class="modal-body">
+                    @for ($i = 0; $i < 15; $i++)
+                        <br/>
+                    @endfor
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('buttons.close_button')</button>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -57,6 +57,7 @@ return [
                 'type' => 'Tipe',
                 'amount' => 'Nilai',
                 'remarks' => 'Catatan',
+                'internal_expense' => '',
             ],
         ],
     ],
@@ -124,6 +125,7 @@ return [
                 'type' => 'Tipe',
                 'amount' => 'Nilai',
                 'remarks' => 'Catatan',
+                'internal_expense' => '',
             ],
         ],
         'table' => [
@@ -188,6 +190,7 @@ return [
                 'type' => 'Tipe',
                 'amount' => 'Nilai',
                 'remarks' => 'Catatan',
+                'internal_expense' => '',
             ],
         ],
     ],

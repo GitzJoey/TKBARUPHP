@@ -332,9 +332,12 @@ return [
             'page_title' => 'Sales Order Copy',
             'page_title_desc' => '',
             'header' => [
-                'search' => 'Search'
+                'search' => 'Search',
             ],
-            'so_not_found' => "Sales order with code ':code' not found."
+            'so_not_found' => 'Sales order with code \':code\' not found.',
+            '" ' => [
+                ' Session::get('error' => '',
+            ],
         ],
         'index' => [
             'title' => 'Sales Order Copy',
@@ -344,7 +347,7 @@ return [
                 'search' => 'Search',
                 'title' => 'List of Sales Order Copy',
             ],
-            'po_not_found' => "Sales order with code ':code' not found.",
+            'po_not_found' => 'Sales order with code \':code\' not found.',
             'table' => [
                 'header' => [
                     'code' => 'Code',
@@ -440,8 +443,25 @@ return [
                 ],
             ],
         ],
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => '',
+        ],
+        'table' => [
+            'header' => [
+                'copy_code' => '',
+                'remarks' => '',
+            ],
+        ],
     ],
     'field' => [
         'so_code' => '',
+    ],
+    'edit' => [
+        'box' => [
+            'transaction_summary' => '',
+        ],
     ],
 ];
