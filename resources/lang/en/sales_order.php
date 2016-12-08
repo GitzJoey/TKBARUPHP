@@ -335,9 +335,6 @@ return [
                 'search' => 'Search',
             ],
             'so_not_found' => 'Sales order with code \':code\' not found.',
-            '" ' => [
-                ' Session::get('error' => '',
-            ],
         ],
         'index' => [
             'title' => 'Sales Order Copy',

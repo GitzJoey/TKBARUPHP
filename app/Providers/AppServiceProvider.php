@@ -72,7 +72,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(SalesOrderCopyService::class, function (){
-            return new salesOrderCopyServiceImpl();
+            return new SalesOrderCopyServiceImpl();
         });
 
         $this->app->singleton(StoreService::class, function (){

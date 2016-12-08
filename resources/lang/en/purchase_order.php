@@ -261,9 +261,6 @@ return [
                 'search' => 'Search',
             ],
             'po_not_found' => 'Purchase order with code \':code\' not found.',
-            '" ' => [
-                ' Session::get('error' => '',
-            ],
         ],
         'index' => [
             'title' => 'Purchase Order Copy',

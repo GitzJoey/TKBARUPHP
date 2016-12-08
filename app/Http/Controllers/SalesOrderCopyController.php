@@ -27,15 +27,17 @@ class SalesOrderCopyController extends Controller
         $this->middleware('auth');
     }
 
-    public function search()
+    public function search(Request $request)
     {
         Log::info('SalesOrderCopyController@search');
+        $request->session()->forget(['code', 'error']);
         return view('sales_order.copy.search');
     }
 
     public function index(Request $request, $soCode = '')
     {
         Log::info('SalesOrderCopyController@index');
+        $request->session()->forget(['code', 'error']);
 
         $so = SalesOrder::with('copies.customer')->whereCode($soCode)->first();
 
@@ -48,7 +50,6 @@ class SalesOrderCopyController extends Controller
             return view('sales_order.copy.search');
         } else {
             Log::info('SO found');
-            $request->session()->forget(['code', 'error']);
             $soCopies = $so->copies;
             return view('sales_order.copy.index', compact('soCopies', 'soCode'));
         }

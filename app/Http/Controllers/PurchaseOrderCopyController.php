@@ -23,15 +23,17 @@ class PurchaseOrderCopyController extends Controller
         $this->middleware('auth');
     }
 
-    public function search()
+    public function search(Request $request)
     {
         Log::info('PurchaseOrderCopyController@search');
+        $request->session()->forget(['code', 'error']);
         return view('purchase_order.copy.search');
     }
 
     public function index(Request $request, $poCode = '')
     {
         Log::info('PurchaseOrderCopyController@index');
+        $request->session()->forget(['code', 'error']);
 
         $po = PurchaseOrder::with('copies.supplier')->whereCode($poCode)->first();
 
@@ -45,7 +47,6 @@ class PurchaseOrderCopyController extends Controller
         }
         else{
             Log::info('PO found');
-            $request->session()->forget(['code', 'error']);
             $poCopies = $po->copies;
             return view('purchase_order.copy.index', compact('poCopies', 'poCode'));
         }

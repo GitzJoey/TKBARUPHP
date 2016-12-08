@@ -20,7 +20,7 @@
         <div class="alert alert-danger">
             <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
             <ul>
-                <li>@lang("purchase_order.copy.search." . Session::get('error'), ['code' => Session::get('code')])</li>
+                <li>@lang("purchase_order.copy.search.po_not_found", ['code' => Session::get('code')])</li>
             </ul>
         </div>
     @endif
