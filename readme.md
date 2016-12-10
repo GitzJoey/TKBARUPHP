@@ -59,6 +59,11 @@ $ php artisan migrate
 $ php artisan db:seed
 ```
 
+Linking public/storage
+```
+$ php artisan storage:link
+```
+
 If something seem not right maybe try to dump-autoload and redo the process
 ```
 $ composer dump-autoload
