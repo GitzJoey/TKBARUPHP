@@ -127,21 +127,6 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Delete Phone Provider'
             ],
             [
-                'name' => 'admin.smsservice-list',
-                'display_name' => '[SMS] List SMS',
-                'description' => 'Show the inbox and outbox of SMS'
-            ],
-            [
-                'name' => 'admin.smsservice-modem',
-                'display_name' => '[SMS] Change Modem Settings',
-                'description' => 'Change Modem Settings'
-            ],
-            [
-                'name' => 'admin.smsservice-send',
-                'display_name' => '[SMS] Send SMS',
-                'description' => 'Enable Send SMS'
-            ],
-            [
                 'name' => 'master.customer-list',
                 'display_name' => '[Customer] Display Customer Listing',
                 'description' => 'See only Listing Of Customer'
@@ -470,6 +455,91 @@ class PermissionTableSeeder extends Seeder
                 'name' => 'truck.maintenance-delete',
                 'display_name' => '[Truck Maintenance] Delete Truck Maintenance',
                 'description' => 'Delete Truck Maintenance'
+            ],
+            [
+                'name' => 'report.admin-user',
+                'display_name' => '[Report] Generate Report User',
+                'description' => 'Generate Report User'
+            ],
+            [
+                'name' => 'report.admin-role',
+                'display_name' => '[Report] Generate Report Role',
+                'description' => 'Generate Report Role'
+            ],
+            [
+                'name' => 'report.admin-store',
+                'display_name' => '[Report] Generate Report Store',
+                'description' => 'Generate Report Store'
+            ],
+            [
+                'name' => 'report.admin-unit',
+                'display_name' => '[Report] Generate Report Unit',
+                'description' => 'Generate Report Unit'
+            ],
+            [
+                'name' => 'report.admin-phone_provider',
+                'display_name' => '[Report] Generate Report Phone Provider',
+                'description' => 'Generate Report Phone Provider'
+            ],
+            [
+                'name' => 'report.admin-settings',
+                'display_name' => '[Report] Generate Report Settings',
+                'description' => 'Generate Report Settings'
+            ],
+            [
+                'name' => 'report.master-supplier',
+                'display_name' => '[Report] Generate Report Supplier',
+                'description' => 'Generate Report Supplier'
+            ],
+            [
+                'name' => 'report.master-customer',
+                'display_name' => '[Report] Generate Report Customer',
+                'description' => 'Generate Report Customer'
+            ],
+            [
+                'name' => 'report.master-product',
+                'display_name' => '[Report] Generate Report Product',
+                'description' => 'Generate Report Product'
+            ],
+            [
+                'name' => 'report.master-product_type',
+                'display_name' => '[Report] Generate Report Product Type',
+                'description' => 'Generate Report Product Type'
+            ],
+            [
+                'name' => 'report.master-bank',
+                'display_name' => '[Report] Generate Report Bank',
+                'description' => 'Generate Report Bank'
+            ],
+            [
+                'name' => 'report.master-warehouse',
+                'display_name' => '[Report] Generate Report Warehouse',
+                'description' => 'Generate Report Warehouse'
+            ],
+            [
+                'name' => 'report.master-truck',
+                'display_name' => '[Report] Generate Report Truck',
+                'description' => 'Generate Report Truck'
+            ],
+            [
+                'name' => 'report.master-truck_maintenance',
+                'display_name' => '[Report] Generate Report Truck Maintenance',
+                'description' => 'Generate Report Truck Maintenance'
+            ],
+            [
+                'name' => 'report.master-vendor_trucking',
+                'display_name' => '[Report] Generate Report Vendor Trucking',
+                'description' => 'Generate Report Vendor Trucking'
+            ],
+            [
+                'name' => 'report.trx-po',
+                'display_name' => '[Report] Generate Report PO',
+                'description' => 'Generate Report PO'
+            ],
+            [
+                'name' => 'report.trx-so',
+                'display_name' => '[Report] Generate Report Sales',
+                'description' => 'Generate Report Sales'
             ],
         ];
         foreach ($permission as $key => $value) {

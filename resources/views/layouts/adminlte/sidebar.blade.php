@@ -208,30 +208,70 @@
                     </ul>
                 </li>
             @endif
-            <li class="treeview {{ active_class(Active::checkRoutePattern('db.report') || Active::checkRoutePattern('db.report.*')) }}">
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i><span>&nbsp;@lang('menu.item.rpt')</span>
-                    <span class="pull-right-container">
+            @if(Entrust::can('report.admin-user') OR
+                Entrust::can('report.admin-role') OR
+                Entrust::can('report.admin-store') OR
+                Entrust::can('report.admin-unit') OR
+                Entrust::can('report.admin-phone_provider') OR
+                Entrust::can('report.admin-settings') OR
+                Entrust::can('report.master-supplier') OR
+                Entrust::can('report.master-customer') OR
+                Entrust::can('report.master-product') OR
+                Entrust::can('report.master-product_type') OR
+                Entrust::can('report.master-user') OR
+                Entrust::can('report.master-warehouse') OR
+                Entrust::can('report.master-bank') OR
+                Entrust::can('report.master-truck') OR
+                Entrust::can('report.master-truck_maintenance') OR
+                Entrust::can('report.master-vendor_trucking') OR
+                Entrust::can('report.trx-po') OR
+                Entrust::can('report.trx-so'))
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.report') || Active::checkRoutePattern('db.report.*')) }}">
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i><span>&nbsp;@lang('menu.item.rpt')</span>
+                        <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="{{ active_class(Active::checkRoutePattern('db.report.transaction')) }}">
-                        <a href="{{ route('db.report.transaction') }}"><i class="fa fa-connectdevelop fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttrx')</a>
-                    </li>
-                    <li class="{{ active_class(Active::checkRoutePattern('db.report.monitoring')) }}">
-                        <a href="{{ route('db.report.monitoring') }}"><i class="fa fa-eye fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmntr')</a>
-                    </li>
-                    <li class="{{ active_class(Active::checkRoutePattern('db.report.tax')) }}">
-                        <a href="{{ route('db.report.tax') }}"><i class="fa fa-institution fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttax')</a>
-                    </li>
-                    <li class="{{ active_class(Active::checkRoutePattern('db.report.master')) }}">
-                        <a href="{{ route('db.report.master') }}"><i class="fa fa-file-text-o fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmaster')</a>
-                    </li>
-                    <li class="{{ active_class(Active::checkRoutePattern('db.report.admin')) }}">
-                        <a href="{{ route('db.report.admin') }}"><i class="glyphicon glyphicon-cog"></i>&nbsp;@lang('menu.item.rpt_rptadmin')</a>
-                    </li>
-                </ul>
-            </li>
+                    </a>
+                    <ul class="treeview-menu">
+                        @if(Entrust::can('report.trx-po') OR
+                            Entrust::can('report.trx-so'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.report.transaction')) }}">
+                                <a href="{{ route('db.report.transaction') }}"><i class="fa fa-connectdevelop fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttrx')</a>
+                            </li>
+                        @endif
+                        <li class="{{ active_class(Active::checkRoutePattern('db.report.monitoring')) }}">
+                            <a href="{{ route('db.report.monitoring') }}"><i class="fa fa-eye fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmntr')</a>
+                        </li>
+                        <li class="{{ active_class(Active::checkRoutePattern('db.report.tax')) }}">
+                            <a href="{{ route('db.report.tax') }}"><i class="fa fa-institution fa-fw"></i>&nbsp;@lang('menu.item.rpt_rpttax')</a>
+                        </li>
+                        @if(Entrust::can('report.master-supplier') OR
+                            Entrust::can('report.master-customer') OR
+                            Entrust::can('report.master-product') OR
+                            Entrust::can('report.master-product_type') OR
+                            Entrust::can('report.master-user') OR
+                            Entrust::can('report.master-warehouse') OR
+                            Entrust::can('report.master-bank') OR
+                            Entrust::can('report.master-truck') OR
+                            Entrust::can('report.master-truck_maintenance') OR
+                            Entrust::can('report.master-vendor_trucking'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.report.master')) }}">
+                                <a href="{{ route('db.report.master') }}"><i class="fa fa-file-text-o fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptmaster')</a>
+                            </li>
+                        @endif
+                        @if(Entrust::can('report.admin-user') OR
+                            Entrust::can('report.admin-role') OR
+                            Entrust::can('report.admin-store') OR
+                            Entrust::can('report.admin-unit') OR
+                            Entrust::can('report.admin-phone_provider') OR
+                            Entrust::can('report.admin-settings'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.report.admin')) }}">
+                                <a href="{{ route('db.report.admin') }}"><i class="glyphicon glyphicon-cog"></i>&nbsp;@lang('menu.item.rpt_rptadmin')</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
             @if(Entrust::can('master.customer-list') OR
                 Entrust::can('master.customer-create') OR
                 Entrust::can('master.customer-edit') OR
@@ -449,22 +489,6 @@
                             <li class="{{ active_class(Active::checkRoutePattern('db.admin.phone_provider') || Active::checkRoutePattern('db.admin.phone_provider.*')) }}">
                                 <a href="{{ route('db.admin.phone_provider') }}"><i class="glyphicon glyphicon-phone"></i>&nbsp;@lang('menu.item.adm_phone_provider')</a>
                             </li>
-                        @endif
-                        @if(Entrust::can('admin.smsservice-list') OR
-                            Entrust::can('admin.smsservice-modem') OR
-                            Entrust::can('admin.smsservice-send'))
-                        <li class="treeview">
-                            <a href="#"><i class="fa fa-cog fa-fw"></i><span>&nbsp;@lang('menu.item.adm_sms')</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-envelope fa-fw"></i>&nbsp;@lang('menu.item.adm_sms_in')</a></li>
-                                <li><a href="#"><i class="fa fa-paper-plane fa-fw"></i>&nbsp;@lang('menu.item.adm_sms_out')</a></li>
-                                <li><a href="#"><i class="fa fa-cog fa-fw"></i>&nbsp;@lang('menu.item.adm_modem')</a></li>
-                            </ul>
-                        </li>
                         @endif
                     </ul>
                 </li>

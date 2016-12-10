@@ -20,7 +20,7 @@ class RolesTableSeeder extends Seeder
         $role_admin = new Role;
         $role_admin->name = 'r_admin';
         $role_admin->display_name = 'Administrator';
-        $role_admin->description = 'Super User';
+        $role_admin->description = 'Administrator';
 
         $role_admin->save();
 
@@ -37,5 +37,24 @@ class RolesTableSeeder extends Seeder
         $permission = Permission::get();
         $role_user->permissions()->attach($permission);
 
+        $role_owner = new Role;
+        $role_owner->name = 'r_owner';
+        $role_owner->display_name = 'Owner';
+        $role_owner->description = 'Owner';
+
+        $role_owner->save();
+
+        $permission = Permission::get();
+        $role_owner->permissions()->attach($permission);
+
+        $role_customer = new Role;
+        $role_customer->name = 'r_customer';
+        $role_customer->display_name = 'Customer';
+        $role_customer->description = 'Customer';
+
+        $role_customer->save();
+
+        $permission = Permission::get();
+        $role_customer->permissions()->attach($permission);
     }
 }

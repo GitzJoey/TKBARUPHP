@@ -19,6 +19,10 @@ Route::get('/', function () {
     return redirect('home');
 });
 
+Route::get('/forgot', function () {
+   Route::get('', 'ForgotPasswordController@test');
+});
+
 Auth::routes();
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
@@ -347,11 +351,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'admin'], function () {
                 Route::get('', 'ReportController@report_admin')->name('db.report.admin');
-                Route::post('user', 'ReportController@generateUserReport')->name('db.report.admin.user');
-                Route::post('role', 'ReportController@generateRoleReport')->name('db.report.admin.role');
-                Route::post('store', 'ReportController@generateStoreReport')->name('db.report.admin.store');
-                Route::post('unit', 'ReportController@generateUnitReport')->name('db.report.admin.unit');
-                Route::post('phone_provider', 'ReportController@generatePhoneProviderReport')->name('db.report.admin.phone_provider');
+                Route::post('user', 'ReportAdminController@generateUserReport')->name('db.report.admin.user');
+                Route::post('role', 'ReportAdminController@generateRoleReport')->name('db.report.admin.role');
+                Route::post('store', 'ReportAdminController@generateStoreReport')->name('db.report.admin.store');
+                Route::post('unit', 'ReportADminController@generateUnitReport')->name('db.report.admin.unit');
+                Route::post('phone_provider', 'ReportAdminController@generatePhoneProviderReport')->name('db.report.admin.phone_provider');
+                Route::post('settings', 'ReportAdminController@generateSettingsReport')->name('db.report.admin.settings');
             });
 
             Route::get('{fileName}', 'ReportController@view')->name('db.report.view');

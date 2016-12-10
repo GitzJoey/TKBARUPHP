@@ -25,7 +25,7 @@
                             <div class="form-group">
                                 <label for="inputUser_User" class="col-sm-2 control-label">@lang('report.admin.field.user')</label>
                                 <div class="col-sm-10">
-                                    <input id="inputUser_User" type="text" class="form-control" placeholder="@lang('report.admin.field.user')">
+                                    <input id="inputUser_User" name="inputUser_User" type="text" class="form-control" placeholder="@lang('report.admin.field.user')">
                                 </div>
                             </div>
                             <div class="form-group">

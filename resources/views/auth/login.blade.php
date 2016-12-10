@@ -51,10 +51,11 @@
             </div>
             -->
             <hr/>
-            <a href="#">I forgot my password</a><br>
+
             <a href="/register" class="text-center">@lang('login.register.new')</a>
 
         </div>
+        <div class="pull-right"><a href="/forgot">Forgot Password</a></div>
     </div>
 
     <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>

@@ -440,7 +440,7 @@ return [
         ],
         'search' => [
             '" ' => [
-                ' Session::get('error' => '',
+                ' Session::get(error' => '',
             ],
             'title' => '',
             'page_title' => '',
