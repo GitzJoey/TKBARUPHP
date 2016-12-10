@@ -314,7 +314,7 @@ return array(
                 |--------------------------------------------------------------------------
                 */
                 'DomPDF' => array(
-                    'path' => base_path('vendor/dompdf/dompdf/')
+                    'path' => base_path('vendor/dompdf/dompdf')
                 ),
 
                 /*

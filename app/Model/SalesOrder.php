@@ -70,6 +70,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $article_code
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Expense[] $expenses
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereArticleCode($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\SalesOrderCopy[] $copies
  */
 class SalesOrder extends Model
 {

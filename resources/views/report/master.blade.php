@@ -221,24 +221,27 @@
                         <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                     </div>
                 </div>
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.vendor_trucking')</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <label for="inputVendorTrucking_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputVendorTrucking_Name" type="text" class="form-control" placeholder="Name">
+                <form action="{{ route('db.report.master.vendor_trucking') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.vendor_trucking')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="inputVendorTrucking_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputVendorTrucking_Name" name="name" type="text" class="form-control" placeholder="Name">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
                     </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

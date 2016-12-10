@@ -87,6 +87,11 @@ class VendorTrucking extends Model
         return $this->hasMany('App\Model\PurchaseOrder');
     }
 
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store');
+    }
+
     public static function boot()
     {
         parent::boot();

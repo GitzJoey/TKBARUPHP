@@ -7,6 +7,63 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Vinkla\Hashids\Facades\Hashids;
 
+/**
+ * App\Model\SalesOrderCopy
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property integer $customer_id
+ * @property integer $warehouse_id
+ * @property integer $vendor_trucking_id
+ * @property integer $main_so_id
+ * @property string $main_so_code
+ * @property string $code
+ * @property \Carbon\Carbon $so_created
+ * @property string $so_type
+ * @property \Carbon\Carbon $shipping_date
+ * @property string $customer_type
+ * @property string $walk_in_cust
+ * @property string $walk_in_cust_detail
+ * @property string $article_code
+ * @property string $status
+ * @property string $main_so_remarks
+ * @property string $remarks
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $items
+ * @property-read \App\Model\Customer $customer
+ * @property-read \App\Model\Warehouse $warehouse
+ * @property-read \App\Model\VendorTrucking $vendorTrucking
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereCustomerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereVendorTruckingId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereMainSoId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereMainSoCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereSoCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereSoType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereShippingDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereCustomerType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereWalkInCust($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereWalkInCustDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereArticleCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereMainSoRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class SalesOrderCopy extends Model
 {
     use SoftDeletes;

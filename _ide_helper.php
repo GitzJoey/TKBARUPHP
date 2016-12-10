@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.23 on 2016-11-30.
+ * Generated for Laravel 5.3.26 on 2016-12-09.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1843,6 +1843,17 @@ namespace {
         /**
          * Determine if the current user is authenticated.
          *
+         * @return \App\User 
+         * @throws \Illuminate\Auth\AuthenticationException
+         * @static 
+         */
+        public static function authenticate(){
+            return \Illuminate\Auth\SessionGuard::authenticate();
+        }
+        
+        /**
+         * Determine if the current user is authenticated.
+         *
          * @return bool 
          * @static 
          */
@@ -1858,17 +1869,6 @@ namespace {
          */
         public static function guest(){
             return \Illuminate\Auth\SessionGuard::guest();
-        }
-        
-        /**
-         * Determine if the current user is authenticated.
-         *
-         * @return \App\User 
-         * @throws \Illuminate\Auth\AuthenticationException
-         * @static 
-         */
-        public static function authenticate(){
-            return \Illuminate\Auth\SessionGuard::authenticate();
         }
         
     }
@@ -3166,8 +3166,12 @@ namespace {
         }
         
         /**
-         * 
+         * Run a select statement against the database and returns a generator.
          *
+         * @param string $query
+         * @param array $bindings
+         * @param bool $useReadPdo
+         * @return \Generator 
          * @static 
          */
         public static function cursor($query, $bindings = array(), $useReadPdo = true){
@@ -5951,6 +5955,18 @@ namespace {
         }
         
         /**
+         * Get or set UNIX mode of a file or directory.
+         *
+         * @param string $path
+         * @param int $mode
+         * @return mixed 
+         * @static 
+         */
+        public static function chmod($path, $mode = null){
+            return \Illuminate\Filesystem\Filesystem::chmod($path, $mode);
+        }
+        
+        /**
          * Delete the file at a given path.
          *
          * @param string|array $paths
@@ -8662,6 +8678,124 @@ namespace {
     }
 
 
+    class PDF extends \Barryvdh\DomPDF\Facade{
+        
+        /**
+         * Get the DomPDF instance
+         *
+         * @return \Barryvdh\DomPDF\Dompdf 
+         * @static 
+         */
+        public static function getDomPDF(){
+            return \Barryvdh\DomPDF\PDF::getDomPDF();
+        }
+        
+        /**
+         * Set the paper size (default A4)
+         *
+         * @param string $paper
+         * @param string $orientation
+         * @return $this 
+         * @static 
+         */
+        public static function setPaper($paper, $orientation = 'portrait'){
+            return \Barryvdh\DomPDF\PDF::setPaper($paper, $orientation);
+        }
+        
+        /**
+         * Show or hide warnings
+         *
+         * @param bool $warnings
+         * @return $this 
+         * @static 
+         */
+        public static function setWarnings($warnings){
+            return \Barryvdh\DomPDF\PDF::setWarnings($warnings);
+        }
+        
+        /**
+         * Load a HTML string
+         *
+         * @param string $string
+         * @param string $encoding Not used yet
+         * @return static 
+         * @static 
+         */
+        public static function loadHTML($string, $encoding = null){
+            return \Barryvdh\DomPDF\PDF::loadHTML($string, $encoding);
+        }
+        
+        /**
+         * Load a HTML file
+         *
+         * @param string $file
+         * @return static 
+         * @static 
+         */
+        public static function loadFile($file){
+            return \Barryvdh\DomPDF\PDF::loadFile($file);
+        }
+        
+        /**
+         * Load a View and convert to HTML
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @param string $encoding Not used yet
+         * @return static 
+         * @static 
+         */
+        public static function loadView($view, $data = array(), $mergeData = array(), $encoding = null){
+            return \Barryvdh\DomPDF\PDF::loadView($view, $data, $mergeData, $encoding);
+        }
+        
+        /**
+         * Output the PDF as a string.
+         *
+         * @return string The rendered PDF as string
+         * @static 
+         */
+        public static function output(){
+            return \Barryvdh\DomPDF\PDF::output();
+        }
+        
+        /**
+         * Save the PDF to a file
+         *
+         * @param $filename
+         * @return static 
+         * @static 
+         */
+        public static function save($filename){
+            return \Barryvdh\DomPDF\PDF::save($filename);
+        }
+        
+        /**
+         * Make the PDF downloadable by the user
+         *
+         * @param string $filename
+         * @return \Illuminate\Http\Response 
+         * @static 
+         */
+        public static function download($filename = 'document.pdf'){
+            return \Barryvdh\DomPDF\PDF::download($filename);
+        }
+        
+        /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @param string $filename
+         * @return \Illuminate\Http\Response 
+         * @static 
+         */
+        public static function stream($filename = 'document.pdf'){
+            return \Barryvdh\DomPDF\PDF::stream($filename);
+        }
+        
+    }
+
+
     class Queue extends \Illuminate\Support\Facades\Queue{
         
         /**
@@ -8957,11 +9091,12 @@ namespace {
          *
          * @param int $status
          * @param array $headers
+         * @param string $fallback
          * @return \Illuminate\Http\RedirectResponse 
          * @static 
          */
-        public static function back($status = 302, $headers = array()){
-            return \Illuminate\Routing\Redirector::back($status, $headers);
+        public static function back($status = 302, $headers = array(), $fallback = false){
+            return \Illuminate\Routing\Redirector::back($status, $headers, $fallback);
         }
         
         /**
@@ -10713,7 +10848,7 @@ namespace {
          * It works if your JavaScript library sets an X-Requested-With HTTP header.
          * It is known to work with common JavaScript frameworks:
          *
-         * @link http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
+         * @see http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
          * @return bool true if the request is an XMLHttpRequest, false otherwise
          * @static 
          */

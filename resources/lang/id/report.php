@@ -90,6 +90,13 @@ return [
                 'name' => 'Nama'
             ],
             'footer' => 'Dicetak oleh :user pada :date'
+        ],
+        'vendor_trucking' => [
+            'report_name' => 'Laporan Penyedia Pengiriman',
+            'parameter' => [
+                'name' => 'Nama'
+            ],
+            'footer' => 'Dicetak oleh :user pada :date'
         ]
     ]
 ];

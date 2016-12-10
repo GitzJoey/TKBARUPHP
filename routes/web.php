@@ -353,6 +353,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('unit', 'ReportController@generateUnitReport')->name('db.report.admin.unit');
                 Route::post('phone_provider', 'ReportController@generatePhoneProviderReport')->name('db.report.admin.phone_provider');
             });
+
+            Route::get('{fileName}', 'ReportController@view')->name('db.report.view');
         });
 
         Route::get('user/profile/{id}', 'UserController@profile')->name('db.user.profile.show');

@@ -37,6 +37,7 @@
     "numeral": "^1.5.3",
     "parsleyjs": "^2.5.0",
     "tooltipster": "^4.1.6",
-    "ui-select": "^0.19.4"
+    "ui-select": "^0.19.4",
+    "pdfjs-dist": "^1.6.377 "
   }
 }

@@ -46,6 +46,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
  * @property-read mixed $hid
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\WarehouseSection[] $sections
+ * @property-read \App\Model\Store $store
  */
 class Warehouse extends Model
 {

@@ -38,6 +38,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Expense whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Expense whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property boolean $is_internal_expense
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Expense whereIsInternalExpense($value)
  */
 class Expense extends Model
 {

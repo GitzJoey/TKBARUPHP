@@ -57,6 +57,7 @@ elixir(function (mix) {
         .copy('node_modules/fullcalendar/dist/fullcalendar.min.js', 'public/adminlte/js')
         .copy('node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js', 'public/adminlte/js')
         .copy('node_modules/tooltipster/dist/js/tooltipster.bundle.min.js', 'public/adminlte/js')
+        .copy('node_modules/pdfobject/pdfobject.min.js', 'public/adminlte/js')
         .copy('node_modules/bootstrap/fonts', 'public/adminlte/fonts')
         .copy('node_modules/font-awesome/fonts', 'public/adminlte/fonts')
         .copy('node_modules/ionicons/dist/fonts', 'public/adminlte/fonts')

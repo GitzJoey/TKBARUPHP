@@ -90,6 +90,13 @@ return [
                 'name' => 'Name'
             ],
             'footer' => 'Printed by :user on :date'
+        ],
+        'vendor_trucking' => [
+            'report_name' => 'Vendor Trucking Report',
+            'parameter' => [
+                'name' => 'Name'
+            ],
+            'footer' => 'Printed by :user on :date'
         ]
     ]
 ];

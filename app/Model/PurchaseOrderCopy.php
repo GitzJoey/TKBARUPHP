@@ -7,6 +7,64 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Vinkla\Hashids\Facades\Hashids;
 
+/**
+ * App\Model\PurchaseOrderCopy
+ *
+ * @property integer $id
+ * @property integer $store_id
+ * @property integer $supplier_id
+ * @property integer $warehouse_id
+ * @property integer $vendor_trucking_id
+ * @property integer $main_po_id
+ * @property string $main_po_code
+ * @property string $code
+ * @property \Carbon\Carbon $po_created
+ * @property string $po_type
+ * @property \Carbon\Carbon $shipping_date
+ * @property string $supplier_type
+ * @property string $walk_in_supplier
+ * @property string $walk_in_supplier_detail
+ * @property string $article_code
+ * @property string $main_po_remarks
+ * @property string $remarks
+ * @property string $status
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\PurchaseOrder $purchaseOrder
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $items
+ * @property-read \App\Model\Supplier $supplier
+ * @property-read \App\Model\Warehouse $warehouse
+ * @property-read \App\Model\VendorTrucking $vendorTrucking
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereSupplierId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereVendorTruckingId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereMainPoId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereMainPoCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy wherePoCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy wherePoType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereShippingDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereSupplierType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereWalkInSupplier($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereWalkInSupplierDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereArticleCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereMainPoRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrderCopy whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class PurchaseOrderCopy extends Model
 {
     use SoftDeletes;
