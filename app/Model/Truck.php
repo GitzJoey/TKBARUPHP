@@ -80,6 +80,11 @@ class Truck extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store');
+    }
+
     public function truckMaintenances()
     {
         return $this->hasMany('App\Model\TruckMaintenance');

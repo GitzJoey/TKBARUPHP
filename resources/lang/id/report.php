@@ -89,6 +89,28 @@ return [
             'parameter' => [
                 'name' => 'Nama'
             ],
+            'header' => [
+                'store' => 'Toko',
+                'name' => 'Nama',
+                'address' => 'Alamat',
+                'phone_number' => 'No. Telp',
+                'status' => 'Status',
+                'remarks' => 'Catatan'
+            ],
+            'footer' => 'Dicetak oleh :user pada :date'
+        ],
+        'vendor_trucking' => [
+            'report_name' => 'Laporan Penyedia Pengiriman',
+            'parameter' => [
+                'name' => 'Nama'
+            ],
+            'footer' => 'Dicetak oleh :user pada :date'
+        ],
+        'truck_maintenance' => [
+            'report_name' => 'Laporan Perawatan Truk',
+            'parameter' => [
+                'plate_number' => 'Nomor Plat'
+            ],
             'footer' => 'Dicetak oleh :user pada :date'
         ],
         'vendor_trucking' => [

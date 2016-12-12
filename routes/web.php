@@ -345,6 +345,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('warehouse', 'ReportController@generateWarehouseReport')->name('db.report.master.warehouse');
                 Route::post('bank', 'ReportController@generateBankReport')->name('db.report.master.bank');
                 Route::post('truck', 'ReportController@generateTruckReport')->name('db.report.master.truck');
+                Route::post('truck_maintenance', 'ReportController@generateTruckMaintenanceReport')->name('db.report.master.truck_maintenance');
                 Route::post('vendor_trucking', 'ReportController@generateVendorTruckingReport')->name('db.report.master.vendor_trucking');
                 Route::post('expensetemplates', 'ReportController@generateExpenseTemplatesReport')->name('db.report.master.expense_templates');
             });
@@ -359,7 +360,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('settings', 'ReportAdminController@generateSettingsReport')->name('db.report.admin.settings');
             });
 
-            Route::get('{fileName}', 'ReportController@view')->name('db.report.view');
+            Route::get('view/{fileName}', 'ReportController@view')->name('db.report.view');
         });
 
         Route::get('user/profile/{id}', 'UserController@profile')->name('db.user.profile.show');

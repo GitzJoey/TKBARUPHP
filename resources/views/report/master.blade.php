@@ -102,16 +102,17 @@
                         </div>
                     </form>
                 </div>
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.product_type')</h3>
-                    </div>
-                    <form action="" method="post" class="form-horizontal">
+                <form action="{{ route('db.report.master.product_type') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.product_type')</h3>
+                        </div>
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputProductUnit_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
                                 <div class="col-sm-9">
-                                    <input id="inputProductUnit_Name" type="text" class="form-control" placeholder="Name">
+                                    <input id="inputProductUnit_Name" type="text" name="name" class="form-control" placeholder="Name">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -125,47 +126,50 @@
                         <div class="box-footer">
                             <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
             <div class="col-md-6">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.bank')</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <label for="inputBank_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputBank_Name" type="text" class="form-control" placeholder="@lang('report.master.field.name')">
+                <form action="{{ route('db.report.master.bank') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.bank')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="inputBank_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputBank_Name" type="text" name="name" class="form-control" placeholder="@lang('report.master.field.name')">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputBank_ShortName" class="col-sm-3 control-label">@lang('report.master.field.short_name')</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBank_ShortName" placeholder="@lang('report.master.field.short_name')">
+                                <div class="form-group">
+                                    <label for="inputBank_ShortName" class="col-sm-3 control-label">@lang('report.master.field.short_name')</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="short_name" class="form-control" id="inputBank_ShortName" placeholder="@lang('report.master.field.short_name')">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputBank_Branch" class="col-sm-3 control-label">@lang('report.master.field.branch')</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBank_Branch" placeholder="@lang('report.master.field.branch')">
+                                <div class="form-group">
+                                    <label for="inputBank_Branch" class="col-sm-3 control-label">@lang('report.master.field.branch')</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="branch" class="form-control" id="inputBank_Branch" placeholder="@lang('report.master.field.branch')">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputBank_BranchCode" class="col-sm-3 control-label">@lang('report.master.field.branch_code')</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBank_BranchCode" placeholder="@lang('report.master.field.branch_code')">
-                                    <span class="help-block"></span>
+                                <div class="form-group">
+                                    <label for="inputBank_BranchCode" class="col-sm-3 control-label">@lang('report.master.field.branch_code')</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="branch_code" class="form-control" id="inputBank_BranchCode" placeholder="@lang('report.master.field.branch_code')">
+                                        <span class="help-block"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
                     </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
-                </div>
+                </form>
                 <form action="{{ route('db.report.master.warehouse') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="box box-info">
@@ -185,42 +189,48 @@
                         </div>
                     </div>
                 </form>
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.truck')</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <label for="inputTruck_PlateNumber" class="col-sm-3 control-label">@lang('report.master.field.plate_number')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputTruck_PlateNumber" type="text" class="form-control" placeholder="@lang('report.master.field.plate_number')">
+                <form action="{{ route('db.report.master.truck') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.truck')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="inputTruck_PlateNumber" class="col-sm-3 control-label">@lang('report.master.field.plate_number')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputTruck_PlateNumber" type="text" name="plate_number" class="form-control" placeholder="@lang('report.master.field.plate_number')">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
                     </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
-                </div>
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.truck_maintenance')</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">@lang('report.master.field.plate_number')</label>
-                                <div class="col-sm-9">
-                                    {{ Form::select('plate_number', $trucklist, null, array('class' => 'form-control', 'placeholder' => trans('labels.PLEASE_SELECT'), 'id' => 'inputTruckMaintenance_PlateNumber')) }}
+                </form>
+                <form action="{{ route('db.report.master.truck_maintenance') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.truck_maintenance')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">@lang('report.master.field.plate_number')</label>
+                                    <div class="col-sm-9">
+                                        {{ Form::select('plate_number', $trucklist, null, array('class' => 'form-control', 'placeholder' => trans('labels.PLEASE_SELECT'), 'id' => 'inputTruckMaintenance_PlateNumber')) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
                     </div>
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                    </div>
-                </div>
+                </form>
                 <form action="{{ route('db.report.master.vendor_trucking') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="box box-info">

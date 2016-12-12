@@ -21,5 +21,8 @@ return [
     'update_button' => 'Update',
     'apply_button' => 'Apply',
     'close_button' => 'Close',
-    'register_button' => 'Register'
+    'register_button' => 'Register',
+    'download_button' => 'Download',
+    'download_excel_button' => 'Download Excel',
+    'download_pdf_button' => 'Download PDF'
 ];

@@ -1,7 +1,7 @@
 @extends('layouts.adminlte.master')
 
 @section('title')
-    View Report
+    @lang('report.viewer.title')
 @endsection
 
 @section('custom_css')
@@ -11,17 +11,17 @@
         }
 
         .pdfobject {
-            border: 1px solid #666;
+            border: 1px solid #888;
         }
     </style>
 @endsection
 
 @section('page_title')
-    View Report
+    <span class="fa fa-table"></span>&nbsp;@lang('report.viewer.page_title')
 @endsection
 
 @section('page_title_desc')
-    @lang('report.master.page_title_desc')
+    @lang('report.viewer.page_title_desc')
 @endsection
 
 @section('content')
@@ -29,9 +29,11 @@
         <div class="col-md-12 pull-right">
             <div class="btn-toolbar">
                 <a id="excelButton" href="{{ asset('storage/reports/' . $fileName . '.xlsx') }}"
-                   target="_blank" class="btn btn-primary pull-right">Download Excel</a>
+                   target="_blank" class="btn btn-primary pull-right"><span class="fa fa-file-excel-o fa-lg"></span> @lang('buttons.download_excel_button')</a>
                 <a id="pdfButton" href="{{ asset('storage/reports/' . $fileName . '.pdf') }}"
-                   target="_blank" class="btn btn-primary pull-right">Download PDF</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   target="_blank" class="btn btn-primary pull-right"><span class="fa fa-file-pdf-o fa-lg"></span> @lang('buttons.download_pdf_button')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="backButton" href="{{ route('db.report.master') }}"
+                   class="btn btn-primary pull-left"><span class="fa fa-arrow-left fa-lg"></span> @lang('buttons.back_button')</a>
             </div>
         </div>
     </div>

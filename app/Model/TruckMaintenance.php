@@ -74,6 +74,10 @@ class TruckMaintenance extends Model
     {
         return $this->belongsTo('App\Model\Truck');
     }
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store');
+    }
 
     public static function boot()
     {

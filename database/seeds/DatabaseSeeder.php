@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
             $this->call(WarehouseTableSeeder::class);
             $this->call(PriceLevelTableSeeder::class);
             $this->call(ExpenseTemplatesTableSeeder::class);
+            $this->call(TrucksTableSeeder::class);
+            $this->call(TruckMaintenancesTableSeeder::class);
         }
     }
 }

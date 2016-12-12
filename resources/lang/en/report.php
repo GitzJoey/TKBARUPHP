@@ -83,11 +83,88 @@ return [
             'customer' => 'Customer',
         ],
     ],
+    'viewer' => [
+        'title' => 'View Report',
+        'page_title' => 'View Report',
+        'page_title_desc' => ''
+    ],
     'template' => [
+        'bank' => [
+            'report_name' => 'Bank Report',
+            'parameter' => [
+                'name' => 'Name',
+                'short_name' => 'Short Name',
+                'branch' => 'Branch',
+                'branch_code' => 'Branch Code'
+            ],
+            'header' => [
+                'name' => 'Name',
+                'short_name' => 'Short Name',
+                'branch' => 'Branch',
+                'branch_code' => 'Branch Code',
+                'status' => 'Status',
+                'remarks' => 'Remarks'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'product_type' => [
+            'report_name' => 'Product Type Report',
+            'parameter' => [
+                'name' => 'Name',
+                'short_code' => 'Short Code'
+            ],
+            'header' => [
+                'store' => 'Store',
+                'name' => 'Name',
+                'short_code' => 'Short Code',
+                'description' => 'Description',
+                'status' => 'Status',
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
         'warehouse' => [
             'report_name' => 'Warehouse Report',
             'parameter' => [
                 'name' => 'Name'
+            ],
+            'header' => [
+                'store' => 'Store',
+                'name' => 'Name',
+                'address' => 'Address',
+                'phone_number' => 'Phone Number',
+                'status' => 'Status',
+                'remarks' => 'Remarks'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'truck' => [
+            'report_name' => 'Truck Report',
+            'parameter' => [
+                'plate_number' => 'Plate Number'
+            ],
+            'header' => [
+                'store' => 'Store',
+                'truck_type' => 'Truck Type',
+                'plate_number' => 'Plate Number',
+                'inspection_date' => 'Inspection Date',
+                'driver' => 'Driver',
+                'status' => 'Status',
+                'remarks' => 'Remarks'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'truck_maintenance' => [
+            'report_name' => 'Truck Maintenance Report',
+            'parameter' => [
+                'plate_number' => 'Plate Number'
+            ],
+            'header' => [
+                'store' => 'Store',
+                'plate_number' => 'Plate Number',
+                'maintenance_type' => 'Maintenance Type',
+                'cost' => 'Cost',
+                'odometer' => 'Odometer',
+                'remarks' => 'Remarks'
             ],
             'footer' => 'Printed by :user on :date'
         ],
@@ -95,6 +172,14 @@ return [
             'report_name' => 'Vendor Trucking Report',
             'parameter' => [
                 'name' => 'Name'
+            ],
+            'header' => [
+                'store' => 'Store',
+                'name' => 'Name',
+                'address' => 'Address',
+                'tax_id' => 'Tax Id',
+                'status' => 'Status',
+                'remarks' => 'Remarks'
             ],
             'footer' => 'Printed by :user on :date'
         ]

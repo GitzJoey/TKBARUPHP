@@ -11,4 +11,8 @@
     tr.footer-row td {
         font-style: italic;
     }
+
+    .text-center{
+        text-align: center;
+    }
 </style>

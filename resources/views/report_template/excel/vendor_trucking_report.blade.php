@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html>
-@include('report_template.excel.style')
+    @include('report_template.excel.style')
 
-<table>
-    <tr class="title-row">
-        <td colspan="{{ count($report['headers']) }}">
-            <h3><b>@lang('report.template.vendor_trucking.report_name')</b></h3>
-        </td>
-    </tr>
-    @foreach($report['titles'] as $key => $title)
+    <table>
         <tr class="title-row">
-            <td colspan="{{ count($report['headers']) }}">
-                <h4><b>{{ $title }}</b></h4>
+            <td colspan="6">
+                <b>@lang('report.template.vendor_trucking.report_name')</b>
             </td>
         </tr>
-    @endforeach
-    @if(count($report['parameters']))
         <tr>
-            <td colspan="{{ count($report['headers']) }}"></td>
+            <td colspan="6">&nbsp;</td>
         </tr>
-        @foreach($report['parameters'] as $key => $parameter)
-            <tr>
-                <td colspan="{{ count($report['headers']) }}">
-                    {{ Lang::get('report.template.vendor_trucking.parameter.' . $parameter['label']) . " : " . $parameter['value'] }}
-                </td>
+        @if($showParameter)
+            @if(!empty($vendorTruckingName))
+                <tr>
+                    <td colspan="6">
+                        @lang('report.template.vendor_trucking.parameter.name') {{ ': ' . $vendorTruckingName }}
+                    </td>
+                </tr>
+            @endif
+        @endif
+        <tr>
+            <td colspan="6">&nbsp;</td>
+        </tr>
+        <tr class="header-row">
+            <th>@lang('report.template.vendor_trucking.header.store')</th>
+            <th>@lang('report.template.vendor_trucking.header.name')</th>
+            <th>@lang('report.template.vendor_trucking.header.address')</th>
+            <th>@lang('report.template.vendor_trucking.header.tax_id')</th>
+            <th>@lang('report.template.vendor_trucking.header.status')</th>
+            <th>@lang('report.template.vendor_trucking.header.remarks')</th>
+        </tr>
+        @foreach($vendorTruckings as $key => $vendorTrucking)
+            <tr class="data-row">
+                <td>{{ $vendorTrucking->store->name }}</td>
+                <td>{{ $vendorTrucking->name }}</td>
+                <td>{{ $vendorTrucking->address }}</td>
+                <td>{{ $vendorTrucking->tax_id }}</td>
+                <td>{{ $statusDDL[$vendorTrucking->status] }}</td>
+                <td>{{ $vendorTrucking->remarks }}</td>
             </tr>
         @endforeach
-    @endif
-    <tr>
-        <td colspan="{{ count($report['headers']) }}"></td>
-    </tr>
-    <tr class="header-row">
-        @foreach($report['headers'] as $key => $header)
-            <th>{{ $header['label'] }}</th>
-        @endforeach
-    </tr>
-    <tr class="data-row">
-        @foreach($report['data'] as $key => $data)
-            <td>{{ $data }}</td>
-        @endforeach
-    </tr>
-    <tr>
-        <td colspan="{{ count($report['headers']) }}"></td>
-    </tr>
-    <tr class="footer-row">
-        <td colspan="{{ count($report['headers']) }}">
-            <h5>@lang('report.template.vendor_trucking.footer', ['user' => $report['user'], 'date' => $report['date']])</h5>
-        </td>
-    </tr>
-</table>
+        <tr>
+            <td colspan="6">&nbsp;</td>
+        </tr>
+        <tr class="footer-row">
+            <td colspan="6">
+                @lang('report.template.vendor_trucking.footer', ['user' => $currentUser, 'date' => $reportDate])
+            </td>
+        </tr>
+    </table>
 </html>
