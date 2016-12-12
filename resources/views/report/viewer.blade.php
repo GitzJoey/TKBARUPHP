@@ -29,11 +29,11 @@
         <div class="col-md-12 pull-right">
             <div class="btn-toolbar">
                 <a id="excelButton" href="{{ asset('storage/reports/' . $fileName . '.xlsx') }}"
-                   target="_blank" class="btn btn-primary pull-right"><span class="fa fa-file-excel-o fa-lg"></span> @lang('buttons.download_excel_button')</a>
+                   target="_blank" class="btn btn-primary pull-right"><span class="fa fa-file-excel-o fa-fw"></span> @lang('buttons.download_excel_button')</a>
                 <a id="pdfButton" href="{{ asset('storage/reports/' . $fileName . '.pdf') }}"
-                   target="_blank" class="btn btn-primary pull-right"><span class="fa fa-file-pdf-o fa-lg"></span> @lang('buttons.download_pdf_button')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   target="_blank" class="btn btn-primary pull-right"><span class="fa fa-file-pdf-o fa-fw"></span> @lang('buttons.download_pdf_button')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a id="backButton" href="{{ route('db.report.master') }}"
-                   class="btn btn-primary pull-left"><span class="fa fa-arrow-left fa-lg"></span> @lang('buttons.back_button')</a>
+                   class="btn btn-primary pull-left"><span class="fa fa-arrow-left fa-fw"></span> @lang('buttons.back_button')</a>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
     <div class="well">
         <div class="row">
             <div class="col-md-12">
-                <div id="pdf-viewer">
+                <div id="pdf-viewer" class="res">
                 </div>
             </div>
         </div>
