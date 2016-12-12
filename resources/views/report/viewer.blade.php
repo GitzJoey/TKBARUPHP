@@ -7,11 +7,16 @@
 @section('custom_css')
     <style>
         .pdfobject-container {
-            height: 500px;
+            min-height: 768px;
         }
 
         .pdfobject {
             border: 1px solid #888;
+            min-height: 768px;
+        }
+
+        #pdf-viewer {
+            min-height: 768px;
         }
     </style>
 @endsection

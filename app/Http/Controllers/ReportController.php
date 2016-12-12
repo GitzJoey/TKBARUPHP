@@ -9,8 +9,10 @@
 namespace App\Http\Controllers;
 
 use App\Model\Bank;
+use App\Model\Customer;
 use App\Model\Product;
 use App\Model\ProductType;
+use App\Model\Supplier;
 use App\Model\TruckMaintenance;
 use App\Model\VendorTrucking;
 use App\Model\Warehouse;
@@ -62,23 +64,190 @@ class ReportController extends Controller
         return view('report.admin', compact('statusDDL', 'rolesDDL'));
     }
 
+    public function generateCustomerReport(Request $request, PDF $pdf)
+    {
+        Log::info('ReportController@generateCustomerReport');
+
+        $currentUser = Auth::user()->name;
+        $reportDate = Carbon::now();
+        $showParameter = true;
+        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+
+        //Parameters
+        $customerName = $request->input('name');
+        $profileName = $request->input('profile_name');
+        $bankAccount = $request->input('bank_account');
+
+        $customers = Customer::with('store', 'profiles', 'priceLevel')
+            ->when($customerName, function ($query) use ($customerName) {
+                return $query->orWhere('name', 'like', "%$customerName%");
+            })
+            ->when($profileName, function ($query) use ($profileName) {
+                return $query->orWhereHas('profiles', function ($q) use ($profileName){
+                    $q->orWhere('first_name', 'like', "%$profileName%")
+                        ->orWhere('last_name', 'like', "%$profileName%");
+                });
+            })
+            ->when($bankAccount, function ($query) use ($bankAccount) {
+                return $query->orWhereHas('bankAccounts', function ($q) use ($bankAccount){
+                    $q->where('account_number', 'like', "%$bankAccount%");
+                });
+            })
+            ->get();
+
+        if (!File::exists(storage_path('app/public/reports'))) {
+            File::makeDirectory(storage_path('app/public/reports'));
+        }
+
+        $fileName = "Customer_Report_" . $reportDate->format('Ymd');
+
+        //Save pdf report
+        $pdf->loadView('report_template.pdf.customer_report',
+            compact('customerName', 'profileName', 'bankAccount', 'customers', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'))
+            ->setPaper('a4', 'landscape')
+            ->save(storage_path("app/public/reports/$fileName.pdf"));
+
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($customerName, $profileName, $bankAccount, $customers, $statusDDL, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($customerName, $profileName, $bankAccount, $customers, $statusDDL, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.customer_report',
+                    compact('customerName', 'profileName', 'bankAccount', 'customers', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'));
+                $sheet->setOrientation('landscape');
+                $sheet->setPageMargin(0.30);
+            });
+        })->store('xlsx', storage_path("app/public/reports"));
+
+        return redirect(route('db.report.view', $fileName));
+    }
+
+    public function generateSupplierReport(Request $request, PDF $pdf)
+    {
+        Log::info('ReportController@generateSupplierReport');
+
+        $currentUser = Auth::user()->name;
+        $reportDate = Carbon::now();
+        $showParameter = true;
+        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+
+        //Parameters
+        $supplierName = $request->input('name');
+        $profileName = $request->input('profile_name');
+        $bankAccount = $request->input('bank_account');
+
+        $suppliers = Supplier::with('store', 'profiles')
+            ->when($supplierName, function ($query) use ($supplierName) {
+                return $query->orWhere('name', 'like', "%$supplierName%");
+            })
+            ->when($profileName, function ($query) use ($profileName) {
+                return $query->orWhereHas('profiles', function ($q) use ($profileName){
+                    $q->orWhere('first_name', 'like', "%$profileName%")
+                      ->orWhere('last_name', 'like', "%$profileName%");
+                });
+            })
+            ->when($bankAccount, function ($query) use ($bankAccount) {
+                return $query->orWhereHas('bankAccounts', function ($q) use ($bankAccount){
+                    $q->where('account_number', 'like', "%$bankAccount%");
+                });
+            })
+            ->get();
+
+        if (!File::exists(storage_path('app/public/reports'))) {
+            File::makeDirectory(storage_path('app/public/reports'));
+        }
+
+        $fileName = "Supplier_Report_" . $reportDate->format('Ymd');
+
+        //Save pdf report
+        $pdf->loadView('report_template.pdf.supplier_report',
+            compact('supplierName', 'profileName', 'bankAccount', 'suppliers', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'))
+            ->setPaper('a4', 'landscape')
+            ->save(storage_path("app/public/reports/$fileName.pdf"));
+
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($supplierName, $profileName, $bankAccount, $suppliers, $statusDDL, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($supplierName, $profileName, $bankAccount, $suppliers, $statusDDL, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.supplier_report',
+                    compact('supplierName', 'profileName', 'bankAccount', 'suppliers', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'));
+                $sheet->setOrientation('landscape');
+                $sheet->setPageMargin(0.30);
+            });
+        })->store('xlsx', storage_path("app/public/reports"));
+
+        return redirect(route('db.report.view', $fileName));
+    }
+
+    public function generateProductReport(Request $request, PDF $pdf)
+    {
+        Log::info('ReportController@generateProductReport');
+
+        $currentUser = Auth::user()->name;
+        $reportDate = Carbon::now();
+        $showParameter = true;
+        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+
+        //Parameters
+        $productName = $request->input('name');
+        $shortCode = $request->input('short_code');
+
+        $products = Product::with('store', 'type')
+            ->when(!empty($productName), function ($query) use ($productName){
+                return $query->orWhere('name', 'like', "%$productName%");
+            })
+            ->when(!empty($shortCode), function ($query) use ($shortCode){
+                return $query->orWhere('short_code', 'like', "%$shortCode%");
+            })
+            ->get();
+
+        if (!File::exists(storage_path('app/public/reports'))) {
+            File::makeDirectory(storage_path('app/public/reports'));
+        }
+
+        $fileName = "Product_Report_" . $reportDate->format('Ymd');
+
+        //Save pdf report
+        $pdf->loadView('report_template.pdf.product_report',
+            compact('productName', 'shortCode', 'products', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'))
+            ->save(storage_path("app/public/reports/$fileName.pdf"));
+
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($productName, $shortCode, $products, $statusDDL, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($productName, $shortCode, $products, $statusDDL, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.product_report',
+                    compact('productName', 'shortCode', 'products', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'));
+                $sheet->setPageMargin(0.30);
+            });
+        })->store('xlsx', storage_path("app/public/reports"));
+
+        return redirect(route('db.report.view', $fileName));
+    }
+
     public function generateProductTypeReport(Request $request, PDF $pdf)
     {
         Log::info('ReportController@generateProductTypeReport');
 
+        $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
         $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+
+        //Parameters
         $productTypeName = $request->input('name');
         $shortCode = $request->input('short_code');
-        $currentUser = Auth::user()->name;
 
-        if (isset($productTypeName) || isset($shortCode)) {
-            $productTypes = ProductType::with('store')->where('name', 'like', "%$productTypeName%")
-                ->orWhere('short_code', 'like', "$shortCode")->get();
-        } else {
-            $productTypes = ProductType::with('store')->all();
-        }
+        $productTypes = ProductType::with('store')
+            ->when(!empty($productTypeName), function ($query) use ($productTypeName){
+                return $query->orWhere('name', 'like', "%$productTypeName%");
+            })
+            ->when(!empty($shortCode), function ($query) use ($shortCode){
+                return $query->orWhere('short_code', 'like', "%$shortCode%");
+            })
+            ->get();
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -109,23 +278,30 @@ class ReportController extends Controller
     {
         Log::info('ReportController@generateBankReport');
 
+        $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
         $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+
+        //Parameters
         $bankName = $request->input('name');
         $shortName = $request->input('short_name');
         $branch = $request->input('branch');
         $branchCode = $request->input('branch_code');
-        $currentUser = Auth::user()->name;
 
-        if (!empty($bankName) || !empty($shortName) || !empty($branch) || !empty($branchCode)) {
-            $banks = Bank::where('name', 'like', "%$bankName%")
-                ->orWhere('short_name', 'like', "%$shortName%")
-                ->orWhere('branch', 'like', "%$branch%")
-                ->orWhere('branch_code', 'like', "%$branchCode%")->get();
-        } else {
-            $banks = Bank::all();
-        }
+        $banks = Bank::when(!empty($bankName), function ($query) use ($bankName){
+                return $query->where('name', 'like', "%$bankName%");
+            })
+            ->when(!empty($shortName), function ($query) use ($shortName){
+                return $query->where('short_name', 'like', "%$shortName%");
+            })
+            ->when(!empty($branch), function ($query) use ($branch){
+                return $query->where('branch', 'like', "%$branch%");
+            })
+            ->when(!empty($branchCode), function ($query) use ($branchCode){
+                return $query->where('branch_code', 'like', "%$branchCode%");
+            })
+            ->get();
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -156,17 +332,18 @@ class ReportController extends Controller
     {
         Log::info('ReportController@generateWarehouseReport');
 
+        $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
         $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
-        $warehouseName = $request->input('name');
-        $currentUser = Auth::user()->name;
 
-        if (isset($warehouseName)) {
-            $warehouses = Warehouse::with('store')->where('name', 'like', "%$warehouseName%")->get();
-        } else {
-            $warehouses = Warehouse::with('store')->all();
-        }
+        //Parameters
+        $warehouseName = $request->input('name');
+
+        $warehouses = Warehouse::with('store')
+            ->when(!empty($warehouseName), function ($query) use ($warehouseName){
+                return $query->where('name', 'like', "%$warehouseName%");
+            })->get();
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -197,18 +374,19 @@ class ReportController extends Controller
     {
         Log::info('ReportController@generateTruckReport');
 
+        $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
         $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
         $truckTypeDDL = Lookup::whereCategory('TRUCKTYPE')->pluck('description', 'code');
-        $plateNumber = $request->input('plate_number');
-        $currentUser = Auth::user()->name;
 
-        if (isset($plateNumber)) {
-            $trucks = Truck::with('store')->where('plate_number', 'like', "%$plateNumber%")->get();
-        } else {
-            $trucks = Truck::with('store')->all();
-        }
+        //Parameters
+        $plateNumber = $request->input('plate_number');
+
+        $trucks = Truck::with('store')
+            ->when(!empty($plateNumber), function ($query) use ($plateNumber){
+                return $query->where('plate_number', 'like', "%$plateNumber%");
+            })->get();
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -239,20 +417,22 @@ class ReportController extends Controller
     {
         Log::info('ReportController@generateTruckMaintenanceReport');
 
+        $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
         $truckMaintenanceTypeDDL = Lookup::whereCategory('TRUCKMTCTYPE')->pluck('description', 'code');
-        $plateNumber = $request->input('plate_number');
-        $currentUser = Auth::user()->name;
 
-        $type = gettype($plateNumber);
-        Log::info("Truck ID Type : $type");
+        //Parameters
+        $truckId = $request->input('truck_id');
 
-        if (!empty($plateNumber)) {
-            $truckMaintenances = TruckMaintenance::with('store', 'truck')
-                ->where('truck_id', '=', $plateNumber)->get();
-        } else {
-            $truckMaintenances = TruckMaintenance::with('store', 'truck')->get();
+        $truckMaintenances = TruckMaintenance::with('store', 'truck')
+            ->when(!empty($truckId), function ($query) use ($truckId){
+                return $query->where('truck_id', '=', $truckId);
+            })->get();
+
+        $plateNumber = '';
+        if(!empty($truckId)){
+            $plateNumber = Truck::find($truckId)->plate_number;
         }
 
         if (!File::exists(storage_path('app/public/reports'))) {
@@ -284,17 +464,18 @@ class ReportController extends Controller
     {
         Log::info('ReportController@generateVendorTruckingReport');
 
+        $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
         $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
-        $vendorTruckingName = $request->input('name');
-        $currentUser = Auth::user()->name;
 
-        if (isset($vendorTruckingName)) {
-            $vendorTruckings = VendorTrucking::with('store')->where('name', 'like', "%$vendorTruckingName%")->get();
-        } else {
-            $vendorTruckings = VendorTrucking::with('store')->all();
-        }
+        //Parameters
+        $vendorTruckingName = $request->input('name');
+
+        $vendorTruckings = VendorTrucking::with('store')
+            ->when(!empty($vendorTruckingName), function ($query) use ($vendorTruckingName) {
+                return $query->where('name', 'like', "%$vendorTruckingName%");
+            })->get();
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));

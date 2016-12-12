@@ -16,92 +16,97 @@
     <div class="well">
         <div class="row">
             <div class="col-md-6">
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.customer')</h3>
+                <form action="{{ route('db.report.master.customer') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.customer')</h3>
+                        </div>
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="inputCustomer_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputCustomer_Name" type="text" name="name" class="form-control" placeholder="@lang('report.master.field.name')">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputCustomer_ProfileName" class="col-sm-3 control-label">@lang('report.master.field.profile_name')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputCustomer_ProfileName" type="text" name="profile_name" class="form-control" placeholder="@lang('report.master.field.profile_name')">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputCustomer_BankAccount" class="col-sm-3 control-label">@lang('report.master.field.bank_account')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputCustomer_BankAccount" type="text" name="bank_account" class="form-control" placeholder="@lang('report.master.field.bank_account')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                            </div>
                     </div>
-                    <form action="" method="post" class="form-horizontal">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="inputCustomer_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputCustomer_Name" type="text" class="form-control" placeholder="@lang('report.master.field.name')">
-                                    <span class="help-block"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputCustomer_ProfileName" class="col-sm-3 control-label">@lang('report.master.field.profile_name')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputCustomer_ProfileName" type="text" class="form-control" placeholder="@lang('report.master.field.profile_name')">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputCustomer_BankAccount" class="col-sm-3 control-label">@lang('report.master.field.bank_account')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputCustomer_BankAccount" type="text" class="form-control" placeholder="@lang('report.master.field.bank_account')">
-                                </div>
-                            </div>
+                </form>
+                <form action="{{ route('db.report.master.supplier') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.supplier')</h3>
                         </div>
-                        <div class="box-footer">
-                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.supplier')</h3>
+                        <form action="" method="post" class="form-horizontal">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="inputSupplier_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputSupplier_Name" type="text" name="name" class="form-control" placeholder="@lang('report.master.field.name')">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSupplier_ProfileName" class="col-sm-3 control-label">@lang('report.master.field.profile_name')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputSupplier_ProfileName" type="text" name="profile_name" class="form-control" placeholder="@lang('report.master.field.profile_name')">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSupplier_BankAccount" class="col-sm-3 control-label">@lang('report.master.field.bank_account')</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputSupplier_BankAccount" type="text" name="bank_account" class="form-control" placeholder="@lang('report.master.field.bank_account')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                            </div>
+                        </form>
                     </div>
-                    <form action="" method="post" class="form-horizontal">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="inputSupplier_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputSupplier_Name" type="text" class="form-control" placeholder="@lang('report.master.field.name')">
-                                    <span class="help-block"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputSupplier_ProfileName" class="col-sm-3 control-label">@lang('report.master.field.profile_name')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputSupplier_ProfileName" type="text" class="form-control" placeholder="@lang('report.master.field.profile_name')">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputSupplier_BankAccount" class="col-sm-3 control-label">@lang('report.master.field.bank_account')</label>
-                                <div class="col-sm-9">
-                                    <input id="inputSupplier_BankAccount" type="text" class="form-control" placeholder="@lang('report.master.field.bank_account')">
-                                </div>
-                            </div>
+                </form>
+                <form action="{{ route('db.report.master.product') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.master.header.product')</h3>
                         </div>
-                        <div class="box-footer">
-                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">@lang('report.master.header.product')</h3>
-                    </div>
-                    <form action="" method="post" class="form-horizontal">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputProduct_Name" class="col-sm-3 control-label">@lang('report.master.field.name')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputProduct_Name" placeholder="@lang('report.master.field.name')">
+                                    <input type="text" name="name" class="form-control" id="inputProduct_Name" placeholder="@lang('report.master.field.name')">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputProduct_ShortCode" class="col-sm-3 control-label">@lang('report.master.field.short_code')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputProduct_ShortCode" placeholder="@lang('report.master.field.short_code')">
+                                    <input type="text" name="short_code" class="form-control" id="inputProduct_ShortCode" placeholder="@lang('report.master.field.short_code')">
                                 </div>
                             </div>
                         </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
                 <form action="{{ route('db.report.master.product_type') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="box box-info">
@@ -221,7 +226,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">@lang('report.master.field.plate_number')</label>
                                     <div class="col-sm-9">
-                                        {{ Form::select('plate_number', $trucklist, null, array('class' => 'form-control', 'placeholder' => trans('labels.PLEASE_SELECT'), 'id' => 'inputTruckMaintenance_PlateNumber')) }}
+                                        {{ Form::select('truck_id', $trucklist, null, array('class' => 'form-control', 'placeholder' => trans('labels.PLEASE_SELECT'), 'id' => 'inputTruckMaintenance_PlateNumber')) }}
                                     </div>
                                 </div>
                             </div>

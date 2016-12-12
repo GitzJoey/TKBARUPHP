@@ -89,6 +89,68 @@ return [
         'page_title_desc' => ''
     ],
     'template' => [
+        'customer' => [
+            'report_name' => 'Customer Report',
+            'parameter' => [
+                'name' => 'Name',
+                'profile_name' => 'Profile Name',
+                'bank_account' => 'Bank Account',
+            ],
+            'header' => [
+                'store' => 'Store',
+                'sign_code' => 'Sign Code',
+                'name' => 'Name',
+                'address' => 'Address',
+                'city' => 'City',
+                'phone_number' => 'Phone Number',
+                'fax_num' => 'Fax Number',
+                'tax_id' => 'Tax ID',
+                'payment_due_day' => 'Payment Due Day',
+                'price_level' => 'Price Level',
+                'status' => 'Status',
+                'remarks' => 'Remarks'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'supplier' => [
+            'report_name' => 'Supplier Report',
+            'parameter' => [
+                'name' => 'Name',
+                'profile_name' => 'Profile Name',
+                'bank_account' => 'Bank Account',
+            ],
+            'header' => [
+                'store' => 'Store',
+                'sign_code' => 'Sign Code',
+                'name' => 'Name',
+                'address' => 'Address',
+                'city' => 'City',
+                'phone_number' => 'Phone Number',
+                'fax_num' => 'Fax Number',
+                'tax_id' => 'Tax ID',
+                'payment_due_day' => 'Payment Due Day',
+                'status' => 'Status',
+                'remarks' => 'Remarks'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'product' => [
+            'report_name' => 'Product Report',
+            'parameter' => [
+                'name' => 'Name',
+                'short_code' => 'Short Code',
+            ],
+            'header' => [
+                'store' => 'Store',
+                'product_type' => 'Product Type',
+                'name' => 'Name',
+                'short_code' => 'Short Code',
+                'description' => 'Description',
+                'status' => 'Status',
+                'remarks' => 'Remarks'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
         'bank' => [
             'report_name' => 'Bank Report',
             'parameter' => [
