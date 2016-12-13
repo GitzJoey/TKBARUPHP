@@ -11,6 +11,7 @@ namespace App\Services\Implementation;
 use Illuminate\Http\Request;
 
 use App\Model\Store;
+use App\Model\Lookup;
 
 use App\Services\StoreService;
 
