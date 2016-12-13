@@ -503,7 +503,7 @@
 
             $scope.setSOCode = function(so){
                 $http.get('{{ route('api.so.code') }}').then(function(data){
-                    so.so_code = data;
+                    so.so_code = data.data;
                 });
             };
 
