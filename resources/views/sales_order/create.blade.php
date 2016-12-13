@@ -502,7 +502,7 @@
             $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
 
             $scope.setSOCode = function(so){
-                $http.get('{{ route('api.so.code') }}').success(function(data){
+                $http.get('{{ route('api.so.code') }}').then(function(data){
                     so.so_code = data;
                 });
             };
