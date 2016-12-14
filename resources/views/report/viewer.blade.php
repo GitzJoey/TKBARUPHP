@@ -37,7 +37,7 @@
                    target="_blank" class="btn btn-primary pull-right"><span class="fa fa-file-excel-o fa-fw"></span> @lang('buttons.download_excel_button')</a>
                 <a id="pdfButton" href="{{ asset('storage/reports/' . $fileName . '.pdf') }}"
                    target="_blank" class="btn btn-primary pull-right"><span class="fa fa-file-pdf-o fa-fw"></span> @lang('buttons.download_pdf_button')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a id="backButton" href="{{ route('db.report.master') }}"
+                <a id="backButton" onclick="window.history.back()"
                    class="btn btn-primary pull-left"><span class="fa fa-arrow-left fa-fw"></span> @lang('buttons.back_button')</a>
             </div>
         </div>

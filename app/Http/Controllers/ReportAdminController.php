@@ -8,10 +8,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Lookup;
 use App\Model\PhoneProvider;
+use App\Model\Role;
+use App\Model\Store;
+use App\Model\Unit;
 use App\User;
 
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 use LaravelLocalization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,422 +32,257 @@ class ReportAdminController extends Controller
         $this->middleware('auth');
     }
 
-    public function generateUserReport(Request $request)
+    public function generateUserReport(Request $request, PDF $pdf)
     {
         Log::info('ReportAdminController@generateUserReport');
 
+        $currentUser = Auth::user()->name;
+        $reportDate = Carbon::now();
         $showParameter = true;
 
-        $paramUser = $request->input('inputUser_User');
-        $paramEmail = $request->input('inputUser_Email');
-        $paramRole = $request->input('inputUser_Role');
-        $paramProfile = $request->input('inputUser_Profile');
+        //Parameters
+        $userName = $request->input('name');
+        $email = $request->input('email');
+        $roleId = $request->input('role_id');
+        $profileName = $request->input('profile_name');
 
-        $currentUser = Auth::user()->name;
+        $users = User::when(!empty($userName), function ($query) use ($userName) {
+                return $query->orWhere('name', 'like', "%$userName%");
+            })
+            ->when(!empty($email), function ($query) use ($email) {
+                return $query->orWhere('email', 'like', "%$email%");
+            })
+            ->when(!empty($roleId), function ($query) use ($roleId) {
+                return $query->orWhereHas('roles', function ($q) use ($roleId) {
+                    $q->where('id', '=', $roleId);
+                });
+            })
+            ->when($profileName, function ($query) use ($profileName) {
+                return $query->orWhereHas('profile', function ($q) use ($profileName){
+                    $q->orWhere('first_name', 'like', "%$profileName%")
+                      ->orWhere('last_name', 'like', "%$profileName%");
+                });
+            })
+            ->get();
 
-        $user = User::where('name', '=', $paramUser)->with('store')->first();
+        $roleName = '';
 
-        //Array to hold titles
-        $titleArray = collect([]);
-
-        //Array to hold data
-        $dataArray = collect([]);
-
-        Carbon::setLocale(Lang::getLocale());
-        $reportDate = Carbon::now()->toDayDateTimeString();
-
-        //Set report title
-        $titleArray->push('');
-
-        $headerArray = [];
-        if  (LaravelLocalization::getCurrentLocale() == "en") {
-            $headerArray = collect(['Store', 'Name', 'Email', 'Type', 'Allow Login', 'Link Profile']);
-        } else {
-            $headerArray = collect(['Store', 'Name', 'Email', 'Type', 'Allow Login', 'Link Profile']);
+        $role = Role::find($roleId);
+        if($role){
+            $roleName = $role->name;
         }
 
-        //Record
-        if(!is_null($user)){
-            $dataArray = collect([
-                $user->store->name,
-                $user->name,
-                $user->email,
-                $user->type,
-                $user->userDetail->allow_login,
-                $user->profile->first_name
-            ]);
+
+        if (!File::exists(storage_path('app/public/reports'))) {
+            File::makeDirectory(storage_path('app/public/reports'));
         }
 
-        //Array to hold overall data for report
-        $report = collect([
-            'titles' => $titleArray,
-            'headers' => $headerArray,
-            'data' => $dataArray,
-            'user' => $currentUser,
-            'date' => $reportDate,
-            'parameters' => collect([])
-        ]);
+        $fileName = "User_Report_" . $reportDate->format('Ymd');
 
-        if($showParameter){
-            $report['parameters']->push([
-                'label' => 'user', 'value' => $paramUser
-            ]);
-        }
+        //Save pdf report
+        $pdf->loadView('report_template.pdf.user_report',
+            compact('userName', 'email', 'profileName', 'roleName', 'users', 'currentUser', 'reportDate', 'showParameter'))
+            ->save(storage_path("app/public/reports/$fileName.pdf"));
 
-        Excel::create("User Report - $user", function ($excel) use ($report){
-            $excel->sheet('Sheet 1', function ($sheet) use ($report) {
-                $sheet->loadView('report_template.user_report', compact('report'));
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($userName, $email, $profileName, $roleName, $users, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($userName, $email, $profileName, $roleName, $users, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.user_report',
+                    compact('userName', 'email', 'profileName', 'roleName', 'users', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
-                $sheet->setAutoSize(true);
             });
-        })->download('xlsx');
+        })->store('xlsx', storage_path("app/public/reports"));
 
-        return redirect(route('db.report.admin'));
+        return redirect(route('db.report.view', $fileName));
     }
 
-    public function generateRoleReport(Request $request)
+    public function generateRoleReport(Request $request, PDF $pdf)
     {
         Log::info('ReportAdminController@generateRoleReport');
 
+        $currentUser = Auth::user()->name;
+        $reportDate = Carbon::now();
         $showParameter = true;
 
-        $paramName = $request->input('inputRole_Name');
-        $paramPermission = $request->input('inputRole_Permission');
+        //Parameters
+        $roleName = $request->input('name');
+        $permission = $request->input('permission');
 
-        $currentUser = Auth::user()->name;
+        $roles = Role::when(!empty($roleName), function ($query) use ($roleName) {
+                return $query->orWhere('name', 'like', "%$roleName%")
+                             ->orWhere('display_name', 'like', "%$roleName%");
+            })
+            ->when(!empty($permission), function ($query) use ($permission) {
+                return $query->orWhereHas('permissions', function ($q) use ($permission){
+                    $q->orWhere('name', 'like', "%$permission%")
+                      ->orWhere('display_name', 'like', "%$permission%");
+                });
+            })
+            ->get();
 
-        $role = Role::where('name', '=', $paramName)->first();
-
-        //Array to hold titles
-        $titleArray = collect([]);
-
-        //Array to hold data
-        $dataArray = collect([]);
-
-        Carbon::setLocale(Lang::getLocale());
-        $reportDate = Carbon::now()->toDayDateTimeString();
-
-        //Set report title
-        $titleArray->push('');
-
-        $headerArray = [];
-        if  (LaravelLocalization::getCurrentLocale() == "en") {
-            $headerArray = collect(['Name', 'Display Name', 'Description', 'Permission']);
-        } else {
-            $headerArray = collect(['Name', 'Display Name', 'Description', 'Permission']);
+        if (!File::exists(storage_path('app/public/reports'))) {
+            File::makeDirectory(storage_path('app/public/reports'));
         }
 
-        //Record
-        if(!is_null($role)){
-            $dataArray = collect([
-                $role->name,
-                $role->display_name,
-                $role->description
-            ]);
-        }
+        $fileName = "Role_Report_" . $reportDate->format('Ymd');
 
-        //Array to hold overall data for report
-        $report = collect([
-            'titles' => $titleArray,
-            'headers' => $headerArray,
-            'data' => $dataArray,
-            'user' => $currentUser,
-            'date' => $reportDate,
-            'parameters' => collect([])
-        ]);
+        //Save pdf report
+        $pdf->loadView('report_template.pdf.role_report',
+            compact('roleName', 'permission', 'roles', 'currentUser', 'reportDate', 'showParameter'))
+            ->save(storage_path("app/public/reports/$fileName.pdf"));
 
-        if($showParameter){
-            $report['parameters']->push([
-                'label' => 'name', 'value' => $paramName
-            ]);
-        }
-
-        Excel::create("Role Report - $role", function ($excel) use ($report){
-            $excel->sheet('Sheet 1', function ($sheet) use ($report) {
-                $sheet->loadView('report_template.role_report', compact('report'));
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($roleName, $permission, $roles, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($roleName, $permission, $roles, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.role_report',
+                    compact('roleName', 'permission', 'roles', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
-                $sheet->setAutoSize(true);
             });
-        })->download('xlsx');
+        })->store('xlsx', storage_path("app/public/reports"));
 
-        return redirect(route('db.report.admin'));
+        return redirect(route('db.report.view', $fileName));
     }
 
-    public function generateStoreReport(Request $request)
+    public function generateStoreReport(Request $request, PDF $pdf)
     {
         Log::info('ReportAdminController@generateStoreReport');
 
-        $showParameter = true;
-
-        $paramName = $request->input('inputStore_Name');
-        $paramTaxId = $request->input('inputStore_TaxId');
-
         $currentUser = Auth::user()->name;
+        $reportDate = Carbon::now();
+        $showParameter = true;
+        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
 
-        $store = Store::where('name', '=', $paramName)->first();
+        //Parameters
+        $storeName = $request->input('name');
+        $taxId = $request->input('tax_id');
 
-        //Array to hold titles
-        $titleArray = collect([]);
+        $stores = Store::when(!empty($storeName), function ($query) use ($storeName) {
+                return $query->orWhere('name', 'like', "%$storeName%");
+            })
+            ->when(!empty($taxId), function ($query) use ($taxId) {
+                return $query->orWhere('tax_id', 'like', "%$taxId%");
+            })
+            ->get();
 
-        //Array to hold data
-        $dataArray = collect([]);
-
-        Carbon::setLocale(Lang::getLocale());
-        $reportDate = Carbon::now()->toDayDateTimeString();
-
-        //Set report title
-        $titleArray->push('');
-
-        $headerArray = [];
-        if  (LaravelLocalization::getCurrentLocale() == "en") {
-            $headerArray = collect(['Name', 'Address', 'Phone Number', 'Fax Number', 'Tax ID', 'Status', 'Default', 'Remarks']);
-        } else {
-            $headerArray = collect(['Name', 'Address', 'Phone Number', 'Fax Number', 'Tax ID', 'Status', 'Default', 'Remarks']);
+        if (!File::exists(storage_path('app/public/reports'))) {
+            File::makeDirectory(storage_path('app/public/reports'));
         }
 
-        //Record
-        if(!is_null($store)){
-            $dataArray = collect([
-                $store->name,
-                $store->address,
-                $store->phone_num,
-                $store->fax_num,
-                $store->tax_id,
-                $store->status,
-                $store->is_default,
-                $store->remarks,
-            ]);
-        }
+        $fileName = "Store_Report_" . $reportDate->format('Ymd');
 
-        //Array to hold overall data for report
-        $report = collect([
-            'titles' => $titleArray,
-            'headers' => $headerArray,
-            'data' => $dataArray,
-            'user' => $currentUser,
-            'date' => $reportDate,
-            'parameters' => collect([])
-        ]);
+        //Save pdf report
+        $pdf->loadView('report_template.pdf.store_report',
+            compact('storeName', 'taxId', 'statusDDL', 'stores', 'currentUser', 'reportDate', 'showParameter'))
+            ->save(storage_path("app/public/reports/$fileName.pdf"));
 
-        if($showParameter){
-            $report['parameters']->push([
-                'label' => 'name', 'value' => $paramName
-            ]);
-        }
-
-        Excel::create("Store Report - $store", function ($excel) use ($report){
-            $excel->sheet('Sheet 1', function ($sheet) use ($report) {
-                $sheet->loadView('report_template.store_report', compact('report'));
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($storeName, $taxId, $statusDDL, $stores, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($storeName, $taxId, $statusDDL, $stores, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.store_report',
+                    compact('storeName', 'taxId', 'statusDDL', 'stores', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
-                $sheet->setAutoSize(true);
             });
-        })->download('xlsx');
+        })->store('xlsx', storage_path("app/public/reports"));
 
-        return redirect(route('db.report.admin'));
+        return redirect(route('db.report.view', $fileName));
     }
 
-    public function generateUnitReport(Request $request)
+    public function generateUnitReport(Request $request, PDF $pdf)
     {
         Log::info('ReportAdminController@generateUnitReport');
 
-        $showParameter = true;
-
-        $paramName = $request->input('inputUnit_Name');
-        $paramSymbol = $request->input('inputUnit_Symbol');
-
         $currentUser = Auth::user()->name;
+        $reportDate = Carbon::now();
+        $showParameter = true;
+        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
 
-        $unit = Unit::where('name', '=', $paramName)->first();
+        //Parameters
+        $unitName = $request->input('name');
+        $symbol = $request->input('symbol');
 
-        //Array to hold titles
-        $titleArray = collect([]);
+        $units = Unit::when(!empty($unitName), function ($query) use ($unitName) {
+                return $query->orWhere('name', 'like', "%$unitName%");
+            })
+            ->when(!empty($symbol), function ($query) use ($symbol) {
+                return $query->orWhere('symbol', 'like', "%$symbol%");
+            })
+            ->get();
 
-        //Array to hold data
-        $dataArray = collect([]);
-
-        Carbon::setLocale(Lang::getLocale());
-        $reportDate = Carbon::now()->toDayDateTimeString();
-
-        //Set report title
-        $titleArray->push('');
-
-        $headerArray = [];
-        if  (LaravelLocalization::getCurrentLocale() == "en") {
-            $headerArray = collect(['Name', 'Symbol', 'Status', 'Remarks']);
-        } else {
-            $headerArray = collect(['Name', 'Symbol', 'Status', 'Remarks']);
+        if (!File::exists(storage_path('app/public/reports'))) {
+            File::makeDirectory(storage_path('app/public/reports'));
         }
 
-        //Record
-        if(!is_null($unit)){
-            $dataArray = collect([
-                $unit->name,
-                $unit->symbol,
-                $unit->status,
-                $unit->remarks,
-            ]);
-        }
+        $fileName = "Unit_Report_" . $reportDate->format('Ymd');
 
-        //Array to hold overall data for report
-        $report = collect([
-            'titles' => $titleArray,
-            'headers' => $headerArray,
-            'data' => $dataArray,
-            'user' => $currentUser,
-            'date' => $reportDate,
-            'parameters' => collect([])
-        ]);
+        //Save pdf report
+        $pdf->loadView('report_template.pdf.unit_report',
+            compact('unitName', 'symbol', 'statusDDL', 'units', 'currentUser', 'reportDate', 'showParameter'))
+            ->save(storage_path("app/public/reports/$fileName.pdf"));
 
-        if($showParameter){
-            $report['parameters']->push([
-                'label' => 'name', 'value' => $paramName
-            ]);
-        }
-
-        Excel::create("Unit Report - $unit", function ($excel) use ($report){
-            $excel->sheet('Sheet 1', function ($sheet) use ($report) {
-                $sheet->loadView('report_template.unit_report', compact('report'));
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($unitName, $symbol, $statusDDL, $units, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($unitName, $symbol, $statusDDL, $units, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.unit_report',
+                    compact('unitName', 'symbol', 'statusDDL', 'units', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
-                $sheet->setAutoSize(true);
             });
-        })->download('xlsx');
+        })->store('xlsx', storage_path("app/public/reports"));
 
-        return redirect(route('db.report.admin'));
+        return redirect(route('db.report.view', $fileName));
     }
 
-    public function generatePhoneProviderReport(Request $request)
+    public function generatePhoneProviderReport(Request $request, PDF $pdf)
     {
         Log::info('ReportAdminController@generatePhoneProviderReport');
 
-        $showParameter = true;
-
-        $paramName = $request->input('inputUnit_Name');
-        $paramShortName = $request->input('inputUnit_ShortName');
-
         $currentUser = Auth::user()->name;
+        $reportDate = Carbon::now();
+        $showParameter = true;
+        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
 
-        $ph = PhoneProvider::where('name', '=', $paramName)->first();
+        //Parameters
+        $phoneProviderName = $request->input('name');
+        $shortName = $request->input('short_name');
 
-        //Array to hold titles
-        $titleArray = collect([]);
+        $phoneProviders = PhoneProvider::when(!empty($phoneProviderName), function ($query) use ($phoneProviderName) {
+                return $query->orWhere('name', 'like', "%$phoneProviderName%");
+            })
+            ->when(!empty($shortName), function ($query) use ($shortName) {
+                return $query->orWhere('short_name', 'like', "%$shortName%");
+            })
+            ->get();
 
-        //Array to hold data
-        $dataArray = collect([]);
-
-        Carbon::setLocale(Lang::getLocale());
-        $reportDate = Carbon::now()->toDayDateTimeString();
-
-        //Set report title
-        $titleArray->push('');
-
-        $headerArray = [];
-        if  (LaravelLocalization::getCurrentLocale() == "en") {
-            $headerArray = collect(['Name', 'Short Name', 'Prefix', 'Status', 'Remarks']);
-        } else {
-            $headerArray = collect(['Name', 'Short Name', 'Prefix', 'Status', 'Remarks']);
+        if (!File::exists(storage_path('app/public/reports'))) {
+            File::makeDirectory(storage_path('app/public/reports'));
         }
 
-        //Record
-        if(!is_null($ph)){
-            $dataArray = collect([
-                $ph->name,
-                $ph->short_name,
-                $ph->prefix,
-                $ph->status,
-                $ph->remarks,
-            ]);
-        }
+        $fileName = "Phone_Provider_Report_" . $reportDate->format('Ymd');
 
-        //Array to hold overall data for report
-        $report = collect([
-            'titles' => $titleArray,
-            'headers' => $headerArray,
-            'data' => $dataArray,
-            'user' => $currentUser,
-            'date' => $reportDate,
-            'parameters' => collect([])
-        ]);
+        //Save pdf report
+        $pdf->loadView('report_template.pdf.phone_provider_report',
+            compact('phoneProviderName', 'shortCode', 'statusDDL', 'phoneProviders', 'currentUser', 'reportDate', 'showParameter'))
+            ->save(storage_path("app/public/reports/$fileName.pdf"));
 
-        if($showParameter){
-            $report['parameters']->push([
-                'label' => 'name', 'value' => $paramName
-            ]);
-        }
-
-        Excel::create("Phone Provider Report - $ph", function ($excel) use ($report){
-            $excel->sheet('Sheet 1', function ($sheet) use ($report) {
-                $sheet->loadView('report_template.phone_provider_report', compact('report'));
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($phoneProviderName, $shortName, $statusDDL, $phoneProviders, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($phoneProviderName, $shortName, $statusDDL, $phoneProviders, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.phone_provider_report',
+                    compact('phoneProviderName', 'shortCode', 'statusDDL', 'phoneProviders', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
-                $sheet->setAutoSize(true);
             });
-        })->download('xlsx');
+        })->store('xlsx', storage_path("app/public/reports"));
 
-        return redirect(route('db.report.admin'));
+        return redirect(route('db.report.view', $fileName));
     }
 
-    public function generateSettingsReport(Request $request)
-    {
-        Log::info('ReportAdminController@generateSettingsReport');
-
-        $showParameter = true;
-
-        $paramUser = $request->input('inputSettings_User');
-
-        $currentUser = Auth::user()->name;
-
-        $settings = Settings::where('user_id', '=', $paramUser)->first();
-
-        //Array to hold titles
-        $titleArray = collect([]);
-
-        //Array to hold data
-        $dataArray = collect([]);
-
-        Carbon::setLocale(Lang::getLocale());
-        $reportDate = Carbon::now()->toDayDateTimeString();
-
-        //Set report title
-        $titleArray->push('');
-
-        $headerArray = [];
-        if  (LaravelLocalization::getCurrentLocale() == "en") {
-            $headerArray = collect(['Key', 'Value']);
-        } else {
-            $headerArray = collect(['Key', 'Value']);
-        }
-
-        //Record
-        if(!is_null($settings)){
-            $dataArray = collect([
-                $settings->key,
-                $settings->value,
-            ]);
-        }
-
-        //Array to hold overall data for report
-        $report = collect([
-            'titles' => $titleArray,
-            'headers' => $headerArray,
-            'data' => $dataArray,
-            'user' => $currentUser,
-            'date' => $reportDate,
-            'parameters' => collect([])
-        ]);
-
-        if($showParameter){
-            $report['parameters']->push([
-                'label' => 'user', 'value' => $paramUser
-            ]);
-        }
-
-        Excel::create("Settings Report - $settings", function ($excel) use ($report){
-            $excel->sheet('Sheet 1', function ($sheet) use ($report) {
-                $sheet->loadView('report_template.settings_report', compact('report'));
-                $sheet->setPageMargin(0.30);
-                $sheet->setAutoSize(true);
-            });
-        })->download('xlsx');
-
-        return redirect(route('db.report.admin'));
-    }
 }

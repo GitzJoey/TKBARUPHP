@@ -244,6 +244,79 @@ return [
                 'remarks' => 'Remarks'
             ],
             'footer' => 'Printed by :user on :date'
-        ]
+        ],
+        'user' => [
+            'report_name' => 'User Report',
+            'parameter' => [
+                'name' => 'Name',
+                'email' => 'E-Mail',
+                'role' => 'Role',
+                'profile' => 'Profile'
+            ],
+            'header' => [
+                'name' => 'Name',
+                'email' => 'E-Mail'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'role' => [
+            'report_name' => 'Role Report',
+            'parameter' => [
+                'name' => 'Name',
+                'permission' => 'Permission',
+            ],
+            'header' => [
+                'name' => 'Name',
+                'display_name' => 'Display Name',
+                'description' => 'Description'
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'store' => [
+            'report_name' => 'Store Report',
+            'parameter' => [
+                'name' => 'Name',
+                'tax_id' => 'Tax Id',
+            ],
+            'header' => [
+                'name' => 'Name',
+                'address' => 'Address',
+                'phone_num' => 'Phone Number',
+                'fax_num' => 'Fax Number',
+                'tax_id' => 'Tax ID',
+                'status' => 'Status',
+                'remarks' => 'Remarks',
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'unit' => [
+            'report_name' => 'Unit Report',
+            'parameter' => [
+                'name' => 'Name',
+                'symbol' => 'Symbol',
+            ],
+            'header' => [
+                'name' => 'Name',
+                'symbol' => 'Symbol',
+                'status' => 'Status',
+                'remarks' => 'Remarks',
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
+        'phone_provider' => [
+            'report_name' => 'Phone Provider Report',
+            'parameter' => [
+                'name' => 'Name',
+                'short_name' => 'Short Name',
+            ],
+            'header' => [
+                'name' => 'Name',
+                'short_name' => 'Short Name',
+                'prefix' => 'Prefix',
+                'status' => 'Status',
+                'remarks' => 'Remarks',
+            ],
+            'footer' => 'Printed by :user on :date'
+        ],
     ]
 ];

@@ -79,16 +79,16 @@ class ReportController extends Controller
         $bankAccount = $request->input('bank_account');
 
         $customers = Customer::with('store', 'profiles', 'priceLevel')
-            ->when($customerName, function ($query) use ($customerName) {
+            ->when(!empty($customerName), function ($query) use ($customerName) {
                 return $query->orWhere('name', 'like', "%$customerName%");
             })
-            ->when($profileName, function ($query) use ($profileName) {
+            ->when(!empty($profileName), function ($query) use ($profileName) {
                 return $query->orWhereHas('profiles', function ($q) use ($profileName){
                     $q->orWhere('first_name', 'like', "%$profileName%")
                         ->orWhere('last_name', 'like', "%$profileName%");
                 });
             })
-            ->when($bankAccount, function ($query) use ($bankAccount) {
+            ->when(!empty($bankAccount), function ($query) use ($bankAccount) {
                 return $query->orWhereHas('bankAccounts', function ($q) use ($bankAccount){
                     $q->where('account_number', 'like', "%$bankAccount%");
                 });
@@ -137,16 +137,16 @@ class ReportController extends Controller
         $bankAccount = $request->input('bank_account');
 
         $suppliers = Supplier::with('store', 'profiles')
-            ->when($supplierName, function ($query) use ($supplierName) {
+            ->when(!empty($supplierName), function ($query) use ($supplierName) {
                 return $query->orWhere('name', 'like', "%$supplierName%");
             })
-            ->when($profileName, function ($query) use ($profileName) {
+            ->when(!empty($profileName), function ($query) use ($profileName) {
                 return $query->orWhereHas('profiles', function ($q) use ($profileName){
                     $q->orWhere('first_name', 'like', "%$profileName%")
                       ->orWhere('last_name', 'like', "%$profileName%");
                 });
             })
-            ->when($bankAccount, function ($query) use ($bankAccount) {
+            ->when(!empty($bankAccount), function ($query) use ($bankAccount) {
                 return $query->orWhereHas('bankAccounts', function ($q) use ($bankAccount){
                     $q->where('account_number', 'like', "%$bankAccount%");
                 });
@@ -211,6 +211,7 @@ class ReportController extends Controller
         //Save pdf report
         $pdf->loadView('report_template.pdf.product_report',
             compact('productName', 'shortCode', 'products', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'))
+            ->setPaper('a4', 'landscape')
             ->save(storage_path("app/public/reports/$fileName.pdf"));
 
         //Save excel report
@@ -431,8 +432,10 @@ class ReportController extends Controller
             })->get();
 
         $plateNumber = '';
-        if(!empty($truckId)){
-            $plateNumber = Truck::find($truckId)->plate_number;
+
+        $truck = Truck::find($truckId);
+        if($truck){
+            $plateNumber = $truck->plate_number;
         }
 
         if (!File::exists(storage_path('app/public/reports'))) {
