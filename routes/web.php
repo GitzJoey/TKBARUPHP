@@ -326,6 +326,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::group(['prefix' => 'report'], function () {
             Route::group(['prefix' => 'trx'], function () {
                 Route::get('', 'ReportController@report_trx')->name('db.report.transaction');
+                Route::post('purchase_order', 'ReportTransactionController@generatePurchaseOrderReport')->name('db.report.trx.po');
+                Route::post('sales_order', 'ReportTransactionController@generateSalesOrderReport')->name('db.report.trx.so');
             });
 
             Route::group(['prefix' => 'mon'], function () {
@@ -338,16 +340,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'master'], function () {
                 Route::get('', 'ReportController@report_master')->name('db.report.master');
-                Route::post('customer', 'ReportController@generateCustomerReport')->name('db.report.master.customer');
-                Route::post('supplier', 'ReportController@generateSupplierReport')->name('db.report.master.supplier');
-                Route::post('product', 'ReportController@generateProductReport')->name('db.report.master.product');
-                Route::post('product_type', 'ReportController@generateProductTypeReport')->name('db.report.master.product_type');
-                Route::post('warehouse', 'ReportController@generateWarehouseReport')->name('db.report.master.warehouse');
-                Route::post('bank', 'ReportController@generateBankReport')->name('db.report.master.bank');
-                Route::post('truck', 'ReportController@generateTruckReport')->name('db.report.master.truck');
-                Route::post('truck_maintenance', 'ReportController@generateTruckMaintenanceReport')->name('db.report.master.truck_maintenance');
-                Route::post('vendor_trucking', 'ReportController@generateVendorTruckingReport')->name('db.report.master.vendor_trucking');
-                Route::post('expensetemplates', 'ReportController@generateExpenseTemplatesReport')->name('db.report.master.expense_templates');
+                Route::post('customer', 'ReportMasterController@generateCustomerReport')->name('db.report.master.customer');
+                Route::post('supplier', 'ReportMasterController@generateSupplierReport')->name('db.report.master.supplier');
+                Route::post('product', 'ReportMasterController@generateProductReport')->name('db.report.master.product');
+                Route::post('product_type', 'ReportMasterController@generateProductTypeReport')->name('db.report.master.product_type');
+                Route::post('warehouse', 'ReportMasterController@generateWarehouseReport')->name('db.report.master.warehouse');
+                Route::post('bank', 'ReportMasterController@generateBankReport')->name('db.report.master.bank');
+                Route::post('truck', 'ReportMasterController@generateTruckReport')->name('db.report.master.truck');
+                Route::post('truck_maintenance', 'ReportMasterController@generateTruckMaintenanceReport')->name('db.report.master.truck_maintenance');
+                Route::post('vendor_trucking', 'ReportMasterController@generateVendorTruckingReport')->name('db.report.master.vendor_trucking');
+                Route::post('expensetemplates', 'ReportMasterController@generateExpenseTemplatesReport')->name('db.report.master.expense_templates');
             });
 
             Route::group(['prefix' => 'admin'], function () {
