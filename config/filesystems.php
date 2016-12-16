@@ -60,6 +60,12 @@ return [
             'visibility' => 'private',
         ],
 
+        'report_storage' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/reports'),
+            'visibility' => 'private',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => 'your-key',

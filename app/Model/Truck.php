@@ -47,6 +47,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\TruckMaintenance[] $truckMaintenances
  * @property string $type
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereType($value)
+ * @property-read \App\Model\Store $store
  */
 class Truck extends Model
 {

@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2016-12-09.
+    * Generated on 2016-12-16.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -147,6 +147,7 @@ namespace PHPSTORM_META {
             'App\Services\PurchaseOrderCopyService' instanceof \App\Services\Implementation\PurchaseOrderCopyServiceImpl,
             'App\Services\SalesOrderCopyService' instanceof \App\Services\Implementation\SalesOrderCopyServiceImpl,
             'App\Services\StoreService' instanceof \App\Services\Implementation\StoreServiceImpl,
+            'App\Services\ReportService' instanceof \App\Services\Implementation\ReportServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -291,6 +292,7 @@ namespace PHPSTORM_META {
             'App\Services\PurchaseOrderCopyService' instanceof \App\Services\Implementation\PurchaseOrderCopyServiceImpl,
             'App\Services\SalesOrderCopyService' instanceof \App\Services\Implementation\SalesOrderCopyServiceImpl,
             'App\Services\StoreService' instanceof \App\Services\Implementation\StoreServiceImpl,
+            'App\Services\ReportService' instanceof \App\Services\Implementation\ReportServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -435,6 +437,7 @@ namespace PHPSTORM_META {
             'App\Services\PurchaseOrderCopyService' instanceof \App\Services\Implementation\PurchaseOrderCopyServiceImpl,
             'App\Services\SalesOrderCopyService' instanceof \App\Services\Implementation\SalesOrderCopyServiceImpl,
             'App\Services\StoreService' instanceof \App\Services\Implementation\StoreServiceImpl,
+            'App\Services\ReportService' instanceof \App\Services\Implementation\ReportServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -579,6 +582,7 @@ namespace PHPSTORM_META {
             'App\Services\PurchaseOrderCopyService' instanceof \App\Services\Implementation\PurchaseOrderCopyServiceImpl,
             'App\Services\SalesOrderCopyService' instanceof \App\Services\Implementation\SalesOrderCopyServiceImpl,
             'App\Services\StoreService' instanceof \App\Services\Implementation\StoreServiceImpl,
+            'App\Services\ReportService' instanceof \App\Services\Implementation\ReportServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,

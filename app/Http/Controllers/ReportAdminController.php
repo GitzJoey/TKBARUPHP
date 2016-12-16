@@ -31,12 +31,14 @@ class ReportAdminController extends Controller
 
     public function __construct(ReportService $reportService)
     {
-        $this->middleware('auth');
         $this->reportService = $reportService;
+        $this->middleware('auth');
     }
 
     public function generateUserReport(Request $request, PDF $pdf)
     {
+        $this->reportService->doReportHousekeeping();
+
         Log::info('ReportAdminController@generateUserReport');
 
         $currentUser = Auth::user()->name;

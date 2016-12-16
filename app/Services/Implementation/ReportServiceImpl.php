@@ -8,12 +8,13 @@
 
 namespace App\Services\Implementation;
 
+use Storage;
 use App\Services\ReportService;
 
 class ReportServiceImpl implements ReportService
 {
     public function doReportHousekeeping()
     {
-
+        dd(Storage::disk('report_storage')->allFiles());
     }
 };

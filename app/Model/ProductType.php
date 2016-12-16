@@ -45,6 +45,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Product[] $products
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Stock[] $stocks
+ * @property-read \App\Model\Store $store
  */
 class ProductType extends Model
 {
