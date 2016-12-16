@@ -8,26 +8,31 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Model\Role;
+use App\Model\Unit;
+use App\Model\Store;
 use App\Model\Lookup;
 use App\Model\PhoneProvider;
-use App\Model\Role;
-use App\Model\Store;
-use App\Model\Unit;
-use App\User;
 
-use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+
+use App\Services\ReportService;
 
 class ReportAdminController extends Controller
 {
-    public function __construct()
+    private $reportService;
+
+    public function __construct(ReportService $reportService)
     {
         $this->middleware('auth');
+        $this->reportService = $reportService;
     }
 
     public function generateUserReport(Request $request, PDF $pdf)

@@ -13,6 +13,7 @@ use App\Services\Implementation\SalesOrderServiceImpl;
 use App\Services\Implementation\StockServiceImpl;
 use App\Services\Implementation\StoreServiceImpl;
 use App\Services\Implementation\SupplierServiceImpl;
+use App\Services\Implementation\ReportServiceImpl;
 
 use App\Services\InflowService;
 use App\Services\PaymentService;
@@ -23,6 +24,7 @@ use App\Services\SalesOrderService;
 use App\Services\StockService;
 use App\Services\SupplierService;
 use App\Services\StoreService;
+use App\Services\ReportService;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -78,6 +80,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(StoreService::class, function (){
             return new StoreServiceImpl();
         });
+
+        $this->app->singleton(ReportService::class, function (){
+            return new ReportServiceImpl();
+        });
     }
 
     /**
@@ -96,7 +102,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\PaymentService',
             'App\Services\PurchaseOrderCopyService',
             'App\Services\SalesOrderCopyService',
-            'App\Services\StoreService'
+            'App\Services\StoreService',
+            'App\Services\ReportService',
         ];
     }
 }
