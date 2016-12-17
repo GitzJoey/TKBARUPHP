@@ -10,10 +10,11 @@ namespace App\Model;
 
 use Auth;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\StoreFilter;
 use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Stocks
@@ -51,6 +52,8 @@ use Vinkla\Hashids\Facades\Hashids;
 class Stock extends Model
 {
     use SoftDeletes;
+
+    use StoreFilter;
 
     protected $dates = ['deleted_at'];
 

@@ -10,6 +10,7 @@ namespace App\Model;
 
 use Auth;
 use Carbon\Carbon;
+use App\Traits\StoreFilter;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -75,6 +76,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SalesOrder extends Model
 {
     use SoftDeletes;
+
+    use StoreFilter;
 
     protected $dates = ['deleted_at', 'so_created', 'shipping_date'];
 

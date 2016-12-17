@@ -3,11 +3,12 @@
 namespace App\Model;
 
 use Carbon\Carbon;
-use Doctrine\Common\Collections\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
+use App\Traits\StoreFilter;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Doctrine\Common\Collections\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Model\Price
@@ -45,6 +46,8 @@ use Vinkla\Hashids\Facades\Hashids;
 class Price extends Model
 {
     use SoftDeletes;
+
+    use StoreFilter;
 
     protected $dates = ['deleted_at', 'input_date'];
 

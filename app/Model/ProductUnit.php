@@ -9,6 +9,7 @@
 namespace App\Model;
 
 use Auth;
+use App\Traits\StoreFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -48,6 +49,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductUnit extends Model
 {
     use SoftDeletes;
+
+    use StoreFilter;
 
     protected $dates = ['deleted_at'];
 

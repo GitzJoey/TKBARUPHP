@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Auth;
+use App\Traits\StoreFilter;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,6 +49,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Giro extends Model
 {
     use SoftDeletes;
+
+    use StoreFilter;
 
     protected $dates = ['deleted_at'];
 

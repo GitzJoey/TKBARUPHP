@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Traits\StoreFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +65,8 @@ use Vinkla\Hashids\Facades\Hashids;
 class Deliver extends Model
 {
     use SoftDeletes;
+
+    use StoreFilter;
 
     protected $table = 'delivers';
 
