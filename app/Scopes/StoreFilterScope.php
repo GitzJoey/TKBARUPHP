@@ -24,7 +24,7 @@ class StoreFilterScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         if (!is_null(Auth::user()) && !empty(Auth::user()->store_id)) {
-            $builder->where('store_id', '=', Auth::user()->store_id);
+            $builder->where($model->getTable().'.store_id', '=', Auth::user()->store_id);
         }
     }
 

@@ -632,5 +632,4 @@
             };
         }]);
     </script>
-    <script type="application/javascript" src="{{ asset('adminlte/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection
