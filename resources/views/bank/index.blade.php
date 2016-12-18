@@ -12,6 +12,10 @@
     @lang('bank.index.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_bank') !!}
+@endsection
+
 @section('content')
     @if ($message = Session::get('success'))
         <div class="alert alert-success">

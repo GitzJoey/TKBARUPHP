@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-building-o fa-fw"></span>&nbsp;@lang('supplier.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('supplier.index.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_supplier') !!}
 @endsection
 
 @section('content')

@@ -12,6 +12,10 @@
     @lang('warehouse.edit.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_warehouse_edit', $warehouse->hId()) !!}
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">

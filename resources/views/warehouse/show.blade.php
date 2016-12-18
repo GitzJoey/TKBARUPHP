@@ -12,6 +12,10 @@
     @lang('warehouse.show.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_warehouse_show', $warehouse->hId()) !!}
+@endsection
+
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">

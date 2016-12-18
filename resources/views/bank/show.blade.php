@@ -4,21 +4,16 @@
     @lang('bank.show.title')
 @endsection
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
-@endsection
-
 @section('page_title')
     <span class="fa fa-bank fa-fw"></span>&nbsp;@lang('bank.show.page_title')
 @endsection
 
 @section('page_title_desc')
     @lang('bank.show.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_bank_show', $bank->hId()) !!}
 @endsection
 
 @section('content')

@@ -214,3 +214,187 @@ Breadcrumbs::register('admin_phone_provider_edit', function($breadcrumbs, $id){
     $breadcrumbs->push('Phone Provider', route('db.admin.phone_provider'));
     $breadcrumbs->push('Edit Phone Provider', route('db.admin.phone_provider.edit', $id));
 });
+
+Breadcrumbs::register('master_customer', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Customer', route('db.master.customer'));
+});
+
+Breadcrumbs::register('master_customer_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Customer', route('db.master.customer'));
+    $breadcrumbs->push('Create Customer', route('db.master.customer.create'));
+});
+
+Breadcrumbs::register('master_customer_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Customer', route('db.master.customer'));
+    $breadcrumbs->push('Show Customer', route('db.master.customer.show', $id));
+});
+
+Breadcrumbs::register('master_customer_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Customer', route('db.master.customer'));
+    $breadcrumbs->push('Edit Customer', route('db.master.customer.edit', $id));
+});
+
+Breadcrumbs::register('master_supplier', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Supplier', route('db.master.supplier'));
+});
+
+Breadcrumbs::register('master_supplier_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Supplier', route('db.master.supplier'));
+    $breadcrumbs->push('Create Supplier', route('db.master.supplier.create'));
+});
+
+Breadcrumbs::register('master_supplier_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Supplier', route('db.master.supplier'));
+    $breadcrumbs->push('Show Supplier', route('db.master.supplier.show', $id));
+});
+
+Breadcrumbs::register('master_supplier_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Supplier', route('db.master.supplier'));
+    $breadcrumbs->push('Edit Supplier', route('db.master.supplier.edit', $id));
+});
+
+Breadcrumbs::register('master_product', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Product', route('db.master.product'));
+});
+
+Breadcrumbs::register('master_product_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Product', route('db.master.product'));
+    $breadcrumbs->push('Create Product', route('db.master.product.create'));
+});
+
+Breadcrumbs::register('master_product_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Product', route('db.master.product'));
+    $breadcrumbs->push('Show Product', route('db.master.product.show', $id));
+});
+
+Breadcrumbs::register('master_product_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Product', route('db.master.product'));
+    $breadcrumbs->push('Edit Product', route('db.master.product.edit', $id));
+});
+
+Breadcrumbs::register('master_product_type', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Product Type', route('db.master.producttype'));
+});
+
+Breadcrumbs::register('master_product_type_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Product Type', route('db.master.producttype'));
+    $breadcrumbs->push('Create Product Type', route('db.master.producttype.create'));
+});
+
+Breadcrumbs::register('master_product_type_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Product Type', route('db.master.producttype'));
+    $breadcrumbs->push('Show Product Type', route('db.master.producttype.show', $id));
+});
+
+Breadcrumbs::register('master_product_type_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Product Type', route('db.master.producttype'));
+    $breadcrumbs->push('Edit Product Type', route('db.master.producttype.edit', $id));
+});
+
+Breadcrumbs::register('master_warehouse', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Warehouse', route('db.master.warehouse'));
+});
+
+Breadcrumbs::register('master_warehouse_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Warehouse', route('db.master.warehouse'));
+    $breadcrumbs->push('Create Warehouse', route('db.master.warehouse.create'));
+});
+
+Breadcrumbs::register('master_warehouse_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Warehouse', route('db.master.warehouse'));
+    $breadcrumbs->push('Show Warehouse', route('db.master.warehouse.show', $id));
+});
+
+Breadcrumbs::register('master_warehouse_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Warehouse', route('db.master.warehouse'));
+    $breadcrumbs->push('Edit Warehouse', route('db.master.warehouse.edit', $id));
+});
+
+Breadcrumbs::register('master_bank', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Bank', route('db.master.bank'));
+});
+
+Breadcrumbs::register('master_bank_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Bank', route('db.master.bank'));
+    $breadcrumbs->push('Create Bank', route('db.master.bank.create'));
+});
+
+Breadcrumbs::register('master_bank_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Bank', route('db.master.bank'));
+    $breadcrumbs->push('Show Bank', route('db.master.bank.show', $id));
+});
+
+Breadcrumbs::register('master_bank_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Bank', route('db.master.bank'));
+    $breadcrumbs->push('Edit Bank', route('db.master.bank.edit', $id));
+});
+
+Breadcrumbs::register('master_truck', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Truck', route('db.master.truck'));
+});
+
+Breadcrumbs::register('master_truck_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Truck', route('db.master.truck'));
+    $breadcrumbs->push('Create Truck', route('db.master.truck.create'));
+});
+
+Breadcrumbs::register('master_truck_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Truck', route('db.master.truck'));
+    $breadcrumbs->push('Show Truck', route('db.master.truck.show', $id));
+});
+
+Breadcrumbs::register('master_truck_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Truck', route('db.master.truck'));
+    $breadcrumbs->push('Edit Truck', route('db.master.truck.edit', $id));
+});
+
+Breadcrumbs::register('master_vendor_trucking', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Vendor Trucking', route('db.master.vendor.trucking'));
+});
+
+Breadcrumbs::register('master_vendor_trucking_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Vendor Trucking', route('db.master.vendor.trucking'));
+    $breadcrumbs->push('Create Vendor Trucking', route('db.master.vendor.trucking.create'));
+});
+
+Breadcrumbs::register('master_vendor_trucking_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Vendor Trucking', route('db.master.vendor.trucking'));
+    $breadcrumbs->push('Show Vendor Trucking', route('db.master.vendor.trucking.show', $id));
+});
+
+Breadcrumbs::register('master_vendor_trucking_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Vendor Trucking', route('db.master.vendor.trucking'));
+    $breadcrumbs->push('Edit Vendor Trucking', route('db.master.vendor.trucking.edit', $id));
+});

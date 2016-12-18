@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-ge fa-fw"></span>&nbsp;@lang('vendor_trucking.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('vendor_trucking.index.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_vendor_trucking') !!}
 @endsection
 
 @section('content')

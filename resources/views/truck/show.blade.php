@@ -12,6 +12,10 @@
     @lang('truck.show.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_truck_show', $truck->hId()) !!}
+@endsection
+
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">

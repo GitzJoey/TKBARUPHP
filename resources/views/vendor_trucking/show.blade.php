@@ -4,20 +4,16 @@
     @lang('vendor_trucking.show.title')
 @endsection
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
-@endsection
-
 @section('page_title')
     <span class="fa fa-ge fa-fw"></span>&nbsp;@lang('vendor_trucking.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('vendor_trucking.show.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_vendor_trucking_show', $vt->hId()) !!}
 @endsection
 
 @section('content')
