@@ -35,6 +35,7 @@
     "moment": "^2.15.2",
     "moment-duration-format": "^1.3.0",
     "numeral": "^1.5.3",
+    "parallux": "^1.5.1",
     "parsleyjs": "^2.5.0",
     "pdfjs-dist": "^1.6.377 ",
     "pdfobject": "^2.0.201604172",
