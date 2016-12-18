@@ -7,6 +7,7 @@
 @section('page_title')
     <span class="fa fa-book fa-fw"></span>&nbsp;@lang('giro.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('giro.index.page_title_desc')
 @endsection

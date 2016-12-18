@@ -34,6 +34,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         }
     });
 
+    Route::group(['prefix' => 'front'], function () {
+        Route::get('', 'FrontWebController@index')->name('fp');
+    });
+
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('', 'DashboardController@index')->name('db');
 
