@@ -7,17 +7,13 @@
 @section('page_title')
     <span class="fa fa-user fa-fw"></span>&nbsp;@lang('role.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('role.show.page_title_desc')
 @endsection
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_role_show', $role->hId()) !!}
 @endsection
 
 @section('content')

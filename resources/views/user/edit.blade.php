@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.edit.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('user.edit.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_user_edit', $user->hId()) !!}
 @endsection
 
 @section('content')

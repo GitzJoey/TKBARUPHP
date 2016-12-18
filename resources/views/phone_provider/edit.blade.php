@@ -12,6 +12,10 @@
     @lang('phone_provider.edit.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_phone_provider_edit', $phoneProvider->hId()) !!}
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">

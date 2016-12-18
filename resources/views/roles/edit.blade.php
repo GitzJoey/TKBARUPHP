@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-key fa-fw"></span>&nbsp;@lang('role.edit.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('role.edit.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_role_edit', $role->hId()) !!}
 @endsection
 
 @section('content')

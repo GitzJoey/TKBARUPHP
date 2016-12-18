@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-user fa-fw" xmlns="http://www.w3.org/1999/html"></span>&nbsp;@lang('user.create.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('user.create.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_user_create') !!}
 @endsection
 
 @section('content')

@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="glyphicon glyphicon-flash"></span>&nbsp;@lang('unit.edit.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('unit.edit.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_unit_edit', $unit->hId()) !!}
 @endsection
 
 @section('content')

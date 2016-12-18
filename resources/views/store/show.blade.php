@@ -4,20 +4,16 @@
     @lang('store.show.title')
 @endsection
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
-@endsection
-
 @section('page_title')
     <span class="fa fa-umbrella fa-fw"></span>&nbsp;@lang('store.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('store.show.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_store_show', $store->hId()) !!}
 @endsection
 
 @section('content')

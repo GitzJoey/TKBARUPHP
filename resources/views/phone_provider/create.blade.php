@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="glyphicon glyphicon-phone"></span>&nbsp;@lang('phone_provider.create.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('phone_provider.create.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_phone_provider_create') !!}
 @endsection
 
 @section('content')

@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('user.show.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_user_show', $user->hId()) !!}
 @endsection
 
 @section('content')

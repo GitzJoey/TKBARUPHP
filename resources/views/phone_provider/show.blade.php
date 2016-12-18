@@ -4,20 +4,16 @@
     @lang('phone_provider.show.title')
 @endsection
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
-@endsection
-
 @section('page_title')
     <span class="glyphicon glyphicon-phone"></span>&nbsp;@lang('phone_provider.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('phone_provider.show.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('admin_phone_provider_show', $phoneProvider->hId()) !!}
 @endsection
 
 @section('content')
