@@ -18,7 +18,7 @@
             <div class="col-md-6">
                 <form action="{{ route('db.report.master.customer') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomIn">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.customer')</h3>
                         </div>
@@ -50,7 +50,7 @@
                 </form>
                 <form action="{{ route('db.report.master.supplier') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomInDown">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.supplier')</h3>
                         </div>
@@ -84,7 +84,7 @@
                 </form>
                 <form action="{{ route('db.report.master.product') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomInUp">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.product')</h3>
                         </div>
@@ -109,7 +109,7 @@
                 </form>
                 <form action="{{ route('db.report.master.product_type') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomInRight">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.product_type')</h3>
                         </div>
@@ -137,7 +137,7 @@
             <div class="col-md-6">
                 <form action="{{ route('db.report.master.bank') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomIn">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.bank')</h3>
                         </div>
@@ -177,7 +177,7 @@
                 </form>
                 <form action="{{ route('db.report.master.warehouse') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomInLeft">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.warehouse')</h3>
                         </div>
@@ -196,7 +196,7 @@
                 </form>
                 <form action="{{ route('db.report.master.truck') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomInDown">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.truck')</h3>
                         </div>
@@ -217,7 +217,7 @@
                 </form>
                 <form action="{{ route('db.report.master.truck_maintenance') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomInUp">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.truck_maintenance')</h3>
                         </div>
@@ -238,7 +238,7 @@
                 </form>
                 <form action="{{ route('db.report.master.vendor_trucking') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated zoomInUp">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.master.header.vendor_trucking')</h3>
                         </div>

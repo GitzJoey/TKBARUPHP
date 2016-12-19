@@ -18,7 +18,7 @@
             <div class="col-md-6">
                 <form action="{{ route('db.report.admin.user') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated fadeInUp">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.user')</h3>
                         </div>
@@ -55,7 +55,7 @@
                 </form>
                 <form action="{{ route('db.report.admin.role') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated fadeInDownBig">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.role')</h3>
                         </div>
@@ -82,7 +82,7 @@
                 </form>
                 <form action="{{ route('db.report.admin.store') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated fadeInLeft">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.store')</h3>
                         </div>
@@ -109,7 +109,7 @@
             <div class="col-md-6">
                 <form action="{{ route('db.report.admin.unit') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated fadeInUpBig">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.unit')</h3>
                         </div>
@@ -134,7 +134,7 @@
                 </form>
                 <form action="{{ route('db.report.admin.phone_provider') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated fadeInRightBig">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.phone_provider')</h3>
                         </div>
@@ -159,7 +159,7 @@
                 </form>
                 <form action="{{ route('db.report.admin.settings') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info">
+                    <div class="box box-info animated fadeInRight">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.settings')</h3>
                         </div>

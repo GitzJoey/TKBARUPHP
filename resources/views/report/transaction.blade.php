@@ -16,7 +16,7 @@
     <div class="well">
         <div class="row">
             <div class="col-md-6">
-                <div class="box box-info">
+                <div class="box box-info animated tada">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.transaction.header.purchase_order')</h3>
                     </div>
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="box box-info">
+                <div class="box box-info animated rollIn">
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('report.transaction.header.sales_order')</h3>
                     </div>
