@@ -20,6 +20,7 @@
     "angular": "^1.5.8",
     "angular-fcsa-number": "^1.5.7",
     "angular-sanitize": "^1.5.8",
+    "animate.css": "^3.5.2",
     "awesome-bootstrap-checkbox": "^1.0.0-alpha.4",
     "bootstrap": "^3.3.7",
     "bootstrap-daterangepicker": "^2.1.24",

@@ -1,0 +1,23 @@
+body.with-fixed-top-nav {
+    padding-top: 70px;
+}
+
+li.mright {
+    margin-right: 25px;
+}
+
+/* top NavBar General sizing */
+ul.dropdown-lr {
+    width: 300px;
+}
+
+/* top NavBar mobile fix */
+@media (max-width: 768px) {
+    .dropdown-lr h3 {
+        color: #eee;
+    }
+
+    .dropdown-lr label {
+        color: #eee;
+    }
+}

@@ -8,10 +8,14 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('frontweb/css/frontweb.css') }}">
+
         @yield('custom_css')
     </head>
 
-    <body>
+    <body class="with-fixed-top-nav">
+        @include('layouts.frontweb.topnav')
+
         @yield('content')
     </body>
 

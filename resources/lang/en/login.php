@@ -16,4 +16,12 @@ return [
         'already_member' => 'I already have a membership',
         'terms_and_cond' => 'Terms & Condition',
     ],
+    'frontweb' => [
+        'topnav' => [
+            'email' => 'Email',
+            'password' => 'Password',
+            'remember_me' => 'Remember Me',
+            'forgot_password' => 'Forgot Password?',
+        ],
+    ],
 ];

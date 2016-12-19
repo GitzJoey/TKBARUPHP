@@ -6,19 +6,6 @@
 
 @section('content')
     <div class="container">
-        <div class="header clearfix">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                    <li role="presentation">
-                        <a href="#"><span class="fa fa-pencil"></span>&nbsp;</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#"><span class="fa fa-power-off"></span>&nbsp;</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <br/>
         <div class="jumbotron jumbotron-wallpaper">
             <div class="row">
                 <div class="col-md-12">
@@ -33,13 +20,9 @@
                     </h4>
                 </div>
             </div>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
         </div>
+        @for ($i = 0; $i < 50; $i++)
+            <br/>
+        @endfor
     </div>
 @endsection

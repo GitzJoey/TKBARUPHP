@@ -14,6 +14,9 @@
                 <li>
                     <a class="disabled" id="timeoutCount" title="Timeout Remaining"></a>
                 </li>
+                <li>
+                    <a href="/front"><span class="fa fa-external-link fa-fw" title="Back To Frontpage"></span></a>
+                </li>
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-globe"></i>

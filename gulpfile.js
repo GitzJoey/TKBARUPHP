@@ -26,6 +26,7 @@ elixir(function (mix) {
         './node_modules/ui-select/dist/select.min.css',
         './node_modules/bootstrap-sweetalert/dist/sweetalert.css',
         './node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+        './node_modules/animate.css/animate.css',
         './resources/assets/css/adminlte.custom.css'
     ], 'public/adminlte/css/adminlte.css')
     .scripts([
@@ -67,5 +68,6 @@ elixir(function (mix) {
         .copy('node_modules/highcharts/css/highcharts.css', 'public/adminlte/css')
         .copy('node_modules/fullcalendar/dist/fullcalendar.min.css', 'public/adminlte/css')
         .copy('node_modules/tooltipster/dist/css/tooltipster.bundle.min.css', 'public/adminlte/css')
-        .copy('node_modules/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css', 'public/adminlte/css');
+        .copy('node_modules/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css', 'public/adminlte/css')
+        .copy('resources/assets/css/frontweb.css', 'public/frontweb/css');
 });
