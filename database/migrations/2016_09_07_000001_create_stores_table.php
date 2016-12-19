@@ -23,6 +23,7 @@ class CreateStoresTable extends Migration
             $table->string('tax_id')->nullable();
             $table->string('status')->nullable();
             $table->string('is_default')->nullable();
+            $table->string('frontweb')->nullable();
             $table->string('image_filename')->nullable();
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);

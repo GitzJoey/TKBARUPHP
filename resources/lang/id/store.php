@@ -28,6 +28,7 @@ return [
         'tax_id' => 'NPWP No.',
         'status' => 'Status',
         'default' => 'Utama',
+        'frontweb' => 'Web Utama',
         'remarks' => 'Keterangan',
     ],
     'edit' => [
@@ -49,9 +50,9 @@ return [
             'header' => [
                 'name' => 'Nama',
                 'address' => 'Alamat',
-                'phone' => 'Telepon',
                 'tax_id' => 'NPWP No.',
                 'default' => 'Utama',
+                'frontweb' => 'Web Utama',
                 'status' => 'Status',
                 'remarks' => 'Keterangan',
             ],

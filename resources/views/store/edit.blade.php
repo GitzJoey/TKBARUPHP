@@ -88,15 +88,22 @@
                                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                                     <label for="inputStatus" class="col-sm-2 control-label">@lang('store.field.status')</label>
                                     <div class="col-sm-10">
-                                        {{ Form::select('status', $statusDDL, null, array('id' => 'statusSelect', 'class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-group' => 'tab_store')) }}
+                                        {{ Form::select('status', $statusDDL, $store->status, array('id' => 'statusSelect', 'class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-checkactive' => $store->is_default, 'data-parsley-group' => 'tab_store')) }}
                                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group {{ $errors->has('is_default') ? 'has-error' : '' }}">
                                     <label for="inputIsDefault" class="col-sm-2 control-label">@lang('store.field.default')</label>
                                     <div class="col-sm-10">
-                                        {{ Form::select('is_default', $yesnoDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-checkactive' => '#statusSelect', 'data-parsley-group' => 'tab_store')) }}
+                                        {{ Form::select('is_default', $yesnoDDL, $store->is_default, array('id' => 'isDefaultSelect', 'class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-isdefault_switch_no' => $store->is_default, 'data-parsley-group' => 'tab_store')) }}
                                         <span class="help-block">{{ $errors->has('is_default') ? $errors->first('is_default') : '' }}</span>&nbsp;
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('frontweb') ? 'has-error' : '' }}">
+                                    <label for="inputFrontWeb" class="col-sm-2 control-label">@lang('store.field.frontweb')</label>
+                                    <div class="col-sm-10">
+                                        {{ Form::select('frontweb', $yesnoDDL, $store->frontweb, array('id'=> 'frontWebSelect', 'class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-frontweb_switch_no' => $store->frontweb, 'data-parsley-group' => 'tab_store')) }}
+                                        <span class="help-block">{{ $errors->has('frontweb') ? $errors->first('frontweb') : '' }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -198,18 +205,35 @@
             };
         });
 
-        window.Parsley.addValidator('checkactive', function (value, statusDDL) {
-            if (value == 'YESNOSELECT.YES') {
-                if ($(statusDDL).val() == 'STATUS.ACTIVE') {
-                    return true;
-                } else {
-                    return false;
-                }
+        window.Parsley.addValidator('checkactive', function (value, is_default) {
+            if (value == 'STATUS.INACTIVE' && is_default == 'YESNOSELECT.YES') {
+                return false;
             } else {
                 return true;
             }
         }, 32)
                 .addMessage('en', 'checkactive', 'Default Store cannot be inactived')
                 .addMessage('id', 'checkactive', 'Toko utama tidak bisa dinonaktifkan');
+
+        window.Parsley.addValidator('isdefault_switch_no', function (value, old_value) {
+            if (old_value == 'YESNOSELECT.YES' && value == 'YESNOSELECT.NO') {
+                return false;
+            } else {
+                return true;
+            }
+        }, 32)
+            .addMessage('en', 'isdefault_switch_no', 'Default Store cannot be switched off, replace other Store as YES instead.')
+            .addMessage('id', 'isdefault_switch_no', 'Toko utama tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu');
+
+        window.Parsley.addValidator('frontweb_switch_no', function (value, old_value) {
+            if (old_value == 'YESNOSELECT.YES' && value == 'YESNOSELECT.NO') {
+                return false;
+            } else {
+                return true;
+            }
+        }, 32)
+            .addMessage('en', 'frontweb_switch_no', 'Front Web cannot be inactived, replace other Store as YES instead')
+            .addMessage('id', 'frontweb_switch_no', 'Website tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu');
+
     </script>
 @endsection

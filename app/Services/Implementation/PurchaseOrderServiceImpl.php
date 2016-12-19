@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: miftah.fathudin
+ * Date: 11/13/2016
+ * Time: 2:26 AM
+ */
 
 namespace App\Services\Implementation;
 
@@ -12,12 +18,6 @@ use Doctrine\Common\Collections\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-/**
- * Created by PhpStorm.
- * User: miftah.fathudin
- * Date: 11/13/2016
- * Time: 2:26 AM
- */
 class PurchaseOrderServiceImpl implements PurchaseOrderService
 {
 

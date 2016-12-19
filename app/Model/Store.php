@@ -55,6 +55,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Giro[] $giros
+ * @property string $frontweb
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereFrontweb($value)
  */
 class Store extends Model
 {
@@ -72,6 +74,7 @@ class Store extends Model
         'tax_id',
         'status',
         'is_default',
+        'frontweb',
         'image_filename',
         'remarks'
     ];

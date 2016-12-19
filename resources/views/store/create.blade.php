@@ -97,6 +97,13 @@
                                         <span class="help-block">{{ $errors->has('is_default') ? $errors->first('is_default') : '' }}</span>
                                     </div>
                                 </div>
+                                <div class="form-group {{ $errors->has('frontweb') ? 'has-error' : '' }}">
+                                    <label for="inputFrontWeb" class="col-sm-2 control-label">@lang('store.field.frontweb')</label>
+                                    <div class="col-sm-10">
+                                        {{ Form::select('frontweb', $yesnoDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-group' => 'tab_store')) }}
+                                        <span class="help-block">{{ $errors->has('frontweb') ? $errors->first('frontweb') : '' }}</span>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="inputRemarks" class="col-sm-2 control-label">@lang('store.field.remarks')</label>
                                     <div class="col-sm-10">

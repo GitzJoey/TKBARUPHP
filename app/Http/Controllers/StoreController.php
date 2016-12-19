@@ -86,6 +86,10 @@ class StoreController extends Controller
             $this->storeService->resetIsDefault();
         }
 
+        if ($data['frontweb'] == 'YESNOSELECT.YES') {
+            $this->storeService->resetFrontWeb();
+        }
+
         $store = Store::create([
             'name' => $data['name'],
             'address' => $data['address'],
@@ -94,6 +98,7 @@ class StoreController extends Controller
             'tax_id' => $data['tax_id'],
             'status' => $data['status'],
             'is_default' => $data['is_default'],
+            'frontweb' => $data['frontweb'],
             'image_filename' => $imageName,
             'remarks' => empty($data['remarks']) ? '' : $data['remarks']
         ]);
@@ -142,6 +147,10 @@ class StoreController extends Controller
             $this->storeService->resetIsDefault();
         }
 
+        if ($data['frontweb'] == 'YESNOSELECT.YES') {
+            $this->storeService->resetFrontWeb();
+        }
+
         $store->bankAccounts()->delete();
 
         for ($i = 0; $i < count($data['bank']); $i++) {
@@ -161,6 +170,7 @@ class StoreController extends Controller
         $store->status = $data['status'];
         $store->is_default = $data['is_default'];
         $store->image_filename = $imageName;
+        $store->frontweb = $data['frontweb'];
         $store->remarks = empty($data['remarks']) ? '' : $data['remarks'];
         $store->save();
 

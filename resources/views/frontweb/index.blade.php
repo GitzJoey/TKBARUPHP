@@ -1,7 +1,15 @@
 @extends('layouts.frontweb.master')
 
 @section('title')
-    Front Web
+    TKBARU
+@endsection
+
+@section('custom_css')
+    <style type="text/css">
+        .jumbotron-wallpaper {
+            background-image: url('{{ asset('images/jumbotron.jpg') }}');
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -10,19 +18,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="pull-right text-right">
-                        <strong></strong>
+                        <strong>Toko BARU</strong>
                     </h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <h4 class="pull-right text-right">
+                        Jln Raya Utara No 67<br>
+                        Wangon
                     </h4>
                 </div>
             </div>
+            @for ($i = 0; $i < 25; $i++)
+                <br/>
+            @endfor
         </div>
-        @for ($i = 0; $i < 50; $i++)
-            <br/>
-        @endfor
     </div>
 @endsection

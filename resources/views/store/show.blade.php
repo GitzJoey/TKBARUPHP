@@ -79,6 +79,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="inputFrontWeb" class="col-sm-2 control-label">@lang('store.field.frontweb')</label>
+                                <div class="col-sm-10">
+                                    <label id="inputFrontWeb" class="control-label control-label-normal">
+                                        <span class="control-label-normal">@lang('lookup.'.$store->frontweb)</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="inputStatus" class="col-sm-2 control-label">@lang('store.field.status')</label>
                                 <div class="col-sm-10">
                                     <label id="inputStatus" class="control-label control-label-normal">

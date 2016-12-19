@@ -22,6 +22,8 @@ interface StoreService
 
     public function resetIsDefault();
 
+    public function resetFrontWeb();
+
     public function setDefaultStore($id);
 
     public function createDefaultStore($storeName);

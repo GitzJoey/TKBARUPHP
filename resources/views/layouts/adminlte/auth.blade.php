@@ -7,12 +7,11 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
-        @yield('custom_css')
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
 
-        <script>
-            window.Laravel = <?php echo json_encode(['csrfToken' => csrf_token(),]); ?>
-        </script>
+        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
+
+        @yield('custom_css')
     </head>
 
     @yield('content')

@@ -8,16 +8,17 @@
 
 namespace App\Services\Implementation;
 
-use App\Model\Customer;
-use App\Model\Expense;
 use App\Model\Item;
 use App\Model\Lookup;
 use App\Model\Product;
-use App\Model\ProductUnit;
+use App\Model\Expense;
+use App\Model\Customer;
 use App\Model\SalesOrder;
-use App\Services\SalesOrderService;
+use App\Model\ProductUnit;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use App\Services\SalesOrderService;
 use Illuminate\Support\Facades\Auth;
 
 class SalesOrderServiceImpl implements SalesOrderService

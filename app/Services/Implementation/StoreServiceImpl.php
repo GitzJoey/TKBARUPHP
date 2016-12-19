@@ -14,6 +14,7 @@ use App\Model\Store;
 use App\Model\Lookup;
 
 use App\Services\StoreService;
+use Illuminate\Support\Facades\Log;
 
 class StoreServiceImpl implements StoreService
 {
@@ -64,10 +65,24 @@ class StoreServiceImpl implements StoreService
 
     public function resetIsDefault()
     {
+        Log::info('resetIsDefault');
+
         $store = Store::whereIsDefault('YESNOSELECT.YES')->get();
 
         foreach ($store as $s) {
             $s->is_default = Lookup::whereCode('YESNOSELECT.NO')->first()->code;
+            $s->save();
+        }
+    }
+
+    public function resetFrontWeb()
+    {
+        Log::info('resetFrontWeb');
+
+        $store = Store::whereFrontweb('YESNOSELECT.YES')->get();
+
+        foreach ($store as $s) {
+            $s->frontweb = Lookup::whereCode('YESNOSELECT.NO')->first()->code;
             $s->save();
         }
     }

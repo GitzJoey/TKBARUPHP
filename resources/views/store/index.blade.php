@@ -44,9 +44,9 @@
                     <tr>
                         <th class="text-center">@lang('store.index.table.header.name')</th>
                         <th class="text-center">@lang('store.index.table.header.address')</th>
-                        <th class="text-center">@lang('store.index.table.header.phone')</th>
                         <th class="text-center">@lang('store.index.table.header.tax_id')</th>
                         <th class="text-center">@lang('store.index.table.header.default')</th>
+                        <th class="text-center">@lang('store.index.table.header.frontweb')</th>
                         <th class="text-center">@lang('store.index.table.header.status')</th>
                         <th class="text-center">@lang('store.index.table.header.remarks')</th>
                         <th class="text-center">@lang('labels.ACTION')</th>
@@ -57,9 +57,9 @@
                         <tr>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->address }}</td>
-                            <td>{{ $item->phone_num }}</td>
                             <td>{{ $item->tax_id }}</td>
                             <td class="text-center">@lang('lookup.' . $item->is_default )</td>
+                            <td class="text-center">@if (!empty($item->frontweb))@lang('lookup.' . $item->frontweb )@endif</td>
                             <td class="text-center">@lang('lookup.' . $item->status)</td>
                             <td>{{ $item->remarks }}</td>
                             <td class="text-center" width="10%">

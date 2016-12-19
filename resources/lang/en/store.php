@@ -28,6 +28,7 @@ return [
         'tax_id' => 'Tax ID',
         'status' => 'Status',
         'default' => 'Default',
+        'frontweb' => 'Front Web',
         'remarks' => 'Remarks',
     ],
     'edit' => [
@@ -49,9 +50,9 @@ return [
             'header' => [
                 'name' => 'Name',
                 'address' => 'Address',
-                'phone' => 'Phone',
-                'tax_id' => 'Fax ID',
+                'tax_id' => 'Tax ID',
                 'default' => 'Default',
+                'frontweb' => 'Front Web',
                 'status' => 'Status',
                 'remarks' => 'Remarks',
             ],
