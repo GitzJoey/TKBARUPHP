@@ -11,16 +11,16 @@
         <div id="navbar" class="collapse navbar-collapse">
             @if (Auth::check())
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/dashboard"><span class="fa fa-dashboard fa-fw"></span></a></li>
+                    <li><a href="/dashboard" title="Dashboard"><span class="fa fa-dashboard fa-fw"></span></a></li>
                     <li class="mright">
-                        <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="glyphicon glyphicon-log-out"></span></a>
+                        <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout"><span class="glyphicon glyphicon-log-out"></span></a>
                         <form id="logout-form" action="{{ url('/logout') }}" method="POST">{{ csrf_field() }}</form>
                     </li>
                 </ul>
             @else
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown mright">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in" title="Login"></span></a>
                         <ul class="dropdown-menu dropdown-lr animated slideInRight" role="menu">
                             <div class="col-lg-12">
                                 <div class="text-center">

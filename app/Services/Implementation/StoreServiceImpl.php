@@ -53,6 +53,11 @@ class StoreServiceImpl implements StoreService
         return Store::whereIsDefault('YESNOSELECT.YES')->get()->first();
     }
 
+    public function getFrontWebStore()
+    {
+        return Store::whereFrontweb('YESNOSELECT.YES')->get()->first();
+    }
+
     public function setDefaultStore($id)
     {
         $store = Store::find($id);

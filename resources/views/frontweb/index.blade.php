@@ -18,15 +18,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="pull-right text-right">
-                        <strong>Toko BARU</strong>
+                        <strong>@if (!empty($store->name)) {{ $store->name }} @endif</strong>
                     </h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <h4 class="pull-right text-right">
-                        Jln Raya Utara No 67<br>
-                        Wangon
+                        @if (!empty($store->address)) {{ $store->address }} @endif<br>
+                        Telp : @if (!empty($store->phone_num)) {{ $store->phone_num }} @endif<br>
+                        Fax : @if (!empty($store->fax_num)) {{ $store->fax_num }} @endif<br><br>
+                        NPWP : @if (!empty($store->tax_id)) {{ $store->tax_id }} @endif<br>
                     </h4>
                 </div>
             </div>

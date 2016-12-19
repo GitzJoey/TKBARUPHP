@@ -20,6 +20,8 @@ interface StoreService
 
     public function getDefaultStore();
 
+    public function getFrontWebStore();
+
     public function resetIsDefault();
 
     public function resetFrontWeb();
