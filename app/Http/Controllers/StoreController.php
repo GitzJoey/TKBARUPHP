@@ -143,11 +143,11 @@ class StoreController extends Controller
             Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
         }
 
-        if ($data['is_default'] == 'YESNOSELECT.YES') {
+        if ($store->is_default == 'YESNOSELECT.NO' && $data['is_default'] == 'YESNOSELECT.YES') {
             $this->storeService->resetIsDefault();
         }
 
-        if ($data['frontweb'] == 'YESNOSELECT.YES') {
+        if ($store->frontweb == 'YESNOSELECT.NO' && $data['frontweb'] == 'YESNOSELECT.YES') {
             $this->storeService->resetFrontWeb();
         }
 
