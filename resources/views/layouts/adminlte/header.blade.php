@@ -1,7 +1,7 @@
 <header class="main-header">
     <a href="/dashboard" class="logo">
         <span class="logo-mini"><i class="fa fa-home"></i></span>
-        <span class="logo-lg"><b>TK</b>BARU</span>
+        <span class="logo-lg {{ mt_rand(1, 5) == 1 ? 'animated flip':'' }}"><b>TK</b>BARU</span>
     </a>
 
     <nav class="navbar navbar-static-top" role="navigation">

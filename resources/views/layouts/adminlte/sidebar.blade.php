@@ -166,7 +166,7 @@
             @if(Entrust::can('customer.confirmation') OR
                 Entrust::can('customer.payment') OR
                 Entrust::can('customer.approval'))
-                <li class="treeview {{ active_class(Active::checkRoutePattern('db.customer.confirmation.*') || Active::checkRoutePattern('db.customer.approval.*')) }}">
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.customer.confirmation.*') || Active::checkRoutePattern('db.customer.payment.*') || Active::checkRoutePattern('db.customer.approval.*')) }}">
                     <a href="#"><i class="fa fa-smile-o fa-fw"></i><span>&nbsp;@lang('menu.item.customer')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
