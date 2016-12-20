@@ -101,7 +101,7 @@ class PhoneProviderController extends Controller
 
             $ph->save();
 
-            $ph->prefixes()->delete();
+            $ph->prefixes->each(function($pr) { $pr->delete(); });
 
             for ($i = 0; $i < count($data['prefixes']); $i++) {
                 $pp = new PhonePrefix();
@@ -117,7 +117,7 @@ class PhoneProviderController extends Controller
     public function delete($id)
     {
         $ph = PhoneProvider::find($id);
-        $ph->prefixes()->delete();
+        $ph->prefixes->each(function($pr) { $pr->delete(); });
         $ph->delete();
 
         return redirect(route('db.admin.phone_provider'));

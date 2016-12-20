@@ -219,6 +219,19 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
 
         if ($customer) {
+            foreach ($customer->profiles as $p) {
+                foreach ($p->phoneNumbers as $ph) {
+                    $ph->delete();
+                }
+                $p->delete();
+            }
+
+            foreach ($customer->bankAccounts as $ba) {
+                $ba->delete();
+            }
+
+            $customer->expenseTemplates()->detach();
+
             $customer->delete();
         }
 
