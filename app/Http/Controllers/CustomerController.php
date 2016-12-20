@@ -332,8 +332,6 @@ class CustomerController extends Controller
     {
         $so = SalesOrder::whereId($id)->first();
 
-
-
         return redirect()->route('db.customer.approval.index');
     }
 

@@ -420,7 +420,7 @@
         }]);
 
         $(document).ready(function() {
-            $.listen('parsley:field:validate', function() {
+            window.Parsley.on('parsley:field:validate', function() {
                 validateFront();
             });
 

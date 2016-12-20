@@ -122,4 +122,9 @@ class PhoneProviderController extends Controller
 
         return redirect(route('db.admin.phone_provider'));
     }
+
+    public function getPhoneProviderByDigit($digit)
+    {
+        return PhoneProvider::where('prefixes.prefix', '=', $digit)->get()->first();
+    }
 }
