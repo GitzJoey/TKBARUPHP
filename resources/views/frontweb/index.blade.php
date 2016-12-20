@@ -26,9 +26,9 @@
                 <div class="col-md-12">
                     <h4 class="pull-right text-right">
                         @if (!empty($store->address)) {{ $store->address }} @endif<br>
-                        Telp : @if (!empty($store->phone_num)) {{ $store->phone_num }} @endif<br>
-                        Fax : @if (!empty($store->fax_num)) {{ $store->fax_num }} @endif<br><br>
-                        NPWP : @if (!empty($store->tax_id)) {{ $store->tax_id }} @endif<br>
+                        @if (!empty($store->phone_num)) Telp : {{ $store->phone_num }} @endif<br>
+                        @if (!empty($store->fax_num)) Fax : {{ $store->fax_num }} @endif<br><br>
+                        @if (!empty($store->tax_id)) NPWP : {{ $store->tax_id }} @endif<br>
                     </h4>
                 </div>
             </div>
