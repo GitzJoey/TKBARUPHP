@@ -8,6 +8,11 @@ return [
         'header' => [
             'title' => 'Create Phone Provider',
         ],
+        'table' => [
+            'header' => [
+                'prefix' => 'Prefix',
+            ],
+        ],
     ],
     'field' => [
         'name' => 'Name',
@@ -23,6 +28,11 @@ return [
         'header' => [
             'title' => 'Edit Phone Provider',
         ],
+        'table' => [
+            'header' => [
+                'prefix' => 'Prefix',
+            ],
+        ],
     ],
     'index' => [
         'title' => 'Phone Provider',
@@ -37,7 +47,7 @@ return [
                 'short_name' => 'Short Name',
                 'prefix' => 'Prefix',
                 'status' => 'Status',
-                'remarks' => 'Keterangan',
+                'remarks' => 'remarks',
             ],
         ],
     ],
@@ -47,6 +57,11 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Show Phone Provider',
+        ],
+        'table' => [
+            'header' => [
+                'prefix' => 'Prefix',
+            ],
         ],
     ],
 ];

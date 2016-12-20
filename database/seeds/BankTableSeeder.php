@@ -42,5 +42,7 @@ class BankTableSeeder extends Seeder
         foreach ($banks as $key => $value) {
             Bank::create($value);
         }
+
+
     }
 }

@@ -44,10 +44,14 @@
                     <tr>
                         <td class="text-center">{{ $phoneProvider->name }}</td>
                         <td class="text-center">{{ $phoneProvider->short_name }}</td>
-                        <td>{{ $phoneProvider->prefix }}</td>
-                        <td>@lang('lookup.'.$phoneProvider->status)</td>
+                        <td class="text-center">
+                            @foreach ($phoneProvider->prefixes as $p)
+                                {{ $p->prefix }}<br>
+                            @endforeach
+                        </td>
+                        <td class="text-center">@lang('lookup.'.$phoneProvider->status)</td>
                         <td>{{ $phoneProvider->remarks }}</td>
-                        <td class="text-center" width="10%">
+                        <td class="text-center valign-middle" width="10%">
                             <a class="btn btn-xs btn-info" href="{{ route('db.admin.phone_provider.show', $phoneProvider->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             <a class="btn btn-xs btn-primary" href="{{ route('db.admin.phone_provider.edit', $phoneProvider->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.phone_provider.delete', $phoneProvider->hId()], 'style'=>'display:inline'])  !!}

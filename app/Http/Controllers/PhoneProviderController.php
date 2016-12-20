@@ -7,6 +7,7 @@
  */
 namespace App\Http\Controllers;
 
+use App\Model\PhonePrefix;
 use DateTime;
 use Validator;
 use Illuminate\Http\Request;
@@ -45,24 +46,28 @@ class PhoneProviderController extends Controller
         $validator = Validator::make($data->all(), [
             'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
-            'prefix' => 'required|string|max:255',
             'status' => 'required',
-            'remarks' => 'required|string|max:255',
-
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.admin.phone_provider.create'))->withInput()->withErrors($validator);
         } else {
+            $ph = new PhoneProvider();
+            $ph->name = $data['name'];
+            $ph->short_name = $data['short_name'];
+            $ph->status = $data['status'];
+            $ph->remarks = $data['remarks'];
 
-            PhoneProvider::create([
-                'name' => $data['name'],
-                'short_name' => $data['short_name'],
-                'prefix' => $data['prefix'],
-                'status' => $data['status'],
-                'remarks' => $data['remarks']
-            ]);
-            return redirect(route('db.admin.phoneProvider'));
+            $ph->save();
+
+            for ($i = 0; $i < count($data['prefixes']); $i++) {
+                $pp = new PhonePrefix();
+                $pp->prefix = $data['prefixes'][$i];
+
+                $ph->prefixes()->save($pp);
+            }
+
+            return redirect(route('db.admin.phone_provider'));
         }
     }
 
@@ -75,27 +80,46 @@ class PhoneProviderController extends Controller
         return view('phone_provider.edit', compact('phoneProvider', 'statusDDL'));
     }
 
-    public function update($id, Request $req)
+    public function update($id, Request $data)
     {
-        $validator = Validator::make($req->all(), [
+        $validator = Validator::make($data->all(), [
             'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
             'status' => 'required',
         ]);
 
-        $pp = PhoneProvider::find($id);
+        $ph = PhoneProvider::find($id);
 
         if ($validator->fails()) {
-            return redirect(route('db.admin.phone_provider.edit', $pp->hId()))->withInput()->withErrors($validator);
+            return redirect(route('db.admin.phone_provider.edit', $ph->hId()))->withInput()->withErrors($validator);
         } else {
-            PhoneProvider::find($id)->update($req->all());
+
+            $ph->name = $data['name'];
+            $ph->short_name = $data['short_name'];
+            $ph->status = $data['status'];
+            $ph->remarks = $data['remarks'];
+
+            $ph->save();
+
+            $ph->prefixes()->delete();
+
+            for ($i = 0; $i < count($data['prefixes']); $i++) {
+                $pp = new PhonePrefix();
+                $pp->prefix = $data['prefixes'][$i];
+
+                $ph->prefixes()->save($pp);
+            }
+
             return redirect(route('db.admin.phone_provider'));
         }
     }
 
     public function delete($id)
     {
-        PhoneProvider::find($id)->delete();
+        $ph = PhoneProvider::find($id);
+        $ph->prefixes()->delete();
+        $ph->delete();
+
         return redirect(route('db.admin.phone_provider'));
     }
 }

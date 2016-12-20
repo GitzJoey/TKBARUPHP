@@ -42,10 +42,21 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPrefix" class="col-sm-2 control-label">@lang('phone_provider.field.prefix')</label>
-                        <div class="col-sm-10">
-                            <label id="inputPrefix" class="control-label">
-                                <span class="control-label-normal">{{ $phoneProvider->prefix }}</span>
-                            </label>
+                        <div class="col-sm-5">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>@lang('phone_provider.show.table.header.prefix')</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($phoneProvider->prefixes as $p)
+                                        <tr>
+                                            <td>{{ $p->prefix }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="form-group">

@@ -50,9 +50,28 @@
                 </div>
                 <div class="form-group">
                     <label for="inputPrefix" class="col-sm-2 control-label">@lang('phone_provider.field.prefix')</label>
-                    <div class="col-sm-10">
-                        <input id="inputPrefix" name="prefix" type="text" class="form-control" value="{{ $phoneProvider->prefix }} "placeholder="@lang('phone_provider.field.prefix')">
-                        <span class="help-block">{{ $errors->has('prefix') ? $errors->first('prefix') : '' }}</span>&nbsp;
+                    <div class="col-sm-5">
+                        <div ng-app="phModule" ng-controller="phController">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>@lang('phone_provider.edit.table.header.prefix')</th>
+                                    <th class="text-center">@lang('labels.ACTION')</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="p in prefixes">
+                                    <td>
+                                        <input type="text" class="form-control" ng-model="p.prefix" name="prefixes[]" data-parsley-required="true"/>
+                                    </td>
+                                    <td class="text-center valign-middle">
+                                        <button type="button" class="btn btn-xs btn-danger" ng-hide="!prefixes.length" ng-click="remove()">@lang('buttons.remove_button')</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" class="btn btn-xs btn-primary" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
@@ -79,4 +98,24 @@
             </div>
         {!! Form::close() !!}
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        var app = angular.module("phModule", []);
+        app.controller("phController", ['$scope', function($scope) {
+            $scope.prefixes = JSON.parse('{!! htmlspecialchars_decode($phoneProvider->prefixes) !!}');
+
+            $scope.addNew = function (p) {
+                $scope.prefixes.push({
+                    'phone_provider_id': '',
+                    'prefix': ''
+                });
+            };
+
+            $scope.remove = function (idx) {
+                $scope.prefixes.splice(idx, 1);
+            };
+        }]);
+    </script>
 @endsection

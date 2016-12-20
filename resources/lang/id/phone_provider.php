@@ -8,6 +8,11 @@ return [
         'header' => [
             'title' => 'Tambah Provider Telepon',
         ],
+        'table' => [
+            'header' => [
+                'prefix' => '',
+            ],
+        ],
     ],
     'field' => [
         'name' => 'Nama',
@@ -22,6 +27,11 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Ubah Provider Telepon',
+        ],
+        'table' => [
+            'header' => [
+                'prefix' => 'Prefix',
+            ],
         ],
     ],
     'index' => [
@@ -47,6 +57,11 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Tampilan Provider Telepon',
+        ],
+        'table' => [
+            'header' => [
+                'prefix' => 'Prefix',
+            ],
         ],
     ],
 ];

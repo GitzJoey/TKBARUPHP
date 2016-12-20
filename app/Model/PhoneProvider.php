@@ -77,6 +77,11 @@ class PhoneProvider extends Model
         $this->hasMany('App\Model\PhoneNumber');
     }
 
+    public function prefixes()
+    {
+        return $this->hasMany('App\Model\PhonePrefix');
+    }
+
     public static function boot()
     {
         parent::boot();
