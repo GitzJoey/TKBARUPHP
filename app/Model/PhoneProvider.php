@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PhonePrefix[] $prefixes
  */
 class PhoneProvider extends Model
 {

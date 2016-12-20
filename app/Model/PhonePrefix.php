@@ -12,6 +12,29 @@ use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Model\PhonePrefix
+ *
+ * @property integer $id
+ * @property integer $phone_provider_id
+ * @property string $prefix
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix wherePhoneProviderId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix wherePrefix($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class PhonePrefix extends Model
 {
     use SoftDeletes;
