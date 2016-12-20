@@ -18,7 +18,8 @@ class SalesOrderCopyController extends Controller
     private $salesOrderService;
     private $stockService;
 
-    public function __construct(SalesOrderCopyService $salesOrderCopyService, SalesOrderService $salesOrderService,
+    public function __construct(SalesOrderCopyService $salesOrderCopyService,
+                                SalesOrderService $salesOrderService,
                                 StockService $stockService)
     {
         $this->salesOrderCopyService = $salesOrderCopyService;
@@ -53,7 +54,6 @@ class SalesOrderCopyController extends Controller
             $soCopies = $so->copies;
             return view('sales_order.copy.index', compact('soCopies', 'soCode'));
         }
-
     }
 
     public function create(Request $request, $soCode)
@@ -96,7 +96,7 @@ class SalesOrderCopyController extends Controller
     public function delete($soCode, $id)
     {
         $soCopy = SalesOrderCopy::find($id);
-        $soCopy->items()->delete();
+        $soCopy->items->each(function($i) { $i->delete(); });
         $soCopy->delete();
 
         return redirect(route('db.so.copy.index', $soCode));

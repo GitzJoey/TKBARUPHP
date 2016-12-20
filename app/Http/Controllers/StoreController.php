@@ -151,7 +151,7 @@ class StoreController extends Controller
             $this->storeService->resetFrontWeb();
         }
 
-        $store->bankAccounts()->delete();
+        $store->bankAccounts->each(function($ba) { $ba->delete(); });
 
         for ($i = 0; $i < count($data['bank']); $i++) {
             $ba = new BankAccount();
@@ -202,7 +202,7 @@ class StoreController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.admin.store'))->withErrors($validator);
         } else {
-            $store->bankAccounts()->delete();
+            $store->bankAccounts->each(function($ba) { $ba->delete(); });
             $store->delete();
         }
 

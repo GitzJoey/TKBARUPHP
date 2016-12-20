@@ -236,6 +236,20 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::findOrFail($id);
 
+        foreach ($supplier->profiles as $p) {
+            foreach ($p->phoneNumbers as $ph) {
+                $ph->delete();
+            }
+            $p->delete();
+        }
+
+        foreach ($supplier->bankAccounts as $ba) {
+            $ba->delete();
+        }
+
+        $supplier->expenseTemplates()->detach();
+        $supplier->products()->detach();
+
         $supplier->delete();
 
         return redirect(route('db.master.supplier'));

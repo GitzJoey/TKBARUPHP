@@ -90,7 +90,7 @@ class PurchaseOrderCopyController extends Controller
     public function delete($poCode, $id)
     {
         $poCopy = PurchaseOrderCopy::find($id);
-        $poCopy->items()->delete();
+        $poCopy->items->each(function($i) { $i->delete(); });
         $poCopy->delete();
 
         return redirect(route('db.po.copy.index', $poCode));

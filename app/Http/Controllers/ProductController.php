@@ -100,7 +100,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        $product->productUnit()->delete();
+        $product->productUnit->each(function($pu) { $pu->delete(); });
 
         $pu = array();
         for ($i = 0; $i < count($data['unit_id']); $i++) {
@@ -131,7 +131,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        $product->productUnit()->delete();
+        $product->productUnit->each(function($pu) { $pu->delete(); });
         $product->delete();
 
         return redirect(route('db.master.product'));

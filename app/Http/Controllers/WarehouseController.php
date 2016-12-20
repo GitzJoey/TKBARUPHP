@@ -93,7 +93,7 @@ class WarehouseController extends Controller
     {
         $warehouse = Warehouse::find($id);
 
-        $warehouse->sections()->delete();
+        $warehouse->sections->each(function($s) { $s->delete(); });
 
         for ($i = 0; $i < count($data['section_name']); $i++) {
             $ws = new WarehouseSection();
@@ -123,7 +123,7 @@ class WarehouseController extends Controller
     public function delete($id)
     {
         $warehouse = Warehouse::find($id);
-        $warehouse->sections()->delete();
+        $warehouse->sections->each(function($s) { $s->delete(); });
         $warehouse->delete();
 
         return redirect(route('db.master.warehouse'));
