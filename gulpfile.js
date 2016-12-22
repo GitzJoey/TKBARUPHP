@@ -67,6 +67,7 @@ elixir(function (mix) {
         .copy('node_modules/icheck/skins/square/blue@2x.png', 'public/adminlte/css')
         .copy('node_modules/highcharts/css/highcharts.css', 'public/adminlte/css')
         .copy('node_modules/fullcalendar/dist/fullcalendar.min.css', 'public/adminlte/css')
+        .copy('node_modules/fullcalendar/dist/fullcalendar.print.css', 'public/adminlte/css')
         .copy('node_modules/tooltipster/dist/css/tooltipster.bundle.min.css', 'public/adminlte/css')
         .copy('node_modules/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css', 'public/adminlte/css')
         .copy('resources/assets/css/frontweb.css', 'public/frontweb/css');
