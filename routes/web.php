@@ -369,7 +369,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('view/{fileName}', 'ReportController@view')->name('db.report.view');
         });
 
-        Route::get('user/profile/{id}', 'UserController@profile')->name('db.user.profile.show');
+        Route::group(['prefix' => 'user'], function() {
+            Route::get('profile/{id}', 'UserController@profile')->name('db.user.profile.show');
+            Route::get('calendar', 'CalendarController@index')->name('db.user.calendar.show');
+        });
+
 
         Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('db.logs');
     });

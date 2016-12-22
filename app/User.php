@@ -88,4 +88,8 @@ class User extends Authenticatable
     public function settings() {
         return $this->hasMany('App\Model\Setting');
     }
+
+    public function events() {
+        return $this->hasMany('App\Model\EventCalendar');
+    }
 }
