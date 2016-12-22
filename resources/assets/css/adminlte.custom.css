@@ -1,4 +1,3 @@
-
 .control-label-normal {
     font-weight: 400;
     display:inline-block;
@@ -149,3 +148,9 @@ ol.breadcrumb {
     padding-right: 25px;
 }
 
+.control-sidebar > .tab-content {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 25px;
+    padding-down: 10px;
+}
