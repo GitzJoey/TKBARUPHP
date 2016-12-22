@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.28 on 2016-12-20.
+ * Generated for Laravel 5.3.26 on 2016-12-21.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1843,6 +1843,17 @@ namespace {
         /**
          * Determine if the current user is authenticated.
          *
+         * @return \App\User 
+         * @throws \Illuminate\Auth\AuthenticationException
+         * @static 
+         */
+        public static function authenticate(){
+            return \Illuminate\Auth\SessionGuard::authenticate();
+        }
+        
+        /**
+         * Determine if the current user is authenticated.
+         *
          * @return bool 
          * @static 
          */
@@ -1858,17 +1869,6 @@ namespace {
          */
         public static function guest(){
             return \Illuminate\Auth\SessionGuard::guest();
-        }
-        
-        /**
-         * Determine if the current user is authenticated.
-         *
-         * @return \App\User 
-         * @throws \Illuminate\Auth\AuthenticationException
-         * @static 
-         */
-        public static function authenticate(){
-            return \Illuminate\Auth\SessionGuard::authenticate();
         }
         
     }
@@ -3130,13 +3130,12 @@ namespace {
          *
          * @param string $query
          * @param array $bindings
-         * @param bool $useReadPdo
          * @return mixed 
          * @static 
          */
-        public static function selectOne($query, $bindings = array(), $useReadPdo = true){
+        public static function selectOne($query, $bindings = array()){
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::selectOne($query, $bindings, $useReadPdo);
+            return \Illuminate\Database\MySqlConnection::selectOne($query, $bindings);
         }
         
         /**
@@ -8324,18 +8323,6 @@ namespace {
         }
         
         /**
-         * Set the global reply-to address and name.
-         *
-         * @param string $address
-         * @param string|null $name
-         * @return void 
-         * @static 
-         */
-        public static function alwaysReplyTo($address, $name = null){
-            \Illuminate\Mail\Mailer::alwaysReplyTo($address, $name);
-        }
-        
-        /**
          * Set the global to address and name.
          *
          * @param string $address
@@ -10745,8 +10732,6 @@ namespace {
         /**
          * Checks whether the method is safe or not.
          *
-         * @see https://tools.ietf.org/html/rfc7231#section-4.2.1
-         * @param bool $andCacheable Adds the additional condition that the method should be cacheable. True by default.
          * @return bool 
          * @static 
          */
@@ -10758,7 +10743,6 @@ namespace {
         /**
          * Checks whether the method is cacheable or not.
          *
-         * @see https://tools.ietf.org/html/rfc7231#section-4.2.3
          * @return bool 
          * @static 
          */
@@ -11225,17 +11209,6 @@ namespace {
          */
         public static function resourceParameters($parameters = array()){
             \Illuminate\Routing\Router::resourceParameters($parameters);
-        }
-        
-        /**
-         * Get or set the verbs used in the resource URIs.
-         *
-         * @param array $verbs
-         * @return array|null 
-         * @static 
-         */
-        public static function resourceVerbs($verbs = array()){
-            return \Illuminate\Routing\Router::resourceVerbs($verbs);
         }
         
         /**

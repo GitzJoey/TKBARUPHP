@@ -70,16 +70,14 @@
                         <th>@lang('bank.upload.table.header.bank')</th>
                         <th>@lang('bank.upload.table.header.upload_date')</th>
                         <th>@lang('bank.upload.table.header.file_name')</th>
-                        <th>@lang('bank.upload.table.header.status')</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($uploadBankList as $key => $u)
+                    @foreach($bankUploads as $key => $bankUpload)
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $bankDDL[$bankUpload->bank] }}</td>
+                            <td>{{ $bankUpload->created_at }}</td>
+                            <td>{{ $bankUpload->filename }}</td>
                         </tr>
                     @endforeach
                 </tbody>

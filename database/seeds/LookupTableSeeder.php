@@ -348,6 +348,11 @@ class LookupTableSeeder extends Seeder
                 'code' => 'EXPENSETYPE.SUB',
                 'description' => 'Subtracting value',
                 'category' => 'EXPENSETYPE',
+            ],
+            [
+                'code' => 'BANKUPLOAD.BCA',
+                'description' => 'Bank BCA',
+                'category' => 'BANKUPLOAD',
             ]
         ];
         foreach ($lookup as $key => $value) {
