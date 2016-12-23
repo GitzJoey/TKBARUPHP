@@ -68,6 +68,7 @@
                         </tbody>
                     </table>
                     <br>
+                    <a class="btn btn-default" href="{{ route('db.user.calendar.show') }}">@lang('buttons.calendar_button')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button class="btn btn-default">@lang('buttons.change_password_button')</button>
                     <button class="btn btn-default">@lang('buttons.reset_password_button')</button>
                 </div>

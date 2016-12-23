@@ -39,14 +39,14 @@ class CalendarController extends Controller
     {
         $user = User::whereId(Auth::user()->id);
 
-        $event = new EventCalendar();
+        $eventc = new EventCalendar();
 
-        $event->event_title = $request->input('event_title');
-        $event->start_date = $request->input('start_date');
-        $event->end_date = $request->input('end_date');
-        $event->ext_url = $request->input('ext_url');
+        $eventc->event_title = $request->input('event_title');
+        $eventc->start_date = $request->input('start_date');
+        $eventc->end_date = $request->input('end_date');
+        $eventc->ext_url = $request->input('ext_url');
 
-        $user->eventCalendars()->save($event);
+        $user->eventCalendars()->create($eventc);
 
         return redirect()->route('db.user.calendar.show');
     }

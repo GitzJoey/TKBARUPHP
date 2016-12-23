@@ -24,5 +24,6 @@ return [
     'register_button' => 'Register',
     'download_button' => 'Download',
     'download_excel_button' => 'Download Excel',
-    'download_pdf_button' => 'Download PDF'
+    'download_pdf_button' => 'Download PDF',
+    'calendar_button' => 'Calendar',
 ];
