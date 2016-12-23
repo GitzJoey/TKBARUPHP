@@ -15,9 +15,10 @@
 
             <form role="form" method="post" action="{{ url('/login') }}">
                 {{ csrf_field() }}
-
                 <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input id="email" name="email" value="{{ old('email') }}" type="email" class="form-control" placeholder="Email">
+                    <input id="email" name="email"
+                           value="{{ !empty(Cookie::get('tkbaruCookie_login')) ? Cookie::get('tkbaruCookie_login'):old('email') }}"
+                           type="email" class="form-control" placeholder="Email">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
                         <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>

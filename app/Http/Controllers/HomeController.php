@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Cookie;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,7 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //return view('home');
+        if (!Cookie::has('tkbaruCookie_login')) {
+            Cookie::queue('tkbaruCookie_login', Auth::user()->email, 4320); //3 days
+        }
+
         return redirect('dashboard');
     }
 }

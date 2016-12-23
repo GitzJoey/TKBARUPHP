@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Vinkla\Hashids\Facades\Hashids;
 
 class DashboardController extends Controller
