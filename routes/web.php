@@ -372,6 +372,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::group(['prefix' => 'user'], function() {
             Route::get('profile/{id}', 'UserController@profile')->name('db.user.profile.show');
             Route::get('calendar', 'CalendarController@index')->name('db.user.calendar.show');
+            Route::get('calendar/retrieve', 'CalendarController@retrieveEvents')->name('db.user.calendar.retrieve');
+            Route::post('calendar/save', 'CalendarController@storeEvent')->name('db.user.calendar.store');
         });
 
 

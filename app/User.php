@@ -89,7 +89,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Model\Setting');
     }
 
-    public function events() {
+    public function eventCalendars() {
         return $this->hasMany('App\Model\EventCalendar');
     }
 }

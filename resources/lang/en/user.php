@@ -19,6 +19,10 @@ return [
         'user_type' => 'User Type',
         'allow_login' => 'Allow Login',
         'link_profile' => 'Link Profile',
+        'title' => 'Title',
+        'start_date' => 'Start Date',
+        'end_date' => 'End Date',
+        'ext_url' => 'URL',
     ],
     'edit' => [
         'title' => 'User',
@@ -68,6 +72,14 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Show User',
+        ],
+    ],
+    'calendar' => [
+        'title' => 'Calendar',
+        'page_title' => 'Calendar',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Create Events',
         ],
     ],
 ];

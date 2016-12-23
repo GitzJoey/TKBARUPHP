@@ -58,6 +58,7 @@ elixir(function (mix) {
         .copy('node_modules/admin-lte/dist/img/boxed-bg.jpg', 'public/adminlte/img')
         .copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
         .copy('node_modules/fullcalendar/dist/fullcalendar.min.js', 'public/adminlte/js')
+        .copy('node_modules/fullcalendar/dist/locale/id.js', 'public/adminlte/js')
         .copy('node_modules/tooltipster/dist/js/tooltipster.bundle.min.js', 'public/adminlte/js')
         .copy('node_modules/pdfobject/pdfobject.min.js', 'public/adminlte/js')
         .copy('node_modules/bootstrap/fonts', 'public/adminlte/fonts')

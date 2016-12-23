@@ -19,6 +19,10 @@ return [
         'user_type' => 'Tipe User',
         'allow_login' => 'Boleh Login',
         'link_profile' => '',
+        'title' => 'Title',
+        'start_date' => 'Start Date',
+        'end_date' => 'End Date',
+        'ext_url' => 'URL',
     ],
     'edit' => [
         'title' => 'Pengguna',
@@ -68,6 +72,14 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Tampilan Pengguna',
+        ],
+    ],
+    'calendar' => [
+        'title' => 'Kalender',
+        'page_title' => 'Kalender',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Buat Acara',
         ],
     ],
 ];

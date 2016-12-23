@@ -32,11 +32,48 @@
         </div>
         <div class="col-md-4">
             <div class="box box-info">
-            </div>
-            <div class="box-body">
-                @for ($i = 0; $i < 15; $i++)
-                    <br/>
-                @endfor
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('user.calendar.header.title')</h3>
+                </div>
+                <form action="{{ route('db.user.calendar.store') }}" method="post" data-parsley-validate="parsley">
+                    {{ csrf_field() }}
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="inputTitle" class="col-sm-3 control-label">@lang('user.field.title')</label>
+                            <div class="col-sm-12">
+                                <input id="inputTitle" name="event_title" type="text" class="form-control" placeholder="@lang('user.field.title')" data-parsley-required="true">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputStartDate" class="col-sm-4 control-label">@lang('user.field.start_date')</label>
+                            <div class="col-sm-12">
+                                <input id="inputStartDate" name="start_date" type="text" class="form-control" placeholder="@lang('user.field.start_date')" data-parsley-required="true">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEndDate" class="col-sm-4 control-label">@lang('user.field.end_date')</label>
+                            <div class="col-sm-12">
+                                <input id="inputEndDate" name="end_date" type="text" class="form-control" placeholder="@lang('user.field.end_date')">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputExtUrl" class="col-sm-3 control-label">@lang('user.field.ext_url')</label>
+                            <div class="col-sm-12">
+                                <input id="inputExtUrl" name="ext_url" type="text" class="form-control" placeholder="@lang('user.field.ext_url')">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputButton" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-12">
+                                <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -44,76 +81,49 @@
 
 @section('custom_js')
     <script src="{{ asset('adminlte/js/fullcalendar.min.js') }}"></script>
+    <script src="{{ asset('adminlte/js/id.js') }}"></script>
 
     <script type="application/javascript">
-        $(function () {
-            /* initialize the calendar
-             -----------------------------------------------------------------*/
-            //Date for the calendar events (dummy data)
-            var date = new Date();
-            var d = date.getDate(),
-                m = date.getMonth(),
-                y = date.getFullYear();
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+        var initialLocaleCode = '{!! LaravelLocalization::getCurrentLocale() !!}';
+
+        $(document).ready(function() {
+            $.ajax({
+                url : '{{ route('db.user.calendar.retrieve') }}',
+                type : "GET",
+                async: false,
+                success : function(response) {
+                    var obj = JSON.parse(JSON.stringify(response, null, 4));
+                    var evvL = [];
+
+                    console.log(obj);
+
+                    $('#calendar').fullCalendar({
+                        header: {
+                            left: 'prev, next today',
+                            center: 'title',
+                            right: 'month, agendaWeek, agendaDay'
+                        },
+                        locale: initialLocaleCode,
+                        buttonText: {
+                            today: 'today',
+                            month: 'month',
+                            week: 'week',
+                            day: 'day'
+                        },
+                        events: evvL,
+                        dayClick: function(day) {
+                            console.log('a day has been clicked!');
+                        }
+                    });
                 },
-                buttonText: {
-                    today: 'today',
-                    month: 'month',
-                    week: 'week',
-                    day: 'day'
-                },
-                //Random default events
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: new Date(y, m, 1),
-                        backgroundColor: "#f56954", //red
-                        borderColor: "#f56954" //red
-                    },
-                    {
-                        title: 'Long Event',
-                        start: new Date(y, m, d - 5),
-                        end: new Date(y, m, d - 2),
-                        backgroundColor: "#f39c12", //yellow
-                        borderColor: "#f39c12" //yellow
-                    },
-                    {
-                        title: 'Meeting',
-                        start: new Date(y, m, d, 10, 30),
-                        allDay: false,
-                        backgroundColor: "#0073b7", //Blue
-                        borderColor: "#0073b7" //Blue
-                    },
-                    {
-                        title: 'Lunch',
-                        start: new Date(y, m, d, 12, 0),
-                        end: new Date(y, m, d, 14, 0),
-                        allDay: false,
-                        backgroundColor: "#00c0ef", //Info (aqua)
-                        borderColor: "#00c0ef" //Info (aqua)
-                    },
-                    {
-                        title: 'Birthday Party',
-                        start: new Date(y, m, d + 1, 19, 0),
-                        end: new Date(y, m, d + 1, 22, 30),
-                        allDay: false,
-                        backgroundColor: "#00a65a", //Success (green)
-                        borderColor: "#00a65a" //Success (green)
-                    },
-                    {
-                        title: 'Click for Google',
-                        start: new Date(y, m, 28),
-                        end: new Date(y, m, 29),
-                        url: 'http://google.com/',
-                        backgroundColor: "#3c8dbc", //Primary (light-blue)
-                        borderColor: "#3c8dbc" //Primary (light-blue)
-                    }
-                ],
-                editable: true,
+                error : function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+
+            $("#inputStartDate, #inputEndDate").datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
             });
         });
     </script>
