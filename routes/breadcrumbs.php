@@ -398,3 +398,20 @@ Breadcrumbs::register('master_vendor_trucking_edit', function($breadcrumbs, $id)
     $breadcrumbs->push('Vendor Trucking', route('db.master.vendor.trucking'));
     $breadcrumbs->push('Edit Vendor Trucking', route('db.master.vendor.trucking.edit', $id));
 });
+
+Breadcrumbs::register('truck_maintenance', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Truck Maintenance', route('db.truck.maintenance'));
+});
+
+Breadcrumbs::register('truck_maintenance_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Truck Maintenance', route('db.truck.maintenance'));
+    $breadcrumbs->push('Create Truck Maintenance', route('db.truck.maintenance.create'));
+});
+
+Breadcrumbs::register('truck_maintenance_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push('Truck Maintenance', route('db.truck.maintenance'));
+    $breadcrumbs->push('Edit Truck Maintenance', route('db.truck.maintenance.edit', $id));
+});

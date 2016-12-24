@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;@lang('truckmtc.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('truckmtc.index.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('truck_maintenance') !!}
 @endsection
 
 @section('content')
@@ -23,6 +28,16 @@
             <h3 class="box-title">@lang('truckmtc.index.header.title')</h3>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <select class="form-control">
+                        @foreach ($truck as $t)
+                            <option value="{{ Hashids::encode($t->id)  }}">{{ $t->plate_number }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <br>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -31,7 +46,7 @@
                     <th class="text-center">@lang('truckmtc.index.table.header.cost')</th>
                     <th class="text-center">@lang('truckmtc.index.table.header.odometer')</th>
                     <th class="text-center">@lang('truckmtc.index.table.header.remarks')</th>
-                    <th class="text-center">&nbsp;</th>
+                    <th class="text-center" width="10%">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,7 +57,7 @@
                         <td>{{ $truck->cost }}</td>
                         <td>{{ $truck->odometer }}</td>
                         <td>{{ $truck->remarks }}</td>
-                        <td class="text-center" width="20%">
+                        <td class="text-center">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.truck.maintenance.edit', $truck->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
                         </td>
                     </tr>
@@ -55,4 +70,10 @@
             {!! $trucklist->render() !!}
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+
+    </script>
 @endsection

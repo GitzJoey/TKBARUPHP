@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;@lang('truckmtc.create.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('truckmtc.create.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('truck_maintenance_create') !!}
 @endsection
 
 @section('content')

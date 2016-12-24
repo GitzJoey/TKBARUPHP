@@ -20,6 +20,14 @@ class TruckMaintenanceController extends Controller
 
     public function index()
     {
+        $truck = Truck::get(['id', 'type', 'plate_number']);
+
+        $trucklist = TruckMaintenance::paginate(10);
+        return view('truck_maintenance.index', compact('truck', 'trucklist'));
+    }
+
+    public function indexPerTruck(Request $req)
+    {
         $trucklist = TruckMaintenance::paginate(10);
         return view('truck_maintenance.index', compact('trucklist'));
     }
