@@ -39,13 +39,13 @@ return [
 
         'main' => [
             'salt' => 'gitzjoey',
-            'length' => '5',
+            'length' => '10',
             'alphabet' => 'abcdefghijklmnopqrstuvwxyz1234567890_',
         ],
 
         'alternative' => [
             'salt' => 'gitzjoey_tkbaru',
-            'length' => '6',
+            'length' => '12',
             'alphabet' => 'abcdefghijklmnopqrstuvwxyz1234567890_',
         ],
 
