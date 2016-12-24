@@ -37,16 +37,16 @@ class CalendarController extends Controller
 
     public function storeEvent(Request $request)
     {
-        $user = User::whereId(Auth::user()->id);
+        $user = User::whereId(Auth::user()->id)->first();
 
         $eventc = new EventCalendar();
 
         $eventc->event_title = $request->input('event_title');
-        $eventc->start_date = $request->input('start_date');
-        $eventc->end_date = $request->input('end_date');
+        $eventc->start_date = date('Y-m-d H:i:s', strtotime($request->input('start_date')));
+        $eventc->end_date = date('Y-m-d H:i:s', strtotime($request->input('end_date')));
         $eventc->ext_url = $request->input('ext_url');
 
-        $user->eventCalendars()->create($eventc);
+        $user->eventCalendars()->save($eventc);
 
         return redirect()->route('db.user.calendar.show');
     }
