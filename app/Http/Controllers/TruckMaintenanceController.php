@@ -6,6 +6,7 @@ use Auth;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Vinkla\Hashids\Facades\Hashids;
 
 use App\Model\Truck;
 use App\Model\Lookup;
@@ -18,18 +19,21 @@ class TruckMaintenanceController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index($truckId = null)
     {
         $truck = Truck::get(['id', 'type', 'plate_number']);
 
-        $trucklist = TruckMaintenance::paginate(10);
-        return view('truck_maintenance.index', compact('truck', 'trucklist'));
-    }
+        $trucklist = [];
 
-    public function indexPerTruck(Request $req)
-    {
-        $trucklist = TruckMaintenance::paginate(10);
-        return view('truck_maintenance.index', compact('trucklist'));
+        if (is_null($truckId)) {
+            $trucklist = TruckMaintenance::paginate(10);
+        } else {
+            $trucklist = TruckMaintenance::whereHas('truck', function($t) use($truckId) {
+                $t->whereId(Hashids::decode($truckId));
+            })->paginate(10);
+        }
+
+        return view('truck_maintenance.index', compact('truckId', 'truck', 'trucklist'));
     }
 
     public function create()

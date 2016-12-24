@@ -30,9 +30,10 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-3">
-                    <select class="form-control">
+                    <select id="plateSelect" class="form-control">
+                        <option value="">@lang('labels.SHOW_ALL')</option>
                         @foreach ($truck as $t)
-                            <option value="{{ Hashids::encode($t->id)  }}">{{ $t->plate_number }}</option>
+                            <option value="{{ Hashids::encode($t->id)  }}" {{ Hashids::encode($t->id) == $truckId ? "selected":""  }}>{{ $t->plate_number }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -74,6 +75,10 @@
 
 @section('custom_js')
     <script type="application/javascript">
-
+        $(document).ready(function() {
+            $('#plateSelect').change(function() {
+                window.location.href = '{{ route('db.truck.maintenance') }}' + '/' + $('#plateSelect').val();
+            }) ;
+        });
     </script>
 @endsection

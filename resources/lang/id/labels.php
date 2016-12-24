@@ -6,6 +6,7 @@
  * Time: 10:37 PM
  */
 return [
+    'SHOW_ALL' => 'Tampilkan Semua',
     'PLEASE_SELECT' => 'Silahkan Pilih',
     'ACTION' => 'Action',
     'GENERAL_ERROR_TITLE' => 'Whoops!',

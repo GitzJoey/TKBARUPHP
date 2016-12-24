@@ -17,19 +17,20 @@ class TruckMaintenancesTableSeeder extends Seeder
         $trucks = Truck::all();
         $maintenanceTypes = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get(['code']);
 
+        for ($i = 1; $i < 11; $i++) {
+            foreach ($trucks as $key => $truck){
+                foreach ($maintenanceTypes as $key => $maintenanceType){
+                    $truckMaintenance = [
+                        'store_id' => 1,
+                        'truck_id' => $truck->id,
+                        'maintenance_type' => $maintenanceType->code,
+                        'cost' => mt_rand(100000, 10000000),
+                        'odometer' => mt_rand(3000, 10000000),
+                        'remarks' => "Dummy maintenance ".$i
+                    ];
 
-        foreach ($trucks as $key => $truck){
-            foreach ($maintenanceTypes as $key => $maintenanceType){
-                $truckMaintenance = [
-                    'store_id' => 1,
-                    'truck_id' => $truck->id,
-                    'maintenance_type' => $maintenanceType->code,
-                    'cost' => 100000.00,
-                    'odometer' => 3000,
-                    'remarks' => "Dummy maintenance"
-                ];
-
-                TruckMaintenance::create($truckMaintenance);
+                    TruckMaintenance::create($truckMaintenance);
+                }
             }
         }
     }

@@ -6,6 +6,7 @@
  * Time: 10:36 PM
  */
 return [
+    'SHOW_ALL' => 'Show All',
     'PLEASE_SELECT' => 'Please Select',
     'ACTION' => 'Action',
     'GENERAL_ERROR_TITLE' => 'Whoops!',
