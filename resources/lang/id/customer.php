@@ -41,6 +41,7 @@ return [
                 'bank' => 'Bank',
                 'account_number' => 'Nomor Akun',
                 'remarks' => 'Keterangan',
+                'account_name' => '',
             ],
         ],
         'table_expense' => [

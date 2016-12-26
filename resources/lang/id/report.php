@@ -87,7 +87,7 @@ return [
         'warehouse' => [
             'report_name' => 'Laporan Gudang',
             'parameter' => [
-                'name' => 'Nama'
+                'name' => 'Nama',
             ],
             'header' => [
                 'store' => 'Toko',
@@ -95,30 +95,255 @@ return [
                 'address' => 'Alamat',
                 'phone_number' => 'No. Telp',
                 'status' => 'Status',
-                'remarks' => 'Catatan'
+                'remarks' => 'Catatan',
             ],
-            'footer' => 'Dicetak oleh :user pada :date'
+            'footer' => 'Dicetak oleh :user pada :date',
         ],
         'vendor_trucking' => [
             'report_name' => 'Laporan Penyedia Pengiriman',
             'parameter' => [
-                'name' => 'Nama'
+                'name' => 'Nama',
             ],
-            'footer' => 'Dicetak oleh :user pada :date'
+            'footer' => 'Dicetak oleh :user pada :date',
+            'header' => [
+                'store' => '',
+                'name' => '',
+                'address' => '',
+                'tax_id' => '',
+                'status' => '',
+                'remarks' => '',
+            ],
         ],
         'truck_maintenance' => [
             'report_name' => 'Laporan Perawatan Truk',
             'parameter' => [
-                'plate_number' => 'Nomor Plat'
+                'plate_number' => 'Nomor Plat',
             ],
-            'footer' => 'Dicetak oleh :user pada :date'
+            'footer' => 'Dicetak oleh :user pada :date',
+            'header' => [
+                'store' => '',
+                'plate_number' => '',
+                'maintenance_type' => '',
+                'cost' => '',
+                'odometer' => '',
+                'remarks' => '',
+            ],
         ],
-        'vendor_trucking' => [
-            'report_name' => 'Laporan Penyedia Pengiriman',
+        'bank' => [
+            'report_name' => '',
             'parameter' => [
-                'name' => 'Nama'
+                'name' => '',
+                'short_name' => '',
+                'branch' => '',
+                'branch_code' => '',
             ],
-            'footer' => 'Dicetak oleh :user pada :date'
-        ]
-    ]
+            'header' => [
+                'name' => '',
+                'short_name' => '',
+                'branch' => '',
+                'branch_code' => '',
+                'status' => '',
+                'remarks' => '',
+            ],
+            'footer' => '',
+        ],
+        'customer' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'profile_name' => '',
+                'bank_account' => '',
+            ],
+            'header' => [
+                'address' => '',
+                'phone_number' => '',
+                'city' => '',
+                'tax_id' => '',
+                'status' => '',
+                'remarks' => '',
+                'payment_due_day' => '',
+                'price_level' => '',
+                'person_in_charge' => '',
+                'no' => '',
+                'first_name' => '',
+                'last_name' => '',
+                'ic_number' => '',
+                'phone_numbers' => '',
+                'provider' => '',
+                'number' => '',
+                'bank_accounts' => '',
+                'bank' => '',
+                'account_number' => '',
+                'store' => '',
+                'sign_code' => '',
+                'name' => '',
+                'fax_num' => '',
+            ],
+            'footer' => '',
+        ],
+        'phone_provider' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'short_name' => '',
+            ],
+            'header' => [
+                'name' => '',
+                'short_name' => '',
+                'prefix' => '',
+                'status' => '',
+                'remarks' => '',
+            ],
+            'footer' => '',
+        ],
+        'product' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'short_code' => '',
+            ],
+            'header' => [
+                'product_type' => '',
+                'name' => '',
+                'short_code' => '',
+                'product_units' => '',
+                'description' => '',
+                'status' => '',
+                'remarks' => '',
+                'unit' => '',
+                'conversion_value' => '',
+                'store' => '',
+            ],
+            'footer' => '',
+        ],
+        'product_type' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'short_code' => '',
+            ],
+            'header' => [
+                'store' => '',
+                'name' => '',
+                'short_code' => '',
+                'description' => '',
+                'status' => '',
+            ],
+            'footer' => '',
+        ],
+        'role' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'permission' => '',
+            ],
+            'header' => [
+                'name' => '',
+                'display_name' => '',
+                'description' => '',
+            ],
+            'footer' => '',
+        ],
+        'store' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'tax_id' => '',
+            ],
+            'header' => [
+                'name' => '',
+                'address' => '',
+                'phone_num' => '',
+                'fax_num' => '',
+                'tax_id' => '',
+                'status' => '',
+                'remarks' => '',
+            ],
+            'footer' => '',
+        ],
+        'supplier' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'profile_name' => '',
+                'bank_account' => '',
+            ],
+            'header' => [
+                'address' => '',
+                'phone_number' => '',
+                'city' => '',
+                'tax_id' => '',
+                'status' => '',
+                'remarks' => '',
+                'payment_due_day' => '',
+                'fax_number' => '',
+                'person_in_charge' => '',
+                'no' => '',
+                'first_name' => '',
+                'last_name' => '',
+                'ic_number' => '',
+                'phone_numbers' => '',
+                'provider' => '',
+                'number' => '',
+                'bank_accounts' => '',
+                'bank' => '',
+                'account_number' => '',
+                'store' => '',
+                'sign_code' => '',
+                'name' => '',
+            ],
+            'footer' => '',
+        ],
+        'truck' => [
+            'report_name' => '',
+            'parameter' => [
+                'plate_number' => '',
+            ],
+            'header' => [
+                'store' => '',
+                'truck_type' => '',
+                'plate_number' => '',
+                'inspection_date' => '',
+                'driver' => '',
+                'status' => '',
+                'remarks' => '',
+            ],
+            'footer' => '',
+        ],
+        'unit' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'symbol' => '',
+                'tax_id' => '',
+            ],
+            'header' => [
+                'name' => '',
+                'symbol' => '',
+                'status' => '',
+                'remarks' => '',
+            ],
+            'footer' => '',
+        ],
+        'user' => [
+            'report_name' => '',
+            'parameter' => [
+                'name' => '',
+                'email' => '',
+                'role' => '',
+                'profile_name' => '',
+                'profile' => '',
+            ],
+            'header' => [
+                'name' => '',
+                'email' => '',
+            ],
+            'footer' => '',
+        ],
+    ],
+    'viewer' => [
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+    ],
 ];

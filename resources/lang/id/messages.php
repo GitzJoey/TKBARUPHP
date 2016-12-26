@@ -16,6 +16,8 @@ return [
                     'title' => '',
                     'text' => '',
                 ],
+                'title' => '',
+                'text' => '',
             ],
         ],
     ],

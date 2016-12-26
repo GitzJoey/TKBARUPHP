@@ -188,36 +188,37 @@
                             <div class="tab-pane" id="tab_bank_account">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('supplier.edit.table_bank.header.bank')</th>
-                                        <th class="text-center">@lang('supplier.edit.table_bank.header.account_number')</th>
-                                        <th class="text-center">@lang('supplier.edit.table_bank.header.remarks')</th>
-                                        <th class="text-center">@lang('labels.ACTION')</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('supplier.edit.table_bank.header.bank')</th>
+                                            <th class="text-center">@lang('supplier.edit.table_bank.header.account_name')</th>
+                                            <th class="text-center">@lang('supplier.edit.table_bank.header.account_number')</th>
+                                            <th class="text-center">@lang('supplier.edit.table_bank.header.remarks')</th>
+                                            <th class="text-center">@lang('labels.ACTION')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="bank in banks">
-                                        <td>
-                                            <input type="hidden" name="bank_account_id[]" ng-value="bank.id">
-                                            <select name="bank[]" class="form-control"
-                                                    ng-init="bank_list = { id: bank.bank_id }"
-                                                    ng-model="bank_list"
-                                                    ng-change="bank.bank_id = bank_list.id"
-                                                    ng-options="b as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
-                                                    data-parsley-required="true" data-parsley-group="tab_bank">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="bank in banks">
+                                            <td>
+                                                <input type="hidden" name="bank_account_id[]" ng-value="bank.id">
+                                                <select name="bank[]" class="form-control"
+                                                        ng-init="bank_list = { id: bank.bank_id }"
+                                                        ng-model="bank_list"
+                                                        ng-change="bank.bank_id = bank_list.id"
+                                                        ng-options="b as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
+                                                        data-parsley-required="true" data-parsley-group="tab_bank">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
@@ -225,24 +226,24 @@
                             <div class="tab-pane" id="tab_product">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th class="text-center">@lang('supplier.edit.table.header.type')</th>
-                                        <th class="text-center">@lang('supplier.edit.table.header.name')</th>
-                                        <th class="text-center">@lang('supplier.edit.table.header.short_code')</th>
-                                        <th class="text-center">@lang('supplier.edit.table.header.description')</th>
-                                        <th class="text-center">@lang('supplier.edit.table.header.remarks')</th>
-                                    </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">@lang('supplier.edit.table.header.type')</th>
+                                            <th class="text-center">@lang('supplier.edit.table.header.name')</th>
+                                            <th class="text-center">@lang('supplier.edit.table.header.short_code')</th>
+                                            <th class="text-center">@lang('supplier.edit.table.header.description')</th>
+                                            <th class="text-center">@lang('supplier.edit.table.header.remarks')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="p in productList">
-                                        <td class="text-center"><input type="checkbox" name="productSelected[]" ng-model="productSelected[p.id]" value="@{{ p.id }}"></td>
-                                        <td>@{{ p.type.name }}</td>
-                                        <td>@{{ p.name }}</td>
-                                        <td>@{{ p.short_code }}</td>
-                                        <td>@{{ p.description }}</td>
-                                        <td>@{{ p.remarks }}</td>
-                                    </tr>
+                                        <tr ng-repeat="p in productList">
+                                            <td class="text-center"><input type="checkbox" name="productSelected[]" ng-model="productSelected[p.id]" value="@{{ p.id }}"></td>
+                                            <td>@{{ p.type.name }}</td>
+                                            <td>@{{ p.name }}</td>
+                                            <td>@{{ p.short_code }}</td>
+                                            <td>@{{ p.description }}</td>
+                                            <td>@{{ p.remarks }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -359,6 +360,7 @@
             $scope.addNewBank = function() {
                 $scope.banks.push({
                     'bank_id': '',
+                    'account_name': '',
                     'account_number': '',
                     'remarks': ''
                 });

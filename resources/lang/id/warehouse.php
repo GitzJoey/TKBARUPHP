@@ -171,4 +171,38 @@ return [
             ],
         ],
     ],
+    'stockopname' => [
+        'adjust' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => '',
+            ],
+            'field' => [
+                'warehouse' => '',
+                'product' => '',
+                'supplier' => '',
+                'current_quantity' => '',
+                'adjusted_quantity' => '',
+                'reason' => '',
+            ],
+        ],
+        'index' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'warehouse' => '',
+                    'product' => '',
+                    'supplier' => '',
+                    'current_quantity' => '',
+                ],
+            ],
+        ],
+    ],
 ];

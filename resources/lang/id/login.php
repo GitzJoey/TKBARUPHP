@@ -21,7 +21,10 @@ return [
             'email' => 'Email',
             'password' => 'Password',
             'remember_me' => 'Remember Me',
-            'forgot_password' => 'Forgot Password?'
+            'forgot_password' => 'Forgot Password?',
         ],
+    ],
+    'forgot' => [
+        'title' => '',
     ],
 ];

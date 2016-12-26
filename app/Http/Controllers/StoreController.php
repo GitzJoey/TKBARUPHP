@@ -106,6 +106,7 @@ class StoreController extends Controller
         for ($i = 0; $i < count($data['bank']); $i++) {
             $ba = new BankAccount();
             $ba->bank_id = $data["bank"][$i];
+            $ba->account_name = $data["account_name"][$i];
             $ba->account_number = $data["account_number"][$i];
             $ba->remarks = $data["bank_remarks"][$i];
 
@@ -156,6 +157,7 @@ class StoreController extends Controller
         for ($i = 0; $i < count($data['bank']); $i++) {
             $ba = new BankAccount();
             $ba->bank_id = $data["bank"][$i];
+            $ba->account_name = $data["account_name"][$i];
             $ba->account_number = $data["account_number"][$i];
             $ba->remarks = $data["bank_remarks"][$i];
 

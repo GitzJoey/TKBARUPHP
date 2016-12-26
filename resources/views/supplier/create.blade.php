@@ -185,6 +185,7 @@
                                     <thead>
                                     <tr>
                                         <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
+                                        <th class="text-center">@lang('supplier.create.table_bank.header.account_name')</th>
                                         <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
                                         <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
                                         <th class="text-center">@lang('labels.ACTION')</th>
@@ -200,6 +201,9 @@
                                                     data-parsley-required="true" data-parsley-group="tab_bank">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="account_name[]" ng-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
@@ -218,24 +222,24 @@
                             <div class="tab-pane" id="tab_product">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.type')</th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.name')</th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.short_code')</th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.description')</th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.remarks')</th>
-                                    </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.type')</th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.name')</th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.short_code')</th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.description')</th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.remarks')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="p in productList">
-                                        <td class="text-center"><input type="checkbox" name="productSelected[]" value="@{{ p.id }}"></td>
-                                        <td>@{{ p.type.name }}</td>
-                                        <td>@{{ p.name }}</td>
-                                        <td>@{{ p.short_code }}</td>
-                                        <td>@{{ p.description }}</td>
-                                        <td>@{{ p.remarks }}</td>
-                                    </tr>
+                                        <tr ng-repeat="p in productList">
+                                            <td class="text-center"><input type="checkbox" name="productSelected[]" value="@{{ p.id }}"></td>
+                                            <td>@{{ p.type.name }}</td>
+                                            <td>@{{ p.name }}</td>
+                                            <td>@{{ p.short_code }}</td>
+                                            <td>@{{ p.description }}</td>
+                                            <td>@{{ p.remarks }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -256,37 +260,37 @@
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.name')</th>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.type')</th>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.amount')</th>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.internal_expense')</th>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.remarks')</th>
-                                        <th class="text-center">&nbsp;</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.name')</th>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.type')</th>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.amount')</th>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.internal_expense')</th>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.remarks')</th>
+                                            <th class="text-center">&nbsp;</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="expense in expenses">
-                                        <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.name }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.type }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.amount }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.is_internal_expense }}
-                                        </td>
-                                        <td class="valign-middle">
-                                            @{{ expense.remarks }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            <button type="button" class="btn btn-xs btn-danger" ng-click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="expense in expenses">
+                                            <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.name }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.type }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.amount }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.is_internal_expense }}
+                                            </td>
+                                            <td class="valign-middle">
+                                                @{{ expense.remarks }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -338,6 +342,7 @@
             $scope.addNewBank = function() {
                 $scope.banks.push({
                     'bank_id': '',
+                    'account_name': '',
                     'account_number': '',
                     'remarks': ''
                 });

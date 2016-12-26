@@ -184,6 +184,7 @@
                                     <thead>
                                     <tr>
                                         <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
+                                        <th>@lang('customer.create.table_bank.header.account_name')</th>
                                         <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
                                         <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
                                         <th class="text-center">@lang('labels.ACTION')</th>
@@ -199,6 +200,9 @@
                                                     data-parsley-required="true" data-parsley-group="tab_bank">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="account_name[]" ng-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
@@ -323,6 +327,7 @@
             $scope.addNewBank = function() {
                 $scope.banks.push({
                     'bank_id': '',
+                    'account_name': '',
                     'account_number': '',
                     'remarks': ''
                 });

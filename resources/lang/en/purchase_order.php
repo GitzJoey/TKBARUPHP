@@ -262,6 +262,7 @@ return [
                 'search' => 'Search',
             ],
             'po_not_found' => 'Purchase order with code \':code\' not found.',
+            'so_not_found' => '',
         ],
         'index' => [
             'title' => 'Purchase Order Copy',

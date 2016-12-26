@@ -24,4 +24,7 @@ return [
             'forgot_password' => 'Forgot Password?',
         ],
     ],
+    'forgot' => [
+        'title' => '',
+    ],
 ];

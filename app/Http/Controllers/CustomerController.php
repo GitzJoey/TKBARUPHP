@@ -84,6 +84,7 @@ class CustomerController extends Controller
             for ($i = 0; $i < count($data['bank']); $i++) {
                 $ba = new BankAccount();
                 $ba->bank_id = $data["bank"][$i];
+                $ba->account_name = $data["account_name"][$i];
                 $ba->account_number = $data["account_number"][$i];
                 $ba->remarks = $data["bank_remarks"][$i];
 
@@ -150,6 +151,7 @@ class CustomerController extends Controller
         for ($i = 0; $i < count($data['bank']); $i++) {
             $ba = BankAccount::findOrNew($data['bank_account_id'][$i]);
             $ba->bank_id = $data["bank"][$i];
+            $ba->account_name= $data["account_name"][$i];
             $ba->account_number = $data["account_number"][$i];
             $ba->remarks = $data["bank_remarks"][$i];
 

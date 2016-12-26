@@ -15,6 +15,7 @@ return [
         'table_bank' => [
             'header' => [
                 'bank' => 'Bank',
+                'account_name' => 'Account Name',
                 'account_number' => 'Account Number',
                 'remarks' => 'Remarks',
             ],

@@ -31,6 +31,7 @@ return [
                 'bank' => '',
                 'account_number' => '',
                 'remarks' => '',
+                'account_name' => '',
             ],
         ],
         'table' => [
@@ -108,6 +109,7 @@ return [
                 'bank' => '',
                 'account_number' => '',
                 'remarks' => '',
+                'account_name' => '',
             ],
         ],
         'table_prod' => [

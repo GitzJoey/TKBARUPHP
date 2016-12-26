@@ -86,7 +86,7 @@ return [
     'viewer' => [
         'title' => 'View Report',
         'page_title' => 'View Report',
-        'page_title_desc' => ''
+        'page_title_desc' => '',
     ],
     'template' => [
         'customer' => [
@@ -121,7 +121,7 @@ return [
                 'bank' => 'Bank',
                 'account_number' => 'Account Number',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'supplier' => [
             'report_name' => 'Supplier Report',
@@ -154,7 +154,7 @@ return [
                 'bank' => 'Bank',
                 'account_number' => 'Account Number',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'product' => [
             'report_name' => 'Product Report',
@@ -172,9 +172,9 @@ return [
                 'conversion_value' => 'Conversion Value',
                 'description' => 'Description',
                 'status' => 'Status',
-                'remarks' => 'Remarks'
+                'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'bank' => [
             'report_name' => 'Bank Report',
@@ -182,7 +182,7 @@ return [
                 'name' => 'Name',
                 'short_name' => 'Short Name',
                 'branch' => 'Branch',
-                'branch_code' => 'Branch Code'
+                'branch_code' => 'Branch Code',
             ],
             'header' => [
                 'name' => 'Name',
@@ -190,15 +190,15 @@ return [
                 'branch' => 'Branch',
                 'branch_code' => 'Branch Code',
                 'status' => 'Status',
-                'remarks' => 'Remarks'
+                'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'product_type' => [
             'report_name' => 'Product Type Report',
             'parameter' => [
                 'name' => 'Name',
-                'short_code' => 'Short Code'
+                'short_code' => 'Short Code',
             ],
             'header' => [
                 'store' => 'Store',
@@ -207,12 +207,12 @@ return [
                 'description' => 'Description',
                 'status' => 'Status',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'warehouse' => [
             'report_name' => 'Warehouse Report',
             'parameter' => [
-                'name' => 'Name'
+                'name' => 'Name',
             ],
             'header' => [
                 'store' => 'Store',
@@ -220,14 +220,14 @@ return [
                 'address' => 'Address',
                 'phone_number' => 'Phone Number',
                 'status' => 'Status',
-                'remarks' => 'Remarks'
+                'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'truck' => [
             'report_name' => 'Truck Report',
             'parameter' => [
-                'plate_number' => 'Plate Number'
+                'plate_number' => 'Plate Number',
             ],
             'header' => [
                 'store' => 'Store',
@@ -236,14 +236,14 @@ return [
                 'inspection_date' => 'Inspection Date',
                 'driver' => 'Driver',
                 'status' => 'Status',
-                'remarks' => 'Remarks'
+                'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'truck_maintenance' => [
             'report_name' => 'Truck Maintenance Report',
             'parameter' => [
-                'plate_number' => 'Plate Number'
+                'plate_number' => 'Plate Number',
             ],
             'header' => [
                 'store' => 'Store',
@@ -251,14 +251,14 @@ return [
                 'maintenance_type' => 'Maintenance Type',
                 'cost' => 'Cost',
                 'odometer' => 'Odometer',
-                'remarks' => 'Remarks'
+                'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'vendor_trucking' => [
             'report_name' => 'Vendor Trucking Report',
             'parameter' => [
-                'name' => 'Name'
+                'name' => 'Name',
             ],
             'header' => [
                 'store' => 'Store',
@@ -266,9 +266,9 @@ return [
                 'address' => 'Address',
                 'tax_id' => 'Tax Id',
                 'status' => 'Status',
-                'remarks' => 'Remarks'
+                'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'user' => [
             'report_name' => 'User Report',
@@ -276,13 +276,14 @@ return [
                 'name' => 'Name',
                 'email' => 'E-Mail',
                 'role' => 'Role',
-                'profile' => 'Profile'
+                'profile' => 'Profile',
+                'profile_name' => '',
             ],
             'header' => [
                 'name' => 'Name',
-                'email' => 'E-Mail'
+                'email' => 'E-Mail',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'role' => [
             'report_name' => 'Role Report',
@@ -293,9 +294,9 @@ return [
             'header' => [
                 'name' => 'Name',
                 'display_name' => 'Display Name',
-                'description' => 'Description'
+                'description' => 'Description',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'store' => [
             'report_name' => 'Store Report',
@@ -312,13 +313,14 @@ return [
                 'status' => 'Status',
                 'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'unit' => [
             'report_name' => 'Unit Report',
             'parameter' => [
                 'name' => 'Name',
                 'symbol' => 'Symbol',
+                'tax_id' => '',
             ],
             'header' => [
                 'name' => 'Name',
@@ -326,7 +328,7 @@ return [
                 'status' => 'Status',
                 'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
         'phone_provider' => [
             'report_name' => 'Phone Provider Report',
@@ -341,7 +343,7 @@ return [
                 'status' => 'Status',
                 'remarks' => 'Remarks',
             ],
-            'footer' => 'Printed by :user on :date'
+            'footer' => 'Printed by :user on :date',
         ],
-    ]
+    ],
 ];

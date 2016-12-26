@@ -25,7 +25,11 @@
         <div class="alert alert-danger">
             <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
             <ul>
-                <li>@lang("sales_order.copy.search." . Session::get('error'), ['code' => Session::get('code')])</li>
+                @if (Session::get('error') == 'so_not_found')
+                    <li>@lang("purchase_order.copy.search.so_not_found") {{ Session::get('code') }}</li>
+                @else
+                    <li>{{ Session::get('error') }} {{ Session::get('code') }}</li>
+                @endif
             </ul>
         </div>
     @endif

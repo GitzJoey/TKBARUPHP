@@ -30,6 +30,7 @@ return [
         'table_bank' => [
             'header' => [
                 'bank' => 'Bank',
+                'account_name' => 'Account Name',
                 'account_number' => 'Account Number',
                 'remarks' => 'Remarks',
             ],
@@ -40,7 +41,7 @@ return [
                 'type' => 'Type',
                 'amount' => 'Amount',
                 'remarks' => 'Remarks',
-                'internal_expense' => 'Internal Expense'
+                'internal_expense' => 'Internal Expense',
             ],
         ],
         'table' => [
@@ -165,7 +166,7 @@ return [
                 'type' => 'Type',
                 'amount' => 'Amount',
                 'remarks' => 'Remarks',
-                'internal_expense' => 'Internal Expense'
+                'internal_expense' => 'Internal Expense',
             ],
         ],
     ],

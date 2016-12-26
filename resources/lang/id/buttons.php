@@ -23,4 +23,7 @@ return [
     'close_button' => 'Tutup',
     'register_button' => 'Daftar',
     'calendar_button' => 'Kalender',
+    'download_excel_button' => '',
+    'download_pdf_button' => '',
+    'download_button' => '',
 ];

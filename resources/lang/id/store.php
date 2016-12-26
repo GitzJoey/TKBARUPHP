@@ -17,6 +17,7 @@ return [
                 'bank' => 'Bank',
                 'account_number' => 'Nomor Rekening',
                 'remarks' => 'Catatan',
+                'account_name' => '',
             ],
         ],
     ],

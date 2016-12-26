@@ -17,6 +17,7 @@ class CreateBankAccountsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('bank_id')->default(0);
             $table->unsignedBigInteger('owner_id')->default(0);
+            $table->string('account_name')->nullable();
             $table->string('account_number')->nullable();
             $table->string('remarks')->nullable();
             $table->string('owner_type')->nullable();

@@ -86,6 +86,7 @@ class SupplierController extends Controller
         for ($i = 0; $i < count($request['bank']); $i++) {
             $ba = new BankAccount();
             $ba->bank_id = $request["bank"][$i];
+            $ba->account_name = $request["account_name"][$i];
             $ba->account_number = $request["account_number"][$i];
             $ba->remarks = $request["bank_remarks"][$i];
 
@@ -160,6 +161,7 @@ class SupplierController extends Controller
         for ($i = 0; $i < count($request['bank']); $i++) {
             $ba = BankAccount::findOrNew($request['bank_account_id'][$i]);
             $ba->bank_id = $request["bank"][$i];
+            $ba->account_name= $request["account_name"][$i];
             $ba->account_number = $request["account_number"][$i];
             $ba->remarks = $request["bank_remarks"][$i];
 

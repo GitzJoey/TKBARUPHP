@@ -116,35 +116,39 @@
                             <div class="tab-pane" id="tab_bank_account">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('store.create.table_bank.header.bank')</th>
-                                        <th class="text-center">@lang('store.create.table_bank.header.account_number')</th>
-                                        <th class="text-center">@lang('store.create.table_bank.header.remarks')</th>
-                                        <th class="text-center">@lang('labels.ACTION')</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('store.create.table_bank.header.bank')</th>
+                                            <th class="text-center">@lang('store.create.table_bank.header.account_name')</th>
+                                            <th class="text-center">@lang('store.create.table_bank.header.account_number')</th>
+                                            <th class="text-center">@lang('store.create.table_bank.header.remarks')</th>
+                                            <th class="text-center">@lang('labels.ACTION')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="bank in banks">
-                                        <td>
-                                            <select class="form-control"
-                                                    name="bank[]"
-                                                    ng-init="bank_list = { id: bank.bank_id }"
-                                                    ng-model="bank_list"
-                                                    ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
-                                                    data-parsley-required="true" data-parsley-group="tab_bank">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="bank in banks">
+                                            <td>
+                                                <select class="form-control"
+                                                        name="bank[]"
+                                                        ng-init="bank_list = { id: bank.bank_id }"
+                                                        ng-model="bank_list"
+                                                        ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
+                                                        data-parsley-required="true" data-parsley-group="tab_bank">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_name[]" ng-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
@@ -175,6 +179,7 @@
             $scope.addNewBank = function() {
                 $scope.banks.push({
                     'bank_id': '',
+                    'account_name': '',
                     'account_number': '',
                     'remarks': ''
                 });

@@ -1,6 +1,191 @@
 <?php 
 
 return [
+    'copy' => [
+        'create' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'supplier' => '',
+                'purchase_order_detail' => '',
+                'shipping' => '',
+                'transactions' => '',
+                'transaction_summary' => '',
+                'remarks' => '',
+                'po_copy_remarks' => '',
+                'expenses' => '',
+            ],
+            'field' => [
+                'supplier_type' => '',
+                'supplier_name' => '',
+                'supplier_details' => '',
+                'po_code' => '',
+                'po_copy_code' => '',
+                'po_type' => '',
+                'po_date' => '',
+                'shipping_date' => '',
+                'warehouse' => '',
+                'vendor_trucking' => '',
+                'po_status' => '',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'quantity' => '',
+                        'unit' => '',
+                        'price_unit' => '',
+                        'total_price' => '',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => '',
+                    ],
+                ],
+            ],
+        ],
+        'edit' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'box' => [
+                'supplier' => '',
+                'purchase_order_detail' => '',
+                'shipping' => '',
+                'transactions' => '',
+                'transaction_summary' => '',
+                'remarks' => '',
+                'po_copy_remarks' => '',
+                'expenses' => '',
+            ],
+            'field' => [
+                'supplier_type' => '',
+                'supplier_name' => '',
+                'supplier_details' => '',
+                'po_code' => '',
+                'po_copy_code' => '',
+                'po_type' => '',
+                'po_date' => '',
+                'shipping_date' => '',
+                'warehouse' => '',
+                'vendor_trucking' => '',
+                'po_status' => '',
+            ],
+            'table' => [
+                'item' => [
+                    'header' => [
+                        'product_name' => '',
+                        'quantity' => '',
+                        'unit' => '',
+                        'price_unit' => '',
+                        'total_price' => '',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => '',
+                    ],
+                ],
+            ],
+        ],
+        'index' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'search' => '',
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'code' => '',
+                    'po_date' => '',
+                    'supplier' => '',
+                    'shipping_date' => '',
+                ],
+            ],
+            'po_not_found' => '',
+        ],
+        'search' => [
+            'po_not_found' => '',
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'search' => '',
+            ],
+            'so_not_found' => '',
+        ],
+    ],
+    'revise' => [
+        'table' => [
+            'item' => [
+                'header' => [
+                    'total_price' => '',
+                    'product_name' => '',
+                    'quantity' => '',
+                    'unit' => '',
+                    'price_unit' => '',
+                ],
+            ],
+            'total' => [
+                'body' => [
+                    'total' => '',
+                ],
+            ],
+            'expense' => [
+                'header' => [
+                    'name' => '',
+                    'type' => '',
+                    'remarks' => '',
+                    'amount' => '',
+                ],
+            ],
+        ],
+        'index' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'code' => '',
+                    'po_date' => '',
+                    'supplier' => '',
+                    'shipping_date' => '',
+                    'status' => '',
+                ],
+            ],
+        ],
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+        'box' => [
+            'supplier' => '',
+            'purchase_order_detail' => '',
+            'shipping' => '',
+            'transactions' => '',
+            'expenses' => '',
+            'transaction_summary' => '',
+            'remarks' => '',
+        ],
+        'field' => [
+            'supplier_type' => '',
+            'supplier_name' => '',
+            'supplier_details' => '',
+            'po_code' => '',
+            'po_type' => '',
+            'po_date' => '',
+            'po_status' => '',
+            'shipping_date' => '',
+            'warehouse' => '',
+            'vendor_trucking' => '',
+        ],
+    ],
     'create' => [
         'title' => '',
         'page_title' => '',
@@ -47,73 +232,7 @@ return [
                     'type' => '',
                     'remarks' => '',
                     'amount' => '',
-                ],
-            ],
-        ],
-    ],
-    'revise' => [
-        'index' => [
-            'title' => '',
-            'page_title' => '',
-            'page_title_desc' => '',
-            'header' => [
-                'title' => '',
-            ],
-            'table' => [
-                'header' => [
-                    'code' => '',
-                    'po_date' => '',
-                    'supplier' => '',
-                    'shipping_date' => '',
-                    'status' => '',
-                ],
-            ],
-        ],
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
-        'box' => [
-            'supplier' => '',
-            'purchase_order_detail' => '',
-            'shipping' => '',
-            'transactions' => '',
-            'expenses' => '',
-            'transaction_summary' => '',
-            'remarks' => '',
-        ],
-        'field' => [
-            'supplier_type' => '',
-            'supplier_name' => '',
-            'supplier_details' => '',
-            'po_code' => '',
-            'po_type' => '',
-            'po_date' => '',
-            'po_status' => '',
-            'shipping_date' => '',
-            'warehouse' => '',
-            'vendor_trucking' => '',
-        ],
-        'table' => [
-            'item' => [
-                'header' => [
-                    'product_name' => '',
-                    'quantity' => '',
-                    'unit' => '',
-                    'price_unit' => '',
-                    'total_price' => '',
-                ],
-            ],
-            'total' => [
-                'body' => [
-                    'total' => '',
-                ],
-            ],
-            'expense' => [
-                'header' => [
-                    'name' => '',
-                    'type' => '',
-                    'remarks' => '',
-                    'amount' => '',
+                    'internal_expense' => '',
                 ],
             ],
         ],
@@ -306,118 +425,6 @@ return [
                     'amount' => '',
                     'remarks' => '',
                 ],
-            ],
-        ],
-    ],
-    'copy' => [
-        'create' => [
-            'title' => '',
-            'page_title' => '',
-            'page_title_desc' => '',
-            'box' => [
-                'supplier' => '',
-                'purchase_order_detail' => '',
-                'shipping' => '',
-                'transactions' => '',
-                'transaction_summary' => '',
-                'remarks' => '',
-                'po_copy_remarks' => '',
-            ],
-            'field' => [
-                'supplier_type' => '',
-                'supplier_name' => '',
-                'supplier_details' => '',
-                'po_code' => '',
-                'po_copy_code' => '',
-                'po_type' => '',
-                'po_date' => '',
-                'shipping_date' => '',
-                'warehouse' => '',
-                'vendor_trucking' => '',
-            ],
-            'table' => [
-                'item' => [
-                    'header' => [
-                        'product_name' => '',
-                        'quantity' => '',
-                        'unit' => '',
-                        'price_unit' => '',
-                    ],
-                ],
-                'total' => [
-                    'body' => [
-                        'total' => '',
-                    ],
-                ],
-            ],
-        ],
-        'edit' => [
-            'title' => '',
-            'page_title' => '',
-            'page_title_desc' => '',
-            'box' => [
-                'supplier' => '',
-                'purchase_order_detail' => '',
-                'shipping' => '',
-                'transactions' => '',
-                'transaction_summary' => '',
-                'remarks' => '',
-                'po_copy_remarks' => '',
-            ],
-            'field' => [
-                'supplier_type' => '',
-                'supplier_name' => '',
-                'supplier_details' => '',
-                'po_code' => '',
-                'po_copy_code' => '',
-                'po_type' => '',
-                'po_date' => '',
-                'shipping_date' => '',
-                'warehouse' => '',
-                'vendor_trucking' => '',
-            ],
-            'table' => [
-                'item' => [
-                    'header' => [
-                        'product_name' => '',
-                        'quantity' => '',
-                        'unit' => '',
-                        'price_unit' => '',
-                    ],
-                ],
-                'total' => [
-                    'body' => [
-                        'total' => '',
-                    ],
-                ],
-            ],
-        ],
-        'index' => [
-            'title' => '',
-            'page_title' => '',
-            'page_title_desc' => '',
-            'header' => [
-                'search' => '',
-                'title' => '',
-            ],
-            'table' => [
-                'header' => [
-                    'code' => '',
-                    'po_date' => '',
-                    'supplier' => '',
-                    'shipping_date' => '',
-                ],
-            ],
-        ],
-        'search' => [
-            '" ' => [
-                ' Session::get('error' => '',
-            ],
-            'title' => '',
-            'page_title' => '',
-            'page_title_desc' => '',
-            'header' => [
-                'search' => '',
             ],
         ],
     ],
