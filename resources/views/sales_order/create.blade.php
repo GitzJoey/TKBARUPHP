@@ -365,6 +365,8 @@
                                                                             <th width="30%">@lang('sales_order.create.table.expense.header.name')</th>
                                                                             <th width="20%"
                                                                                 class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
+                                                                            <th width="20%"
+                                                                                class="text-center">@lang('sales_order.create.table.expense.header.internal_expense')</th>
                                                                             <th width="25%"
                                                                                 class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
                                                                             <th width="5%">&nbsp;</th>
@@ -384,6 +386,9 @@
                                                                                         ng-options="expenseType as expenseType.description for expenseType in expenseTypes track by expenseType.code">
                                                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 </select>
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <input name="so_@{{ $parent.$index }}_is_internal_expense[]" ng-model="expense.is_internal_expense" type="checkbox">
                                                                             </td>
                                                                             <td>
                                                                                 <input name="so_@{{ $parent.$index }}_expense_remarks[]" type="text" class="form-control"
@@ -601,10 +606,18 @@
                             type: {
                                 code: customer.expense_templates[i].type
                             },
+                            is_internal_expense: customer.expense_templates[i].is_internal_expense === 1,
                             amount: numeral(customer.expense_templates[i].amount).format('0,0'),
                             remarks: customer.expense_templates[i].remarks
                         });
                     }
+
+                    $(function () {
+                        $('input[type="checkbox"], input[type="radio"]').iCheck({
+                            checkboxClass: 'icheckbox_square-blue',
+                            radioClass: 'iradio_square-blue'
+                        });
+                    });
                 }
                 else{
                     $scope.SOs[SOIndex].expenses = [];
@@ -615,8 +628,16 @@
                 $scope.SOs[index].expenses.push({
                     name: '',
                     type: '',
+                    is_internal_expense: false,
                     amount: 0,
                     remarks: ''
+                });
+
+                $(function () {
+                    $('input[type="checkbox"], input[type="radio"]').iCheck({
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue'
+                    });
                 });
             };
 
@@ -626,9 +647,9 @@
 
             $scope.refreshCustomers = function (param) {
                 return $http.get('{{ route('api.customer.search') }}/' + param)
-                        .then(function (response) {
-                            $scope.customerDDL = response.data;
-                        });
+                    .then(function (response) {
+                        $scope.customerDDL = response.data;
+                    });
             };
         }]);
     </script>

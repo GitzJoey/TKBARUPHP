@@ -20,6 +20,7 @@ class CreateStockOutsTable extends Migration
             $table->unsignedBigInteger('product_id')->default(0);
             $table->unsignedBigInteger('stock_id')->default(0);
             $table->unsignedBigInteger('warehouse_id')->default(0);
+            $table->unsignedBigInteger('stock_opname_id')->default(0);
             $table->decimal('quantity', 19, 2)->default(0);
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);

@@ -78,9 +78,9 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             $expense = new Expense();
             $expense->name = $request->input("expense_name.$i");
             $expense->type = $request->input("expense_type.$i");
+            $expense->is_internal_expense = !empty($request->input("is_internal_expense.$i"));
             $expense->amount = floatval(str_replace(',', '', $request->input("expense_amount.$i")));
             $expense->remarks = $request->input("expense_remarks.$i");
-
             $po->expenses()->save($expense);
         }
 
@@ -166,6 +166,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             $expense = Expense::findOrNew($request->input("expense_id.$i"));
             $expense->name = $request->input("expense_name.$i");
             $expense->type = $request->input("expense_type.$i");
+            $expense->is_internal_expense = !empty($request->input("is_internal_expense.$i"));
             $expense->amount = floatval(str_replace(',', '', $request->input("expense_amount.$i")));
             $expense->remarks = $request->input("expense_remarks.$i");
 

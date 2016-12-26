@@ -8,6 +8,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Stock;
+use App\Model\StockIn;
+use App\Model\StockOpname;
+use App\Model\StockOut;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -127,5 +131,24 @@ class WarehouseController extends Controller
         $warehouse->delete();
 
         return redirect(route('db.master.warehouse'));
+    }
+
+    public function stockopname()
+    {
+        $stocks = Stock::paginate(10);
+
+        return view('warehouse.stockopname.index', compact('stocks'));
+    }
+
+    public function adjust($id)
+    {
+        $stock = Stock::find($id);
+
+        return view('warehouse.stockopname.adjustment', compact('stock'));
+    }
+
+    public function saveAdjustment(Request $request, $id)
+    {
+
     }
 }

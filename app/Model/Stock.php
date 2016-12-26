@@ -83,6 +83,16 @@ class Stock extends Model
         return $this->hasMany('App\Model\Price');
     }
 
+    public function warehouse()
+    {
+        return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
+    }
+
+    public function purchaseOrder()
+    {
+        return $this->belongsTo('App\Model\PurchaseOrder', 'po_id');
+    }
+
     public function priceHistory()
     {
         return Price::where('input_date', '>=', Carbon::today()->subDays(10))

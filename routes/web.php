@@ -210,6 +210,20 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('edit/{id}', 'WarehouseController@edit')->name('db.master.warehouse.edit');
                 Route::patch('edit/{id}', 'WarehouseController@update');
                 Route::delete('edit/{id}', 'WarehouseController@delete')->name('db.master.warehouse.delete');
+
+                Route::get('inflow', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
+                Route::get('inflow/receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
+                Route::post('inflow/receipt/{id?}', 'WarehouseInflowController@saveReceipt');
+
+                Route::get('outflow', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow.index');
+                Route::get('outflow/deliver/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
+                Route::post('outflow/deliver/{id?}', 'WarehouseOutflowController@saveDeliver');
+
+                Route::group(['prefix' => 'stockopname'], function () {
+                    Route::get('', 'WarehouseController@stockopname')->name('db.warehouse.stockopname.index');
+                    Route::get('adjust/{id}', 'WarehouseController@adjust')->name('db.warehouse.stockopname.adjust');
+                    Route::post('adjust/{id}', 'WarehouseController@saveAdjustment');
+                });
             });
 
             Route::group(['prefix' => 'bank'], function () {
@@ -295,18 +309,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('approval', 'CustomerController@approvalIndex')->name('db.customer.approval.index');
             Route::get('approval/approve/{id}', 'CustomerController@approval')->name('db.customer.approval.approve');
             Route::get('approval/reject/{id}', 'CustomerController@reject')->name('db.customer.approval.reject');
-        });
-
-        Route::group(['prefix' => 'warehouse'], function () {
-            Route::get('inflow', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
-            Route::get('inflow/receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
-            Route::post('inflow/receipt/{id?}', 'WarehouseInflowController@saveReceipt');
-
-            Route::get('outflow', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow.index');
-            Route::get('outflow/deliver/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
-            Route::post('outflow/deliver/{id?}', 'WarehouseOutflowController@saveDeliver');
-
-            Route::get('stockopname', 'WarehouseController@stockopname')->name('db.warehouse.stockopname.index');
         });
 
         Route::group(['prefix' => 'price'], function () {

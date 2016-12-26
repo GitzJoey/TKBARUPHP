@@ -37,6 +37,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Model\StockOpname $stockOpname
  */
 class StockIn extends Model
 {
@@ -52,12 +53,18 @@ class StockIn extends Model
         'po_id',
         'product_id',
         'warehouse_id',
-        'stock_id'
+        'stock_id',
+        'stock_opname_id'
     ];
 
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function stockOpname()
+    {
+        return $this->belongsTo('App\Model\StockOpname');
     }
 
     public static function boot()

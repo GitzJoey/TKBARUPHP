@@ -45,6 +45,7 @@ return [
                 'header' => [
                     'name' => 'Name',
                     'type' => 'Type',
+                    'internal_expense' => 'Internal Expense',
                     'amount' => 'Amount',
                     'remarks' => 'Remarks',
                 ],

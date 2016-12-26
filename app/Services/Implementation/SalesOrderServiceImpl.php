@@ -85,6 +85,7 @@ class SalesOrderServiceImpl implements SalesOrderService
             $expense = new Expense();
             $expense->name = $request->input("so_$index" . "_expense_name.$j");
             $expense->type = $request->input("so_$index" . "_expense_type.$j");
+            $expense->is_internal_expense = !empty($request->input("so_$index" . "_is_internal_expense.$j"));
             $expense->amount = floatval(str_replace(',', '', $request->input("so_$index" . "_expense_amount.$j")));
             $expense->remarks = $request->input("so_$index" . "_expense_remarks.$j");
         }
@@ -189,6 +190,7 @@ class SalesOrderServiceImpl implements SalesOrderService
             $expense = Expense::findOrNew($request->input("expense_id.$i"));
             $expense->name = $request->input("expense_name.$i");
             $expense->type = $request->input("expense_type.$i");
+            $expense->is_internal_expense = !empty($request->input("is_internal_expense.$i"));
             $expense->amount = floatval(str_replace(',', '', $request->input("expense_amount.$i")));
             $expense->remarks = $request->input("expense_remarks.$i");
 
@@ -254,6 +256,7 @@ class SalesOrderServiceImpl implements SalesOrderService
                     'type' => [
                         'code' => $request->input("so_$i"."_expense_type.$j")
                     ],
+                    'is_internal_expense' => $request->input("so_$i" . "_is_internal_expense.$j"),
                     'amount' => floatval(str_replace(',', '', $request->input("so_$i"."_expense_amount.$j"))),
                     'remarks' => $request->input("so_$i"."_expense_remarks.$j")
                 ];

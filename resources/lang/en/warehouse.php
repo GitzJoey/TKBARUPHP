@@ -171,4 +171,38 @@ return [
             ],
         ],
     ],
+    'stockopname' => [
+        'index' => [
+            'title' => 'Stock Opname',
+            'page_title' => 'Stock Opname',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'List of Stocks',
+            ],
+            'table' => [
+                'header' => [
+                    'warehouse' => 'Warehouse',
+                    'product' => 'Product',
+                    'supplier' => 'Supplier',
+                    'current_quantity' => 'Current Quantity',
+                ],
+            ],
+        ],
+        'adjust' => [
+            'title' => 'Adjust Stock Quantity',
+            'page_title' => 'Adjust Stock Quantity',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Adjust Stock Quantity',
+            ],
+            'field' => [
+                'warehouse' => 'Warehouse',
+                'product' => 'Product',
+                'supplier' => 'Supplier',
+                'current_quantity' => 'Current Quantity',
+                'adjusted_quantity' => 'Adjusted Quantity',
+                'reason' => 'Reason'
+            ]
+        ]
+    ],
 ];
