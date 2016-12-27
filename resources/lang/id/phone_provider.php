@@ -10,7 +10,7 @@ return [
         ],
         'table' => [
             'header' => [
-                'prefix' => '',
+                'prefix' => 'Prefix',
             ],
         ],
     ],

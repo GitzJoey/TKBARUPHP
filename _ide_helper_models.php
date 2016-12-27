@@ -82,8 +82,107 @@ namespace App\Model{
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereOwnerId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereOwnerType($value)
+ * @property string $account_name
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereAccountName($value)
  */
 	class BankAccount extends \Eloquent {}
+}
+
+namespace App\Model{
+/**
+ * App\Model\BankBCACSVRecord
+ *
+ * @property integer $id
+ * @property string $date
+ * @property string $remarks
+ * @property string $branch
+ * @property float $amount
+ * @property string $db_cr
+ * @property float $balance
+ * @property integer $bank_upload_id
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereBranch($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereAmount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereDbCr($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereBalance($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereBankUploadId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
+	class BankBCACSVRecord extends \Eloquent {}
+}
+
+namespace App\Model{
+/**
+ * App\Model\BankConsolidate
+ *
+ * @property integer $id
+ * @property string $date
+ * @property string $remarks
+ * @property float $amount
+ * @property string $db_cr
+ * @property float $balance
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereAmount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereDbCr($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereBalance($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
+	class BankConsolidate extends \Eloquent {}
+}
+
+namespace App\Model{
+/**
+ * App\Model\BankUpload
+ *
+ * @property integer $id
+ * @property string $filename
+ * @property string $bank
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereFilename($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereBank($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
+	class BankUpload extends \Eloquent {}
 }
 
 namespace App\Model{
@@ -209,6 +308,40 @@ namespace App\Model{
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereArticleCode($value)
  */
 	class Deliver extends \Eloquent {}
+}
+
+namespace App\Model{
+/**
+ * App\Model\EventCalendar
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property string $start_date
+ * @property string $end_date
+ * @property string $event_title
+ * @property string $ext_url
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereStartDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereEndDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereEventTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereExtUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
+	class EventCalendar extends \Eloquent {}
 }
 
 namespace App\Model{
@@ -514,6 +647,33 @@ namespace App\Model{
 
 namespace App\Model{
 /**
+ * App\Model\PhonePrefix
+ *
+ * @property integer $id
+ * @property integer $phone_provider_id
+ * @property string $prefix
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix wherePhoneProviderId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix wherePrefix($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
+	class PhonePrefix extends \Eloquent {}
+}
+
+namespace App\Model{
+/**
  * App\PhoneProvider
  *
  * @property integer $id
@@ -541,6 +701,7 @@ namespace App\Model{
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PhonePrefix[] $prefixes
  */
 	class PhoneProvider extends \Eloquent {}
 }
@@ -1167,6 +1328,8 @@ namespace App\Model{
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Price[] $prices
+ * @property-read \App\Model\Warehouse $warehouse
+ * @property-read \App\Model\PurchaseOrder $purchaseOrder
  */
 	class Stock extends \Eloquent {}
 }
@@ -1202,8 +1365,43 @@ namespace App\Model{
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Model\StockOpname $stockOpname
  */
 	class StockIn extends \Eloquent {}
+}
+
+namespace App\Model{
+/**
+ * App\Model\StockOpname
+ *
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $stockMovement
+ * @mixin \Eloquent
+ * @property integer $id
+ * @property integer $stock_id
+ * @property float $previous_quantity
+ * @property float $adjusted_quantity
+ * @property string $reason
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\StockIn $stockIn
+ * @property-read \App\Model\StockOut $stockOut
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereStockId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname wherePreviousQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereAdjustedQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereReason($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereDeletedAt($value)
+ */
+	class StockOpname extends \Eloquent {}
 }
 
 namespace App\Model{
@@ -1237,6 +1435,7 @@ namespace App\Model{
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Model\StockOpname $stockOpname
  */
 	class StockOut extends \Eloquent {}
 }
@@ -1661,6 +1860,7 @@ namespace App{
  * @property-read \App\UserDetail $userDetail
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Settings[] $settings
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\EventCalendar[] $eventCalendars
  */
 	class User extends \Eloquent {}
 }

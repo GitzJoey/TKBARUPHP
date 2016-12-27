@@ -15,9 +15,9 @@ return [
         'table_bank' => [
             'header' => [
                 'bank' => 'Bank',
+                'account_name' => 'Nama Rekening',
                 'account_number' => 'Nomor Rekening',
                 'remarks' => 'Catatan',
-                'account_name' => '',
             ],
         ],
     ],

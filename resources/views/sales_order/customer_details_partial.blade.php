@@ -19,8 +19,8 @@
                                     <li><a href="#tab_pic" data-toggle="tab">@lang('customer.create.tab.pic')</a></li>
                                     <li><a href="#tab_bank_account"
                                            data-toggle="tab">@lang('customer.create.tab.bank_account')</a></li>
-                                    <li><a href="#tab_product"
-                                           data-toggle="tab">@lang('customer.create.tab.product')</a></li>
+                                    <li><a href="#tab_settings"
+                                           data-toggle="tab">@lang('customer.create.tab.settings')</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_customer">
@@ -179,31 +179,19 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="tab-pane" id="tab_product">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th class="text-center">@lang('customer.create.table_prod.header.type')</th>
-                                                <th class="text-center">@lang('customer.create.table_prod.header.name')</th>
-                                                <th class="text-center">@lang('customer.create.table_prod.header.short_code')</th>
-                                                <th class="text-center">@lang('customer.create.table_prod.header.description')</th>
-                                                <th class="text-center">@lang('customer.create.table_prod.header.remarks')</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr ng-repeat="p in po.customer.products">
-                                                <td class="text-center">
-                                                    <input type="checkbox" checked disabled>
-                                                </td>
-                                                <td>@{{ p.type.name }}</td>
-                                                <td>@{{ p.name }}</td>
-                                                <td>@{{ p.short_code }}</td>
-                                                <td>@{{ p.description }}</td>
-                                                <td>@{{ p.remarks }}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="tab-pane" id="tab_settings">
+                                        <div class="form-group">
+                                            <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
+                                            <div class="col-sm-10">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" readonly="readonly">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

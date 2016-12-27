@@ -307,7 +307,7 @@
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label">&nbsp;</label>
                         <div class="col-sm-10">
-                            <a href="{{ route('db.master.customer') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <a href="{{ route('db.master.supplier') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
                             <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                         </div>
                     </div>

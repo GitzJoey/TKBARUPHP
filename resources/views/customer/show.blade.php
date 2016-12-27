@@ -171,39 +171,26 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab_bank_account">
-                            <div class="box-group" id="accordion_bankaccount">
-                                <div class="panel box box-default">
-                                    <div class="box-header with-border">
-                                        <h4 class="box-title">
-                                            <a class="collapsed" aria-expanded="false" href="#collapseBankAccountLists" data-toggle="collapse" data-parent="#accordion_bankaccount">
-                                                @lang('customer.show.tab.header.bank_lists')
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div class="panel-collapse collapse" id="collapseBankAccountLists" aria-expanded="false">
-                                        <div class="box-body">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center">@lang('customer.show.table_bank.header.bank')</th>
-                                                        <th class="text-center">@lang('customer.show.table_bank.header.account_number')</th>
-                                                        <th class="text-center">@lang('customer.show.table_bank.header.remarks')</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($customer->bankAccounts as $ba)
-                                                        <tr>
-                                                            <td>{{ $ba->bank->name }}&nbsp;({{ $ba->bank->name }})</td>
-                                                            <td>{{ $ba->account_number }}</td>
-                                                            <td>{{ $ba->remarks }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">@lang('customer.show.table_bank.header.bank')</th>
+                                        <th class="text-center">@lang('customer.show.table_bank.header.account_name')</th>
+                                        <th class="text-center">@lang('customer.show.table_bank.header.account_number')</th>
+                                        <th class="text-center">@lang('customer.show.table_bank.header.remarks')</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($customer->bankAccounts as $ba)
+                                        <tr>
+                                            <td>{{ $ba->bank->name }}&nbsp;({{ $ba->bank->name }})</td>
+                                            <td>{{ $ba->account_name }}</td>
+                                            <td>{{ $ba->account_number }}</td>
+                                            <td>{{ $ba->remarks }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                         <div class="tab-pane" id="tab_expenses">
                             <table class="table table-bordered">

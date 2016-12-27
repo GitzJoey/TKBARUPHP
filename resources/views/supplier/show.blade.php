@@ -45,7 +45,7 @@
                         <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.show.tab.settings')</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab_customer">
+                        <div class="tab-pane active" id="tab_supplier">
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-2 control-label">@lang('supplier.field.name')</label>
                                 <div class="col-sm-10">

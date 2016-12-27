@@ -41,7 +41,7 @@
                             <li class="active"><a href="#tab_customer" data-toggle="tab">@lang('customer.edit.tab.customer')&nbsp;<span id="custDataTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
-                            <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.create.tab.expenses')&nbsp;<span id="expensesTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.edit.tab.expenses')&nbsp;<span id="expensesTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                         </ul>
                         <div class="tab-content">
