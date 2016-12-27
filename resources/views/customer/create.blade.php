@@ -101,7 +101,7 @@
                                             <div class="box box-widget">
                                                 <div class="box-header with-border">
                                                     <div class="user-block">
-                                                        <strong>Person In Charge @{{ $index + 1 }}</strong><br/>
+                                                        <strong>@lang('customer.field.person_in_charge') @{{ $index + 1 }}</strong><br/>
                                                         &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
                                                     </div>
                                                     <div class="box-tools">
@@ -138,37 +138,37 @@
                                                         <div class="col-sm-10">
                                                             <table class="table table-bordered">
                                                                 <thead>
-                                                                <tr>
-                                                                    <th>@lang('customer.create.table_phone.header.provider')</th>
-                                                                    <th>@lang('customer.create.table_phone.header.number')</th>
-                                                                    <th>@lang('customer.create.table_phone.header.remarks')</th>
-                                                                    <th class="text-center">@lang('labels.ACTION')</th>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <th>@lang('customer.create.table_phone.header.provider')</th>
+                                                                        <th>@lang('customer.create.table_phone.header.number')</th>
+                                                                        <th>@lang('customer.create.table_phone.header.remarks')</th>
+                                                                        <th class="text-center">@lang('labels.ACTION')</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr ng-repeat="ph in profile.phone_number">
-                                                                    <td>
-                                                                        <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" ng-model="ph.provider"
-                                                                                ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id"
-                                                                                data-parsley-required="true" data-parsley-group="tab_pic">
-                                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
-                                                                    <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="ph.remarks"></td>
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
-                                                                            <span class="fa fa-close fa-fw"></span>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr ng-repeat="ph in profile.phone_number">
+                                                                        <td>
+                                                                            <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" ng-model="ph.provider"
+                                                                                    ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id"
+                                                                                    data-parsley-required="true" data-parsley-group="tab_pic">
+                                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
+                                                                        <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="ph.remarks"></td>
+                                                                        <td class="text-center">
+                                                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
+                                                                                <span class="fa fa-close fa-fw"></span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                                 <tfoot>
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <button type="button" class="btn btn-xs btn-default" ng-click="addNewPhone($index)">@lang('buttons.create_new_button')</button>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <td colspan="4">
+                                                                            <button type="button" class="btn btn-xs btn-default" ng-click="addNewPhone($index)">@lang('buttons.create_new_button')</button>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tfoot>
                                                             </table>
                                                         </div>
@@ -182,38 +182,38 @@
                             <div class="tab-pane" id="tab_bank_account">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
-                                        <th>@lang('customer.create.table_bank.header.account_name')</th>
-                                        <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
-                                        <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
-                                        <th class="text-center">@lang('labels.ACTION')</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
+                                            <th>@lang('customer.create.table_bank.header.account_name')</th>
+                                            <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
+                                            <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
+                                            <th class="text-center">@lang('labels.ACTION')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="bank in banks">
-                                        <td>
-                                            <select class="form-control"
-                                                    name="bank[]"
-                                                    ng-model="bank.bank_id"
-                                                    ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
-                                                    data-parsley-required="true" data-parsley-group="tab_bank">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_name[]" ng-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="bank in banks">
+                                            <td>
+                                                <select class="form-control"
+                                                        name="bank[]"
+                                                        ng-model="bank.bank_id"
+                                                        ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
+                                                        data-parsley-required="true" data-parsley-group="tab_bank">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_name[]" ng-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
@@ -235,37 +235,37 @@
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('customer.create.table_expense.header.name')</th>
-                                        <th class="text-center">@lang('customer.create.table_expense.header.type')</th>
-                                        <th class="text-center">@lang('customer.create.table_expense.header.amount')</th>
-                                        <th class="text-center">@lang('customer.create.table_expense.header.internal_expense')</th>
-                                        <th class="text-center">@lang('customer.create.table_expense.header.remarks')</th>
-                                        <th class="text-center">&nbsp;</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('customer.create.table_expense.header.name')</th>
+                                            <th class="text-center">@lang('customer.create.table_expense.header.type')</th>
+                                            <th class="text-center">@lang('customer.create.table_expense.header.amount')</th>
+                                            <th class="text-center">@lang('customer.create.table_expense.header.internal_expense')</th>
+                                            <th class="text-center">@lang('customer.create.table_expense.header.remarks')</th>
+                                            <th class="text-center">&nbsp;</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="expense in expenses">
-                                        <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.name }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.type }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.amount }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.is_internal_expense }}
-                                        </td>
-                                        <td class="valign-middle">
-                                            @{{ expense.remarks }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            <button type="button" class="btn btn-xs btn-danger" ng-click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="expense in expenses">
+                                            <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.name }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.type }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.amount }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.is_internal_expense }}
+                                            </td>
+                                            <td class="valign-middle">
+                                                @{{ expense.remarks }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

@@ -101,7 +101,7 @@
                                             <div class="box box-widget">
                                                 <div class="box-header with-border">
                                                     <div class="user-block">
-                                                        <strong>Person In Charge @{{ $index + 1 }}</strong><br/>
+                                                        <strong>@lang('customer.field.person_in_charge') @{{ $index + 1 }}</strong><br/>
                                                         &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
                                                     </div>
                                                     <div class="box-tools">

@@ -123,6 +123,7 @@ return [
         'phone_number' => 'Telepon',
         'price_level' => 'Tingkatan Harga',
         'payment_due_day' => 'Tenggat Pembayaran',
+        'person_in_charge' => 'Penanggungjawab',
     ],
     'edit' => [
         'title' => 'Pelanggan',

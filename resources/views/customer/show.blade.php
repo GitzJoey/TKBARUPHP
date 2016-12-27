@@ -37,7 +37,7 @@
             <div class="box-body">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li><a href="#tab_customer" data-toggle="tab">@lang('customer.show.tab.customer')</a></li>
+                        <li class="active"><a href="#tab_customer" data-toggle="tab">@lang('customer.show.tab.customer')</a></li>
                         <li><a href="#tab_pic" data-toggle="tab">@lang('customer.show.tab.pic')</a></li>
                         <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.show.tab.bank_account')</a></li>
                         <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.show.tab.expenses')</a></li>
@@ -101,7 +101,7 @@
                                         <div class="box box-widget">
                                             <div class="box-header with-border">
                                                 <div class="user-block">
-                                                    <strong>Person In Charge {{ $key + 1 }}</strong><br/>
+                                                    <strong>@lang('customer.field.person_in_charge') {{ $key + 1 }}</strong><br/>
                                                     &nbsp;&nbsp;&nbsp;{{ $profile->first_name }}&nbsp;{{ $profile->last_name }}
                                                 </div>
                                                 <div class="box-tools">

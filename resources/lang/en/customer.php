@@ -1,4 +1,5 @@
-<?php 
+
+<?php
 
 return [
     'confirmation' => [
@@ -123,6 +124,7 @@ return [
         'phone_number' => 'Phone Number',
         'price_level' => 'Price Level',
         'payment_due_day' => 'Payment Due Day',
+        'person_in_charge' => 'Person In Charge',
     ],
     'edit' => [
         'title' => 'Customer',
