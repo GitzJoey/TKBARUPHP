@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-user fa-fw" xmlns="http://www.w3.org/1999/html"></span>&nbsp;@lang('user.create.page_title')
+    <span class="fa fa-user fa-fw"></span>&nbsp;@lang('user.create.page_title')
 @endsection
 
 @section('page_title_desc')

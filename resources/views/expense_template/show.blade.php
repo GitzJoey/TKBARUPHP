@@ -54,15 +54,15 @@
                     <div class="form-group">
                         <label for="inputIsInternalExpense" class="col-sm-2 control-label">@lang('expense_template.field.internal_expense')</label>
                         <div class="col-sm-10">
-                            <label id="inputIsInternalExpense" class="control-label">
-                                <span class="control-label-normal">
+                            <div class="checkbox icheck">
+                                <label>
                                     @if($expenseTemplate->is_internal_expense)
-                                        @lang('lookup.YESNOSELECT.YES')
+                                        <input type="checkbox" checked disabled>&nbsp;
                                     @else
-                                        @lang('lookup.YESNOSELECT.NO')
+                                        <input type="checkbox" disabled>&nbsp;
                                     @endif
-                                </span>
-                            </label>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -76,4 +76,15 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(function () {
+            $('input[type="checkbox"], input[type="radio"]').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue'
+            });
+        });
+    </script>
 @endsection

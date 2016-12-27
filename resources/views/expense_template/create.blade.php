@@ -70,8 +70,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-8">
-                            <label class="checkbox-inline"><input type="checkbox" name="is_internal_expense" value="">&nbsp;@lang('expense_template.field.internal_expense')</label>
+                        <label for="inputInternalExpense" class="col-sm-2 control-label">@lang('expense_template.field.internal_expense')</label>
+                        <div class="col-sm-8">
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox" name="is_internal_expense" value="">&nbsp;
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">

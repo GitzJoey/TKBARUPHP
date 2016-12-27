@@ -52,8 +52,4 @@ return [
     'item.adm_unit' => 'Unit',
     'item.adm_settings' => 'Settings',
     'item.adm_phone_provider' => 'Phone Provider',
-    'item.adm_sms' => 'SMS Service',
-    'item.adm_sms_in' => 'SMS Inbox',
-    'item.adm_sms_out' => 'SMS Out',
-    'item.adm_modem' => 'Modem',
 ];

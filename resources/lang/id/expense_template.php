@@ -14,7 +14,7 @@ return [
                 'type' => 'Tipe',
                 'amount' => 'Jumlah',
                 'remarks' => 'Catatan',
-                'internal_expense' => '',
+                'internal_expense' => 'Internal',
             ],
         ],
     ],
@@ -47,6 +47,6 @@ return [
         'type' => 'Tipe',
         'amount' => 'Jumlah',
         'remarks' => 'Catatan',
-        'internal_expense' => '',
+        'internal_expense' => 'Internal',
     ],
 ];
