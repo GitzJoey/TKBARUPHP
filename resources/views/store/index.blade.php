@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('admin_user') !!}
+    {!! Breadcrumbs::render('admin_store') !!}
 @endsection
 
 @section('content')
