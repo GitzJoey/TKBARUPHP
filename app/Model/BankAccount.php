@@ -48,6 +48,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereOwnerId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereOwnerType($value)
+ * @property string $account_name
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereAccountName($value)
  */
 class BankAccount extends Model
 {

@@ -48,6 +48,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Price[] $prices
+ * @property-read \App\Model\Warehouse $warehouse
+ * @property-read \App\Model\PurchaseOrder $purchaseOrder
  */
 class Stock extends Model
 {

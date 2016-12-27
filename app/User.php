@@ -40,6 +40,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property-read \App\UserDetail $userDetail
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Settings[] $settings
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\EventCalendar[] $eventCalendars
  */
 class User extends Authenticatable
 {

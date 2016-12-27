@@ -12,6 +12,30 @@ use Vinkla\Hashids\Facades\Hashids;
  *
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $stockMovement
  * @mixin \Eloquent
+ * @property integer $id
+ * @property integer $stock_id
+ * @property float $previous_quantity
+ * @property float $adjusted_quantity
+ * @property string $reason
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\StockIn $stockIn
+ * @property-read \App\Model\StockOut $stockOut
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereStockId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname wherePreviousQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereAdjustedQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereReason($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereDeletedAt($value)
  */
 class StockOpname extends Model
 {
