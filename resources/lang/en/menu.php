@@ -56,7 +56,4 @@ return [
     'item.adm_sms_in' => 'SMS Inbox',
     'item.adm_sms_out' => 'SMS Out',
     'item.adm_modem' => 'Modem',
-    'item' => [
-        'po_copy' => '',
-    ],
 ];
