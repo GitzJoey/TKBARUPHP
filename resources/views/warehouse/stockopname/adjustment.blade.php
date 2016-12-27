@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-wrench fa-fw"></span>&nbsp;@lang('warehouse.stockopname.adjust.page_title')
+    <span class="fa fa-database fa-fw"></span>&nbsp;@lang('warehouse.stockopname.adjust.page_title')
 @endsection
 
 @section('page_title_desc')
