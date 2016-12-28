@@ -421,7 +421,7 @@ class CustomerController extends Controller
         if(empty($param))
             return collect([]);
 
-        return Customer::with('profiles', 'expenseTemplates')->where('name', 'like', "%$param%")
+        return Customer::with('profiles.phoneNumbers.provider', 'expenseTemplates', 'bankAccounts.bank', 'priceLevel')->where('name', 'like', "%$param%")
             ->orWhereHas('profiles', function ($query) use ($param)
             {
                 $query->where('first_name', 'like', "%$param%")

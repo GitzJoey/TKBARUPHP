@@ -12,6 +12,7 @@ use App\Model\Lookup;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
 use App\Model\Warehouse;
+use App\Repos\LookupRepo;
 use App\Services\PurchaseOrderService;
 use App\Services\SupplierService;
 use App\Util\POCodeGenerator;
@@ -35,12 +36,12 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@create] ');
 
         $supplierDDL = $this->supplierService->getSuppliersForCreatePO();
-        $warehouseDDL = Warehouse::all(['id', 'name']);
-        $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
-        $poTypeDDL = Lookup::where('category', '=', 'POTYPE')->get(['description', 'code']);
-        $supplierTypeDDL = Lookup::where('category', '=', 'SUPPLIERTYPE')->get(['description', 'code']);
+        $warehouseDDL = Warehouse::where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name']);
+        $vendorTruckingDDL = VendorTrucking::where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name']);
+        $poTypeDDL = LookupRepo::findByCategory('POTYPE');
+        $supplierTypeDDL = LookupRepo::findByCategory('SUPPLIERTYPE');
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
         $poStatusDraft = Lookup::where('code', '=', 'POSTATUS.D')->get(['description', 'code']);
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
         $poCode = POCodeGenerator::generateCode();
 
         return view('purchase_order.create', compact('supplierDDL', 'warehouseDDL', 'vendorTruckingDDL',
@@ -74,7 +75,7 @@ class PurchaseOrderController extends Controller
 
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])
             ->paginate(10);
-        $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
+        $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');
 
         return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL'));
     }

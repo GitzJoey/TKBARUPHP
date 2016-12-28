@@ -40,7 +40,7 @@
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
                                 <li ng-repeat="so in SOs" ng-class="{active: $last}">
-                                    <a href="#tab_so@{{ $index + 1 }}" data-toggle="tab">
+                                    <a href="#tab_so_@{{ $index + 1 }}" data-toggle="tab">
                                         @{{ so.customer_type.code == 'CUSTOMERTYPE.R' ? so.customer.name || (defaultTabLabel + " " + ($index + 1))
                                         : so.customer_type.code == 'CUSTOMERTYPE.WI' ? so.walk_in_cust || (defaultTabLabel + " " + ($index + 1))
                                         : (defaultTabLabel + " " + ($index + 1)) }}</a>
@@ -54,7 +54,7 @@
                             <div class="tab-content">
                                 <div ng-repeat="so in SOs"
                                      ng-class="{active: $last}"
-                                     class="tab-pane" id="tab_so@{{ $index + 1 }}">
+                                     class="tab-pane" id="tab_so_@{{ $index + 1 }}">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="box box-info">
@@ -103,8 +103,8 @@
                                                                         <input type="hidden" name="customer_id[]" ng-value="so.customer.id" >
                                                                     </div>
                                                                     <div class="col-sm-2">
-                                                                        <button id="customerDetailButton" type="button" class="btn btn-primary btn-sm"
-                                                                                data-toggle="modal" data-target="#customerDetailModal"><span
+                                                                        <button id="customerDetailButton_@{{ $index }}" type="button" class="btn btn-primary btn-sm"
+                                                                                data-toggle="modal" data-target="#customerDetailModal_@{{ $index }}"><span
                                                                                     class="fa fa-info-circle fa-lg"></span></button>
                                                                     </div>
                                                                 </div>
@@ -472,6 +472,232 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="modal fade" id="customerDetailModal_@{{ $index }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="customerDetailModalLabel_@{{ $index }}">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="customerDetailModalLabel_@{{ $index }}">Customer Detail</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="nav-tabs-custom">
+                                                        <ul class="nav nav-tabs">
+                                                            <li class="active"><a href="#tab_customer_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.customer')</a></li>
+                                                            <li><a href="#tab_pic_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.pic')</a></li>
+                                                            <li><a href="#tab_bank_account_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.bank_account')</a></li>
+                                                            <li><a href="#tab_expenses_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.expenses')</a></li>
+                                                            <li><a href="#tab_settings_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.settings')</a></li>
+                                                        </ul>
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane active" id="tab_customer_@{{ $index }}">
+                                                                <div class="form-group">
+                                                                    <label for="inputName_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.name')</label>
+                                                                    <div class="col-sm-10">
+                                                                        <label id="inputName_@{{ $index }}" class="control-label">
+                                                                            <span class="control-label-normal">@{{ so.customer.name }}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputAddress_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.address')</label>
+                                                                    <div class="col-sm-10">
+                                                                        <label id="inputAddress_@{{ $index }}" class="control-label">
+                                                                            <span class="control-label-normal">@{{ so.customer.address }}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputCity_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.city')</label>
+                                                                    <div class="col-sm-10">
+                                                                        <label id="inputCity_@{{ $index }}" class="control-label">
+                                                                            <span class="control-label-normal">@{{ so.customer.city }}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputPhone_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.phone')</label>
+                                                                    <div class="col-sm-10">
+                                                                        <label id="inputPhone_@{{ $index }}" class="control-label">
+                                                                            <span class="control-label-normal">@{{ so.customer.phone }}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputTaxId_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
+                                                                    <div class="col-sm-10">
+                                                                        <label id="inputTaxId_@{{ $index }}" class="control-label">
+                                                                            <span class="control-label-normal">@{{ so.customer.tax_id }}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputRemarks_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
+                                                                    <div class="col-sm-10">
+                                                                        <label id="inputRemarks_@{{ $index }}" class="control-label">
+                                                                            <span class="control-label-normal">@{{ so.customer.remarks }}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane" id="tab_pic_@{{ $index }}">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div ng-repeat="profile in so.customer.profiles">
+                                                                            <div class="box box-widget">
+                                                                                <div class="box-header with-border">
+                                                                                    <div class="user-block">
+                                                                                        <strong>@lang('customer.field.person_in_charge') @{{ $index + 1 }}</strong><br/>
+                                                                                        &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
+                                                                                    </div>
+                                                                                    <div class="box-tools">
+                                                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="box-body">
+                                                                                    <div class="form-group">
+                                                                                        <label for="inputFirstName_@{{ $parent.index }}_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
+                                                                                        <div class="col-sm-10">
+                                                                                            <label id="inputFirstName_@{{ $parent.index }}_@{{ $index }}" class="control-label">
+                                                                                                <span class="control-label-normal">@{{ profile.first_name }}</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label for="inputLastName_@{{ $parent.index }}_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
+                                                                                        <div class="col-sm-10">
+                                                                                            <label id="inputLastName_@{{ $parent.index }}_@{{ $index }}" class="control-label">
+                                                                                                <span class="control-label-normal">@{{ profile.last_name }}</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
+                                                                                        <div class="col-sm-10">
+                                                                                            <label id="inputAddress_@{{ $parent.index }}_@{{ $index }}" class="control-label">
+                                                                                                <span class="control-label-normal">@{{ profile.address }}</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label for="inputICNum_@{{ $parent.index }}_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
+                                                                                        <div class="col-sm-10">
+                                                                                            <label id="inputICNum_@{{ $parent.index }}_@{{ $index }}" class="control-label">
+                                                                                                <span class="control-label-normal">@{{ profile.ic_num }}</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label for="inputPhoneNumber_@{{ $parent.index }}_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.phone_number')</label>
+                                                                                        <div class="col-sm-10">
+                                                                                            <table class="table table-bordered">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th>@lang('customer.show.table_phone.header.provider')</th>
+                                                                                                    <th>@lang('customer.show.table_phone.header.number')</th>
+                                                                                                    <th>@lang('customer.show.table_phone.header.remarks')</th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr ng-repeat="phone in profile.phone_numbers">
+                                                                                                        <td>@{{ phone.provider.name }}</td>
+                                                                                                        <td>@{{ phone.number }}</td>
+                                                                                                        <td>@{{ phone.remarks }}</td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane" id="tab_bank_account_@{{ $index }}">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="text-center">@lang('customer.show.table_bank.header.bank')</th>
+                                                                            <th class="text-center">@lang('customer.show.table_bank.header.account_number')</th>
+                                                                            <th class="text-center">@lang('customer.show.table_bank.header.remarks')</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="ba in so.customer.bank_accounts">
+                                                                            <td>@{{ ba.bank.name }}&nbsp;(@{{ ba.bank.name }})</td>
+                                                                            <td>@{{ ba.account_number }}</td>
+                                                                            <td>@{{ ba.remarks }}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="tab-pane" id="tab_expenses_@{{ $index }}">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th class="text-center">@lang('customer.show.table_expense.header.name')</th>
+                                                                        <th class="text-center">@lang('customer.show.table_expense.header.type')</th>
+                                                                        <th class="text-center">@lang('customer.show.table_expense.header.amount')</th>
+                                                                        <th class="text-center">@lang('customer.show.table_expense.header.internal_expense')</th>
+                                                                        <th class="text-center">@lang('customer.show.table_expense.header.remarks')</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="et in so.customer.expense_templates">
+                                                                            <td class="text-center valign-middle">
+                                                                                @{{ et.name }}
+                                                                            </td>
+                                                                            <td class="text-center valign-middle">
+                                                                                @{{ et.type }}
+                                                                            </td>
+                                                                            <td class="text-center valign-middle">
+                                                                                @{{ et.amount }}
+                                                                            </td>
+                                                                            <td class="text-center valign-middle">
+                                                                                <div ng-if="et.is_internal_expense">
+                                                                                    @lang('lookup.YESNOSELECT.YES')
+                                                                                </div>
+                                                                                <div ng-if="!et.is_internal_expense">
+                                                                                    @lang('lookup.YESNOSELECT.NO')
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="valign-middle">
+                                                                                @{{ et.remarks }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="tab-pane" id="tab_settings_@{{ $index }}">
+                                                                <div class="form-group">
+                                                                    <label for="inputPriceLevel_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
+                                                                    <div class="col-sm-10">
+                                                                        <label class="control-label">
+                                                                            <span class="control-label-normal">@{{ so.customer.price_level.name }}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="inputPaymentDueDay_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
+                                                                    <div class="col-sm-10">
+                                                                        <label id="inputPaymentDueDay_@{{ $index }}" class="control-label">
+                                                                            <span class="control-label-normal">@{{ so.customer.payment_due_day }}</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('buttons.close_button')</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -479,7 +705,6 @@
                 </div>
             </div>
         </form>
-        @include('sales_order.customer_details_partial')
     </div>
 @endsection
 
@@ -534,6 +759,8 @@
                         defaultDate: moment()
                     });
                 });
+
+                console.log(SOs);
             };
 
             if($scope.SOs.length == 0){
@@ -649,6 +876,7 @@
                 return $http.get('{{ route('api.customer.search') }}/' + param)
                     .then(function (response) {
                         $scope.customerDDL = response.data;
+                        console.log($scope.customerDDL);
                     });
             };
         }]);
