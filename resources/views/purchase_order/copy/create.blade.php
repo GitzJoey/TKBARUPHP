@@ -94,30 +94,30 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputPoCode"
-                                           class="col-sm-2 control-label">@lang('purchase_order.copy.create.field.po_code')</label>
-                                    <div class="col-sm-10">
+                                           class="col-sm-3 control-label">@lang('purchase_order.copy.create.field.po_code')</label>
+                                    <div class="col-sm-9">
                                         <input type="text" class="form-control" readonly value="{{ $poToBeCopied->code }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPoCopyCode"
-                                           class="col-sm-2 control-label">@lang('purchase_order.copy.create.field.po_copy_code')</label>
-                                    <div class="col-sm-10">
+                                           class="col-sm-3 control-label">@lang('purchase_order.copy.create.field.po_copy_code')</label>
+                                    <div class="col-sm-9">
                                         <input type="text" class="form-control" readonly name="code" value="{{ $poCopyCode }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPoType"
-                                           class="col-sm-2 control-label">@lang('purchase_order.copy.create.field.po_type')</label>
-                                    <div class="col-sm-10">
+                                           class="col-sm-3 control-label">@lang('purchase_order.copy.create.field.po_type')</label>
+                                    <div class="col-sm-9">
                                         <input type="text" class="form-control" readonly
                                                value="@lang('lookup.'.$poToBeCopied->po_type)">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPoDate"
-                                           class="col-sm-2 control-label">@lang('purchase_order.copy.create.field.po_date')</label>
-                                    <div class="col-sm-10">
+                                           class="col-sm-3 control-label">@lang('purchase_order.copy.create.field.po_date')</label>
+                                    <div class="col-sm-9">
                                         <div class="input-group date">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-calendar"></i>

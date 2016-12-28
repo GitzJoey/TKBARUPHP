@@ -26,7 +26,7 @@
             <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
             <ul>
                 @if (Session::get('error') == 'so_not_found')
-                    <li>@lang("purchase_order.copy.search.so_not_found") {{ Session::get('code') }}</li>
+                    <li>@lang("sales_order.copy.search.so_not_found") {{ Session::get('code') }}</li>
                 @else
                     <li>{{ Session::get('error') }} {{ Session::get('code') }}</li>
                 @endif

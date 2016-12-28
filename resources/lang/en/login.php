@@ -3,6 +3,7 @@
 return [
     'title' => 'Sign in to start your session',
     'remember_me' => 'Remember Me',
+    'forgot_pass' => 'Forgot Password',
     'register' => [
         'new' => 'Register a new membership',
         'title' => 'Register a new membership',

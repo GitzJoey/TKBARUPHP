@@ -79,8 +79,8 @@
             $scope.POs = [];
 
             $scope.getWarehousePOs = function (warehouse) {
-                $http.get('{{ route('api.warehouse.inflow.po') }}/' + warehouse.id).success(function (data) {
-                    $scope.POs = data;
+                $http.get('{{ route('api.warehouse.inflow.po') }}/' + warehouse.id).then(function (data) {
+                    $scope.POs = data.data;
                 });
             }
         }]);

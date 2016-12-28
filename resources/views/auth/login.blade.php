@@ -44,19 +44,12 @@
                     </div>
                 </div>
             </form>
-            <!--
-            <div class="social-auth-links text-center">
-                <p>- OR -</p>
-                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
-                <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-            </div>
-            -->
             <hr/>
 
             <a href="/register" class="text-center">@lang('login.register.new')</a>
 
         </div>
-        <div class="pull-right"><a href="/forgot">Forgot Password</a></div>
+        <div class="pull-right"><a href="/forgot">@lang('login.forgot_pass')</a></div>
     </div>
 
     <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>

@@ -3,12 +3,12 @@
 return [
     'inflow' => [
         'index' => [
-            'title' => 'Barang Masuk',
-            'page_title' => 'Barang Masuk',
+            'title' => 'Pemasukan Barang',
+            'page_title' => 'Pemasukan Barang',
             'page_title_desc' => '',
             'header' => [
                 'warehouse' => 'Gudang',
-                'purchase_order' => 'Pembelian',
+                'purchase_order' => 'Daftar Pembelian',
             ],
             'table' => [
                 'header' => [

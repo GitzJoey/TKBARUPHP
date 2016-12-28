@@ -110,16 +110,16 @@
                                 <div class="box-body">
                                     <div class="form-group">
                                         <label for="inputPoCode"
-                                               class="col-sm-2 control-label">@lang('purchase_order.create.field.po_code')</label>
-                                        <div class="col-sm-10">
+                                               class="col-sm-3 control-label">@lang('purchase_order.create.field.po_code')</label>
+                                        <div class="col-sm-9">
                                             <input type="text" class="form-control" id="inputPoCode" name="code"
                                                    placeholder="PO Code" readonly value="{{ $poCode }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPoType"
-                                               class="col-sm-2 control-label">@lang('purchase_order.create.field.po_type')</label>
-                                        <div class="col-sm-10">
+                                               class="col-sm-3 control-label">@lang('purchase_order.create.field.po_type')</label>
+                                        <div class="col-sm-9">
                                             <select id="inputPoType" data-parsley-required="true"
                                                     name="po_type"
                                                     class="form-control"
@@ -131,8 +131,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPoDate"
-                                               class="col-sm-2 control-label">@lang('purchase_order.create.field.po_date')</label>
-                                        <div class="col-sm-10">
+                                               class="col-sm-3 control-label">@lang('purchase_order.create.field.po_date')</label>
+                                        <div class="col-sm-9">
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -145,8 +145,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPoStatus"
-                                               class="col-sm-2 control-label">@lang('purchase_order.create.field.po_status')</label>
-                                        <div class="col-sm-10">
+                                               class="col-sm-3 control-label">@lang('purchase_order.create.field.po_status')</label>
+                                        <div class="col-sm-9">
                                             <label class="control-label control-label-normal">@lang('lookup.'.$poStatusDraft->first()->code)</label>
                                         </div>
                                     </div>

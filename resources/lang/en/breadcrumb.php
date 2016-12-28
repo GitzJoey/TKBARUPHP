@@ -8,9 +8,9 @@
 return [
     'dashboard' => 'Dashboard',
     'po.create' => 'Create Purchase Order',
-    'po.list' => 'Purchase Order Lists',
+    'po.list' => 'Revise Purchase Order',
     'po.revise' => 'Revise Purchase Order',
-    'po.payment.list' => 'PO Payment Lists',
+    'po.payment.list' => 'PO Payment',
     'po.payment.cash' => 'Cash Payment',
     'po.payment.transfer' => 'Transfer Payment',
     'po.payment.giro' => 'Giro Payment',

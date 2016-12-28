@@ -8,9 +8,9 @@
 return [
     'dashboard' => 'Dashboard',
     'po.create' => 'Tambah Pembelian',
-    'po.list' => 'Daftar Pembelian',
+    'po.list' => 'Revisi Pembelian',
     'po.revise' => 'Revisi Pembelian',
-    'po.payment.list' => 'Daftar Pembayaran',
+    'po.payment.list' => 'Pembayaran',
     'po.payment.cash' => 'Pembayaran Tunai',
     'po.payment.transfer' => 'Pembayaran Transfer',
     'po.payment.giro' => 'Pembayaran Giro',

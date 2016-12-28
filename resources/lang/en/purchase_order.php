@@ -54,7 +54,7 @@ return [
     ],
     'revise' => [
         'index' => [
-            'title' => 'Revise PO',
+            'title' => 'Revise Purchase Order',
             'page_title' => 'Revise Purchase Order',
             'page_title_desc' => '',
             'header' => [
@@ -70,7 +70,7 @@ return [
                 ],
             ],
         ],
-        'title' => 'Revise PO',
+        'title' => 'Revise Purchase Order',
         'page_title' => 'Revise Purchase Order',
         'page_title_desc' => '',
         'box' => [
@@ -261,8 +261,7 @@ return [
             'header' => [
                 'search' => 'Search',
             ],
-            'po_not_found' => 'Purchase order with code \':code\' not found.',
-            'so_not_found' => '',
+            'po_not_found' => 'Purchase order code not found.',
         ],
         'index' => [
             'title' => 'Purchase Order Copy',
@@ -272,7 +271,7 @@ return [
                 'search' => 'Search',
                 'title' => 'List of Purchase Order Copy',
             ],
-            'po_not_found' => 'Purchase order with code \':code\' not found.',
+            'po_not_found' => 'Purchase order code not found.',
             'table' => [
                 'header' => [
                     'code' => 'Code',

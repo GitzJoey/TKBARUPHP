@@ -8,7 +8,7 @@ return [
             'page_title_desc' => '',
             'box' => [
                 'supplier' => 'Supplier',
-                'purchase_order_detail' => 'Detail',
+                'purchase_order_detail' => 'Detail Pembelian',
                 'shipping' => 'Pengiriman',
                 'transactions' => 'Transaksi',
                 'transaction_summary' => 'Transaksi',
@@ -20,10 +20,10 @@ return [
                 'supplier_type' => 'Tipe',
                 'supplier_name' => 'Nama',
                 'supplier_details' => 'Detail',
-                'po_code' => 'Kode Pembelian',
-                'po_copy_code' => 'Kode Duplikat',
+                'po_code' => 'Kode',
+                'po_copy_code' => 'Duplikat',
                 'po_type' => 'Tipe',
-                'po_date' => 'Tgl Pembelian',
+                'po_date' => 'Tanggal PO',
                 'shipping_date' => 'Tgl Pengiriman',
                 'warehouse' => 'Gudang',
                 'vendor_trucking' => 'Layanan Angkutan',
@@ -47,12 +47,12 @@ return [
             ],
         ],
         'edit' => [
-            'title' => 'Revisi Pembelian',
-            'page_title' => 'Revisi Pembelian',
+            'title' => 'Duplikat Pembelian',
+            'page_title' => 'Duplikat Pembelian',
             'page_title_desc' => '',
             'box' => [
                 'supplier' => 'Supplier',
-                'purchase_order_detail' => 'Detail',
+                'purchase_order_detail' => 'Detail Pembelian',
                 'shipping' => 'Pengiriman',
                 'transactions' => 'Transaksi',
                 'transaction_summary' => 'Transaksi',
@@ -91,12 +91,12 @@ return [
             ],
         ],
         'index' => [
-            'title' => 'Revisi Pembelian',
-            'page_title' => 'Revisi Pembelian',
+            'title' => 'Duplikat Pembelian',
+            'page_title' => 'Duplikat Pembelian',
             'page_title_desc' => '',
             'header' => [
-                'search' => 'Cari',
-                'title' => 'Revisi Pembelian',
+                'search' => 'Cari Kode Pembelian',
+                'title' => 'Duplikat Pembelian',
             ],
             'table' => [
                 'header' => [
@@ -110,13 +110,12 @@ return [
         ],
         'search' => [
             'po_not_found' => 'Kode Pembelian Tidak Ditemukan',
-            'title' => 'Cari',
-            'page_title' => 'Cari',
-            'page_title_desc' => 'Cari',
+            'title' => 'Duplikat Pembelian',
+            'page_title' => 'Duplikat Pembelian',
+            'page_title_desc' => '',
             'header' => [
-                'search' => 'Cari',
+                'search' => 'Cari Kode Pembelian',
             ],
-            'so_not_found' => '',
         ],
     ],
     'revise' => [
@@ -149,7 +148,7 @@ return [
             'page_title' => 'Revisi Pembelian',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Revisi Pembelian',
+                'title' => 'Daftar Revisi Pembelian',
             ],
             'table' => [
                 'header' => [
@@ -161,12 +160,12 @@ return [
                 ],
             ],
         ],
-        'title' => 'Pembelian',
-        'page_title' => 'Pembelian',
+        'title' => 'Revisi Pembelian',
+        'page_title' => 'Revisi Pembelian',
         'page_title_desc' => '',
         'box' => [
             'supplier' => 'Supplier',
-            'purchase_order_detail' => 'Detail',
+            'purchase_order_detail' => 'Detail Pembelian',
             'shipping' => 'Pengiriman',
             'transactions' => 'Transaksi',
             'expenses' => 'Biaya',
@@ -177,11 +176,11 @@ return [
             'supplier_type' => 'Tipe',
             'supplier_name' => 'Nama',
             'supplier_details' => 'Detail',
-            'po_code' => 'Kode Pembelian',
+            'po_code' => 'Kode',
             'po_type' => 'Tipe',
-            'po_date' => 'Tgl Pembelian',
+            'po_date' => 'Tanggal PO',
             'po_status' => 'Status',
-            'shipping_date' => 'tgl Pengiriman',
+            'shipping_date' => 'Tgl Pengiriman',
             'warehouse' => 'Gudang',
             'vendor_trucking' => 'Layanan Angkutan',
         ],
@@ -192,7 +191,7 @@ return [
         'page_title_desc' => '',
         'box' => [
             'supplier' => 'Supplier',
-            'purchase_order_detail' => 'Detail',
+            'purchase_order_detail' => 'Detail Pembelian',
             'shipping' => 'Pengiriman',
             'transactions' => 'Transaksi',
             'expenses' => 'Biaya',
@@ -200,12 +199,12 @@ return [
             'remarks' => 'Keterangan',
         ],
         'field' => [
-            'supplier_type' => 'tipe',
+            'supplier_type' => 'Tipe',
             'supplier_name' => 'Nama',
-            'supplier_details' => 'Detail',
-            'po_code' => 'Kode Pembelian',
+            'supplier_details' => 'Detail Pembelian',
+            'po_code' => 'Kode',
             'po_type' => 'Tipe',
-            'po_date' => 'Tgl Pembelian',
+            'po_date' => 'Tanggal PO',
             'po_status' => 'Status',
             'shipping_date' => 'Tgl Pengiriman',
             'warehouse' => 'Gudang',
@@ -239,11 +238,11 @@ return [
     ],
     'payment' => [
         'cash' => [
-            'title' => 'Pembayaran',
-            'page_title' => 'Pembayaran',
+            'title' => 'Pembayaran Tunai',
+            'page_title' => 'Pembayaran Tunai',
             'page_title_desc' => '',
             'box' => [
-                'payment' => 'Pembayaran',
+                'payment' => 'Pembayaran Tunai',
             ],
             'field' => [
                 'payment_type' => 'Tipe',
@@ -275,7 +274,7 @@ return [
             'page_title' => 'Pembayaran',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Pembayaran',
+                'title' => 'Daftar Pembayaran',
             ],
             'table' => [
                 'header' => [
@@ -291,7 +290,7 @@ return [
         'summary' => [
             'box' => [
                 'supplier' => 'Supplier',
-                'purchase_order_detail' => 'Detail',
+                'purchase_order_detail' => 'Detail Pembelian',
                 'shipping' => 'Pengiriman',
                 'transactions' => 'Transaksi',
                 'expenses' => 'Biaya',
@@ -303,11 +302,11 @@ return [
                 'supplier_type' => 'Tipe',
                 'supplier_name' => 'Nama',
                 'supplier_details' => 'Detail',
-                'po_code' => 'Kode Pembelian',
+                'po_code' => 'Kode',
                 'po_type' => 'Tipe',
-                'po_date' => 'Tgl Pembelian',
+                'po_date' => 'Tanggal PO',
                 'po_status' => 'Status',
-                'shipping_date' => 'Tgl Kirim',
+                'shipping_date' => 'Tanggal Kirim',
                 'warehouse' => 'Gudang',
                 'vendor_trucking' => 'Layanan Angkutan',
             ],
