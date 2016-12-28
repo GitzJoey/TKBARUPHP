@@ -4,10 +4,6 @@
     @lang('purchase_order.copy.edit.title')
 @endsection
 
-@section('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/bootstrap-datetimepicker.min.css') }}">
-@endsection
-
 @section('page_title')
     <span class="fa fa-code-fork fa-rotate-180 fa-fw"></span>&nbsp;@lang('purchase_order.copy.edit.page_title')
 @endsection

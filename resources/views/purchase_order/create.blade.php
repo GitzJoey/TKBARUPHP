@@ -4,10 +4,6 @@
     @lang('purchase_order.create.title')
 @endsection
 
-@section('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/bootstrap-datetimepicker.min.css') }}">
-@endsection
-
 @section('page_title')
     <span class="fa fa-truck fa-fw"></span>&nbsp;@lang('purchase_order.create.page_title')
 @endsection
