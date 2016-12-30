@@ -47,6 +47,8 @@ class StockOpname extends Model
 
     protected $fillable = [
         'stock_id',
+        'opname_date',
+        'is_match',
         'previous_quantity',
         'adjusted_quantity',
         'reason'

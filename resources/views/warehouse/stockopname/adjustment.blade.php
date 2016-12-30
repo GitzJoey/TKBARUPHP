@@ -45,9 +45,27 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputSupplier" class="col-sm-2 control-label">@lang('warehouse.stockopname.adjust.field.supplier')</label>
+                        <label for="inputOpnameDate"
+                               class="col-sm-2 control-label">@lang('warehouse.stockopname.adjust.field.opname_date')</label>
                         <div class="col-sm-8">
-                            <input id="inputSupplier" type="text" value="{{ empty($stock->purchaseOrder->supplier) ? $stock->purchaseOrder->walk_in_supplier : $stock->purchaseOrder->supplier->name }}" disabled class="form-control">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="text" class="form-control" id="inputOpnameDate"
+                                       name="opname_date"
+                                       data-parsley-required="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputIsMatch" class="col-sm-2 control-label">@lang('warehouse.stockopname.adjust.field.is_match')</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input id="inputIsMatch" type="checkbox" name="is_match">&nbsp;
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -93,6 +111,30 @@
     <script type="application/javascript">
         var app = angular.module('stockOpnameModule', ['fcsa-number']);
         app.controller("stockOpnameController", ['$scope', function ($scope) {
+
         }]);
+
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+
+            $('input').on('ifChanged', function(c){
+                if (c.target.checked) {
+                    $('#inputAdjustedQuantity').val(0).attr('readonly', 'readonly');
+                    $('#inputReason').val('').attr('readonly', 'readonly');
+                } else {
+                    $('#inputAdjustedQuantity').val('').removeAttr('readonly');
+                    $('#inputReason').val('').removeAttr('readonly');
+                }
+            });
+
+            $("#inputOpnameDate").datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
+            });
+        });
     </script>
 @endsection

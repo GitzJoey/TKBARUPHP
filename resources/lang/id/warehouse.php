@@ -182,7 +182,8 @@ return [
             'field' => [
                 'warehouse' => 'Gudang',
                 'product' => 'Produk',
-                'supplier' => 'Supplier',
+                'opname_date' => 'Tanggal Opname',
+                'is_match' => 'Sama',
                 'current_quantity' => 'Jumlah Terakhir',
                 'adjusted_quantity' => 'Jumlah Penyesuaian',
                 'reason' => 'Alasan',
@@ -199,7 +200,7 @@ return [
                 'header' => [
                     'warehouse' => 'Gudang',
                     'product' => 'Produk',
-                    'supplier' => 'Supplier',
+                    'opname_date' => 'Tanggal Opname',
                     'current_quantity' => 'Jumlah Terakhir',
                 ],
             ],

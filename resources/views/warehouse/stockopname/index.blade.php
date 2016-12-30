@@ -29,7 +29,7 @@
                 <tr>
                     <th class="text-center">@lang('warehouse.stockopname.index.table.header.warehouse')</th>
                     <th class="text-center">@lang('warehouse.stockopname.index.table.header.product')</th>
-                    <th class="text-center">@lang('warehouse.stockopname.index.table.header.supplier')</th>
+                    <th class="text-center">@lang('warehouse.stockopname.index.table.header.opname_date')</th>
                     <th class="text-center">@lang('warehouse.stockopname.index.table.header.current_quantity')</th>
                     <th class="text-center">@lang('labels.ACTION')</th>
                 </tr>
@@ -39,7 +39,7 @@
                     <tr>
                         <td>{{ $stock->warehouse->name }}</td>
                         <td>{{ $stock->product->name }}</td>
-                        <td>{{ empty($stock->purchaseOrder->supplier) ? $stock->purchaseOrder->walk_in_supplier : $stock->purchaseOrder->supplier->name }}</td>
+                        <td>{{ !empty($stock->opname_date) ? $stock->opname_date : '' }}</td>
                         <td>{{ $stock->current_quantity }}</td>
                         <td class="text-center" width="10%">
                             <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.stockopname.adjust', $stock->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>

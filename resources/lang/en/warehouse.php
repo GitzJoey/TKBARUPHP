@@ -183,7 +183,7 @@ return [
                 'header' => [
                     'warehouse' => 'Warehouse',
                     'product' => 'Product',
-                    'supplier' => 'Supplier',
+                    'opname_date' => 'Opname Date',
                     'current_quantity' => 'Current Quantity',
                 ],
             ],
@@ -198,7 +198,8 @@ return [
             'field' => [
                 'warehouse' => 'Warehouse',
                 'product' => 'Product',
-                'supplier' => 'Supplier',
+                'opname_date' => 'Opname Date',
+                'is_match' => 'Match',
                 'current_quantity' => 'Current Quantity',
                 'adjusted_quantity' => 'Adjusted Quantity',
                 'reason' => 'Reason'
