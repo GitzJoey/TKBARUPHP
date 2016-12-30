@@ -13,6 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
+    {!! Breadcrumbs::render('purchase_order_copy') !!}
 @endsection
 
 @section('content')

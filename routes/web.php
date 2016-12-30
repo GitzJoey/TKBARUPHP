@@ -284,7 +284,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         });
 
         Route::group(['prefix' => 'truck'], function () {
-            Route::get('maintenance/{truckId?}', 'TruckMaintenanceController@index')->name('db.truck.maintenance');
+            Route::get('maintenance', 'TruckMaintenanceController@index')->name('db.truck.maintenance');
             Route::get('maintenance/show/{id}', 'TruckMaintenanceController@show')->name('db.truck.maintenance.show');
             Route::get('maintenance/create', 'TruckMaintenanceController@create')->name('db.truck.maintenance.create');
             Route::post('maintenance/create', 'TruckMaintenanceController@store');

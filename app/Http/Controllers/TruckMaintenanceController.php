@@ -19,18 +19,21 @@ class TruckMaintenanceController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($truckId = null)
+    public function index(Request $request)
     {
         $truck = Truck::get(['id', 'type', 'plate_number']);
 
+        $truckId = $request->query('s');
         $trucklist = [];
 
-        if (is_null($truckId)) {
+        if (empty($truckId)) {
             $trucklist = TruckMaintenance::paginate(10);
         } else {
-            $trucklist = TruckMaintenance::whereHas('truck', function($t) use($truckId) {
-                $t->whereId(Hashids::decode($truckId));
-            })->paginate(10);
+            if ($truckId != 'create') {
+                $trucklist = TruckMaintenance::whereHas('truck', function($t) use($truckId) {
+                    $t->whereId(Hashids::decode($truckId));
+                })->paginate(10);
+            }
         }
 
         return view('truck_maintenance.index', compact('truckId', 'truck', 'trucklist'));

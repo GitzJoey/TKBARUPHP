@@ -50,6 +50,11 @@ Breadcrumbs::register('purchase_order_payment_giro', function ($breadcrumbs, $po
     $breadcrumbs->push(trans('breadcrumb.po.payment.giro'), route('db.po.payment.giro', $poId));
 });
 
+Breadcrumbs::register('purchase_order_copy', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.po.copy'), route('db.po.copy'));
+});
+
 Breadcrumbs::register('inflow', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.warehouse.inflow.index'), route('db.warehouse.inflow.index'));
@@ -108,6 +113,11 @@ Breadcrumbs::register('sales_order_payment_transfer', function ($breadcrumbs, $s
 Breadcrumbs::register('sales_order_payment_giro', function ($breadcrumbs, $soId){
     $breadcrumbs->parent('sales_order_payment');
     $breadcrumbs->push(trans('breadcrumb.so.payment.giro'), route('db.so.payment.giro', $soId));
+});
+
+Breadcrumbs::register('sales_order_copy', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.so.copy'), route('db.so.copy'));
 });
 
 Breadcrumbs::register('admin_user', function($breadcrumbs){

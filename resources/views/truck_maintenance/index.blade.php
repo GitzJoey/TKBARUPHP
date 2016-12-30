@@ -68,7 +68,7 @@
         </div>
         <div class="box-footer clearfix">
             <a class="btn btn-success" href="{{ route('db.truck.maintenance.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
-            {!! $trucklist->render() !!}
+            {!! $trucklist->appends(Request::query())->render() !!}
         </div>
     </div>
 @endsection
@@ -77,7 +77,7 @@
     <script type="application/javascript">
         $(document).ready(function() {
             $('#plateSelect').change(function() {
-                window.location.href = '{{ route('db.truck.maintenance') }}' + '/' + $('#plateSelect').val();
+                window.location.href = '{{ route('db.truck.maintenance') }}' + '?s=' + $('#plateSelect').val();
             }) ;
         });
     </script>

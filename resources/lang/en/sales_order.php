@@ -333,7 +333,7 @@ return [
             'header' => [
                 'search' => 'Search',
             ],
-            'so_not_found' => 'Sales order with code \':code\' not found.',
+            'so_not_found' => 'Sales order not found.',
         ],
         'index' => [
             'title' => 'Sales Order Copy',
@@ -343,7 +343,6 @@ return [
                 'search' => 'Search',
                 'title' => 'List of Sales Order Copy',
             ],
-            'po_not_found' => 'Sales order with code \':code\' not found.',
             'table' => [
                 'header' => [
                     'code' => 'Code',
