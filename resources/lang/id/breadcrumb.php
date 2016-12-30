@@ -7,7 +7,7 @@
  */
 return [
     'dashboard' => 'Dashboard',
-    'po.create' => 'Tambah Pembelian',
+    'po.create' => 'Pembelian',
     'po.list' => 'Revisi Pembelian',
     'po.revise' => 'Revisi Pembelian',
     'po.payment.list' => 'Pembayaran',
@@ -18,10 +18,10 @@ return [
     'warehouse.inflow.receipt' => 'Nota Terima',
     'warehouse.outflow.index' => 'Pengeluaran Gudang',
     'warehouse.outflow.deliver' => 'Nota Kirim',
-    'so.create' => 'Tambah Penjualan',
-    'so.list' => 'Daftar Penjualan',
+    'so.create' => 'Penjualan',
+    'so.list' => 'Revisi Penjualan',
     'so.revise' => 'Revisi Penjualan',
-    'so.payment.list' => 'Daftar Pembayaran',
+    'so.payment.list' => 'Pembayaran',
     'so.payment.cash' => 'Pembayaran Tunai',
     'so.payment.transfer' => 'Pembayaran Transfer',
     'so.payment.giro' => 'Pembayaran Giro',

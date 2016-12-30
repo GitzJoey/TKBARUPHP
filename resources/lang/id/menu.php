@@ -2,12 +2,12 @@
 
 return [
     'item.po' => 'Pembelian',
-    'item.po_new' => 'Pembelian Baru',
+    'item.po_new' => 'Pembelian',
     'item.po_revise' => 'Revisi',
     'item.po_payment' => 'Pembayaran',
     'item.po_copy' => 'Duplikat',
     'item.so' => 'Penjualan',
-    'item.so_new' => 'Penjualan Baru',
+    'item.so_new' => 'Penjualan',
     'item.so_revise' => 'Revisi',
     'item.so_payment' => 'Pembayaran',
     'item.so_copy' => 'Duplikat',

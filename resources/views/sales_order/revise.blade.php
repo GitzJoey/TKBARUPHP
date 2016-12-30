@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('revise_sales_order', $currentSo->hId()) !!}
+    {!! Breadcrumbs::render('revise_sales_order_detail', $currentSo) !!}
 @endsection
 
 @section('content')
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-11">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <h3 class="box-title">@lang('sales_order.revise.box.customer')</h3>
@@ -42,8 +42,8 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputCustomerType"
-                                           class="col-sm-4 control-label">@lang('sales_order.revise.field.customer_type')</label>
-                                    <div class="col-sm-6">
+                                           class="col-sm-2 control-label">@lang('sales_order.revise.field.customer_type')</label>
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control" readonly
                                                value="@lang('lookup.'.$currentSo->customer_type)">
                                     </div>
@@ -51,8 +51,8 @@
                                 @if($currentSo->customer_type == 'CUSTOMERTYPE.R')
                                     <div class="form-group">
                                         <label for="inputCustomerId"
-                                               class="col-sm-4 control-label">@lang('sales_order.revise.field.customer_name')</label>
-                                        <div class="col-sm-6">
+                                               class="col-sm-2 control-label">@lang('sales_order.revise.field.customer_name')</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" readonly
                                                    value="{{ $currentSo->customer->name }}">
                                         </div>
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <h3 class="box-title">@lang('sales_order.revise.box.sales_order_detail')</h3>

@@ -25,6 +25,11 @@ Breadcrumbs::register('revise_purchase_order', function ($breadcrumbs, $poId){
     $breadcrumbs->push(trans('breadcrumb.po.revise'), route('db.po.revise', $poId));
 });
 
+Breadcrumbs::register('revise_purchase_order_detail', function ($breadcrumbs, $currentPo){
+    $breadcrumbs->parent('purchase_order');
+    $breadcrumbs->push($currentPo->code, route('db.po.revise', $currentPo->hId()));
+});
+
 Breadcrumbs::register('purchase_order_payment', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.po.payment.list'), route('db.po.payment.index'));
@@ -78,6 +83,11 @@ Breadcrumbs::register('sales_order', function ($breadcrumbs){
 Breadcrumbs::register('revise_sales_order', function ($breadcrumbs, $soId){
     $breadcrumbs->parent('sales_order');
     $breadcrumbs->push(trans('breadcrumb.so.revise'), route('db.so.revise', $soId));
+});
+
+Breadcrumbs::register('revise_sales_order_detail', function ($breadcrumbs, $currentSO){
+    $breadcrumbs->parent('sales_order');
+    $breadcrumbs->push($currentSO->code, route('db.so.revise', $currentSO->hId()));
 });
 
 Breadcrumbs::register('sales_order_payment', function ($breadcrumbs){

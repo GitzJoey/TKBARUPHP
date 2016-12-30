@@ -129,7 +129,7 @@
                                                 <div class="col-md-6">
                                                     <div class="box box-info">
                                                         <div class="box-header with-border">
-                                                            <h3 class="box-title">@lang('sales_order.create.box.purchase_order_detail')</h3>
+                                                            <h3 class="box-title">@lang('sales_order.create.box.sales_order_detail')</h3>
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="form-group">

@@ -77,8 +77,8 @@
             $scope.SOs = [];
 
             $scope.getWarehouseSOs = function (warehouse) {
-                $http.get('{{ route('api.warehouse.outflow.so') }}/' + warehouse.id).success(function (data) {
-                    $scope.SOs = data;
+                $http.get('{{ route('api.warehouse.outflow.so') }}/' + warehouse.id).then(function (data) {
+                    $scope.SOs = data.data;
                 });
             }
         }]);

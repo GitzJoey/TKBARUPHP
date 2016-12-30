@@ -9,15 +9,13 @@ return [
             'sales' => 'Sales',
         ],
         'box' => [
-            'supplier' => 'Supplier',
-            'purchase_order_detail' => 'Detail',
             'shipping' => 'Shipping',
             'transactions' => 'Transactions',
             'transaction_summary' => 'Transaction Summary',
             'expenses' => 'Expenses',
             'remarks' => 'Remarks',
             'customer' => 'Customer',
-            'sales_order_detail' => '',
+            'sales_order_detail' => 'Sales Detail',
         ],
         'field' => [
             'customer_type' => 'Customer Type',
