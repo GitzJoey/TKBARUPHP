@@ -36,6 +36,10 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereDeletedAt($value)
+ * @property string $opname_date
+ * @property boolean $is_match
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereOpnameDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereIsMatch($value)
  */
 class StockOpname extends Model
 {
