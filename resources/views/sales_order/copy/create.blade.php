@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-md-11">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <h3 class="box-title">@lang('sales_order.copy.create.box.customer')</h3>
@@ -41,8 +41,8 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputCustomerType"
-                                           class="col-sm-4 control-label">@lang('sales_order.copy.create.field.customer_type')</label>
-                                    <div class="col-sm-6">
+                                           class="col-sm-2 control-label">@lang('sales_order.copy.create.field.customer_type')</label>
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control" readonly
                                                value="@lang('lookup.'.$soToBeCopied->customer_type)">
                                     </div>
@@ -50,8 +50,8 @@
                                 @if($soToBeCopied->customer_type == 'CUSTOMERTYPE.R')
                                     <div class="form-group">
                                         <label for="inputCustomerId"
-                                               class="col-sm-4 control-label">@lang('sales_order.copy.create.field.customer_name')</label>
-                                        <div class="col-sm-6">
+                                               class="col-sm-2 control-label">@lang('sales_order.copy.create.field.customer_name')</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" readonly
                                                    value="{{ $soToBeCopied->customer->name }}">
                                         </div>
@@ -65,7 +65,7 @@
                                 @else
                                     <div class="form-group">
                                         <label for="inputCustomerName"
-                                               class="col-sm-4 control-label">@lang('sales_order.copy.create.field.customer_name')</label>
+                                               class="col-sm-2 control-label">@lang('sales_order.copy.create.field.customer_name')</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" readonly
                                                    value="{{ $soToBeCopied->walk_in_cust }}">
@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputCustomerDetails"
-                                               class="col-sm-4 control-label">@lang('sales_order.copy.create.field.customer_details')</label>
+                                               class="col-sm-2 control-label">@lang('sales_order.copy.create.field.customer_details')</label>
                                         <div class="col-sm-8">
                                             <textarea class="form-control" rows="5" readonly>{{ $soToBeCopied->walk_in_cust_detail }}
                                             </textarea>
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <div class="box box-info">
                             <div class="box-header with-border">
                                 <h3 class="box-title">@lang('sales_order.copy.create.box.sales_order_detail')</h3>
@@ -138,7 +138,7 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputShippingDate"
-                                           class="col-sm-3 control-label">@lang('sales_order.copy.create.field.shipping_date')</label>
+                                           class="col-sm-2 control-label">@lang('sales_order.copy.create.field.shipping_date')</label>
                                     <div class="col-sm-9">
                                         <div class="input-group date">
                                             <div class="input-group-addon">
@@ -152,7 +152,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputWarehouse"
-                                           class="col-sm-3 control-label">@lang('sales_order.copy.create.field.warehouse')</label>
+                                           class="col-sm-2 control-label">@lang('sales_order.copy.create.field.warehouse')</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" readonly
                                                value="{{ $soToBeCopied->warehouse->name }}">
@@ -160,7 +160,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputVendorTrucking"
-                                           class="col-sm-3 control-label">@lang('sales_order.copy.create.field.vendor_trucking')</label>
+                                           class="col-sm-2 control-label">@lang('sales_order.copy.create.field.vendor_trucking')</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" readonly
                                                value="{{ empty($soToBeCopied->vendorTrucking->name) ? '':$soToBeCopied->vendorTrucking->name }}">
