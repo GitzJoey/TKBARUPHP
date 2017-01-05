@@ -281,6 +281,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
                 route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
             });
+
+            Route::group(['prefix' => 'consolidate'], function (){
+                Route::get('', 'BankConsolidateController@index')->name('db.bank.consolidate');
+            });
         });
 
         Route::group(['prefix' => 'truck'], function () {

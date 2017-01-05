@@ -152,7 +152,7 @@
                         @endif
                         @if(Entrust::can('bank.consolidate'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.bank.consolidate')) }}">
-                                <a href="#"><i class="fa fa-compress fa-fw"></i>&nbsp;@lang('menu.item.bank_consolidate')</a>
+                                <a href="{{ route('db.bank.consolidate') }}"><i class="fa fa-compress fa-fw"></i>&nbsp;@lang('menu.item.bank_consolidate')</a>
                             </li>
                         @endif
                         @if(Entrust::can('bank.giro'))
