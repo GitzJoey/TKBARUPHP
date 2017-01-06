@@ -16,44 +16,42 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Product
+ * App\Model\Product
  *
  * @property integer $id
- * @property string $type
+ * @property integer $store_id
+ * @property integer $product_type_id
  * @property string $name
  * @property string $short_code
  * @property string $description
  * @property string $image_path
  * @property string $status
  * @property string $remarks
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereShortCode($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereImagePath($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property integer $store_id
- * @property integer $product_type_id
- * @property-read \App\Store $store
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\ProductUnit[] $productUnitList
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereProductTypeId($value)
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Product whereDeletedAt($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\Store $store
+ * @property-read \App\Model\ProductType $type
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ProductUnit[] $productUnits
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereProductTypeId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereShortCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereImagePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Product extends Model
 {

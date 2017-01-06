@@ -13,30 +13,30 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\UserDetail
+ * App\Model\UserDetail
  *
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $user_id
  * @property string $type
  * @property boolean $allow_login
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property-read \App\User $user
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereAllowLogin($value)
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereUpdatedAt($value)
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\UserDetail whereDeletedAt($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereAllowLogin($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class UserDetail extends Model
 {

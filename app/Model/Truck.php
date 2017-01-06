@@ -15,40 +15,39 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Truck
+ * App\Model\Truck
  *
- * @mixin \Eloquent
  * @property integer $id
+ * @property integer $store_id
+ * @property string $type
  * @property string $plate_number
  * @property string $inspection_date
  * @property string $driver
  * @property string $status
  * @property string $remarks
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck wherePlateNumber($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereInspectionDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereDriver($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\TruckMaintenance[] $maintenanceList
- * @property integer $store_id
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Truck whereDeletedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\TruckMaintenance[] $truckMaintenances
- * @property string $type
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereType($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property-read \App\Model\Store $store
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\TruckMaintenance[] $truckMaintenances
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck wherePlateNumber($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereInspectionDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereDriver($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Truck extends Model
 {

@@ -8,12 +8,12 @@ namespace App\Model;
  * @property integer $id
  * @property integer $giro_id
  * @property-read \App\Model\Payment $payment
+ * @property-read \App\Model\Giro $giro
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payment_detail
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payable
  * @method static \Illuminate\Database\Query\Builder|\App\Model\GiroPayment whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\GiroPayment whereGiroId($value)
  * @mixin \Eloquent
- * @property-read \App\Model\Giro $giro
  */
 class GiroPayment extends Payment
 {

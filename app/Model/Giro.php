@@ -12,11 +12,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * App\Model\Giro
  *
  * @property integer $id
+ * @property integer $store_id
  * @property integer $bank_id
  * @property string $serial_number
  * @property string $effective_date
  * @property float $amount
  * @property string $printed_name
+ * @property string $status
  * @property string $remarks
  * @property integer $created_by
  * @property integer $updated_by
@@ -24,12 +26,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\Store $store
+ * @property-read \App\Model\Bank $bank
+ * @property-read \App\Model\GiroPayment $giroPayment
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereBankId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereSerialNumber($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereEffectiveDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereAmount($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro wherePrintedName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereStatus($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereRemarks($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereUpdatedBy($value)
@@ -38,13 +45,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereDeletedAt($value)
  * @mixin \Eloquent
- * @property integer $store_id
- * @property string $status
- * @property-read \App\Model\Store $store
- * @property-read \App\Model\Bank $bank
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereStatus($value)
- * @property-read \App\Model\GiroPayment $giroPayment
  */
 class Giro extends Model
 {

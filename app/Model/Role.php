@@ -12,7 +12,7 @@ use Zizaco\Entrust\EntrustRole;
 use Vinkla\Hashids\Facades\Hashids;
 
 /**
- * App\Role
+ * App\Model\Role
  *
  * @property integer $id
  * @property string $name
@@ -20,17 +20,16 @@ use Vinkla\Hashids\Facades\Hashids;
  * @property string $description
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Permission[] $perms
- * @method static \Illuminate\Database\Query\Builder|\App\Role whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Role whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Role whereDisplayName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Role whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Role whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Role whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Permission[] $permissionList
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Permission[] $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Permission[] $perms
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Role whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Role whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Role whereDisplayName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Role whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Role whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Role whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Role extends EntrustRole
 {

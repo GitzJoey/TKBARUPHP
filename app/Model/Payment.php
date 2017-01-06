@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
  *
  * @property integer $id
  * @property integer $store_id
+ * @property integer $payment_detail_id
+ * @property integer $payable_id
+ * @property string $type
+ * @property string $payable_type
+ * @property string $payment_detail_type
  * @property \Carbon\Carbon $payment_date
  * @property float $total_amount
  * @property string $status
@@ -20,14 +25,15 @@ use Illuminate\Support\Facades\Auth;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @property integer $payment_detail_id
- * @property string $payment_detail_type
- * @property integer $payable_id
- * @property string $payable_type
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payment_detail
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payable
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePaymentDetailId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePayableId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePayableType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePaymentDetailType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePaymentDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereTotalAmount($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereStatus($value)
@@ -37,13 +43,7 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePaymentDetailId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePaymentDetailType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePayableId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment wherePayableType($value)
  * @mixin \Eloquent
- * @property string $type
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereType($value)
  */
 class Payment extends Model
 {

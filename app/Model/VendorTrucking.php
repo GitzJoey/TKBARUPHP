@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\VendorTrucking
+ * App\Model\VendorTrucking
  *
  * @property integer $id
  * @property integer $store_id
@@ -29,24 +29,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $deleted_by
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereTaxId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\VendorTrucking whereDeletedAt($value)
- * @mixin \Eloquent
+ * @property \Carbon\Carbon $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
  * @property-read \App\Model\Store $store
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereTaxId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class VendorTrucking extends Model
 {

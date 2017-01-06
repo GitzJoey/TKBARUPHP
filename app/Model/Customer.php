@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Customer
+ * App\Model\Customer
  *
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Profile[] $profile
  * @property integer $id
+ * @property integer $store_id
+ * @property string $sign_code
  * @property string $name
  * @property string $address
  * @property string $city
@@ -22,41 +22,40 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $fax_num
  * @property string $tax_id
  * @property integer $payment_due_day
- * @property string $remarks
+ * @property integer $price_level_id
  * @property string $status
+ * @property string $remarks
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereCity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer wherePhoneNumber($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereFaxNum($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereTaxId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer wherePaymentDueDay($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Customer whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Profile[] $profiles
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
- * @property integer $store_id
- * @property integer $price_level_id
  * @property-read \App\Model\PriceLevel $priceLevel
  * @property-read \App\Model\Store $store
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer wherePriceLevelId($value)
- * @property string $sign_code
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ExpenseTemplate[] $expenseTemplates
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereSignCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereCity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer wherePhoneNumber($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereFaxNum($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereTaxId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer wherePaymentDueDay($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer wherePriceLevelId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Customer extends Model
 {

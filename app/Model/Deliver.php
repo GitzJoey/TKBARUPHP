@@ -18,13 +18,16 @@ use Vinkla\Hashids\Facades\Hashids;
  * @property integer $base_unit_id
  * @property float $conversion_value
  * @property \Carbon\Carbon $deliver_date
+ * @property \Carbon\Carbon $confirm_receive_date
  * @property float $brutto
  * @property float $base_brutto
  * @property float $netto
  * @property float $base_netto
  * @property float $tare
  * @property float $base_tare
- * @property string $licence_plate
+ * @property string $license_plate
+ * @property string $article_code
+ * @property string $remarks
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
@@ -39,13 +42,16 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBaseUnitId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereConversionValue($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereDeliverDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereConfirmReceiveDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBrutto($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBaseBrutto($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereNetto($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBaseNetto($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereTare($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereBaseTare($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereLicencePlate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereLicensePlate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereArticleCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereRemarks($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereDeletedBy($value)
@@ -53,14 +59,6 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereDeletedAt($value)
  * @mixin \Eloquent
- * @property \Carbon\Carbon $confirm_receive_date
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereConfirmReceiveDate($value)
- * @property string $license_plate
- * @property string $remarks
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereLicensePlate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereRemarks($value)
- * @property string $article_code
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereArticleCode($value)
  */
 class Deliver extends Model
 {

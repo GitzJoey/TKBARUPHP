@@ -14,9 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Bank
+ * App\Model\Bank
  *
- * @mixin \Eloquent
  * @property integer $id
  * @property string $name
  * @property string $short_name
@@ -24,28 +23,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $branch_code
  * @property string $status
  * @property string $remarks
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereShortName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereBranch($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereBranchCode($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereUpdatedAt($value)
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Bank whereDeletedAt($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property-read mixed $bank_full_name
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Giro[] $Giros
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereShortName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereBranch($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereBranchCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Bank extends Model
 {

@@ -14,15 +14,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Vinkla\Hashids\Facades\Hashids;
 
 /**
- * App\Item
+ * App\Model\Item
  *
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $store_id
  * @property integer $product_id
- * @property integer $stocks_id
+ * @property integer $stock_id
  * @property integer $selected_unit_id
  * @property integer $base_unit_id
+ * @property integer $itemable_id
+ * @property string $itemable_type
  * @property float $conversion_value
  * @property float $quantity
  * @property float $price
@@ -33,33 +34,30 @@ use Vinkla\Hashids\Facades\Hashids;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereProductId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereStocksId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereSelectedUnitId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereBaseUnitId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereConversionValue($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereQuantity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item wherePrice($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereToBaseQuantity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Item whereDeletedAt($value)
- * @property integer $stock_id
- * @property string $itemable_id
- * @property string $itemable_type
  * @property-read \App\Model\Product $product
  * @property-read \App\Model\ProductUnit $selectedUnit
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Receipt[] $receipts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Deliver[] $delivers
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $itemable
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereProductId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereStockId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereSelectedUnitId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereBaseUnitId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereItemableId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereItemableType($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Deliver[] $delivers
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereConversionValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereToBaseQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Item extends Model
 {
