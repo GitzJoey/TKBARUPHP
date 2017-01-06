@@ -8,18 +8,20 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Auth;
+use Illuminate\Http\Request;
+
 use App\Model\Bank;
-use App\Model\BankAccount;
-use App\Model\ExpenseTemplate;
 use App\Model\Lookup;
-use App\Model\PhoneNumber;
-use App\Model\PhoneProvider;
 use App\Model\Product;
 use App\Model\Profile;
 use App\Model\Supplier;
+use App\Model\BankAccount;
+use App\Model\PhoneNumber;
+use App\Model\PhoneProvider;
+use App\Model\ExpenseTemplate;
 use App\Model\SupplierSetting;
-use Auth;
-use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
@@ -68,56 +70,58 @@ class SupplierController extends Controller
             'status' => 'required',
         ]);
 
-        $suppliers = [
-            'store_id' => Auth::user()->store->id,
-            'name' => $request->input('name'),
-            'address' => $request->input('address'),
-            'city' => $request->input('city'),
-            'phone_number' => $request->input('phone_number'),
-            'fax_num' => $request->input('fax_num'),
-            'tax_id' => $request->input('tax_id'),
-            'status' => $request->input('status'),
-            'remarks' => $request->input('remarks'),
-            'payment_due_day' => empty($request->input('payment_due_day')) ? 0 : $request->input('payment_due_day'),
-        ];
+        DB::transaction(function() use($request) {
+            $suppliers = [
+                'store_id' => Auth::user()->store->id,
+                'name' => $request->input('name'),
+                'address' => $request->input('address'),
+                'city' => $request->input('city'),
+                'phone_number' => $request->input('phone_number'),
+                'fax_num' => $request->input('fax_num'),
+                'tax_id' => $request->input('tax_id'),
+                'status' => $request->input('status'),
+                'remarks' => $request->input('remarks'),
+                'payment_due_day' => empty($request->input('payment_due_day')) ? 0 : $request->input('payment_due_day'),
+            ];
 
-        $supplier = Supplier::create($suppliers);
+            $supplier = Supplier::create($suppliers);
 
-        for ($i = 0; $i < count($request['bank']); $i++) {
-            $ba = new BankAccount();
-            $ba->bank_id = $request["bank"][$i];
-            $ba->account_name = $request["account_name"][$i];
-            $ba->account_number = $request["account_number"][$i];
-            $ba->remarks = $request["bank_remarks"][$i];
+            for ($i = 0; $i < count($request['bank']); $i++) {
+                $ba = new BankAccount();
+                $ba->bank_id = $request["bank"][$i];
+                $ba->account_name = $request["account_name"][$i];
+                $ba->account_number = $request["account_number"][$i];
+                $ba->remarks = $request["bank_remarks"][$i];
 
-            $supplier->bankAccounts()->save($ba);
-        }
-
-        for ($i = 0; $i < count($request['first_name']); $i++) {
-            $pa = new Profile();
-            $pa->first_name = $request["first_name"][$i];
-            $pa->last_name = $request["last_name"][$i];
-            $pa->address = $request["profile_address"][$i];
-            $pa->ic_num = $request["ic_num"][$i];
-
-            $supplier->profiles()->save($pa);
-
-            for ($j = 0; $j < count($request['profile_' . $i . '_phone_provider']); $j++) {
-                $ph = new PhoneNumber();
-                $ph->phone_provider_id = $request['profile_' . $i . '_phone_provider'][$j];
-                $ph->number = $request['profile_' . $i . '_phone_number'][$j];
-                $ph->remarks = $request['profile_' . $i . '_remarks'][$j];
-
-                $pa->phoneNumbers()->save($ph);
+                $supplier->bankAccounts()->save($ba);
             }
-        }
 
-        for ($i = 0; $i < count($request['productSelected']); $i++) {
-            $pr = Product::whereId($request['productSelected'][$i])->first();
-            $supplier->products()->save($pr);
-        }
+            for ($i = 0; $i < count($request['first_name']); $i++) {
+                $pa = new Profile();
+                $pa->first_name = $request["first_name"][$i];
+                $pa->last_name = $request["last_name"][$i];
+                $pa->address = $request["profile_address"][$i];
+                $pa->ic_num = $request["ic_num"][$i];
 
-        $supplier->expenseTemplates()->sync($request->input('expense_template_id'));
+                $supplier->profiles()->save($pa);
+
+                for ($j = 0; $j < count($request['profile_' . $i . '_phone_provider']); $j++) {
+                    $ph = new PhoneNumber();
+                    $ph->phone_provider_id = $request['profile_' . $i . '_phone_provider'][$j];
+                    $ph->number = $request['profile_' . $i . '_phone_number'][$j];
+                    $ph->remarks = $request['profile_' . $i . '_remarks'][$j];
+
+                    $pa->phoneNumbers()->save($ph);
+                }
+            }
+
+            for ($i = 0; $i < count($request['productSelected']); $i++) {
+                $pr = Product::whereId($request['productSelected'][$i])->first();
+                $supplier->products()->save($pr);
+            }
+
+            $supplier->expenseTemplates()->sync($request->input('expense_template_id'));
+        });
 
         return redirect(route('db.master.supplier'));
     }
@@ -141,95 +145,97 @@ class SupplierController extends Controller
 
     public function update($id, Request $request)
     {
-        $supplier = Supplier::with('bankAccounts', 'profiles')->findOrFail($id);
+        DB::transaction(function() use($id, $request) {
+            $supplier = Supplier::with('bankAccounts', 'profiles')->findOrFail($id);
 
-        if (!$supplier) {
-            return redirect(route('db.master.supplier'));
-        }
+            if (!$supplier) {
+                return redirect(route('db.master.supplier'));
+            }
 
-        $supplierBankAccountIds = $supplier->bankAccounts->map(function ($bankAccount) {
-            return $bankAccount->id;
-        })->all();
-
-        $inputtedBankAccountId = $request->input('bank_account_id');
-
-        $supplierBankAccountsToBeDeleted = array_diff($supplierBankAccountIds, isset($inputtedBankAccountId) ?
-            $inputtedBankAccountId : []);
-
-        BankAccount::destroy($supplierBankAccountsToBeDeleted);
-
-        for ($i = 0; $i < count($request['bank']); $i++) {
-            $ba = BankAccount::findOrNew($request['bank_account_id'][$i]);
-            $ba->bank_id = $request["bank"][$i];
-            $ba->account_name= $request["account_name"][$i];
-            $ba->account_number = $request["account_number"][$i];
-            $ba->remarks = $request["bank_remarks"][$i];
-
-            $supplier->bankAccounts()->save($ba);
-        }
-
-        $supplierProfileIds = $supplier->profiles->map(function ($profile) {
-            return $profile->id;
-        })->all();
-
-        $inputtedProfileId = $request->input('profile_id');
-
-        $supplierProfilesToBeDeleted = array_diff($supplierProfileIds, isset($inputtedProfileId) ?
-            $inputtedProfileId : []);
-
-        Profile::destroy($supplierProfilesToBeDeleted);
-
-        for ($i = 0; $i < count($request['first_name']); $i++) {
-            $pa = Profile::with('phoneNumbers')->findOrNew($request['profile_id'][$i]);
-            $pa->first_name = $request["first_name"][$i];
-            $pa->last_name = $request["last_name"][$i];
-            $pa->address = $request["profile_address"][$i];
-            $pa->ic_num = $request["ic_num"][$i];
-
-            $supplier->profiles()->save($pa);
-
-            $profilePhoneNumberIds = $pa->phoneNumbers->map(function ($phoneNumber) {
-                return $phoneNumber->id;
+            $supplierBankAccountIds = $supplier->bankAccounts->map(function ($bankAccount) {
+                return $bankAccount->id;
             })->all();
 
-            $inputtedPhoneNumberId = $request->input('profile_' . $i . '_phone_number_id');
+            $inputtedBankAccountId = $request->input('bank_account_id');
 
-            $profilePhoneNumbersToBeDeleted = array_diff($profilePhoneNumberIds,
-                isset($inputtedPhoneNumberId) ? $inputtedPhoneNumberId : []);
+            $supplierBankAccountsToBeDeleted = array_diff($supplierBankAccountIds, isset($inputtedBankAccountId) ?
+                $inputtedBankAccountId : []);
 
-            PhoneNumber::destroy($profilePhoneNumbersToBeDeleted);
+            BankAccount::destroy($supplierBankAccountsToBeDeleted);
 
-            for ($j = 0; $j < count($request['profile_' . $i . '_phone_provider']); $j++) {
-                $ph = PhoneNumber::findOrNew($request['profile_' . $i . '_phone_number_id'][$j]);
-                $ph->phone_provider_id = $request['profile_' . $i . '_phone_provider'][$j];
-                error_log($request['profile_' . $i . '_phone_provider'][$j]);
-                $ph->number = $request['profile_' . $i . '_phone_number'][$j];
-                $ph->remarks = $request['profile_' . $i . '_remarks'][$j];
+            for ($i = 0; $i < count($request['bank']); $i++) {
+                $ba = BankAccount::findOrNew($request['bank_account_id'][$i]);
+                $ba->bank_id = $request["bank"][$i];
+                $ba->account_name= $request["account_name"][$i];
+                $ba->account_number = $request["account_number"][$i];
+                $ba->remarks = $request["bank_remarks"][$i];
 
-                $pa->phoneNumbers()->save($ph);
+                $supplier->bankAccounts()->save($ba);
             }
-        }
 
-        $supplier->products()->detach();
+            $supplierProfileIds = $supplier->profiles->map(function ($profile) {
+                return $profile->id;
+            })->all();
 
-        for ($i = 0; $i < count($request['productSelected']); $i++) {
-            $pr = Product::whereId($request['productSelected'][$i])->first();
-            $supplier->products()->save($pr);
-        }
+            $inputtedProfileId = $request->input('profile_id');
 
-        $supplier->name = $request->input('name');
-        $supplier->address = $request->input('address');
-        $supplier->city = $request->input('city');
-        $supplier->phone_number = $request->input('phone_number');
-        $supplier->fax_num = $request->input('fax_num');
-        $supplier->tax_id = $request->input('tax_id');
-        $supplier->status = $request->input('status');
-        $supplier->remarks = $request->input('remarks');
-        $supplier->payment_due_day = empty($request->input('payment_due_day')) ? 0 : $request->input('payment_due_day');
+            $supplierProfilesToBeDeleted = array_diff($supplierProfileIds, isset($inputtedProfileId) ?
+                $inputtedProfileId : []);
 
-        $supplier->save();
+            Profile::destroy($supplierProfilesToBeDeleted);
 
-        $supplier->expenseTemplates()->sync($request->input('expense_template_id'));
+            for ($i = 0; $i < count($request['first_name']); $i++) {
+                $pa = Profile::with('phoneNumbers')->findOrNew($request['profile_id'][$i]);
+                $pa->first_name = $request["first_name"][$i];
+                $pa->last_name = $request["last_name"][$i];
+                $pa->address = $request["profile_address"][$i];
+                $pa->ic_num = $request["ic_num"][$i];
+
+                $supplier->profiles()->save($pa);
+
+                $profilePhoneNumberIds = $pa->phoneNumbers->map(function ($phoneNumber) {
+                    return $phoneNumber->id;
+                })->all();
+
+                $inputtedPhoneNumberId = $request->input('profile_' . $i . '_phone_number_id');
+
+                $profilePhoneNumbersToBeDeleted = array_diff($profilePhoneNumberIds,
+                    isset($inputtedPhoneNumberId) ? $inputtedPhoneNumberId : []);
+
+                PhoneNumber::destroy($profilePhoneNumbersToBeDeleted);
+
+                for ($j = 0; $j < count($request['profile_' . $i . '_phone_provider']); $j++) {
+                    $ph = PhoneNumber::findOrNew($request['profile_' . $i . '_phone_number_id'][$j]);
+                    $ph->phone_provider_id = $request['profile_' . $i . '_phone_provider'][$j];
+                    error_log($request['profile_' . $i . '_phone_provider'][$j]);
+                    $ph->number = $request['profile_' . $i . '_phone_number'][$j];
+                    $ph->remarks = $request['profile_' . $i . '_remarks'][$j];
+
+                    $pa->phoneNumbers()->save($ph);
+                }
+            }
+
+            $supplier->products()->detach();
+
+            for ($i = 0; $i < count($request['productSelected']); $i++) {
+                $pr = Product::whereId($request['productSelected'][$i])->first();
+                $supplier->products()->save($pr);
+            }
+
+            $supplier->name = $request->input('name');
+            $supplier->address = $request->input('address');
+            $supplier->city = $request->input('city');
+            $supplier->phone_number = $request->input('phone_number');
+            $supplier->fax_num = $request->input('fax_num');
+            $supplier->tax_id = $request->input('tax_id');
+            $supplier->status = $request->input('status');
+            $supplier->remarks = $request->input('remarks');
+            $supplier->payment_due_day = empty($request->input('payment_due_day')) ? 0 : $request->input('payment_due_day');
+
+            $supplier->save();
+
+            $supplier->expenseTemplates()->sync($request->input('expense_template_id'));
+        });
 
         return redirect(route('db.master.supplier'));
     }
