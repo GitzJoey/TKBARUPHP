@@ -80,10 +80,9 @@ class RolesController extends Controller
             'description' => 'required',
         ]);
 
-        $role = Role::with('permissions')->where('id', '=', $id);
+        $role = Role::with('permissions')->where('id', '=', $id)->first();
         $pl = Permission::whereIn('id', $req['permission'])->get();
-
-        $role->permissions->sync($pl);
+        $role->permissions()->sync($pl);
 
         $role->update([
             'name' => $req['name'],
