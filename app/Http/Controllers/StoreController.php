@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -73,45 +74,47 @@ class StoreController extends Controller
             'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $imageName = '';
+        DB::transaction(function() use($data) {
+            $imageName = '';
 
-        if (!empty($data->image_path)) {
-            $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
-            $path = public_path('images') . '/' . $imageName;
+            if (!empty($data->image_path)) {
+                $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
+                $path = public_path('images') . '/' . $imageName;
 
-            Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
-        }
+                Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
+            }
 
-        if ($data['is_default'] == 'YESNOSELECT.YES') {
-            $this->storeService->resetIsDefault();
-        }
+            if ($data['is_default'] == 'YESNOSELECT.YES') {
+                $this->storeService->resetIsDefault();
+            }
 
-        if ($data['frontweb'] == 'YESNOSELECT.YES') {
-            $this->storeService->resetFrontWeb();
-        }
+            if ($data['frontweb'] == 'YESNOSELECT.YES') {
+                $this->storeService->resetFrontWeb();
+            }
 
-        $store = Store::create([
-            'name' => $data['name'],
-            'address' => $data['address'],
-            'phone_num' => $data['phone_num'],
-            'fax_num' => $data['fax_num'],
-            'tax_id' => $data['tax_id'],
-            'status' => $data['status'],
-            'is_default' => $data['is_default'],
-            'frontweb' => $data['frontweb'],
-            'image_filename' => $imageName,
-            'remarks' => empty($data['remarks']) ? '' : $data['remarks']
-        ]);
+            $store = Store::create([
+                'name' => $data['name'],
+                'address' => $data['address'],
+                'phone_num' => $data['phone_num'],
+                'fax_num' => $data['fax_num'],
+                'tax_id' => $data['tax_id'],
+                'status' => $data['status'],
+                'is_default' => $data['is_default'],
+                'frontweb' => $data['frontweb'],
+                'image_filename' => $imageName,
+                'remarks' => empty($data['remarks']) ? '' : $data['remarks']
+            ]);
 
-        for ($i = 0; $i < count($data['bank']); $i++) {
-            $ba = new BankAccount();
-            $ba->bank_id = $data["bank"][$i];
-            $ba->account_name = $data["account_name"][$i];
-            $ba->account_number = $data["account_number"][$i];
-            $ba->remarks = $data["bank_remarks"][$i];
+            for ($i = 0; $i < count($data['bank']); $i++) {
+                $ba = new BankAccount();
+                $ba->bank_id = $data["bank"][$i];
+                $ba->account_name = $data["account_name"][$i];
+                $ba->account_number = $data["account_number"][$i];
+                $ba->remarks = $data["bank_remarks"][$i];
 
-            $store->bankAccounts()->save($ba);
-        }
+                $store->bankAccounts()->save($ba);
+            }
+        });
 
         return redirect(route('db.admin.store'));
     }
@@ -133,48 +136,50 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@update] $id:' . $id);
 
-        $store = Store::find($id);
+        DB::transaction(function() use ($data) {
+            $store = Store::find($id);
 
-        $imageName = '';
+            $imageName = '';
 
-        if (!empty($data->image_path)) {
-            $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
-            $path = public_path('images') . '/' . $imageName;
+            if (!empty($data->image_path)) {
+                $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
+                $path = public_path('images') . '/' . $imageName;
 
-            Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
-        }
+                Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
+            }
 
-        if ($store->is_default == 'YESNOSELECT.NO' && $data['is_default'] == 'YESNOSELECT.YES') {
-            $this->storeService->resetIsDefault();
-        }
+            if ($store->is_default == 'YESNOSELECT.NO' && $data['is_default'] == 'YESNOSELECT.YES') {
+                $this->storeService->resetIsDefault();
+            }
 
-        if ($store->frontweb == 'YESNOSELECT.NO' && $data['frontweb'] == 'YESNOSELECT.YES') {
-            $this->storeService->resetFrontWeb();
-        }
+            if ($store->frontweb == 'YESNOSELECT.NO' && $data['frontweb'] == 'YESNOSELECT.YES') {
+                $this->storeService->resetFrontWeb();
+            }
 
-        $store->bankAccounts->each(function($ba) { $ba->delete(); });
+            $store->bankAccounts->each(function($ba) { $ba->delete(); });
 
-        for ($i = 0; $i < count($data['bank']); $i++) {
-            $ba = new BankAccount();
-            $ba->bank_id = $data["bank"][$i];
-            $ba->account_name = $data["account_name"][$i];
-            $ba->account_number = $data["account_number"][$i];
-            $ba->remarks = $data["bank_remarks"][$i];
+            for ($i = 0; $i < count($data['bank']); $i++) {
+                $ba = new BankAccount();
+                $ba->bank_id = $data["bank"][$i];
+                $ba->account_name = $data["account_name"][$i];
+                $ba->account_number = $data["account_number"][$i];
+                $ba->remarks = $data["bank_remarks"][$i];
 
-            $store->bankAccounts()->save($ba);
-        }
+                $store->bankAccounts()->save($ba);
+            }
 
-        $store->name = $data['name'];
-        $store->address = $data['address'];
-        $store->phone_num = $data['phone_num'];
-        $store->fax_num = $data['fax_num'];
-        $store->tax_id = $data['tax_id'];
-        $store->status = $data['status'];
-        $store->is_default = $data['is_default'];
-        $store->image_filename = $imageName;
-        $store->frontweb = $data['frontweb'];
-        $store->remarks = empty($data['remarks']) ? '' : $data['remarks'];
-        $store->save();
+            $store->name = $data['name'];
+            $store->address = $data['address'];
+            $store->phone_num = $data['phone_num'];
+            $store->fax_num = $data['fax_num'];
+            $store->tax_id = $data['tax_id'];
+            $store->status = $data['status'];
+            $store->is_default = $data['is_default'];
+            $store->image_filename = $imageName;
+            $store->frontweb = $data['frontweb'];
+            $store->remarks = empty($data['remarks']) ? '' : $data['remarks'];
+            $store->save();
+        });
 
         return redirect(route('db.admin.store'));
     }
