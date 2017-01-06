@@ -79,7 +79,9 @@ class UserController extends Controller
 
             $usr->save();
             $usr->roles()->attach(Role::whereName($data['roles'])->get());
-            $usr->profile()->save(Profile::whereId($data['link_profile'])->first());
+            if (!empty($data['link_profile'])) {
+                $usr->profile()->save(Profile::whereId($data['link_profile'])->first());
+            }
             $usr->userDetail()->save($ud);
 
             Session::flash('success', 'New User Created');

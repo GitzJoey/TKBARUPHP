@@ -54,6 +54,7 @@ class TruckMaintenance extends Model
     protected $fillable = [
         'store_id',
         'truck_id',
+        'maintenance_date',
         'maintenance_type',
         'cost',
         'odometer',
