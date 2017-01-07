@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
 use Validator;
 use App\Http\Requests;
@@ -56,28 +57,28 @@ class ProductController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
         } else {
+            DB::transaction(function() use ($data) {
+                $product = new Product;
+                $product->store_id = Auth::user()->store->id;
+                $product->product_type_id = $data['type'];
+                $product->name = $data['name'];
+                $product->short_code = $data['short_code'];
+                $product->description = $data['description'];
+                $product->status = $data['status'];
+                $product->remarks = $data['remarks'];
 
-            $product = new Product;
+                $product->save();
 
-            $product->store_id = Auth::user()->store->id;
-            $product->product_type_id = $data['type'];
-            $product->name = $data['name'];
-            $product->short_code = $data['short_code'];
-            $product->description = $data['description'];
-            $product->status = $data['status'];
-            $product->remarks = $data['remarks'];
+                for ($i = 0; $i < count($data['unit_id']); $i++) {
+                    $punit = new ProductUnit();
+                    $punit->unit_id = $data['unit_id'][$i];
+                    $punit->is_base = (bool)$data['is_base'][$i];
+                    $punit->conversion_value = $data['conversion_value'][$i];
+                    $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
 
-            $product->save();
-
-            for ($i = 0; $i < count($data['unit_id']); $i++) {
-                $punit = new ProductUnit();
-                $punit->unit_id = $data['unit_id'][$i];
-                $punit->is_base = (bool)$data['is_base'][$i];
-                $punit->conversion_value = $data['conversion_value'][$i];
-                $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
-
-                $product->productUnit()->save($punit);
-            }
+                    $product->productUnit()->save($punit);
+                }
+            });
 
             return redirect(route('db.master.product'));
         }
@@ -98,31 +99,33 @@ class ProductController extends Controller
 
     public function update($id, Request $data)
     {
-        $product = Product::find($id);
+        DB::transaction(function() use ($id, $data) {
+            $product = Product::find($id);
 
-        $product->productUnit->each(function($pu) { $pu->delete(); });
+            $product->productUnit->each(function($pu) { $pu->delete(); });
 
-        $pu = array();
-        for ($i = 0; $i < count($data['unit_id']); $i++) {
-            $punit = new ProductUnit();
-            $punit->unit_id = $data['unit_id'][$i];
-            $punit->is_base = (bool)$data['is_base'][$i];
-            $punit->conversion_value = $data['conversion_value'][$i];
-            $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
+            $pu = array();
+            for ($i = 0; $i < count($data['unit_id']); $i++) {
+                $punit = new ProductUnit();
+                $punit->unit_id = $data['unit_id'][$i];
+                $punit->is_base = (bool)$data['is_base'][$i];
+                $punit->conversion_value = $data['conversion_value'][$i];
+                $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
 
-            array_push($pu, $punit);
-        }
+                array_push($pu, $punit);
+            }
 
-        $product->productUnit()->saveMany($pu);
+            $product->productUnit()->saveMany($pu);
 
-        $product->update([
-            'product_type_id' => $data['type'],
-            'name' => $data['name'],
-            'short_code' => $data['short_code'],
-            'description' => $data['description'],
-            'status' => $data['status'],
-            'remarks' => $data['remarks']
-        ]);
+            $product->update([
+                'product_type_id' => $data['type'],
+                'name' => $data['name'],
+                'short_code' => $data['short_code'],
+                'description' => $data['description'],
+                'status' => $data['status'],
+                'remarks' => $data['remarks']
+            ]);
+        });
 
         return redirect(route('db.master.product'));
     }
