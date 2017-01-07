@@ -24,6 +24,7 @@
     "awesome-bootstrap-checkbox": "^1.0.0-alpha.4",
     "bootstrap": "^3.3.7",
     "bootstrap-daterangepicker": "^2.1.24",
+    "bootstrap-fileinput-npm": "^4.2.8",
     "bootstrap-sweetalert": "^1.0.1",
     "eonasdan-bootstrap-datetimepicker ": "^4.17.43",
     "font-awesome": "^4.7.0",
