@@ -11,7 +11,7 @@ use App\Model\Payment;
 use App\Model\SalesOrder;
 use App\Model\Store;
 use App\Model\TransferPayment;
-use App\Services\Implementation\SalesOrderPaymentServiceImpl;
+use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -20,10 +20,9 @@ class SalesOrderPaymentController extends Controller
 {
     private $paymentService;
 
-    public function __construct()
+    public function __construct(PaymentService $paymentService)
     {
-        //TODO : move this to service provider and make it as singleton
-        $this->paymentService = new SalesOrderPaymentServiceImpl();
+        $this->paymentService = $paymentService;
         $this->middleware('auth');
     }
 
@@ -68,19 +67,7 @@ class SalesOrderPaymentController extends Controller
     {
         Log::info('[SalesOrderController@saveCashPayment]');
 
-        $cashPayment = new CashPayment();
-        $cashPayment->save();
-
-        $paymentParam = [
-            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
-            'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
-            'status' => Lookup::whereCode('CASHPAYMENTSTATUS.C')->first()->code,
-            'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
-        ];
-
-        $payment = Payment::create($paymentParam);
-
-        $cashPayment->payment()->save($payment);
+        $payment = $this->paymentService->createCashPayment($request);
 
         $currentSo = SalesOrder::find($id);
 
@@ -114,22 +101,7 @@ class SalesOrderPaymentController extends Controller
     {
         Log::info('[SalesOrderController@saveTransferPayment]');
 
-        $transferPayment = new TransferPayment();
-        $transferPayment->bank_account_from_id = empty($request->input('bank_account_from')) ? 0 : $request->input('bank_account_from');
-        $transferPayment->bank_account_to_id = empty($request->input('bank_account_to')) ? 0 : $request->input('bank_account_to');
-        $transferPayment->effective_date = date('Y-m-d', strtotime($request->input('effective_date')));
-        $transferPayment->save();
-
-        $paymentParam = [
-            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
-            'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
-            'status' => Lookup::whereCode('TRFPAYMENTSTATUS.UNCONFIRMED')->first()->code,
-            'type' => Lookup::whereCode('PAYMENTTYPE.T')->first()->code
-        ];
-
-        $payment = Payment::create($paymentParam);
-
-        $transferPayment->payment()->save($payment);
+        $payment = $this->paymentService->createTransferPayment($request);
 
         $currentSo = SalesOrder::find($id);
 
@@ -173,20 +145,7 @@ class SalesOrderPaymentController extends Controller
 
         $giro = Giro::create($giroParam);
 
-        $giroPayment = new GiroPayment();
-        $giroPayment->giro_id = $giro->id;
-        $giroPayment->save();
-
-        $paymentParam = [
-            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
-            'total_amount' => floatval(str_replace(',', '', $request->input('amount'))),
-            'status' => Lookup::whereCode('GIROPAYMENTSTATUS.WE')->first()->code,
-            'type' => Lookup::whereCode('PAYMENTTYPE.G')->first()->code
-        ];
-
-        $payment = Payment::create($paymentParam);
-
-        $giroPayment->payment()->save($payment);
+        $payment = $this->paymentService->createGiroPayment($request, $giro);
 
         $currentSo = SalesOrder::find($id);
 

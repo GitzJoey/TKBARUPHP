@@ -8,34 +8,33 @@
 
 namespace App\Services;
 
+use App\Model\Giro;
 use Illuminate\Http\Request;
 
 interface PaymentService
 {
     /**
-     * Make a cash payment for payable model with given id.
+     * Make a cash payment.
      *
      * @param Request $request request containing data for cash payment.
-     * @param int $payableId id of payable model.
-     * @return mixed payable model paid.
+     * @return Payment created cash payment.
      */
-    public function createCashPayment(Request $request, $payableId);
+    public function createCashPayment(Request $request);
 
     /**
-     * Make a transfer payment for payable model with given id.
+     * Make a transfer payment.
      *
      * @param Request $request request containing data for transfer payment.
-     * @param int $payableId id of payable model.
-     * @return mixed payable model paid.
+     * @return Payment created transfer payment.
      */
-    public function createTransferPayment(Request $request, $payableId);
+    public function createTransferPayment(Request $request);
 
     /**
-     * Make a giro payment for payable model with given id.
+     * Make a giro payment.
      *
      * @param Request $request request containing data for giro payment.
-     * @param int $payableId id of payable model.
-     * @return mixed payable model paid.
+     * @param Giro $giro giro used for payment.
+     * @return Payment created giro payment.
      */
-    public function createGiroPayment(Request $request, $payableId);
+    public function createGiroPayment(Request $request, Giro $giro);
 }

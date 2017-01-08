@@ -5,8 +5,8 @@ namespace App\Providers;
 use App\Http\Controllers\PurchaseOrderPaymentController;
 
 use App\Services\Implementation\InflowServiceImpl;
+use App\Services\Implementation\PaymentServiceImpl;
 use App\Services\Implementation\PurchaseOrderCopyServiceImpl;
-use App\Services\Implementation\PurchaseOrderPaymentServiceImpl;
 use App\Services\Implementation\PurchaseOrderServiceImpl;
 use App\Services\Implementation\SalesOrderCopyServiceImpl;
 use App\Services\Implementation\SalesOrderServiceImpl;
@@ -83,6 +83,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(ReportService::class, function (){
             return new ReportServiceImpl();
+        });
+
+        $this->app->singleton(PaymentService::class, function (){
+            return new PaymentServiceImpl();
         });
     }
 
