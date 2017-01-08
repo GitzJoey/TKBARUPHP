@@ -30,9 +30,21 @@ class CustomerController extends Controller
         $this->middleware('auth', [ 'except' => [ 'searchCustomers' ] ]);
     }
 
-    public function index()
+    public function index(Request $req)
     {
-        $customer = Customer::paginate(10);
+        $customer = [];
+        if (!empty($req->query('s'))) {
+            $param = $req->query('s');
+            $customer = Customer::with('profiles.phoneNumbers.provider', 'expenseTemplates', 'bankAccounts.bank', 'priceLevel')
+                ->where('name', 'like', "%$param%")
+                ->orWhereHas('profiles', function ($query) use ($param) {
+                    $query->where('first_name', 'like', "%$param%")
+                        ->orWhere('last_name', 'like', "%$param%");
+                })->paginate(10);
+        } else {
+            $customer = Customer::paginate(10);
+        }
+
         return view('customer.index')->with('customer', $customer);
     }
 
