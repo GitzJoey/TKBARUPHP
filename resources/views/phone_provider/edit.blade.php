@@ -51,26 +51,26 @@
                 <div class="form-group">
                     <label for="inputPrefix" class="col-sm-2 control-label">@lang('phone_provider.field.prefix')</label>
                     <div class="col-sm-5">
-                        <div ng-app="phModule" ng-controller="phController">
+                        <div id="phVue">
                             <table class="table table-striped table-bordered">
                                 <thead>
-                                <tr>
-                                    <th>@lang('phone_provider.edit.table.header.prefix')</th>
-                                    <th class="text-center">@lang('labels.ACTION')</th>
-                                </tr>
+                                    <tr>
+                                        <th>@lang('phone_provider.edit.table.header.prefix')</th>
+                                        <th class="text-center">@lang('labels.ACTION')</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="p in prefixes">
-                                    <td>
-                                        <input type="text" class="form-control" ng-model="p.prefix" name="prefixes[]" data-parsley-required="true"/>
-                                    </td>
-                                    <td class="text-center valign-middle">
-                                        <button type="button" class="btn btn-xs btn-danger" ng-hide="!prefixes.length" ng-click="remove()">@lang('buttons.remove_button')</button>
-                                    </td>
-                                </tr>
+                                    <tr v-for="p in prefixes">
+                                        <td>
+                                            <input type="text" class="form-control" v-model="p.prefix" name="prefixes[]" data-parsley-required="true"/>
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            <button type="button" class="btn btn-xs btn-danger" v-show="prefixes.length" v-on:click="remove()">@lang('buttons.remove_button')</button>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
-                            <button type="button" class="btn btn-xs btn-primary" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                            <button type="button" class="btn btn-xs btn-primary" v-on:click="addNew()">@lang('buttons.create_new_button')</button>
                         </div>
                     </div>
                 </div>
@@ -102,20 +102,22 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("phModule", []);
-        app.controller("phController", ['$scope', function($scope) {
-            $scope.prefixes = JSON.parse('{!! htmlspecialchars_decode($phoneProvider->prefixes) !!}');
-
-            $scope.addNew = function (p) {
-                $scope.prefixes.push({
-                    'phone_provider_id': '',
-                    'prefix': ''
-                });
-            };
-
-            $scope.remove = function (idx) {
-                $scope.prefixes.splice(idx, 1);
-            };
-        }]);
+        var app = new Vue({
+            el: '#phVue',
+            data: {
+                prefixes: JSON.parse('{!! htmlspecialchars_decode($phoneProvider->prefixes) !!}'),
+            },
+            methods: {
+                addNew: function () {
+                    this.prefixes.push({
+                        'phone_provider_id': '',
+                        'prefix': ''
+                    })
+                },
+                remove: function (idx) {
+                    this.prefixes.splice(idx, 1);
+                }
+            }
+        });
     </script>
 @endsection

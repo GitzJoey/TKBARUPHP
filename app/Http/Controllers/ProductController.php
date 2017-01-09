@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use Validator;
 use App\Http\Requests;
+use LaravelLocalization;
 use Illuminate\Http\Request;
 
 use App\Model\Unit;
@@ -57,6 +58,11 @@ class ProductController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
         } else {
+            if (count($data['unit_id']) == 0) {
+                $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
+                return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
+            }
+
             DB::transaction(function() use ($data) {
                 $product = new Product;
                 $product->store_id = Auth::user()->store->id;
@@ -99,6 +105,23 @@ class ProductController extends Controller
 
     public function update($id, Request $data)
     {
+        $validator = Validator::make($data->all(), [
+            'type' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'short_code' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+        ]);
+
+        if (count($data['unit_id']) == 0) {
+            $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
+            return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
+        }
+
+        if ($validator->fails()) {
+            return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
+        }
+
         DB::transaction(function() use ($id, $data) {
             $product = Product::find($id);
 

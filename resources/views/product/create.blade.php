@@ -69,11 +69,13 @@
                 <div class="form-group">
                     <label for="inputProductUnit" class="col-sm-2 control-label">@lang('product.field.unit')</label>
                     <div class="col-sm-10">
-                        <div ng-app="addUnitModule" ng-controller="addUnit">
+                        <div id="productVue">
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th class="text-center"><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                                    <th class="text-center valign-middle">
+                                        <input type="checkbox" v-model="selectedAll" v-on:click="checkAll()" />
+                                    </th>
                                     <th>@lang('product.create.table.header.unit')</th>
                                     <th class="text-center">@lang('product.create.table.header.is_base')</th>
                                     <th>@lang('product.create.table.header.conversion_value')</th>
@@ -81,30 +83,30 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="unit in units">
+                                    <tr v-for="unit in units">
+                                        <td class="text-center valign-middle">
+                                            <input type="checkbox" v-model="unit.selected" v-on:click="checkSelectAll()"/>
+                                        </td>
+                                        <td>
+                                            {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'v-model' => 'unit.unit_id', 'data-parsley-required' => 'true')) }}
+                                        </td>
                                         <td class="text-center">
-                                            <input type="checkbox" ng-model="unit.selected" ng-click="checkSelectAll()"/>
+                                            <input type="checkbox" v-model="unit.is_base" v-on:click="checkOnlyOneIsBase($index)" name="is_base[]"/>
+                                            <input type="hidden" v-model="unit.is_base_val" name="is_base[]"/>
                                         </td>
                                         <td>
-                                            {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'ng-model' => 'unit.unit_id', 'data-parsley-required' => 'true')) }}
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" ng-model="unit.is_base" ng-click="checkOnlyOneIsBase($index)" name="is_base[]"/>
-                                            <input type="hidden" ng-model="unit.is_base_val" name="is_base[]"/>
+                                            <input type="text" class="form-control" v-model="unit.conversion_value" name="conversion_value[]" data-parsley-required="true"/>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="unit.conversion_value" name="conversion_value[]" data-parsley-required="true"/>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" ng-model="unit.remarks" name="remarks[]"/>
+                                            <input type="text" class="form-control" v-model="unit.remarks" name="remarks[]"/>
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="4">
-                                            <button type="button" class="btn btn-xs btn-danger" ng-hide="!units.length" ng-click="remove()">@lang('buttons.remove_button')</button>
-                                            <button type="button" class="btn btn-xs btn-primary" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                                            <button type="button" class="btn btn-xs btn-danger" v-show="units.length" v-on:click="remove()">@lang('buttons.remove_button')</button>
+                                            <button type="button" class="btn btn-xs btn-primary" v-on:click="addNew()">@lang('buttons.create_new_button')</button>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -141,68 +143,75 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("addUnitModule", []);
-        app.controller("addUnit", ['$scope', function($scope) {
-            $scope.units = [{
-                'unit_id': '',
-                'is_base': false,
-                'is_base_val': false,
-                'conversion_value':'',
-                'remarks': ''
-            }];
-
-            $scope.addNew = function(unit) {
-                $scope.units.push({
+        var app = new Vue({
+            el: '#productVue',
+            data: {
+                selectedAll: false,
+                units: [{
+                    'selected': false,
                     'unit_id': '',
                     'is_base': false,
                     'is_base_val': false,
-                    'conversion_value': '',
+                    'conversion_value':'',
                     'remarks': ''
-                });
-            };
+                }],
+            },
+            methods: {
+                addNew: function () {
+                    this.units.push({
+                        'selected': false,
+                        'unit_id': '',
+                        'is_base': false,
+                        'is_base_val': false,
+                        'conversion_value': '',
+                        'remarks': ''
+                    });
+                },
+                remove: function () {
+                    var newDataList = [];
+                    this.selectedAll = false;
 
-            $scope.remove = function() {
-                var newDataList=[];
-                $scope.selectedAll = false;
-                angular.forEach($scope.units, function(selected){
-                    if(!selected.selected) {
-                        newDataList.push(selected);
-                    }
-                });
-                $scope.units = newDataList;
-            };
-
-            $scope.checkAll = function() {
-                if ($scope.selectedAll) {
-                    $scope.selectedAll = true;
-                } else {
-                    $scope.selectedAll = false;
-                }
-
-                angular.forEach($scope.units, function(unit) {
-                    unit.selected = $scope.selectedAll;
-                });
-            };
-
-            $scope.checkSelectAll = function() {
-                angular.forEach($scope.units, function(unit) {
-                    if (unit.selected == false) {
-                        $scope.selectedAll = false;
-                    }
-                });
-            };
-
-            $scope.checkOnlyOneIsBase = function($index) {
-                for (var i=0; i<$scope.units.length; i++) {
-                    if ($index == i) {
-                        $scope.units[i].conversion_value = 1;
-                        $scope.units[i].is_base_val = true;
+                    this.units.forEach(function (unit) {
+                        if (!unit.selected) {
+                            newDataList.push(unit);
+                        }
+                    });
+                    this.units = newDataList;
+                },
+                checkAll: function () {
+                    if (this.selectedAll) {
+                        this.selectedAll = true;
+                        this.units.forEach(function (unit) {
+                            unit.selected = true;
+                        });
                     } else {
-                        $scope.units[i].is_base = false;
-                        $scope.units[i].is_base_val = false;
+                        this.selectedAll = false;
+                        this.units.forEach(function (unit) {
+                            unit.selected = false;
+                        });
+                    }
+                },
+                checkSelectAll: function () {
+                    var check = true;
+                    this.units.forEach(function (unit) {
+                        if (unit.selected == false) {
+                            check = false;
+                        }
+                    });
+                    this.selectedAll = check;
+                },
+                checkOnlyOneIsBase: function (idx) {
+                    for (var i = 0; i < this.units.length; i++) {
+                        if (idx == i) {
+                            this.units[i].conversion_value = 1;
+                            this.units[i].is_base_val = true;
+                        } else {
+                            this.units[i].is_base = false;
+                            this.units[i].is_base_val = false;
+                        }
                     }
                 }
-            };
-        }]);
+            }
+        });
     </script>
 @endsection
