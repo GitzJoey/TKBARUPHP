@@ -8,6 +8,7 @@ use App\Model\Lookup;
 use App\Model\Payment;
 use App\Model\TransferPayment;
 use App\Services\PaymentService;
+
 use Illuminate\Http\Request;
 
 class PaymentServiceImpl implements PaymentService {
@@ -21,7 +22,7 @@ class PaymentServiceImpl implements PaymentService {
             'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
         ];
         $payment = Payment::create($paymentParam);
-        
+
         $cashPayment = new CashPayment();
         $cashPayment->save();
         $cashPayment->payment()->save($payment);
@@ -38,14 +39,14 @@ class PaymentServiceImpl implements PaymentService {
             'type' => Lookup::whereCode('PAYMENTTYPE.T')->first()->code
         ];
         $payment = Payment::create($paymentParam);
-        
+
         $transferPayment = new TransferPayment();
         $transferPayment->bank_account_from_id = empty($request->input('bank_account_from')) ? 0 : $request->input('bank_account_from');
         $transferPayment->bank_account_to_id = empty($request->input('bank_account_to')) ? 0 : $request->input('bank_account_to');
         $transferPayment->effective_date = date('Y-m-d', strtotime($request->input('effective_date')));
         $transferPayment->save();
         $transferPayment->payment()->save($payment);
-    
+
         return $payment;
     }
 

@@ -109,6 +109,7 @@ class Product extends Model
 
         foreach ($this->productUnits as $produnit) {
             array_push($pu, array(
+                'selected' => false,
                 'unit_id' => (string)$produnit->unit_id,
                 'is_base' => empty($produnit->is_base) ? false : true,
                 'conversion_value' => $produnit->conversion_value,

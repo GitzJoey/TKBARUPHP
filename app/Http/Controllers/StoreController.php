@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Validator;
+use LaravelLocalization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
@@ -136,7 +137,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@update] $id:' . $id);
 
-        DB::transaction(function() use ($data) {
+        DB::transaction(function() use ($id, $data) {
             $store = Store::find($id);
 
             $imageName = '';
@@ -201,7 +202,7 @@ class StoreController extends Controller
         $rules = array('is_default' => 'isdefault');
 
         $messages = array(
-            'isdefault' => 'Default Store cannot be deleted'
+            'isdefault' => LaravelLocalization::getCurrentLocale() == 'en' ? 'Default Store cannot be deleted':'Toko Utama tidak bisa di hapus'
         );
 
         $validator = Validator::make($inputs, $rules, $messages);

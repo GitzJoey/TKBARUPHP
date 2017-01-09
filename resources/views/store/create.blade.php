@@ -34,7 +34,7 @@
         </div>
         <form id="storeForm" class="form-horizontal" action="{{ route('db.admin.store.create') }}" enctype="multipart/form-data" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
-            <div ng-app="storeModule" ng-controller="storeController">
+            <div id="storeVue">
                 <div class="box-body">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
@@ -114,41 +114,40 @@
                             <div class="tab-pane" id="tab_bank_account">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('store.create.table_bank.header.bank')</th>
-                                        <th class="text-center">@lang('store.create.table_bank.header.account_name')</th>
-                                        <th class="text-center">@lang('store.create.table_bank.header.account_number')</th>
-                                        <th class="text-center">@lang('store.create.table_bank.header.remarks')</th>
-                                        <th class="text-center">@lang('labels.ACTION')</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('store.create.table_bank.header.bank')</th>
+                                            <th class="text-center">@lang('store.create.table_bank.header.account_name')</th>
+                                            <th class="text-center">@lang('store.create.table_bank.header.account_number')</th>
+                                            <th class="text-center">@lang('store.create.table_bank.header.remarks')</th>
+                                            <th class="text-center">@lang('labels.ACTION')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="bank in banks">
-                                        <td>
-                                            <select class="form-control"
-                                                    name="bank[]"
-                                                    ng-model="bank.bank_id"
-                                                    ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
-                                                    data-parsley-required="true" data-parsley-group="tab_bank">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_name[]" ng-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr v-for="bank in banks">
+                                            <td>
+                                                <select class="form-control"
+                                                        name="bank[]"
+                                                        v-model="bank.bank_id">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" v-on:click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
+                                <button class="btn btn-xs btn-default" type="button" v-on:click="addNewBank()">@lang('buttons.create_new_button')</button>
                             </div>
                         </div>
                     </div>
@@ -168,26 +167,28 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("storeModule", []);
-        app.controller("storeController", ['$scope', function($scope) {
-            $scope.banks = [];
-            $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
-
-            $scope.addNewBank = function() {
-                $scope.banks.push({
-                    'bank_id': '',
-                    'account_name': '',
-                    'account_number': '',
-                    'remarks': ''
-                });
-            };
-
-            $scope.removeSelectedBank = function(idx) {
-                $scope.banks.splice(idx, 1);
-            };
-        }]);
-
         $(document).ready(function() {
+            var app = new Vue({
+                el: '#storeVue',
+                data: {
+                    banks: [],
+                    bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}')
+                },
+                methods: {
+                    addNewBank: function() {
+                        this.banks.push({
+                            'bank_id': '',
+                            'account_name': '',
+                            'account_number': '',
+                            'remarks': ''
+                        });
+                    },
+                    removeSelectedBank: function(idx) {
+                        this.banks.splice(idx, 1);
+                    }
+                }
+            });
+
             window.Parsley.on('parsley:field:validate', function() {
                 validateFront();
             });
