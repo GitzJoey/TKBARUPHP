@@ -136,7 +136,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@update] $id:' . $id);
 
-        DB::transaction(function() use ($data) {
+        DB::transaction(function() use ($id, $data) {
             $store = Store::find($id);
 
             $imageName = '';
