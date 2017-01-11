@@ -39,6 +39,7 @@ elixir(function (mix) {
         './node_modules/moment-duration-format/lib/moment-duration-format.js',
         './node_modules/icheck/icheck.min.js',
         './node_modules/bootstrap-daterangepicker/daterangepicker.js',
+        './node_modules/autonumeric/autoNumeric-min.js',
         './resources/assets/js/parsley.config.js',
         './node_modules/parsleyjs/dist/parsley.min.js',
         './node_modules/parsleyjs/dist/i18n/en.js',

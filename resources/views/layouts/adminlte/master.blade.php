@@ -61,159 +61,161 @@
                     $(this).fadeOut("slow");
                 });
                 container.delay(500).fadeOut("slow");
-            });
 
-            window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
+                window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
 
-            $('#goTop').goTop();
+                $('#goTop').goTop();
 
-            var sessionTimeout = parseInt('{{ Config::get('session.lifetime') }}') * 60;
-            function timeout() {
-                setTimeout(function () {
-                    sessionTimeout = (sessionTimeout - 1);
-                    if (sessionTimeout >= 30) {
-                        $('#timeoutCount').text(moment.duration(sessionTimeout, 'seconds').format('h:mm:ss'));
-                    } else {
-                        document.getElementById('logout-form').submit();
-                    }
-                    timeout();
-                }, 1000);
-            }
-            timeout();
+                var sessionTimeout = parseInt('{{ Config::get('session.lifetime') }}') * 60;
+                function timeout() {
+                    setTimeout(function () {
+                        sessionTimeout = (sessionTimeout - 1);
+                        if (sessionTimeout >= 30) {
+                            $('#timeoutCount').text(moment.duration(sessionTimeout, 'seconds').format('h:mm:ss'));
+                        } else {
+                            document.getElementById('logout-form').submit();
+                        }
+                        timeout();
+                    }, 1000);
+                }
+                timeout();
 
-            var my_skins = [
-                "skin-blue",
-                "skin-black",
-                "skin-red",
-                "skin-yellow",
-                "skin-purple",
-                "skin-green",
-                "skin-blue-light",
-                "skin-black-light",
-                "skin-red-light",
-                "skin-yellow-light",
-                "skin-purple-light",
-                "skin-green-light"
-            ];
+                var my_skins = [
+                    "skin-blue",
+                    "skin-black",
+                    "skin-red",
+                    "skin-yellow",
+                    "skin-purple",
+                    "skin-green",
+                    "skin-blue-light",
+                    "skin-black-light",
+                    "skin-red-light",
+                    "skin-yellow-light",
+                    "skin-purple-light",
+                    "skin-green-light"
+                ];
 
-            $('a[id^="btn_skin"]').click(function(e) {
-                e.preventDefault();
+                $('a[id^="btn_skin"]').click(function(e) {
+                    e.preventDefault();
 
-                $.each(my_skins, function(i) {
-                    $('body').removeClass(my_skins[i]);
+                    $.each(my_skins, function(i) {
+                        $('body').removeClass(my_skins[i]);
+                    });
+
+                    $('body').addClass($(this).attr('data-skin'));
+
+                    store('skin', $(this).attr('data-skin'));
                 });
 
-                $('body').addClass($(this).attr('data-skin'));
+                $('input[id^="cbx_settings_"]').click(function(e) {
+                    var button = $(this).attr('id');
 
-                store('skin', $(this).attr('data-skin'));
-            });
+                    if (button == 'cbx_settings_toggleRightSidebarSkin') {
+                        var sidebar = $("aside.control-sidebar");
+                        var skinList = $("#skinList");
 
-            $('input[id^="cbx_settings_"]').click(function(e) {
-                var button = $(this).attr('id');
+                        if (sidebar.hasClass("control-sidebar-dark")) {
+                            sidebar.removeClass("control-sidebar-dark");
+                            sidebar.addClass("control-sidebar-light");
+                            skinList.removeClass("control-sidebar-skin-bg-dark");
+                            skinList.addClass("control-sidebar-skin-bg-light");
+                        } else {
+                            sidebar.removeClass("control-sidebar-light");
+                            sidebar.addClass("control-sidebar-dark");
+                            skinList.removeClass("control-sidebar-skin-bg-light");
+                            skinList.addClass("control-sidebar-skin-bg-dark");
+                        }
+                    }
+                })
 
-                if (button == 'cbx_settings_toggleRightSidebarSkin') {
-                    var sidebar = $("aside.control-sidebar");
-                    var skinList = $("#skinList");
-
-                    if (sidebar.hasClass("control-sidebar-dark")) {
-                        sidebar.removeClass("control-sidebar-dark");
-                        sidebar.addClass("control-sidebar-light");
-                        skinList.removeClass("control-sidebar-skin-bg-dark");
-                        skinList.addClass("control-sidebar-skin-bg-light");
+                function store(name, val) {
+                    if (typeof (Storage) !== "undefined") {
+                        localStorage.setItem(name, val);
                     } else {
-                        sidebar.removeClass("control-sidebar-light");
-                        sidebar.addClass("control-sidebar-dark");
-                        skinList.removeClass("control-sidebar-skin-bg-light");
-                        skinList.addClass("control-sidebar-skin-bg-dark");
+                        window.alert('Please use a modern browser to properly view this template!');
                     }
                 }
-            })
 
-            function store(name, val) {
-                if (typeof (Storage) !== "undefined") {
-                    localStorage.setItem(name, val);
-                } else {
-                    window.alert('Please use a modern browser to properly view this template!');
+                function get(name) {
+                    if (typeof (Storage) !== "undefined") {
+                        return localStorage.getItem(name);
+                    } else {
+                        window.alert('Please use a modern browser to properly view this template!');
+                    }
                 }
-            }
 
-            function get(name) {
-                if (typeof (Storage) !== "undefined") {
-                    return localStorage.getItem(name);
-                } else {
-                    window.alert('Please use a modern browser to properly view this template!');
-                }
-            }
+                function change_layout(cls) {
+                    $("body").toggleClass(cls);
+                    $.AdminLTE.layout.fixSidebar();
 
-            function change_layout(cls) {
-                $("body").toggleClass(cls);
-                $.AdminLTE.layout.fixSidebar();
-
-                if (cls == "layout-boxed")
+                    if (cls == "layout-boxed")
+                        $.AdminLTE.controlSidebar._fix($(".control-sidebar-bg"));
+                    if ($('body').hasClass('fixed') && cls == 'fixed') {
+                        $.AdminLTE.pushMenu.expandOnHover();
+                        $.AdminLTE.layout.activate();
+                    }
                     $.AdminLTE.controlSidebar._fix($(".control-sidebar-bg"));
-                if ($('body').hasClass('fixed') && cls == 'fixed') {
-                    $.AdminLTE.pushMenu.expandOnHover();
-                    $.AdminLTE.layout.activate();
+                    $.AdminLTE.controlSidebar._fix($(".control-sidebar"));
                 }
-                $.AdminLTE.controlSidebar._fix($(".control-sidebar-bg"));
-                $.AdminLTE.controlSidebar._fix($(".control-sidebar"));
-            }
 
-            $('#cbx_settings_toggleSidebar').click(function() {
-                if ($(this).is(':checked')) {
-                    $("body").addClass('sidebar-collapse');
-                    store('toggle_sidebar', true);
-                } else {
-                    $("body").removeClass('sidebar-collapse');
-                    store('toggle_sidebar', false);
-                }
-            });
+                $('#cbx_settings_toggleSidebar').click(function() {
+                    if ($(this).is(':checked')) {
+                        $("body").addClass('sidebar-collapse');
+                        store('toggle_sidebar', true);
+                    } else {
+                        $("body").removeClass('sidebar-collapse');
+                        store('toggle_sidebar', false);
+                    }
+                });
 
-            $("#cbx_settings_toggleRightSidebarSlide").on('click', function () {
-                change_layout($(this).data('controlsidebar'));
+                $("#cbx_settings_toggleRightSidebarSlide").on('click', function () {
+                    change_layout($(this).data('controlsidebar'));
 
-                var slide = $.AdminLTE.options.controlSidebarOptions.slide;
+                    var slide = $.AdminLTE.options.controlSidebarOptions.slide;
 
-                $.AdminLTE.options.controlSidebarOptions.slide = slide;
+                    $.AdminLTE.options.controlSidebarOptions.slide = slide;
 
-                if (!slide) $('.control-sidebar').removeClass('control-sidebar-open');
-            });
+                    if (!slide) $('.control-sidebar').removeClass('control-sidebar-open');
+                });
 
-            $("#cbx_settings_expandOnHover").on('click', function () {
-                if ($('#cbx_settings_expandOnHover').is(':checked')) {
-                    store('expandOnHover', true);
-                    $("body").removeClass('sidebar-expanded-on-hover').addClass('sidebar-collapse');
-                } else {
-                    store('expandOnHover', false);
-                }
-            });
+                $("#cbx_settings_expandOnHover").on('click', function () {
+                    if ($('#cbx_settings_expandOnHover').is(':checked')) {
+                        store('expandOnHover', true);
+                        $("body").removeClass('sidebar-expanded-on-hover').addClass('sidebar-collapse');
+                    } else {
+                        store('expandOnHover', false);
+                    }
+                });
 
-            $('#cbx_settings_boxedLayout').click(function() {
-                if ($(this).is(':checked')) {
-                    change_layout('layout-boxed');
-                    store('layout-boxed', true)
-                } else {
-                    change_layout('fixed');
-                    store('layout-boxed', false)
-                }
-            });
+                $('#cbx_settings_boxedLayout').click(function() {
+                    if ($(this).is(':checked')) {
+                        change_layout('layout-boxed');
+                        store('layout-boxed', true)
+                    } else {
+                        change_layout('fixed');
+                        store('layout-boxed', false)
+                    }
+                });
 
-            $(".main-sidebar").hover(function(){
-                var screenWidth = $.AdminLTE.options.screenSizes.sm - 1;
+                $(".main-sidebar").hover(function(){
+                    var screenWidth = $.AdminLTE.options.screenSizes.sm - 1;
 
-                if ($("body").hasClass('sidebar-mini')
-                    && $("body").hasClass('sidebar-collapse')
-                    && $(window).width() > screenWidth
-                    && get('expandOnHover') == "true") {
-                    $("body").removeClass('sidebar-collapse').addClass('sidebar-expanded-on-hover');
-                } else if ($("body").hasClass('sidebar-mini')
-                    && $("body").hasClass('sidebar-expanded-on-hover')
-                    && $(window).width() > screenWidth
-                    && get('expandOnHover') == "true") {
-                    $("body").removeClass('sidebar-expanded-on-hover').addClass('sidebar-collapse');
-                } else {
+                    if ($("body").hasClass('sidebar-mini')
+                        && $("body").hasClass('sidebar-collapse')
+                        && $(window).width() > screenWidth
+                        && get('expandOnHover') == "true") {
+                        $("body").removeClass('sidebar-collapse').addClass('sidebar-expanded-on-hover');
+                    } else if ($("body").hasClass('sidebar-mini')
+                        && $("body").hasClass('sidebar-expanded-on-hover')
+                        && $(window).width() > screenWidth
+                        && get('expandOnHover') == "true") {
+                        $("body").removeClass('sidebar-expanded-on-hover').addClass('sidebar-collapse');
+                    } else {
 
-                }
+                    }
+                });
+
+                $('input[autonumeric]').autoNumeric('init');
             });
         </script>
 
