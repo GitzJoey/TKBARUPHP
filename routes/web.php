@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/forgot', function () {
-   Route::get('', 'ForgotPasswordController@test');
+    Route::get('', 'ForgotPasswordController@test');
 });
 
 Auth::routes();
@@ -246,6 +246,27 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::delete('edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
             });
 
+            Route::group(['prefix' => 'employees'], function () {
+                Route::get('', 'EmployeesController@index')->name('db.master.employees');
+                Route::get('show/{id}', 'EmployeesController@show')->name('db.master.employees.show');
+                Route::get('create', 'EmployeesController@create')->name('db.master.employees.create');
+                Route::post('create/', 'EmployeesController@store');
+                Route::get('edit/{id}', 'EmployeesController@edit')->name('db.master.employees.edit');
+                Route::patch('edit/{id}', 'EmployeesController@update');
+                Route::delete('edit/{id}', 'EmployeesController@delete')->name('db.master.employees.delete');
+            });
+
+            Route::group(['prefix' => 'salary'], function () {
+                Route::get('', 'SalaryController@index')->name('db.master.salary');
+                Route::get('show/{id}', 'SalaryController@show')->name('db.master.salary.show');
+                Route::get('create', 'SalaryController@create')->name('db.master.salary.create');
+                Route::post('create/', 'SalaryController@store');
+                Route::get('edit/{id}', 'SalaryController@edit')->name('db.master.salary.edit');
+                Route::patch('edit/{id}', 'SalaryController@update');
+                Route::delete('edit/{id}', 'SalaryController@delete')->name('db.master.salary.delete');
+            });
+
+
             Route::group(['prefix' => 'vendor'], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
@@ -280,6 +301,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::patch('edit/{id}', 'GiroController@update');
                 Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
                 route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
+            });
+
+            Route::group(['prefix' => 'consolidate'], function (){
+                Route::get('', 'BankConsolidateController@index')->name('db.bank.consolidate');
             });
         });
 
@@ -371,7 +396,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('view/{fileName}', 'ReportController@view')->name('db.report.view');
         });
 
-        Route::group(['prefix' => 'user'], function() {
+        Route::group(['prefix' => 'user'], function () {
             Route::get('profile/{id}', 'UserController@profile')->name('db.user.profile.show');
             Route::get('calendar', 'CalendarController@index')->name('db.user.calendar.show');
             Route::get('calendar/retrieve', 'CalendarController@retrieveEvents')->name('db.user.calendar.retrieve');
