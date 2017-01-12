@@ -63,6 +63,9 @@
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow') }}/@{{ po.id }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
+                        <tr v-show="selectedWarehouse != '' && !POs.length">
+                            <td colspan="6" class="text-center animated shake">@lang('labels.DATA_NOT_FOUND')</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
