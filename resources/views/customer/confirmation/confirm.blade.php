@@ -106,7 +106,8 @@
                                                 </td>
                                                 <td>
                                                     <select name="selected_unit_id[]" data-parsley-required="true"
-                                                            class="form-control">
+                                                            class="form-control"
+                                                            v-model="deliver.selected_unit.unit_id">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="product_unit in deliver.item.product.product_units" v-bind:value="product_unit.unit.id">@{{ product_unit.unit.name }} (@{{ product_unit.unit.symbol }})</option>
                                                     </select>
@@ -191,6 +192,7 @@
                 },
                 ready: function() {
                     this.createDeliver();
+                    console.log(this.outflow.delivers);
                 }
             });
 
