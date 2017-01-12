@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span>&nbsp;@lang('warehouse.inflow.receipt.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('warehouse.inflow.receipt.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('receipt', $po->hId(), $po->warehouse_id) !!}
 @endsection
@@ -120,7 +122,7 @@
                                                 <td>
                                                     <select name="selected_unit_id[]" data-parsley-required="true"
                                                             class="form-control"
-                                                            v-model="receipt.selected_unit.unit_id">
+                                                            v-model="receipt.selected_unit">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="product_unit in receipt.item.product.product_units" v-bind:value="product_unit.unit.id">@{{ product_unit.unit.name }} (@{{ product_unit.unit.symbol }})</option>
                                                     </select>
@@ -187,7 +189,7 @@
                     createReceipt: function() {
                         for(var i = 0; i < this.PO.items.length; i++){
                             this.inflow.receipts.push({
-                                item: PO.items[i],
+                                item: this.PO.items[i],
                                 selected_unit: '',
                                 brutto: '',
                                 netto: '',
@@ -198,6 +200,10 @@
                     removeReceipt: function (index) {
                         this.inflow.receipts.splice(index, 1);
                     }
+                },
+                ready: function() {
+                    this.createReceipt();
+                    console.log(this.inflow.receipts);
                 }
             });
 
@@ -208,20 +214,20 @@
                 singleDatePicker: true,
                 showDropdowns: true
             });
-        });
 
-        window.Parsley.addValidator('checkequal', function (value, itemId) {
-            var brutto = '#brutto_' + itemId;
-            var netto = '#netto_' + itemId;
-            var tare = '#tare_' + itemId;
+            window.Parsley.addValidator('checkequal', function (value, itemId) {
+                var brutto = '#brutto_' + itemId;
+                var netto = '#netto_' + itemId;
+                var tare = '#tare_' + itemId;
 
-            if (Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))) {
-                return true;
-            } else {
-                return false;
-            }
-        }, 32)
+                if (Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }, 32)
                 .addMessage('en', 'checkequal', 'Netto and Tare value not equal with Bruto')
                 .addMessage('id', 'checkequal', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
+        });
     </script>
 @endsection

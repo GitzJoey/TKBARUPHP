@@ -55,15 +55,15 @@
                         <tr v-for="so in SOs">
                             <td class="text-center">@{{ so.code }}</td>
                             <td class="text-center">@{{ so.so_created }}</td>
-                            <td ng-show="so.customer_type == 'CUSTOMERTYPE.R'" class="text-center">@{{ so.customer.name }}</td>
-                            <td ng-show="so.customer_type == 'CUSTOMERTYPE.WI'" class="text-center">@{{ so.walk_in_cust }}</td>
+                            <td v-show="so.customer_type == 'CUSTOMERTYPE.R'" class="text-center">@{{ so.customer.name }}</td>
+                            <td v-show="so.customer_type == 'CUSTOMERTYPE.WI'" class="text-center">@{{ so.walk_in_cust }}</td>
                             <td class="text-center">@{{ so.shipping_date }}</td>
                             <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.outflow') }}/@{{ so.id }}" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
                         <tr v-show="selectedWarehouse != '' && !SOs.length">
-                            <td colspan="6" class="text-center animated shake">@lang('labels.DATA_NOT_FOUND')</td>
+                            <td colspan="5" class="text-center animated shake">@lang('labels.DATA_NOT_FOUND')</td>
                         </tr>
                     </tbody>
                 </table>
@@ -84,7 +84,7 @@
                 methods: {
                     getWarehouseSOs: function (selectedWarehouse) {
                         this.$http.get('{{ route('api.warehouse.outflow.so') }}/' + this.selectedWarehouse.id).then(function (data) {
-                            $scope.SOs = data.data;
+                            this.SOs = data.data;
                         });
                     }
                 }
