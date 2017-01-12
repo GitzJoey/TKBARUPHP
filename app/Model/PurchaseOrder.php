@@ -15,17 +15,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\PurchaseOrder
+ * App\Model\PurchaseOrder
  *
- * @mixin \Eloquent
  * @property integer $id
+ * @property integer $store_id
+ * @property integer $supplier_id
+ * @property integer $warehouse_id
+ * @property integer $vendor_trucking_id
  * @property string $code
- * @property string $po_type
  * @property \Carbon\Carbon $po_created
+ * @property string $po_type
  * @property \Carbon\Carbon $shipping_date
  * @property string $supplier_type
  * @property string $walk_in_supplier
  * @property string $walk_in_supplier_detail
+ * @property string $article_code
  * @property string $remarks
  * @property string $status
  * @property integer $created_by
@@ -34,24 +38,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @property integer $supplier_id
- * @property integer $vendor_trucking_id
- * @property integer $store_id
- * @property integer $warehouse_id
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Items[] $items
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Payments[] $payments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $items
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Receipt[] $receipts
  * @property-read \App\Model\Supplier $supplier
  * @property-read \App\Model\VendorTrucking $vendorTrucking
  * @property-read \App\Model\Store $store
  * @property-read \App\Model\Warehouse $warehouse
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Payment[] $payments
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Expense[] $expenses
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrderCopy[] $copies
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereSupplierId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereVendorTruckingId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereCode($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder wherePoType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder wherePoCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder wherePoType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereShippingDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereSupplierType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereWalkInSupplier($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereWalkInSupplierDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereArticleCode($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereRemarks($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereStatus($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereCreatedBy($value)
@@ -60,15 +68,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereDeletedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereSupplierId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereVendorTruckingId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereWarehouseId($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Receipt[] $receipts
- * @property string $article_code
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Expense[] $expenses
- * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereArticleCode($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrderCopy[] $copies
+ * @mixin \Eloquent
  */
 class PurchaseOrder extends Model
 {

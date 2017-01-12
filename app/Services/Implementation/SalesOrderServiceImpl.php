@@ -16,10 +16,12 @@ use App\Model\Customer;
 use App\Model\SalesOrder;
 use App\Model\ProductUnit;
 
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use App\Services\SalesOrderService;
 use Illuminate\Support\Facades\Auth;
+
+use App\Services\SalesOrderService;
 
 class SalesOrderServiceImpl implements SalesOrderService
 {
@@ -35,66 +37,68 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function createSO(Request $request, $index)
     {
-        if ($request->input("customer_type.$index") == 'CUSTOMERTYPE.R') {
-            $customer_id = empty($request->input("customer_id.$index")) ? 0 : $request->input("customer_id.$index");
-            $walk_in_cust = '';
-            $walk_in_cust_detail = '';
-        } else {
-            $customer_id = 0;
-            $walk_in_cust = $request->input("walk_in_customer.$index");
-            $walk_in_cust_detail = $request->input("walk_in_customer_details.$index");
-        }
+        DB::transaction(function() use ($request, $index) {
+            if ($request->input("customer_type.$index") == 'CUSTOMERTYPE.R') {
+                $customer_id = empty($request->input("customer_id.$index")) ? 0 : $request->input("customer_id.$index");
+                $walk_in_cust = '';
+                $walk_in_cust_detail = '';
+            } else {
+                $customer_id = 0;
+                $walk_in_cust = $request->input("walk_in_customer.$index");
+                $walk_in_cust_detail = $request->input("walk_in_customer_details.$index");
+            }
 
-        $params = [
-            'customer_type' => $request->input("customer_type.$index"),
-            'customer_id' => $customer_id,
-            'walk_in_cust' => $walk_in_cust,
-            'walk_in_cust_detail' => $walk_in_cust_detail,
-            'code' => $request->input("so_code.$index"),
-            'so_type' => $request->input("sales_type.$index"),
-            'so_created' => date('Y-m-d H:i:s', strtotime($request->input("so_created.$index"))),
-            'shipping_date' => date('Y-m-d H:i:s', strtotime($request->input("shipping_date.$index"))),
-            'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
-            'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$index")) ? 0 : $request->input("vendor_trucking_id.$index"),
-            'warehouse_id' => $request->input("warehouse_id.$index"),
-            'remarks' => $request->input("remarks.$index"),
-            'store_id' => Auth::user()->store_id
-        ];
+            $params = [
+                'customer_type' => $request->input("customer_type.$index"),
+                'customer_id' => $customer_id,
+                'walk_in_cust' => $walk_in_cust,
+                'walk_in_cust_detail' => $walk_in_cust_detail,
+                'code' => $request->input("so_code.$index"),
+                'so_type' => $request->input("sales_type.$index"),
+                'so_created' => date('Y-m-d H:i:s', strtotime($request->input("so_created.$index"))),
+                'shipping_date' => date('Y-m-d H:i:s', strtotime($request->input("shipping_date.$index"))),
+                'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
+                'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$index")) ? 0 : $request->input("vendor_trucking_id.$index"),
+                'warehouse_id' => $request->input("warehouse_id.$index"),
+                'remarks' => $request->input("remarks.$index"),
+                'store_id' => Auth::user()->store_id
+            ];
 
-        $so = SalesOrder::create($params);
+            $so = SalesOrder::create($params);
 
-        for ($j = 0; $j < count($request->input("so_$index" . "_product_id")); $j++) {
-            $item = new Item();
-            $item->product_id = $request->input("so_$index" . "_product_id.$j");
-            $item->stock_id = empty($request->input("so_$index" . "_stock_id.$j")) ? 0 : $request->input("so_$index" . "_stock_id.$j");
-            $item->store_id = Auth::user()->store_id;
-            $item->selected_unit_id = $request->input("so_$index" . "_selected_unit_id.$j");
-            $item->base_unit_id = $request->input("so_$index" . "_base_unit_id.$j");
-            $item->conversion_value = ProductUnit::where([
-                'product_id' => $item->product_id,
-                'unit_id' => $item->selected_unit_id
-            ])->first()->conversion_value;
-            $item->quantity = $request->input("so_$index" . "_quantity.$j");
-            $item->price = floatval(str_replace(',', '', $request->input("so_$index" . "_price.$j")));
-            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+            for ($j = 0; $j < count($request->input("so_$index" . "_product_id")); $j++) {
+                $item = new Item();
+                $item->product_id = $request->input("so_$index" . "_product_id.$j");
+                $item->stock_id = empty($request->input("so_$index" . "_stock_id.$j")) ? 0 : $request->input("so_$index" . "_stock_id.$j");
+                $item->store_id = Auth::user()->store_id;
+                $item->selected_unit_id = $request->input("so_$index" . "_selected_unit_id.$j");
+                $item->base_unit_id = $request->input("so_$index" . "_base_unit_id.$j");
+                $item->conversion_value = ProductUnit::where([
+                    'product_id' => $item->product_id,
+                    'unit_id' => $item->selected_unit_id
+                ])->first()->conversion_value;
+                $item->quantity = $request->input("so_$index" . "_quantity.$j");
+                $item->price = floatval(str_replace(',', '', $request->input("so_$index" . "_price.$j")));
+                $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
-            $so->items()->save($item);
-        }
+                $so->items()->save($item);
+            }
 
-        for ($j = 0; $j < count($request->input("so_$index" . "_expense_name")); $j++) {
-            $expense = new Expense();
-            $expense->name = $request->input("so_$index" . "_expense_name.$j");
-            $expense->type = $request->input("so_$index" . "_expense_type.$j");
-            $expense->is_internal_expense = !empty($request->input("so_$index" . "_is_internal_expense.$j"));
-            $expense->amount = floatval(str_replace(',', '', $request->input("so_$index" . "_expense_amount.$j")));
-            $expense->remarks = $request->input("so_$index" . "_expense_remarks.$j");
-        }
+            for ($j = 0; $j < count($request->input("so_$index" . "_expense_name")); $j++) {
+                $expense = new Expense();
+                $expense->name = $request->input("so_$index" . "_expense_name.$j");
+                $expense->type = $request->input("so_$index" . "_expense_type.$j");
+                $expense->is_internal_expense = !empty($request->input("so_$index" . "_is_internal_expense.$j"));
+                $expense->amount = floatval(str_replace(',', '', $request->input("so_$index" . "_expense_amount.$j")));
+                $expense->remarks = $request->input("so_$index" . "_expense_remarks.$j");
+            }
 
-        $userSOs = session('userSOs');
-        $userSOs->splice($index, 1);
-        session(['userSOs' => $userSOs]);
+            $userSOs = session('userSOs');
+            $userSOs->splice($index, 1);
+            session(['userSOs' => $userSOs]);
 
-        return $so;
+            return $so;
+        });
     }
 
     /**
@@ -136,70 +140,72 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function reviseSO(Request $request, $id)
     {
-        // Get current SO
-        $currentSo = SalesOrder::with('items')->find($id);
+        DB::transaction(function() use ($id, $request) {
+            // Get current SO
+            $currentSo = SalesOrder::with('items')->find($id);
 
-        // Get ID of current SO's items
-        $soItemsId = $currentSo->items->map(function ($item) {
-            return $item->id;
-        })->all();
+            // Get ID of current SO's items
+            $soItemsId = $currentSo->items->map(function ($item) {
+                return $item->id;
+            })->all();
 
-        // Get the id of removed items
-        $soItemsToBeDeleted = array_diff($soItemsId, $request->input('item_id'));
+            // Get the id of removed items
+            $soItemsToBeDeleted = array_diff($soItemsId, $request->input('item_id'));
 
-        // Remove the item that removed on the revise page
-        Item::destroy($soItemsToBeDeleted);
+            // Remove the item that removed on the revise page
+            Item::destroy($soItemsToBeDeleted);
 
-        $currentSo->warehouse_id = $request->input('warehouse_id');
-        $currentSo->shipping_date = date('Y-m-d H:i:s', strtotime($request->input('shipping_date')));
-        $currentSo->remarks = $request->input('remarks');
-        $currentSo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
+            $currentSo->warehouse_id = $request->input('warehouse_id');
+            $currentSo->shipping_date = date('Y-m-d H:i:s', strtotime($request->input('shipping_date')));
+            $currentSo->remarks = $request->input('remarks');
+            $currentSo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
 
-        for ($i = 0; $i < count($request->input('item_id')); $i++) {
-            $item = Item::findOrNew($request->input("item_id.$i"));
-            $item->product_id = $request->input("product_id.$i");
-            $item->stock_id = empty($request->input("stock_id.$i")) ? 0 : $request->input("stock_id.$i");
-            $item->store_id = Auth::user()->store_id;
-            $item->selected_unit_id = $request->input("selected_unit_id.$i");
-            $item->base_unit_id = $request->input("base_unit_id.$i");
-            $item->conversion_value = ProductUnit::where([
-                'product_id' => $item->product_id,
-                'unit_id' => $item->selected_unit_id
-            ])->first()->conversion_value;
-            $item->quantity = $request->input("quantity.$i");
-            $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
-            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+            for ($i = 0; $i < count($request->input('item_id')); $i++) {
+                $item = Item::findOrNew($request->input("item_id.$i"));
+                $item->product_id = $request->input("product_id.$i");
+                $item->stock_id = empty($request->input("stock_id.$i")) ? 0 : $request->input("stock_id.$i");
+                $item->store_id = Auth::user()->store_id;
+                $item->selected_unit_id = $request->input("selected_unit_id.$i");
+                $item->base_unit_id = $request->input("base_unit_id.$i");
+                $item->conversion_value = ProductUnit::where([
+                    'product_id' => $item->product_id,
+                    'unit_id' => $item->selected_unit_id
+                ])->first()->conversion_value;
+                $item->quantity = $request->input("quantity.$i");
+                $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
+                $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
-            $currentSo->items()->save($item);
-        }
+                $currentSo->items()->save($item);
+            }
 
-        // Get IDs of current SO's expenses
-        $soExpensesId = $currentSo->expenses->map(function ($expense) {
-            return $expense->id;
-        })->all();
+            // Get IDs of current SO's expenses
+            $soExpensesId = $currentSo->expenses->map(function ($expense) {
+                return $expense->id;
+            })->all();
 
-        $inputtedExpenseId = $request->input('expense_id');
+            $inputtedExpenseId = $request->input('expense_id');
 
-        // Get the id of removed expenses
-        $soExpensesToBeDeleted = array_diff($soExpensesId, isset($inputtedExpenseId) ? $inputtedExpenseId : []);
+            // Get the id of removed expenses
+            $soExpensesToBeDeleted = array_diff($soExpensesId, isset($inputtedExpenseId) ? $inputtedExpenseId : []);
 
-        // Remove the expenses that removed on the revise page
-        Expense::destroy($soExpensesToBeDeleted);
+            // Remove the expenses that removed on the revise page
+            Expense::destroy($soExpensesToBeDeleted);
 
-        for($i = 0; $i < count($request->input('expense_id')); $i++){
-            $expense = Expense::findOrNew($request->input("expense_id.$i"));
-            $expense->name = $request->input("expense_name.$i");
-            $expense->type = $request->input("expense_type.$i");
-            $expense->is_internal_expense = !empty($request->input("is_internal_expense.$i"));
-            $expense->amount = floatval(str_replace(',', '', $request->input("expense_amount.$i")));
-            $expense->remarks = $request->input("expense_remarks.$i");
+            for($i = 0; $i < count($request->input('expense_id')); $i++){
+                $expense = Expense::findOrNew($request->input("expense_id.$i"));
+                $expense->name = $request->input("expense_name.$i");
+                $expense->type = $request->input("expense_type.$i");
+                $expense->is_internal_expense = !empty($request->input("is_internal_expense.$i"));
+                $expense->amount = floatval(str_replace(',', '', $request->input("expense_amount.$i")));
+                $expense->remarks = $request->input("expense_remarks.$i");
 
-            $currentSo->expenses()->save($expense);
-        }
+                $currentSo->expenses()->save($expense);
+            }
 
-        $currentSo->save();
+            $currentSo->save();
 
-        return $currentSo;
+            return $currentSo;
+        });
     }
 
     /**

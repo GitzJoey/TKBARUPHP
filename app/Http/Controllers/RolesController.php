@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Session;
 use Validator;
 use Illuminate\Http\Request;
@@ -47,15 +48,17 @@ class RolesController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.admin.roles.create'))->withInput()->withErrors($validator);
         } else {
-            $role = new Role;
-            $role->name = $data['name'];
-            $role->display_name = $data['display_name'];
-            $role->description = $data['description'];
-            $role->save();
+            DB::transaction(function() use ($data) {
+                $role = new Role;
+                $role->name = $data['name'];
+                $role->display_name = $data['display_name'];
+                $role->description = $data['description'];
+                $role->save();
 
-            foreach ($data['permission'] as $pl) {
-                $role->permissions()->attach($pl);
-            }
+                foreach ($data['permission'] as $pl) {
+                    $role->permissions()->attach($pl);
+                }
+            });
 
             Session::flash('success', 'New User Created');
 
@@ -80,17 +83,19 @@ class RolesController extends Controller
             'description' => 'required',
         ]);
 
-        $role = Role::whereId($id);
-        $pl = Permission::whereIn('id', $req['permission'])->get();
+        DB::transaction(function() use ($req) {
+            $role = Role::with('permissions')->where('id', '=', $id)->first();
+            $pl = Permission::whereIn('id', $req['permission'])->get();
 
-        $role->permissions()->sync($pl);
+            $role->permissions()->sync($pl);
 
-        $role->update([
-            'name' => $req['name'],
-            'display_name' => $req['display_name'],
-            'description' => $req['description'],
-        ]);
-
+            $role->update([
+                'name' => $req['name'],
+                'display_name' => $req['display_name'],
+                'description' => $req['description'],
+            ]);
+        });
+        
         return redirect(route('db.admin.roles'));
     }
 

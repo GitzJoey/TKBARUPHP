@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
  * App\Model\BankBCACSVRecord
  *
  * @property integer $id
- * @property string $date
+ * @property \Carbon\Carbon $date
  * @property string $remarks
  * @property string $branch
  * @property float $amount

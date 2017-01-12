@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Auth;
 use Validator;
 use App\Http\Requests;
+use LaravelLocalization;
 use Illuminate\Http\Request;
 
 use App\Model\Unit;
@@ -56,28 +58,33 @@ class ProductController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
         } else {
-
-            $product = new Product;
-
-            $product->store_id = Auth::user()->store->id;
-            $product->product_type_id = $data['type'];
-            $product->name = $data['name'];
-            $product->short_code = $data['short_code'];
-            $product->description = $data['description'];
-            $product->status = $data['status'];
-            $product->remarks = $data['remarks'];
-
-            $product->save();
-
-            for ($i = 0; $i < count($data['unit_id']); $i++) {
-                $punit = new ProductUnit();
-                $punit->unit_id = $data['unit_id'][$i];
-                $punit->is_base = (bool)$data['is_base'][$i];
-                $punit->conversion_value = $data['conversion_value'][$i];
-                $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
-
-                $product->productUnit()->save($punit);
+            if (count($data['unit_id']) == 0) {
+                $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
+                return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
             }
+
+            DB::transaction(function() use ($data) {
+                $product = new Product;
+                $product->store_id = Auth::user()->store->id;
+                $product->product_type_id = $data['type'];
+                $product->name = $data['name'];
+                $product->short_code = $data['short_code'];
+                $product->description = $data['description'];
+                $product->status = $data['status'];
+                $product->remarks = $data['remarks'];
+
+                $product->save();
+
+                for ($i = 0; $i < count($data['unit_id']); $i++) {
+                    $punit = new ProductUnit();
+                    $punit->unit_id = $data['unit_id'][$i];
+                    $punit->is_base = (bool)$data['is_base'][$i];
+                    $punit->conversion_value = $data['conversion_value'][$i];
+                    $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
+
+                    $product->productUnit()->save($punit);
+                }
+            });
 
             return redirect(route('db.master.product'));
         }
@@ -98,31 +105,50 @@ class ProductController extends Controller
 
     public function update($id, Request $data)
     {
-        $product = Product::find($id);
+        $validator = Validator::make($data->all(), [
+            'type' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'short_code' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+        ]);
 
-        $product->productUnit->each(function($pu) { $pu->delete(); });
-
-        $pu = array();
-        for ($i = 0; $i < count($data['unit_id']); $i++) {
-            $punit = new ProductUnit();
-            $punit->unit_id = $data['unit_id'][$i];
-            $punit->is_base = (bool)$data['is_base'][$i];
-            $punit->conversion_value = $data['conversion_value'][$i];
-            $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
-
-            array_push($pu, $punit);
+        if (count($data['unit_id']) == 0) {
+            $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
+            return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
         }
 
-        $product->productUnit()->saveMany($pu);
+        if ($validator->fails()) {
+            return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
+        }
 
-        $product->update([
-            'product_type_id' => $data['type'],
-            'name' => $data['name'],
-            'short_code' => $data['short_code'],
-            'description' => $data['description'],
-            'status' => $data['status'],
-            'remarks' => $data['remarks']
-        ]);
+        DB::transaction(function() use ($id, $data) {
+            $product = Product::find($id);
+
+            $product->productUnit->each(function($pu) { $pu->delete(); });
+
+            $pu = array();
+            for ($i = 0; $i < count($data['unit_id']); $i++) {
+                $punit = new ProductUnit();
+                $punit->unit_id = $data['unit_id'][$i];
+                $punit->is_base = (bool)$data['is_base'][$i];
+                $punit->conversion_value = $data['conversion_value'][$i];
+                $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
+
+                array_push($pu, $punit);
+            }
+
+            $product->productUnit()->saveMany($pu);
+
+            $product->update([
+                'product_type_id' => $data['type'],
+                'name' => $data['name'],
+                'short_code' => $data['short_code'],
+                'description' => $data['description'],
+                'status' => $data['status'],
+                'remarks' => $data['remarks']
+            ]);
+        });
 
         return redirect(route('db.master.product'));
     }

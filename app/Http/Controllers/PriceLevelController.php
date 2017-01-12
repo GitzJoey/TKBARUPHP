@@ -54,7 +54,6 @@ class PriceLevelController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.price.price_level.create'))->withInput()->withErrors($validator);
         } else {
-
             PriceLevel::create([
                 'store_id' => Auth::user()->store->id,
                 'type' => $data['type'],
@@ -65,6 +64,7 @@ class PriceLevelController extends Controller
                 'percentage_value' => $data['[percentage_value'],
                 'status' => $data['status'],
             ]);
+
             return redirect(route('db.price.price_level'));
         }
     }

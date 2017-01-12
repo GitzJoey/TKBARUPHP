@@ -17,6 +17,7 @@ class CreateTruckMaintenancesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('truck_id')->default(0);
+            $table->dateTime('maintenance_date')->nullable();
             $table->string('maintenance_type')->nullable();
             $table->bigInteger('cost')->default(0);
             $table->bigInteger('odometer')->default(0);

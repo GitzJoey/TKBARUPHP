@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Session;
 use Validator;
 
+use DB;
 use App\User;
 use App\Model\Role;
 use App\Model\Store;
@@ -67,20 +68,25 @@ class UserController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.admin.user.create'))->withInput()->withErrors($validator);
         } else {
-            $usr = new User();
-            $usr->name = $data['name'];
-            $usr->email = $data['email'];
-            $usr->password = bcrypt($data['password']);
-            $usr->store_id = $data['store'];
+            DB::transaction(function() use ($data) {
+                $usr = new User();
+                $usr->name = $data['name'];
+                $usr->email = $data['email'];
+                $usr->password = bcrypt($data['password']);
+                $usr->store_id = $data['store'];
 
-            $ud = new UserDetail();
-            $ud->type = $data['type'];
-            $ud->allow_login = boolval($data['allow_login']);
+                $ud = new UserDetail();
+                $ud->type = $data['type'];
+                $ud->allow_login = boolval($data['allow_login']);
 
-            $usr->save();
-            $usr->roles()->attach(Role::whereName($data['roles'])->get());
-            $usr->profile()->save(Profile::whereId($data['link_profile'])->first());
-            $usr->userDetail()->save($ud);
+                $usr->save();
+                $usr->roles()->attach(Role::whereName($data['roles'])->get());
+                if (!empty($data['link_profile'])) {
+                    $usr->profile()->save(Profile::whereId($data['link_profile'])->first());
+                }
+                $usr->userDetail()->save($ud);
+            });
+
 
             Session::flash('success', 'New User Created');
 
@@ -104,36 +110,40 @@ class UserController extends Controller
     {
         $this->validate($req, [
             'name' => 'required|max:255',
-            'password' => 'required|min:6|confirmed',
             'roles' => 'required',
+            'password' => 'required|min:6|confirmed',
             'store' => 'required',
         ]);
 
-        $usr = User::find($id);
-        $usr->name = $req['name'];
-        $usr->email = $req['email'];
-        $usr->password = bcrypt($req['password']);
-        $usr->store_id = $req['store'];
-        $usr->save();
+        DB::transaction(function() use ($id, $req) {
+            $usr = User::find($id);
+            $usr->name = $req['name'];
+            $usr->email = $req['email'];
+            if (!empty($req['password'])) {
+                $usr->password = bcrypt($req['password']);
+            }
+            $usr->store_id = $req['store'];
+            $usr->save();
 
-        $role_id = Role::whereName($req['roles'])->first()->id;
-        $usr->roles()->sync([$role_id]);
+            $role_id = Role::whereName($req['roles'])->first()->id;
+            $usr->roles()->sync([$role_id]);
 
-        //unlink last profile
-        $lastp = Profile::whereUserId($usr->id)->first();
-        if ($lastp) {
-            $lastp->user_id = 0;
-            $lastp->save();
-        }
+            //unlink last profile
+            $lastp = Profile::whereUserId($usr->id)->first();
+            if ($lastp) {
+                $lastp->user_id = 0;
+                $lastp->save();
+            }
 
-        if (!empty($req['link_profile'])) {
-            $p = Profile::whereId($req['link_profile'])->first();
-            $usr->profile()->save($p);
-        }
+            if (!empty($req['link_profile'])) {
+                $p = Profile::whereId($req['link_profile'])->first();
+                $usr->profile()->save($p);
+            }
 
-        $usr->userDetail->type = $req['type'];
-        $usr->userDetail->allow_login = boolval($req['allow_login']);
-        $usr->userDetail->save();
+            $usr->userDetail->type = $req['type'];
+            $usr->userDetail->allow_login = boolval($req['allow_login']);
+            $usr->userDetail->save();
+        });
 
         return redirect(route('db.admin.user'));
     }

@@ -15,9 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\PriceLevel
+ * App\Model\PriceLevel
  *
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $store_id
  * @property string $type
@@ -32,22 +31,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $deleted_by
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereWeight($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereIncrementValue($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel wherePercentageValue($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PriceLevel whereDeletedAt($value)
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereWeight($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereIncrementValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel wherePercentageValue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class PriceLevel extends Model
 {

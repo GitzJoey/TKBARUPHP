@@ -23,6 +23,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\StockOpname $stockOpname
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereSoId($value)
@@ -37,9 +38,6 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereDeletedAt($value)
  * @mixin \Eloquent
- * @property-read \App\Model\StockOpname $stockOpname
- * @property integer $stock_opname_id
- * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereStockOpnameId($value)
  */
 class StockOut extends Model
 {

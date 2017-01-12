@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Store
+ * App\Model\Store
  *
  * @property integer $id
  * @property string $name
@@ -24,39 +24,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $tax_id
  * @property string $status
  * @property string $is_default
- * @property string $remarks
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store wherePhoneNum($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereFaxNum($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereTaxId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereIsDefault($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property string $frontweb
  * @property string $image_filename
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereImageFilename($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $user
+ * @property string $remarks
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Store whereDeletedAt($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Product[] $products
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\BankAccount[] $bankAccounts
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Giro[] $giros
- * @property string $frontweb
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store wherePhoneNum($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereFaxNum($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereTaxId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereIsDefault($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereFrontweb($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereImageFilename($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Store extends Model
 {

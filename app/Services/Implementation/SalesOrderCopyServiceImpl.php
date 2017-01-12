@@ -8,15 +8,17 @@
 
 namespace App\Services\Implementation;
 
-
 use App\Model\Item;
-use App\Model\ProductUnit;
 use App\Model\SalesOrder;
+use App\Model\ProductUnit;
 use App\Model\SalesOrderCopy;
+
 use App\Services\SalesOrderCopyService;
-use Doctrine\Common\Collections\Collection;
+
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Doctrine\Common\Collections\Collection;
 
 class SalesOrderCopyServiceImpl implements SalesOrderCopyService
 {
@@ -40,47 +42,49 @@ class SalesOrderCopyServiceImpl implements SalesOrderCopyService
      */
     public function createSOCopy(Request $request, $soCode)
     {
-        $soToBeCopied = SalesOrder::whereCode($soCode)->first();
+        DB::transaction(function() use ($request, $soCode) {
+            $soToBeCopied = SalesOrder::whereCode($soCode)->first();
 
-        $params = [
-            'code' => $request->input('code'),
-            'remarks' => $request->input('remarks'),
-            'main_so_id' => $soToBeCopied->id,
-            'main_so_code' => $soToBeCopied->code,
-            'main_so_remarks' => $soToBeCopied->remarks,
-            'so_type' => $soToBeCopied->so_type,
-            'so_created' => $soToBeCopied->so_created,
-            'shipping_date' => $soToBeCopied->shipping_date,
-            'customer_type' => $soToBeCopied->customer_type,
-            'walk_in_cust' => $soToBeCopied->walk_in_cust,
-            'walk_in_cust_detail' => $soToBeCopied->walk_in_cust_detail,
-            'status' => $soToBeCopied->status,
-            'customer_id' => $soToBeCopied->customer_id,
-            'vendor_trucking_id' => $soToBeCopied->vendor_trucking_id,
-            'warehouse_id' => $soToBeCopied->warehouse_id,
-            'store_id' => $soToBeCopied->store_id
-        ];
+            $params = [
+                'code' => $request->input('code'),
+                'remarks' => $request->input('remarks'),
+                'main_so_id' => $soToBeCopied->id,
+                'main_so_code' => $soToBeCopied->code,
+                'main_so_remarks' => $soToBeCopied->remarks,
+                'so_type' => $soToBeCopied->so_type,
+                'so_created' => $soToBeCopied->so_created,
+                'shipping_date' => $soToBeCopied->shipping_date,
+                'customer_type' => $soToBeCopied->customer_type,
+                'walk_in_cust' => $soToBeCopied->walk_in_cust,
+                'walk_in_cust_detail' => $soToBeCopied->walk_in_cust_detail,
+                'status' => $soToBeCopied->status,
+                'customer_id' => $soToBeCopied->customer_id,
+                'vendor_trucking_id' => $soToBeCopied->vendor_trucking_id,
+                'warehouse_id' => $soToBeCopied->warehouse_id,
+                'store_id' => $soToBeCopied->store_id
+            ];
 
-        $soCopy = SalesOrderCopy::create($params);
+            $soCopy = SalesOrderCopy::create($params);
 
-        for ($i = 0; $i < count($request->input('product_id')); $i++) {
-            $item = new Item();
-            $item->product_id = $request->input("product_id.$i");
-            $item->store_id =  $soToBeCopied->store_id;
-            $item->selected_unit_id = $request->input("selected_unit_id.$i");
-            $item->base_unit_id = $request->input("base_unit_id.$i");
-            $item->conversion_value = ProductUnit::where([
-                'product_id' => $item->product_id,
-                'unit_id' => $item->selected_unit_id
-            ])->first()->conversion_value;
-            $item->quantity = $request->input("quantity.$i");
-            $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
-            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+            for ($i = 0; $i < count($request->input('product_id')); $i++) {
+                $item = new Item();
+                $item->product_id = $request->input("product_id.$i");
+                $item->store_id =  $soToBeCopied->store_id;
+                $item->selected_unit_id = $request->input("selected_unit_id.$i");
+                $item->base_unit_id = $request->input("base_unit_id.$i");
+                $item->conversion_value = ProductUnit::where([
+                    'product_id' => $item->product_id,
+                    'unit_id' => $item->selected_unit_id
+                ])->first()->conversion_value;
+                $item->quantity = $request->input("quantity.$i");
+                $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
+                $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
-            $soCopy->items()->save($item);
-        }
+                $soCopy->items()->save($item);
+            }
 
-        return $soCopy;
+            return $soCopy;
+        });
     }
 
     /**
@@ -104,43 +108,45 @@ class SalesOrderCopyServiceImpl implements SalesOrderCopyService
      */
     public function editSOCopy(Request $request, $soCopyId)
     {
-        // Get current SO Copy
-        $currentSoCopy = SalesOrderCopy::with('items')->find($soCopyId);
+        DB::transaction(function() use ($request, $soCopyId) {
+            // Get current SO Copy
+            $currentSoCopy = SalesOrderCopy::with('items')->find($soCopyId);
 
-        // Get IDs of current SO Copy's items
-        $soCopyItemsId = $currentSoCopy->items->map(function ($item) {
-            return $item->id;
-        })->all();
+            // Get IDs of current SO Copy's items
+            $soCopyItemsId = $currentSoCopy->items->map(function ($item) {
+                return $item->id;
+            })->all();
 
-        $inputtedItemId = $request->input('item_id');
+            $inputtedItemId = $request->input('item_id');
 
-        // Get the id of removed items
-        $soCopyItemsToBeDeleted = array_diff($soCopyItemsId, isset($inputtedItemId) ? $inputtedItemId : []);
+            // Get the id of removed items
+            $soCopyItemsToBeDeleted = array_diff($soCopyItemsId, isset($inputtedItemId) ? $inputtedItemId : []);
 
-        // Remove the items that removed on the revise page
-        Item::destroy($soCopyItemsToBeDeleted);
+            // Remove the items that removed on the revise page
+            Item::destroy($soCopyItemsToBeDeleted);
 
-        $currentSoCopy->remarks = $request->input('remarks');
+            $currentSoCopy->remarks = $request->input('remarks');
 
-        for ($i = 0; $i < count($request->input('item_id')); $i++) {
-            $item = Item::findOrNew($request->input("item_id.$i"));
-            $item->product_id = $request->input("product_id.$i");
-            $item->store_id = Auth::user()->store_id;
-            $item->selected_unit_id = $request->input("selected_unit_id.$i");
-            $item->base_unit_id = $request->input("base_unit_id.$i");
-            $item->conversion_value = ProductUnit::where([
-                'product_id' => $item->product_id,
-                'unit_id' => $item->selected_unit_id
-            ])->first()->conversion_value;
-            $item->quantity = $request->input("quantity.$i");
-            $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
-            $item->to_base_quantity = $item->quantity * $item->conversion_value;
+            for ($i = 0; $i < count($request->input('item_id')); $i++) {
+                $item = Item::findOrNew($request->input("item_id.$i"));
+                $item->product_id = $request->input("product_id.$i");
+                $item->store_id = Auth::user()->store_id;
+                $item->selected_unit_id = $request->input("selected_unit_id.$i");
+                $item->base_unit_id = $request->input("base_unit_id.$i");
+                $item->conversion_value = ProductUnit::where([
+                    'product_id' => $item->product_id,
+                    'unit_id' => $item->selected_unit_id
+                ])->first()->conversion_value;
+                $item->quantity = $request->input("quantity.$i");
+                $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
+                $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
-            $currentSoCopy->items()->save($item);
-        }
+                $currentSoCopy->items()->save($item);
+            }
 
-        $currentSoCopy->save();
+            $currentSoCopy->save();
 
-        return $currentSoCopy;
+            return $currentSoCopy;
+        });
     }
 }

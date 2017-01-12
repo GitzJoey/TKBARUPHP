@@ -14,42 +14,35 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\BankAccount
+ * App\Model\BankAccount
  *
  * @property integer $id
  * @property integer $bank_id
+ * @property integer $owner_id
  * @property string $account_number
  * @property string $remarks
- * @property string $status
+ * @property string $owner_type
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property string $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Supplier[] $supplier
- * @property-read \App\Bank $bank
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereBankId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereAccountNumber($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\BankAccount whereDeletedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Supplier[] $suppliers
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Customer[] $customers
- * @property integer $owner_id
- * @property string $owner_type
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\Bank $bank
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereBankId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereOwnerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereAccountNumber($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereRemarks($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereOwnerType($value)
- * @property string $account_name
- * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereAccountName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class BankAccount extends Model
 {

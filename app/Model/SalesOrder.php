@@ -16,19 +16,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\SalesOrder
+ * App\Model\SalesOrder
  *
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $store_id
  * @property integer $customer_id
- * @property integer $vendor_truck_id
+ * @property integer $warehouse_id
+ * @property integer $vendor_trucking_id
  * @property string $code
- * @property string $so_created
- * @property string $shipping_date
- * @property string $customer_type
- * @property string $walk_in_cust_detail
+ * @property \Carbon\Carbon $so_created
  * @property string $so_type
+ * @property \Carbon\Carbon $shipping_date
+ * @property string $customer_type
+ * @property string $walk_in_cust
+ * @property string $walk_in_cust_detail
+ * @property string $article_code
  * @property string $status
  * @property string $remarks
  * @property integer $created_by
@@ -37,41 +39,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereCustomerId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereVendorTruckId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereCode($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereSoCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereShippingDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereCustomerType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereWalkInCustDetail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereSoType($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\SalesOrder whereDeletedAt($value)
- * @property string $walk_in_cust
- * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWalkInCust($value)
- * @property integer $warehouse_id
- * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWarehouseId($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $items
- * @property integer $vendor_trucking_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Deliver[] $delivers
  * @property-read \App\Model\Customer $customer
  * @property-read \App\Model\Warehouse $warehouse
  * @property-read \App\Model\VendorTrucking $vendorTrucking
  * @property-read \App\Model\Store $store
- * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereVendorTruckingId($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Deliver[] $delivers
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Payment[] $payments
- * @property string $article_code
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Expense[] $expenses
- * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereArticleCode($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\SalesOrderCopy[] $copies
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereCustomerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereVendorTruckingId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereSoCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereSoType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereShippingDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereCustomerType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWalkInCust($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereWalkInCustDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereArticleCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class SalesOrder extends Model
 {

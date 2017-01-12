@@ -16,34 +16,34 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Model\ProductUnit;
 
 /**
- * App\Unit
+ * App\Model\Unit
  *
  * @property integer $id
  * @property string $name
  * @property string $symbol
  * @property string $status
  * @property string $remarks
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereSymbol($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereUpdatedAt($value)
- * @mixin \Eloquent
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property-read mixed $unit_name
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Unit whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ProductUnit[] $productUnits
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\WarehouseSection[] $capacityUnits
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereSymbol($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Unit extends Model
 {

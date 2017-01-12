@@ -62,6 +62,7 @@ class TruckMaintenanceController extends Controller
             TruckMaintenance::create([
                 'store_id' => Auth::user()->store->id,
                 'truck_id' => $data['plate_number'],
+                'maintenance_date' => date('Y-m-d H:i:s', strtotime($data['maintenance_date'])),
                 'maintenance_type' => $data['maintenance_type'],
                 'cost' => $data['cost'],
                 'odometer' => $data['odometer'],

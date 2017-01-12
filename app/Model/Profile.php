@@ -14,46 +14,42 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Profile
+ * App\Model\Profile
  *
  * @property integer $id
+ * @property integer $user_id
+ * @property integer $owner_id
  * @property string $first_name
  * @property string $last_name
  * @property string $address
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @property-read \App\User $user
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereFirstName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereLastName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property integer $user_id
  * @property string $ic_num
  * @property string $image_filename
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereIcNum($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereImageFilename($value)
+ * @property string $owner_type
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\PhoneNumber[] $phone
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Supplier[] $supplier
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Profile whereDeletedAt($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\User $user
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PhoneNumber[] $phoneNumbers
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Supplier[] $suppliers
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Customer[] $customers
- * @property integer $owner_id
- * @property string $owner_type
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereUserId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereOwnerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereFirstName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereLastName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereIcNum($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereImageFilename($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereOwnerType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Profile extends Model
 {

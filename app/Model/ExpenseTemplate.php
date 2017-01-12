@@ -14,6 +14,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @property string $name
  * @property string $type
  * @property float $amount
+ * @property boolean $is_internal_expense
  * @property string $remarks
  * @property integer $created_by
  * @property integer $updated_by
@@ -25,6 +26,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereAmount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereIsInternalExpense($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereRemarks($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereUpdatedBy($value)
@@ -33,8 +35,6 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereDeletedAt($value)
  * @mixin \Eloquent
- * @property boolean $is_internal_expense
- * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereIsInternalExpense($value)
  */
 class ExpenseTemplate extends Model
 {

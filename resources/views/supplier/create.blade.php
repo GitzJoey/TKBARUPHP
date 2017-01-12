@@ -34,7 +34,7 @@
         </div>
         <form id="supplierForm" class="form-horizontal" action="{{ route('db.master.supplier.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
-            <div ng-app="supplierModule" ng-controller="supplierController">
+            <div id="supplierVue">
                 <div class="box-body">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
@@ -95,10 +95,10 @@
                             <div class="tab-pane" id="tab_pic">
                                 <div class="row">
                                     <div class="col-md-1">
-                                        <button class="btn btn-xs btn-default" type="button" ng-click="addNewProfile()">@lang('buttons.create_new_button')</button>
+                                        <button class="btn btn-xs btn-default" type="button" v-on:click="addNewProfile()">@lang('buttons.create_new_button')</button>
                                     </div>
                                     <div class="col-md-11">
-                                        <div ng-repeat="profile in profiles" ng-init="profileIndex = $index">
+                                        <div v-for="profile in profiles">
                                             <div class="box box-widget">
                                                 <div class="box-header with-border">
                                                     <div class="user-block">
@@ -113,25 +113,25 @@
                                                     <div class="form-group">
                                                         <label for="inputFirstName" class="col-sm-2 control-label">@lang('supplier.field.first_name')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputFirstName" type="text" name="first_name[]" class="form-control" ng-model="profile.first_name" placeholder="@lang('supplier.field.first_name')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputFirstName" type="text" name="first_name[]" class="form-control" v-model="profile.first_name" placeholder="@lang('supplier.field.first_name')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="inputLastName" class="col-sm-2 control-label">@lang('supplier.field.last_name')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputLastName" type="text" name="last_name[]" class="form-control" ng-model="profile.last_name" placeholder="@lang('supplier.field.last_name')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputLastName" type="text" name="last_name[]" class="form-control" v-model="profile.last_name" placeholder="@lang('supplier.field.last_name')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="inputAddress" class="col-sm-2 control-label">@lang('supplier.field.address')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputAddress" type="text" name="profile_address[]" class="form-control" ng-model="profile.address" placeholder="@lang('supplier.field.address')">
+                                                            <input id="inputAddress" type="text" name="profile_address[]" class="form-control" v-model="profile.address" placeholder="@lang('supplier.field.address')">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="inputICNum" class="col-sm-2 control-label">@lang('supplier.field.ic_num')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputICNum" type="text" name="ic_num[]" class="form-control" ng-model="profile.ic_num" placeholder="@lang('supplier.field.ic_num')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputICNum" type="text" name="ic_num[]" class="form-control" v-model="profile.ic_num" placeholder="@lang('supplier.field.ic_num')" data-parsley-required="true" data-parsley-group="tab_pic">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -139,37 +139,37 @@
                                                         <div class="col-sm-10">
                                                             <table class="table table-bordered">
                                                                 <thead>
-                                                                <tr>
-                                                                    <th>@lang('supplier.create.table_phone.header.provider')</th>
-                                                                    <th>@lang('supplier.create.table_phone.header.number')</th>
-                                                                    <th>@lang('supplier.create.table_phone.header.remarks')</th>
-                                                                    <th class="text-center">@lang('labels.ACTION')</th>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <th>@lang('supplier.create.table_phone.header.provider')</th>
+                                                                        <th>@lang('supplier.create.table_phone.header.number')</th>
+                                                                        <th>@lang('supplier.create.table_phone.header.remarks')</th>
+                                                                        <th class="text-center">@lang('labels.ACTION')</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr ng-repeat="ph in profile.phone_number">
-                                                                    <td>
-                                                                        <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" ng-model="ph.provider"
-                                                                                ng-options="p.name + ' (' + p.short_name + ')' for p in providerDDL track by p.id"
-                                                                                data-parsley-required="true" data-parsley-group="tab_pic">
-                                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" ng-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
-                                                                    <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" ng-model="ph.remarks"></td>
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedPhone($parent.$index, $index)">
-                                                                            <span class="fa fa-close fa-fw"></span>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr v-for="ph in profile.phone_numbers">
+                                                                        <td>
+                                                                            <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control" v-model="ph.phone_provider_id"
+                                                                                    data-parsley-required="true" data-parsley-group="tab_pic">
+                                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }})</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
+                                                                        <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" v-model="ph.remarks"></td>
+                                                                        <td class="text-center">
+                                                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" v-on:click="removeSelectedPhone($parent.$index, $index)">
+                                                                                <span class="fa fa-close fa-fw"></span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                                 <tfoot>
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <button type="button" class="btn btn-xs btn-default" ng-click="addNewPhone($index)">@lang('buttons.create_new_button')</button>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <td colspan="4">
+                                                                            <button type="button" class="btn btn-xs btn-default" v-on:click="addNewPhone($index)">@lang('buttons.create_new_button')</button>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tfoot>
                                                             </table>
                                                         </div>
@@ -183,41 +183,41 @@
                             <div class="tab-pane" id="tab_bank_account">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
-                                        <th class="text-center">@lang('supplier.create.table_bank.header.account_name')</th>
-                                        <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
-                                        <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
-                                        <th class="text-center">@lang('labels.ACTION')</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
+                                            <th class="text-center">@lang('supplier.create.table_bank.header.account_name')</th>
+                                            <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
+                                            <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
+                                            <th class="text-center">@lang('labels.ACTION')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="bank in banks">
-                                        <td>
-                                            <select class="form-control"
-                                                    name="bank[]"
-                                                    ng-model="bank.bank_id"
-                                                    ng-options="b.id as b.name + ' (' + b.short_name + ')' for b in bankDDL track by b.id"
-                                                    data-parsley-required="true" data-parsley-group="tab_bank">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_name[]" ng-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_number[]" ng-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="bank_remarks[]" ng-model="bank.remarks">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr v-for="bank in banks">
+                                            <td>
+                                                <select class="form-control"
+                                                        name="bank[]"
+                                                        v-model="bank.bank_id"
+                                                        data-parsley-required="true" data-parsley-group="tab_bank">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" v-on:click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
+                                <button class="btn btn-xs btn-default" type="button" v-on:click="addNewBank()">@lang('buttons.create_new_button')</button>
                             </div>
                             <div class="tab-pane" id="tab_product">
                                 <table class="table table-bordered">
@@ -232,7 +232,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="p in productList">
+                                        <tr v-for="p in productList">
                                             <td class="text-center"><input type="checkbox" name="productSelected[]" value="@{{ p.id }}"></td>
                                             <td>@{{ p.type.name }}</td>
                                             <td>@{{ p.name }}</td>
@@ -248,14 +248,14 @@
                                     <div class="col-md-11">
                                         <select id="inputExpense"
                                                 class="form-control"
-                                                ng-model="expense"
-                                                ng-options="expense as expense.name for expense in expenseTemplates track by expense.id">
+                                                v-model="selectedExpense">
                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="expense in expenseTemplates" v-bind:value="expense">@{{ expense.name }}</option>
                                         </select>
                                     </div>
                                     <div class="col-md-1">
                                         <button type="button" class="btn btn-primary btn-md"
-                                                ng-click="addExpense(expense)"><span class="fa fa-plus"/></button>
+                                                v-on:click="addExpense(selectedExpense)"><span class="fa fa-plus"/></button>
                                     </div>
                                 </div>
                                 <table class="table table-bordered">
@@ -270,7 +270,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="expense in expenses">
+                                        <tr v-for="expense in expenses">
                                             <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
                                             <td class="text-center valign-middle">
                                                 @{{ expense.name }}
@@ -288,7 +288,7 @@
                                                 @{{ expense.remarks }}
                                             </td>
                                             <td class="text-center valign-middle">
-                                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
+                                                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -320,90 +320,84 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("supplierModule", []);
-        app.controller("supplierController", ['$scope', function($scope) {
-            $scope.banks = [];
-            $scope.profiles = [];
-            $scope.expenses = [];
-            $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
-            $scope.providerDDL = JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}');
-            $scope.productList = JSON.parse('{!! htmlspecialchars_decode($productList) !!}');
-            $scope.expenseTemplates = JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}');
-
-            _.forEach($scope.expenseTemplates, function (expenseTemplate, index) {
-                if(expenseTemplate.is_internal_expense){
-                    expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
-                }
-                else{
-                    expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
+        $(document).ready(function() {
+            var app = new Vue({
+                el: '#supplierVue',
+                data: {
+                    banks: [],
+                    profiles: [],
+                    expenses: [],
+                    bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
+                    providerDDL: JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}'),
+                    productList: JSON.parse('{!! htmlspecialchars_decode($productList) !!}'),
+                    expenseTemplates: JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}'),
+                    selectedExpense: ''
+                },
+                methods: {
+                    addNewBank: function() {
+                        this.banks.push({
+                            'bank_id': '',
+                            'account_name': '',
+                            'account_number': '',
+                            'remarks': ''
+                        });
+                    },
+                    removeSelectedBank: function(idx) {
+                        $scope.banks.splice(idx, 1);
+                    },
+                    addNewProfile: function() {
+                        this.profiles.push({
+                            'first_name': '',
+                            'last_name': '',
+                            'address': '',
+                            'ic_num': '',
+                            'image_filename': '',
+                            'phone_numbers':[{
+                                'phone_provider_id': '',
+                                'number': '',
+                                'remarks': ''
+                            }]
+                        });
+                    },
+                    removeSelectedProfile: function(idx) {
+                        this.profiles.splice(idx, 1);
+                    },
+                    addNewPhone: function(parentIndex) {
+                        this.profiles[parentIndex].phone_numbers.push({
+                            'phone_provider_id': '',
+                            'number': '',
+                            'remarks': ''
+                        });
+                    },
+                    removeSelectedPhone: function(parentIndex, idx) {
+                        this.profiles[parentIndex].phone_numbers.splice(idx, 1);
+                    },
+                    addExpense: function(selectedExpense) {
+                        this.expenses.push({
+                            id: selectedExpense.id,
+                            name: selectedExpense.name,
+                            type: selectedExpense.type,
+                            amount: numeral(selectedExpense.amount).format('0,0'),
+                            is_internal_expense: selectedExpense.is_internal_expense,
+                            remarks: selectedExpense.remarks
+                        });
+                    },
+                    removeSelectedExpense: function(idx) {
+                        this.expenses.splice(idx, 1);
+                    },
+                },
+                ready: function() {
+                    _.forEach(this.expenseTemplates, function (expenseTemplate, index) {
+                        if(expenseTemplate.is_internal_expense){
+                            expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
+                        }
+                        else{
+                            expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
+                        }
+                    });
                 }
             });
 
-            $scope.addNewBank = function() {
-                $scope.banks.push({
-                    'bank_id': '',
-                    'account_name': '',
-                    'account_number': '',
-                    'remarks': ''
-                });
-            };
-
-            $scope.removeSelectedBank = function(idx) {
-                $scope.banks.splice(idx, 1);
-            };
-
-            $scope.resetInputBank = function() {
-                $scope.inputBank = {};
-            };
-
-            $scope.addNewProfile = function() {
-                $scope.profiles.push({
-                    'first_name': '',
-                    'last_name': '',
-                    'address': '',
-                    'ic_num': '',
-                    'image_filename': '',
-                    'phone_number':[{
-                        'provider': '',
-                        'number': '',
-                        'remarks': ''
-                    }]
-                });
-            };
-
-            $scope.removeSelectedProfile = function(idx) {
-                $scope.profiles.splice(idx, 1);
-            };
-
-            $scope.addNewPhone = function(parentIndex) {
-                $scope.profiles[parentIndex].phone_number.push({
-                    'provider': '',
-                    'number': '',
-                    'remarks': ''
-                });
-            };
-
-            $scope.removeSelectedPhone = function(parentIndex, idx) {
-                $scope.profiles[parentIndex].phone_number.splice(idx, 1);
-            };
-
-            $scope.addExpense = function(expense) {
-                $scope.expenses.push({
-                    id: expense.id,
-                    name: expense.name,
-                    type: expense.type,
-                    amount: numeral(expense.amount).format('0,0'),
-                    is_internal_expense: expense.is_internal_expense,
-                    remarks: expense.remarks
-                });
-            };
-
-            $scope.removeSelectedExpense = function(idx) {
-                $scope.expenses.splice(idx, 1);
-            };
-        }]);
-
-        $(document).ready(function() {
             window.Parsley.on('parsley:field:validate', function() {
                 validateFront();
             });

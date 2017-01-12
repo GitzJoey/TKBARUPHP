@@ -10,10 +10,10 @@ use Vinkla\Hashids\Facades\Hashids;
 /**
  * App\Model\StockOpname
  *
- * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $stockMovement
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $stock_id
+ * @property string $opname_date
+ * @property boolean $is_match
  * @property float $previous_quantity
  * @property float $adjusted_quantity
  * @property string $reason
@@ -27,6 +27,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @property-read \App\Model\StockOut $stockOut
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereStockId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereOpnameDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereIsMatch($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname wherePreviousQuantity($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereAdjustedQuantity($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereReason($value)
@@ -36,10 +38,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereDeletedAt($value)
- * @property string $opname_date
- * @property boolean $is_match
- * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereOpnameDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereIsMatch($value)
+ * @mixin \Eloquent
  */
 class StockOpname extends Model
 {

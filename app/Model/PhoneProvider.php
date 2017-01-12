@@ -14,34 +14,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\PhoneProvider
+ * App\Model\PhoneProvider
  *
  * @property integer $id
  * @property string $name
  * @property string $short_name
  * @property string $status
  * @property string $remarks
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereShortName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property string $prefix
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider wherePrefix($value)
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneProvider whereDeletedAt($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PhonePrefix[] $prefixes
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereShortName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneProvider whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class PhoneProvider extends Model
 {

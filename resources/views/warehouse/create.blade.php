@@ -34,7 +34,7 @@
         </div>
         <form class="form-horizontal" action="{{ route('db.master.warehouse.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
-            <div ng-app="warehouseModule" ng-controller="warehouseController">
+            <div id="warehouseVue">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>
@@ -72,22 +72,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="c in sections">
-                                        <td><input type="text" class="form-control" ng-model="c.name" name="section_name[]" data-parsley-required="true"/></td>
-                                        <td><input type="text" class="form-control" ng-model="c.position" name="section_position[]" data-parsley-required="true"/></td>
+                                    <tr v-for="c in sections">
+                                        <td><input type="text" class="form-control" v-model="c.name" name="section_name[]" data-parsley-required="true"/></td>
+                                        <td><input type="text" class="form-control" v-model="c.position" name="section_position[]" data-parsley-required="true"/></td>
                                         <td><input type="text" class="form-control text-right" ng-model="c.capacity" name="section_capacity[]" data-parsley-required="true" data-parsley-type="number"/></td>
                                         <td>
                                             <select class="form-control"
                                                     name="section_capacity_unit[]"
-                                                    ng-model="c.capacity_unit_id"
-                                                    ng-options="key as value for (key, value) in unitDDL track by key"
+                                                    v-model="c.capacity_unit_id"
                                                     data-parsley-required="true">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-for="(key, value) in unitDDL" v-bind:value="key">@{{ value }}</option>
                                             </select>
                                         </td>
-                                        <td><input type="text" class="form-control" ng-model="c.remarks" name="section_remarks[]"/></td>
+                                        <td><input type="text" class="form-control" v-model="c.remarks" name="section_remarks[]"/></td>
                                         <td class="text-center valign-middle">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" ng-click="removeSelected($index)">
+                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" v-on:click="removeSelected($index)">
                                                 <span class="fa fa-close fa-fw"></span>
                                             </button>
                                         </td>
@@ -95,8 +95,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="5">
-                                            <button type="button" class="btn btn-xs btn-default" ng-click="addNew()">@lang('buttons.create_new_button')</button>
+                                        <td colspan="6">
+                                            <button type="button" class="btn btn-xs btn-default" v-on:click="addNew()">@lang('buttons.create_new_button')</button>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -132,29 +132,32 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("warehouseModule", []);
-        app.controller("warehouseController", ['$scope', function($scope) {
-            $scope.unitDDL = JSON.parse('{!! htmlspecialchars_decode($unitDDL) !!}');
-
-            $scope.sections = [{
-                'name': '',
-                'position': '',
-                'capacity': 0,
-                'remarks': ''
-            }];
-
-            $scope.addNew = function (unit) {
-                $scope.sections.push({
+        var app = new Vue({
+            el: '#warehouseVue',
+            data: {
+                sections: [{
                     'name': '',
                     'position': '',
                     'capacity': 0,
+                    'capacity_unit_id': '',
                     'remarks': ''
-                });
-            };
-
-            $scope.removeSelected = function (idx) {
-                $scope.sections.splice(idx, 1);
-            };
-        }]);
+                }],
+                unitDDL: JSON.parse('{!! htmlspecialchars_decode($unitDDL) !!}')
+            },
+            methods: {
+                addNew: function () {
+                    this.sections.push({
+                        'name': '',
+                        'position': '',
+                        'capacity': 0,
+                        'capacity_unit_id': '',
+                        'remarks': ''
+                    });
+                },
+                removeSelected: function (idx) {
+                    this.sections.splice(idx, 1);
+                }
+            }
+        });
     </script>
 @endsection

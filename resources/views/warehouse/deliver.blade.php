@@ -28,7 +28,7 @@
 
     <form class="form-horizontal" action="{{ route('db.warehouse.outflow', $so->hId())}}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
-        <div ng-app="warehouseOutflowModule" ng-controller="warehouseOutflowController">
+        <div id="deliverVue">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -110,29 +110,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="deliver in outflow.delivers">
-                                            <input type="hidden" name="item_id[]" ng-value="deliver.item.id">
-                                            <input type="hidden" name="product_id[]" ng-value="deliver.item.product_id">
-                                            <input type="hidden" name="stock_id[]" ng-value="deliver.item.stock_id">
-                                            <input type="hidden" name="base_unit_id[]" ng-value="deliver.item.base_unit_id">
-                                            <td class="valign-middle">@{{ deliver.item.product.name }}</td>
-                                            <td>
-                                                <select name="selected_unit_id[]" data-parsley-required="true"
-                                                        class="form-control"
-                                                        ng-model="deliver.selected_unit"
-                                                        ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in deliver.item.product.product_units track by product_unit.unit.id">
-                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="brutto[]" ng-model="deliver.brutto"
-                                                       data-parsley-required="true"
-                                                       data-parsley-type="number">
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md" ng-click="removeDeliver($index)"><span class="fa fa-minus"/></button>
-                                            </td>
-                                        </tr>
+                                            <tr v-for="deliver in outflow.delivers">
+                                                <input type="hidden" name="item_id[]" v-bind:value="deliver.item.id">
+                                                <input type="hidden" name="product_id[]" v-bind:value="deliver.item.product_id">
+                                                <input type="hidden" name="stock_id[]" v-bind:value="deliver.item.stock_id">
+                                                <input type="hidden" name="base_unit_id[]" v-bind:value="deliver.item.base_unit_id">
+                                                <td class="valign-middle">@{{ deliver.item.product.name }}</td>
+                                                <td>
+                                                    <select name="selected_unit_id[]" data-parsley-required="true"
+                                                            class="form-control"
+                                                            v-model="deliver.selected_unit.unit_id">
+                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="product_unit in deliver.item.product.product_units" v-bind:value="product_unit.unit.id">@{{ product_unit.unit.name }}(@{{ product_unit.unit.symbol }})</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="brutto[]" v-model="deliver.brutto"
+                                                           data-parsley-required="true"
+                                                           data-parsley-type="number">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver($index)"><span class="fa fa-minus"/></button>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -157,42 +157,48 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('warehouseOutflowModule', []);
-        app.controller("warehouseOutflowController", ['$scope', function($scope) {
-            var SO = JSON.parse('{!! htmlspecialchars_decode($so) !!}');
-
-            $scope.outflow = {
-                delivers : []
-            };
-
-            for(var i = 0; i < SO.items.length; i++){
-                $scope.outflow.delivers.push({
-                    item: SO.items[i],
-                    selected_unit: _.find(SO.items[i].product.product_units, getSelectedUnit(SO.items[i].selected_unit_id)),
-                    brutto: SO.items[i].quantity % 1 != 0 ? parseFloat(SO.items[i].quantity).toFixed(1) : parseFloat(SO.items[i].quantity).toFixed(0)
-                });
-            }
-
-            $scope.removeDeliver = function (index) {
-                $scope.outflow.delivers.splice(index, 1);
-            }
+        $(document).ready(function () {
+            var app = new Vue({
+                el: '#deliverVue',
+                data: {
+                    SO: JSON.parse('{!! htmlspecialchars_decode($so) !!}'),
+                    outflow: {
+                        delivers : []
+                    }
+                },
+                methods: {
+                    createDeliver: function() {
+                        for(var i = 0; i < this.SO.items.length; i++){
+                            this.outflow.delivers.push({
+                                item: this.SO.items[i],
+                                selected_unit: _.find(this.SO.items[i].product.product_units, getSelectedUnit(this.SO.items[i].selected_unit_id)),
+                                brutto: this.SO.items[i].quantity % 1 != 0 ? parseFloat(this.SO.items[i].quantity).toFixed(1) : parseFloat(this.SO.items[i].quantity).toFixed(0)
+                            });
+                        }
+                    },
+                    removeDeliver: function (index) {
+                        this.outflow.delivers.splice(index, 1);
+                    }
+                },
+                ready: function() {
+                    this.createDeliver();
+                }
+            });
 
             function getSelectedUnit(selectedUnitId) {
                 return function (element) {
                     return element.unit_id == selectedUnitId;
                 }
             }
-        }]);
 
-        $(function () {
             $("#inputDeliverDate").daterangepicker(
-                    {
-                        locale: {
-                            format: 'DD-MM-YYYY'
-                        },
-                        singleDatePicker: true,
-                        showDropdowns: true
-                    }
+                {
+                    locale: {
+                        format: 'DD-MM-YYYY'
+                    },
+                    singleDatePicker: true,
+                    showDropdowns: true
+                }
             );
         });
     </script>

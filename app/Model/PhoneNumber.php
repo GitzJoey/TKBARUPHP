@@ -13,34 +13,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\PhoneNumber
+ * App\Model\PhoneNumber
  *
- * @mixin \Eloquent
  * @property integer $id
+ * @property integer $profile_id
  * @property integer $phone_provider_id
  * @property string $number
- * @property string $status
  * @property string $remarks
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property string $deleted_at
- * @property-read \App\PhoneProvider $provider
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber wherePhoneProviderId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereNumber($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereDeletedAt($value)
- * @property integer $profile_id
- * @method static \Illuminate\Database\Query\Builder|\App\PhoneNumber whereProfileId($value)
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\PhoneProvider $provider
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereProfileId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber wherePhoneProviderId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereNumber($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class PhoneNumber extends Model
 {

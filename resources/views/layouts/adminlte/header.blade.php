@@ -73,6 +73,11 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="/logout" class="btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+                        <span class="glyphicon glyphicon-log-out"></span>
+                    </a>
+                </li>
+                <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i>&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 </li>
             </ul>

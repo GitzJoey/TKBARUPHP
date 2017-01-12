@@ -15,39 +15,39 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Warehouse
+ * App\Model\Warehouse
  *
  * @property integer $id
+ * @property integer $store_id
  * @property string $name
  * @property string $address
  * @property string $phone_num
  * @property string $status
  * @property string $remarks
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse wherePhoneNum($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereRemarks($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property integer $store_id
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted_by
- * @property string $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Warehouse whereDeletedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
  * @property-read mixed $hid
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\PurchaseOrder[] $purchaseOrders
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\WarehouseSection[] $sections
  * @property-read \App\Model\Store $store
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse wherePhoneNum($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class Warehouse extends Model
 {

@@ -11,7 +11,7 @@ namespace App\Model;
 use Zizaco\Entrust\EntrustPermission;
 
 /**
- * App\Permission
+ * App\Model\Permission
  *
  * @property integer $id
  * @property string $name
@@ -19,15 +19,13 @@ use Zizaco\Entrust\EntrustPermission;
  * @property string $description
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Role[] $roles
- * @method static \Illuminate\Database\Query\Builder|\App\Permission whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Permission whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Permission whereDisplayName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Permission whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Permission whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Permission whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Permission whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Permission whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Permission whereDisplayName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Permission whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Permission whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Permission whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read \App\Role $role
  */
 class Permission extends EntrustPermission
 {

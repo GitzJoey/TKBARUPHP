@@ -34,6 +34,19 @@
         </div>
         {!! Form::model($truckMtc, ['method' => 'PATCH', 'route' => ['db.truck.maintenance.edit', $truckMtc->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
+                <div class="form-group">
+                    <label for="inputMaintenanceDate"
+                           class="col-sm-3 control-label">@lang('truckmtc.field.maintenance_date')</label>
+                    <div class="col-sm-9">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control" id="inputMaintenanceDate"
+                                   name="maintenance_date" value="{{ $truckMtc->maintenace_date->format('d-m-Y')  }}" data-parsley-required="true">
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
                     <label class="col-sm-2 control-label">@lang('truckmtc.field.plate_number')</label>
                     <div class="col-sm-10">

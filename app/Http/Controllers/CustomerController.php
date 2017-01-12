@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Model\Bank;
-use App\Model\ExpenseTemplate;
 use App\Model\Store;
 use App\Model\Lookup;
 use App\Model\Profile;
@@ -14,7 +13,9 @@ use App\Model\PriceLevel;
 use App\Model\BankAccount;
 use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
+use App\Model\ExpenseTemplate;
 
+use DB;
 use Auth;
 use Validator;
 use App\Http\Requests;
@@ -29,9 +30,21 @@ class CustomerController extends Controller
         $this->middleware('auth', [ 'except' => [ 'searchCustomers' ] ]);
     }
 
-    public function index()
+    public function index(Request $req)
     {
-        $customer = Customer::paginate(10);
+        $customer = [];
+        if (!empty($req->query('s'))) {
+            $param = $req->query('s');
+            $customer = Customer::with('profiles.phoneNumbers.provider', 'expenseTemplates', 'bankAccounts.bank', 'priceLevel')
+                ->where('name', 'like', "%$param%")
+                ->orWhereHas('profiles', function ($query) use ($param) {
+                    $query->where('first_name', 'like', "%$param%")
+                        ->orWhere('last_name', 'like', "%$param%");
+                })->paginate(10);
+        } else {
+            $customer = Customer::paginate(10);
+        }
+
         return view('customer.index')->with('customer', $customer);
     }
 
@@ -67,50 +80,52 @@ class CustomerController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
         } else {
-            $customer = new Customer();
-            $customer->store_id = Auth::user()->store->id;
-            $customer->name = $data['name'];
-            $customer->address = $data['address'];
-            $customer->city = $data['city'];
-            $customer->phone_number = $data['phone'];
-            $customer->tax_id = $data['tax_id'];
-            $customer->remarks = $data['remarks'];
-            $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
-            $customer->price_level_id = $data['price_level'];
-            $customer->status = $data['status'];
+            DB::transaction(function() use ($data) {
+                $customer = new Customer();
+                $customer->store_id = Auth::user()->store->id;
+                $customer->name = $data['name'];
+                $customer->address = $data['address'];
+                $customer->city = $data['city'];
+                $customer->phone_number = $data['phone'];
+                $customer->tax_id = $data['tax_id'];
+                $customer->remarks = $data['remarks'];
+                $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
+                $customer->price_level_id = $data['price_level'];
+                $customer->status = $data['status'];
 
-            $customer->save();
+                $customer->save();
 
-            for ($i = 0; $i < count($data['bank']); $i++) {
-                $ba = new BankAccount();
-                $ba->bank_id = $data["bank"][$i];
-                $ba->account_name = $data["account_name"][$i];
-                $ba->account_number = $data["account_number"][$i];
-                $ba->remarks = $data["bank_remarks"][$i];
+                for ($i = 0; $i < count($data['bank']); $i++) {
+                    $ba = new BankAccount();
+                    $ba->bank_id = $data["bank"][$i];
+                    $ba->account_name = $data["account_name"][$i];
+                    $ba->account_number = $data["account_number"][$i];
+                    $ba->remarks = $data["bank_remarks"][$i];
 
-                $customer->bankAccounts()->save($ba);
-            }
-
-            for ($i = 0; $i < count($data['first_name']); $i++) {
-                $pa = new Profile();
-                $pa->first_name = $data["first_name"][$i];
-                $pa->last_name = $data["last_name"][$i];
-                $pa->address = $data["profile_address"][$i];
-                $pa->ic_num = $data["ic_num"][$i];
-
-                $customer->profiles()->save($pa);
-
-                for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
-                    $ph = new PhoneNumber();
-                    $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
-                    $ph->number = $data['profile_' . $i . '_phone_number'][$j];
-                    $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
-
-                    $pa->phoneNumbers()->save($ph);
+                    $customer->bankAccounts()->save($ba);
                 }
-            }
 
-            $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+                for ($i = 0; $i < count($data['first_name']); $i++) {
+                    $pa = new Profile();
+                    $pa->first_name = $data["first_name"][$i];
+                    $pa->last_name = $data["last_name"][$i];
+                    $pa->address = $data["profile_address"][$i];
+                    $pa->ic_num = $data["ic_num"][$i];
+
+                    $customer->profiles()->save($pa);
+
+                    for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
+                        $ph = new PhoneNumber();
+                        $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
+                        $ph->number = $data['profile_' . $i . '_phone_number'][$j];
+                        $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
+
+                        $pa->phoneNumbers()->save($ph);
+                    }
+                }
+
+                $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+            });
 
             return redirect(route('db.master.customer'));
         }
@@ -131,87 +146,89 @@ class CustomerController extends Controller
 
     public function update($id, Request $data)
     {
-        $customer = Customer::findOrFail($id);
+        DB::transaction(function() use ($id, $data) {
+            $customer = Customer::findOrFail($id);
 
-        if (!$customer) {
-            return redirect(route('db.master.customer'));
-        }
+            if (!$customer) {
+                return redirect(route('db.master.customer'));
+            }
 
-        $customerBankAccountIds = $customer->bankAccounts->map(function ($bankAccount){
-            return $bankAccount->id;
-        })->all();
-
-        $inputtedBankAccountId = $data->input('bank_account_id');
-
-        $customerBankAccountsToBeDeleted = array_diff($customerBankAccountIds, isset($inputtedBankAccountId) ?
-            $inputtedBankAccountId : []);
-
-        BankAccount::destroy($customerBankAccountsToBeDeleted);
-
-        for ($i = 0; $i < count($data['bank']); $i++) {
-            $ba = BankAccount::findOrNew($data['bank_account_id'][$i]);
-            $ba->bank_id = $data["bank"][$i];
-            $ba->account_name= $data["account_name"][$i];
-            $ba->account_number = $data["account_number"][$i];
-            $ba->remarks = $data["bank_remarks"][$i];
-
-            $customer->bankAccounts()->save($ba);
-        }
-
-        $customerProfileIds = $customer->profiles->map(function ($profile) {
-            return $profile->id;
-        })->all();
-
-        $inputtedProfileId = $data->input('profile_id');
-
-        $customerProfilesToBeDeleted = array_diff($customerProfileIds, isset($inputtedProfileId) ?
-            $inputtedProfileId : []);
-
-        Profile::destroy($customerProfilesToBeDeleted);
-
-        for ($i = 0; $i < count($data['first_name']); $i++) {
-            $pa = Profile::with('phoneNumbers')->findOrNew($data['profile_id'][$i]);
-            $pa->first_name = $data["first_name"][$i];
-            $pa->last_name = $data["last_name"][$i];
-            $pa->address = $data["profile_address"][$i];
-            $pa->ic_num = $data["ic_num"][$i];
-
-            $customer->profiles()->save($pa);
-
-            $profilePhoneNumberIds = $pa->phoneNumbers->map(function ($phoneNumber) {
-                return $phoneNumber->id;
+            $customerBankAccountIds = $customer->bankAccounts->map(function ($bankAccount){
+                return $bankAccount->id;
             })->all();
 
-            $inputtedPhoneNumberId = $data->input('profile_' . $i . '_phone_number_id');
+            $inputtedBankAccountId = $data->input('bank_account_id');
 
-            $profilePhoneNumbersToBeDeleted = array_diff($profilePhoneNumberIds,
-                isset($inputtedPhoneNumberId) ? $inputtedPhoneNumberId : []);
+            $customerBankAccountsToBeDeleted = array_diff($customerBankAccountIds, isset($inputtedBankAccountId) ?
+                $inputtedBankAccountId : []);
 
-            PhoneNumber::destroy($profilePhoneNumbersToBeDeleted);
+            BankAccount::destroy($customerBankAccountsToBeDeleted);
 
-            for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
-                $ph = PhoneNumber::findOrNew($data['profile_' . $i . '_phone_number_id'][$j]);
-                $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
-                $ph->number = $data['profile_' . $i . '_phone_number'][$j];
-                $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
+            for ($i = 0; $i < count($data['bank']); $i++) {
+                $ba = BankAccount::findOrNew($data['bank_account_id'][$i]);
+                $ba->bank_id = $data["bank"][$i];
+                $ba->account_name= $data["account_name"][$i];
+                $ba->account_number = $data["account_number"][$i];
+                $ba->remarks = $data["bank_remarks"][$i];
 
-                $pa->phoneNumbers()->save($ph);
+                $customer->bankAccounts()->save($ba);
             }
-        }
 
-        $customer->name = $data['name'];
-        $customer->address = $data['address'];
-        $customer->city = $data['city'];
-        $customer->phone_number = $data['phone'];
-        $customer->tax_id = $data['tax_id'];
-        $customer->remarks = $data['remarks'];
-        $customer->price_level_id = empty($data['price_level']) ? 0 : $data['price_level'];
-        $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
-        $customer->status = $data['status'];
+            $customerProfileIds = $customer->profiles->map(function ($profile) {
+                return $profile->id;
+            })->all();
 
-        $customer->save();
+            $inputtedProfileId = $data->input('profile_id');
 
-        $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+            $customerProfilesToBeDeleted = array_diff($customerProfileIds, isset($inputtedProfileId) ?
+                $inputtedProfileId : []);
+
+            Profile::destroy($customerProfilesToBeDeleted);
+
+            for ($i = 0; $i < count($data['first_name']); $i++) {
+                $pa = Profile::with('phoneNumbers')->findOrNew($data['profile_id'][$i]);
+                $pa->first_name = $data["first_name"][$i];
+                $pa->last_name = $data["last_name"][$i];
+                $pa->address = $data["profile_address"][$i];
+                $pa->ic_num = $data["ic_num"][$i];
+
+                $customer->profiles()->save($pa);
+
+                $profilePhoneNumberIds = $pa->phoneNumbers->map(function ($phoneNumber) {
+                    return $phoneNumber->id;
+                })->all();
+
+                $inputtedPhoneNumberId = $data->input('profile_' . $i . '_phone_number_id');
+
+                $profilePhoneNumbersToBeDeleted = array_diff($profilePhoneNumberIds,
+                    isset($inputtedPhoneNumberId) ? $inputtedPhoneNumberId : []);
+
+                PhoneNumber::destroy($profilePhoneNumbersToBeDeleted);
+
+                for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
+                    $ph = PhoneNumber::findOrNew($data['profile_' . $i . '_phone_number_id'][$j]);
+                    $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
+                    $ph->number = $data['profile_' . $i . '_phone_number'][$j];
+                    $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
+
+                    $pa->phoneNumbers()->save($ph);
+                }
+            }
+
+            $customer->name = $data['name'];
+            $customer->address = $data['address'];
+            $customer->city = $data['city'];
+            $customer->phone_number = $data['phone'];
+            $customer->tax_id = $data['tax_id'];
+            $customer->remarks = $data['remarks'];
+            $customer->price_level_id = empty($data['price_level']) ? 0 : $data['price_level'];
+            $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
+            $customer->status = $data['status'];
+
+            $customer->save();
+
+            $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+        });
 
         return redirect(route('db.master.customer'));
     }
@@ -242,12 +259,14 @@ class CustomerController extends Controller
 
     public function confirmationIndex()
     {
-        $profile = Profile::with('customers')->where('user_id', '=' , Auth::user()->id)->first();
+        $profile = Profile::with('owner')
+            ->where('owner_type', '=', 'App\Model\Customer')
+            ->where('user_id', '=' , Auth::user()->id)->first();
 
         $customerhid = Hashids::encode(0);
 
-        if ($profile && $profile->customers()) {
-            $customerhid = Hashids::encode($profile->customers()->first()->id);
+        if ($profile && $profile->owner()) {
+            $customerhid = Hashids::encode($profile->owner()->first()->id);
         }
 
         return redirect(route('db.customer.confirmation.customer', $customerhid));

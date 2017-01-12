@@ -86,6 +86,27 @@ class BankController extends Controller
         return view('bank.upload', compact('bankDDL', 'bankUploads'));
     }
 
+    public function edit($id)
+    {
+        $bank = Bank::find($id);
+
+        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+
+        return view('bank.edit', compact('bank', 'statusDDL'));
+    }
+
+    public function update($id, Request $req)
+    {
+        Bank::find($id)->update($req->all());
+        return redirect(route('db.master.bank'));
+    }
+
+    public function delete($id)
+    {
+        Bank::find($id)->delete();
+        return redirect(route('db.master.bank'));
+    }
+
     public function storeUpload(Request $data)
     {
         $validator = Validator::make($data->all(), [
@@ -135,26 +156,5 @@ class BankController extends Controller
         $data->session()->flash('success', 'Upload success.');
 
         return redirect()->action('BankController@upload');
-    }
-
-    public function edit($id)
-    {
-        $bank = Bank::find($id);
-
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-
-        return view('bank.edit', compact('bank', 'statusDDL'));
-    }
-
-    public function update($id, Request $req)
-    {
-        Bank::find($id)->update($req->all());
-        return redirect(route('db.master.bank'));
-    }
-
-    public function delete($id)
-    {
-        Bank::find($id)->delete();
-        return redirect(route('db.master.bank'));
     }
 }

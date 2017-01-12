@@ -25,12 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (!Cookie::has('tkbaruCookie_login')) {
-            $cookie = Cookie::make('tkbaruCookie_login', Auth::user()->email, 4320, "/", null, false, false); //3 days
+        $cookie = Cookie::make('tkbaruCookie_login', Auth::user()->email, 360, "/", null, false, false); //6 Hours
 
-            return redirect('dashboard')->withCookie($cookie);
-        } else {
-            return redirect('dashboard');
-        }
+        return redirect('dashboard')->withCookie($cookie);
     }
 }

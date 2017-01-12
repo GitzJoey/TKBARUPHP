@@ -54,7 +54,7 @@
                         <input id="inputAmount" name="amount" type="text" class="form-control"
                                placeholder="@lang('expense_template.field.amount')"
                                data-parsley-required="true" data-parsley-pattern="/^\d+(,\d+)*$/" ng-model="amount"
-                               fcsa-number>
+                               autonumeric data-a-sep="," data-a-dec=".">
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>
                 </div>
@@ -95,16 +95,11 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(function () {
+        $(document).ready(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
             });
         });
-
-        var app = angular.module('expenseTemplateModule', ['fcsa-number']);
-        app.controller("expenseTemplateController", ['$scope', function ($scope) {
-            $scope.amount = parseInt('{{ $expenseTemplate->amount }}');
-        }]);
     </script>
 @endsection

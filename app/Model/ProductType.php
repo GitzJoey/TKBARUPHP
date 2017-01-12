@@ -16,9 +16,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\ProductType
+ * App\Model\ProductType
  *
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $store_id
  * @property string $name
@@ -30,23 +29,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $deleted_by
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property string $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Product[] $product
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereStoreId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereShortCode($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\ProductType whereDeletedAt($value)
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\Store $store
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Product[] $products
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Stock[] $stocks
- * @property-read \App\Model\Store $store
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereShortCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductType whereDeletedAt($value)
+ * @mixin \Eloquent
  */
 class ProductType extends Model
 {

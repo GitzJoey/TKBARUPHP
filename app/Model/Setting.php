@@ -12,25 +12,17 @@ use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Settings
+ * App\Model\Setting
  *
- * @property string $skey
- * @property string $category
- * @property string $value
- * @property string $description
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Settings whereSkey($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Settings whereCategory($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Settings whereValue($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Settings whereDescription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Settings whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Settings whereUpdatedAt($value)
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $user_id
- * @method static \Illuminate\Database\Query\Builder|\App\Settings whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Settings whereUserId($value)
+ * @property string $skey
+ * @property string $value
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Setting whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Setting whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Setting whereSkey($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Setting whereValue($value)
+ * @mixin \Eloquent
  */
 class Setting extends Model
 {

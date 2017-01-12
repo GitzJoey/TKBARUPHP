@@ -17,9 +17,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Stocks
+ * App\Model\Stock
  *
- * @mixin \Eloquent
  * @property integer $id
  * @property integer $store_id
  * @property integer $po_id
@@ -34,6 +33,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
  * @property-read \App\Model\Product $product
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Price[] $prices
+ * @property-read \App\Model\Warehouse $warehouse
+ * @property-read \App\Model\PurchaseOrder $purchaseOrder
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereStoreId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock wherePoId($value)
@@ -47,9 +49,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereDeletedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Price[] $prices
- * @property-read \App\Model\Warehouse $warehouse
- * @property-read \App\Model\PurchaseOrder $purchaseOrder
+ * @mixin \Eloquent
  */
 class Stock extends Model
 {

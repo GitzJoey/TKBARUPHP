@@ -74,4 +74,23 @@ return [
             ],
         ],
     ],
+    'consolidate' => [
+        'index' => [
+            'title' => 'Bank Consolidate',
+            'page_title' => 'Bank Consolidate',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'List of Bank Consolidates '
+            ],
+            'table' => [
+                'header' => [
+                    'date' => 'Date',
+                    'remarks' => 'Remarks',
+                    'amount' => 'Amount',
+                    'db_cr' => 'DB/CR',
+                    'balance' => 'Balance'
+                ],
+            ],
+        ],
+    ],
 ];
