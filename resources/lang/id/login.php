@@ -12,7 +12,7 @@ return [
         'email' => 'Email',
         'password' => 'Password',
         'retype_password' => 'Ulangi Password',
-        'agree_1' => 'Saya Menyetujui',
+        'agree_1' => 'Saya Menyetujui ',
         'agree_2' => 'Syarat Dan Ketentuan',
         'already_member' => 'Sudah Memiliki Login',
         'terms_and_cond' => 'Syarat Dan Ketentuan',
