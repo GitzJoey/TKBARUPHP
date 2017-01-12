@@ -159,7 +159,7 @@
     <script type="application/javascript">
         $(document).ready(function () {
             var app = new Vue({
-                el: 'deliverVue',
+                el: '#deliverVue',
                 data: {
                     SO: JSON.parse('{!! htmlspecialchars_decode($so) !!}'),
                     outflow: {
@@ -170,9 +170,9 @@
                     createDeliver: function() {
                         for(var i = 0; i < this.SO.items.length; i++){
                             this.outflow.delivers.push({
-                                item: SO.items[i],
-                                selected_unit: _.find(SO.items[i].product.product_units, getSelectedUnit(SO.items[i].selected_unit_id)),
-                                brutto: SO.items[i].quantity % 1 != 0 ? parseFloat(SO.items[i].quantity).toFixed(1) : parseFloat(SO.items[i].quantity).toFixed(0)
+                                item: this.SO.items[i],
+                                selected_unit: _.find(this.SO.items[i].product.product_units, getSelectedUnit(this.SO.items[i].selected_unit_id)),
+                                brutto: this.SO.items[i].quantity % 1 != 0 ? parseFloat(this.SO.items[i].quantity).toFixed(1) : parseFloat(this.SO.items[i].quantity).toFixed(0)
                             });
                         }
                     },
