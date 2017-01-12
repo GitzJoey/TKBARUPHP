@@ -28,7 +28,7 @@
 
     <form class="form-horizontal" action="{{ route('db.warehouse.inflow', $po->hId())}}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
-        <div ng-app="warehouseInflowModule" ng-controller="warehouseInflowController">
+        <div id="receiptVue">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -102,54 +102,54 @@
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="50%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.product_name')</th>
-                                            <th width="15%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.unit')</th>
-                                            <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.brutto')</th>
-                                            <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.netto')</th>
-                                            <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.tare')</th>
-                                            <th width="5%">&nbsp;</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="50%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.product_name')</th>
+                                                <th width="15%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.unit')</th>
+                                                <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.brutto')</th>
+                                                <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.netto')</th>
+                                                <th width="10%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.tare')</th>
+                                                <th width="5%">&nbsp;</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="receipt in inflow.receipts">
-                                            <input type="hidden" name="item_id[]" ng-value="receipt.item.id">
-                                            <input type="hidden" name="product_id[]" ng-value="receipt.item.product_id">
-                                            <input type="hidden" name="base_unit_id[]" ng-value="receipt.item.base_unit_id">
-                                            <td class="valign-middle">@{{ receipt.item.product.name }}</td>
-                                            <td>
-                                                <select name="selected_unit_id[]" data-parsley-required="true"
-                                                        class="form-control"
-                                                        ng-model="receipt.selected_unit"
-                                                        ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in receipt.item.product.product_units track by product_unit.unit.id">
-                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input id="brutto_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="brutto[]" ng-model="receipt.brutto"
-                                                       data-parsley-required="true"
-                                                       data-parsley-type="number"
-                                                       data-parsley-checkequal="@{{ receipt.item.id }}"
-                                                       data-parsley-trigger="change">
-                                            </td>
-                                            <td>
-                                                <input id="netto_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="netto[]" ng-model="receipt.netto"
-                                                       data-parsley-required="true"
-                                                       data-parsley-type="number"
-                                                       data-parsley-checkequal="@{{ receipt.item.id }}"
-                                                       data-parsley-trigger="change">
-                                            </td>
-                                            <td>
-                                                <input id="tare_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="tare[]" ng-model="receipt.tare"
-                                                       data-parsley-required="true"
-                                                       data-parsley-type="number"
-                                                       data-parsley-checkequal="@{{ receipt.item.id }}"
-                                                       data-parsley-trigger="change">
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md" ng-click="removeReceipt($index)"><span class="fa fa-minus"/></button>
-                                            </td>
-                                        </tr>
+                                            <tr v-for="receipt in inflow.receipts">
+                                                <input type="hidden" name="item_id[]" v-bind:value="receipt.item.id">
+                                                <input type="hidden" name="product_id[]" v-bind:value="receipt.item.product_id">
+                                                <input type="hidden" name="base_unit_id[]" v-bind:value="receipt.item.base_unit_id">
+                                                <td class="valign-middle">@{{ receipt.item.product.name }}</td>
+                                                <td>
+                                                    <select name="selected_unit_id[]" data-parsley-required="true"
+                                                            class="form-control"
+                                                            v-model="receipt.selected_unit.unit_id">
+                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="product_unit in receipt.item.product.product_units" v-bind:value="product_unit.unit.id">@{{ product_unit.unit.name }} (@{{ product_unit.unit.symbol }})</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input id="brutto_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="brutto[]" v-model="receipt.brutto"
+                                                           data-parsley-required="true"
+                                                           data-parsley-type="number"
+                                                           data-parsley-checkequal="@{{ receipt.item.id }}"
+                                                           data-parsley-trigger="change">
+                                                </td>
+                                                <td>
+                                                    <input id="netto_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="netto[]" v-model="receipt.netto"
+                                                           data-parsley-required="true"
+                                                           data-parsley-type="number"
+                                                           data-parsley-checkequal="@{{ receipt.item.id }}"
+                                                           data-parsley-trigger="change">
+                                                </td>
+                                                <td>
+                                                    <input id="tare_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="tare[]" v-model="receipt.tare"
+                                                           data-parsley-required="true"
+                                                           data-parsley-type="number"
+                                                           data-parsley-checkequal="@{{ receipt.item.id }}"
+                                                           data-parsley-trigger="change">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeReceipt($index)"><span class="fa fa-minus"/></button>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -174,30 +174,33 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('warehouseInflowModule', []);
-        app.controller("warehouseInflowController", ['$scope', function($scope) {
-            var PO =JSON.parse('{!! htmlspecialchars_decode($po) !!}');
+        $(document).ready(function () {
+            var app = new Vue({
+                el: '#receiptVue',
+                data: {
+                    PO: JSON.parse('{!! htmlspecialchars_decode($po) !!}'),
+                    inflow: {
+                        receipts : []
+                    }
+                },
+                methods: {
+                    createReceipt: function() {
+                        for(var i = 0; i < this.PO.items.length; i++){
+                            this.inflow.receipts.push({
+                                item: PO.items[i],
+                                selected_unit: '',
+                                brutto: '',
+                                netto: '',
+                                tare: ''
+                            });
+                        }
+                    },
+                    removeReceipt: function (index) {
+                        this.inflow.receipts.splice(index, 1);
+                    }
+                }
+            });
 
-            $scope.inflow = {
-                receipts : []
-            };
-
-            for(var i = 0; i < PO.items.length; i++){
-                $scope.inflow.receipts.push({
-                    item: PO.items[i],
-                    selected_unit: '',
-                    brutto: '',
-                    netto: '',
-                    tare: ''
-                });
-            }
-
-            $scope.removeReceipt = function (index) {
-                $scope.inflow.receipts.splice(index, 1);
-            }
-        }]);
-
-        $(function () {
             $("#inputReceiptDate").daterangepicker({
                 locale: {
                     format: 'DD-MM-YYYY'
