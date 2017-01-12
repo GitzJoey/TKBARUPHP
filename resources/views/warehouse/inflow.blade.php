@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <div ng-app="warehouseInflowModule" ng-controller="warehouseInflowController">
+    <div id="warehouseInflowVue">
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('warehouse.inflow.index.header.warehouse')</h3>
@@ -31,10 +31,10 @@
             <div class="box-body">
                 <select id="inputWarehouse"
                         class="form-control"
-                        ng-model="warehouse"
-                        ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id"
-                        ng-change="getWarehousePOs(warehouse)">
+                        v-model="selectedWarehouse"
+                        v-on:change="getWarehousePOs(selectedWarehouse)">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
+                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
                 </select>
             </div>
         </div>
@@ -54,14 +54,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="po in POs">
+                        <tr v-for="po in POs">
                             <td class="text-center">@{{ po.code }}</td>
                             <td class="text-center">@{{ po.po_created }}</td>
-                            <td class="text-center">@{{ po.supplier.name }}</td>
+                            <td class="text-center">
+                                <span v-show="po.customer_type == 'SUPPLIERTYPE.R'">@{{ po.supplier.name }}</span>
+                                <span v-show="po.customer_type == 'SUPPLIERTYPE.WI">@{{ po.walk_in_supplier }}</span>
+                            </td>
                             <td class="text-center">@{{ po.shipping_date }}</td>
                             <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow') }}/@{{ po.id }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
+                        </tr>
+                        <tr v-show="selectedWarehouse != '' && !POs.length">
+                            <td colspan="5" class="text-center animated shake">@lang('labels.DATA_NOT_FOUND')</td>
                         </tr>
                     </tbody>
                 </table>
@@ -72,17 +78,22 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('warehouseInflowModule', []);
-        app.controller('warehouseInflowController', ['$scope', '$http', function($scope, $http) {
-            $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-
-            $scope.POs = [];
-
-            $scope.getWarehousePOs = function (warehouse) {
-                $http.get('{{ route('api.warehouse.inflow.po') }}/' + warehouse.id).then(function (data) {
-                    $scope.POs = data.data;
-                });
-            }
-        }]);
+        $(document).ready(function() {
+            var app = new Vue({
+                el: '#warehouseInflowVue',
+                data:{
+                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                    selectedWarehouse: '',
+                    POs: []
+                },
+                methods: {
+                    getWarehousePOs: function (selectedWarehouse) {
+                        this.$http.get('{{ route('api.warehouse.inflow.po') }}/' + this.selectedWarehouse.id).then(function(data) {
+                            this.POs = data.data;
+                        });
+                    }
+                }
+            });
+        });
     </script>
 @endsection

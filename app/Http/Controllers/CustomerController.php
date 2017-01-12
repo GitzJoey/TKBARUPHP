@@ -259,12 +259,14 @@ class CustomerController extends Controller
 
     public function confirmationIndex()
     {
-        $profile = Profile::with('customers')->where('user_id', '=' , Auth::user()->id)->first();
+        $profile = Profile::with('owner')
+            ->where('owner_type', '=', 'App\Model\Customer')
+            ->where('user_id', '=' , Auth::user()->id)->first();
 
         $customerhid = Hashids::encode(0);
 
-        if ($profile && $profile->customers()) {
-            $customerhid = Hashids::encode($profile->customers()->first()->id);
+        if ($profile && $profile->owner()) {
+            $customerhid = Hashids::encode($profile->owner()->first()->id);
         }
 
         return redirect(route('db.customer.confirmation.customer', $customerhid));

@@ -28,7 +28,7 @@
 
     <form class="form-horizontal" action="{{ route('db.customer.confirmation.confirm', $so->hId())}}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
-        <div ng-app="custConfirmModule" ng-controller="custConfirmController">
+        <div id="custConfirmVue">
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -88,54 +88,56 @@
                                             <tr>
                                                 <th width="20%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.product_name')</th>
                                                 <th width="15%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.unit')</th>
-                                                <th width="5%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.brutto')</th>
-                                                <th width="15%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.netto')</th>
-                                                <th width="15%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.tare')</th>
-                                                <th width="25%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.remarks')</th>
+                                                <th width="10%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.brutto')</th>
+                                                <th width="10%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.netto')</th>
+                                                <th width="10%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.tare')</th>
+                                                <th width="30%" class="text-center">@lang('customer.confirmation.confirm.table.item.header.remarks')</th>
                                                 <th width="5%">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="deliver in outflow.delivers">
-                                                <input type="hidden" name="deliver_id[]" ng-value="deliver.id">
-                                                <input type="hidden" name="item_id[]" ng-value="deliver.item.id">
-                                                <input type="hidden" name="product_id[]" ng-value="deliver.item.product_id">
-                                                <input type="hidden" name="base_unit_id[]" ng-value="deliver.item.base_unit_id">
-                                                <td class="valign-middle">@{{ deliver.item.product.name }}</td>
+                                            <tr v-for="deliver in outflow.delivers">
+                                                <td class="valign-middle">
+                                                    <input type="hidden" name="deliver_id[]" value="0">
+                                                    <input type="hidden" name="item_id[]" value="@{{ deliver.item.id }}">
+                                                    <input type="hidden" name="product_id[]" value="@{{ deliver.item.product_id }}">
+                                                    <input type="hidden" name="base_unit_id[]" value="@{{ deliver.item.base_unit_id }}">
+                                                    @{{ deliver.item.product.name }}
+                                                </td>
                                                 <td>
                                                     <select name="selected_unit_id[]" data-parsley-required="true"
                                                             class="form-control"
-                                                            ng-model="selected_unit"
-                                                            ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in deliver.item.product.product_units track by product_unit.unit.id">
+                                                            v-model="deliver.selected_unit.unit_id">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="product_unit in deliver.item.product.product_units" v-bind:value="product_unit.unit.id">@{{ product_unit.unit.name }} (@{{ product_unit.unit.symbol }})</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input id="brutto_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="brutto[]" ng-model="deliver.brutto"
+                                                    <input id="brutto_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="brutto[]" v-model="deliver.brutto"
                                                            data-parsley-required="true"
                                                            data-parsley-type="number"
                                                            data-parsley-trigger="change"
                                                            readonly>
                                                 </td>
                                                 <td>
-                                                    <input id="netto_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="netto[]" ng-model="deliver.netto"
+                                                    <input id="netto_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="netto[]" v-model="deliver.netto"
                                                            data-parsley-required="true"
                                                            data-parsley-type="number"
                                                            data-parsley-checkequal="@{{ deliver.item.id }}"
                                                            data-parsley-trigger="change">
                                                 </td>
                                                 <td>
-                                                    <input id="tare_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="tare[]" ng-model="deliver.tare"
+                                                    <input id="tare_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="tare[]" v-model="deliver.tare"
                                                            data-parsley-required="true"
                                                            data-parsley-type="number"
                                                            data-parsley-checkequal="@{{ deliver.item.id }}"
                                                            data-parsley-trigger="change">
                                                 </td>
                                                 <td>
-                                                    <input id="remarks_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="remarks[]" ng-model="deliver.remarks">
+                                                    <input id="remarks_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="remarks[]" v-model="deliver.remarks">
                                                 </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-danger btn-md" ng-click="removeDeliver($index)"><span class="fa fa-minus"/></button>
+                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver($index)"><span class="fa fa-minus"/></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -152,7 +154,7 @@
                 <div class="btn-toolbar">
                     <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                     <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.customer.confirmation.customer', $so->hId()) }}" >@lang('buttons.cancel_button')</a>
+                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.customer.confirmation.customer', $so->customer->hId()) }}" >@lang('buttons.cancel_button')</a>
                 </div>
             </div>
         </div>
@@ -162,37 +164,44 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('custConfirmModule', []);
-        app.controller("custConfirmController", ['$scope', function($scope) {
-            var SO = JSON.parse('{!! htmlspecialchars_decode($so) !!}');
-
-            $scope.outflow = {
-                delivers : []
-            };
-
-            for(var i = 0; i < SO.items.length; i++){
-                $scope.outflow.delivers.push({
-                    item: SO.items[i],
-                    selected_unit: _.find(SO.items[i].product.product_units, getSelectedUnit(SO.items[i].selected_unit_id)),
-                    brutto: SO.items[i].quantity,
-                    netto: 0,
-                    tare: 0,
-                    remarks: ''
-                });
-            }
-
-            $scope.removeDeliver = function (index) {
-                $scope.outflow.delivers.splice(index, 1);
-            }
+        $(document).ready(function () {
+            var app = new Vue({
+                el: '#custConfirmVue',
+                data: {
+                    SO: JSON.parse('{!! htmlspecialchars_decode($so) !!}'),
+                    outflow: {
+                        delivers: []
+                    }
+                },
+                methods: {
+                    removeDeliver: function (index) {
+                        this.outflow.delivers.splice(index, 1);
+                    },
+                    createDeliver: function() {
+                        for(var i = 0; i < this.SO.items.length; i++) {
+                            this.outflow.delivers.push({
+                                item: this.SO.items[i],
+                                selected_unit: _.find(this.SO.items[i].product.product_units, getSelectedUnit(this.SO.items[i].selected_unit_id)),
+                                brutto: this.SO.items[i].quantity,
+                                netto: 0,
+                                tare: 0,
+                                remarks: ''
+                            });
+                        }
+                    }
+                },
+                ready: function() {
+                    this.createDeliver();
+                    console.log(this.outflow.delivers);
+                }
+            });
 
             function getSelectedUnit(selectedUnitId) {
                 return function (element) {
                     return element.unit_id == selectedUnitId;
                 }
             }
-        }]);
 
-        $(function () {
             $("#inputConfirmReceiveDate").daterangepicker({
                 locale: {
                     format: 'DD-MM-YYYY'
@@ -200,20 +209,20 @@
                 singleDatePicker: true,
                 showDropdowns: true
             });
-        });
 
-        window.Parsley.addValidator('checkequal', function (value, itemId) {
-            var brutto = '#brutto_' + itemId;
-            var netto = '#netto_' + itemId;
-            var tare = '#tare_' + itemId;
+            window.Parsley.addValidator('checkequal', function (value, itemId) {
+                var brutto = '#brutto_' + itemId;
+                var netto = '#netto_' + itemId;
+                var tare = '#tare_' + itemId;
 
-            if (Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))) {
-                return false;
-            } else {
-                return false;
-            }
-        }, 32)
+                if (Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))) {
+                    return false;
+                } else {
+                    return false;
+                }
+            }, 32)
                 .addMessage('en', 'checkequal', 'Netto and Tare value not equal with Bruto')
                 .addMessage('id', 'checkequal', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
+        });
     </script>
 @endsection

@@ -111,6 +111,7 @@ class UserController extends Controller
         $this->validate($req, [
             'name' => 'required|max:255',
             'roles' => 'required',
+            'password' => 'required|min:6|confirmed',
             'store' => 'required',
         ]);
 
@@ -118,7 +119,9 @@ class UserController extends Controller
             $usr = User::find($id);
             $usr->name = $req['name'];
             $usr->email = $req['email'];
-            $usr->password = bcrypt($req['password']);
+            if (!empty($req['password'])) {
+                $usr->password = bcrypt($req['password']);
+            }
             $usr->store_id = $req['store'];
             $usr->save();
 
