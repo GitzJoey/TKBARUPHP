@@ -8,17 +8,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Lookup;
 use App\Model\Stock;
 use App\Model\StockIn;
 use App\Model\StockOpname;
 use App\Model\StockOut;
-use Auth;
-use Illuminate\Http\Request;
-
 use App\Model\Unit;
-use App\Model\Lookup;
 use App\Model\Warehouse;
 use App\Model\WarehouseSection;
+
+use Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
@@ -135,13 +136,16 @@ class WarehouseController extends Controller
 
     public function stockopname()
     {
+        Log::info('[WarehouseController@stockopname]');
         $stocks = Stock::paginate(10);
 
         return view('warehouse.stockopname.index', compact('stocks'));
     }
 
+
     public function adjust($id)
     {
+        Log::info('[WarehouseController@adjust]');
         $stock = Stock::find($id);
 
         return view('warehouse.stockopname.adjustment', compact('stock'));
@@ -149,6 +153,49 @@ class WarehouseController extends Controller
 
     public function saveAdjustment(Request $request, $id)
     {
+        Log::info('[WarehouseController@saveAdjustment]');
+        $stock = Stock::find($id);
 
+        $stockOpnameParam = [
+            'stock_id'          => $stock->id,
+            'opname_date'       => date('Y-m-d H:i:s', strtotime($request->input('opname_date'))),
+            'is_match'          => $request->has('is_match') ? true : false,
+            'previous_quantity' => $stock->current_quantity,
+            'adjusted_quantity' => $request->input('adjusted_quantity'),
+            'reason'            => $request->input('reason')
+        ];
+
+        $stockOpname = StockOpname::create($stockOpnameParam);
+
+        if($stockOpname->adjusted_quantity > $stockOpname->previous_quantity){
+            $stockInParam = [
+                'store_id' => Auth::user()->store_id,
+                'po_id'=> 0,
+                'product_id' => $stock->product_id,
+                'stock_id' => $stock->id,
+                'warehouse_id' => $stock->warehouse_id,
+                'stock_opname_id' => $stockOpname->id,
+                'quantiy' => $stockOpname->adjusted_quantity - $stockOpname->previous_quantity
+            ];
+
+            $stockIn = StockIn::create($stockInParam);
+        } else if ($stockOpname->adjusted_quantity < $stockOpname->previous_quantity){
+            $stockOutParam = [
+                'store_id' => Auth::user()->store_id,
+                'so_id'=> 0,
+                'product_id' => $stock->product_id,
+                'stock_id' => $stock->id,
+                'warehouse_id' => $stock->warehouse_id,
+                'stock_opname_id' => $stockOpname->id,
+                'quantiy' => $stockOpname->previous_quantity - $stockOpname->adjusted_quantity
+            ];
+
+            $stockOut = StockOut::create($stockOutParam);
+        }
+
+        $stock->current_quantity = $stockOpname->adjusted_quantity;
+        $stock->save();
+
+        return redirect(route('db.warehouse.stockopname.index'));
     }
 }

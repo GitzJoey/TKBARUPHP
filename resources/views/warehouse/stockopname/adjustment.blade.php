@@ -111,7 +111,7 @@
     <script type="application/javascript">
         var app = angular.module('stockOpnameModule', ['fcsa-number']);
         app.controller("stockOpnameController", ['$scope', function ($scope) {
-
+                
         }]);
 
         $(function () {
