@@ -54,14 +54,16 @@
                             <td class="text-center">{{ $so->shipping_date }}</td>
                             <td class="text-center">{{ $soStatusDDL[$so->status] }}</td>
                             <td class="text-center" width="10%">
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.so.revise', $so->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>
-                                @if($so->status == 'SOSTATUS.WD')
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.so.reject', $so->hId()], 'style'=>'display:inline'])  !!}
-                                    <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button"><span class="fa fa-close fa-fw"></span></button>
-                                {!! Form::close() !!}
-                                @else
-                                    <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button" disabled><span class="fa fa-close fa-fw"></span></button>
-                                @endif
+                                <div ng-app="soModule" ng-controller="soController">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('db.so.revise', $so->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>
+                                    @if($so->status == 'SOSTATUS.WD')
+                                    {!! Form::open(['method' => 'DELETE', 'route' => ['db.so.reject', $so->hId()], 'style'=>'display:inline'])  !!}
+                                        <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button" ng-click="showAlert($event); $event.preventDefault()"><span class="fa fa-close fa-fw"></span></button>
+                                    {!! Form::close() !!}
+                                    @else
+                                        <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button" disabled><span class="fa fa-close fa-fw"></span></button>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -75,20 +77,24 @@
 @endsection
 @section('custom_js')
     <script type="application/javascript">
-        $('#delete_button').on('click',function(e){
-            e.preventDefault();
-            var form = $(this).parents('form');
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this sales order.",
-                type: "error",
-                showCancelButton: true,
-                confirmButtonClass: "btn-danger",
-                confirmButtonText: "Yes, reject it!",
-                closeOnConfirm: false
-            }, function(isConfirm){
-                if (isConfirm) form.submit();
-            });
-        });
+        var app = angular.module("soModule", []);
+        app.controller("soController", ['$scope', function ($scope) {
+            $scope.showAlert = function ($event) {
+                var buttonId = $event.currentTarget.id;
+                var form = $('#'+buttonId).parents('form');
+                swal({
+                    title: "@lang('messages.alert.delete.sales_order.title')",
+                    text: "@lang('messages.alert.delete.sales_order.text')",
+                    type: "error",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "@lang('buttons.reject_button')",
+                    cancelButtonText: "@lang('buttons.cancel_button')",
+                    closeOnConfirm: false
+                }, function (isConfirm) {
+                    if (isConfirm) form.submit();
+                });
+            };
+        }]);
     </script>
 @endsection
