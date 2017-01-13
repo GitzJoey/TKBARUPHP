@@ -44,9 +44,9 @@
                         <td class="text-center">{{ $employees->ic_number }}</td>
                         <td class="text-center">{{ $employees->image_path }}</td>
                         <td class="text-center" width="10%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.master.employees.show', $employees->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.employees.edit', $employees->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.employees.delete', $employees->hId()], 'style'=>'display:inline'])  !!}
+                            <a class="btn btn-xs btn-info" href="{{ route('db.employees.employees.show', $employees->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                            <a class="btn btn-xs btn-primary" href="{{ route('db.employees.employees.edit', $employees->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.employees.employees.delete', $employees->hId()], 'style'=>'display:inline'])  !!}
                                 <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                             {!! Form::close() !!}
                         </td>
@@ -56,7 +56,7 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" href="{{ route('db.master.employees.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
+            <a class="btn btn-success" href="{{ route('db.employees.employees.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $employeeslist->render() !!}
         </div>
     </div>
