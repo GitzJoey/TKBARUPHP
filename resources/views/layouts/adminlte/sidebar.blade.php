@@ -402,17 +402,17 @@
                             </li>
                         @endif
                         @if(Entrust::can('master.product-list') OR
-                        Entrust::can('master.product-create') OR
-                        Entrust::can('master.product-edit') OR
-                        Entrust::can('master.product-delete') OR
-                        Entrust::can('master.product.producttype-list') OR
-                        Entrust::can('master.product.producttype-create') OR
-                        Entrust::can('master.product.producttype-edit') OR
-                        Entrust::can('master.product.producttype-delete'))
+                            Entrust::can('master.product-create') OR
+                            Entrust::can('master.product-edit') OR
+                            Entrust::can('master.product-delete') OR
+                            Entrust::can('master.product.producttype-list') OR
+                            Entrust::can('master.product.producttype-create') OR
+                            Entrust::can('master.product.producttype-edit') OR
+                            Entrust::can('master.product.producttype-delete'))
                             <li class="treeview {{ active_class(Active::checkRoutePattern('db.master.product') ||
-                                                            Active::checkRoutePattern('db.master.product.*') ||
-                                                            Active::checkRoutePattern('db.master.producttype') ||
-                                                            Active::checkRoutePattern('db.master.producttype.*')) }}">
+                                                                Active::checkRoutePattern('db.master.product.*') ||
+                                                                Active::checkRoutePattern('db.master.producttype') ||
+                                                                Active::checkRoutePattern('db.master.producttype.*')) }}">
                                 <a href="#">
                                     <i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.employees')
                                     <span class="pull-right-container">
