@@ -30,7 +30,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('employees.edit.header.title')</h3>
         </div>
-        {!! Form::model($employees, ['id' => 'employeesForm', 'method' => 'PATCH', 'route' => ['db.master.employees.edit', $employees->hId()], 'class' => 'form-horizontal',  'files' => true, 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($employees, ['id' => 'employeesForm', 'method' => 'PATCH', 'route' => ['db.employees.employees.edit', $employees->hId()], 'class' => 'form-horizontal',  'files' => true, 'data-parsley-validate' => 'parsley']) !!}
         <div class="box-body">
             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                 <label for="inputName" class="col-sm-2 control-label">@lang('employees.field.name')</label>
@@ -75,7 +75,7 @@
             <div class="form-group">
                 <label for="inputButton" class="col-sm-2 control-label"></label>
                 <div class="col-sm-10">
-                    <a href="{{ route('db.master.employees') }}"
+                    <a href="{{ route('db.employees.employees') }}"
                        class="btn btn-default">@lang('buttons.cancel_button')</a>
                     <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                 </div>

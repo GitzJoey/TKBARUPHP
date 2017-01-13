@@ -28,7 +28,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('employees.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.master.employees.create') }}" enctype="multipart/form-data" method="post"
+        <form class="form-horizontal" action="{{ route('db.employees.employees.create') }}" enctype="multipart/form-data" method="post"
               data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
@@ -67,7 +67,7 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.master.employees') }}"
+                        <a href="{{ route('db.employees.employees') }}"
                            class="btn btn-default">@lang('buttons.cancel_button')</a>
                         <button class="btn btn-default" type="submit">@lang('buttons.create_new_button')</button>
                     </div>

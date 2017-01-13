@@ -53,5 +53,6 @@ return [
     'item.adm_settings' => 'Settings',
     'item.adm_phone_provider' => 'Phone Provider',
     'item.employees' =>'Employees',
+    'item.employees_list' =>'Employees List',
     'item.salary' => 'salary',
 ];

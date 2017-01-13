@@ -58,7 +58,7 @@ class EmployeesController extends Controller
         }
 
         if ($validator->fails()) {
-            return redirect(route('db.master.employees.create'))->withInput()->withErrors($validator);
+            return redirect(route('db.employees.employees.create'))->withInput()->withErrors($validator);
         } else {
             Employees::create([
                 'name' => $data['name'],
@@ -66,7 +66,7 @@ class EmployeesController extends Controller
                 'ic_number' => $data['ic_number'],
                 'image_path' => $imageName
             ]);
-            return redirect(route('db.master.employees'));
+            return redirect(route('db.employees.employees'));
         }
     }
 
@@ -95,13 +95,13 @@ class EmployeesController extends Controller
         $employees->image_path = $imageName;
         $employees->save();
 
-        return redirect(route('db.master.employees'));
+        return redirect(route('db.employees.employees'));
     }
 
 
     public function delete($id)
     {
         Employees::find($id)->delete();
-        return redirect(route('db.master.employees'));
+        return redirect(route('db.employees.employees'));
     }
 }

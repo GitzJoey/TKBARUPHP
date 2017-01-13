@@ -208,6 +208,23 @@
                     </ul>
                 </li>
             @endif
+            @if(Entrust::can('employees.employees-list') OR
+                Entrust::can('employees.employees-create') OR
+                Entrust::can('employees.employees-edit') OR
+                Entrust::can('employees.employees-delete'))
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.employees.employees') || Active::checkRoutePattern('db.employees.employees.*')) }}">
+                    <a href="#"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i><span>&nbsp;@lang('menu.item.employees')</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ active_class(Active::checkRoutePattern('db.employees.employees') || Active::checkRoutePattern('db.employees.employees.*')) }}">
+                            <a href="{{ route('db.employees.employees') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.employees_list')</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
             @if(Entrust::can('report.admin-user') OR
                 Entrust::can('report.admin-role') OR
                 Entrust::can('report.admin-store') OR
@@ -397,32 +414,6 @@
                                 <ul class="treeview-menu">
                                     <li class="{{ active_class(Active::checkRoutePattern('db.master.vendor.trucking') || Active::checkRoutePattern('db.master.vendor.trucking.*')) }}">
                                         <a href="{{ route('db.master.vendor.trucking') }}"><i class="fa fa-ge fa-fw"></i>&nbsp;@lang('menu.item.master_vendor_trucking')</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                        @if(Entrust::can('master1.product-list') OR
-                            Entrust::can('master1.product-create') OR
-                            Entrust::can('master1.product-edit') OR
-                            Entrust::can('master1.product-delete'))
-                            <li class="treeview {{ active_class(Active::checkRoutePattern('db.master.product') ||
-                                                                Active::checkRoutePattern('db.master.product.*') ||
-                                                                Active::checkRoutePattern('db.master.producttype') ||
-                                                                Active::checkRoutePattern('db.master.producttype.*')) }}">
-                                <a href="#">
-                                    <i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.employees')
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li class="{{ active_class(Active::checkRoutePattern('db.master.employees') || Active::checkRoutePattern('db.master.employees.*')) }}">
-                                        <a href="{{ route('db.master.employees') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.employees')
-                                        </a>
-                                    </li>
-                                    <li class="{{ active_class(Active::checkRoutePattern('db.master.salary') || Active::checkRoutePattern('db.master.salary.*')) }}">
-                                        <a href="{{ route('db.master.salary') }}"><i class="fa fa-cube fa-fw"></i>&nbsp;@lang('menu.item.salary')
-                                        </a>
                                     </li>
                                 </ul>
                             </li>
