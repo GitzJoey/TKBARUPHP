@@ -401,14 +401,44 @@
                                 </ul>
                             </li>
                         @endif
-                            @if(Entrust::can('master.expense_template-list') OR
-                                Entrust::can('master.expense_template-create') OR
-                                Entrust::can('master.expense_template-edit') OR
-                                Entrust::can('master.expense_template-delete'))
-                                <li class="{{ active_class(Active::checkRoutePattern('db.master.expense_template') || Active::checkRoutePattern('db.master.expense_template.*')) }}">
-                                    <a href="{{ route('db.master.expense_template') }}"><i class="fa fa-ticket fa-fw"></i>&nbsp;@lang('menu.item.master_expense_template')</a>
-                                </li>
-                            @endif
+                        @if(Entrust::can('master.product-list') OR
+                        Entrust::can('master.product-create') OR
+                        Entrust::can('master.product-edit') OR
+                        Entrust::can('master.product-delete') OR
+                        Entrust::can('master.product.producttype-list') OR
+                        Entrust::can('master.product.producttype-create') OR
+                        Entrust::can('master.product.producttype-edit') OR
+                        Entrust::can('master.product.producttype-delete'))
+                            <li class="treeview {{ active_class(Active::checkRoutePattern('db.master.product') ||
+                                                            Active::checkRoutePattern('db.master.product.*') ||
+                                                            Active::checkRoutePattern('db.master.producttype') ||
+                                                            Active::checkRoutePattern('db.master.producttype.*')) }}">
+                                <a href="#">
+                                    <i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.employees')
+                                    <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class="{{ active_class(Active::checkRoutePattern('db.master.employees') || Active::checkRoutePattern('db.master.employees.*')) }}">
+                                        <a href="{{ route('db.master.employees') }}"><i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.employees')
+                                        </a>
+                                    </li>
+                                    <li class="{{ active_class(Active::checkRoutePattern('db.master.salary') || Active::checkRoutePattern('db.master.salary.*')) }}">
+                                        <a href="{{ route('db.master.salary') }}"><i class="fa fa-cube fa-fw"></i>&nbsp;@lang('menu.item.salary')
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
+                        @if(Entrust::can('master.expense_template-list') OR
+                            Entrust::can('master.expense_template-create') OR
+                            Entrust::can('master.expense_template-edit') OR
+                            Entrust::can('master.expense_template-delete'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.master.expense_template') || Active::checkRoutePattern('db.master.expense_template.*')) }}">
+                                <a href="{{ route('db.master.expense_template') }}"><i class="fa fa-ticket fa-fw"></i>&nbsp;@lang('menu.item.master_expense_template')</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif
