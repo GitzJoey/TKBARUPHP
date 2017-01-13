@@ -401,14 +401,14 @@
                                 </ul>
                             </li>
                         @endif
-                        @if(Entrust::can('master.expense_template-list') OR
-                            Entrust::can('master.expense_template-create') OR
-                            Entrust::can('master.expense_template-edit') OR
-                            Entrust::can('master.expense_template-delete'))
-                            <li class="{{ active_class(Active::checkRoutePattern('db.master.expense_template') || Active::checkRoutePattern('db.master.expense_template.*')) }}">
-                                <a href="{{ route('db.master.expense_template') }}"><i class="fa fa-ticket fa-fw"></i>&nbsp;@lang('menu.item.master_expense_template')</a>
-                            </li>
-                        @endif
+                            @if(Entrust::can('master.expense_template-list') OR
+                                Entrust::can('master.expense_template-create') OR
+                                Entrust::can('master.expense_template-edit') OR
+                                Entrust::can('master.expense_template-delete'))
+                                <li class="{{ active_class(Active::checkRoutePattern('db.master.expense_template') || Active::checkRoutePattern('db.master.expense_template.*')) }}">
+                                    <a href="{{ route('db.master.expense_template') }}"><i class="fa fa-ticket fa-fw"></i>&nbsp;@lang('menu.item.master_expense_template')</a>
+                                </li>
+                            @endif
                     </ul>
                 </li>
             @endif
