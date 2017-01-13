@@ -401,10 +401,10 @@
                                 </ul>
                             </li>
                         @endif
-                        @if(Entrust::can('master.product-list') OR
-                            Entrust::can('master.product-create') OR
-                            Entrust::can('master.product-edit') OR
-                            Entrust::can('master.product-delete'))
+                        @if(Entrust::can('master1.product-list') OR
+                            Entrust::can('master1.product-create') OR
+                            Entrust::can('master1.product-edit') OR
+                            Entrust::can('master1.product-delete'))
                             <li class="treeview {{ active_class(Active::checkRoutePattern('db.master.product') ||
                                                                 Active::checkRoutePattern('db.master.product.*') ||
                                                                 Active::checkRoutePattern('db.master.producttype') ||
