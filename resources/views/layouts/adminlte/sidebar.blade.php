@@ -416,8 +416,8 @@
                                 <a href="#">
                                     <i class="fa fa-cubes fa-fw"></i>&nbsp;@lang('menu.item.employees')
                                     <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
                                 </a>
                                 <ul class="treeview-menu">
                                     <li class="{{ active_class(Active::checkRoutePattern('db.master.employees') || Active::checkRoutePattern('db.master.employees.*')) }}">
