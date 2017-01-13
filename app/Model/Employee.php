@@ -15,7 +15,7 @@ use Vinkla\Hashids\Facades\Hashids;
 
 
 /**
- * App\Model\Employees
+ * App\Model\Employee
  *
  * @property integer $id
  * @property string $name
@@ -29,28 +29,28 @@ use Vinkla\Hashids\Facades\Hashids;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * @property \Carbon\Carbon $deleted_at
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereIcNumber($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereImagePath($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereCreatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereUpdatedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereDeletedBy($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Model\Employees whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereIcNumber($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereImagePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereDeletedAt($value)
  * @mixin \Eloquent
  * @property integer $deleted_by
  */
-class Employees extends Model
+class Employee extends Model
 {
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'employees';
+    protected $table = 'employee';
 
     protected $fillable = [
         'name',

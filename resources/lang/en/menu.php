@@ -52,7 +52,7 @@ return [
     'item.adm_unit' => 'Unit',
     'item.adm_settings' => 'Settings',
     'item.adm_phone_provider' => 'Phone Provider',
-    'item.employees' =>'Employees',
-    'item.employees_list' =>'Employees List',
+    'item.employee' =>'Employee',
+    'item.employee_list' =>'Employee List',
     'item.salary' => 'salary',
 ];

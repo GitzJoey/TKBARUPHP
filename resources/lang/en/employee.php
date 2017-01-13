@@ -2,59 +2,59 @@
 
 return [
     'create' => [
-        'title' => 'Pegawai',
-        'page_title' => 'Pegawai',
+        'title' => 'Employee',
+        'page_title' => 'Employee',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Create Pegawai',
+            'title' => 'Create Employee',
         ],
         'tab' => [
-            'store' => 'Pegawai Data',
+            'store' => 'Employee Data',
         ],
-        'table_employees' => [
+        'table_employee' => [
             'header' => [
-                'name' => 'Nama',
+                'name' => 'Name',
                 'email' => 'Email',
-                'ic_number' => 'Nomer KTP',
+                'ic_number' => 'identity Card Number',
             ],
         ],
     ],
     'field' => [
-        'name' => 'Nama',
+        'name' => 'Name',
         'email' => 'Email',
-        'ic_number' => 'Nomer KTP',
+        'ic_number' => 'identity Card Number',
         'image_path' => 'Image Path',
     ],
     'edit' => [
-        'title' => 'Pegawai',
-        'page_title' => 'Pegawai',
+        'title' => 'Employee',
+        'page_title' => 'Employee',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Edit Pegawai',
+            'title' => 'Edit Employee',
         ],
     ],
     'index' => [
-        'title' => 'Pegawai',
-        'page_title' => 'Pegawai',
+        'title' => 'Employee',
+        'page_title' => 'Employee',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Pegawai Lists',
+            'title' => 'Employee Lists',
         ],
         'table' => [
             'header' => [
                 'name' => 'Name',
                 'email' => 'Email',
                 'ic_number' => 'identity Card Number',
-                'image_path' => 'Nomer KTP',
+                'image_path' => 'Image Path',
             ],
         ],
     ],
     'show' => [
-        'title' => 'Pegawai',
-        'page_title' => 'Pegawai',
+        'title' => 'Employee',
+        'page_title' => 'Employee',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Show Pegawai',
+            'title' => 'Show Employee',
         ],
     ],
 ];

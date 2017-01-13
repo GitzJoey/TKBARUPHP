@@ -9,12 +9,12 @@
 namespace  App\Http\Controllers;
 
 
-use App\Model\Employees;
+use App\Model\Employee;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Validator;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
     public function __construct()
     {
@@ -23,20 +23,20 @@ class EmployeesController extends Controller
 
     public function index()
     {
-        $employeeslist = Employees::paginate(10);
-        return view('employees.index', compact('employeeslist'));
+        $employeelist = Employee::paginate(10);
+        return view('employee.index', compact('employeelist'));
     }
 
     public function show($id)
     {
-        $employees = Employees::find($id);
+        $employee = Employee::find($id);
 
-        return view('employees.show')->with('employees', $employees);
+        return view('employee.show')->with('employee', $employee);
     }
 
     public function create()
     {
-        return view('employees.create');
+        return view('employee.create');
     }
 
     public function store(Request $data)
@@ -58,28 +58,28 @@ class EmployeesController extends Controller
         }
 
         if ($validator->fails()) {
-            return redirect(route('db.employees.employees.create'))->withInput()->withErrors($validator);
+            return redirect(route('db.employee.employee.create'))->withInput()->withErrors($validator);
         } else {
-            Employees::create([
+            Employee::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'ic_number' => $data['ic_number'],
                 'image_path' => $imageName
             ]);
-            return redirect(route('db.employees.employees'));
+            return redirect(route('db.employee.employee'));
         }
     }
 
     public function edit($id)
     {
-        $employees = Employees::find($id);
+        $employee = Employee::find($id);
 
-        return View('employees.edit', compact('employees'));
+        return View('employee.edit', compact('employee'));
     }
 
     public function update($id, Request $data)
     {
-        $employees = Employees::find($id);
+        $employee = Employee::find($id);
 
         $imageName = '';
 
@@ -89,19 +89,19 @@ class EmployeesController extends Controller
             Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
         }
 
-        $employees->name = $data['name'];
-        $employees->email = $data['email'];
-        $employees->ic_number = $data['ic_number'];
-        $employees->image_path = $imageName;
-        $employees->save();
+        $employee->name = $data['name'];
+        $employee->email = $data['email'];
+        $employee->ic_number = $data['ic_number'];
+        $employee->image_path = $imageName;
+        $employee->save();
 
-        return redirect(route('db.employees.employees'));
+        return redirect(route('db.employee.employee'));
     }
 
 
     public function delete($id)
     {
-        Employees::find($id)->delete();
-        return redirect(route('db.employees.employees'));
+        Employee::find($id)->delete();
+        return redirect(route('db.employee.employee'));
     }
 }
