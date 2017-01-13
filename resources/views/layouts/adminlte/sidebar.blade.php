@@ -208,19 +208,19 @@
                     </ul>
                 </li>
             @endif
-            @if(Entrust::can('employees.employees-list') OR
-                Entrust::can('employees.employees-create') OR
-                Entrust::can('employees.employees-edit') OR
-                Entrust::can('employees.employees-delete'))
-                <li class="treeview {{ active_class(Active::checkRoutePattern('db.employees.employees') || Active::checkRoutePattern('db.employees.employees.*')) }}">
-                    <a href="#"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i><span>&nbsp;@lang('menu.item.employees')</span>
+            @if(Entrust::can('employee.employee-list') OR
+                Entrust::can('employee.employee-create') OR
+                Entrust::can('employee.employee-edit') OR
+                Entrust::can('employee.employee-delete'))
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.employee.employee') || Active::checkRoutePattern('db.employee.employee.*')) }}">
+                    <a href="#"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i><span>&nbsp;@lang('menu.item.employee')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{{ active_class(Active::checkRoutePattern('db.employees.employees') || Active::checkRoutePattern('db.employees.employees.*')) }}">
-                            <a href="{{ route('db.employees.employees') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.employees_list')</a>
+                        <li class="{{ active_class(Active::checkRoutePattern('db.employee.employee') || Active::checkRoutePattern('db.employee.employee.*')) }}">
+                            <a href="{{ route('db.employee.employee') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.employee_list')</a>
                         </li>
                     </ul>
                 </li>

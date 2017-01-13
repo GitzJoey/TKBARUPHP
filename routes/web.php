@@ -307,14 +307,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::patch('maintenance/edit/{id}', 'TruckMaintenanceController@update');
         });
 
-        Route::group(['prefix' => 'employees'], function () {
-            Route::get('', 'EmployeesController@index')->name('db.employees.employees');
-            Route::get('show/{id}', 'EmployeesController@show')->name('db.employees.employees.show');
-            Route::get('create', 'EmployeesController@create')->name('db.employees.employees.create');
-            Route::post('create/', 'EmployeesController@store');
-            Route::get('edit/{id}', 'EmployeesController@edit')->name('db.employees.employees.edit');
-            Route::patch('edit/{id}', 'EmployeesController@update');
-            Route::delete('edit/{id}', 'EmployeesController@delete')->name('db.employees.employees.delete');
+        Route::group(['prefix' => 'employee'], function () {
+            Route::get('', 'EmployeeController@index')->name('db.employee.employee');
+            Route::get('show/{id}', 'EmployeeController@show')->name('db.employee.employee.show');
+            Route::get('create', 'EmployeeController@create')->name('db.employee.employee.create');
+            Route::post('create/', 'EmployeeController@store');
+            Route::get('edit/{id}', 'EmployeeController@edit')->name('db.employee.employee.edit');
+            Route::patch('edit/{id}', 'EmployeeController@update');
+            Route::delete('edit/{id}', 'EmployeeController@delete')->name('db.employee.employee.delete');
         });
 
         Route::group(['prefix' => 'customer'], function () {

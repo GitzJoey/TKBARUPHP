@@ -187,24 +187,24 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Delete Product'
             ],
             [
-                'name' => 'employees.employees-list',
-                'display_name' => '[Employees] Display Employees Listing',
-                'description' => 'See only Listing Of Employees'
+                'name' => 'employee.employee-list',
+                'display_name' => '[Employee] Display Employee Listing',
+                'description' => 'See only Listing Of Employee'
             ],
             [
-                'name' => 'employees.employees-create',
-                'display_name' => '[Employees] Create Employees',
-                'description' => 'Create New Employees'
+                'name' => 'employee.employee-create',
+                'display_name' => '[Employee] Create Employee',
+                'description' => 'Create New Employee'
             ],
             [
-                'name' => 'employees.employees-edit',
-                'display_name' => '[Employees] Edit Employees',
-                'description' => 'Edit Employees'
+                'name' => 'employee.employee-edit',
+                'display_name' => '[Employee] Edit Employee',
+                'description' => 'Edit Employee'
             ],
             [
-                'name' => 'employees.employees-delete',
-                'display_name' => '[Employees] Delete Employees',
-                'description' => 'Delete Employees'
+                'name' => 'employee.employee-delete',
+                'display_name' => '[Employee] Delete Employee',
+                'description' => 'Delete Employee'
             ],
             [
                 'name' => 'master.product.producttype-list',
