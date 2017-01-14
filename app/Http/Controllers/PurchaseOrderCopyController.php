@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Model\Lookup;
 use App\Model\PurchaseOrder;
 use App\Model\PurchaseOrderCopy;
-use App\Services\PurchaseOrderCopyService;
+
 use App\Services\PurchaseOrderService;
+use App\Services\PurchaseOrderCopyService;
+
 use App\Util\POCopyCodeGenerator;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 

@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\CashPayment;
 use App\Model\Giro;
-use App\Model\GiroPayment;
-use App\Model\Lookup;
-use App\Model\Payment;
-use App\Model\PurchaseOrder;
 use App\Model\Store;
-use App\Model\TransferPayment;
+use App\Model\Lookup;
+use App\Model\PurchaseOrder;
+
 use App\Services\PaymentService;
 use App\Services\PurchaseOrderService;
+
 use App\Repos\LookupRepo;
 
 use Illuminate\Http\Request;

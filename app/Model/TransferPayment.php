@@ -17,6 +17,8 @@ namespace App\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TransferPayment whereBankAccountFromId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TransferPayment whereBankAccountToId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payment_detail
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $payable
  */
 class TransferPayment extends Payment
 {

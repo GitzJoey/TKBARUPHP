@@ -12,6 +12,7 @@ use Auth;
 use Illuminate\Http\Request;
 
 use App\Model\VendorTrucking;
+
 use App\Repos\LookupRepo;
 
 class VendorTruckingController extends Controller

@@ -9,11 +9,11 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use DateTime;
 use Validator;
 use Illuminate\Http\Request;
 
 use App\Model\Truck;
+
 use App\Repos\LookupRepo;
 
 class TruckController extends Controller

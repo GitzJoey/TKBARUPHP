@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Model\Product;
 use App\Model\SalesOrder;
 use App\Model\SalesOrderCopy;
-use App\Services\SalesOrderCopyService;
-use App\Services\SalesOrderService;
+
 use App\Services\StockService;
+use App\Services\SalesOrderService;
+use App\Services\SalesOrderCopyService;
+
 use App\Util\SOCopyCodeGenerator;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 

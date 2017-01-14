@@ -9,8 +9,10 @@
 namespace App\Http\Controllers;
 
 use App\Model\Warehouse;
+
 use App\Services\InflowService;
 use App\Services\PurchaseOrderService;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 

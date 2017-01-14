@@ -8,19 +8,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Lookup;
+use App\Model\Unit;
 use App\Model\Stock;
 use App\Model\StockIn;
-use App\Model\StockOpname;
 use App\Model\StockOut;
-use App\Model\Unit;
+use App\Model\StockOpname;
 use App\Model\Warehouse;
 use App\Model\WarehouseSection;
-use App\Repos\LookupRepo;
 
-use Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
+use App\Repos\LookupRepo;
 
 use Auth;
 use Illuminate\Support\Facades\Log;

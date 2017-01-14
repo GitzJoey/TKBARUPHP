@@ -10,6 +10,7 @@ use Vinkla\Hashids\Facades\Hashids;
 
 use App\Model\Truck;
 use App\Model\TruckMaintenance;
+
 use App\Repos\LookupRepo;
 
 class TruckMaintenanceController extends Controller

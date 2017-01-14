@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\PurchaseOrder;
 use App\Model\SalesOrder;
+use App\Model\PurchaseOrder;
+
 use App\Repos\LookupRepo;
 
-use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;

@@ -8,11 +8,11 @@
 
 namespace  App\Http\Controllers;
 
-
 use App\Model\Employee;
+
+use Validator;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
-use Validator;
 
 class EmployeeController extends Controller
 {

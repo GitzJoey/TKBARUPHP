@@ -8,12 +8,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\UserDetail;
-use Illuminate\Http\Request;
+use DB;
 use Session;
 use Validator;
+use App\Model\UserDetail;
+use Illuminate\Http\Request;
 
-use DB;
 use App\User;
 use App\Model\Role;
 use App\Model\Store;
