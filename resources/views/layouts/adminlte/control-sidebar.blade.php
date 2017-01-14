@@ -138,48 +138,48 @@
 
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.date_format')</label>
-                    <select class="form-control">
-                        <option>DD-MM-YYYY</option>
-                        <option>DD MMM YYYY</option>
+                    <select id="settingDateFormat" class="form-control">
+                        <option value="">DD-MM-YYYY</option>
+                        <option value="">DD MMM YYYY</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.time_format')</label>
-                    <select class="form-control">
-                        <option>HH:mm</option>
-                        <option>HH:mm:ss</option>
+                    <select id="settingTimeFormat" class="form-control">
+                        <option value="">HH:mm</option>
+                        <option value="">HH:mm:ss</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">
                         @lang('control_sidebar.settings.field.24hour')
-                        <input type="checkbox" class="pull-right" checked>
+                        <input id="setting1224Hour" type="checkbox" class="pull-right" checked>
                     </label>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.thousand_separator')</label>
-                    <select class="form-control">
-                        <option>Comma</option>
-                        <option>Dot</option>
+                    <select id="settingThousandSeparator" class="form-control">
+                        <option value="">Comma</option>
+                        <option value="">Dot</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.decimal_separator')</label>
-                    <select class="form-control">
-                        <option>Comma</option>
-                        <option>Dot</option>
+                    <select id="settingDecimalSeparator" class="form-control">
+                        <option value="">Comma</option>
+                        <option value="">Dot</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.decimal_digit')</label>
-                    <select class="form-control">
-                        <option>0</option>
-                        <option>2</option>
+                    <select id="settingDecimalDigit" class="form-control">
+                        <option value="">0</option>
+                        <option value="">2</option>
                     </select>
                 </div>
                 <hr>
                 <div class="form-group">
-                    <button type="button" class="btn btn-xs btn-default">@lang('buttons.apply_button')</button>
+                    <button id="applySettingsButton" type="button" class="btn btn-xs btn-default">@lang('buttons.apply_button')</button>
                 </div>
             </form>
         </div>
