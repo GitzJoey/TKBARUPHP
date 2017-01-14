@@ -18,4 +18,11 @@ interface SupplierService
      * @return Collection collection of Suppliers
      */
     public function getSuppliersForCreatePO();
+
+    /**
+     * Get all suppliers that have one or more empty manual-filled fields/properties (except remarks).
+     *
+     * @return Collection unfinished suppliers
+     */
+    public function getUnfinisheSupplier();
 }
