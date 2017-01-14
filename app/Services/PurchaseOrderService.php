@@ -89,9 +89,10 @@ interface PurchaseOrderService
     public function getPOForCopy($poCode);
 
     /**
-     * Get a collection of purchase orders that due for payment.
+     * Get a collection of purchase orders that almost due for payment.
      *
-     * @return Collection
+     * @param int $daysToDue number of days before the purchase order must be paid.
+     * @return Collection purchase order that due for payment.
      */
-    public function getDuePO();
+    public function getDuePO($daysToDue = 1);
 }

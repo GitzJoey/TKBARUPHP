@@ -13,9 +13,9 @@ use App\Model\Lookup;
 use App\Model\Expense;
 use App\Model\ProductUnit;
 use App\Model\PurchaseOrder;
-
 use App\Services\PurchaseOrderService;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -250,12 +250,26 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
     }
 
     /**
-     * Get a collection of purchase orders that due for payment.
+     * Get a collection of purchase orders that almost due for payment.
      *
-     * @return Collection
+     * @param int $daysToDue number of days before the purchase order must be paid.
+     * @return Collection purchase order that due for payment.
      */
-    public function getDuePO()
+    public function getDuePO($daysToDue = 1)
     {
-        return collect([]);
+        $poWaitingForPayment = PurchaseOrder::with('receipts', 'supplier')
+        ->where('status', '=', 'POSTATUS.WP')
+        ->whereHas('supplier', function($query){
+            $query->where('payment_due_day', '>', 0);
+        })->get();
+
+        $today = Carbon::today();
+
+        $duePO = $poWaitingForPayment->filter(function($po, $key) use ($daysToDue, $today){
+            $supplierPaymentDueDay = $po->supplier->payment_due_day;
+            return $today->gte($po->receipts->first()->receipt_date->addDays($supplierPaymentDueDay - $daysToDue));
+        });
+
+        return $duePO;
     }
 }
