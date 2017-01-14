@@ -217,14 +217,24 @@
 
                 $('input[autonumeric]').autoNumeric('init');
 
-                /*
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
                 $('#applySettingsButton').click(function() {
                     $.ajax({
                         url: '{{ route('api.user.apply_settings') }}',
-                        data:
-                    })
+                        type: "GET",
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function(xhr, status, error) {
+                            alert(xhr.responseText);
+                        }
+                    });
                 });
-                */
             });
         </script>
 

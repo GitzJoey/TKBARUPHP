@@ -106,6 +106,6 @@ class StoreServiceImpl implements StoreService
 
     public function applySettings()
     {
-
+        return 'ok';
     }
 }
