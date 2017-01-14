@@ -17,8 +17,8 @@ use DB;
 use App\User;
 use App\Model\Role;
 use App\Model\Store;
-use App\Model\Lookup;
 use App\Model\Profile;
+use App\Repos\LookupRepo;
 
 class UserController extends Controller
 {
@@ -49,7 +49,7 @@ class UserController extends Controller
     {
         $rolesDDL = Role::get()->pluck('display_name', 'name');
         $storeDDL = Store::get()->pluck('name', 'id');
-        $usertypeDDL = Lookup::whereCategory('USERTYPE')->pluck('description', 'code');
+        $usertypeDDL = LookupRepo::findByCategory('USERTYPE')->pluck('description', 'code');
         $profiles = Profile::where('user_id', '=', 0)->get();
 
         return view('user.create', compact('rolesDDL', 'storeDDL', 'usertypeDDL', 'profiles'));
@@ -100,7 +100,7 @@ class UserController extends Controller
 
         $rolesDDL = Role::get()->pluck('display_name', 'name');
         $storeDDL = Store::get()->pluck('name', 'id');
-        $usertypeDDL = Lookup::whereCategory('USERTYPE')->pluck('description', 'code');
+        $usertypeDDL = LookupRepo::findByCategory('USERTYPE')->pluck('description', 'code');
         $profiles = Profile::where('user_id', '=', 0)->orWhere('user_id', '=', $user->id)->get();
 
         return view('user.edit', compact('user', 'storeDDL', 'rolesDDL', 'usertypeDDL', 'profiles'));

@@ -12,7 +12,7 @@ use Validator;
 use Illuminate\Http\Request;
 
 use App\Model\Unit;
-use App\Model\Lookup;
+use App\Repos\LookupRepo;
 
 class UnitController extends Controller
 {
@@ -38,7 +38,7 @@ class UnitController extends Controller
     public function create()
     {
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('unit.create', compact('statusDDL'));
     }
@@ -71,7 +71,7 @@ class UnitController extends Controller
     {
         $unit = Unit::find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('unit.edit', compact('unit', 'statusDDL'));
     }

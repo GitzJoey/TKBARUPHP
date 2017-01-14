@@ -10,10 +10,10 @@ use LaravelLocalization;
 use Illuminate\Http\Request;
 
 use App\Model\Unit;
-use App\Model\Lookup;
 use App\Model\Product;
 use App\Model\ProductUnit;
 use App\Model\ProductType;
+use App\Repos\LookupRepo;
 
 class ProductController extends Controller
 {
@@ -38,7 +38,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
         $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
@@ -94,7 +94,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
         $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 

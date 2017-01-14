@@ -12,6 +12,8 @@ use App\Model\Store;
 use App\Model\TransferPayment;
 use App\Services\PaymentService;
 use App\Services\PurchaseOrderService;
+use App\Repos\LookupRepo;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -34,17 +36,17 @@ class PurchaseOrderPaymentController extends Controller
         Log::info('[PurchaseOrderController@paymentIndex]');
 
         $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')->paginate(10);
-        $poStatusDDL = Lookup::where('category', '=', 'POSTATUS')->get()->pluck('description', 'code');
+        $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');
 
         return view('purchase_order.payment.payment_index', compact('purchaseOrders', 'poStatusDDL'));
     }
 
     public function paymentHistory($id){
         $currentPo = $currentPo = $this->purchaseOrderService->getPOForPayment($id);
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('purchase_order.payment.payment_history', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL',
             'expenseTypes'));
@@ -55,11 +57,11 @@ class PurchaseOrderPaymentController extends Controller
         Log::info('[PurchaseOrderController@createCashPayment]');
 
         $currentPo = $this->purchaseOrderService->getPOForPayment($id);
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.C';
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('purchase_order.payment.cash_payment',
             compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType', 'expenseTypes'));
@@ -89,10 +91,10 @@ class PurchaseOrderPaymentController extends Controller
         $storeBankAccounts = $currentStore->bankAccounts;
         $supplierBankAccounts = is_null($currentPo->supplier) ? collect([]) : $currentPo->supplier->bankAccounts;
         $paymentType = 'PAYMENTTYPE.T';
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('purchase_order.payment.transfer_payment', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL',
             'paymentType', 'storeBankAccounts', 'supplierBankAccounts', 'expenseTypes'));
@@ -117,11 +119,11 @@ class PurchaseOrderPaymentController extends Controller
 
         $currentPo = $currentPo = $this->purchaseOrderService->getPOForPayment($id);
         $availableGiros = Giro::with('bank')->where('status', '=', 'GIROSTATUS.N')->get();
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.G';
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('purchase_order.payment.giro_payment', compact('currentPo', 'paymentTypeDDL', 'paymentStatusDDL',
             'paymentType', 'availableGiros', 'bankDDL', 'expenseTypes'));

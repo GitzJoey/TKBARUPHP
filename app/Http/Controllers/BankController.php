@@ -8,20 +8,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Bank;
 use App\Model\BankBCACSVRecord;
 use App\Model\BankUpload;
+use App\Model\Lookup;
+use App\Repos\LookupRepo;
+
 use Auth;
+use App\Http\Requests;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Storage;
 use Validator;
-use App\Http\Requests;
-use Illuminate\Http\Request;
-
-use App\Model\Bank;
-use App\Model\Lookup;
 
 class BankController extends Controller
 {
@@ -44,8 +45,7 @@ class BankController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         return view('bank.create', compact('statusDDL'));
     }
 
@@ -80,7 +80,7 @@ class BankController extends Controller
 
     public function upload()
     {
-        $bankDDL = Lookup::where('category', '=', 'BANKUPLOAD')->get()->pluck('description', 'code');
+        $bankDDL = LookupRepo::findByCategory('BANKUPLOAD')->pluck('description', 'code');
         $bankUploads = BankUpload::all();
 
         return view('bank.upload', compact('bankDDL', 'bankUploads'));
@@ -88,9 +88,8 @@ class BankController extends Controller
 
     public function edit($id)
     {
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $bank = Bank::find($id);
-
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
 
         return view('bank.edit', compact('bank', 'statusDDL'));
     }
@@ -114,47 +113,44 @@ class BankController extends Controller
             'file_path' => 'required|mimes:csv,txt|size:max:999',
         ]);
 
-        if ($data->hasFile('file_path')) {
-            $path = Storage::disk('file_upload')->put($data->file('file_path')->getClientOriginalName(), $data->file('file_path'));
-            $bankUpload = BankUpload::create(['bank' => $data->input('bank'), 'filename' => $data->file('file_path')->getClientOriginalName()]);
+        $path = Storage::disk('file_upload')->put($data->file('file_path')->getClientOriginalName(), $data->file('file_path'));
+        $bankUpload = BankUpload::create(['bank' => $data->input('bank'), 'filename' => $data->file('file_path')->getClientOriginalName()]);
 
-            Excel::load(storage_path('app/file_upload/' . $path), function ($reader) use ($data, $bankUpload){
-                if($data->input('bank') == 'BANKUPLOAD.BCA'){
-                    Config::set('excel.import.startRow', 5);
+        Excel::load(storage_path('app/file_upload/' . $path), function ($reader) use ($data, $bankUpload){
+            if($data->input('bank') == 'BANKUPLOAD.BCA'){
+                Config::set('excel.import.startRow', 5);
 
-                    $dataRows = $reader->get();
+                $dataRows = $reader->get();
 
-                    $dataRows->each(function ($item, $key) use ($bankUpload){
-                        //Check if it already reached the footer
-                        if($item['tanggal'] == 'Saldo Awal'){
-                            return false;
-                        }
+                $dataRows->each(function ($item, $key) use ($bankUpload){
+                    //Check if it already reached the footer
+                    if($item['tanggal'] == 'Saldo Awal'){
+                        return false;
+                    }
 
-                        $date = str_replace("'", "", $item['tanggal']);
-                        $date = explode('/', $date);
-                        $date = Carbon::create(null, $date[1], $date[0]);
-                        $branch = str_replace("'", "", $item['cabang']);
-                        $remarks = $item['keterangan'];
-                        $amount = floatval($item['jumlah']);
-                        $db_cr = $item[''];
-                        $balance = floatval($item['saldo']);
+                    $date = str_replace("'", "", $item['tanggal']);
+                    $date = explode('/', $date);
+                    $date = Carbon::create(null, $date[1], $date[0]);
+                    $branch = str_replace("'", "", $item['cabang']);
+                    $remarks = $item['keterangan'];
+                    $amount = floatval($item['jumlah']);
+                    $db_cr = $item[''];
+                    $balance = floatval($item['saldo']);
 
-                        BankBCACSVRecord::create([
-                            'date' => $date,
-                            'branch' => $branch,
-                            'remarks' => $remarks,
-                            'amount' => $amount,
-                            'db_cr' => $db_cr,
-                            'balance' => $balance,
-                            'bank_upload_id' => $bankUpload->id
-                        ]);
-                    });
-                }
-            });
-        }
+                    BankBCACSVRecord::create([
+                        'date' => $date,
+                        'branch' => $branch,
+                        'remarks' => $remarks,
+                        'amount' => $amount,
+                        'db_cr' => $db_cr,
+                        'balance' => $balance,
+                        'bank_upload_id' => $bankUpload->id
+                    ]);
+                });
+            }
+        });
 
         $data->session()->flash('success', 'Upload success.');
-
         return redirect()->action('BankController@upload');
     }
 }

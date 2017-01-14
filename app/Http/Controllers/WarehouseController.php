@@ -16,6 +16,11 @@ use App\Model\StockOut;
 use App\Model\Unit;
 use App\Model\Warehouse;
 use App\Model\WarehouseSection;
+use App\Repos\LookupRepo;
+
+use Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 use Auth;
 use Illuminate\Support\Facades\Log;
@@ -43,7 +48,7 @@ class WarehouseController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
         return view('warehouse.create', compact('statusDDL', 'unitDDL'));
@@ -88,7 +93,7 @@ class WarehouseController extends Controller
     {
         $warehouse = Warehouse::with('sections')->find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
 
         return view('warehouse.edit', compact('warehouse', 'statusDDL', 'unitDDL'));

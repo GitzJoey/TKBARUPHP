@@ -87,7 +87,7 @@ class PurchaseOrderController extends Controller
         $currentPo = $this->purchaseOrderService->getPOForRevise($id);
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('description', 'code');
 
         return view('purchase_order.revise', compact('currentPo', 'warehouseDDL', 'vendorTruckingDDL', 'expenseTypes'));
     }

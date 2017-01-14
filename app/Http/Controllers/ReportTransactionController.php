@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Lookup;
 use App\Model\PurchaseOrder;
 use App\Model\SalesOrder;
+use App\Repos\LookupRepo;
+
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class ReportTransactionController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('POSTATUS')->pluck('description', 'code');
+        $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');
 
         //Parameters
         $poCode = $request->input('code');
@@ -66,16 +67,16 @@ class ReportTransactionController extends Controller
 
         //Save pdf report
         $pdf->loadView('report_template.pdf.purchase_order_report',
-            compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'))
+            compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'poStatusDDL', 'currentUser', 'reportDate', 'showParameter'))
             ->save(storage_path("app/public/reports/$fileName.pdf"));
 
         //Save excel report
         Excel::create($fileName, function ($excel)
-        use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $statusDDL, $currentUser, $reportDate, $showParameter) {
+        use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
             $excel->sheet('Sheet 1', function ($sheet)
-            use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $statusDDL, $currentUser, $reportDate, $showParameter) {
+            use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
                 $sheet->loadView('report_template.excel.purchase_order_report',
-                    compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'));
+                    compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'poStatusDDL', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
             });
         })->store('xlsx', storage_path("app/public/reports"));
@@ -90,7 +91,7 @@ class ReportTransactionController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('SOSTATUS')->pluck('description', 'code');
+        $soStatusDDL = LookupRepo::findByCategory('SOSTATUS')->pluck('description', 'code');
 
         //Parameters
         $soCode = $request->input('code');
@@ -129,14 +130,14 @@ class ReportTransactionController extends Controller
 
         //Save pdf report
         $pdf->loadView('report_template.pdf.sales_order_report',
-            compact('soCode', 'soDate', 'shippingDate', 'deliverDate', 'customer', 'salesOrders', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'))
+            compact('soCode', 'soDate', 'shippingDate', 'deliverDate', 'customer', 'salesOrders', 'soStatusDDL', 'currentUser', 'reportDate', 'showParameter'))
             ->save(storage_path("app/public/reports/$fileName.pdf"));
 
         //Save excel report
         Excel::create($fileName, function ($excel)
-        use ($soCode, $soDate, $shippingDate, $deliverDate, $customer, $salesOrders, $statusDDL, $currentUser, $reportDate, $showParameter) {
+        use ($soCode, $soDate, $shippingDate, $deliverDate, $customer, $salesOrders, $soStatusDDL, $currentUser, $reportDate, $showParameter) {
             $excel->sheet('Sheet 1', function ($sheet)
-            use ($soCode, $soDate, $shippingDate, $deliverDate, $customer, $salesOrders, $statusDDL, $currentUser, $reportDate, $showParameter) {
+            use ($soCode, $soDate, $shippingDate, $deliverDate, $customer, $salesOrders, $soStatusDDL, $currentUser, $reportDate, $showParameter) {
                 $sheet->loadView('report_template.excel.sales_order_report',
                     compact('soCode', 'soDate', 'shippingDate', 'deliverDate', 'customer', 'salesOrders', 'statusDDL', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
