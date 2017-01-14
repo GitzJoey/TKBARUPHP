@@ -208,6 +208,23 @@
                     </ul>
                 </li>
             @endif
+            @if(Entrust::can('employee.employee-list') OR
+                Entrust::can('employee.employee-create') OR
+                Entrust::can('employee.employee-edit') OR
+                Entrust::can('employee.employee-delete'))
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.employee.employee') || Active::checkRoutePattern('db.employee.employee.*')) }}">
+                    <a href="#"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i><span>&nbsp;@lang('menu.item.employee')</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ active_class(Active::checkRoutePattern('db.employee.employee') || Active::checkRoutePattern('db.employee.employee.*')) }}">
+                            <a href="{{ route('db.employee.employee') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.employee_list')</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
             @if(Entrust::can('report.admin-user') OR
                 Entrust::can('report.admin-role') OR
                 Entrust::can('report.admin-store') OR
@@ -401,14 +418,14 @@
                                 </ul>
                             </li>
                         @endif
-                            @if(Entrust::can('master.expense_template-list') OR
-                                Entrust::can('master.expense_template-create') OR
-                                Entrust::can('master.expense_template-edit') OR
-                                Entrust::can('master.expense_template-delete'))
-                                <li class="{{ active_class(Active::checkRoutePattern('db.master.expense_template') || Active::checkRoutePattern('db.master.expense_template.*')) }}">
-                                    <a href="{{ route('db.master.expense_template') }}"><i class="fa fa-ticket fa-fw"></i>&nbsp;@lang('menu.item.master_expense_template')</a>
-                                </li>
-                            @endif
+                        @if(Entrust::can('master.expense_template-list') OR
+                            Entrust::can('master.expense_template-create') OR
+                            Entrust::can('master.expense_template-edit') OR
+                            Entrust::can('master.expense_template-delete'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.master.expense_template') || Active::checkRoutePattern('db.master.expense_template.*')) }}">
+                                <a href="{{ route('db.master.expense_template') }}"><i class="fa fa-ticket fa-fw"></i>&nbsp;@lang('menu.item.master_expense_template')</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endif

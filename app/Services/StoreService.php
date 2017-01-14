@@ -29,4 +29,6 @@ interface StoreService
     public function setDefaultStore($id);
 
     public function createDefaultStore($storeName);
+
+    public function applySettings();
 }

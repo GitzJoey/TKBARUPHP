@@ -11,10 +11,13 @@ This project is porting from Java version, you can find the Java version [here!]
 
 # The Goal
 The Goal is to become the ***most up to date*** POS system using the most up to date technology and
-based with the best practice that every people in the world is using. 
+based with the best practice that every people in the world is using. Only with this goal we are
+forced to always learn and learn and learn to adapt with the latest technology and make us keep up to date
+with the current technology.
 
 # Requirements
 * [Latest PHP 5](http://php.net)
+* [Laravel](http://www.laravel.com)
 * [Composer](http://getcomposer.org) 
 * [NodeJS/NPM](http://nodejs.org)
 * [Git](http://git-scm.com)

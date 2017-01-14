@@ -103,4 +103,9 @@ class StoreServiceImpl implements StoreService
 
         return $store->id;
     }
+
+    public function applySettings()
+    {
+
+    }
 }

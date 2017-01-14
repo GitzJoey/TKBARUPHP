@@ -216,6 +216,15 @@
                 });
 
                 $('input[autonumeric]').autoNumeric('init');
+
+                /*
+                $('#applySettingsButton').click(function() {
+                    $.ajax({
+                        url: '{{ route('api.user.apply_settings') }}',
+                        data:
+                    })
+                });
+                */
             });
         </script>
 
