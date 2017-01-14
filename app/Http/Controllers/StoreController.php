@@ -17,8 +17,8 @@ use Intervention\Image\Facades\Image;
 
 use App\Model\Bank;
 use App\Model\Store;
-use App\Model\Lookup;
 use App\Model\BankAccount;
+use App\Repos\LookupRepo;
 
 use App\Services\StoreService;
 
@@ -55,8 +55,8 @@ class StoreController extends Controller
         Log::info('[StoreController@create] ');
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
 
         return view('store.create', compact('statusDDL', 'yesnoDDL', 'bankDDL'));
     }
@@ -127,8 +127,8 @@ class StoreController extends Controller
         $store = Store::with('bankAccounts.bank')->where('id', '=' , $id)->first();
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $yesnoDDL = Lookup::where('category', '=', 'YESNOSELECT')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
 
         return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL', 'bankDDL'));
     }

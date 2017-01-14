@@ -14,7 +14,7 @@ use Validator;
 use Illuminate\Http\Request;
 
 use App\Model\Truck;
-use App\Model\Lookup;
+use App\Repos\LookupRepo;
 
 class TruckController extends Controller
 {
@@ -32,16 +32,16 @@ class TruckController extends Controller
     public function show($id)
     {
         $truck = Truck::find($id);
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $truckTypeDDL = Lookup::where('category', '=', 'TRUCKTYPE')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('description', 'code');
 
         return view('truck.show', compact('statusDDL', 'truckTypeDDL'))->with('truck', $truck);
     }
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $truckTypeDDL = Lookup::where('category', '=', 'TRUCKTYPE')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('description', 'code');
 
         return view('truck.create', compact('statusDDL', 'truckTypeDDL'));
     }
@@ -75,8 +75,8 @@ class TruckController extends Controller
     {
         $truck = Truck::find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $truckTypeDDL = Lookup::where('category', '=', 'TRUCKTYPE')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('description', 'code');
 
         return view('truck.edit', compact('truck', 'statusDDL', 'truckTypeDDL'));
     }

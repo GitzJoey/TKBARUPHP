@@ -6,12 +6,14 @@ use App\Model\Giro;
 use App\Model\Bank;
 use App\Model\CashPayment;
 use App\Model\GiroPayment;
-use App\Model\Lookup;
 use App\Model\Payment;
 use App\Model\SalesOrder;
 use App\Model\Store;
 use App\Model\TransferPayment;
+use App\Model\Lookup;
+use App\Repos\LookupRepo;
 use App\Services\PaymentService;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -31,7 +33,7 @@ class SalesOrderPaymentController extends Controller
         Log::info('SalesOrderController@paymentIndex');
 
         $salesOrders = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WP')->get();
-        $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
+        $soStatusDDL = LookupRepo::findByCategory('SOSTATUS')->pluck('description', 'code');
 
         return view('sales_order.payment.payment_index', compact('salesOrders', 'soStatusDDL'));
     }
@@ -39,10 +41,10 @@ class SalesOrderPaymentController extends Controller
     public function paymentHistory($id){
         $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
             'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('sales_order.payment.payment_history', compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'expenseTypes'));
     }
@@ -53,11 +55,11 @@ class SalesOrderPaymentController extends Controller
 
         $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
             'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.C';
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('sales_order.payment.cash_payment', compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType',
             'expenseTypes'));
@@ -85,13 +87,13 @@ class SalesOrderPaymentController extends Controller
         $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
         $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
             'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $storeBankAccounts = $currentStore->bankAccounts;
         $customerBankAccounts = empty($currentSo->customer) ? collect([]) : $currentSo->customer->bankAccounts;
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.T';
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('sales_order.payment.transfer_payment', compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType',
             'storeBankAccounts', 'customerBankAccounts', 'expenseTypes'));
@@ -118,11 +120,11 @@ class SalesOrderPaymentController extends Controller
             'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank',
             'vendorTrucking', 'warehouse', 'expenses')->find($id);
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['id', 'name']);
-        $paymentTypeDDL = Lookup::where('category', '=', 'PAYMENTTYPE')->get()->pluck('description', 'code');
+        $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
         $paymentType = 'PAYMENTTYPE.G';
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('sales_order.payment.giro_payment', compact('currentSo', 'paymentTypeDDL', 'paymentStatusDDL', 'paymentType',
             'bankDDL', 'expenseTypes'));

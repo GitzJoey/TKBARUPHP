@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Vinkla\Hashids\Facades\Hashids;
 
 use App\Model\Truck;
-use App\Model\Lookup;
 use App\Model\TruckMaintenance;
+use App\Repos\LookupRepo;
 
 class TruckMaintenanceController extends Controller
 {
@@ -41,7 +41,7 @@ class TruckMaintenanceController extends Controller
 
     public function create()
     {
-        $mtctypeDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
+        $mtctypeDDL = LookupRepo::findByCategory('TRUCKMTCTYPE')->pluck('code');
         $trucklist = Truck::get()->pluck('plate_number', 'id');
 
         return view('truck_maintenance.create', compact('mtctypeDDL', 'trucklist'));
@@ -78,7 +78,7 @@ class TruckMaintenanceController extends Controller
         $truckMtc = TruckMaintenance::find($id);
 
         $trucklist = Truck::get()->pluck('plate_number', 'id');
-        $mtctypeDDL = Lookup::where('category', '=', 'TRUCKMTCTYPE')->get()->pluck('code');
+        $mtctypeDDL = LookupRepo::findByCategory('TRUCKMTCTYPE')->pluck('code');
 
         return view('truck_maintenance.edit', compact('truckMtc', 'trucklist', 'mtctypeDDL'));
     }

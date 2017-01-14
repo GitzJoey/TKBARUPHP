@@ -8,12 +8,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\PriceLevel;
+use App\Repos\LookupRepo;
+
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
-
-use App\Model\Lookup;
-use App\Model\PriceLevel;
 
 class PriceLevelController extends Controller
 {
@@ -36,8 +36,8 @@ class PriceLevelController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $plTypeDDL = Lookup::where('category', '=', 'PRICELEVELTYPE')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $plTypeDDL = LookupRepo::findByCategory('PRICELEVELTYPE')->pluck('description', 'code');
 
         return view('price_level.create', compact('statusDDL', 'plTypeDDL'));
     }
@@ -73,8 +73,8 @@ class PriceLevelController extends Controller
     {
         $pricelevel = PriceLevel::find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
-        $plTypeDDL = Lookup::where('category', '=', 'PRICELEVELTYPE')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $plTypeDDL = LookupRepo::findByCategory('PRICELEVELTYPE')->pluck('description', 'code');
 
         return view('price_level.edit', compact('pricelevel', 'plTypeDDL', 'statusDDL'));
     }
