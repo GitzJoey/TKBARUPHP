@@ -216,4 +216,9 @@ class StoreController extends Controller
 
         return redirect(route('db.admin.store'));
     }
+
+    public function applySettings()
+    {
+        return 'ok';
+    }
 }

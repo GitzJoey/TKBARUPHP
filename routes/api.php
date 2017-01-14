@@ -17,7 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::post('/user/settings', 'StoreService@applySettings')->name('api.user.apply_settings');
+Route::get('/user_settings', 'StoreController@applySettings')->name('api.user.apply_settings');
 
 Route::get('/po/code', function (){
     return \App\Util\POCodeGenerator::generateCode();
