@@ -108,4 +108,21 @@ class StoreServiceImpl implements StoreService
     {
 
     }
+
+    /**
+     * Get all stores that have one or more un-set fields/properties (except remarks).
+     *
+     * @return Collection unfinished stores
+     */
+    public function getUnfinishedStore()
+    {
+        return Store::orWhereNull('name')
+        ->orWhereNull('address')
+        ->orWhereNull('phone_num')
+        ->orWhereNull('fax_num')
+        ->orWhereNull('tax_id')
+        ->orWhereNull('frontweb')
+        ->orWhereNull('image_filename')
+        ->get();
+    }
 }
