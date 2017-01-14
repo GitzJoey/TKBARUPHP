@@ -248,4 +248,14 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type',
             'supplier.expenseTemplates', 'vendorTrucking', 'warehouse')->where('code', '=', $poCode)->first();
     }
+
+    /**
+     * Get a collection of purchase orders that due for payment.
+     *
+     * @return Collection
+     */
+    public function getDuePO()
+    {
+        return collect([]);
+    }
 }
