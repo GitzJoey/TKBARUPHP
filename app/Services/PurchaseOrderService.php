@@ -92,7 +92,7 @@ interface PurchaseOrderService
      * Get a collection of purchase orders that almost due for payment.
      *
      * @param int $daysToDue number of days before the purchase order must be paid.
-     * @return Collection
+     * @return Collection purchase order that due for payment.
      */
     public function getDuePO($daysToDue = 1);
 }

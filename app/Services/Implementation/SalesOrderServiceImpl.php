@@ -307,4 +307,28 @@ class SalesOrderServiceImpl implements SalesOrderService
         return SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
             'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse')->where('code', '=', $soCode)->first();
     }
+
+    /**
+     * Get a collection of sales orders that almost due for payment.
+     *
+     * @param int $daysToDue number of days before the sales order payment should be received.
+     * @return Collection sales order that due for payment.
+     */
+    public function getDueSO($daysToDue = 1)
+    {
+        $soWaitingForPayment = SalesOrder::with('delivers', 'customer')
+        ->where('status', '=', 'SOSTATUS.WP')
+        ->whereHas('customer', function($query){
+            $query->where('payment_due_day', '>', 0);
+        })->get();
+
+        $today = Carbon::today();
+
+        $dueSO = $soWaitingForPayment->filter(function($so, $key) use ($daysToDue, $today){
+            $customerPaymentDueDay = $so->customer->payment_due_day;
+            return $today->gte($so->delivers->first()->deliver_date->addDays($customerPaymentDueDay - $daysToDue));
+        });
+
+        return $dueSO;
+    }
 }
