@@ -15,6 +15,7 @@ use App\Model\Lookup;
 
 use App\Services\StoreService;
 use Illuminate\Support\Facades\Log;
+use Doctrine\Common\Collections\Collection;
 
 class StoreServiceImpl implements StoreService
 {
@@ -110,7 +111,7 @@ class StoreServiceImpl implements StoreService
     }
 
     /**
-     * Get all stores that have one or more un-set fields/properties (except remarks).
+     * Get all stores that have one or more empty manual-filled fields/properties (except remarks).
      *
      * @return Collection unfinished stores
      */
