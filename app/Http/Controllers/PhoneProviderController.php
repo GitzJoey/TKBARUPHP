@@ -7,14 +7,14 @@
  */
 namespace App\Http\Controllers;
 
+use App\Model\PhonePrefix;
+use App\Model\PhoneProvider;
+use App\Repos\LookupRepo;
+
 use DB;
 use DateTime;
 use Validator;
 use Illuminate\Http\Request;
-
-use App\Model\Lookup;
-use App\Model\PhonePrefix;
-use App\Model\PhoneProvider;
 
 class PhoneProviderController extends Controller
 {
@@ -37,7 +37,7 @@ class PhoneProviderController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('phone_provider.create', compact('statusDDL'));
     }
@@ -78,7 +78,7 @@ class PhoneProviderController extends Controller
     {
         $phoneProvider = PhoneProvider::find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('phone_provider.edit', compact('phoneProvider', 'statusDDL'));
     }

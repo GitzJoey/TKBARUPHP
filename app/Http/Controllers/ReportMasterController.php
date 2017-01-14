@@ -11,7 +11,8 @@ use App\Model\TruckMaintenance;
 use App\Model\VendorTrucking;
 use App\Model\Warehouse;
 use App\Model\Truck;
-use App\Model\Lookup;
+use App\Repos\LookupRepo;
+
 use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,7 +35,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $customerName = $request->input('name');
@@ -90,7 +91,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $supplierName = $request->input('name');
@@ -146,7 +147,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $productName = $request->input('name');
@@ -194,7 +195,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $productTypeName = $request->input('name');
@@ -241,7 +242,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $bankName = $request->input('name');
@@ -295,7 +296,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $warehouseName = $request->input('name');
@@ -337,8 +338,8 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
-        $truckTypeDDL = Lookup::whereCategory('TRUCKTYPE')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('description', 'code');
 
         //Parameters
         $plateNumber = $request->input('plate_number');
@@ -380,7 +381,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $truckMaintenanceTypeDDL = Lookup::whereCategory('TRUCKMTCTYPE')->pluck('description', 'code');
+        $truckMaintenanceTypeDDL = LookupRepo::findByCategory('TRUCKMTCTYPE')->pluck('description', 'code');
 
         //Parameters
         $truckId = $request->input('truck_id');
@@ -429,7 +430,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $vendorTruckingName = $request->input('name');

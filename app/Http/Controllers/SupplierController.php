@@ -13,7 +13,6 @@ use Auth;
 use Illuminate\Http\Request;
 
 use App\Model\Bank;
-use App\Model\Lookup;
 use App\Model\Product;
 use App\Model\Profile;
 use App\Model\Supplier;
@@ -22,6 +21,7 @@ use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
 use App\Model\ExpenseTemplate;
 use App\Model\SupplierSetting;
+use App\Repos\LookupRepo;
 
 class SupplierController extends Controller
 {
@@ -41,7 +41,7 @@ class SupplierController extends Controller
         $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank',
             'expenseTemplates')->find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $productList = Product::whereStatus('STATUS.ACTIVE')->get();
@@ -53,7 +53,7 @@ class SupplierController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get();
@@ -131,7 +131,7 @@ class SupplierController extends Controller
         $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'products',
             'expenseTemplates')->find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get();

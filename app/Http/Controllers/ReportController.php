@@ -10,7 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Role;
 use App\Model\Truck;
-use App\Model\Lookup;
+use App\Repos\LookupRepo;
 
 class ReportController extends Controller
 {
@@ -43,7 +43,7 @@ class ReportController extends Controller
 
     public function report_admin()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $rolesDDL = Role::get()->pluck('display_name', 'name');
 
         return view('report.admin', compact('statusDDL', 'rolesDDL'));
