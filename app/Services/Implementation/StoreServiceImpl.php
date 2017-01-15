@@ -15,6 +15,7 @@ use App\Model\Lookup;
 
 use App\Services\StoreService;
 use Illuminate\Support\Facades\Log;
+use Doctrine\Common\Collections\Collection;
 
 class StoreServiceImpl implements StoreService
 {
@@ -107,5 +108,22 @@ class StoreServiceImpl implements StoreService
     public function applySettings()
     {
         return 'ok';
+    }
+
+    /**
+     * Get all stores that have one or more empty manual-filled fields/properties (except remarks).
+     *
+     * @return Collection unfinished stores
+     */
+    public function getUnfinishedStore()
+    {
+        return Store::orWhereNull('name')
+        ->orWhereNull('address')
+        ->orWhereNull('phone_num')
+        ->orWhereNull('fax_num')
+        ->orWhereNull('tax_id')
+        ->orWhereNull('frontweb')
+        ->orWhereNull('image_filename')
+        ->get();
     }
 }

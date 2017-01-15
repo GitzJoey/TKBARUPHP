@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\Collection;
 use Illuminate\Http\Request;
 
 /**
- * A service class which provide some service for purchase order operation such as creation, revision and rejection.
+ * A service class which provide some service for purchase order.
  *
  * Interface PurchaseOrderService
  * @package App\Services
@@ -87,4 +87,12 @@ interface PurchaseOrderService
      * @return PurchaseOrder
      */
     public function getPOForCopy($poCode);
+
+    /**
+     * Get a collection of purchase orders that almost due for payment.
+     *
+     * @param int $daysToDue number of days before the purchase order must be paid.
+     * @return Collection purchase order that due for payment.
+     */
+    public function getDuePO($daysToDue = 1);
 }

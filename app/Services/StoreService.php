@@ -9,6 +9,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
+use Doctrine\Common\Collections\Collection;
 
 interface StoreService
 {
@@ -31,4 +32,11 @@ interface StoreService
     public function createDefaultStore($storeName);
 
     public function applySettings();
+
+    /**
+     * Get all stores that have one or more empty manual-filled fields/properties (except remarks).
+     *
+     * @return Collection unfinished stores
+     */
+    public function getUnfinishedStore();
 }

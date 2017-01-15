@@ -84,4 +84,12 @@ interface SalesOrderService
      * @return SalesOrder sales order to be copied.
      */
     public function getSOForCopy($soCode);
+
+    /**
+     * Get a collection of sales orders that almost due for payment.
+     *
+     * @param int $daysToDue number of days before the sales order payment should be received.
+     * @return Collection sales order that due for payment.
+     */
+    public function getDueSO($daysToDue = 1);
 }
