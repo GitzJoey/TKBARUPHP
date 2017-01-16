@@ -16,6 +16,7 @@ use App\Model\Warehouse;
 use App\Services\SalesOrderService;
 use App\Services\StockService;
 use App\Util\SOCodeGenerator;
+use App\Repos\LookupRepo;
 
 use App;
 use Illuminate\Http\Request;
@@ -44,10 +45,10 @@ class SalesOrderController extends Controller
         $warehouseDDL = Warehouse::all(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
         $productDDL = Product::with('productUnits.unit')->get();
-        $soTypeDDL = Lookup::where('category', '=', 'SOTYPE')->get(['code', 'description']);
-        $customerTypeDDL = Lookup::where('category', '=', 'CUSTOMERTYPE')->get(['code', 'description']);
+        $soTypeDDL = LookupRepo::findByCategory('SOTYPE');
+        $customerTypeDDL = LookupRepo::findByCategory('CUSTOMERTYPE');
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
         $soStatusDraft = Lookup::where('code', '=', 'SOSTATUS.D')->get(['description', 'code']);
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
         $soCode = SOCodeGenerator::generateCode();
 
         $userSOs = session('userSOs', collect([]));
@@ -118,7 +119,7 @@ class SalesOrderController extends Controller
 
         $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])
             ->paginate(10);
-        $soStatusDDL = Lookup::where('category', '=', 'SOSTATUS')->get()->pluck('description', 'code');
+        $soStatusDDL = LookupRepo::findByCategory('SOSTATUS')->pluck('description', 'code');
 
         return view('sales_order.index', compact('salesOrders', 'soStatusDDL'));
     }
@@ -133,7 +134,7 @@ class SalesOrderController extends Controller
         $productDDL = Product::with('productUnits.unit')->get();
         $stocksDDL = $this->stockService->getStocksForSO();
         $customerDDL = collect([$currentSo->customer->toArray()]);
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get(['description', 'code']);
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('sales_order.revise',
             compact('currentSo', 'productDDL', 'warehouseDDL', 'vendorTruckingDDL', 'stocksDDL', 'customerDDL',

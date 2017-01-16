@@ -11,7 +11,7 @@ namespace App\Http\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 
-use App\Model\Lookup;
+use App\Repos\LookupRepo;
 use App\Model\ProductType;
 
 class ProductTypeController extends Controller
@@ -35,7 +35,7 @@ class ProductTypeController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('product_type.create', compact('statusDDL'));
     }
@@ -63,7 +63,7 @@ class ProductTypeController extends Controller
     {
         $prodtype = ProductType::find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('product_type.edit', compact('prodtype', 'statusDDL'));
     }

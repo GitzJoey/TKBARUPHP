@@ -65,16 +65,20 @@
                     @endif
                 </div>
                 <div class="row">
-                    <div class="col-xs-8">
+                    <div class="col-xs-12">
                         <div class="checkbox icheck">
-                            <label>
-                            </label>
+                            <label></label>
                             <input id="terms" type="checkbox" data-parsley-required="true" data-parsley-errors-container="#checkbox_req"> @lang('login.register.agree_1')<a href="#" data-toggle="modal" data-target="#termsModal">@lang('login.register.agree_2')</a>
                             <span id="checkbox_req" class="help-block has-error"></span>
                         </div>
                     </div>
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('buttons.register_button')</button>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('buttons.register_button')</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -106,7 +110,7 @@
     <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
 
     <script>
-        $(function () {
+        $(document).ready(function () {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',

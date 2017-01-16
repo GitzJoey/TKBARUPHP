@@ -11,8 +11,8 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 
-use App\Model\Lookup;
 use App\Model\VendorTrucking;
+use App\Repos\LookupRepo;
 
 class VendorTruckingController extends Controller
 {
@@ -35,7 +35,7 @@ class VendorTruckingController extends Controller
 
     public function create()
     {
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('vendor_trucking.create', compact('statusDDL'));
     }
@@ -65,7 +65,7 @@ class VendorTruckingController extends Controller
     {
         $vt = VendorTrucking::find($id);
 
-        $statusDDL = Lookup::where('category', '=', 'STATUS')->get()->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('vendor_trucking.edit', compact('vt', 'statusDDL'));
     }

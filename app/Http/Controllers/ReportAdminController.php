@@ -12,8 +12,8 @@ use App\User;
 use App\Model\Role;
 use App\Model\Unit;
 use App\Model\Store;
-use App\Model\Lookup;
 use App\Model\PhoneProvider;
+use App\Repos\LookupRepo;
 
 use Carbon\Carbon;
 use Barryvdh\DomPDF\PDF;
@@ -76,7 +76,6 @@ class ReportAdminController extends Controller
         if($role){
             $roleName = $role->name;
         }
-
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -159,7 +158,7 @@ class ReportAdminController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $storeName = $request->input('name');
@@ -205,7 +204,7 @@ class ReportAdminController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $unitName = $request->input('name');
@@ -251,7 +250,7 @@ class ReportAdminController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = Lookup::whereCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         //Parameters
         $phoneProviderName = $request->input('name');

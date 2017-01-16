@@ -6,6 +6,7 @@ use App\Model\Price;
 use App\Model\PriceLevel;
 use App\Model\ProductType;
 use App\Model\Stock;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -87,9 +88,9 @@ class PriceController extends Controller
 
         $prices = collect([]);
 
-        $priceLevels->each(function ($priceLevel, $key) use($prices, $request, $id){
+        $priceLevels->each(function ($priceLevel, $key) use ($prices, $request, $id){
             $prices->push([
-                'store_id'           => Auth::user()->store_id,
+                'store_id'          => Auth::user()->store_id,
                 'stock_id'          => $id,
                 'price_level_id'    => $priceLevel->id,
                 'input_date'        => date('Y-m-d H:i', strtotime($request->input('input_date'))),

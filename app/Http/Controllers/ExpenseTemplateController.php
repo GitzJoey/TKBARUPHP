@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\ExpenseTemplate;
-use App\Model\Lookup;
+use App\Repos\LookupRepo;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -23,7 +24,7 @@ class ExpenseTemplateController extends Controller
 
     public function create()
     {
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get()->pluck('description', 'code');
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('description', 'code');
 
         return view('expense_template.create', compact('expenseTypes'));
     }
@@ -54,7 +55,7 @@ class ExpenseTemplateController extends Controller
     {
         $expenseTemplate = ExpenseTemplate::find($id);
 
-        $expenseTypes = Lookup::where('category', '=', 'EXPENSETYPE')->get()->pluck('description', 'code');
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('description', 'code');
 
         return view('expense_template.edit', compact('expenseTemplate', 'expenseTypes'));
     }
