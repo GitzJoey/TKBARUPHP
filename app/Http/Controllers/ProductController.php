@@ -13,6 +13,7 @@ use App\Model\Unit;
 use App\Model\Product;
 use App\Model\ProductUnit;
 use App\Model\ProductType;
+
 use App\Repos\LookupRepo;
 
 class ProductController extends Controller

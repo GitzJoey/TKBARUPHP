@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Model\Bank;
-use App\Model\Customer;
-use App\Model\Product;
-use App\Model\ProductType;
-use App\Model\Supplier;
-use App\Model\TruckMaintenance;
-use App\Model\VendorTrucking;
-use App\Model\Warehouse;
 use App\Model\Truck;
+use App\Model\Product;
+use App\Model\Customer;
+use App\Model\Supplier;
+use App\Model\Warehouse;
+use App\Model\ProductType;
+use App\Model\VendorTrucking;
+use App\Model\TruckMaintenance;
+
 use App\Repos\LookupRepo;
 
-use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;

@@ -13,7 +13,13 @@
             <h4 class='control-sidebar-heading'>@lang('control_sidebar.tab.layout_options')</h4>
             <div class='form-group'>
                 <label class='control-sidebar-subheading'>
-                    <input id="cbx_settings_boxedLayout" type='checkbox' data-layout='layout-boxed'class='pull-right'/>
+                    <input id="cbx_settings_fixedLayout" type='checkbox' data-layout='fixed' class='pull-right'/>
+                    <span data-toggle="tooltip" data-placement="left" title="{{ trans('control_sidebar.layout_options.fixed_layout.tooltip') }}">@lang('control_sidebar.layout_options.fixed_layout.title')</span>
+                </label>
+            </div>
+            <div class='form-group'>
+                <label class='control-sidebar-subheading'>
+                    <input id="cbx_settings_boxedLayout" type='checkbox' data-layout='layout-boxed' class='pull-right'/>
                     <span data-toggle="tooltip" data-placement="left" title="{{ trans('control_sidebar.layout_options.boxed_layout.tooltip') }}">@lang('control_sidebar.layout_options.boxed_layout.title')</span>
                 </label>
             </div>

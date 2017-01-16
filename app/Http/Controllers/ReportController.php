@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Role;
 use App\Model\Truck;
+
 use App\Repos\LookupRepo;
 
 class ReportController extends Controller

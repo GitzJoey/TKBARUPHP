@@ -95,39 +95,6 @@
                     "skin-green-light"
                 ];
 
-                $('a[id^="btn_skin"]').click(function(e) {
-                    e.preventDefault();
-
-                    $.each(my_skins, function(i) {
-                        $('body').removeClass(my_skins[i]);
-                    });
-
-                    $('body').addClass($(this).attr('data-skin'));
-
-                    store('skin', $(this).attr('data-skin'));
-                });
-
-                $('input[id^="cbx_settings_"]').click(function(e) {
-                    var button = $(this).attr('id');
-
-                    if (button == 'cbx_settings_toggleRightSidebarSkin') {
-                        var sidebar = $("aside.control-sidebar");
-                        var skinList = $("#skinList");
-
-                        if (sidebar.hasClass("control-sidebar-dark")) {
-                            sidebar.removeClass("control-sidebar-dark");
-                            sidebar.addClass("control-sidebar-light");
-                            skinList.removeClass("control-sidebar-skin-bg-dark");
-                            skinList.addClass("control-sidebar-skin-bg-light");
-                        } else {
-                            sidebar.removeClass("control-sidebar-light");
-                            sidebar.addClass("control-sidebar-dark");
-                            skinList.removeClass("control-sidebar-skin-bg-light");
-                            skinList.addClass("control-sidebar-skin-bg-dark");
-                        }
-                    }
-                })
-
                 function store(name, val) {
                     if (typeof (Storage) !== "undefined") {
                         localStorage.setItem(name, val);
@@ -158,58 +125,35 @@
                     $.AdminLTE.controlSidebar._fix($(".control-sidebar"));
                 }
 
-                $('#cbx_settings_toggleSidebar').click(function() {
-                    if ($(this).is(':checked')) {
-                        $("body").addClass('sidebar-collapse');
-                        store('toggle_sidebar', true);
-                    } else {
-                        $("body").removeClass('sidebar-collapse');
-                        store('toggle_sidebar', false);
-                    }
+                $("[data-layout]").on('click', function () {
+                    change_layout($(this).data('layout'));
                 });
 
-                $("#cbx_settings_toggleRightSidebarSlide").on('click', function () {
+                $("[data-controlsidebar]").on('click', function () {
                     change_layout($(this).data('controlsidebar'));
-
-                    var slide = $.AdminLTE.options.controlSidebarOptions.slide;
-
-                    $.AdminLTE.options.controlSidebarOptions.slide = slide;
-
-                    if (!slide) $('.control-sidebar').removeClass('control-sidebar-open');
+                    var slide = !AdminLTE.options.controlSidebarOptions.slide;
+                    AdminLTE.options.controlSidebarOptions.slide = slide;
+                    if (!slide)
+                        $('.control-sidebar').removeClass('control-sidebar-open');
                 });
 
-                $("#cbx_settings_expandOnHover").on('click', function () {
-                    if ($('#cbx_settings_expandOnHover').is(':checked')) {
-                        store('expandOnHover', true);
-                        $("body").removeClass('sidebar-expanded-on-hover').addClass('sidebar-collapse');
+                $("[data-sidebarskin='toggle']").on('click', function () {
+                    var sidebar = $(".control-sidebar");
+                    if (sidebar.hasClass("control-sidebar-dark")) {
+                        sidebar.removeClass("control-sidebar-dark")
+                        sidebar.addClass("control-sidebar-light")
                     } else {
-                        store('expandOnHover', false);
+                        sidebar.removeClass("control-sidebar-light")
+                        sidebar.addClass("control-sidebar-dark")
                     }
                 });
 
-                $('#cbx_settings_boxedLayout').click(function() {
+                $("[data-enable='expandOnHover']").on('click', function () {
                     if ($(this).is(':checked')) {
-                        change_layout('layout-boxed');
-                        store('layout-boxed', true)
-                    } else {
-                        change_layout('fixed');
-                        store('layout-boxed', false)
-                    }
-                });
-
-                $(".main-sidebar").hover(function(){
-                    var screenWidth = $.AdminLTE.options.screenSizes.sm - 1;
-
-                    if ($("body").hasClass('sidebar-mini')
-                        && $("body").hasClass('sidebar-collapse')
-                        && $(window).width() > screenWidth
-                        && get('expandOnHover') == "true") {
-                        $("body").removeClass('sidebar-collapse').addClass('sidebar-expanded-on-hover');
-                    } else if ($("body").hasClass('sidebar-mini')
-                        && $("body").hasClass('sidebar-expanded-on-hover')
-                        && $(window).width() > screenWidth
-                        && get('expandOnHover') == "true") {
-                        $("body").removeClass('sidebar-expanded-on-hover').addClass('sidebar-collapse');
+                        $(this).attr('disabled', true);
+                        $.AdminLTE.pushMenu.expandOnHover();
+                        if (!$('body').hasClass('sidebar-collapse'))
+                            $("[data-layout='sidebar-collapse']").click();
                     } else {
 
                     }

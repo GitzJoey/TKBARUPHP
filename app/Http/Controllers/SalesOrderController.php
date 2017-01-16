@@ -11,11 +11,14 @@ namespace App\Http\Controllers;
 use App\Model\Lookup;
 use App\Model\Product;
 use App\Model\SalesOrder;
-use App\Model\VendorTrucking;
 use App\Model\Warehouse;
-use App\Services\SalesOrderService;
+use App\Model\VendorTrucking;
+
 use App\Services\StockService;
+use App\Services\SalesOrderService;
+
 use App\Util\SOCodeGenerator;
+
 use App\Repos\LookupRepo;
 
 use App;

@@ -7,10 +7,8 @@ use App\Model\PriceLevel;
 use App\Model\ProductType;
 use App\Model\Stock;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class PriceController extends Controller
 {

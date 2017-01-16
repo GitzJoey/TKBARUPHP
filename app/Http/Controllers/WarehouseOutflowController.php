@@ -8,12 +8,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Deliver;
-use App\Model\ProductUnit;
 use App\Model\Stock;
+use App\Model\Deliver;
 use App\Model\StockOut;
 use App\Model\Warehouse;
 use App\Model\SalesOrder;
+use App\Model\ProductUnit;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;

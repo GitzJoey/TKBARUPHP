@@ -9,13 +9,17 @@
 namespace App\Http\Controllers;
 
 use App\Model\Lookup;
+use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
-use App\Model\Warehouse;
+
 use App\Repos\LookupRepo;
-use App\Services\PurchaseOrderService;
+
 use App\Services\SupplierService;
+use App\Services\PurchaseOrderService;
+
 use App\Util\POCodeGenerator;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 

@@ -9,20 +9,19 @@
 namespace App\Http\Controllers;
 
 use App\Model\Bank;
-use App\Model\BankBCACSVRecord;
 use App\Model\BankUpload;
-use App\Model\Lookup;
+use App\Model\BankBCACSVRecord;
+
 use App\Repos\LookupRepo;
 
 use Auth;
-use App\Http\Requests;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Facades\Excel;
 use Storage;
 use Validator;
+use Carbon\Carbon;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Config;
 
 class BankController extends Controller
 {

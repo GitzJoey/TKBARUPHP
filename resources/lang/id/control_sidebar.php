@@ -17,6 +17,10 @@ return [
         ],
     ],
     'layout_options' => [
+        'fixed_layout' => [
+            'tooltip' => 'Aktifkan Fixed Layout, Tidak bisa menggunakan fixed dan boxed layout bersama',
+            'title' => 'Non/Aktifkan Fixed Layout',
+        ],
         'boxed_layout' => [
             'tooltip' => 'Aktifkan Boxed Layout',
             'title' => 'Non/Aktifkan Boxed Layout',
