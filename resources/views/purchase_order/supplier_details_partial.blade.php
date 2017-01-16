@@ -82,11 +82,11 @@
                                     <div class="tab-pane" id="tab_pic">
                                         <div class="row">
                                             <div class="col-md-11">
-                                                <template v-for="(profile, profileIndex) of po.supplier.profiles">
+                                                <template v-for="profile of po.supplier.profiles">
                                                     <div class="box box-widget">
                                                         <div class="box-header with-border">
                                                             <div class="user-block">
-                                                                <strong>Person In Charge @{{ profileIndex + 1 }}</strong><br/>
+                                                                <strong>Person In Charge @{{ $index + 1 }}</strong><br/>
                                                                 &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}
                                                                 &nbsp;@{{ profile.last_name }}
                                                             </div>
