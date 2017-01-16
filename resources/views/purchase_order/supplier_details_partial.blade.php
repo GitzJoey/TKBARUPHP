@@ -34,7 +34,7 @@
                                                        class="col-sm-2 control-label">@lang('purchase_order.partial.supplier.field.name')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputName" type="text" class="form-control" readonly
-                                                           ng-model="po.supplier.name">
+                                                           v-model="po.supplier.name">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -50,7 +50,7 @@
                                                        class="col-sm-2 control-label">@lang('purchase_order.partial.supplier.field.city')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputCity" type="text" class="form-control" readonly
-                                                           ng-model="po.supplier.city">
+                                                           v-model="po.supplier.city">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -58,7 +58,7 @@
                                                        class="col-sm-2 control-label">@lang('purchase_order.partial.supplier.field.phone')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputPhone" type="tel" class="form-control" readonly
-                                                           ng-model="po.supplier.phone_number">
+                                                           v-model="po.supplier.phone_number">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -66,7 +66,7 @@
                                                        class="col-sm-2 control-label">@lang('purchase_order.partial.supplier.field.tax_id')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputTaxId" type="text" class="form-control" readonly
-                                                           ng-model="po.supplier.tax_id">
+                                                           v-model="po.supplier.tax_id">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -74,7 +74,7 @@
                                                        class="col-sm-2 control-label">@lang('purchase_order.partial.supplier.field.remarks')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputRemarks" type="text" class="form-control" readonly
-                                                           ng-model="po.supplier.remarks">
+                                                           v-model="po.supplier.remarks">
                                                 </div>
                                             </div>
                                         </div>
@@ -82,11 +82,11 @@
                                     <div class="tab-pane" id="tab_pic">
                                         <div class="row">
                                             <div class="col-md-11">
-                                                <div ng-repeat="profile in po.supplier.profiles">
+                                                <template v-for="(profile, profileIndex) of po.supplier.profiles">
                                                     <div class="box box-widget">
                                                         <div class="box-header with-border">
                                                             <div class="user-block">
-                                                                <strong>Person In Charge @{{ $index + 1 }}</strong><br/>
+                                                                <strong>Person In Charge @{{ profileIndex + 1 }}</strong><br/>
                                                                 &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}
                                                                 &nbsp;@{{ profile.last_name }}
                                                             </div>
@@ -104,7 +104,7 @@
                                                                     <input id="inputFirstName" type="text"
                                                                            class="form-control"
                                                                            readonly
-                                                                           ng-model="profile.first_name">
+                                                                           v-model="profile.first_name">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -114,7 +114,7 @@
                                                                     <input id="inputLastName" type="text"
                                                                            class="form-control"
                                                                            readonly
-                                                                           ng-model="profile.last_name">
+                                                                           v-model="profile.last_name">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -124,7 +124,7 @@
                                                                     <input id="inputAddress" type="text"
                                                                            class="form-control"
                                                                            readonly
-                                                                           ng-model="profile.address">
+                                                                           v-model="profile.address">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -134,7 +134,7 @@
                                                                     <input id="inputICNum" type="text"
                                                                            class="form-control"
                                                                            readonly
-                                                                           ng-model="profile.ic_num">
+                                                                           v-model="profile.ic_num">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -150,7 +150,7 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr ng-repeat="phoneNumber in profile.phone_numbers">
+                                                                        <tr v-for="phoneNumber in profile.phone_numbers">
                                                                             <td>@{{ phoneNumber.provider.name }}</td>
                                                                             <td>@{{ phoneNumber.number }}</td>
                                                                             <td>@{{ phoneNumber.remarks }}</td>
@@ -161,7 +161,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
@@ -175,11 +175,13 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="bankAccount in po.supplier.bank_accounts">
-                                                <td>@{{ bankAccount.bank.name }}</td>
-                                                <td>@{{ bankAccount.account_number }}</td>
-                                                <td>@{{ bankAccount.remarks }}</td>
-                                            </tr>
+                                                <template v-for="bankAccount in po.supplier.bank_accounts">
+                                                    <tr>
+                                                        <td>@{{ bankAccount.bank.name }}</td>
+                                                        <td>@{{ bankAccount.account_number }}</td>
+                                                        <td>@{{ bankAccount.remarks }}</td>
+                                                    </tr>
+                                                </template>
                                             </tbody>
                                         </table>
                                     </div>
@@ -196,7 +198,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="p in po.supplier.products">
+                                            <tr v-for="p in po.supplier.products">
                                                 <td class="text-center">
                                                     <input type="checkbox" checked disabled>
                                                 </td>
@@ -220,7 +222,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="expense in po.supplier.expenses">
+                                            <tr v-for="expense in po.supplier.expenses">
                                                 <td class="text-center valign-middle">@{{ expense.name }}</td>
                                                 <td class="text-center valign-middle">@{{ expense.type }}</td>
                                                 <td class="text-center valign-middle">@{{ expense.amount }}</td>
