@@ -458,77 +458,97 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        function isBase(unit) {
-            return unit.is_base == 1;
-        }
+        $(document).ready(function() {
+            var poApp = new Vue({
+                el: '#poVue',
+                data: {
+                    supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
+                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                    poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
+                    supplierTypeDDL: JSON.parse('{!! htmlspecialchars_decode($supplierTypeDDL) !!}'),
+                    vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
+                    expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                    po: {
+                        supplier_type: '',
+                        items: [],
+                        expenses: []
+                    }
+                },
+                methods: {
+                    grandTotal: function () {
+                        var vm = this;
+                        var result = 0;
+                        _.forEach(vm.po.items, function (item, key) {
+                            result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                        });
+                        return result;
+                    },
+                    expenseTotal: function () {
+                        var vm = this;
+                        var result = 0;
+                        _.forEach(vm.po.expenses, function (expense, key) {
+                            if (expense.type.code === 'EXPENSETYPE.ADD')
+                                result += parseInt(numeral().unformat(expense.amount));
+                            else
+                                result -= parseInt(numeral().unformat(expense.amount));
+                        });
+                        return result;
+                    },
+                    insertItem: function (product) {
+                        var vm = this;
+                        vm.po.items.push({
+                            product: _.cloneDeep(product),
+                            selected_unit: {
+                                selected_unit_id: '',
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                            quantity: 0,
+                            price: 0
+                        });
+                    },
+                    removeItem: function (index) {
+                        var vm = this;
+                        vm.po.items.splice(index, 1);
+                    },
+                    insertDefaultExpense: function (supplier) {
+                        var vm = this;
+                        if (supplier) {
+                            vm.po.expenses = [];
+                            for (var i = 0; i < supplier.expense_templates.length; i++) {
+                                vm.po.expenses.push({
+                                    name: supplier.expense_templates[i].name,
+                                    type: {
+                                        code: supplier.expense_templates[i].type
+                                    },
+                                    is_internal_expense: supplier.expense_templates[i].is_internal_expense === 1,
+                                    amount: numeral(supplier.expense_templates[i].amount).format('0,0'),
+                                    remarks: supplier.expense_templates[i].remarks
+                                });
+                            }
 
-        var poApp = new Vue({
-            el: '#poVue',
-            data: {
-                supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
-                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
-                supplierTypeDDL: JSON.parse('{!! htmlspecialchars_decode($supplierTypeDDL) !!}'),
-                vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
-                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
-                po: {
-                    supplier_type: '',
-                    items: [],
-                    expenses: []
-                }
-            },
-            methods: {
-                grandTotal: function () {
-                    var vm = this;
-                    var result = 0;
-                    _.forEach(vm.po.items, function (item, key) {
-                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                    });
-                    return result;
-                },
-                expenseTotal: function () {
-                    var vm = this;
-                    var result = 0;
-                    _.forEach(vm.po.expenses, function (expense, key) {
-                        if (expense.type.code === 'EXPENSETYPE.ADD')
-                            result += parseInt(numeral().unformat(expense.amount));
-                        else
-                            result -= parseInt(numeral().unformat(expense.amount));
-                    });
-                    return result;
-                },
-                insertItem: function (product) {
-                    var vm = this;
-                    vm.po.items.push({
-                        product: _.cloneDeep(product),
-                        selected_unit: {
-                            selected_unit_id: '',
-                            conversion_value: 1
-                        },
-                        base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                        quantity: 0,
-                        price: 0
-                    });
-                },
-                removeItem: function (index) {
-                    var vm = this;
-                    vm.po.items.splice(index, 1);
-                },
-                insertDefaultExpense: function (supplier) {
-                    var vm = this;
-                    if (supplier) {
-                        vm.po.expenses = [];
-                        for (var i = 0; i < supplier.expense_templates.length; i++) {
-                            vm.po.expenses.push({
-                                name: supplier.expense_templates[i].name,
-                                type: {
-                                    code: supplier.expense_templates[i].type
-                                },
-                                is_internal_expense: supplier.expense_templates[i].is_internal_expense === 1,
-                                amount: numeral(supplier.expense_templates[i].amount).format('0,0'),
-                                remarks: supplier.expense_templates[i].remarks
+                            $(function () {
+                                $('input[type="checkbox"], input[type="radio"]').iCheck({
+                                    checkboxClass: 'icheckbox_square-blue',
+                                    radioClass: 'iradio_square-blue'
+                                });
                             });
                         }
+                        else {
+                            vm.po.expenses.push({
+                                type: ''
+                            });
+                        }
+                    },
+                    insertExpense: function () {
+                        var vm = this;
+                        vm.po.expenses.push({
+                            name: '',
+                            type: '',
+                            is_internal_expense: false,
+                            amount: 0,
+                            remarks: ''
+                        });
 
                         $(function () {
                             $('input[type="checkbox"], input[type="radio"]').iCheck({
@@ -536,38 +556,18 @@
                                 radioClass: 'iradio_square-blue'
                             });
                         });
+                    },
+                    removeExpense: function (index) {
+                        var vm = this;
+                        vm.po.expenses.splice(index, 1);
                     }
-                    else {
-                        vm.po.expenses.push({
-                            type: ''
-                        });
-                    }
-                },
-                insertExpense: function () {
-                    var vm = this;
-                    vm.po.expenses.push({
-                        name: '',
-                        type: '',
-                        is_internal_expense: false,
-                        amount: 0,
-                        remarks: ''
-                    });
-
-                    $(function () {
-                        $('input[type="checkbox"], input[type="radio"]').iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue'
-                        });
-                    });
-                },
-                removeExpense: function (index) {
-                    var vm = this;
-                    vm.po.expenses.splice(index, 1);
                 }
-            }
-        });
+            });
 
-        $(function () {
+            function isBase(unit) {
+                return unit.is_base == 1;
+            }
+
             $('input[type="checkbox"], input[type="radio"]').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
