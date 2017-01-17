@@ -75,6 +75,8 @@ class UserController extends Controller
                 $usr->password = bcrypt($data['password']);
                 $usr->store_id = $data['store'];
 
+                $usr->api_token = str_random(60);
+
                 $ud = new UserDetail();
                 $ud->type = $data['type'];
                 $ud->allow_login = boolval($data['allow_login']);

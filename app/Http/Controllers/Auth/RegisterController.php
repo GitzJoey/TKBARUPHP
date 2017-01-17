@@ -76,6 +76,8 @@ class RegisterController extends Controller
         $usr->email = $data['email'];
         $usr->password = bcrypt($data['password']);
 
+        $usr->api_token = str_random(60);
+
         if (!empty($data['store_name'])) {
             $id = $this->storeService->createDefaultStore($data['store_name']);
             $usr->store_id = $id;

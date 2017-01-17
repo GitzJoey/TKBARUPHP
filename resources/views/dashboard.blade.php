@@ -15,14 +15,6 @@
 @endsection
 
 @section('content')
-    <div id="test">
-        <template v-if="test == 'ok'">
-            <p>ok</p>
-        </template>
-        <template v-else>
-            <p>not ok</p>
-        </template>
-    </div>
     @for ($i = 0; $i < 1000; $i++)
         <br/>
     @endfor
@@ -31,21 +23,7 @@
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
-            var app = new Vue({
-                el: '#test',
-                data: {
-                    test: 'ok1'
-                },
-                methods: {
-                    t: function() {
-                        alert('ok');
-                    }
-                },
-                ready: function() {
-                    //this.t();
-                    alert('ok');
-                }
-            })
+
         });
     </script>
 @endsection
