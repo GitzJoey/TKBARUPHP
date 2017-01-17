@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Model\SalesOrder;
+
 use Doctrine\Common\Collections\Collection;
 
 interface CustomerService
@@ -11,5 +13,13 @@ interface CustomerService
      *
      * @return Collection unfinished customers
      */
-    public function getUnfinisheCustomer();
+    public function getUnfinishedCustomer();
+
+    /**
+     * Get customer last sales order.
+     *
+     * @param mixed $customer
+     * @return SalesOrder
+     */
+    public function getCustomerLastOrder($customer);
 }

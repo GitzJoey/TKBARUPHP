@@ -16,7 +16,7 @@ class CustomerServiceImpl implements CustomerService
      */
     public function getUnfinishedCustomer()
     {
-        return Product::orWhereNull('sign_code')
+        return Customer::orWhereNull('sign_code')
         ->orWhereNull('name')
         ->orWhereNull('address')
         ->orWhereNull('city')
@@ -25,5 +25,20 @@ class CustomerServiceImpl implements CustomerService
         ->orWhereNull('tax_id')
         ->orWhereNull('payment_due_day')
         ->get();
+    }
+
+    /**
+     * Get customer last sales order.
+     *
+     * @param mixed $customer
+     * @return SalesOrder
+     */
+    public function getCustomerLastOrder($customer)
+    {
+        $customer = Customer::with(['sales_orders' => function($query){
+            $query->latest()->first();
+        }])->find($customer);
+
+        return $customer->sales_orders;
     }
 }
