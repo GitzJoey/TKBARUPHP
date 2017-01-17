@@ -22,7 +22,7 @@ class SupplierServiceImpl implements SupplierService
 
     public function getUnfinisheSupplier()
     {
-        return Product::orWhereNull('sign_code')
+        return Supplier::orWhereNull('sign_code')
             ->orWhereNull('name')
             ->orWhereNull('address')
             ->orWhereNull('city')
