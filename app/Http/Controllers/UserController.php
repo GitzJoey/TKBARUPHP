@@ -121,10 +121,16 @@ class UserController extends Controller
             $usr = User::find($id);
             $usr->name = $req['name'];
             $usr->email = $req['email'];
+            $usr->store_id = $req['store'];
+
             if (!empty($req['password'])) {
                 $usr->password = bcrypt($req['password']);
             }
-            $usr->store_id = $req['store'];
+            
+            if (empty($usr->api_token)) {
+                $usr->api_token = str_random(60);
+            }
+
             $usr->save();
 
             $role_id = Role::whereName($req['roles'])->first()->id;
