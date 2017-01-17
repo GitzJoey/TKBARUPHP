@@ -32,11 +32,11 @@ interface CustomerService
     public function getCustomerUnpaidSalesOrderTotalAmount($customer);
 
     /**
-     * Get all passive customers in some period of time.
+     * Get all passive customers in a period of time.
      * Passive customers are customers who don't make any sales order.
      *
      * @param int $numberOfPeriod number of period
-     * @param string $period period of time. Can be days, months, or years.
+     * @param string $period period of time. Can be days, weeks, months, or years.
      * @return Collection
      */
     public function getPassiveCustomer($numberOfPeriod = 1, $period = "months");

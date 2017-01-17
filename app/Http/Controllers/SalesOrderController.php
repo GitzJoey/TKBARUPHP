@@ -37,7 +37,7 @@ class SalesOrderController extends Controller
     {
         $this->salesOrderService = $salesOrderService;
         $this->stockService = $stockService;
-        $this->middleware('auth');
+        $this->middleware('auth', [ 'except' => [ 'getDueSO' ] ]);
     }
 
     public function create()
@@ -167,5 +167,14 @@ class SalesOrderController extends Controller
         }
 
         return view('sales_order.copy_index', compact('copylist'));
+    }
+
+    public function getDueSO(Request $request)
+    {
+        if(!empty($request->query('dod')) && is_numeric($request->query('dod'))){
+            return $this->salesOrderService->getDueSO($request->query('dod'));
+        } else {
+            return $this->salesOrderService->getDueSO();
+        }
     }
 }
