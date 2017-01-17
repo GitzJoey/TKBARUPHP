@@ -22,4 +22,12 @@ interface CustomerService
      * @return SalesOrder
      */
     public function getCustomerLastOrder($customer);
+
+    /**
+     * Get the total amount of customer's unpaid sales orders.
+     *
+     * @param mixed $customer
+     * @return float
+     */
+    public function getCustomerUnpaidSalesOrderTotalAmount($customer);
 }

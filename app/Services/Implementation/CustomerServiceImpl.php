@@ -37,8 +37,24 @@ class CustomerServiceImpl implements CustomerService
     {
         $customer = Customer::with(['sales_orders' => function($query){
             $query->latest()->first();
-        }])->find($customer);
+        }])->findOrFail($customer);
 
         return $customer->sales_orders;
+    }
+
+    /**
+     * Get the total amount of customer's unpaid sales orders.
+     *
+     * @param mixed $customer
+     * @return float
+     */
+    public function getCustomerUnpaidSalesOrderTotalAmount($customer){
+        $customer = Customer::with('sales_orders')->findOrFail($customer);
+
+        $customerUnpaidSalesOrderAmounts = $customer->sales_orders->map(function($sales_order){
+            return $sales_order->totalAmountUnpaid();
+        });
+
+        return count($customerUnpaidSalesOrderAmounts) > 0 ? $customerUnpaidSalesOrderAmounts->sum() : 0;
     }
 }
