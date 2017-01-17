@@ -114,6 +114,11 @@ class Customer extends Model
         return $this->belongsTo('App\Model\Store', 'store_id');
     }
 
+    public function sales_orders()
+    {
+        return $this->hasMany('App\Model\SalesOrder');
+    }
+
     public function expenseTemplates()
     {
         return $this->belongsToMany('App\Model\ExpenseTemplate', 'customer_expense_template');
