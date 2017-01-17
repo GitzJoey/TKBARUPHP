@@ -18,8 +18,8 @@ return [
     ],
     'layout_options' => [
         'fixed_layout' => [
-            'tooltip' => 'Activate the fixed layout',
-            'title' => 'Activate the fixed layout. You cant use fixed and boxed layouts together',
+            'tooltip' => 'Activate the fixed layout. You cant use fixed and boxed layouts together',
+            'title' => 'Activate the fixed layout',
         ],
         'boxed_layout' => [
             'tooltip' => 'Activate the boxed layout',

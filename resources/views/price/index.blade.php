@@ -30,10 +30,10 @@
     @endif
 
     @if(count($productCategories) == 0)
-        <div class="box box-info">
+        <div class="box box-info animated bounceInUp">
             <div class="box-body">
                 <div>
-                    There are no stocks yet.
+                    @lang('labels.DATA_NOT_FOUND')
                 </div>
             </div>
         </div>

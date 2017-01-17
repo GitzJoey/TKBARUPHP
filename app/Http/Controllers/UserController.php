@@ -126,7 +126,7 @@ class UserController extends Controller
             if (!empty($req['password'])) {
                 $usr->password = bcrypt($req['password']);
             }
-            
+
             if (empty($usr->api_token)) {
                 $usr->api_token = str_random(60);
             }
