@@ -35,7 +35,7 @@ class CustomerServiceImpl implements CustomerService
      */
     public function getCustomerLastOrder($customer)
     {
-        $customer = Customer::with(['sales_orders' => function($query){
+        $customer = Customer::with(['sales_orders.items' => function($query){
             $query->latest()->first();
         }])->findOrFail($customer);
 

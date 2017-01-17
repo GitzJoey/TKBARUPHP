@@ -59,16 +59,13 @@ class Payment extends Model
 
     public function payment_detail()
     {
+        // CashPayment | TransferPayment | GiroPayment
         return $this->morphTo();
     }
 
-    /**
-     * May return relation to PurchaseOrder or SalesOrder
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
     public function payable()
     {
+        // SalesOrder | PurchaseOrder
         return $this->morphTo();
     }
 

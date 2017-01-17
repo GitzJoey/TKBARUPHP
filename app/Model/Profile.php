@@ -88,6 +88,7 @@ class Profile extends Model
     }
 
     public function owner(){
+        // Customer | Supplier
         return $this->morphTo();
     }
 
