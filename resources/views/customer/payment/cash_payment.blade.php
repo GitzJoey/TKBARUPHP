@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-money fa-fw"></span>&nbsp;@lang('customer.payment.cash.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('customer.payment.cash.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+
 @endsection
 
 @section('content')

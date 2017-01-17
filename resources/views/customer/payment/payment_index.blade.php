@@ -12,13 +12,17 @@
     @lang('customer.payment.index.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+
+@endsection
+
 @section('content')
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @elseif($message = Session::get('info'))
-        <div class="alert alert-success">
+        <div class="alert alert-info">
             <p>{{ $message }}</p>
         </div>
         {{ Session::forget('info') }}

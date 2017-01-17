@@ -12,6 +12,10 @@
     @lang('product.create.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_product_create') !!}
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">

@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-cubes fa-fw"></span>&nbsp;@lang('product.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('product.index.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_product') !!}
 @endsection
 
 @section('content')
