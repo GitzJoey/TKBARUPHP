@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('sales_order_payment_transfer', $currentSo->hId()) !!}
+
 @endsection
 
 @section('content')

@@ -7,17 +7,13 @@
 @section('page_title')
     <span class="fa fa-cubes fa-fw"></span>&nbsp;@lang('product.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('product.show.page_title_desc')
 @endsection
 
-@section('custom_css')
-    <style type="text/css">
-        .control-label-normal {
-            font-weight: 400;
-            display:inline-block;
-        }
-    </style>
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('master_product_show', $product->hId()) !!}
 @endsection
 
 @section('content')

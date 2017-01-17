@@ -394,3 +394,13 @@ Breadcrumbs::register('truck_maintenance_edit', function($breadcrumbs, $id){
     $breadcrumbs->parent('truck_maintenance');
     $breadcrumbs->push(trans('breadcrumb.truck_maintenance.edit'), route('db.truck.maintenance.edit', $id));
 });
+
+Breadcrumbs::register('customer_confirmation', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.customer.confirmation'), route('db.customer.confirmation.index'));
+});
+
+Breadcrumbs::register('customer_confirmation_confirm', function($breadcrumbs, $id){
+    $breadcrumbs->parent('customer_confirmation');
+    $breadcrumbs->push(trans('breadcrumb.customer.confirmation.confirm'), route('db.customer.confirmation.confirm', $id));
+});

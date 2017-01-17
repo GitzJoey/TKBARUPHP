@@ -12,6 +12,10 @@
     @lang('sales_order.payment.giro.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">

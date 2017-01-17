@@ -220,6 +220,8 @@ class StoreController extends Controller
 
     public function applySettings()
     {
-        return 'test';
+        return response()->json([
+            'return' => 'success'
+        ]);
     }
 }

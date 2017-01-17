@@ -52,6 +52,8 @@
             </div>
         </div>
 
+        <input type="hidden" id="secapi" value="{{ Auth::user()->api_token }}">
+
         <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
 
         <script type="application/javascript">
@@ -161,21 +163,26 @@
 
                 $('input[autonumeric]').autoNumeric('init');
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
                 $('#applySettingsButton').click(function() {
-                    $.ajax({
-                        url: '{{ route('api.user.apply_settings') }}',
-                        type: "GET",
-                        success: function (response) {
-                            console.log(response);
+                    var response = $.ajax({
+                        type: "POST",
+                        url: '{{ route('api.user.apply_settings') }}' + '?api_token=' + $('#secapi').val(),
+                        data: {
+                            df: $('#settingDateFormat').val(),
+                            tf: $('#settingTimeFormat').val(),
+                            hf: $('#setting1224Hour').val(),
+                            ts: $('#settingThousandSeparator').val(),
+                            ds: $('#settingDecimalSeparator').val(),
+                            dd: $('#settingDecimalDigit').val()
                         },
-                        error: function(xhr, status, error) {
-                            alert(xhr.responseText);
+                        dataType: 'application/json',
+                        complete: function() {
+                            noty({
+                                text: 'Settings updated.',
+                                type: 'success',
+                                timeout: 3000,
+                                progressBar: true
+                            });
                         }
                     });
                 });

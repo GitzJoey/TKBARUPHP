@@ -154,3 +154,55 @@ ol.breadcrumb {
     padding-right: 25px;
     padding-down: 10px;
 }
+
+.store-ribbon-blue {
+    margin-top: 8px;
+}
+
+.store-ribbon-black {
+    margin-top: 8px;
+}
+
+.store-ribbon-red {
+    margin-top: 8px;
+}
+
+.store-ribbon-yellow {
+    margin-top: 8px;
+}
+
+.store-ribbon-purple {
+    margin-top: 8px;
+}
+
+.store-ribbon-green {
+    margin-top: 8px;
+}
+
+.store-ribbon-blue-light {
+    margin-top: 8px;
+}
+
+.store-ribbon-black-light {
+    margin-top: 8px;
+}
+
+.store-ribbon-red-light {
+    margin-top: 8px;
+}
+
+.store-ribbon-yellow-light {
+    margin-top: 8px;
+}
+
+.store-ribbon-purple-light {
+    margin-top: 8px;
+}
+
+.store-ribbon-green-light {
+    margin-top: 8px;
+}
+
+.store-ribbon-none {
+    margin-top: 0px;
+}
