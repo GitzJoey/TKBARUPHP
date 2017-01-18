@@ -44,7 +44,7 @@
                                         <label for="inputSupplierType"
                                                class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_type')</label>
                                         <div class="col-sm-8">
-                                            <input type="hidden" name="supplier_type" v-bind:value="po.supplier_type.code" >
+                                            <input type="hidden" name="supplier_type" v-bind:value="po.supplier_type" >
                                             <select id="inputSupplierType" data-parsley-required="true"
                                                     class="form-control"
                                                     v-model="po.supplier_type">
@@ -470,6 +470,19 @@
                     expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                     po: {
                         supplier_type: '',
+                        supplier: {
+                            id: '',
+                            bank_accounts: []
+                        },
+                        warehouse: {
+                            id: ''
+                        },
+                        vendorTrucking: {
+                            id: ''
+                        },
+                        poType: {
+                            code: ''
+                        },
                         items: [],
                         expenses: []
                     }

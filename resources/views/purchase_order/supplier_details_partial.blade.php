@@ -168,20 +168,18 @@
                                     <div class="tab-pane" id="tab_bank_account">
                                         <table class="table table-bordered">
                                             <thead>
-                                            <tr>
-                                                <th class="text-center">@lang('purchase_order.partial.supplier.table_bank.header.bank')</th>
-                                                <th class="text-center">@lang('purchase_order.partial.supplier.table_bank.header.account_number')</th>
-                                                <th class="text-center">@lang('purchase_order.partial.supplier.table_bank.header.remarks')</th>
-                                            </tr>
+                                                <tr>
+                                                    <th class="text-center">@lang('purchase_order.partial.supplier.table_bank.header.bank')</th>
+                                                    <th class="text-center">@lang('purchase_order.partial.supplier.table_bank.header.account_number')</th>
+                                                    <th class="text-center">@lang('purchase_order.partial.supplier.table_bank.header.remarks')</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                                <template v-for="bankAccount in po.supplier.bank_accounts">
-                                                    <tr>
-                                                        <td>@{{ bankAccount.bank.name }}</td>
-                                                        <td>@{{ bankAccount.account_number }}</td>
-                                                        <td>@{{ bankAccount.remarks }}</td>
-                                                    </tr>
-                                                </template>
+                                                <tr v-for="bankAccount in po.supplier.bank_accounts">
+                                                    <td>@{{ bankAccount.bank.name }}</td>
+                                                    <td>@{{ bankAccount.account_number }}</td>
+                                                    <td>@{{ bankAccount.remarks }}</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
