@@ -64,6 +64,7 @@ class Expense extends Model
 
     public function expensable()
     {
+        // SalesOrder | PurchaseOrder
         return $this->morphTo();
     }
 

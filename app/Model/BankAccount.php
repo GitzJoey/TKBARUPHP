@@ -75,6 +75,7 @@ class BankAccount extends Model
     }
 
     public function owner(){
+        // Supplier | Customer | Store
         return $this->morphTo();
     }
 

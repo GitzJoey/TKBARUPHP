@@ -32,7 +32,7 @@ class PurchaseOrderController extends Controller
     {
         $this->purchaseOrderService = $purchaseOrderService;
         $this->supplierService = $supplierService;
-        $this->middleware('auth');
+        $this->middleware('auth', [ 'except' => [ 'getDuePO' ] ]);
     }
 
     public function create()
@@ -108,5 +108,14 @@ class PurchaseOrderController extends Controller
         $this->purchaseOrderService->rejectPO($request, $id);
 
         return redirect(route('db.po.revise.index'));
+    }
+
+    public function getDuePO(Request $request)
+    {
+        if(!empty($request->query('dod')) && is_numeric($request->query('dod'))){
+            return $this->purchaseOrderService->getDuePO($request->query('dod'));
+        } else {
+            return $this->purchaseOrderService->getDuePO();
+        }
     }
 }

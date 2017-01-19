@@ -51,3 +51,13 @@ Route::group(['prefix' => 'phone_provider'], function()
 {
     Route::get('search/{param?}', 'PhoneProviderController@getPhoneProviderByDigit')->name('api.phone_provider.search');
 });
+
+Route::group(['prefix' => 'purchase_order'], function()
+{
+    Route::get('due_purchase_order', 'PurchaseOrderController@getDuePO')->name('api.purchase_order.due_purchase_order');
+});
+
+Route::group(['prefix' => 'sales_order'], function()
+{
+    Route::get('due_sales_order', 'SalesOrderController@getDueSO')->name('api.sales_order.due_sales_order');
+});

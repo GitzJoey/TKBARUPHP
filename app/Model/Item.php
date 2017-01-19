@@ -102,6 +102,7 @@ class Item extends Model
 
     public function itemable()
     {
+        // SalesOrder | SalesOrderCopy | PurchaseOrder | PurchaseOrderCopy
         return $this->morphTo();
     }
 

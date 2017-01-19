@@ -147,6 +147,15 @@ class SalesOrder extends Model
         return $this->morphMany('App\Model\Payment', 'payable');
     }
 
+    public function expenses(){
+        return $this->morphMany('App\Model\Expense', 'expensable');
+    }
+
+    public function copies()
+    {
+        return $this->hasMany('App\Model\SalesOrderCopy', 'main_so_id');
+    }
+
     public function cashPayments()
     {
         return $this->payments->filter(function ($payment){
@@ -170,28 +179,18 @@ class SalesOrder extends Model
 
     public function totalAmount()
     {
-        $itemAmounts = $this->items->map(function($item){
-            return $item->price * $item->to_base_quantity;
-        });
-
-        $itemTotalAmount = count($itemAmounts) > 0 ? $itemAmounts->sum() : 0;
-
-        $expenseAmounts = $this->expenses->map(function ($expense){
-            return $expense->type === 'EXPENSETYPE.ADD' ? $expense->amount : ($expense->amount * -1);
-        });
-
-        $expenseTotalAmount = count($expenseAmounts) > 0 ? $expenseAmounts->sum() : 0;
-
-        return $itemTotalAmount + $expenseTotalAmount;
+        return itemTotalAmount() + expenseTotalAmount();
     }
 
     public function totalAmountPaid()
     {
-        return $this->payments->filter(function ($payment, $key){
-            return $payment->status !== 'TRFPAYMENTSTATUS.UNCONFIRMED'
-            && $payment->status !== 'GIROPAYMENTSTATUS.WE'
-            && $payment->status !== 'PAYMENTTYPE.FR';
-        })->sum('total_amount');
+        $confirmedPayments = getConfirmedPayment();
+        return count($confirmedPayments) > 0 ? $confirmedPayments->sum('total_amount') : 0;
+    }
+
+    public function totalAmountUnpaid()
+    {
+        return totalAmount() - totalAmountPaid();
     }
 
     public function updatePaymentStatus()
@@ -202,13 +201,31 @@ class SalesOrder extends Model
         $this->save();
     }
 
-    public function expenses(){
-        return $this->morphMany('App\Model\Expense', 'expensable');
+    private function itemTotalAmount()
+    {
+        $itemAmounts = $this->items->map(function($item){
+            return $item->price * $item->to_base_quantity;
+        });
+
+        return count($itemAmounts) > 0 ? $itemAmounts->sum() : 0;
     }
 
-    public function copies()
+    private function expenseTotalAmount()
     {
-        return $this->hasMany('App\Model\SalesOrderCopy', 'main_so_id');
+        $expenseAmounts = $this->expenses->map(function ($expense){
+            return $expense->type === 'EXPENSETYPE.ADD' ? $expense->amount : ($expense->amount * -1);
+        });
+
+        return count($expenseAmounts) > 0 ? $expenseAmounts->sum() : 0;
+    }
+
+    private function getConfirmedPayment()
+    {
+        return $this->payments->filter(function ($payment, $key){
+            return $payment->status !== 'TRFPAYMENTSTATUS.UNCONFIRMED'
+            && $payment->status !== 'GIROPAYMENTSTATUS.WE'
+            && $payment->status !== 'PAYMENTTYPE.FR';
+        });
     }
 
     public static function boot()

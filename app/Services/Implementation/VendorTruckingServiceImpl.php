@@ -16,7 +16,7 @@ class VendorTruckingServiceImpl implements VendorTruckingService
      */
     public function getUnfinishedVendorTrucking()
     {
-        return Warehouse::orWhereNull('name')
+        return VendorTrucking::orWhereNull('name')
         ->orWhereNull('address')
         ->orWhereNull('tax_id')
         ->get();
