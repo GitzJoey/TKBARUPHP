@@ -15,9 +15,6 @@ return [
             'product' => 'Product List',
             'settings' => 'Settings',
             'expenses' => 'Default Expenses',
-            'header' => [
-                'bank_lists' => '',
-            ],
         ],
         'table_phone' => [
             'header' => [

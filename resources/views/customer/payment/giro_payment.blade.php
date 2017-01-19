@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <div ng-app="soModule" ng-controller="soController">
+    <div id="custPayemntVue">
         {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.customer.payment.giro', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
@@ -111,8 +111,9 @@
                                         <label for="inputAmount"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_amount')</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputAmount" ng-value="giro.amount" fcsa-number
-                                                   name="amount" ng-model="amount" data-parsley-required="true">
+                                            <input type="text" class="form-control" id="inputAmount" ng-value="giro.amount"
+                                                   name="amount" ng-model="amount" data-parsley-required="true"
+                                                   autonumeric>
                                         </div>
                                         <label for="inputPrintedName"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.printed_name')</label>
@@ -158,42 +159,56 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soModule", ['fcsa-number']);
-        app.controller("soController", ['$scope', function ($scope) {
-            var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
-            $scope.bankDDL = JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}');
-
-            $scope.so = {
-                customer: currentSo.customer,
-                items: [],
-                warehouse: {
-                    id: currentSo.warehouse.id,
-                    name: currentSo.warehouse.name
+        $(document).ready(function() {
+            var app = new Vue({
+                el: '#custPaymentVue',
+                data: {
+                    currentSo: JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}'),
+                    bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
+                    so:{
+                        customer: '',
+                        warehouse: {
+                            id: '',
+                            name: '',
+                        },
+                        vendorTrucking: {
+                            id: '',
+                            name: ''
+                        },
+                        items: []
+                    }
                 },
-                vendorTrucking: {
-                    id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                    name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
+                ready: function() {
+                    this.init();
+                },
+                methods: {
+                    init: function() {
+                        this.so.customer = this.currentSo.customer;
+                        this.so.warehouse.id = this.currentSo.warehouse.id;
+                        this.so.warehouse.name = this.currentSo.warehouse.name;
+                        this.vendorTrucking.id = this.currentSo.vendor_trucking == null ? '' : this.currentSo.vendor_trucking.id,
+                        this.vendorTrucking.name = this.currentSo.vendor_trucking == null ? '' : this.currentSo.vendor_trucking.name
+
+                        for (var i = 0; i < this.currentSo.items.length; i++) {
+                            this.so.items.push({
+                                id: currentSo.items[i].id,
+                                product: currentSo.items[i].product,
+                                base_unit: _.find(currentSo.items[i].product.product_units, isBase),
+                                selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
+                                quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
+                                price: parseFloat(currentSo.items[i].price).toFixed(0)
+                            });
+                        }
+                    },
+                    grandTotal: function () {
+                        var result = 0;
+                        angular.forEach($scope.so.items, function (item, key) {
+                            result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                        });
+                        return result;
+                    }
                 }
-            };
-
-            for (var i = 0; i < currentSo.items.length; i++) {
-                $scope.so.items.push({
-                    id: currentSo.items[i].id,
-                    product: currentSo.items[i].product,
-                    base_unit: _.find(currentSo.items[i].product.product_units, isBase),
-                    selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
-                    quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
-                    price: parseFloat(currentSo.items[i].price).toFixed(0)
-                });
-            }
-
-            $scope.grandTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
+            });
 
             function getSelectedUnit(selectedUnitId) {
                 return function (element) {
@@ -204,9 +219,7 @@
             function isBase(unit) {
                 return unit.is_base == 1;
             }
-        }]);
 
-        $(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
