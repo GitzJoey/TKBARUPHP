@@ -97,11 +97,11 @@
                                         <button class="btn btn-xs btn-default" type="button" ng-click="addNewProfile()">@lang('buttons.create_new_button')</button>
                                     </div>
                                     <div class="col-md-11">
-                                        <div v-for="profile in profiles">
+                                        <div v-for="(profile, profileIdx) in profiles">
                                             <div class="box box-widget">
                                                 <div class="box-header with-border">
                                                     <div class="user-block">
-                                                        <strong>@lang('customer.field.person_in_charge') @{{ $index + 1 }}</strong><br/>
+                                                        <strong>@lang('customer.field.person_in_charge') @{{ profileIndex + 1 }}</strong><br/>
                                                         &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
                                                     </div>
                                                     <div class="box-tools">
@@ -147,20 +147,20 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr v-for="ph in profile.phone_numbers">
+                                                                    <tr v-for="(ph, phIdx) in profile.phone_numbers">
                                                                         <td>
-                                                                            <input type="hidden" name="profile_@{{ $parent.$index }}_phone_number_id[]" v-bind:value="ph.id">
-                                                                            <select name="profile_@{{ $parent.$index }}_phone_provider[]" class="form-control"
+                                                                            <input type="hidden" name="profile_@{{ profileIdx }}_phone_number_id[]" v-bind:value="ph.id">
+                                                                            <select name="profile_@{{ profileIdx }}_phone_provider[]" class="form-control"
                                                                                     v-model="ph.phone_provider_id"
                                                                                     data-parsley-required="true" data-parsley-group="tab_pic">
                                                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }})</option>
                                                                             </select>
                                                                         </td>
-                                                                        <td><input type="text" name="profile_@{{ $parent.$index }}_phone_number[]" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
-                                                                        <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" v-model="ph.remarks"></td>
+                                                                        <td><input type="text" name="profile_@{{ profileIdx }}_phone_number[]" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
+                                                                        <td><input type="text" class="form-control" name="profile_@{{ profileIdx }}_remarks[]" v-model="ph.remarks"></td>
                                                                         <td class="text-center">
-                                                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" v-on:click="removeSelectedPhone($parent.$index, $index)">
+                                                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ phIdx }}" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
                                                                                 <span class="fa fa-close fa-fw"></span>
                                                                             </button>
                                                                         </td>
@@ -169,7 +169,7 @@
                                                                 <tfoot>
                                                                     <tr>
                                                                         <td colspan="4">
-                                                                            <button type="button" class="btn btn-xs btn-default" v-on:click="addNewPhone($index)">@lang('buttons.create_new_button')</button>
+                                                                            <button type="button" class="btn btn-xs btn-default" v-on:click="addNewPhone(profileIdx)">@lang('buttons.create_new_button')</button>
                                                                         </td>
                                                                     </tr>
                                                                 </tfoot>
@@ -194,7 +194,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="bank in banks">
+                                        <tr v-for="(bank, bankIdx) in banks">
                                             <td>
                                                 <input type="hidden" name="bank_account_id[]" v-bind:value="bank.id">
                                                 <select class="form-control"
@@ -215,7 +215,7 @@
                                                 <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" v-on:click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ bankIdx }}" v-on:click="removeSelectedBank(bankIdx)"><span class="fa fa-close fa-fw"></span></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -249,7 +249,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="expense in expenses">
+                                        <tr v-for="(expense, expenseIdx) in expenses">
                                             <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
                                             <td class="text-center valign-middle">
                                                 @{{ expense.name }}
@@ -267,7 +267,7 @@
                                                 @{{ expense.remarks }}
                                             </td>
                                             <td class="text-center valign-middle">
-                                                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
+                                                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense(expenseIdx)"><span class="fa fa-close fa-fw"></span></button>
                                             </td>
                                         </tr>
                                     </tbody>
