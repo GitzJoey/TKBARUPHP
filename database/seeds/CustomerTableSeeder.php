@@ -40,6 +40,7 @@ class CustomerTableSeeder extends Seeder
             for ($b = 0; $b < 2; $b++) {
                 $ba = new BankAccount();
                 $ba->bank_id = $b + 1;
+                $ba->account_name = 'name 123123123';
                 $ba->account_number = '123123123';
                 $ba->remarks = 'Bank ' . $b;
 
