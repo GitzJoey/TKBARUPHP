@@ -49,11 +49,11 @@
                                                     class="form-control"
                                                     v-model="po.supplier_type">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                <option v-for="st in supplierTypeDDL" v-bind:value="st.code">@{{ st.description }}</option>
+                                                <option v-for="st of supplierTypeDDL" v-bind:value="st">@{{ st.description }}</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <template v-if="po.supplier_type == 'SUPPLIERTYPE.R'">
+                                    <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
                                         <div class="form-group">
                                             <label for="inputSupplierId"
                                                    class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
@@ -75,7 +75,7 @@
                                             </div>
                                         </div>
                                     </template>
-                                    <template v-if="po.supplier_type == 'SUPPLIERTYPE.WI'">
+                                    <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
                                         <div class="form-group">
                                             <label for="inputSupplierName"
                                                    class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
@@ -269,13 +269,13 @@
                                                                    data-parsley-type="number">
                                                         </td>
                                                         <td>
-                                                            <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.id" >
+                                                            <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
                                                             <select data-parsley-required="true"
                                                                     class="form-control"
-                                                                    v-model="item.selected_unit.selected_unit_id"
+                                                                    v-model="item.selected_unit"
                                                                     data-parsley-required="true">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                <option v-for="pu in item.product.product_units" v-bind:value="pu.unit.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
+                                                                <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                             </select>
                                                         </td>
                                                         <td>
@@ -286,7 +286,7 @@
                                                         </td>
                                                         <td class="text-center">
                                                             <button type="button" class="btn btn-danger btn-md"
-                                                                    v-on:click="removeItem(itemIndex)"><span
+                                                                    v-on:click="removeItem($index)"><span
                                                                         class="fa fa-minus"></span>
                                                             </button>
                                                         </td>
@@ -366,7 +366,7 @@
                                                         </td>
                                                         <td class="text-center">
                                                             <button type="button" class="btn btn-danger btn-md"
-                                                                    v-on:click="removeExpense(expenseIndex)"><span
+                                                                    v-on:click="removeExpense($index)"><span
                                                                         class="fa fa-minus"></span>
                                                             </button>
                                                         </td>
