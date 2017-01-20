@@ -59,7 +59,7 @@
                                    title="Revise"><span class="fa fa-pencil fa-fw"></span></a>
                                 @if($po->status == 'POSTATUS.WA')
                                     {!! Form::open(['method' => 'DELETE', 'route' => ['db.po.reject', $po->hId()], 'style'=>'display:inline'])  !!}
-                                    <button type="submit" class="btn btn-xs btn-danger" title="Reject" id="delete_button" v-on:click="showAlert">
+                                    <button type="submit" class="btn btn-xs btn-danger" title="Reject" id="delete_button" v-on:click.prevent="showAlert">
                                         <span class="fa fa-close fa-fw"></span></button>
                                     {!! Form::close() !!}
                                 @else
