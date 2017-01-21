@@ -44,11 +44,11 @@
                                         <label for="inputSupplierType"
                                                class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_type')</label>
                                         <div class="col-sm-8">
-                                            <input type="hidden" name="supplier_type" v-bind:value="po.supplier_type" >
+                                            <input type="hidden" name="supplier_type" v-bind:value="po.supplier_type.code" >
                                             <select id="inputSupplierType" data-parsley-required="true"
                                                     class="form-control"
                                                     v-model="po.supplier_type">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="st of supplierTypeDDL" v-bind:value="st">@{{ st.description }}</option>
                                             </select>
                                         </div>
@@ -63,7 +63,7 @@
                                                         class="form-control"
                                                         v-model="po.supplier"
                                                         v-on:change="insertDefaultExpense(po.supplier)">
-                                                    <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="supplier of supplierDDL" v-bind:value="supplier">@{{ supplier.name }}</option>
                                                 </select>
                                             </div>
@@ -119,7 +119,7 @@
                                             <select id="inputPoType" data-parsley-required="true"
                                                     class="form-control"
                                                     v-model="po.poType">
-                                                <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="poType of poTypeDDL" v-bind:value="poType">@{{ poType.description }}</option>
                                             </select>
                                         </div>
@@ -178,7 +178,7 @@
                                             <select id="inputWarehouse" data-parsley-required="true"
                                                     class="form-control"
                                                     v-model="po.warehouse">
-                                                <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
                                             </select>
                                         </div>
@@ -192,7 +192,7 @@
                                             <select id="inputVendorTrucking"
                                                     class="form-control"
                                                     v-model="po.vendorTrucking">
-                                                <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
                                             </select>
                                         </div>
@@ -228,7 +228,7 @@
                                             <select id="inputProduct"
                                                     class="form-control"
                                                     v-model="po.product">
-                                                <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
                                             </select>
                                         </div>
@@ -257,7 +257,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="item in po.items">
+                                                    <tr v-for="(item, itemIndex) in po.items">
                                                         <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
                                                         <input type="hidden" name="base_unit_id[]"
                                                                v-bind:value="item.base_unit.unit.id">
@@ -274,7 +274,7 @@
                                                                     class="form-control"
                                                                     v-model="item.selected_unit"
                                                                     data-parsley-required="true">
-                                                                <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                             </select>
                                                         </td>
@@ -286,7 +286,7 @@
                                                         </td>
                                                         <td class="text-center">
                                                             <button type="button" class="btn btn-danger btn-md"
-                                                                    v-on:click="removeItem($index)"><span
+                                                                    v-on:click="removeItem(itemIndex)"><span
                                                                         class="fa fa-minus"></span>
                                                             </button>
                                                         </td>
@@ -353,7 +353,7 @@
                                                             <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
                                                             <select data-parsley-required="true"
                                                                     class="form-control" v-model="expense.type">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
                                                             </select>
                                                         </td>
@@ -469,10 +469,11 @@
                     vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
                     expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                     po: {
-                        supplier_type: '',
+                        supplier_type: {
+                            code: ''
+                        },
                         supplier: {
-                            id: '',
-                            bank_accounts: []
+                            id: ''
                         },
                         warehouse: {
                             id: ''
@@ -482,6 +483,9 @@
                         },
                         poType: {
                             code: ''
+                        },
+                        product: {
+                            id: ''
                         },
                         items: [],
                         expenses: []
@@ -512,7 +516,9 @@
                         vm.po.items.push({
                             product: _.cloneDeep(product),
                             selected_unit: {
-                                selected_unit_id: '',
+                                unit: {
+                                    id: ''
+                                },
                                 conversion_value: 1
                             },
                             base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
@@ -557,7 +563,9 @@
                         var vm = this;
                         vm.po.expenses.push({
                             name: '',
-                            type: '',
+                            type: {
+                                code: ''
+                            },
                             is_internal_expense: false,
                             amount: 0,
                             remarks: ''
