@@ -512,19 +512,21 @@
                         return result;
                     },
                     insertItem: function (product) {
-                        var vm = this;
-                        vm.po.items.push({
-                            product: _.cloneDeep(product),
-                            selected_unit: {
-                                unit: {
-                                    id: ''
+                        if(product.id != ''){
+                            var vm = this;
+                            vm.po.items.push({
+                                product: _.cloneDeep(product),
+                                selected_unit: {
+                                    unit: {
+                                        id: ''
+                                    },
+                                    conversion_value: 1
                                 },
-                                conversion_value: 1
-                            },
-                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                            quantity: 0,
-                            price: 0
-                        });
+                                base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                                quantity: 0,
+                                price: 0
+                            });
+                        }
                     },
                     removeItem: function (index) {
                         var vm = this;
@@ -532,7 +534,7 @@
                     },
                     insertDefaultExpense: function (supplier) {
                         var vm = this;
-                        if (supplier) {
+                        if (supplier.id != '') {
                             vm.po.expenses = [];
                             for (var i = 0; i < supplier.expense_templates.length; i++) {
                                 vm.po.expenses.push({
