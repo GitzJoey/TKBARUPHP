@@ -5,7 +5,7 @@
 @section('content')
     <body class="hold-transition register-page">
 
-    <div class="register-box">
+    <div class="register-box animated slideInDown">
         <div class="register-logo">
             <a href="#"></a>
         </div>
