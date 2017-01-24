@@ -398,7 +398,7 @@
                 }
             });
 
-            window.Parsley.on('parsley:field:validate', function() {
+            $('#supplierForm').parsley().on('field:validate', function() {
                 validateFront();
             });
 

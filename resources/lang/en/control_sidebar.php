@@ -10,10 +10,17 @@ return [
         'field' => [
             'date_format' => 'Date Format',
             'time_format' => 'Time Format',
-            '24hour' => '24 Hour Settings',
             'thousand_separator' => 'Thousand Separator',
             'decimal_separator' => 'Decimal Separator',
             'decimal_digit' => 'Decimal Digit',
+            'comma' => 'Comma',
+            'dot' => 'Dot',
+            'space' => 'Space',
+            '0' => '0',
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
         ],
     ],
     'layout_options' => [

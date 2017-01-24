@@ -11,6 +11,7 @@ return [
         'tab' => [
             'store' => 'Data Toko',
             'bank_account' => 'Rekening Bank',
+            'settings' => 'Pengaturan',
         ],
         'table_bank' => [
             'header' => [
@@ -31,6 +32,14 @@ return [
         'default' => 'Utama',
         'frontweb' => 'Web Utama',
         'remarks' => 'Keterangan',
+        'date_format' => 'Format Tanggal',
+        'time_format' => 'Format Jam',
+        'thousand_separator' => 'Pemisah Ribuan',
+        'decimal_separator' => 'Pemisah Desimal',
+        'decimal_digit' => 'Desimal Digit',
+        'comma' => 'Koma',
+        'dot' => 'Titik',
+        'space' => 'Spasi',
     ],
     'edit' => [
         'title' => 'Toko',

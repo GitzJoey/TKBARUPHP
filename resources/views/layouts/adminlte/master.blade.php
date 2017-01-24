@@ -170,7 +170,6 @@
                         data: {
                             df: $('#settingDateFormat').val(),
                             tf: $('#settingTimeFormat').val(),
-                            hf: $('#setting1224Hour').val(),
                             ts: $('#settingThousandSeparator').val(),
                             ds: $('#settingDecimalSeparator').val(),
                             dd: $('#settingDecimalDigit').val()

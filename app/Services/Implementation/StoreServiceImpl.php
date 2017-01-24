@@ -105,11 +105,6 @@ class StoreServiceImpl implements StoreService
         return $store->id;
     }
 
-    public function applySettings()
-    {
-        return 'ok';
-    }
-
     /**
      * Get all stores that have one or more empty manual-filled fields/properties (except remarks).
      *

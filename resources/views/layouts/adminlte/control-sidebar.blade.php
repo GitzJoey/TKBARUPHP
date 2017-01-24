@@ -145,42 +145,43 @@
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.date_format')</label>
                     <select id="settingDateFormat" class="form-control">
-                        <option value="">DD-MM-YYYY</option>
-                        <option value="">DD MMM YYYY</option>
+                        <option value="d/m/Y" {{ Auth::user()->store->date_format == 'd/m/Y' ? 'selected':'' }}>dd/MM/yyyy - {{ date('d/m/Y') }} (default)</option>
+                        <option value="d m Y" {{ Auth::user()->store->date_format == 'd m Y' ? 'selected':'' }}>dd MM yyyy - {{ date('d m Y') }}</option>
+                        <option value="d M Y" {{ Auth::user()->store->date_format == 'd M Y' ? 'selected':'' }}>dd MMM yyyy - {{ date('d M Y') }}</option>
+                        <option value="m/d/Y" {{ Auth::user()->store->date_format == 'm/d/Y' ? 'selected':'' }}>MM/dd/yyyy - {{ date('m/d/Y') }}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.time_format')</label>
                     <select id="settingTimeFormat" class="form-control">
-                        <option value="">HH:mm</option>
-                        <option value="">HH:mm:ss</option>
+                        <option value="H:i:s" {{ Auth::user()->store->time_format == 'H:i:s' ? 'selected':'' }}>{{ date('H:i:s') }}</option>
+                        <option value="h:i A" {{ Auth::user()->store->time_format == 'h:i A' ? 'selected':'' }}>{{ date('h:i A') }}</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label class="control-sidebar-subheading">
-                        @lang('control_sidebar.settings.field.24hour')
-                        <input id="setting1224Hour" type="checkbox" class="pull-right" checked>
-                    </label>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.thousand_separator')</label>
                     <select id="settingThousandSeparator" class="form-control">
-                        <option value="">Comma</option>
-                        <option value="">Dot</option>
+                        <option value="," {{ Auth::user()->store->thousand_separator == ',' ? 'selected':'' }}>@lang('control_sidebar.settings.field.comma')&nbsp;-&nbsp;1,000,000</option>
+                        <option value="." {{ Auth::user()->store->thousand_separator == '.' ? 'selected':'' }}>@lang('control_sidebar.settings.field.dot')&nbsp;-&nbsp;1.000.000</option>
+                        <option value=" " {{ Auth::user()->store->thousand_separator == ' ' ? 'selected':'' }}>@lang('control_sidebar.settings.field.space')&nbsp;-&nbsp;1 000 000</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.decimal_separator')</label>
                     <select id="settingDecimalSeparator" class="form-control">
-                        <option value="">Comma</option>
-                        <option value="">Dot</option>
+                        <option value="," {{ Auth::user()->store->decimal_separator == ',' ? 'selected':'' }}>@lang('control_sidebar.settings.field.comma')&nbsp;-&nbsp;0,00</option>
+                        <option value="." {{ Auth::user()->store->decimal_separator == '.' ? 'selected':'' }}>@lang('control_sidebar.settings.field.dot')&nbsp;-&nbsp;0.00</option>
+                        <option value=" " {{ Auth::user()->store->decimal_separator == ' ' ? 'selected':'' }}>@lang('control_sidebar.settings.field.space')&nbsp;-&nbsp;0 00</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.decimal_digit')</label>
                     <select id="settingDecimalDigit" class="form-control">
-                        <option value="">0</option>
-                        <option value="">2</option>
+                        <option value="0" {{ Auth::user()->store->decimal_digit == 0 ? 'selected':'' }}>@lang('control_sidebar.settings.field.0')</option>
+                        <option value="1" {{ Auth::user()->store->decimal_digit == 1 ? 'selected':'' }}>@lang('control_sidebar.settings.field.1')</option>
+                        <option value="2" {{ Auth::user()->store->decimal_digit == 2 ? 'selected':'' }}>@lang('control_sidebar.settings.field.2')</option>
+                        <option value="3" {{ Auth::user()->store->decimal_digit == 3 ? 'selected':'' }}>@lang('control_sidebar.settings.field.3')</option>
+                        <option value="4" {{ Auth::user()->store->decimal_digit == 4 ? 'selected':'' }}>@lang('control_sidebar.settings.field.4')</option>
                     </select>
                 </div>
                 <hr>

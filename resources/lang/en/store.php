@@ -11,6 +11,7 @@ return [
         'tab' => [
             'store' => 'Store Data',
             'bank_account' => 'Bank Account',
+            'settings' => 'Settings',
         ],
         'table_bank' => [
             'header' => [
@@ -31,6 +32,14 @@ return [
         'default' => 'Default',
         'frontweb' => 'Front Web',
         'remarks' => 'Remarks',
+        'date_format' => 'Date Format',
+        'time_format' => 'Time Format',
+        'thousand_separator' => 'Thousand Separator',
+        'decimal_separator' => 'Decimal Separator',
+        'decimal_digit' => 'Decimal Digit',
+        'comma' => 'Comma',
+        'dot' => 'Dot',
+        'space' => 'Space',
     ],
     'edit' => [
         'title' => 'Store',

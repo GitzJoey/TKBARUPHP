@@ -38,6 +38,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property int $stock_opname_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereStockOpnameId($value)
  */
 class StockIn extends Model
 {
