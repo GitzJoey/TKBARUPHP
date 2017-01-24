@@ -42,14 +42,14 @@ class CustomerServiceImpl implements CustomerService
     /**
      * Get customer last sales order.
      *
-     * @param mixed $customer
+     * @param int | string $customerId
      * @return SalesOrder
      */
-    public function getCustomerLastOrder($customer)
+    public function getCustomerLastOrder($customerId)
     {
         $customer = Customer::with(['sales_orders' => function($query){
             $query->latest()->first();
-        }], 'sales_orders.items')->findOrFail($customer);
+        }], 'sales_orders.items')->findOrFail($customerId);
 
         return $customer->sales_orders->first();
     }
@@ -57,11 +57,11 @@ class CustomerServiceImpl implements CustomerService
     /**
      * Get the total amount of customer's unpaid sales orders.
      *
-     * @param mixed $customer
+     * @param mixed $customerId
      * @return float
      */
-    public function getCustomerUnpaidSalesOrderTotalAmount($customer){
-        $customer = Customer::with('sales_orders')->findOrFail($customer);
+    public function getCustomerUnpaidSalesOrderTotalAmount($customerId){
+        $customer = Customer::with('sales_orders')->findOrFail($customerId);
 
         $customerUnpaidSalesOrderAmounts = $customer->sales_orders->map(function($sales_order){
             return $sales_order->totalAmountUnpaid();
