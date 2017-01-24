@@ -40,6 +40,7 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab_store" data-toggle="tab">@lang('store.create.tab.store')&nbsp;<span id="storeDataTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_bank_account" data-toggle="tab">@lang('store.create.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li><a href="#tab_settings" data-toggle="tab">@lang('store.create.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_store">
@@ -149,6 +150,66 @@
                                 </table>
                                 <button class="btn btn-xs btn-default" type="button" v-on:click="addNewBank()">@lang('buttons.create_new_button')</button>
                             </div>
+                            <div class="tab-pane" id="tab_settings">
+                                <div class="form-group {{ $errors->has('date_format') ? 'has-error' : '' }}">
+                                    <label for="inputDateFormat" class="col-sm-2 control-label">@lang('store.field.date_format')</label>
+                                    <div class="col-sm-10">
+                                        <select name="date_format" class="form-control">
+                                            <option value="dd MM yyyy">dd MM yyyy ( {{ Carbon\Carbon::now()->format('d m Y') }} )</option>
+                                        </select>
+                                        <span class="help-block">{{ $errors->has('date_format') ? $errors->first('date_format') : '' }}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('time_format') ? 'has-error' : '' }}">
+                                    <label for="inputTimeFormat" class="col-sm-2 control-label">@lang('store.field.time_format')</label>
+                                    <div class="col-sm-10">
+                                        <select name="time_format" class="form-control">
+                                            <option value=""></option>
+                                        </select>
+                                        <span class="help-block">{{ $errors->has('time_format') ? $errors->first('time_format') : '' }}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('1224hour') ? 'has-error' : '' }}">
+                                    <label for="input1224Hour" class="col-sm-2 control-label">@lang('store.field.1224hour')</label>
+                                    <div class="col-sm-10">
+                                        <div class="checkbox icheck">
+                                            <label>
+                                                <input type="checkbox" name="allow_login">&nbsp;
+                                            </label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <label>
+                                                <input type="checkbox" name="allow_login">&nbsp;
+                                            </label>
+                                        </div>
+                                        <span class="help-block">{{ $errors->has('1224hour') ? $errors->first('1224hour') : '' }}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('thousand_separator') ? 'has-error' : '' }}">
+                                    <label for="inputThousandSeparator" class="col-sm-2 control-label">@lang('store.field.thousand_separator')</label>
+                                    <div class="col-sm-10">
+                                        <select name="thousand_separator" class="form-control">
+                                            <option value=""></option>
+                                        </select>
+                                        <span class="help-block">{{ $errors->has('thousand_separator') ? $errors->first('thousand_separator') : '' }}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDecimalSeparator" class="col-sm-2 control-label">@lang('store.field.decimal_separator')</label>
+                                    <div class="col-sm-10">
+                                        <select name="decimal_separator" class="form-control">
+                                            <option value=""></option>
+                                        </select>
+                                        <span class="help-block">{{ $errors->has('decimal_separator') ? $errors->first('decimal_separator') : '' }}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDecimalDigit" class="col-sm-2 control-label">@lang('store.field.decimal_digit')</label>
+                                    <div class="col-sm-10">
+                                        <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="0" placeholder="Decimal Digit" data-parsley-required="true" data-parsley-group="tab_settings">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -187,6 +248,12 @@
                         this.banks.splice(idx, 1);
                     }
                 }
+            });
+
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
             });
 
             window.Parsley.on('parsley:field:validate', function() {
