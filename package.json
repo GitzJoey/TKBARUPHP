@@ -45,6 +45,7 @@
     "pdfjs-dist": "^1.6.377 ",
     "pdfobject": "^2.0.201604172",
     "tooltipster": "^4.1.6",
-    "ui-select": "^0.19.4"
+    "ui-select": "^0.19.4",
+    "select2": "^4.0.3"
   }
 }
