@@ -27,7 +27,7 @@
             </ul>
         </div>
     @endif
-    <div ng-app="soModule" ng-controller="soController" ng-cloak>
+    <div id="soVue">
         <form class="form-horizontal" id="so-form" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
         {{ csrf_field() }}
             <div class="box-body">
@@ -35,22 +35,21 @@
                     <div class="col-md-12">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                                <li ng-repeat="so in SOs" ng-class="{active: $last}">
-                                    <a href="#tab_so_@{{ $index + 1 }}" data-toggle="tab">
-                                        @{{ so.customer_type.code == 'CUSTOMERTYPE.R' ? so.customer.name || (defaultTabLabel + " " + ($index + 1))
-                                        : so.customer_type.code == 'CUSTOMERTYPE.WI' ? so.walk_in_cust || (defaultTabLabel + " " + ($index + 1))
-                                        : (defaultTabLabel + " " + ($index + 1)) }}</a>
+                                <li v-for="(so, soIndex) in SOs" v-bind:class="{active: soIndex === SOs.length - 1}">
+                                    <a v-bind:href="'#tab_so_' + (soIndex + 1)" data-toggle="tab">
+                                        @{{ so.customer_type.code == 'CUSTOMERTYPE.R' ? so.customer.name || (defaultTabLabel + " " + (soIndex + 1))
+                                        : so.customer_type.code == 'CUSTOMERTYPE.WI' ? so.walk_in_cust || (defaultTabLabel + " " + (soIndex + 1))
+                                        : (defaultTabLabel + " " + (soIndex + 1)) }}</a>
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-xs btn-default pull-right" ng-click="insertTab(SOs)">
+                                    <button type="button" class="btn btn-xs btn-default pull-right" v-on:click="insertTab(SOs)">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button>
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div ng-repeat="so in SOs"
-                                     ng-class="{active: $last}"
-                                     class="tab-pane" id="tab_so_@{{ $index + 1 }}">
+                                <div v-for="(so, soIndex) in SOs" v-bind:class="{active: soIndex === SOs.length - 1}"
+                                     class="tab-pane" v-bind:id="'tab_so_' + (soIndex + 1)">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="box box-info">
@@ -70,59 +69,50 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="form-group">
-                                                                <label for="inputCustomerType_@{{ $index + 1 }}" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_type')</label>
+                                                                <label v-bind:for="'inputCustomerType_' + ( soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_type')</label>
                                                                 <div class="col-sm-6">
-                                                                    <select id="inputCustomerType_@{{ $index + 1 }}" data-parsley-required="true"
+                                                                    <input type="hidden" name="customer_type[]" v-bind:value="so.customer_type.code">
+                                                                    <select v-bind:id="'inputCustomerType_' + (soIndex + 1)" data-parsley-required="true"
                                                                             class="form-control"
-                                                                            name="customer_type[]"
-                                                                            ng-model="so.customer_type"
-                                                                            ng-options="customerType as customerType.description for customerType in customerTypeDDL track by customerType.code">
-                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                            v-model="so.customer_type">
+                                                                        <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                        <option v-for="customerType in customerTypeDDL" v-bind:value="customerType">@{{ customerType.description }}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <div ng-show="so.customer_type.code === 'CUSTOMERTYPE.R'">
+                                                            <!--<div v-show="so.customer_type.code === 'CUSTOMERTYPE.R'">-->
                                                                 <div class="form-group">
-                                                                    <label for="inputCustomerId_@{{ $index + 1 }}" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                                    <label v-bind:for="'inputCustomerId_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-6">
-                                                                        <ui-select ng-model="so.customer"
-                                                                                   spinner-enabled="true"
-                                                                                   ng-change="insertDefaultExpense($index, so.customer)">
-                                                                            <ui-select-match placeholder="Choose customer..."
-                                                                                             allow-clear="true">@{{$select.selected.name}}</ui-select-match>
-                                                                            <ui-select-choices repeat="customer in customerDDL track by customer.id"
-                                                                                               refresh="refreshCustomers($select.search)"
-                                                                                               refresh-delay="0">
-                                                                                <span ng-bind="customer.name"></span>
-                                                                            </ui-select-choices>
-                                                                        </ui-select>
-                                                                        <input type="hidden" name="customer_id[]" ng-value="so.customer.id" >
+                                                                        <select class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex">
+                                                                            <option></option>
+                                                                        </select>
                                                                     </div>
                                                                     <div class="col-sm-2">
-                                                                        <button id="customerDetailButton_@{{ $index }}" type="button" class="btn btn-primary btn-sm"
-                                                                                data-toggle="modal" data-target="#customerDetailModal_@{{ $index }}"><span
+                                                                        <button v-bind:id="'customerDetailButton_' + soIndex" type="button" class="btn btn-primary btn-sm"
+                                                                                data-toggle="modal" v-bind:data-target="'#customerDetailModal_' + soIndex"><span
                                                                                     class="fa fa-info-circle fa-lg"></span></button>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div ng-show="so.customer_type.code === 'CUSTOMERTYPE.WI'">
+                                                            <!--</div>-->
+                                                            <!--<div v-show="so.customer_type.code === 'CUSTOMERTYPE.WI'">-->
                                                                 <div class="form-group">
-                                                                    <label for="inputCustomerName_@{{ $index + 1 }}" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                                    <label v-bind:for="'inputCustomerName_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-8">
-                                                                        <input type="text" class="form-control" id="inputCustomerName_@{{ $index + 1 }}"
+                                                                        <!--<input type="text" class="form-control" v-bind:id="'inputCustomerName_' + (soIndex + 1)"
                                                                                name="walk_in_customer[]" placeholder="Customer Name"
-                                                                               ng-model="so.walk_in_cust">
+                                                                               v-model="so.walk_in_cust">-->
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="inputCustomerDetails_@{{ $index + 1 }}" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_details')</label>
+                                                                    <label v-bind:for="'inputCustomerDetails_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_details')</label>
                                                                     <div class="col-sm-8">
-                                                                <textarea id="inputCustomerDetails_@{{ $index + 1 }}" class="form-control"
+                                                                <!--<textarea v-bind:id="'inputCustomerDetails_' + (soIndex + 1)" class="form-control"
                                                                           rows="5" name="walk_in_customer_details[]"
-                                                                          ng-model="so.walk_in_cust_details"></textarea>
+                                                                          v-model="so.walk_in_cust_details"></textarea>-->
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            <!--</div>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,39 +123,39 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="form-group">
-                                                                <label for="inputSoCode_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.so_code')</label>
+                                                                <label v-bind:for="'inputSoCode_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_code')</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" class="form-control" id="inputSoCode_@{{ $index + 1 }}"
+                                                                    <!--<input type="text" class="form-control" v-bind:id="'inputSoCode_' + (soIndex + 1)"
                                                                            name="so_code[]" placeholder="SO Code" readonly
-                                                                           ng-model="so.so_code">
+                                                                           v-model="so.so_code">-->
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputSoType_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
+                                                                <label v-bind:for="'inputSoType_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
                                                                 <div class="col-sm-9">
-                                                                    <select id="inputSoType_@{{ $index + 1 }}" data-parsley-required="true"
+                                                                    <!--<input type="hidden" name="sales_type[]" v-bind:value="so.sales_type.code">
+                                                                    <select v-bind:id="'inputSoType_' + (soIndex + 1)" data-parsley-required="true"
                                                                             class="form-control"
-                                                                            name="sales_type[]"
-                                                                            ng-model="so.sales_type"
-                                                                            ng-options="salesType as salesType.description for salesType in soTypeDDL track by salesType.code">
-                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                    </select>
+                                                                            v-model="so.sales_type">
+                                                                        <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                        <option v-for="salesType in soTypeDDL" v-bind:value="salesType">@{{ salesType.description }}</option>
+                                                                    </select>-->
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputSoDate_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.so_date')</label>
+                                                                <label v-bind:for="'inputSoDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_date')</label>
                                                                 <div class="col-sm-9">
                                                                     <div class="input-group date">
                                                                         <div class="input-group-addon">
                                                                             <i class="fa fa-calendar"></i>
                                                                         </div>
-                                                                        <input type="text" class="form-control inputSoDate" id="inputSoDate_@{{ $index + 1 }}"
-                                                                               name="so_created[]" ng-model="so.so_created" data-parsley-required="true">
+                                                                        <input type="text" class="form-control inputSoDate" v-bind:id="'inputSoDate_' + (soIndex + 1)"
+                                                                               name="so_created[]" v-model="so.so_created" data-parsley-required="true">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputSoStatus_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.so_status')</label>
+                                                                <label v-bind:for="'inputSoStatus_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_status')</label>
                                                                 <div class="col-sm-9">
                                                                     <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
                                                                 </div>
@@ -182,39 +172,39 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="form-group">
-                                                                <label for="inputShippingDate_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
+                                                                <label v-bind:for="'inputShippingDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
                                                                 <div class="col-sm-9">
                                                                     <div class="input-group date">
                                                                         <div class="input-group-addon">
                                                                             <i class="fa fa-calendar"></i>
                                                                         </div>
-                                                                        <input type="text" class="form-control inputShippingDate" id="inputShippingDate_@{{ $index + 1 }}"
-                                                                               name="shipping_date[]" ng-model="so.shipping_date" data-parsley-required="true">
+                                                                        <!--<input type="text" class="form-control inputShippingDate" v-bind:id="'inputShippingDate_' + (soIndex + 1)"
+                                                                               name="shipping_date[]" v-model="so.shipping_date" data-parsley-required="true">-->
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputWarehouse_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
+                                                                <label v-bind:for="'inputWarehouse_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
                                                                 <div class="col-sm-9">
-                                                                    <select id="inputWarehouse_@{{ $index + 1 }}" data-parsley-required="true"
-                                                                            name="warehouse_id[]"
+                                                                    <!--<input type="hidden" name="warehouse_id[]" v-bind:value="so.warehouse.id">
+                                                                    <select v-bind:id="'inputWarehouse_' + (soIndex + 1)" data-parsley-required="true"
                                                                             class="form-control"
-                                                                            ng-model="so.warehouse"
-                                                                            ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
-                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                    </select>
+                                                                            v-model="so.warehouse">
+                                                                        <option v-bind:value="{id: }">@lang('labels.PLEASE_SELECT')</option>
+                                                                        <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{warehouse.name}}</option>
+                                                                    </select>-->
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="inputVendorTrucking_@{{ $index + 1 }}" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
+                                                                <label v-bind:for="'inputVendorTrucking_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
                                                                 <div class="col-sm-9">
-                                                                    <select id="inputVendorTrucking_@{{ $index + 1 }}"
-                                                                            name="vendor_trucking_id[]"
+                                                                    <!--<input type="hidden" name="vendor_trucking_id[]" v-bind:value="so.vendorTrucking.id">
+                                                                    <select v-bind:id="'inputVendorTrucking_' + (soIndex + 1)"
                                                                             class="form-control"
-                                                                            ng-model="so.vendorTrucking"
-                                                                            ng-options="vendorTrucking as vendorTrucking.name for vendorTrucking in vendorTruckingDDL track by vendorTrucking.id">
-                                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                    </select>
+                                                                            v-model="so.vendorTrucking">
+                                                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                        <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.description }}</option>
+                                                                    </select>-->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -234,7 +224,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <!--<div class="row">
                                         <div class="col-md-9">
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -244,39 +234,39 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="row">
-                                                                <div ng-show="so.sales_type.code === 'SOTYPE.SVC'">
+                                                                <div v-show="so.sales_type.code === 'SOTYPE.SVC'">
                                                                     <div class="col-md-11">
-                                                                        <select id="inputProduct_@{{ $index + 1 }}"
+                                                                        <select v-bind:id="'inputProduct_' + (soIndex + 1)"
                                                                                 class="form-control"
-                                                                                ng-model="so.product"
-                                                                                ng-options="product as product.name for product in productDDL track by product.id">
-                                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                v-model="so.product">
+                                                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                            <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-1">
                                                                         <button type="button" class="btn btn-primary btn-md"
-                                                                                ng-click="insertProduct($index, so.product)"><span class="fa fa-plus"/></button>
+                                                                                v-on:click="insertProduct(soIndex, so.product)"><span class="fa fa-plus"/></button>
                                                                     </div>
                                                                 </div>
-                                                                <div ng-show="so.sales_type.code == 'SOTYPE.S'">
+                                                                <div v-show="so.sales_type.code === 'SOTYPE.S'">
                                                                     <div class="col-md-11">
-                                                                        <select id="inputStock_@{{ $index + 1 }}"
+                                                                        <select v-bind:id="'inputStock_' + (soIndex + 1)"
                                                                                 class="form-control"
-                                                                                ng-model="so.stock"
-                                                                                ng-options="stock as stock.product.name for stock in stocksDDL track by stock.id">
-                                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                v-model="so.stock">
+                                                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                            <option v-for="stock in stocksDDL" v-bind:value="stock">@{{ stock.product.name }}</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-1">
                                                                         <button type="button" class="btn btn-primary btn-md"
-                                                                                ng-click="insertStock($index, so.stock)"><span class="fa fa-plus"/></button>
+                                                                                v-on:click="insertStock(soIndex, so.stock)"><span class="fa fa-plus"/></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <hr>
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <table id="itemsListTable_@{{ $index + 1 }}" class="table table-bordered table-hover">
+                                                                    <table v-bind:id="'itemsListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
                                                                         <thead>
                                                                         <tr>
                                                                             <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
@@ -288,33 +278,33 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr ng-repeat="item in so.items">
-                                                                            <input type="hidden" name="so_@{{ $parent.$index }}_product_id[]" ng-value="item.product.id">
-                                                                            <input type="hidden" name="so_@{{ $parent.$index }}_stock_id[]" ng-value="item.stock_id">
-                                                                            <input type="hidden" name="so_@{{ $parent.$index }}_base_unit_id[]" ng-value="item.base_unit.unit.id">
+                                                                        <tr v-for="(item, itemIndex) in so.items">
+                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_product_id[]'" v-bind:value="item.product.id">
+                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_stock_id[]'" v-bind:value="item.stock_id">
+                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_base_unit_id[]'" v-bind:value="item.base_unit.unit.id">
                                                                             <td class="valign-middle">@{{ item.product.name }}</td>
                                                                             <td>
-                                                                                <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_quantity[]"
-                                                                                       ng-model="item.quantity" data-parsley-required="true"
+                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_quantity[]'"
+                                                                                       v-model="item.quantity" data-parsley-required="true"
                                                                                        data-parsley-type="number">
                                                                             </td>
                                                                             <td>
-                                                                                <select name="so_@{{ $parent.$index }}_selected_unit_id[]" data-parsley-required="true"
-                                                                                        class="form-control"
-                                                                                        ng-model="item.selected_unit"
-                                                                                        data-parsley-required="true"
-                                                                                        ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
-                                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                <input type="hidden" v-bind:name="'so_' + soIndex + '_selected_unit_id[]'" v-bind:value="item.selected_unit.unit.id">
+                                                                                <select data-parsley-required="true" class="form-control"
+                                                                                        v-model="item.selected_unit"
+                                                                                        data-parsley-required="true">
+                                                                                    <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                                                    <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
                                                                                 </select>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="text" class="form-control text-right" name="so_@{{ $parent.$index }}_price[]"
-                                                                                       ng-model="item.price" data-parsley-required="true"
-                                                                                       data-parsley-pattern="^\d+(,\d+)*$" fcsa-number>
+                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_price[]'"
+                                                                                       v-model="item.price" data-parsley-required="true"
+                                                                                       data-parsley-pattern="^\d+(,\d+)*$">
                                                                             </td>
                                                                             <td class="text-center">
                                                                                 <button type="button" class="btn btn-danger btn-md"
-                                                                                        ng-click="removeItem($parent.$index, $index)"><span class="fa fa-minus"/>
+                                                                                        v-on:click="removeItem(soIndex, itemIndex)"><span class="fa fa-minus"/>
                                                                                 </button>
                                                                             </td>
                                                                             <td class="text-right valign-middle">
@@ -327,13 +317,13 @@
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <table id="itemsTotalListTable_@{{ $index + 1 }}" class="table table-bordered">
+                                                                    <table v-bind:id="'itemsTotalListTable_' + (soIndex + 1)" class="table table-bordered">
                                                                         <tbody>
                                                                         <tr>
                                                                             <td width="80%"
                                                                                 class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                             <td width="20%" class="text-right">
-                                                                                <span class="control-label-normal">@{{ grandTotal($index) | number }}</span>
+                                                                                <span class="control-label-normal">@{{ grandTotal(soIndex) }}</span>
                                                                             </td>
                                                                         </tr>
                                                                         </tbody>
@@ -350,12 +340,12 @@
                                                         <div class="box-header with-border">
                                                             <h3 class="box-title">@lang('sales_order.create.box.expenses')</h3>
                                                             <button type="button" class="btn btn-primary btn-xs pull-right"
-                                                                    ng-click="insertExpense($index)"><span class="fa fa-plus fa-fw"></span></button>
+                                                                    v-on:click="insertExpense(soIndex)"><span class="fa fa-plus fa-fw"></span></button>
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <table id="expensesListTable_@{{ $index + 1 }}" class="table table-bordered table-hover">
+                                                                    <table v-bind:id="'expensesListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
                                                                         <thead>
                                                                         <tr>
                                                                             <th width="30%">@lang('sales_order.create.table.expense.header.name')</th>
@@ -371,34 +361,34 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr ng-repeat="expense in so.expenses">
+                                                                        <tr v-for="(expense, expenseIndex) in so.expenses">
                                                                             <td>
-                                                                                <input name="so_@{{ $parent.$index }}_expense_name[]" type="text" class="form-control"
-                                                                                       ng-model="expense.name" data-parsley-required="true">
+                                                                                <input v-bind:name="'so_' + soIndex + '_expense_name[]'" type="text" class="form-control"
+                                                                                       v-model="expense.name" data-parsley-required="true">
                                                                             </td>
                                                                             <td>
-                                                                                <select name="so_@{{ $parent.$index }}_expense_type[]" data-parsley-required="true"
-                                                                                        class="form-control" ng-model="expense.type"
-                                                                                        ng-options="expenseType as expenseType.description for expenseType in expenseTypes track by expenseType.code">
-                                                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                <select v-bind:name="'so_' + soIndex + '_expense_type[]'" data-parsley-required="true"
+                                                                                        class="form-control" v-model="expense.type">
+                                                                                    <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                                    <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
                                                                                 </select>
                                                                             </td>
                                                                             <td class="text-center">
-                                                                                <input name="so_@{{ $parent.$index }}_is_internal_expense[]" ng-model="expense.is_internal_expense" type="checkbox">
+                                                                                <input v-bind:name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense" type="checkbox">
                                                                             </td>
                                                                             <td>
-                                                                                <input name="so_@{{ $parent.$index }}_expense_remarks[]" type="text" class="form-control"
-                                                                                       ng-model="expense.remarks"/>
+                                                                                <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control"
+                                                                                       v-model="expense.remarks"/>
                                                                             </td>
                                                                             <td class="text-center">
                                                                                 <button type="button" class="btn btn-danger btn-md"
-                                                                                        ng-click="removeExpense($parent.$index, $index)"><span class="fa fa-minus"/>
+                                                                                        v-on:click="removeExpense(soIndex, expenseIndex)"><span class="fa fa-minus"/>
                                                                                 </button>
                                                                             </td>
                                                                             <td>
-                                                                                <input name="so_@{{ $parent.$index }}_expense_amount[]" type="text" class="form-control text-right"
-                                                                                       ng-model="expense.amount" data-parsley-required="true"
-                                                                                       data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number/>
+                                                                                <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
+                                                                                       v-model="expense.amount" data-parsley-required="true"
+                                                                                       data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"/>
                                                                             </td>
                                                                         </tr>
                                                                         </tbody>
@@ -407,13 +397,13 @@
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <table id="expensesTotalListTable_@{{ $index + 1 }}" class="table table-bordered">
+                                                                    <table v-bind:id="'expensesTotalListTable_' + (soIndex + 1)" class="table table-bordered">
                                                                         <tbody>
                                                                         <tr>
                                                                             <td width="80%"
                                                                                 class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                             <td width="20%" class="text-right">
-                                                                                <span class="control-label-normal">@{{ expenseTotal($index) | number }}</span>
+                                                                                <span class="control-label-normal">@{{ expenseTotal($index)}}</span>
                                                                             </td>
                                                                         </tr>
                                                                         </tbody>
@@ -437,7 +427,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="box box-info">
@@ -449,8 +439,8 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    <textarea id="inputRemarks_@{{ $index + 1 }}" class="form-control" rows="5" name="remarks[]"
-                                                                              ng-model="so.remarks"></textarea>
+                                                                    <textarea v-bind:id="'inputRemarks_' + (soIndex + 1)" class="form-control" rows="5" name="remarks[]"
+                                                                              v-model="so.remarks"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -462,37 +452,37 @@
                                     <div class="row">
                                         <div class="col-md-7 col-offset-md-5">
                                             <div class="btn-toolbar">
-                                                <button id="submitButton_@{{ $index }}" type="submit" name="submit" ng-value="$index" class="submitButton btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
+                                                <button v-bind:id="'submitButton_' + soIndex" type="submit" name="submit" v-bind:value="soIndex" class="submitButton btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                                                 <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                                                <button id="cancelButton_@{{ $index }}" type="submit" name="cancel" ng-value="$index" class="cancelButton btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
+                                                <button v-bind:id="'cancelButton_' + soIndex" type="submit" name="cancel" v-bind:value="soIndex" class="cancelButton btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="modal fade" id="customerDetailModal_@{{ $index }}" tabindex="-1" role="dialog"
-                                         aria-labelledby="customerDetailModalLabel_@{{ $index }}">
+                                    <!--<div class="modal fade" v-bind:id="'customerDetailModal_' + soIndex" tabindex="-1" role="dialog"
+                                         v-bind:aria-labelledby="'customerDetailModalLabel_' + soIndex">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                                                 aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="customerDetailModalLabel_@{{ $index }}">Customer Detail</h4>
+                                                    <h4 class="modal-title" v-bind:id="'customerDetailModalLabel_' + soIndex">Customer Detail</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="nav-tabs-custom">
                                                         <ul class="nav nav-tabs">
-                                                            <li class="active"><a href="#tab_customer_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.customer')</a></li>
-                                                            <li><a href="#tab_pic_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.pic')</a></li>
-                                                            <li><a href="#tab_bank_account_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.bank_account')</a></li>
-                                                            <li><a href="#tab_expenses_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.expenses')</a></li>
-                                                            <li><a href="#tab_settings_@{{ $index }}" data-toggle="tab">@lang('customer.show.tab.settings')</a></li>
+                                                            <li class="active"><a v-bind:href="'#tab_customer_' + soIndex" data-toggle="tab">@lang('customer.show.tab.customer')</a></li>
+                                                            <li><a v-bind:href="'#tab_pic_' + soIndex" data-toggle="tab">@lang('customer.show.tab.pic')</a></li>
+                                                            <li><a v-bind:href="'#tab_bank_account_' + soIndex }}" data-toggle="tab">@lang('customer.show.tab.bank_account')</a></li>
+                                                            <li><a v-bind:href="#tab_expenses_@{{ soIndex }}" data-toggle="tab">@lang('customer.show.tab.expenses')</a></li>
+                                                            <li><a v-bind:href="#tab_settings_@{{ soIndex }}" data-toggle="tab">@lang('customer.show.tab.settings')</a></li>
                                                         </ul>
                                                         <div class="tab-content">
-                                                            <div class="tab-pane active" id="tab_customer_@{{ $index }}">
+                                                            <div class="tab-pane active" id="tab_customer_@{{ soIndex }}">
                                                                 <div class="form-group">
-                                                                    <label for="inputName_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.name')</label>
+                                                                    <label for="inputName_@{{ soIndex }}" class="col-sm-2 control-label">@lang('customer.field.name')</label>
                                                                     <div class="col-sm-10">
-                                                                        <label id="inputName_@{{ $index }}" class="control-label">
+                                                                        <label id="inputName_@{{ soIndex }}" class="control-label">
                                                                             <span class="control-label-normal">@{{ so.customer.name }}</span>
                                                                         </label>
                                                                     </div>
@@ -693,7 +683,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -707,43 +697,203 @@
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function () {
-            $('.cancelButton').on('click', function(e){
-                var form = $("#so-form");
-                form.parsley().destroy();
-                form.submit();
-            });
-        });
+            var soApp = new Vue({
+            el: '#soVue',
+            data: {
+                vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
+                customerTypeDDL: JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}'),
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+                stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
+                soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
+                SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
+                defaultTabLabel: '@lang('sales_order.create.tab.sales')'
+            },
+            methods: {
+                setSOCode: function(so){
+                    this.$http.get('{{ route('api.so.code') }}').then(function(data){
+                        so.so_code = data.data;
+                    });
+                },
+                insertTab: function(SOs){
+                    var vm = this;
 
-        var app = angular.module("soModule", ['fcsa-number', 'ui.select', 'ngSanitize']);
-        app.controller("soController", ['$scope', '$http', function($scope, $http) {
-            $scope.soTypeDDL = JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}');
-            $scope.customerTypeDDL = JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}');
-            $scope.customerDDL = [];
-            $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-            $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
-            $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
-            $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
-            $scope.SOs = JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}');
-            $scope.defaultTabLabel = '@lang('sales_order.create.tab.sales')';
-            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
+                    if(!$("#so-form").parsley().validate()){
+                        return;
+                    }
 
-            $scope.setSOCode = function(so){
-                $http.get('{{ route('api.so.code') }}').then(function(data){
-                    so.so_code = data.data;
-                });
-            };
+                    var so = {
+                        so_code: '',
+                        customer_type: {
+                            code: ''
+                        },
+                        customer: {
+                            id: ''
+                        },
+                        soType: {
+                            code: ''
+                        },
+                        warehouse: {
+                            id: ''
+                        },
+                        vendorTrucking: {
+                            id: ''
+                        },
+                        items : [],
+                        expenses: []
+                    };
 
-            $scope.insertTab = function(SOs){
-                if(!$("#so-form").parsley().validate())
-                    return;
-                var so = {
-                    so_code: '',
-                    customer_type: '',
-                    items : [],
-                    expenses: []
-                };
-                $scope.setSOCode(so);
-                SOs.push(so);
+                    vm.setSOCode(so);
+                    SOs.push(so);
+
+                    $(function () {
+                        $(".inputSoDate").datetimepicker({
+                            format: "DD-MM-YYYY hh:mm A",
+                            defaultDate: moment()
+                        });
+                        $(".inputShippingDate").datetimepicker({
+                            format: "DD-MM-YYYY hh:mm A",
+                            defaultDate: moment()
+                        });
+                    });
+                },
+                grandTotal: function (index) {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.SOs[index].items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                },
+                expenseTotal: function (index) {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.SOs[index].expenses, function (expense, key) {
+                        if(expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numeral().unformat(expense.amount));
+                        else
+                            result -= parseInt(numeral().unformat(expense.amount));
+                    });
+                    return result;
+                },
+                insertProduct: function (index, product) {
+                    var vm = this;
+                    if(product.id != ''){
+                        vm.SOs[index].items.push({
+                            stock_id: 0,
+                            product: _.cloneDeep(product),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                            quantity: 0,
+                            price: 0
+                        });
+                    }
+                },
+                insertStock: function (index, stock) {
+                    var vm = this;
+                    if(stock.id != ''){
+                        var stock_price = _.find(stock.today_prices, function (price) {
+                            return price.price_level_id === vm.SOs[index].customer.price_level_id;
+                        });
+
+                        vm.SOs[index].items.push({
+                            stock_id: stock.id,
+                            product: _.cloneDeep(stock.product),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(stock.product.product_units, isBase)),
+                            quantity: 0,
+                            price: stock_price ? stock_price.price : 0
+                        });
+                    }
+                },
+                removeItem: function (SOIndex, index) {
+                    this.SOs[SOIndex].items.splice(index, 1);
+                },
+                insertDefaultExpense: function (SOIndex, customer) {
+                    var vm = this;
+                    if(customer.id != ''){
+                        vm.SOs[SOIndex].expenses = [];
+                        for(var i = 0; i < customer.expense_templates.length; i++){
+                            vm.SOs[SOIndex].expenses.push({
+                                name: customer.expense_templates[i].name,
+                                type: {
+                                    code: customer.expense_templates[i].type,
+                                    description: _.find(expenseTypes, function(expenseType){ return expenseType.code === customer.expense_templates[i].type})
+                                },
+                                is_internal_expense: customer.expense_templates[i].is_internal_expense === 1,
+                                amount: numeral(customer.expense_templates[i].amount).format('0,0'),
+                                remarks: customer.expense_templates[i].remarks
+                            });
+                        }
+
+                        $(function () {
+                            $('input[type="checkbox"], input[type="radio"]').iCheck({
+                                checkboxClass: 'icheckbox_square-blue',
+                                radioClass: 'iradio_square-blue'
+                            });
+                        });
+                    }
+                    else{
+                        vm.SOs[SOIndex].expenses = [];
+                    }
+                },
+                insertExpense: function (index) {
+                    var vm = this;
+                    this.SOs[index].expenses.push({
+                        name: '',
+                        type: {
+                            code: ''
+                        },
+                        is_internal_expense: false,
+                        amount: 0,
+                        remarks: ''
+                    });
+
+                    $(function () {
+                        $('input[type="checkbox"], input[type="radio"]').iCheck({
+                            checkboxClass: 'icheckbox_square-blue',
+                            radioClass: 'iradio_square-blue'
+                        });
+                    });
+                },
+                removeExpense: function (SOIndex, index) {
+                    this.SOs[SOIndex].expenses.splice(index, 1);
+                },
+            },
+            updated: function(){
+                for(var i = 0; i < this.SOs.length; i++){
+                    $("#customerSelect" + i).select2({
+                        placeholder: 'Choose customer...',
+                        ajax: {
+                            url: '{{ route('api.customer.search') }}',
+                            data: function(params){
+                                return {
+                                    q: params.term
+                                }
+                            },
+                            delay: 250,
+                            dataType: 'json'
+                        },
+                        templateResult: function(customer){
+                            return customer.name;
+                        },
+                        templateSelection: function(customer){
+                            soApp.SOs[i].customer = _.cloneDeep(customer);
+                            return customer.name;
+                        }
+                    });
+                }
 
                 $(function () {
                     $(".inputSoDate").datetimepicker({
@@ -754,127 +904,46 @@
                         format: "DD-MM-YYYY hh:mm A",
                         defaultDate: moment()
                     });
-                });
-
-                console.log(SOs);
-            };
-
-            if($scope.SOs.length == 0){
-                $scope.insertTab($scope.SOs);
+                });    
             }
+        });
 
-            $scope.grandTotal = function (index) {
-                var result = 0;
-                angular.forEach($scope.SOs[index].items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
-
-            $scope.expenseTotal = function (index) {
-                var result = 0;
-                angular.forEach($scope.SOs[index].expenses, function (expense, key) {
-                    if(expense.type.code === 'EXPENSETYPE.ADD')
-                        result += parseInt(numeral().unformat(expense.amount));
-                    else
-                        result -= parseInt(numeral().unformat(expense.amount));
-                });
-                return result;
-            };
-
-            function isBase(unit) {
-                return unit.is_base == 1;
-            }
-
-            $scope.insertProduct = function (index, product) {
-                $scope.SOs[index].items.push({
-                    stock_id: 0,
-                    product: product,
-                    selected_unit: {
-                        conversion_value: 1
+        if(soApp.SOs.length == 0){
+            soApp.insertTab(soApp.SOs);
+        }else{
+            for(var i = 0; i < soApp.SOs.length; i++){
+                $("#customerSelect" + i).select2({
+                    placeholder: 'Choose customer...',
+                    ajax: {
+                        url: '{{ route('api.customer.search') }}',
+                        data: function(params){
+                            return {
+                                q: params.term
+                            }
+                        },
+                        delay: 250,
+                        dataType: 'json'
                     },
-                    base_unit: _.find(product.product_units, isBase),
-                    quantity: 0,
-                    price: 0
-                });
-            };
-
-            $scope.insertStock = function (index, stock) {
-                var stock_price = _.find(stock.today_prices, function (price) {
-                    return price.price_level_id === $scope.SOs[index].customer.price_level_id;
-                });
-
-                $scope.SOs[index].items.push({
-                    stock_id: stock.id,
-                    product: stock.product,
-                    selected_unit: {
-                        conversion_value: 1
+                    templateResult: function(customer){
+                        return customer.name;
                     },
-                    base_unit: _.find(stock.product.product_units, isBase),
-                    quantity: 0,
-                    price: stock_price ? stock_price.price : 0
-                });
-            };
-
-            $scope.removeItem = function (SOIndex, index) {
-                $scope.SOs[SOIndex].items.splice(index, 1);
-            };
-
-            $scope.insertDefaultExpense = function (SOIndex, customer) {
-                if(customer){
-                    $scope.SOs[SOIndex].expenses = [];
-                    for(var i = 0; i < customer.expense_templates.length; i++){
-                        $scope.SOs[SOIndex].expenses.push({
-                            name: customer.expense_templates[i].name,
-                            type: {
-                                code: customer.expense_templates[i].type
-                            },
-                            is_internal_expense: customer.expense_templates[i].is_internal_expense === 1,
-                            amount: numeral(customer.expense_templates[i].amount).format('0,0'),
-                            remarks: customer.expense_templates[i].remarks
-                        });
+                    templateSelection: function(customer){
+                        soApp.SOs[i].customer = _.cloneDeep(customer);
+                        return customer.name;
                     }
-
-                    $(function () {
-                        $('input[type="checkbox"], input[type="radio"]').iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue'
-                        });
-                    });
-                }
-                else{
-                    $scope.SOs[SOIndex].expenses = [];
-                }
-            };
-
-            $scope.insertExpense = function (index) {
-                $scope.SOs[index].expenses.push({
-                    name: '',
-                    type: '',
-                    is_internal_expense: false,
-                    amount: 0,
-                    remarks: ''
                 });
+            }
+        }
 
-                $(function () {
-                    $('input[type="checkbox"], input[type="radio"]').iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue'
-                    });
-                });
-            };
+        function isBase(unit) {
+            return unit.is_base == 1;
+        }
 
-            $scope.removeExpense = function (SOIndex, index) {
-                $scope.SOs[SOIndex].expenses.splice(index, 1);
-            };
-
-            $scope.refreshCustomers = function (param) {
-                return $http.get('{{ route('api.customer.search') }}/' + param)
-                    .then(function (response) {
-                        $scope.customerDDL = response.data;
-                        console.log($scope.customerDDL);
-                    });
-            };
-        }]);
-    </script>
+        $('.cancelButton').on('click', function(e){
+            var form = $("#so-form");
+            form.parsley().destroy();
+            form.submit();
+        });
+    });
+</script>
 @endsection
