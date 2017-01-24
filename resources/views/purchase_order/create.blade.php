@@ -133,8 +133,7 @@
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                                 <input type="text" class="form-control" id="inputPoDate"
-                                                       name="po_created"
-                                                       v-model="po.poCreated" data-parsley-required="true">
+                                                       name="po_created" data-parsley-required="true">
                                             </div>
                                         </div>
                                     </div>
@@ -165,8 +164,7 @@
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                                 <input type="text" class="form-control" id="inputShippingDate"
-                                                       name="shipping_date" v-model="po.shippingDate"
-                                                       data-parsley-required="true">
+                                                       name="shipping_date" data-parsley-required="true">
                                             </div>
                                         </div>
                                     </div>

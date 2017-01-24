@@ -20,7 +20,7 @@ class SupplierServiceImpl implements SupplierService
             'products.productUnits.unit', 'products.type', 'expenseTemplates')->get();
     }
 
-    public function getUnfinisheSupplier()
+    public function getUnfinishedSupplier()
     {
         return Supplier::orWhereNull('sign_code')
             ->orWhereNull('name')
@@ -31,5 +31,16 @@ class SupplierServiceImpl implements SupplierService
             ->orWhereNull('tax_id')
             ->orWhereNull('payment_due_day')
             ->get();
+    }
+
+    /**
+     * Check whether there are some suppliers that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     * 
+     * @return bool
+     */
+    public function isUnfinishedSupplierExist()
+    {
+        return count(getUnfinishedSupplier()) > 0;
     }
 }

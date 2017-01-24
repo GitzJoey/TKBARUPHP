@@ -37,4 +37,12 @@ interface StoreService
      * @return Collection unfinished stores
      */
     public function getUnfinishedStore();
+
+    /**
+     * Check whether there are some stores that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     * 
+     * @return bool
+     */
+    public function isUnfinishedStoreExist();
 }

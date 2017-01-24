@@ -24,5 +24,13 @@ interface SupplierService
      *
      * @return Collection unfinished suppliers
      */
-    public function getUnfinisheSupplier();
+    public function getUnfinishedSupplier();
+
+    /**
+     * Check whether there are some suppliers that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     * 
+     * @return bool
+     */
+    public function isUnfinishedSupplierExist();
 }

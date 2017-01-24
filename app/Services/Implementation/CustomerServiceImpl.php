@@ -29,6 +29,17 @@ class CustomerServiceImpl implements CustomerService
     }
 
     /**
+     * Check whether there are some customers that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     *
+     * @return bool
+     */
+    public function isUnfinishedCustomerExist()
+    {
+        return count(getUnfinishedCustomer()) > 0;
+    }
+
+    /**
      * Get customer last sales order.
      *
      * @param mixed $customer

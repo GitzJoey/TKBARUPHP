@@ -12,4 +12,12 @@ interface VendorTruckingService
      * @return Collection unfinished vendor truckings
      */
     public function getUnfinishedVendorTrucking();
+
+    /**
+     * Check whether there are some vendor truckings that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     * 
+     * @return bool
+     */
+    public function isUnfinishedVendorTruckingExist();
 }

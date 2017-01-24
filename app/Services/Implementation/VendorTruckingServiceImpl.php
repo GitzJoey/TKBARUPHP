@@ -21,4 +21,15 @@ class VendorTruckingServiceImpl implements VendorTruckingService
         ->orWhereNull('tax_id')
         ->get();
     }
+
+    /**
+     * Check whether there are some vendor truckings that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     *
+     * @return bool
+     */
+    public function isUnfinishedVendorTruckingExist()
+    {
+        return count(getUnfinishedVendorTrucking()) > 0;
+    }
 }
