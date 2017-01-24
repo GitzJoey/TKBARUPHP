@@ -12,4 +12,12 @@ interface WarehouseService
      * @return Collection unfinished warehouses
      */
     public function getUnfinishedWarehouse();
+
+    /**
+     * Check whether there are some warehouses that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     * 
+     * @return bool
+     */
+    public function isUnfinishedWarehouseExist();
 }

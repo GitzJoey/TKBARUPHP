@@ -16,6 +16,14 @@ interface CustomerService
     public function getUnfinishedCustomer();
 
     /**
+     * Check whether there are some customers that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     *
+     * @return bool
+     */
+    public function isUnfinishedCustomerExist();
+
+    /**
      * Get customer last sales order.
      *
      * @param mixed $customer
