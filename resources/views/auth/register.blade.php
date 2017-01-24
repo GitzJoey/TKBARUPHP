@@ -36,14 +36,14 @@
                 @else
                 @endif
                 <div class="form-group has-feedback {{ $errors->has('name') ? ' has-error' : '' }}">
-                    <input id="name" name="name" type="text" class="form-control" placeholder="{{ trans('login.register.full_name') }}">
+                    <input id="name" name="name" type="text" class="form-control" placeholder="{{ trans('login.register.full_name') }}" value="{{ old('name') }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('name'))
                         <span class="help-block"><strong>{{ $errors->first('name') }}</strong></span>
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ trans('login.register.email') }}">
+                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ trans('login.register.email') }}" value="{{ old('email') }}">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
                         <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
@@ -111,6 +111,8 @@
 
     <script>
         $(document).ready(function () {
+            window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
+
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',

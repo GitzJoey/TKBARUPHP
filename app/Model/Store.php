@@ -56,6 +56,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property string $date_format
+ * @property string $time_format
+ * @property string $thousand_separator
+ * @property string $decimal_separator
+ * @property int $decimal_digit
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDateFormat($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereTimeFormat($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereThousandSeparator($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDecimalSeparator($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDecimalDigit($value)
  */
 class Store extends Model
 {
@@ -75,7 +85,13 @@ class Store extends Model
         'is_default',
         'frontweb',
         'image_filename',
-        'remarks'
+        'remarks',
+        'date_format',
+        'time_format',
+        '1224hour',
+        'thousand_separator',
+        'decimal_separator',
+        'decimal_digit'
     ];
 
     protected $hidden = [

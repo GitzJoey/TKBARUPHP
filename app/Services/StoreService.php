@@ -31,8 +31,6 @@ interface StoreService
 
     public function createDefaultStore($storeName);
 
-    public function applySettings();
-
     /**
      * Get all stores that have one or more empty manual-filled fields/properties (except remarks).
      *

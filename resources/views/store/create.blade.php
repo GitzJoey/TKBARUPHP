@@ -155,41 +155,35 @@
                                     <label for="inputDateFormat" class="col-sm-2 control-label">@lang('store.field.date_format')</label>
                                     <div class="col-sm-10">
                                         <select name="date_format" class="form-control">
-                                            <option value="dd MM yyyy">dd MM yyyy ( {{ Carbon\Carbon::now()->format('d m Y') }} )</option>
+                                            <option value="d/m/Y" selected>dd/MM/yyyy - {{ date('d/m/Y') }} (default)</option>
+                                            <option value="d m Y">dd MM yyyy - {{ date('d m Y') }}</option>
+                                            <option value="d M Y">dd MMM yyyy - {{ date('d M Y') }}</option>
+                                            <option value="m/d/Y">MM/dd/yyyy - {{ date('m/d/Y') }}</option>
                                         </select>
                                         <span class="help-block">{{ $errors->has('date_format') ? $errors->first('date_format') : '' }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group {{ $errors->has('time_format') ? 'has-error' : '' }}">
                                     <label for="inputTimeFormat" class="col-sm-2 control-label">@lang('store.field.time_format')</label>
-                                    <div class="col-sm-10">
-                                        <select name="time_format" class="form-control">
-                                            <option value=""></option>
-                                        </select>
-                                        <span class="help-block">{{ $errors->has('time_format') ? $errors->first('time_format') : '' }}</span>
-                                    </div>
-                                </div>
-                                <div class="form-group {{ $errors->has('1224hour') ? 'has-error' : '' }}">
-                                    <label for="input1224Hour" class="col-sm-2 control-label">@lang('store.field.1224hour')</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-4">
                                         <div class="checkbox icheck">
-                                            <label>
-                                                <input type="checkbox" name="allow_login">&nbsp;
-                                            </label>
+                                            <input type="radio" name="time_format" value="H:i:s" checked>
+                                            <label>&nbsp;{{ date('H:i:s') }}</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <label>
-                                                <input type="checkbox" name="allow_login">&nbsp;
-                                            </label>
+                                            <input type="radio" name="time_format" value="h i">
+                                            <label>&nbsp;{{ date('h:i A') }}</label>
                                         </div>
-                                        <span class="help-block">{{ $errors->has('1224hour') ? $errors->first('1224hour') : '' }}</span>
                                     </div>
+                                    <span class="help-block">{{ $errors->has('time_format') ? $errors->first('time_format') : '' }}</span>
                                 </div>
                                 <div class="form-group {{ $errors->has('thousand_separator') ? 'has-error' : '' }}">
                                     <label for="inputThousandSeparator" class="col-sm-2 control-label">@lang('store.field.thousand_separator')</label>
                                     <div class="col-sm-10">
                                         <select name="thousand_separator" class="form-control">
-                                            <option value=""></option>
+                                            <option value=",">@lang('store.field.comma')&nbsp;-&nbsp;1,000,000</option>
+                                            <option value=".">@lang('store.field.dot')&nbsp;-&nbsp;1.000.000</option>
+                                            <option value=" ">@lang('store.field.space')&nbsp;-&nbsp;1 000 000</option>
                                         </select>
                                         <span class="help-block">{{ $errors->has('thousand_separator') ? $errors->first('thousand_separator') : '' }}</span>
                                     </div>
@@ -198,7 +192,9 @@
                                     <label for="inputDecimalSeparator" class="col-sm-2 control-label">@lang('store.field.decimal_separator')</label>
                                     <div class="col-sm-10">
                                         <select name="decimal_separator" class="form-control">
-                                            <option value=""></option>
+                                            <option value=",">@lang('store.field.comma')&nbsp;-&nbsp;0,00</option>
+                                            <option value=".">@lang('store.field.dot')&nbsp;-&nbsp;0.00</option>
+                                            <option value=" ">@lang('store.field.space')&nbsp;-&nbsp;0 00</option>
                                         </select>
                                         <span class="help-block">{{ $errors->has('decimal_separator') ? $errors->first('decimal_separator') : '' }}</span>
                                     </div>
@@ -206,7 +202,7 @@
                                 <div class="form-group">
                                     <label for="inputDecimalDigit" class="col-sm-2 control-label">@lang('store.field.decimal_digit')</label>
                                     <div class="col-sm-10">
-                                        <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="0" placeholder="Decimal Digit" data-parsley-required="true" data-parsley-group="tab_settings">
+                                        <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="0" placeholder="Decimal Digit" data-parsley-required="true" data-parsley-type="number" data-parsley-max="4" data-parsley-group="tab_settings">
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +252,7 @@
                 increaseArea: '20%'
             });
 
-            window.Parsley.on('parsley:field:validate', function() {
+            $('#storeForm').parsley().on('field:validate', function() {
                 validateFront();
             });
 
@@ -271,6 +267,12 @@
                     $('#bankAccountTabError').addClass('hidden');
                 } else {
                     $('#bankAccountTabError').removeClass('hidden');
+                }
+
+                if (true === $('#storeForm').parsley().isValid("tab_settings", false)) {
+                    $('#settingsTabError').addClass('hidden');
+                } else {
+                    $('#settingsTabError').removeClass('hidden');
                 }
             };
         });

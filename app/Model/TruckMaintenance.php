@@ -40,6 +40,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereDeletedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\TruckMaintenance whereDeletedAt($value)
  * @property-read \App\Model\Store $store
+ * @property string $maintenance_date
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TruckMaintenance whereMaintenanceDate($value)
  */
 class TruckMaintenance extends Model
 {

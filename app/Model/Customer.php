@@ -56,6 +56,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\SalesOrder[] $sales_orders
  */
 class Customer extends Model
 {
