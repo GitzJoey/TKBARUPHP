@@ -48,7 +48,7 @@
                                             <select id="inputSupplierType" data-parsley-required="true"
                                                     class="form-control"
                                                     v-model="po.supplier_type">
-                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="defaultSupplierType">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="st of supplierTypeDDL" v-bind:value="st">@{{ st.description }}</option>
                                             </select>
                                         </div>
@@ -63,7 +63,7 @@
                                                         class="form-control"
                                                         v-model="po.supplier"
                                                         v-on:change="insertDefaultExpense(po.supplier)">
-                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-bind:value="defaultSupplier">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="supplier of supplierDDL" v-bind:value="supplier">@{{ supplier.name }}</option>
                                                 </select>
                                             </div>
@@ -119,7 +119,7 @@
                                             <select id="inputPoType" data-parsley-required="true"
                                                     class="form-control"
                                                     v-model="po.poType">
-                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="defaultPOType">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="poType of poTypeDDL" v-bind:value="poType">@{{ poType.description }}</option>
                                             </select>
                                         </div>
@@ -178,7 +178,7 @@
                                             <select id="inputWarehouse" data-parsley-required="true"
                                                     class="form-control"
                                                     v-model="po.warehouse">
-                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="defaultWarehouse">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
                                             </select>
                                         </div>
@@ -192,7 +192,7 @@
                                             <select id="inputVendorTrucking"
                                                     class="form-control"
                                                     v-model="po.vendorTrucking">
-                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="defaultVendorTrucking">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
                                             </select>
                                         </div>
@@ -228,7 +228,7 @@
                                             <select id="inputProduct"
                                                     class="form-control"
                                                     v-model="po.product">
-                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="defaultProduct">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
                                             </select>
                                         </div>
@@ -274,7 +274,7 @@
                                                                     class="form-control"
                                                                     v-model="item.selected_unit"
                                                                     data-parsley-required="true">
-                                                                <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-bind:value="defaultProductUnit">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                             </select>
                                                         </td>
@@ -353,7 +353,7 @@
                                                             <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
                                                             <select data-parsley-required="true"
                                                                     class="form-control" v-model="expense.type">
-                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-bind:value="defaultExpenseType">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
                                                             </select>
                                                         </td>
@@ -512,19 +512,21 @@
                         return result;
                     },
                     insertItem: function (product) {
-                        var vm = this;
-                        vm.po.items.push({
-                            product: _.cloneDeep(product),
-                            selected_unit: {
-                                unit: {
-                                    id: ''
+                        if(product.id != ''){
+                            var vm = this;
+                            vm.po.items.push({
+                                product: _.cloneDeep(product),
+                                selected_unit: {
+                                    unit: {
+                                        id: ''
+                                    },
+                                    conversion_value: 1
                                 },
-                                conversion_value: 1
-                            },
-                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                            quantity: 0,
-                            price: 0
-                        });
+                                base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                                quantity: 0,
+                                price: 0
+                            });
+                        }
                     },
                     removeItem: function (index) {
                         var vm = this;
@@ -532,7 +534,7 @@
                     },
                     insertDefaultExpense: function (supplier) {
                         var vm = this;
-                        if (supplier) {
+                        if (supplier.id != '') {
                             vm.po.expenses = [];
                             for (var i = 0; i < supplier.expense_templates.length; i++) {
                                 vm.po.expenses.push({
@@ -581,6 +583,51 @@
                     removeExpense: function (index) {
                         var vm = this;
                         vm.po.expenses.splice(index, 1);
+                    }
+                },
+                computed: {
+                    defaultSupplierType: function(){
+                        return {
+                            code: ''
+                        };
+                    },
+                    defaultSupplier: function(){
+                        return {
+                            id: ''
+                        };
+                    },
+                    defaultWarehouse: function(){
+                        return {
+                            id: ''
+                        };
+                    },
+                    defaultVendorTrucking: function(){
+                        return {
+                            id: ''
+                        };
+                    },
+                    defaultPOType: function(){
+                        return {
+                            code: ''
+                        };
+                    },
+                    defaultProduct: function(){
+                        return {
+                            id: ''
+                        };
+                    },
+                    defaultProductUnit: function(){
+                        return {
+                            unit: {
+                                id: ''
+                            },
+                            conversion_value: 1
+                        };
+                    },
+                    defaultExpenseType: function(){
+                        return {
+                            code: ''
+                        }
                     }
                 }
             });

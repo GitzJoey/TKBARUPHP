@@ -5,7 +5,7 @@
 @section('content')
     <body class="hold-transition login-page">
 
-    <div class="login-box">
+    <div class="login-box animated slideInUp">
         <div class="login-logo">
             <a href="#"></a>
         </div>

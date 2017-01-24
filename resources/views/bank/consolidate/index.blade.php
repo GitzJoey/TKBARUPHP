@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-bankfa-compress fa-fw"></span>&nbsp;@lang('bank.consolidate.index.page_title')
+    <span class="fa fa-compress fa-fw"></span>&nbsp;@lang('bank.consolidate.index.page_title')
 @endsection
 
 @section('page_title_desc')

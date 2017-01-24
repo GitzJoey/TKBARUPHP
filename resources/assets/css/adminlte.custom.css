@@ -206,3 +206,7 @@ ol.breadcrumb {
 .store-ribbon-none {
     margin-top: 0px;
 }
+
+.sidebar-menu .treeview-menu > li > a {
+    padding: 5px 5px 5px 27px;
+}

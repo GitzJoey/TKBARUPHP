@@ -165,7 +165,7 @@
                                                 <select id="inputWarehouse" data-parsley-required="true"
                                                         class="form-control"
                                                         v-model="po.warehouse">
-                                                    <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
                                                 </select>
                                             @else
@@ -185,7 +185,7 @@
                                                 <select id="inputVendorTrucking"
                                                         class="form-control"
                                                         v-model="po.vendorTrucking">
-                                                    <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
                                                 </select>
                                             @else
@@ -228,7 +228,7 @@
                                                 <select id="inputProduct"
                                                         class="form-control"
                                                         v-model="po.product">
-                                                    <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
                                                 </select>
                                             </div>
@@ -257,7 +257,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr v-for="item in po.items">
+                                                <tr v-for="(item, itemIndex) in po.items">
                                                     <input type="hidden" name="item_id[]" v-bind:value="item.id">
                                                     <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
                                                     <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
@@ -275,7 +275,7 @@
                                                                     class="form-control"
                                                                     v-model="item.selected_unit"
                                                                     data-parsley-required="true">
-                                                                <option v-bind:value="null">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                             </select>
                                                         @else
@@ -293,7 +293,7 @@
                                                     <td class="text-center">
                                                         @if($currentPo->status == 'POSTATUS.WA')
                                                             <button type="button" class="btn btn-danger btn-md"
-                                                                    v-on:click="removeItem($index)"><span class="fa fa-minus"/>
+                                                                    v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
                                                             </button>
                                                         @endif
                                                     </td>
@@ -351,7 +351,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr v-for="expense in po.expenses">
+                                                <tr v-for="(expense, expenseIndex) in po.expenses">
                                                     <td>
                                                         <input type="hidden" name="expense_id[]" v-bind:value="expense.id" />
                                                         <input name="expense_name[]" type="text" class="form-control" v-model="expense.name"
@@ -362,7 +362,7 @@
                                                             <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
                                                             <select data-parsley-required="true"
                                                                     class="form-control" v-model="expense.type">
-                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
                                                             </select>
                                                         @else
@@ -378,7 +378,7 @@
                                                     <td class="text-center">
                                                         @if($currentPo->status == 'POSTATUS.WA')
                                                             <button type="button" class="btn btn-danger btn-md"
-                                                                    v-on:click="removeExpense($index)"><span class="fa fa-minus"/>
+                                                                    v-on:click="removeExpense(expenseIndex)"><span class="fa fa-minus"/>
                                                             </button>
                                                         @endif
                                                     </td>
@@ -467,7 +467,6 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function(){
             var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
             var poApp = new Vue({
                 el: '#poVue',
@@ -478,22 +477,19 @@
                     po: {
                         supplier: _.cloneDeep(currentPo.supplier),
                         items: [],
-                        warehouse: _.cloneDeep(currentPo.warehouse){
-                            id: currentPo.warehouse.id,
-                            name: currentPo.warehouse.name
-                        },
-                        vendorTrucking: {
-                            id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
-                            name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
-                        },
-                        expenses: []
+                        warehouse: _.cloneDeep(currentPo.warehouse),
+                        vendorTrucking: _.cloneDeep(currentPo.vendor_trucking),
+                        expenses: [],
+                        product: {
+                            id: ''
+                        }
                     }
                 },
                 methods: {
                     grandTotal: function () {
                         var vm = this;
                         var result = 0;
-                        angular.forEach(vm.po.items, function (item, key) {
+                        _.forEach(vm.po.items, function (item, key) {
                             result += (item.selected_unit.conversion_value * item.quantity * item.price);
                         });
                         return result;
@@ -501,7 +497,7 @@
                     expenseTotal: function () {
                         var vm = this;
                         var result = 0;
-                        angular.forEach(vm.po.expenses, function (expense, key) {
+                        _.forEach(vm.po.expenses, function (expense, key) {
                             if(expense.type.code === 'EXPENSETYPE.ADD')
                                 result += parseInt(numeral().unformat(expense.amount));
                             else
@@ -510,22 +506,33 @@
                         return result;
                     },
                     insertItem: function (product) {
-                        this.po.items.push({
-                            id: null,
-                            product: _.cloneDeep(roduct),
-                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                            selected_unit: null,
-                            quantity: 0,
-                            price: 0
-                        });
+                        if(product.id != ''){
+                            console.log(product);
+                            this.po.items.push({
+                                id: null,
+                                product: _.cloneDeep(product),
+                                base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                                selected_unit: {
+                                    unit: {
+                                        id: ''
+                                    }, 
+                                    conversion_value: 1
+                                },
+                                quantity: 0,
+                                price: 0
+                            });
+                        }
                     },
                     removeItem: function (index) {
                         this.po.items.splice(index, 1);
                     },
                     insertExpense: function () {
+                        console.log('Inserting expense');
                         this.po.expenses.push({
                             name: '',
-                            type: '',
+                            type: {
+                                code: ''
+                            },
                             amount: 0,
                             remarks: ''
                         });
@@ -555,10 +562,7 @@
                 poApp.po.expenses.push({
                     id: currentPo.expenses[i].id,
                     name: currentPo.expenses[i].name,
-                    type: {
-                        code: currentPo.expenses[i].type,
-                        description: type ? type.description : ''
-                    },
+                    type: _.cloneDeep(type),
                     amount: currentPo.expenses[i].amount,
                     remarks: currentPo.expenses[i].remarks
                 });
@@ -573,7 +577,6 @@
             function isBase(unit) {
                 return unit.is_base == 1;
             }
-        });
 
         $(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
