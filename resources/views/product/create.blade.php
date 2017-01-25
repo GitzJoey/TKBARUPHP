@@ -49,22 +49,26 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>@lang('product.create.table.category.header.code')</th>
-                                        <th>@lang('product.create.table.category.header.name')</th>
-                                        <th>@lang('product.create.table.category.header.description')</th>
-                                        <th>&nbsp;</th>
+                                        <th width="20%">@lang('product.create.table.category.header.code')</th>
+                                        <th width="30%">@lang('product.create.table.category.header.name')</th>
+                                        <th width="40%">@lang('product.create.table.category.header.description')</th>
+                                        <th width="10%" class="text-center">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(cat, catIdx) in category">
+                                    <tr v-for="(cat, catIdx) in product_categories">
                                         <td>
-
+                                            <input type="hidden" name="level[]" v-bind:value="catIdx">
+                                            <input type="text" class="form-control" id="inputCode" name="code[]" data-parsley-required="true">
                                         </td>
                                         <td>
-
+                                            <input type="text" class="form-control" id="inputName" name="name[]" data-parsley-required="true">
                                         </td>
                                         <td>
-
+                                            <input type="text" class="form-control" id="inputDescription" name="description[]" data-parsley-required="true">
+                                        </td>
+                                        <td class="valign-middle text-center">
+                                            <button type="button" class="btn btn-xs btn-danger" v-on:click="removeCategory(catIdx)"><span class="fa fa-close"></span></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -81,7 +85,7 @@
                     <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                         <label for="inputName" class="col-sm-2 control-label">@lang('product.field.name')</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }} " placeholder="@lang('product.field.name')" data-parsley-required="true">
+                            <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }}" placeholder="@lang('product.field.name')" data-parsley-required="true">
                             <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                         </div>
                     </div>
@@ -122,10 +126,10 @@
                                         <th class="text-center valign-middle">
                                             <input type="checkbox" v-model="selectedAll" v-on:click="checkAll()" />
                                         </th>
-                                        <th>@lang('product.create.table.header.unit')</th>
-                                        <th class="text-center">@lang('product.create.table.header.is_base')</th>
-                                        <th>@lang('product.create.table.header.conversion_value')</th>
-                                        <th>@lang('product.create.table.header.remarks')</th>
+                                        <th>@lang('product.create.table.product.header.unit')</th>
+                                        <th class="text-center">@lang('product.create.table.product.header.is_base')</th>
+                                        <th>@lang('product.create.table.product.header.conversion_value')</th>
+                                        <th>@lang('product.create.table.product.header.remarks')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -141,7 +145,8 @@
                                             <input type="hidden" v-model="unit.is_base_val" name="is_base[]"/>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" v-model="unit.conversion_value" name="conversion_value[]" data-parsley-required="true"/>
+                                            <input type="text" class="form-control" v-model="unit.conversion_value" name="conversion_value[]"
+                                                   data-parsley-required="true" v-bind:readonly="unit.is_base == 1"/>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" v-model="unit.remarks" name="remarks[]"/>
@@ -163,7 +168,7 @@
                         <label for="inputMinimalInStock" class="col-sm-2 control-label">@lang('product.field.minimal_in_stock')</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputMinimalInStock" name="minimal_in_stock"
-                                   value="{{ old('minimal_in_stock') }}" placeholder="@lang('product.field.minimal_in_stock')"
+                                   value="0" placeholder="@lang('product.field.minimal_in_stock')"
                                    data-parsley-type="number">
                             <span class="help-block">{{ $errors->has('minimal_in_stock') ? $errors->first('minimal_in_stock') : '' }}</span>
                         </div>
@@ -210,7 +215,7 @@
                     'conversion_value':'',
                     'remarks': ''
                 }],
-                category: []
+                product_categories: []
             },
             methods: {
                 addNew: function () {
@@ -268,7 +273,15 @@
                     }
                 },
                 addCategory: function() {
-                    console.log('a');
+                    this.product_categories.push({
+                        'code':'',
+                        'name':'',
+                        'description':'',
+                        'level':0
+                    });
+                },
+                removeCategory: function(idx) {
+                    this.product_categories.splice(idx, 1);
                 }
             }
         });

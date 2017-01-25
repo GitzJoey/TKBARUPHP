@@ -105,6 +105,11 @@ class Product extends Model
         return $this->hasMany('App\Model\ProductUnit');
     }
 
+    public function productCategories()
+    {
+        return $this->hasMany('App\Model\ProductCategory');
+    }
+
     public function getProductUnitsJSON()
     {
         $pu = array();

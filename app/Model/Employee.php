@@ -53,6 +53,7 @@ class Employee extends Model
     protected $table = 'employee';
 
     protected $fillable = [
+        'store_id',
         'name',
         'email',
         'ic_number',
@@ -68,9 +69,14 @@ class Employee extends Model
         'deleted_at',
     ];
 
-    public function hId() //hahah
+    public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store');
     }
 
     public static function boot()

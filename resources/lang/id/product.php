@@ -9,16 +9,26 @@ return [
             'title' => 'Tambah Produk',
         ],
         'table' => [
-            'header' => [
-                'unit' => 'Satuan',
-                'is_base' => 'Satuan Dasar',
-                'conversion_value' => 'Nilai Tukar',
-                'remarks' => 'Keterangan',
+            'product' => [
+                'header' => [
+                    'unit' => 'Satuan',
+                    'is_base' => 'Satuan Dasar',
+                    'conversion_value' => 'Nilai Tukar',
+                    'remarks' => 'Keterangan',
+                ],
+            ],
+            'category' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'name' => 'Nama',
+                    'description' => 'Keterangan',
+                ],
             ],
         ],
     ],
     'field' => [
         'type' => 'Tipe',
+        'category' => 'Kategori',
         'name' => 'Nama',
         'short_code' => 'Kode',
         'description' => 'Deskripsi',
@@ -36,11 +46,20 @@ return [
             'title' => 'Ubah Produk',
         ],
         'table' => [
-            'header' => [
-                'unit' => 'Satuan',
-                'is_base' => 'Satuan Dasar',
-                'conversion_value' => 'Nilai Tukar',
-                'remarks' => 'Keterangan',
+            'product' => [
+                'header' => [
+                    'unit' => 'Satuan',
+                    'is_base' => 'Satuan Dasar',
+                    'conversion_value' => 'Nilai Tukar',
+                    'remarks' => 'Keterangan',
+                ],
+            ],
+            'category' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'name' => 'Nama',
+                    'description' => 'Keterangan',
+                ],
             ],
         ],
     ],
@@ -70,11 +89,20 @@ return [
             'title' => 'Tampilan Produk',
         ],
         'table' => [
-            'header' => [
-                'unit' => 'Unit',
-                'is_base' => 'Dasar Unit',
-                'conversion_value' => 'Nilai Tukar',
-                'remarks' => 'Keterangan',
+            'product' => [
+                'header' => [
+                    'unit' => 'Unit',
+                    'is_base' => 'Dasar Unit',
+                    'conversion_value' => 'Nilai Tukar',
+                    'remarks' => 'Keterangan',
+                ],
+            ],
+            'category' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'name' => 'Nama',
+                    'description' => 'Keterangan',
+                ],
             ],
         ],
     ],

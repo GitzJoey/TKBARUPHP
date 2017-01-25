@@ -37,6 +37,7 @@ return [
         'thousand_separator' => 'Thousand Separator',
         'decimal_separator' => 'Decimal Separator',
         'decimal_digit' => 'Decimal Digit',
+        'none' => 'None',
         'comma' => 'Comma',
         'dot' => 'Dot',
         'space' => 'Space',

@@ -49,7 +49,7 @@
                                 <thead>
                                 <tr>
                                     <th>@lang('product.create.table.category.header.code')</th>
-                                    <th class="text-center">@lang('product.create.table.category.header.name')</th>
+                                    <th>@lang('product.create.table.category.header.name')</th>
                                     <th>@lang('product.create.table.category.header.description')</th>
                                 </tr>
                                 </thead>
@@ -95,10 +95,10 @@
                                         <th class="text-center">
                                             <input type="checkbox" v-model="selectedAll" v-on:click="checkAll()" />
                                         </th>
-                                        <th>@lang('product.edit.table.header.unit')</th>
-                                        <th class="text-center">@lang('product.edit.table.header.is_base')</th>
-                                        <th>@lang('product.edit.table.header.conversion_value')</th>
-                                        <th>@lang('product.edit.table.header.remarks')</th>
+                                        <th>@lang('product.edit.table.product.header.unit')</th>
+                                        <th class="text-center">@lang('product.edit.table.product.header.is_base')</th>
+                                        <th>@lang('product.edit.table.product.header.conversion_value')</th>
+                                        <th>@lang('product.edit.table.product.header.remarks')</th>
                                     </tr>
                                 </thead>
                                 <tbody>

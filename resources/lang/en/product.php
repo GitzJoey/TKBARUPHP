@@ -9,16 +9,26 @@ return [
             'title' => 'Create Product',
         ],
         'table' => [
-            'header' => [
-                'unit' => 'Unit',
-                'is_base' => 'Base Unit',
-                'conversion_value' => 'Conversion Value',
-                'remarks' => 'Remarks',
+            'product' => [
+                'header' => [
+                    'unit' => 'Unit',
+                    'is_base' => 'Base Unit',
+                    'conversion_value' => 'Conversion Value',
+                    'remarks' => 'Remarks',
+                ],
+            ],
+            'category' => [
+                'header' => [
+                    'code' => 'Code',
+                    'name' => 'Name',
+                    'description' => 'Description',
+                ],
             ],
         ],
     ],
     'field' => [
         'type' => 'Type',
+        'category' => 'Category',
         'name' => 'Name',
         'short_code' => 'Short Code',
         'description' => 'Description',
@@ -36,11 +46,20 @@ return [
             'title' => 'Edit Product',
         ],
         'table' => [
-            'header' => [
-                'unit' => 'Unit',
-                'is_base' => 'Base Unit',
-                'conversion_value' => 'Conversion Value',
-                'remarks' => 'Remarks',
+            'product' => [
+                'header' => [
+                    'unit' => 'Unit',
+                    'is_base' => 'Base Unit',
+                    'conversion_value' => 'Conversion Value',
+                    'remarks' => 'Remarks',
+                ],
+            ],
+            'category' => [
+                'header' => [
+                    'code' => 'Code',
+                    'name' => 'Name',
+                    'description' => 'Description',
+                ],
             ],
         ],
     ],
@@ -70,11 +89,20 @@ return [
             'title' => 'Show Product',
         ],
         'table' => [
-            'header' => [
-                'unit' => 'Unit',
-                'is_base' => 'Base Unit',
-                'conversion_value' => 'Conversion Value',
-                'remarks' => 'Remarks',
+            'product' => [
+                'header' => [
+                    'unit' => 'Unit',
+                    'is_base' => 'Base Unit',
+                    'conversion_value' => 'Conversion Value',
+                    'remarks' => 'Remarks',
+                ],
+            ],
+            'category' => [
+                'header' => [
+                    'code' => 'Code',
+                    'name' => 'Name',
+                    'description' => 'Description',
+                ],
             ],
         ],
     ],

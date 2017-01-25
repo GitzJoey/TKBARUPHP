@@ -11,8 +11,9 @@ use Illuminate\Http\Request;
 
 use App\Model\Unit;
 use App\Model\Product;
-use App\Model\ProductUnit;
 use App\Model\ProductType;
+use App\Model\ProductUnit;
+use App\Model\ProductCategory;
 
 use App\Repos\LookupRepo;
 
@@ -83,7 +84,18 @@ class ProductController extends Controller
                     $punit->conversion_value = $data['conversion_value'][$i];
                     $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
 
-                    $product->productUnit()->save($punit);
+                    $product->productUnits()->save($punit);
+                }
+
+                for ($j = 0; $j < count($data['level']); $j++) {
+                    $pcat = new ProductCategory();
+                    $pcat->store_id = Auth::user()->store->id;
+                    $pcat->code = $data['code'][$j];
+                    $pcat->name = $data['name'][$j];
+                    $pcat->description = $data['description'][$j];
+                    $pcat->level = $data['level'][$j];
+
+                    $product->productCategories()->save($pcat);
                 }
             });
 
@@ -158,7 +170,8 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        $product->productUnit->each(function($pu) { $pu->delete(); });
+        $product->productUnits->each(function($pu) { $pu->delete(); });
+        $product->productCategories->each(function($pc) { $pc->delete(); });
         $product->delete();
 
         return redirect(route('db.master.product'));

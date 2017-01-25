@@ -37,6 +37,7 @@ return [
         'thousand_separator' => 'Pemisah Ribuan',
         'decimal_separator' => 'Pemisah Desimal',
         'decimal_digit' => 'Desimal Digit',
+        'none' => 'Kosong',
         'comma' => 'Koma',
         'dot' => 'Titik',
         'space' => 'Spasi',
