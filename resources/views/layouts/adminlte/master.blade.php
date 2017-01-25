@@ -15,7 +15,7 @@
     </head>
 
     <body class="hold-transition skin-blue sidebar-mini">
-        <div class="wrapper">
+        <div class="wrapper {{ !empty(Auth::user()->store->ribbon) ? Auth::user()->store->ribbon:'' }}">
             @include('layouts.adminlte.header')
 
             @include('layouts.adminlte.sidebar')
