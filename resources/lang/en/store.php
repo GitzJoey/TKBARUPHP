@@ -40,6 +40,18 @@ return [
         'comma' => 'Comma',
         'dot' => 'Dot',
         'space' => 'Space',
+        "blue" => 'Blue',
+        "black" => 'Black',
+        "red" => 'Red',
+        "yellow" => 'Yellow',
+        "purple" => 'Purple',
+        "green" => 'Green',
+        "blue-light" => 'Light Blue',
+        "black-light" => 'Light Black',
+        "red-light" => 'Light Red',
+        "yellow-light" => 'Light Yellow',
+        "purple-light" => 'Light Purple',
+        "green-light" => 'Light Green'
     ],
     'edit' => [
         'title' => 'Store',

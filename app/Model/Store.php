@@ -91,7 +91,8 @@ class Store extends Model
         '1224hour',
         'thousand_separator',
         'decimal_separator',
-        'decimal_digit'
+        'decimal_digit',
+        'ribbon'
     ];
 
     protected $hidden = [

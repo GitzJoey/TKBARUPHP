@@ -40,6 +40,18 @@ return [
         'comma' => 'Koma',
         'dot' => 'Titik',
         'space' => 'Spasi',
+        "blue" => 'Biru',
+        "black" => 'Hitam',
+        "red" => 'Merah',
+        "yellow" => 'Kuning',
+        "purple" => 'Ungu',
+        "green" => 'Hijau',
+        "blue-light" => 'Biru Terang',
+        "black-light" => 'Hitam Terang',
+        "red-light" => 'Merah Terang',
+        "yellow-light" => 'Kuning Terang',
+        "purple-light" => 'Ungu Terang',
+        "green-light" => 'Hijau Terang'
     ],
     'edit' => [
         'title' => 'Toko',

@@ -31,6 +31,7 @@ class CreateStoresTable extends Migration
             $table->string('thousand_separator')->nullable();
             $table->string('decimal_separator')->nullable();
             $table->integer('decimal_digit')->default(0);
+            $table->string('ribbon')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);

@@ -205,6 +205,67 @@
                                         <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="0" placeholder="Decimal Digit" data-parsley-required="true" data-parsley-type="number" data-parsley-max="4" data-parsley-group="tab_settings">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="inputRibbon" class="col-sm-2 control-label">@lang('store.field.ribbon')</label>
+                                    <div class="col-sm-3">
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-none">
+                                            <label>&nbsp;@lang('store.field.none')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-blue">
+                                            <label>&nbsp;@lang('store.field.blue')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-black">
+                                            <label>&nbsp;@lang('store.field.black')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-red">
+                                            <label>&nbsp;@lang('store.field.red')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-yellow">
+                                            <label>&nbsp;@lang('store.field.yellow')</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-purple">
+                                            <label>&nbsp;@lang('store.field.purple')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-green">
+                                            <label>&nbsp;@lang('store.field.green')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-blue-light">
+                                            <label>&nbsp;@lang('store.field.blue-light')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-black-light">
+                                            <label>&nbsp;@lang('store.field.black-light')</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-red-light">
+                                            <label>&nbsp;@lang('store.field.red-light')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-yellow-light">
+                                            <label>&nbsp;@lang('store.field.yellow-light')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-purple-light">
+                                            <label>&nbsp;@lang('store.field.purple-light')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-green-light">
+                                            <label>&nbsp;@lang('store.field.green-light')</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
