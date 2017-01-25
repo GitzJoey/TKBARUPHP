@@ -63,6 +63,13 @@
                         <span class="help-block">{{ $errors->has('short_code') ? $errors->first('short_code') : '' }}</span>
                     </div>
                 </div>
+                <div class="form-group {{ $errors->has('barcode') ? 'has-error' : '' }}">
+                    <label for="inputBarcode" class="col-sm-2 control-label">@lang('product.field.barcode')</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputBarcode" name="barcode" value="{{ old('barcode') }}" placeholder="@lang('product.field.barcode')">
+                        <span class="help-block">{{ $errors->has('barcode') ? $errors->first('barcode') : '' }}</span>
+                    </div>
+                </div>
                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                     <label for="inputDescription" class="col-sm-2 control-label">@lang('product.field.description')</label>
                     <div class="col-sm-10">
@@ -118,6 +125,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group {{ $errors->has('minimal_in_stock') ? 'has-error' : '' }}">
+                    <label for="inputMinimalInStock" class="col-sm-2 control-label">@lang('product.field.minimal_in_stock')</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputMinimalInStock" name="minimal_in_stock"
+                               value="{{ old('minimal_in_stock') }}" placeholder="@lang('product.field.minimal_in_stock')"
+                               data-parsley-type="number">
+                        <span class="help-block">{{ $errors->has('minimal_in_stock') ? $errors->first('minimal_in_stock') : '' }}</span>
+                    </div>
+                </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('product.field.status')</label>
                     <div class="col-sm-10">
@@ -128,7 +144,7 @@
                 <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
                     <label for="inputRemarks" class="col-sm-2 control-label">@lang('product.field.remarks')</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="remarks" name="remarks" value="{{ old('remarks') }}" placeholder="@lang('product.field.remarks')">
+                        <input type="text" class="form-control" id="inputRemarks" name="remarks" value="{{ old('remarks') }}" placeholder="@lang('product.field.remarks')">
                         <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
                     </div>
                 </div>

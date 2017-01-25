@@ -68,8 +68,10 @@ class Product extends Model
         'product_type_id',
         'name',
         'short_code',
+        'barcode',
         'description',
         'image_path',
+        'minimal_in_stock',
         'status',
         'remarks'
     ];

@@ -23,6 +23,8 @@ return [
         'short_code' => 'Kode',
         'description' => 'Deskripsi',
         'unit' => 'Satuan',
+        'barcode' => 'Barcode',
+        'minimal_in_stock' => 'Minimal Di Stok',
         'status' => 'Status',
         'remarks' => 'Keterangan',
     ],

@@ -49,6 +49,14 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputBarcode" class="col-sm-2 control-label">@lang('product.field.barcode')</label>
+                        <div class="col-sm-10">
+                            <label id="inputBarcode" class="control-label">
+                                <span class="control-label-normal">{{ $product->barcode }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputDescription" class="col-sm-2 control-label">@lang('product.field.description')</label>
                         <div class="col-sm-10">
                             <label id="inputDescription" class="control-label control-label-normal">
@@ -82,9 +90,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputMinimalInStock" class="col-sm-2 control-label">@lang('product.field.minimal_in_stock')</label>
+                        <div class="col-sm-10">
+                            <label id="inputMinimalInStock" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $product->minimal_in_stock }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('product.field.status')</label>
                         <div class="col-sm-10">
-                            <label id="status" class="control-label control-label-normal">
+                            <label id="inputStatus" class="control-label control-label-normal">
                                 <span class="control-label-normal">@lang('lookup.'.$product->status)</span>
                             </label>
                         </div>
@@ -92,7 +108,7 @@
                     <div class="form-group">
                         <label for="inputRemarks" class="col-sm-2 control-label">@lang('product.field.remarks')</label>
                         <div class="col-sm-10">
-                            <label id="remarks" class="control-label control-label-normal">
+                            <label id="inputRemarks" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $product->remarks }}</span>
                             </label>
                         </div>

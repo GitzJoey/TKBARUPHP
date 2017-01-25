@@ -23,6 +23,8 @@ return [
         'short_code' => 'Short Code',
         'description' => 'Description',
         'unit' => 'Unit',
+        'barcode' => 'Barcode',
+        'minimal_in_stock' => 'Minimal In Stock',
         'status' => 'Status',
         'remarks' => 'Remarks',
     ],

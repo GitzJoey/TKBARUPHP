@@ -55,6 +55,13 @@
                         <span class="help-block">{{ $errors->has('short_code') ? $errors->first('short_code') : '' }}</span>
                     </div>
                 </div>
+                <div class="form-group {{ $errors->has('barcode') ? 'has-error' : '' }}">
+                    <label for="inputBarcode" class="col-sm-2 control-label">@lang('product.field.barcode')</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputBarcode" name="barcode" value="{{ old('barcode') }}" placeholder="@lang('product.field.barcode')">
+                        <span class="help-block">{{ $errors->has('barcode') ? $errors->first('barcode') : '' }}</span>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="inputDescription" class="col-sm-2 control-label">@lang('product.field.description')</label>
                     <div class="col-sm-10">
@@ -113,6 +120,15 @@
                                 </tfoot>
                             </table>
                         </div>
+                    </div>
+                </div>
+                <div class="form-group {{ $errors->has('minimal_in_stock') ? 'has-error' : '' }}">
+                    <label for="inputMinimalInStock" class="col-sm-2 control-label">@lang('product.field.minimal_in_stock')</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputMinimalInStock" name="minimal_in_stock"
+                               value="{{ empty(old('minimal_in_stock')) ? $product->minimal_instock:old('minimal_in_stock') }}" placeholder="@lang('product.field.minimal_in_stock')"
+                               data-parsley-type="number">
+                        <span class="help-block">{{ $errors->has('minimal_in_stock') ? $errors->first('minimal_in_stock') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
