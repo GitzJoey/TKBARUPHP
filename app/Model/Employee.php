@@ -50,7 +50,7 @@ class Employee extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'employee';
+    protected $table = 'employees';
 
     protected $fillable = [
         'store_id',
