@@ -105,7 +105,7 @@
                                     @foreach($product->productUnits as $produnit)
                                         <tr>
                                             <td>{{ $produnit->unit->name }}</td>
-                                            <td>{{ $produnit->is_base }}</td>
+                                            <td>{{ $produnit->is_base ? trans('lookup.YESNOSELECT.YES'):trans('lookup.YESNOSELECT.NO') }}</td>
                                             <td>{{ $produnit->conversion_value }}</td>
                                             <td>{{ $produnit->remarks }}</td>
                                         </tr>

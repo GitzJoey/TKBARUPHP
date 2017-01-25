@@ -58,14 +58,14 @@
                                 <tbody>
                                     <tr v-for="(cat, catIdx) in product_categories">
                                         <td>
-                                            <input type="hidden" name="level[]" v-bind:value="catIdx">
-                                            <input type="text" class="form-control" id="inputCode" name="code[]" data-parsley-required="true">
+                                            <input type="hidden" name="cat_level[]" v-bind:value="catIdx">
+                                            <input type="text" class="form-control" id="inputCode" name="cat_code[]" data-parsley-required="true">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" id="inputName" name="name[]" data-parsley-required="true">
+                                            <input type="text" class="form-control" id="inputName" name="cat_name[]" data-parsley-required="true">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" id="inputDescription" name="description[]" data-parsley-required="true">
+                                            <input type="text" class="form-control" id="inputDescription" name="cat_description[]" data-parsley-required="true">
                                         </td>
                                         <td class="valign-middle text-center">
                                             <button type="button" class="btn btn-xs btn-danger" v-on:click="removeCategory(catIdx)"><span class="fa fa-close"></span></button>
@@ -138,7 +138,10 @@
                                             <input type="checkbox" v-model="unit.selected" v-on:click="checkSelectAll()"/>
                                         </td>
                                         <td>
-                                            {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'v-model' => 'unit.unit_id', 'data-parsley-required' => 'true')) }}
+                                            {{ Form::select('unit_id[]', $unitDDL, null, array(
+                                                'class' => 'form-control',
+                                                'placeholder' => Lang::get('labels.PLEASE_SELECT'),
+                                                'v-model' => 'unit.unit_id', 'data-parsley-required' => 'true')) }}
                                         </td>
                                         <td class="text-center">
                                             <input type="checkbox" v-model="unit.is_base" v-on:click="checkOnlyOneIsBase(unitIdx)"/>

@@ -87,13 +87,13 @@ class ProductController extends Controller
                     $product->productUnits()->save($punit);
                 }
 
-                for ($j = 0; $j < count($data['level']); $j++) {
+                for ($j = 0; $j < count($data['cat_level']); $j++) {
                     $pcat = new ProductCategory();
                     $pcat->store_id = Auth::user()->store->id;
-                    $pcat->code = $data['code'][$j];
-                    $pcat->name = $data['name'][$j];
-                    $pcat->description = $data['description'][$j];
-                    $pcat->level = $data['level'][$j];
+                    $pcat->code = $data['cat_code'][$j];
+                    $pcat->name = $data['cat_name'][$j];
+                    $pcat->description = $data['cat_description'][$j];
+                    $pcat->level = $data['cat_level'][$j];
 
                     $product->productCategories()->save($pcat);
                 }
@@ -156,13 +156,13 @@ class ProductController extends Controller
             $product->productCategories->each(function($pc) { $pc->delete(); });
 
             $pclist = array();
-            for ($j = 0; $j  < count($data['level']); $j++) {
+            for ($j = 0; $j  < count($data['cat_level']); $j++) {
                 $pcat = new ProductCategory();
                 $pcat->store_id = Auth::user()->store->id;
-                $pcat->code = $data['code'][$j];
-                $pcat->name = $data['name'][$j];
-                $pcat->description = $data['description'][$j];
-                $pcat->level = $data['level'][$j];
+                $pcat->code = $data['cat_code'][$j];
+                $pcat->name = $data['cat_name'][$j];
+                $pcat->description = $data['cat_description'][$j];
+                $pcat->level = $data['cat_level'][$j];
 
                 array_push($pclist, $pcat);
             }
