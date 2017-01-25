@@ -15,6 +15,39 @@ use App\Traits\StoreFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Model\ProductCategory
+ *
+ * @property int $id
+ * @property int $store_id
+ * @property int $product_id
+ * @property string $code
+ * @property string $name
+ * @property string $description
+ * @property int $level
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\Store $store
+ * @property-read \App\Model\Product $product
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereLevel($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ProductCategory whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class ProductCategory extends Model
 {
     use SoftDeletes;

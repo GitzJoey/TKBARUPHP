@@ -43,6 +43,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereDeletedAt($value)
  * @mixin \Eloquent
  * @property integer $deleted_by
+ * @property-read \App\Model\Store $store
  */
 class Employee extends Model
 {
