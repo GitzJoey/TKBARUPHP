@@ -63,13 +63,13 @@
                                 @if(is_null($user->userDetail->allow_login))
                                     <div class="checkbox icheck">
                                         <label>
-                                            <input type="checkbox" disabled>&nbsp;
+                                            <input type="checkbox" disabled class="is_icheck">&nbsp;
                                         </label>
                                     </div>
                                 @else
                                     <div class="checkbox icheck">
                                         <label>
-                                            <input type="checkbox" checked disabled>&nbsp;
+                                            <input type="checkbox" checked disabled class="is_icheck">&nbsp;
                                         </label>
                                     </div>
                                 @endif
@@ -108,7 +108,7 @@
 @section('custom_js')
     <script type="text/javascript">
         $(function () {
-            $('input').iCheck({
+            $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'

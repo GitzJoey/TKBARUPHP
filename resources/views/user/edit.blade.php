@@ -99,9 +99,9 @@
                                     @endif
                                 @else
                                     @if (old('allow_login') == 'on')
-                                        <input type="checkbox" name="allow_login" checked>&nbsp;
+                                        <input type="checkbox" name="allow_login" checked class="is_icheck">&nbsp;
                                     @else
-                                        <input type="checkbox" name="allow_login">&nbsp;
+                                        <input type="checkbox" name="allow_login" class="is_icheck">&nbsp;
                                     @endif
                                 @endif
                             </label>
@@ -167,7 +167,7 @@
 @section('custom_js')
     <script type="text/javascript">
         $(function () {
-            $('input').iCheck({
+            $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'

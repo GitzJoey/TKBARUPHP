@@ -35,7 +35,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" name="remember"> @lang('login.remember_me')
+                                <input type="checkbox" class="is_icheck" name="remember"> @lang('login.remember_me')
                             </label>
                         </div>
                     </div>
@@ -55,8 +55,8 @@
     <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
 
     <script type="text/javascript">
-        $(function () {
-            $('input').iCheck({
+        $(document).ready(function () {
+            $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'
