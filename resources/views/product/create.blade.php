@@ -141,12 +141,12 @@
                                             {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'v-model' => 'unit.unit_id', 'data-parsley-required' => 'true')) }}
                                         </td>
                                         <td class="text-center">
-                                            <input type="checkbox" v-model="unit.is_base" v-on:click="checkOnlyOneIsBase(unitIdx)" name="is_base[]"/>
+                                            <input type="checkbox" v-model="unit.is_base" v-on:click="checkOnlyOneIsBase(unitIdx)"/>
                                             <input type="hidden" v-model="unit.is_base_val" name="is_base[]"/>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" v-model="unit.conversion_value" name="conversion_value[]"
-                                                   data-parsley-required="true" v-bind:readonly="unit.is_base == 1"/>
+                                                   data-parsley-required="true" v-bind:readonly="unit.is_base"/>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" v-model="unit.remarks" name="remarks[]"/>
@@ -265,6 +265,7 @@
                     for (var i = 0; i < this.units.length; i++) {
                         if (idx == i) {
                             this.units[i].conversion_value = 1;
+                            this.units[i].is_base = true;
                             this.units[i].is_base_val = true;
                         } else {
                             this.units[i].is_base = false;

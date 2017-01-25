@@ -82,7 +82,7 @@
                                                     v-model="c.capacity_unit_id"
                                                     data-parsley-required="true">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                <option v-for="(key, value) in unitDDL" v-bind:value="key">@{{ value }}</option>
+                                                <option v-for="(value, key) in unitDDL" v-bind:value="key">@{{ value }}</option>
                                             </select>
                                         </td>
                                         <td><input type="text" class="form-control" v-model="c.remarks" name="section_remarks[]"/></td>
