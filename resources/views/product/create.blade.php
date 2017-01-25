@@ -34,67 +34,102 @@
         </div>
         <form id="productForm" class="form-horizontal" action="{{ route('db.master.product.create') }}" enctype="multipart/form-data" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
-            <div class="box-body">
-                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                    <label for="inputType" class="col-sm-2 control-label">@lang('product.field.type')</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('type', $prodtypeDdL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
+            <div id="productVue">
+                <div class="box-body">
+                    <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                        <label for="inputType" class="col-sm-2 control-label">@lang('product.field.type')</label>
+                        <div class="col-sm-10">
+                            {{ Form::select('type', $prodtypeDdL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                            <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <label for="inputName" class="col-sm-2 control-label">@lang('product.field.name')</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }} " placeholder="@lang('product.field.name')" data-parsley-required="true">
-                        <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
-                    <label for="inputImagePath" class="col-sm-2 control-label">&nbsp;</label>
-                    <div class="col-sm-10">
-                        <input type="file" class="form-control" id="inputImagePath" name="image_path">
-                        <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('short_code') ? 'has-error' : '' }}">
-                    <label for="inputShortCode" class="col-sm-2 control-label">@lang('product.field.short_code')</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputShortCode" name="short_code" value="{{ old('short_code') }}" placeholder="@lang('product.field.short_code')">
-                        <span class="help-block">{{ $errors->has('short_code') ? $errors->first('short_code') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('barcode') ? 'has-error' : '' }}">
-                    <label for="inputBarcode" class="col-sm-2 control-label">@lang('product.field.barcode')</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputBarcode" name="barcode" value="{{ old('barcode') }}" placeholder="@lang('product.field.barcode')">
-                        <span class="help-block">{{ $errors->has('barcode') ? $errors->first('barcode') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                    <label for="inputDescription" class="col-sm-2 control-label">@lang('product.field.description')</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputDescription" name="description" value="{{ old('description') }}" placeholder="@lang('product.field.description')">
-                        <span class="help-block">{{ $errors->has('description') ? $errors->first('description') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputProductUnit" class="col-sm-2 control-label">@lang('product.field.unit')</label>
-                    <div class="col-sm-10">
-                        <div id="productVue">
+                    <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
+                        <label for="inputCategory" class="col-sm-2 control-label">@lang('product.field.category')</label>
+                        <div class="col-sm-10">
                             <table class="table table-striped table-bordered">
                                 <thead>
-                                <tr>
-                                    <th class="text-center valign-middle">
-                                        <input type="checkbox" v-model="selectedAll" v-on:click="checkAll()" />
-                                    </th>
-                                    <th>@lang('product.create.table.header.unit')</th>
-                                    <th class="text-center">@lang('product.create.table.header.is_base')</th>
-                                    <th>@lang('product.create.table.header.conversion_value')</th>
-                                    <th>@lang('product.create.table.header.remarks')</th>
-                                </tr>
+                                    <tr>
+                                        <th>@lang('product.create.table.category.header.code')</th>
+                                        <th>@lang('product.create.table.category.header.name')</th>
+                                        <th>@lang('product.create.table.category.header.description')</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="unit in units">
+                                    <tr v-for="(cat, catIdx) in category">
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4">
+                                            <button type="button" class="btn btn-xs btn-primary" v-on:click="addCategory()">@lang('buttons.create_new_button')</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                        <label for="inputName" class="col-sm-2 control-label">@lang('product.field.name')</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }} " placeholder="@lang('product.field.name')" data-parsley-required="true">
+                            <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
+                        <label for="inputImagePath" class="col-sm-2 control-label">&nbsp;</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="inputImagePath" name="image_path">
+                            <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('short_code') ? 'has-error' : '' }}">
+                        <label for="inputShortCode" class="col-sm-2 control-label">@lang('product.field.short_code')</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputShortCode" name="short_code" value="{{ old('short_code') }}" placeholder="@lang('product.field.short_code')">
+                            <span class="help-block">{{ $errors->has('short_code') ? $errors->first('short_code') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('barcode') ? 'has-error' : '' }}">
+                        <label for="inputBarcode" class="col-sm-2 control-label">@lang('product.field.barcode')</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputBarcode" name="barcode" value="{{ old('barcode') }}" placeholder="@lang('product.field.barcode')">
+                            <span class="help-block">{{ $errors->has('barcode') ? $errors->first('barcode') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
+                        <label for="inputDescription" class="col-sm-2 control-label">@lang('product.field.description')</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputDescription" name="description" value="{{ old('description') }}" placeholder="@lang('product.field.description')">
+                            <span class="help-block">{{ $errors->has('description') ? $errors->first('description') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputProductUnit" class="col-sm-2 control-label">@lang('product.field.unit')</label>
+                        <div class="col-sm-10">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center valign-middle">
+                                            <input type="checkbox" v-model="selectedAll" v-on:click="checkAll()" />
+                                        </th>
+                                        <th>@lang('product.create.table.header.unit')</th>
+                                        <th class="text-center">@lang('product.create.table.header.is_base')</th>
+                                        <th>@lang('product.create.table.header.conversion_value')</th>
+                                        <th>@lang('product.create.table.header.remarks')</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(unit, unitIdx) in units">
                                         <td class="text-center valign-middle">
                                             <input type="checkbox" v-model="unit.selected" v-on:click="checkSelectAll()"/>
                                         </td>
@@ -102,7 +137,7 @@
                                             {{ Form::select('unit_id[]', $unitDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'v-model' => 'unit.unit_id', 'data-parsley-required' => 'true')) }}
                                         </td>
                                         <td class="text-center">
-                                            <input type="checkbox" v-model="unit.is_base" v-on:click="checkOnlyOneIsBase($index)" name="is_base[]"/>
+                                            <input type="checkbox" v-model="unit.is_base" v-on:click="checkOnlyOneIsBase(unitIdx)" name="is_base[]"/>
                                             <input type="hidden" v-model="unit.is_base_val" name="is_base[]"/>
                                         </td>
                                         <td>
@@ -124,39 +159,39 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="form-group {{ $errors->has('minimal_in_stock') ? 'has-error' : '' }}">
-                    <label for="inputMinimalInStock" class="col-sm-2 control-label">@lang('product.field.minimal_in_stock')</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputMinimalInStock" name="minimal_in_stock"
-                               value="{{ old('minimal_in_stock') }}" placeholder="@lang('product.field.minimal_in_stock')"
-                               data-parsley-type="number">
-                        <span class="help-block">{{ $errors->has('minimal_in_stock') ? $errors->first('minimal_in_stock') : '' }}</span>
+                    <div class="form-group {{ $errors->has('minimal_in_stock') ? 'has-error' : '' }}">
+                        <label for="inputMinimalInStock" class="col-sm-2 control-label">@lang('product.field.minimal_in_stock')</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputMinimalInStock" name="minimal_in_stock"
+                                   value="{{ old('minimal_in_stock') }}" placeholder="@lang('product.field.minimal_in_stock')"
+                                   data-parsley-type="number">
+                            <span class="help-block">{{ $errors->has('minimal_in_stock') ? $errors->first('minimal_in_stock') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('product.field.status')</label>
+                        <div class="col-sm-10">
+                            {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                            <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('product.field.remarks')</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputRemarks" name="remarks" value="{{ old('remarks') }}" placeholder="@lang('product.field.remarks')">
+                            <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputButton" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="{{ route('db.master.product') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button id="submitButton" class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <label for="inputStatus" class="col-sm-2 control-label">@lang('product.field.status')</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
-                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('product.field.remarks')</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputRemarks" name="remarks" value="{{ old('remarks') }}" placeholder="@lang('product.field.remarks')">
-                        <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputButton" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                        <a href="{{ route('db.master.product') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button id="submitButton" class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                    </div>
-                </div>
+                <div class="box-footer"></div>
             </div>
-            <div class="box-footer"></div>
         </form>
     </div>
 @endsection
@@ -175,6 +210,7 @@
                     'conversion_value':'',
                     'remarks': ''
                 }],
+                category: []
             },
             methods: {
                 addNew: function () {
@@ -230,6 +266,9 @@
                             this.units[i].is_base_val = false;
                         }
                     }
+                },
+                addCategory: function() {
+                    console.log('a');
                 }
             }
         });

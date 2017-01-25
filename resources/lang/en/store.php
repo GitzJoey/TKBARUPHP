@@ -51,7 +51,8 @@ return [
         "red-light" => 'Light Red',
         "yellow-light" => 'Light Yellow',
         "purple-light" => 'Light Purple',
-        "green-light" => 'Light Green'
+        "green-light" => 'Light Green',
+        "ribbon" => 'Ribbon',
     ],
     'edit' => [
         'title' => 'Store',

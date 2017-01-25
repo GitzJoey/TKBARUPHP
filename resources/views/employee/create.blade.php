@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-employee fa-flip-horizontal fa-fw"></span>&nbsp;@lang('employee.create.page_title')
+    <span class="fa fa-odnoklassniki fa-fw"></span>&nbsp;@lang('employee.create.page_title')
 @endsection
 
 @section('page_title_desc')

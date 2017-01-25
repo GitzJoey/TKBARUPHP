@@ -51,7 +51,8 @@ return [
         "red-light" => 'Merah Terang',
         "yellow-light" => 'Kuning Terang',
         "purple-light" => 'Ungu Terang',
-        "green-light" => 'Hijau Terang'
+        "green-light" => 'Hijau Terang',
+        "ribbon" => 'Pita',
     ],
     'edit' => [
         'title' => 'Toko',
