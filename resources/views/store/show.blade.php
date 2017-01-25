@@ -192,7 +192,7 @@
                                         <label>&nbsp;@lang('store.field.blue')</label>
                                     </div>
                                     <div class="checkbox icheck">
-                                        <input type="radio" name="ribbon" value="store-ribbon-black" {{ $store->ribbon == 'store-ribbon-black' ? 'checked':'' }} disabled>
+                                        <input type="radio" name="ribbon" value="store-ribbon-black" {{ $store->ribbon == 'store-ribbon-black' ? 'checked':'' }} disabled class="is_icheck">
                                         <label>&nbsp;@lang('store.field.black')</label>
                                     </div>
                                     <div class="checkbox icheck">
