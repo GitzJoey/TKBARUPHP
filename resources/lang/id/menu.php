@@ -62,4 +62,6 @@ return [
     'item.adm_unit' => 'Satuan',
     'item.adm_settings' => 'Pengaturan',
     'item.adm_phone_provider' => 'Provider Telepon',
+    'item.employee' => 'Pegawai',
+    'item.employee.employee_list' => 'Daftar Pegawai',
 ];

@@ -74,4 +74,23 @@ return [
             ],
         ],
     ],
+    'consolidate' => [
+        'index' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'date' => '',
+                    'remarks' => '',
+                    'amount' => '',
+                    'db_cr' => '',
+                    'balance' => '',
+                ],
+            ],
+        ],
+    ],
 ];
