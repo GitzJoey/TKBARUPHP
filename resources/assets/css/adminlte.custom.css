@@ -222,3 +222,7 @@ ol.breadcrumb {
 .sidebar-menu .treeview-menu > li > a {
     padding: 5px 5px 5px 27px;
 }
+
+.menu-separator {
+    border-bottom: 1px solid #444 !important;
+}

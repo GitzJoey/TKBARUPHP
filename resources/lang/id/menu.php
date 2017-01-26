@@ -1,6 +1,16 @@
 <?php 
 
 return [
+    'item.accounting' => 'Accounting',
+    'item.accounting.cash' => 'Kas',
+    'item.accounting.capital' => 'Modal',
+    'item.accounting.cost' => 'Biaya',
+    'item.accounting.cost.cost' => 'Biaya',
+    'item.accounting.cost.category' => 'Kategori',
+    'item.accounting.revenue' => 'Pendapatan',
+    'item.accounting.revenue.revenue' => 'Pendapatan',
+    'item.accounting.revenue.category' => 'Kategori',
+    'item.accounting.cash_flow' => 'Arus Kas',
     'item.po' => 'Pembelian',
     'item.po_new' => 'Pembelian',
     'item.po_revise' => 'Revisi',
