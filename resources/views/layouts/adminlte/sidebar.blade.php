@@ -29,7 +29,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ route('db.acc.cost') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.cost')</a></li>
-                            <li><a href="{{ route('db.acc.category') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.category')</a></li>
+                            <li><a href="{{ route('db.acc.cost.category') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.category')</a></li>
                         </ul>
                     </li>
                     <li>

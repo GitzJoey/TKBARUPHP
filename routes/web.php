@@ -45,7 +45,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('/cash', 'AccountingCashController@index')->name('db.acc.cash');
             Route::get('/capital', 'AccountingCapitalController@index')->name('db.acc.capital');
             Route::get('/cost', 'AccountingCostController@index')->name('db.acc.cost');
+            Route::get('/cost/category', 'AccountingCostController@index')->name('db.acc.cost.category');
             Route::get('/revenue', 'AccountingRevenueController@index')->name('db.acc.revenue');
+            Route::get('/revenue/category', 'AccountingRevenueController@index')->name('db.acc.revenue.category');
             Route::get('/cash_flow', 'AccountingCashFlowController@index')->name('db.acc.cash_flow');
         });
 
