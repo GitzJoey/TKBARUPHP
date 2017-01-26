@@ -19,7 +19,7 @@ return [
             'field' => [
                 'supplier_type' => 'Tipe',
                 'supplier_name' => 'Nama',
-                'supplier_details' => 'Detail',
+                'supplier_details' => 'Detil',
                 'po_code' => 'Kode',
                 'po_copy_code' => 'Duplikat',
                 'po_type' => 'Tipe',
@@ -201,7 +201,7 @@ return [
         'field' => [
             'supplier_type' => 'Tipe',
             'supplier_name' => 'Nama',
-            'supplier_details' => 'Detail Pembelian',
+            'supplier_details' => 'Detil',
             'po_code' => 'Kode',
             'po_type' => 'Tipe',
             'po_date' => 'Tanggal PO',

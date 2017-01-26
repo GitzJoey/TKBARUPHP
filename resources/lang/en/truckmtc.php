@@ -15,6 +15,7 @@ return [
         'cost' => 'Cost',
         'odometer' => 'Odometer',
         'remarks' => 'Remarks',
+        'maintenance_date' => 'Maintenance Date',
     ],
     'edit' => [
         'title' => 'Truck Maintenance',

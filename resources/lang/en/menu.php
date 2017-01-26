@@ -1,6 +1,16 @@
 <?php 
 
 return [
+    'item.accounting' => 'Accounting',
+    'item.accounting.cash' => 'Cash',
+    'item.accounting.capital' => 'Capital',
+    'item.accounting.cost' => 'Cost',
+    'item.accounting.cost.cost' => 'Cost',
+    'item.accounting.cost.category' => 'Category',
+    'item.accounting.revenue' => 'Revenue',
+    'item.accounting.revenue.revenue' => 'Revenue',
+    'item.accounting.revenue.category' => 'Category',
+    'item.accounting.cash_flow' => 'Cash Flow',
     'item.po' => 'Purchase Order',
     'item.po_new' => 'Purchase Order',
     'item.po_revise' => 'Revise PO',
@@ -52,7 +62,6 @@ return [
     'item.adm_unit' => 'Unit',
     'item.adm_settings' => 'Settings',
     'item.adm_phone_provider' => 'Phone Provider',
-    'item.employee' =>'Employee',
-    'item.employee_list' =>'Employee List',
-    'item.salary' => 'salary',
+    'item.employee' => 'Employee',
+    'item.employee.employee_list' => 'Employee List',
 ];

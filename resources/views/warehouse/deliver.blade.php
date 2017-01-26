@@ -110,7 +110,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="deliver in outflow.delivers">
+                                            <tr v-for="(deliver, deliverIdx) in outflow.delivers">
                                                 <input type="hidden" name="item_id[]" v-bind:value="deliver.item.id">
                                                 <input type="hidden" name="product_id[]" v-bind:value="deliver.item.product_id">
                                                 <input type="hidden" name="stock_id[]" v-bind:value="deliver.item.stock_id">
@@ -130,7 +130,7 @@
                                                            data-parsley-type="number">
                                                 </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver($index)"><span class="fa fa-minus"/></button>
+                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver(deliverIdx)"><span class="fa fa-minus"/></button>
                                                 </td>
                                             </tr>
                                         </tbody>

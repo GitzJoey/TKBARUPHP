@@ -20,8 +20,10 @@ Class CreateProductsTable extends Migration
             $table->unsignedBigInteger('product_type_id')->default(0);
             $table->string('name')->nullable();
             $table->string('short_code')->nullable();
+            $table->string('barcode')->nullable();
             $table->string('description')->nullable();
             $table->string('image_path')->nullable();
+            $table->integer('minimum_in_stock')->default(0);
             $table->string('status')->nullable();
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);

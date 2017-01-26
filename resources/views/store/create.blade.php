@@ -167,11 +167,11 @@
                                     <label for="inputTimeFormat" class="col-sm-2 control-label">@lang('store.field.time_format')</label>
                                     <div class="col-sm-4">
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="time_format" value="H:i:s" checked>
+                                            <input type="radio" name="time_format" value="H:i:s" checked class="is_icheck">
                                             <label>&nbsp;{{ date('H:i:s') }}</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="time_format" value="h i">
+                                            <input type="radio" name="time_format" value="h i" class="is_icheck">
                                             <label>&nbsp;{{ date('h:i A') }}</label>
                                         </div>
                                     </div>
@@ -203,6 +203,67 @@
                                     <label for="inputDecimalDigit" class="col-sm-2 control-label">@lang('store.field.decimal_digit')</label>
                                     <div class="col-sm-10">
                                         <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="0" placeholder="Decimal Digit" data-parsley-required="true" data-parsley-type="number" data-parsley-max="4" data-parsley-group="tab_settings">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputRibbon" class="col-sm-2 control-label">@lang('store.field.ribbon')</label>
+                                    <div class="col-sm-3">
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-none" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.none')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-blue" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.blue')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-black" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.black')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-red" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.red')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-yellow" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.yellow')</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-purple" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.purple')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-green" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.green')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-blue-light" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.blue-light')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-black-light" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.black-light')</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-red-light" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.red-light')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-yellow-light" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.yellow-light')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-purple-light" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.purple-light')</label>
+                                        </div>
+                                        <div class="checkbox icheck">
+                                            <input type="radio" name="ribbon" value="store-ribbon-green-light" class="is_icheck">
+                                            <label>&nbsp;@lang('store.field.green-light')</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +307,7 @@
                 }
             });
 
-            $('input').iCheck({
+            $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'

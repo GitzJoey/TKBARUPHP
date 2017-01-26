@@ -89,10 +89,6 @@ return [
             'product' => 'Product List',
             'settings' => 'Settings',
             'expenses' => 'Default Expenses',
-            'header' => [
-                'bank_lists' => '',
-                'bank_inputs' => '',
-            ],
         ],
         'table_phone' => [
             'header' => [

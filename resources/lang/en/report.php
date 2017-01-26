@@ -345,5 +345,8 @@ return [
             ],
             'footer' => 'Printed by :user on :date',
         ],
+        'purchase_order' => [
+            'report_name' => '',
+        ],
     ],
 ];

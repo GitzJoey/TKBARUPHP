@@ -41,6 +41,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('', 'DashboardController@index')->name('db');
 
+        Route::group(['prefix' => 'acc'], function() {
+            Route::get('/cash', 'AccountingCashController@index')->name('db.acc.cash');
+            Route::get('/capital', 'AccountingCapitalController@index')->name('db.acc.capital');
+            Route::get('/cost', 'AccountingCostController@index')->name('db.acc.cost');
+            Route::get('/cost/category', 'AccountingCostController@index')->name('db.acc.cost.category');
+            Route::get('/revenue', 'AccountingRevenueController@index')->name('db.acc.revenue');
+            Route::get('/revenue/category', 'AccountingRevenueController@index')->name('db.acc.revenue.category');
+            Route::get('/cash_flow', 'AccountingCashFlowController@index')->name('db.acc.cash_flow');
+        });
+
         Route::group(['prefix' => 'po'], function () {
             Route::get('create', 'PurchaseOrderController@create')->name('db.po.create');
             Route::post('create', 'PurchaseOrderController@store');

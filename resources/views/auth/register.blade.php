@@ -68,7 +68,7 @@
                     <div class="col-xs-12">
                         <div class="checkbox icheck">
                             <label></label>
-                            <input id="terms" type="checkbox" data-parsley-required="true" data-parsley-errors-container="#checkbox_req"> @lang('login.register.agree_1')<a href="#" data-toggle="modal" data-target="#termsModal">@lang('login.register.agree_2')</a>
+                            <input id="terms" class="is_icheck" type="checkbox" data-parsley-required="true" data-parsley-errors-container="#checkbox_req"> @lang('login.register.agree_1')<a href="#" data-toggle="modal" data-target="#termsModal">@lang('login.register.agree_2')</a>
                             <span id="checkbox_req" class="help-block has-error"></span>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
         $(document).ready(function () {
             window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
 
-            $('input').iCheck({
+            $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'

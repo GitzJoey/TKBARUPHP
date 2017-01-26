@@ -156,50 +156,62 @@ ol.breadcrumb {
 }
 
 .store-ribbon-blue {
+    background-color: #367fa9;
     margin-top: 8px;
 }
 
 .store-ribbon-black {
+    background-color: #000000;
     margin-top: 8px;
 }
 
 .store-ribbon-red {
+    background-color: #f6f6f6;
     margin-top: 8px;
 }
 
 .store-ribbon-yellow {
+    background-color: #f6f6f6;
     margin-top: 8px;
 }
 
 .store-ribbon-purple {
+    background-color: #555299;
     margin-top: 8px;
 }
 
 .store-ribbon-green {
+    background-color: #f6f6f6;
     margin-top: 8px;
 }
 
 .store-ribbon-blue-light {
+    background-color: #367fa9;
     margin-top: 8px;
 }
 
 .store-ribbon-black-light {
+    background-color: #333333;
     margin-top: 8px;
 }
 
 .store-ribbon-red-light {
+    background-color: #f6f6f6;
     margin-top: 8px;
 }
 
 .store-ribbon-yellow-light {
+    background-color: #e08e0b;
     margin-top: 8px;
 }
 
 .store-ribbon-purple-light {
+    background-color: #555299;
     margin-top: 8px;
 }
 
 .store-ribbon-green-light {
+    background-color: #008d4c;
     margin-top: 8px;
 }
 
@@ -209,4 +221,8 @@ ol.breadcrumb {
 
 .sidebar-menu .treeview-menu > li > a {
     padding: 5px 5px 5px 27px;
+}
+
+.menu-separator {
+    border-bottom: 1px solid #444 !important;
 }

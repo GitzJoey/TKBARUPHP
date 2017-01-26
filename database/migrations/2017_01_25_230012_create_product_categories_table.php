@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeTable extends Migration
+class CreateProductCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateEmployeeTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee', function (Blueprint $table) {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('ic_number')->unique();
-            $table->string('image_path');
+            $table->unsignedBigInteger('store_id')->default(0);
+            $table->unsignedBigInteger('product_id')->default(0);
+            $table->string('code')->nullable();
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('level')->default(0);
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);
@@ -34,6 +36,6 @@ class CreateEmployeeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('employee');
+        Schema::drop('product_categories');
     }
 }

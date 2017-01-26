@@ -112,6 +112,7 @@ class StoreController extends Controller
                 'thousand_separator' => $data['thousand_separator'],
                 'decimal_separator' => $data['decimal_separator'],
                 'decimal_digit' => $data['decimal_digit'],
+                'ribbon' => $data['ribbon'],
             ]);
 
             for ($i = 0; $i < count($data['bank']); $i++) {
@@ -193,6 +194,7 @@ class StoreController extends Controller
             $store->thousand_separator = $data['thousand_separator'];
             $store->decimal_separator = $data['decimal_separator'];
             $store->decimal_digit = $data['decimal_digit'];
+            $store->ribbon = $data['ribbon'];
 
             $store->save();
         });
