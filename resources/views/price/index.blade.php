@@ -190,7 +190,7 @@
                                     },
                                 @endforeach
                                 {
-                                    name: 'Market Price',
+                                    name: '@lang('price.index.price_history.chart.market_price')',
                                     pointInterval: moment.duration(1, 'hours').asMilliseconds(),
                                     data: [
                                         @foreach($stock->priceHistory()->unique('input_date')->values() as $priceKey => $price)

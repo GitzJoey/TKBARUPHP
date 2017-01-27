@@ -18,4 +18,11 @@ interface StockService
      * @return Collection stocks ready to be sold.
      */
     public function getStocksForSO();
+
+    /**
+     * Get the information of all stocks at current time. 
+     *
+     * @return Collection
+     */
+    public function getCurrentStocks();
 }
