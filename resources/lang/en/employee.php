@@ -21,9 +21,13 @@ return [
     ],
     'field' => [
         'name' => 'Name',
-        'email' => 'Email',
-        'ic_number' => 'identity Card Number',
+        'address' => 'Address',
+        'ic_number' => 'IC Number',
         'image_path' => 'Image Path',
+        'start_date' => 'Start Date',
+        'freelance' => 'Freelance',
+        'base_salary' => 'Base Salary',
+        'status' => 'Status',
     ],
     'edit' => [
         'title' => 'Employee',
@@ -43,9 +47,10 @@ return [
         'table' => [
             'header' => [
                 'name' => 'Name',
-                'email' => 'Email',
-                'ic_number' => 'identity Card Number',
-                'image_path' => 'Image Path',
+                'address' => 'Address',
+                'ic_number' => 'IC Number',
+                'start_date' => 'Start Date',
+                'freelance' => 'Freelance',
             ],
         ],
     ],

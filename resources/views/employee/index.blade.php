@@ -12,7 +12,9 @@
     @lang('employee.index.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
 
+@endsection
 
 @section('content')
     @if ($message = Session::get('success'))
@@ -28,30 +30,32 @@
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center">@lang('employee.index.table.header.name')</th>
-                    <th class="text-center">@lang('employee.index.table.header.email')</th>
-                    <th class="text-center">@lang('employee.index.table.header.ic_number')</th>
-                    <th class="text-center">@lang('employee.index.table.header.image_path')</th>
-                    <th class="text-center">@lang('labels.ACTION')</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">@lang('employee.index.table.header.name')</th>
+                        <th class="text-center">@lang('employee.index.table.header.address')</th>
+                        <th class="text-center">@lang('employee.index.table.header.ic_number')</th>
+                        <th class="text-center">@lang('employee.index.table.header.start_date')</th>
+                        <th class="text-center">@lang('employee.index.table.header.freelance')</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ($employeelist as $key => $employee)
-                    <tr>
-                        <td class="text-center">{{ $employee->name }}</td>
-                        <td class="text-center">{{ $employee->email }}</td>
-                        <td class="text-center">{{ $employee->ic_number }}</td>
-                        <td class="text-center">{{ $employee->image_path }}</td>
-                        <td class="text-center" width="10%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.employee.employee.show', $employee->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.employee.employee.edit', $employee->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.employee.employee.delete', $employee->hId()], 'style'=>'display:inline'])  !!}
-                                <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach ($employeelist as $key => $employee)
+                        <tr>
+                            <td class="text-center">{{ $employee->name }}</td>
+                            <td class="text-center">{{ $employee->address }}</td>
+                            <td class="text-center">{{ $employee->ic_number }}</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center" width="10%">
+                                <a class="btn btn-xs btn-info" href="{{ route('db.employee.employee.show', $employee->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.employee.employee.edit', $employee->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.employee.employee.delete', $employee->hId()], 'style'=>'display:inline'])  !!}
+                                    <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

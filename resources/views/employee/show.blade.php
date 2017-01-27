@@ -12,6 +12,10 @@
     @lang('employee.show.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+
+@endsection
+
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
@@ -29,10 +33,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail" class="col-sm-2 control-label">@lang('employee.field.email')</label>
+                        <label for="inputAddress" class="col-sm-2 control-label">@lang('employee.field.address')</label>
                         <div class="col-sm-10">
-                            <label id="inputEmail" class="control-label">
-                                <span class="control-label-normal">{{ $employee->email }}</span>
+                            <label id="inputAddress" class="control-label">
+                                <span class="control-label-normal">{{ $employee->address }}</span>
                             </label>
                         </div>
                     </div>
@@ -43,6 +47,29 @@
                             <label id="inputIcNumber" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $employee->ic_number }}</span>
                             </label>
+                        </div>
+                    </div>
+                    <div class="form-group>
+                        <label for="inputStartDate" class="col-sm-2 control-label">@lang('employee.field.start_date')</label>
+                        <div class="col-sm-5">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputFreelance" class="col-sm-2 control-label">@lang('employee.field.freelance')</label>
+                        <div class="col-sm-5">
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox" name="freelance" class="is_icheck" disabled>&nbsp;
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBaseSalary" class="col-sm-2 control-label">@lang('employee.field.base_salary')</label>
+                        <div class="col-sm-5">
+                            <input id="inputBaseSalary" name="base_salary" type="text" class="form-control"
+                                   placeholder="@lang('employee.field.base_salary')" data-parsley-required="true"
+                                   autonumeric readonly>
                         </div>
                     </div>
                     <div class="form-group">
@@ -56,6 +83,14 @@
                                          style="max-width: 150px; max-height: 150px;"/>
                                 @endif
                                 <span class="control-label-normal">{{ $employee->image_path }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('employee.field.status')</label>
+                        <div class="col-sm-5">
+                            <label id="inputStatus" class="control-label control-label-normal">
+                                <span class="control-label-normal">@lang('lookup.'.$product->status)</span>
                             </label>
                         </div>
                     </div>

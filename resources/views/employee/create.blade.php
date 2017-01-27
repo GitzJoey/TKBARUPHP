@@ -12,6 +12,10 @@
     @lang('employee.create.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -40,28 +44,63 @@
                         <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <label for="inputEmail" class="col-sm-2 control-label">@lang('employee.field.email')</label>
+                <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
+                    <label for="inputAddress" class="col-sm-2 control-label">@lang('employee.field.address')</label>
                     <div class="col-sm-10">
-                        <input id="inputEmail" name="email" type="text" class="form-control"
-                               placeholder="@lang('employee.field.email')" data-parsley-required="true">
-                        <span class="help-block">{{ $errors->has('email') ? $errors->first('email') : '' }}</span>
+                        <input id="inputAddress" name="address" type="text" class="form-control"
+                               placeholder="@lang('employee.field.address')" data-parsley-required="true">
+                        <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('ic_number') ? 'has-error' : '' }}">
                     <label for="inputIcNumber" class="col-sm-2 control-label">@lang('employee.field.ic_number')</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-5">
                         <input id="inputIcNumber" name="ic_number" type="text" class="form-control"
                                placeholder="@lang('employee.field.ic_number')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('ic_number') ? $errors->first('ic_number') : '' }}</span>
                     </div>
                 </div>
+                <div class="form-group {{ $errors->has('start_date') ? 'has-error' : '' }}">
+                    <label for="inputStartDate" class="col-sm-2 control-label">@lang('employee.field.start_date')</label>
+                    <div class="col-sm-5">
+                        <input id="inputStartDate" name="start_date" type="text" class="form-control"
+                               placeholder="@lang('employee.field.start_date')" data-parsley-required="true">
+                        <span class="help-block">{{ $errors->has('start_date') ? $errors->first('start_date') : '' }}</span>
+                    </div>
+                </div>
+                <div class="form-group {{ $errors->has('freelance') ? 'has-error' : '' }}">
+                    <label for="inputFreelance" class="col-sm-2 control-label">@lang('employee.field.freelance')</label>
+                    <div class="col-sm-5">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" name="freelance" class="is_icheck">&nbsp;
+                            </label>
+                        </div>
+                        <span class="help-block">{{ $errors->has('freelance') ? $errors->first('freelance') : '' }}</span>
+                    </div>
+                </div>
+                <div class="form-group {{ $errors->has('base_salary') ? 'has-error' : '' }}">
+                    <label for="inputBaseSalary" class="col-sm-2 control-label">@lang('employee.field.base_salary')</label>
+                    <div class="col-sm-5">
+                        <input id="inputBaseSalary" name="base_salary" type="text" class="form-control"
+                               placeholder="@lang('employee.field.base_salary')" data-parsley-required="true"
+                               autonumeric>
+                        <span class="help-block">{{ $errors->has('base_salary') ? $errors->first('base_salary') : '' }}</span>
+                    </div>
+                </div>
                 <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
-                    <label for="inputFoto" class="col-sm-2 control-label">@lang('employee.field.image_path')</label>
+                    <label for="inputImagePath" class="col-sm-2 control-label">@lang('employee.field.image_path')</label>
                     <div class="col-sm-10">
                         <input id="inputImagePath" name="image_path" type="file" class="form-control"
                                placeholder="@lang('employee.field.image_path')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
+                    </div>
+                </div>
+                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                    <label for="inputStatus" class="col-sm-2 control-label">@lang('employee.field.status')</label>
+                    <div class="col-sm-5">
+                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -78,3 +117,18 @@
     </div>
 @endsection
 
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('input.is_icheck').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue'
+            });
+
+            $("#inputStartDate").datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
+            });
+        });
+    </script>
+@endsection

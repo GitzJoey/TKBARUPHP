@@ -14,16 +14,22 @@ return [
         'table_employee' => [
             'header' => [
                 'name' => 'Nama',
-                'email' => 'Email',
-                'ic_number' => 'Nomer KTP',
+                'address' => 'Alamat',
+                'ic_number' => 'Nomor KTP',
+                'start_date' => 'Mulai Kerja',
+                'freelance' => 'Paruh Waktu',
             ],
         ],
     ],
     'field' => [
         'name' => 'Nama',
-        'email' => 'Email',
+        'address' => 'Alamat',
         'ic_number' => 'Nomer KTP',
+        'start_date' => 'Mulai Kerja',
+        'freelance' => 'Paruh Waktu',
+        'base_salary' => 'Gaji',
         'image_path' => 'Image Path',
+        'status' => 'Status',
     ],
     'edit' => [
         'title' => 'Pegawai',
