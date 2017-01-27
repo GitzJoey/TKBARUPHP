@@ -126,7 +126,7 @@
             });
 
             $("#inputStartDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
+                format: "DD-MM-YYYY",
                 defaultDate: moment()
             });
         });
