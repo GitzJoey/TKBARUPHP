@@ -233,7 +233,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="p in productList">
-                                            <td class="text-center"><input type="checkbox" name="productSelected[]" value="@{{ p.id }}"></td>
+                                            <td class="text-center"><input type="checkbox" name="productSelected[]" v-bind:value="p.id"></td>
                                             <td>@{{ p.type.name }}</td>
                                             <td>@{{ p.name }}</td>
                                             <td>@{{ p.short_code }}</td>
@@ -271,7 +271,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(expense, expenseIdx) in expenses">
-                                            <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
+                                            <input type="hidden" name="expense_template_id[]" v-bind:value="expense.id">
                                             <td class="text-center valign-middle">
                                                 @{{ expense.name }}
                                             </td>
