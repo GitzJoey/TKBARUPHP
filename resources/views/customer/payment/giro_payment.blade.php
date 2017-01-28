@@ -178,7 +178,7 @@
                         items: []
                     }
                 },
-                ready: function() {
+                mounted: function() {
                     this.init();
                 },
                 methods: {

@@ -376,7 +376,7 @@
                         this.expenses.splice(idx, 1);
                     }
                 },
-                ready: function() {
+                mounted: function() {
                     _.forEach(this.expenseTemplates, function (expenseTemplate, index) {
                         if(expenseTemplate.is_internal_expense){
                             expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
