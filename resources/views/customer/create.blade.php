@@ -245,7 +245,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="expense in expenses">
+                                        <tr v-for="(expense, expenseIdx) in expenses">
                                             <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
                                             <td class="text-center valign-middle">
                                                 @{{ expense.name }}
@@ -263,7 +263,7 @@
                                                 @{{ expense.remarks }}
                                             </td>
                                             <td class="text-center valign-middle">
-                                                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense($index)"><span class="fa fa-close fa-fw"></span></button>
+                                                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense(expenseIdx)"><span class="fa fa-close fa-fw"></span></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -376,7 +376,7 @@
                         this.expenses.splice(idx, 1);
                     }
                 },
-                ready: function() {
+                mounted: function() {
                     _.forEach(this.expenseTemplates, function (expenseTemplate, index) {
                         if(expenseTemplate.is_internal_expense){
                             expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
@@ -388,7 +388,7 @@
                 }
             });
 
-            window.Parsley.on('parsley:field:validate', function() {
+            $('#customerForm').parsley().on('field:validate', function() {
                 validateFront();
             });
 

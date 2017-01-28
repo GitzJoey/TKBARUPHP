@@ -17,6 +17,8 @@ use App\Model\ExpenseTemplate;
 
 use App\Repos\LookupRepo;
 
+use App\Services\CustomerService;
+
 use DB;
 use Auth;
 use Validator;
@@ -27,9 +29,17 @@ use Vinkla\Hashids\Facades\Hashids;
 
 class CustomerController extends Controller
 {
-    public function __construct()
+    private $customerService;
+
+    public function __construct(CustomerService $customerService)
     {
-        $this->middleware('auth', [ 'except' => [ 'searchCustomers' ] ]);
+        $this->customerService = $customerService;
+        $this->middleware('auth', [ 
+            'except' => [ 
+                'searchCustomers', 
+                'getCustomerLastOrder'
+            ] 
+        ]);
     }
 
     public function index(Request $req)
@@ -434,6 +444,8 @@ class CustomerController extends Controller
         return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
     }
 
+    // ===================== REST API HANDLER METHODS ====================== //
+
     public function searchCustomers($param = "")
     {
         Log::info("CustomerController@searchCustomers\nparam : $param");
@@ -447,5 +459,10 @@ class CustomerController extends Controller
                 $query->where('first_name', 'like', "%$param%")
                       ->orWhere('last_name', 'like', "%$param%");
             })->get();
+    }
+
+    public function getCustomerLastOrder(Request $request)
+    {
+        return $this->customerService->getCustomerLastOrder($request->query('customerId'));
     }
 }

@@ -39,7 +39,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ asset('images/blank.png') }}" class="user-image" alt="User Image">
@@ -49,7 +48,7 @@
                         <li class="user-header">
                             <img src="{{ asset('images/blank.png') }}" class="img-circle" alt="User Image">
                             <p>
-                                {{ Auth::user()->store->name }}
+                                <strong>{{ Auth::user()->store->name }}</strong>
                                 <small>{{ Auth::user()->store->address }}</small><br/>
                                 <small>{{ Auth::user()->store->tax_id }}</small>
                             </p>

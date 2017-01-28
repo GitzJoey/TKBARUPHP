@@ -121,7 +121,9 @@ class SupplierController extends Controller
                 $supplier->products()->save($pr);
             }
 
-            $supplier->expenseTemplates()->sync($request->input('expense_template_id'));
+            if (count($request->input('expense_template_id')) > 0) {
+                $supplier->expenseTemplates()->sync($request->input('expense_template_id'));
+            }
         });
 
         return redirect(route('db.master.supplier'));
@@ -235,7 +237,9 @@ class SupplierController extends Controller
 
             $supplier->save();
 
-            $supplier->expenseTemplates()->sync($request->input('expense_template_id'));
+            if (count($request->input('expense_template_id')) > 0) {
+                $supplier->expenseTemplates()->sync($request->input('expense_template_id'));
+            }
         });
 
         return redirect(route('db.master.supplier'));

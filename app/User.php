@@ -41,6 +41,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Settings[] $settings
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\EventCalendar[] $eventCalendars
+ * @property string $api_token
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereApiToken($value)
  */
 class User extends Authenticatable
 {

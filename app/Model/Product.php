@@ -52,6 +52,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property string $barcode
+ * @property int $minimal_in_stock
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ProductCategory[] $productCategories
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereBarcode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereMinimalInStock($value)
  */
 class Product extends Model
 {
@@ -68,8 +73,10 @@ class Product extends Model
         'product_type_id',
         'name',
         'short_code',
+        'barcode',
         'description',
         'image_path',
+        'minimal_in_stock',
         'status',
         'remarks'
     ];
@@ -101,6 +108,11 @@ class Product extends Model
     public function productUnits()
     {
         return $this->hasMany('App\Model\ProductUnit');
+    }
+
+    public function productCategories()
+    {
+        return $this->hasMany('App\Model\ProductCategory');
     }
 
     public function getProductUnitsJSON()

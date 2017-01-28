@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 return [
     'create' => [
@@ -8,22 +8,25 @@ return [
         'header' => [
             'title' => 'Create Pegawai',
         ],
-        'tab' => [
-            'store' => 'Pegawai Data',
-        ],
         'table_employee' => [
             'header' => [
                 'name' => 'Nama',
-                'email' => 'Email',
-                'ic_number' => 'Nomer KTP',
+                'address' => 'Alamat',
+                'ic_number' => 'Nomor KTP',
+                'start_date' => 'Mulai Kerja',
+                'freelance' => 'Paruh Waktu',
             ],
         ],
     ],
     'field' => [
         'name' => 'Nama',
-        'email' => 'Email',
+        'address' => 'Alamat',
         'ic_number' => 'Nomer KTP',
+        'start_date' => 'Mulai Kerja',
+        'freelance' => 'Paruh Waktu',
+        'base_salary' => 'Gaji',
         'image_path' => 'Image Path',
+        'status' => 'Status',
     ],
     'edit' => [
         'title' => 'Pegawai',
@@ -43,9 +46,10 @@ return [
         'table' => [
             'header' => [
                 'name' => 'Name',
-                'email' => 'Email',
-                'ic_number' => 'identity Card Number',
-                'image_path' => 'Nomer KTP',
+                'ic_number' => 'Nomor KTP',
+                'address' => 'Address',
+                'start_date' => 'Tanggal Mulai',
+                'freelance' => 'Freelance',
             ],
         ],
     ],

@@ -38,6 +38,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property int $stock_opname_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereStockOpnameId($value)
  */
 class StockOut extends Model
 {

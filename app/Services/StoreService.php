@@ -31,12 +31,18 @@ interface StoreService
 
     public function createDefaultStore($storeName);
 
-    public function applySettings();
-
     /**
      * Get all stores that have one or more empty manual-filled fields/properties (except remarks).
      *
      * @return Collection unfinished stores
      */
     public function getUnfinishedStore();
+
+    /**
+     * Check whether there are some stores that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     * 
+     * @return bool
+     */
+    public function isUnfinishedStoreExist();
 }

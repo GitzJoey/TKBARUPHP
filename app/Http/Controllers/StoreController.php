@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Auth;
+use Illuminate\Support\Facades\Input;
 use Validator;
 use LaravelLocalization;
 use Illuminate\Http\Request;
@@ -104,7 +106,13 @@ class StoreController extends Controller
                 'is_default' => $data['is_default'],
                 'frontweb' => $data['frontweb'],
                 'image_filename' => $imageName,
-                'remarks' => empty($data['remarks']) ? '' : $data['remarks']
+                'remarks' => empty($data['remarks']) ? '' : $data['remarks'],
+                'date_format' => $data['date_format'],
+                'time_format' => $data['time_format'],
+                'thousand_separator' => $data['thousand_separator'],
+                'decimal_separator' => $data['decimal_separator'],
+                'decimal_digit' => $data['decimal_digit'],
+                'ribbon' => $data['ribbon'],
             ]);
 
             for ($i = 0; $i < count($data['bank']); $i++) {
@@ -180,6 +188,14 @@ class StoreController extends Controller
             $store->image_filename = $imageName;
             $store->frontweb = $data['frontweb'];
             $store->remarks = empty($data['remarks']) ? '' : $data['remarks'];
+
+            $store->date_format = $data['date_format'];
+            $store->time_format = $data['time_format'];
+            $store->thousand_separator = $data['thousand_separator'];
+            $store->decimal_separator = $data['decimal_separator'];
+            $store->decimal_digit = $data['decimal_digit'];
+            $store->ribbon = $data['ribbon'];
+
             $store->save();
         });
 
@@ -218,7 +234,7 @@ class StoreController extends Controller
         return redirect(route('db.admin.store'));
     }
 
-    public function applySettings()
+    public function applySettings(Request $req)
     {
         return response()->json([
             'return' => 'success'

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.29 on 2017-01-15.
+ * Generated for Laravel 5.3.29 on 2017-01-26.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -5754,6 +5754,7 @@ namespace {
          * @param callback|null $callback
          * @param string|null $encoding
          * @param bool $noBasePath
+         * @param callback|null $callbackConfigReader
          * @return \Maatwebsite\Excel\LaravelExcelReader 
          * @static 
          */
@@ -8761,6 +8762,17 @@ namespace {
          */
         public static function loadView($view, $data = array(), $mergeData = array(), $encoding = null){
             return \Barryvdh\DomPDF\PDF::loadView($view, $data, $mergeData, $encoding);
+        }
+        
+        /**
+         * Set/Change an option in DomPdf
+         *
+         * @param array $options
+         * @return static 
+         * @static 
+         */
+        public static function setOptions($options){
+            return \Barryvdh\DomPDF\PDF::setOptions($options);
         }
         
         /**

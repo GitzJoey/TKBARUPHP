@@ -21,4 +21,15 @@ class WarehouseServiceImpl implements WarehouseService
         ->orWhereNull('phone_num')
         ->get();
     }
+
+    /**
+     * Check whether there are some warehouses that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     *
+     * @return bool
+     */
+    public function isUnfinishedWarehouseExist()
+    {
+        return count(getUnfinishedWarehouse()) > 0;
+    }
 }

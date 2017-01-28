@@ -16,9 +16,17 @@ interface CustomerService
     public function getUnfinishedCustomer();
 
     /**
+     * Check whether there are some customers that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     *
+     * @return bool
+     */
+    public function isUnfinishedCustomerExist();
+
+    /**
      * Get customer last sales order.
      *
-     * @param mixed $customer
+     * @param int | string $customerId
      * @return SalesOrder
      */
     public function getCustomerLastOrder($customer);
@@ -26,10 +34,10 @@ interface CustomerService
     /**
      * Get the total amount of customer's unpaid sales orders.
      *
-     * @param mixed $customer
+     * @param int|string $customerId
      * @return float
      */
-    public function getCustomerUnpaidSalesOrderTotalAmount($customer);
+    public function getCustomerUnpaidSalesOrderTotalAmount($customerId);
 
     /**
      * Get all passive customers in a period of time.

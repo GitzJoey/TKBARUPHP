@@ -15,6 +15,7 @@ return [
         'cost' => 'Ongkos',
         'odometer' => 'Odometer',
         'remarks' => 'Keterangan',
+        'maintenance_date' => 'Tanggal Pemeliharaan',
     ],
     'edit' => [
         'title' => 'Pemeliharaan Truk',

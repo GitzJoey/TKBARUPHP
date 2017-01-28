@@ -90,7 +90,7 @@
                     <div class="col-sm-10">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox" name="allow_login">&nbsp;
+                                <input type="checkbox" name="allow_login" class="is_icheck">&nbsp;
                             </label>
                         </div>
                     </div>
@@ -125,8 +125,8 @@
 
 @section('custom_js')
     <script type="text/javascript">
-        $(function () {
-            $('input').iCheck({
+        $(document).ready(function () {
+            $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'

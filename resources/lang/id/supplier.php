@@ -6,7 +6,7 @@ return [
         'page_title' => 'Supplier',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Creaate Supplier',
+            'title' => 'Tambah Supplier',
         ],
         'tab' => [
             'supplier' => 'Data Supplier',

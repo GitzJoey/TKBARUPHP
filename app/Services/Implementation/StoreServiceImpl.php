@@ -105,11 +105,6 @@ class StoreServiceImpl implements StoreService
         return $store->id;
     }
 
-    public function applySettings()
-    {
-        return 'ok';
-    }
-
     /**
      * Get all stores that have one or more empty manual-filled fields/properties (except remarks).
      *
@@ -125,5 +120,16 @@ class StoreServiceImpl implements StoreService
         ->orWhereNull('frontweb')
         ->orWhereNull('image_filename')
         ->get();
+    }
+
+    /**
+     * Check whether there are some stores that have one 
+     * or more empty manual-filled fields/properties (except remarks) or not.
+     * 
+     * @return bool
+     */
+    public function isUnfinishedStoreExist()
+    {
+        return count(getUnfinishedStore()) > 0;
     }
 }

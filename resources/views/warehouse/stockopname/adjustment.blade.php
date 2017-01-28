@@ -30,7 +30,7 @@
         </div>
         {!! Form::model($stock, ['method' => 'POST', 'route' => ['db.warehouse.stockopname.adjust', $stock->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
-            <div ng-app="stockOpnameModule" ng-controller="stockOpnameController">
+            <div id="stockOpnameVue">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="inputWarehouse" class="col-sm-2 control-label">@lang('warehouse.stockopname.adjust.field.warehouse')</label>
@@ -63,7 +63,7 @@
                         <div class="col-sm-10">
                             <div class="checkbox icheck">
                                 <label>
-                                    <input id="inputIsMatch" type="checkbox" name="is_match">&nbsp;
+                                    <input id="inputIsMatch" type="checkbox" name="is_match" class="is_icheck">&nbsp;
                                 </label>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                             <input id="inputAdjustedQuantity" name="adjusted_quantity" type="text" class="form-control"
                                    placeholder="@lang('warehouse.stockopname.adjust.field.adjusted_quantity')"
                                    data-parsley-required="true" data-parsley-pattern="/^\d+(,\d+)*$/" ng-model="adjustedQuantity"
-                                   fcsa-number>
+                                   autonumeric data-a-sep=",">
                             <span class="help-block">{{ $errors->has('adjusted_quantity') ? $errors->first('adjusted_quantity') : '' }}</span>
                         </div>
                     </div>
@@ -109,19 +109,14 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('stockOpnameModule', ['fcsa-number']);
-        app.controller("stockOpnameController", ['$scope', function ($scope) {
-                
-        }]);
-
-        $(function () {
-            $('input').iCheck({
+        $(document).ready(function () {
+            $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'
             });
 
-            $('input').on('ifChanged', function(c){
+            $('input.is_icheck').on('ifChanged', function(c){
                 if (c.target.checked) {
                     $('#inputAdjustedQuantity').val(0).attr('readonly', 'readonly');
                     $('#inputReason').val('').attr('readonly', 'readonly');

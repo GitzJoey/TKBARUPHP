@@ -412,6 +412,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Enable Input Stock Opname'
             ],
             [
+                'name' => 'warehouse.transfer-stock',
+                'display_name' => '[Warehouse Transfer Stock] Input Transfer Stock',
+                'description' => 'Enable Input Transfer Stock'
+            ],
+            [
                 'name' => 'bank.upload',
                 'display_name' => '[Bank] Upload Bank Data',
                 'description' => 'Enable Upload Bank Data'

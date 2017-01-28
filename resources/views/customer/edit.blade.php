@@ -375,7 +375,7 @@
                         this.expenses.splice(idx, 1);
                     }
                 },
-                ready: function() {
+                mounted: function() {
                     _.forEach(this.expenses, function (expense, index) {
                         if(expense.is_internal_expense){
                             expense.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
@@ -396,7 +396,7 @@
                 }
             });
 
-            window.Parsley.on('parsley:field:validate', function() {
+            $('#customerForm').parsley().on('field:validate', function() {
                 validateFront();
             });
 

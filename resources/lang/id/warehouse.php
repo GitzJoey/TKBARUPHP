@@ -206,4 +206,28 @@ return [
             ],
         ],
     ],
+    'transfer_stock' => [
+        'create' => [
+            'title' => 'Tambah Pindah Stok',
+            'page_title' => 'Tambah Pindah Stok',
+            'page_title_desc' => '',
+        ],
+        'index' => [
+            'title' => 'Pindah Stok',
+            'page_title' => 'Pindah Stok',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Pindah Stok',
+            ],
+            'table' => [
+                'header' => [
+                    'transfer_date' => 'Tanggal Pindah',
+                    'product' => 'Produk',
+                    'from' => 'Dari',
+                    'to' => 'Ke',
+                    'quantity' => 'Jumlah',
+                ],
+            ],
+        ],
+    ],
 ];

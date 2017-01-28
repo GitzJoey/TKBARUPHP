@@ -43,6 +43,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereDeletedAt($value)
  * @mixin \Eloquent
  * @property integer $deleted_by
+ * @property-read \App\Model\Store $store
  */
 class Employee extends Model
 {
@@ -50,13 +51,18 @@ class Employee extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'employee';
+    protected $table = 'employees';
 
     protected $fillable = [
+        'store_id',
         'name',
-        'email',
+        'address',
         'ic_number',
-        'image_path'
+        'start_date',
+        'freelance',
+        'base_salary',
+        'image_path',
+        'status,'
     ];
 
     protected $hidden = [
@@ -68,9 +74,14 @@ class Employee extends Model
         'deleted_at',
     ];
 
-    public function hId() //hahah
+    public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function store()
+    {
+        return $this->belongsTo('App\Model\Store');
     }
 
     public static function boot()

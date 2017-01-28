@@ -340,6 +340,9 @@ return [
             ],
             'footer' => '',
         ],
+        'purchase_order' => [
+            'report_name' => '',
+        ],
     ],
     'viewer' => [
         'title' => 'Tampilan Laporan',

@@ -1,6 +1,16 @@
 <?php 
 
 return [
+    'item.accounting' => 'Keuangan',
+    'item.accounting.cash' => 'Kas',
+    'item.accounting.capital' => 'Modal',
+    'item.accounting.cost' => 'Biaya',
+    'item.accounting.cost.cost' => 'Biaya',
+    'item.accounting.cost.category' => 'Kategori',
+    'item.accounting.revenue' => 'Pendapatan',
+    'item.accounting.revenue.revenue' => 'Pendapatan',
+    'item.accounting.revenue.category' => 'Kategori',
+    'item.accounting.cash_flow' => 'Arus Kas',
     'item.po' => 'Pembelian',
     'item.po_new' => 'Pembelian',
     'item.po_revise' => 'Revisi',
@@ -17,7 +27,8 @@ return [
     'item.wh' => 'Gudang',
     'item.wh_inflow' => 'Masuk',
     'item.wh_outflow' => 'Keluar',
-    'item.wh_stockopname' => 'Stock Opname',
+    'item.wh_stockopname' => 'Stok Opname',
+    'item.wh_transfer' => 'Pindah Stok',
     'item.bank' => 'Bank',
     'item.bank_upload' => 'Upload',
     'item.bank_consolidate' => 'Konsolidasi',
@@ -52,4 +63,6 @@ return [
     'item.adm_unit' => 'Satuan',
     'item.adm_settings' => 'Pengaturan',
     'item.adm_phone_provider' => 'Provider Telepon',
+    'item.employee' => 'Pegawai',
+    'item.employee.employee_list' => 'Daftar Pegawai',
 ];

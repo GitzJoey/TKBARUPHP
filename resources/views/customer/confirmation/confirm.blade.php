@@ -192,7 +192,7 @@
                         }
                     }
                 },
-                ready: function() {
+                mounted: function() {
                     this.createDeliver();
                     console.log(this.outflow.delivers);
                 }

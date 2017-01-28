@@ -14,7 +14,7 @@
         @yield('custom_css')
     </head>
 
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini {{ !empty(Auth::user()->store->ribbon) ? Auth::user()->store->ribbon:'' }}">
         <div class="wrapper">
             @include('layouts.adminlte.header')
 
@@ -170,7 +170,6 @@
                         data: {
                             df: $('#settingDateFormat').val(),
                             tf: $('#settingTimeFormat').val(),
-                            hf: $('#setting1224Hour').val(),
                             ts: $('#settingThousandSeparator').val(),
                             ds: $('#settingDecimalSeparator').val(),
                             dd: $('#settingDecimalDigit').val()

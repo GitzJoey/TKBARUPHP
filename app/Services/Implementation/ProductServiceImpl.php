@@ -14,12 +14,12 @@ class ProductServiceImpl implements ProductService
      *
      * @return Collection unfinished products
      */
-    public function getUnfinishedProduct()
+    public function getUnfinisheProduct()
     {
         return Product::orWhereNull('name')
-        ->orWhereNull('short_code')
-        ->orWhereNull('description')
-        ->orWhereNull('image_path')
-        ->get();
+            ->orWhereNull('short_code')
+            ->orWhereNull('description')
+            ->orWhereNull('image_path')
+            ->get();
     }
 }

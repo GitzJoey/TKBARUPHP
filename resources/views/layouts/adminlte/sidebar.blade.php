@@ -13,6 +13,37 @@
 
         <ul class="sidebar-menu">
             <li class="header">&nbsp;</li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-table fa-fw"></i> <span>@lang('menu.item.accounting')</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('db.acc.cash') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash')</a></li>
+                    <li><a href="{{ route('db.acc.capital') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital')</a></li>
+                    <li>
+                        <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost')
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ route('db.acc.cost') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.cost')</a></li>
+                            <li><a href="{{ route('db.acc.cost.category') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.category')</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue')
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ route('db.acc.revenue') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue.revenue')</a></li>
+                            <li><a href="{{ route('db.acc.revenue.category') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue.category')</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ route('db.acc.cash_flow') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash_flow')</a></li>
+                </ul>
+            </li>
             @if(Entrust::can('po.po-create') OR
                 Entrust::can('po.po-revise') OR
                 Entrust::can('po.po-payment') OR
@@ -109,7 +140,8 @@
             @endif
             @if(Entrust::can('warehouse.inflow-input') OR
                 Entrust::can('warehouse.outflow-input') OR
-                Entrust::can('warehouse.stockopname'))
+                Entrust::can('warehouse.stockopname') OR
+                Entrust::can('warehouse.transfer-stock'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.warehouse') || Active::checkRoutePattern('db.warehouse.*')) }}">
                     <a href="#"><i class="fa fa-wrench fa-fw"></i><span>&nbsp;@lang('menu.item.wh')</span>
                         <span class="pull-right-container">
@@ -129,7 +161,12 @@
                         @endif
                         @if(Entrust::can('warehouse.stockopname'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.stockopname.*')) }}">
-                                <a href="{{ route('db.warehouse.stockopname.index') }}"><i class="fa fa-database"></i>&nbsp;@lang('menu.item.wh_stockopname')</a>
+                                <a href="{{ route('db.warehouse.stockopname.index') }}"><i class="fa fa-database fa-fw"></i>&nbsp;@lang('menu.item.wh_stockopname')</a>
+                            </li>
+                        @endif
+                        @if(Entrust::can('warehouse.transfer-stock'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.transfer_stock.*')) }}">
+                                <a href="{{ route('db.warehouse.transfer_stock.index') }}"><i class="fa fa-refresh fa-fw"></i>&nbsp;@lang('menu.item.wh_transfer')</a>
                             </li>
                         @endif
                     </ul>
@@ -213,14 +250,14 @@
                 Entrust::can('employee.employee-edit') OR
                 Entrust::can('employee.employee-delete'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.employee.employee') || Active::checkRoutePattern('db.employee.employee.*')) }}">
-                    <a href="#"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i><span>&nbsp;@lang('menu.item.employee')</span>
+                    <a href="#"><i class="fa fa-odnoklassniki fa-fw"></i><span>&nbsp;@lang('menu.item.employee')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
                         <li class="{{ active_class(Active::checkRoutePattern('db.employee.employee') || Active::checkRoutePattern('db.employee.employee.*')) }}">
-                            <a href="{{ route('db.employee.employee') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.employee_list')</a>
+                            <a href="{{ route('db.employee.employee') }}"><i class="fa fa-odnoklassniki fa-fw"></i>&nbsp;@lang('menu.item.employee.employee_list')</a>
                         </li>
                     </ul>
                 </li>

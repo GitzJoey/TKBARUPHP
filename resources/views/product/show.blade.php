@@ -33,6 +33,31 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputCategory" class="col-sm-2 control-label">@lang('product.field.category')</label>
+                        <div class="col-sm-10">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th width="20%">@lang('product.show.table.category.header.code')</th>
+                                        <th width="30%">@lang('product.show.table.category.header.name')</th>
+                                        <th width="40%">@lang('product.show.table.category.header.description')</th>
+                                        <th width="10%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($product->productCategories as $pc)
+                                        <tr>
+                                            <td>{{ $pc->code }}</td>
+                                            <td>{{ $pc->name }}</td>
+                                            <td>{{ $pc->description }}</td>
+                                            <td></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputName" class="col-sm-2 control-label">@lang('product.field.name')</label>
                         <div class="col-sm-10">
                             <label id="inputName" class="control-label">
@@ -49,6 +74,14 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputBarcode" class="col-sm-2 control-label">@lang('product.field.barcode')</label>
+                        <div class="col-sm-10">
+                            <label id="inputBarcode" class="control-label">
+                                <span class="control-label-normal">{{ $product->barcode }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputDescription" class="col-sm-2 control-label">@lang('product.field.description')</label>
                         <div class="col-sm-10">
                             <label id="inputDescription" class="control-label control-label-normal">
@@ -61,18 +94,18 @@
                         <div class="col-sm-10">
                             <table class="table table-striped table-bordered">
                                 <thead>
-                                <tr>
-                                    <th>@lang('product.show.table.header.unit')</th>
-                                    <th class="text-center">@lang('product.show.table.header.is_base')</th>
-                                    <th>@lang('product.show.table.header.conversion_value')</th>
-                                    <th>@lang('product.show.table.header.remarks')</th>
-                                </tr>
+                                    <tr>
+                                        <th>@lang('product.show.table.product.header.unit')</th>
+                                        <th class="text-center">@lang('product.show.table.product.header.is_base')</th>
+                                        <th>@lang('product.show.table.product.header.conversion_value')</th>
+                                        <th>@lang('product.show.table.product.header.remarks')</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($product->productUnits as $produnit)
                                         <tr>
                                             <td>{{ $produnit->unit->name }}</td>
-                                            <td>{{ $produnit->is_base }}</td>
+                                            <td>{{ $produnit->is_base ? trans('lookup.YESNOSELECT.YES'):trans('lookup.YESNOSELECT.NO') }}</td>
                                             <td>{{ $produnit->conversion_value }}</td>
                                             <td>{{ $produnit->remarks }}</td>
                                         </tr>
@@ -82,9 +115,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="inputMinimalInStock" class="col-sm-2 control-label">@lang('product.field.minimal_in_stock')</label>
+                        <div class="col-sm-10">
+                            <label id="inputMinimalInStock" class="control-label control-label-normal">
+                                <span class="control-label-normal">{{ $product->minimal_in_stock }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('product.field.status')</label>
                         <div class="col-sm-10">
-                            <label id="status" class="control-label control-label-normal">
+                            <label id="inputStatus" class="control-label control-label-normal">
                                 <span class="control-label-normal">@lang('lookup.'.$product->status)</span>
                             </label>
                         </div>
@@ -92,7 +133,7 @@
                     <div class="form-group">
                         <label for="inputRemarks" class="col-sm-2 control-label">@lang('product.field.remarks')</label>
                         <div class="col-sm-10">
-                            <label id="remarks" class="control-label control-label-normal">
+                            <label id="inputRemarks" class="control-label control-label-normal">
                                 <span class="control-label-normal">{{ $product->remarks }}</span>
                             </label>
                         </div>

@@ -5,7 +5,7 @@
 @section('content')
     <body class="hold-transition register-page">
 
-    <div class="register-box">
+    <div class="register-box animated slideInDown">
         <div class="register-logo">
             <a href="#"></a>
         </div>
@@ -36,14 +36,14 @@
                 @else
                 @endif
                 <div class="form-group has-feedback {{ $errors->has('name') ? ' has-error' : '' }}">
-                    <input id="name" name="name" type="text" class="form-control" placeholder="{{ trans('login.register.full_name') }}">
+                    <input id="name" name="name" type="text" class="form-control" placeholder="{{ trans('login.register.full_name') }}" value="{{ old('name') }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     @if ($errors->has('name'))
                         <span class="help-block"><strong>{{ $errors->first('name') }}</strong></span>
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ trans('login.register.email') }}">
+                    <input id="email" name="email" type="email" class="form-control" placeholder="{{ trans('login.register.email') }}" value="{{ old('email') }}">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
                         <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
@@ -68,7 +68,7 @@
                     <div class="col-xs-12">
                         <div class="checkbox icheck">
                             <label></label>
-                            <input id="terms" type="checkbox" data-parsley-required="true" data-parsley-errors-container="#checkbox_req"> @lang('login.register.agree_1')<a href="#" data-toggle="modal" data-target="#termsModal">@lang('login.register.agree_2')</a>
+                            <input id="terms" class="is_icheck" type="checkbox" data-parsley-required="true" data-parsley-errors-container="#checkbox_req"> @lang('login.register.agree_1')<a href="#" data-toggle="modal" data-target="#termsModal">@lang('login.register.agree_2')</a>
                             <span id="checkbox_req" class="help-block has-error"></span>
                         </div>
                     </div>
@@ -111,7 +111,9 @@
 
     <script>
         $(document).ready(function () {
-            $('input').iCheck({
+            window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
+
+            $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'
