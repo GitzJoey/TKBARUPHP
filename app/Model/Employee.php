@@ -56,9 +56,13 @@ class Employee extends Model
     protected $fillable = [
         'store_id',
         'name',
-        'email',
+        'address',
         'ic_number',
-        'image_path'
+        'start_date',
+        'freelance',
+        'base_salary',
+        'image_path',
+        'status,'
     ];
 
     protected $hidden = [

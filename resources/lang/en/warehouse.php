@@ -202,8 +202,32 @@ return [
                 'is_match' => 'Match',
                 'current_quantity' => 'Current Quantity',
                 'adjusted_quantity' => 'Adjusted Quantity',
-                'reason' => 'Reason'
-            ]
-        ]
+                'reason' => 'Reason',
+            ],
+        ],
+    ],
+    'transfer_stock' => [
+        'create' => [
+            'title' => 'Create Transfer Stock',
+            'page_title' => 'Create Transfer Stock',
+            'page_title_desc' => '',
+        ],
+        'index' => [
+            'title' => 'Transfer Stock',
+            'page_title' => 'Transfer Stock',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Transfer Stock Lists',
+            ],
+            'table' => [
+                'header' => [
+                    'transfer_date' => 'Transfer Date',
+                    'product' => 'Product',
+                    'from' => 'From',
+                    'to' => 'To',
+                    'quantity' => 'Quantity',
+                ],
+            ],
+        ],
     ],
 ];

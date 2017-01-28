@@ -10,6 +10,8 @@ namespace  App\Http\Controllers;
 
 use App\Model\Employee;
 
+use App\Repos\LookupRepo;
+
 use Validator;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -36,7 +38,9 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        return view('employee.create');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+
+        return view('employee.create', compact('statusDDL'));
     }
 
     public function store(Request $data)

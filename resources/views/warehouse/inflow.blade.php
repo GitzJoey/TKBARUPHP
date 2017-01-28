@@ -45,25 +45,25 @@
             <div class="box-body">
                 <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <th class="text-center">@lang('warehouse.inflow.index.table.header.code')</th>
-                        <th class="text-center">@lang('warehouse.inflow.index.table.header.po_date')</th>
-                        <th class="text-center">@lang('warehouse.inflow.index.table.header.supplier')</th>
-                        <th class="text-center">@lang('warehouse.inflow.index.table.header.shipping_date')</th>
-                        <th class="text-center">@lang('labels.ACTION')</th>
-                    </tr>
+                        <tr>
+                            <th class="text-center">@lang('warehouse.inflow.index.table.header.code')</th>
+                            <th class="text-center">@lang('warehouse.inflow.index.table.header.po_date')</th>
+                            <th class="text-center">@lang('warehouse.inflow.index.table.header.supplier')</th>
+                            <th class="text-center">@lang('warehouse.inflow.index.table.header.shipping_date')</th>
+                            <th class="text-center">@lang('labels.ACTION')</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr v-for="po in POs">
                             <td class="text-center">@{{ po.code }}</td>
                             <td class="text-center">@{{ po.po_created }}</td>
                             <td class="text-center">
-                                <span v-show="po.customer_type == 'SUPPLIERTYPE.R'">@{{ po.supplier.name }}</span>
-                                <span v-show="po.customer_type == 'SUPPLIERTYPE.WI">@{{ po.walk_in_supplier }}</span>
+                                <span v-show="po.supplier_type == 'SUPPLIERTYPE.R'">@{{ po.supplier.name }}</span>
+                                <span v-show="po.supplier_type == 'SUPPLIERTYPE.WI'">@{{ po.walk_in_supplier }}</span>
                             </td>
                             <td class="text-center">@{{ po.shipping_date }}</td>
                             <td class="text-center" width="10%">
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow') }}/@{{ po.id }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" v-bind:href="'{{ route('db.warehouse.inflow') }}/' + po.id" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
                         <tr v-show="selectedWarehouse != '' && !POs.length">
@@ -88,10 +88,14 @@
                 },
                 methods: {
                     getWarehousePOs: function (selectedWarehouse) {
+                        this.POs = [];
                         this.$http.get('{{ route('api.warehouse.inflow.po') }}/' + this.selectedWarehouse.id).then(function(data) {
                             this.POs = data.data;
                         });
                     }
+                },
+                mounted: function() {
+
                 }
             });
         });

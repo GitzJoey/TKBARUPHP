@@ -44,7 +44,6 @@
                     <li><a href="{{ route('db.acc.cash_flow') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash_flow')</a></li>
                 </ul>
             </li>
-            <li class="header">&nbsp;</li>
             @if(Entrust::can('po.po-create') OR
                 Entrust::can('po.po-revise') OR
                 Entrust::can('po.po-payment') OR
@@ -141,7 +140,8 @@
             @endif
             @if(Entrust::can('warehouse.inflow-input') OR
                 Entrust::can('warehouse.outflow-input') OR
-                Entrust::can('warehouse.stockopname'))
+                Entrust::can('warehouse.stockopname') OR
+                Entrust::can('warehouse.transfer-stock'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.warehouse') || Active::checkRoutePattern('db.warehouse.*')) }}">
                     <a href="#"><i class="fa fa-wrench fa-fw"></i><span>&nbsp;@lang('menu.item.wh')</span>
                         <span class="pull-right-container">
@@ -161,7 +161,12 @@
                         @endif
                         @if(Entrust::can('warehouse.stockopname'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.stockopname.*')) }}">
-                                <a href="{{ route('db.warehouse.stockopname.index') }}"><i class="fa fa-database"></i>&nbsp;@lang('menu.item.wh_stockopname')</a>
+                                <a href="{{ route('db.warehouse.stockopname.index') }}"><i class="fa fa-database fa-fw"></i>&nbsp;@lang('menu.item.wh_stockopname')</a>
+                            </li>
+                        @endif
+                        @if(Entrust::can('warehouse.transfer-stock'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.transfer_stock.*')) }}">
+                                <a href="{{ route('db.warehouse.transfer_stock.index') }}"><i class="fa fa-refresh fa-fw"></i>&nbsp;@lang('menu.item.wh_transfer')</a>
                             </li>
                         @endif
                     </ul>

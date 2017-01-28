@@ -201,9 +201,8 @@
                         this.inflow.receipts.splice(index, 1);
                     }
                 },
-                ready: function() {
+                mounted: function() {
                     this.createReceipt();
-                    console.log(this.inflow.receipts);
                 }
             });
 

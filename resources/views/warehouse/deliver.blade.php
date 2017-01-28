@@ -180,7 +180,7 @@
                         this.outflow.delivers.splice(index, 1);
                     }
                 },
-                ready: function() {
+                mounted: function() {
                     this.createDeliver();
                 }
             });

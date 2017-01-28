@@ -37,7 +37,6 @@ class UnitController extends Controller
 
     public function create()
     {
-
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('unit.create', compact('statusDDL'));
@@ -49,13 +48,11 @@ class UnitController extends Controller
             'name' => 'required|string|max:255',
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-            'remarks' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.admin.unit.create'))->withInput()->withErrors($validator);
         } else {
-
             Unit::create([
                 'name' => $data['name'],
                 'symbol' => $data['symbol'],
@@ -82,7 +79,6 @@ class UnitController extends Controller
             'name' => 'required|string|max:255',
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-            'remarks' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -90,7 +86,6 @@ class UnitController extends Controller
         } else {
             Unit::find($id)->update($req->all());
             return redirect(route('db.admin.unit'));
-
         }
     }
 
@@ -99,5 +94,4 @@ class UnitController extends Controller
         Unit::find($id)->delete();
         return redirect(route('db.admin.unit'));
     }
-
 }

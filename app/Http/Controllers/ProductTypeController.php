@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 
 use App\Repos\LookupRepo;
@@ -50,6 +51,7 @@ class ProductTypeController extends Controller
         ]);
 
         ProductType::create([
+            'store_id' => Auth::user()->store->id,
             'name' => $data['name'],
             'short_code' => $data['short_code'],
             'description' => $data['description'],
