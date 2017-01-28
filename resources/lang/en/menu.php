@@ -28,6 +28,7 @@ return [
     'item.wh_inflow' => 'Inflow',
     'item.wh_outflow' => 'Outflow',
     'item.wh_stockopname' => 'Stock Opname',
+    'item.wh_transfer' => 'Transfer Stock',
     'item.bank' => 'Bank',
     'item.bank_upload' => 'Upload',
     'item.bank_consolidate' => 'Consolidate',

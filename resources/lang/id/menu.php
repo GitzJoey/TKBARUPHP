@@ -1,7 +1,7 @@
 <?php 
 
 return [
-    'item.accounting' => 'Accounting',
+    'item.accounting' => 'Keuangan',
     'item.accounting.cash' => 'Kas',
     'item.accounting.capital' => 'Modal',
     'item.accounting.cost' => 'Biaya',
@@ -27,7 +27,8 @@ return [
     'item.wh' => 'Gudang',
     'item.wh_inflow' => 'Masuk',
     'item.wh_outflow' => 'Keluar',
-    'item.wh_stockopname' => 'Stock Opname',
+    'item.wh_stockopname' => 'Stok Opname',
+    'item.wh_transfer' => 'Pindah Stok',
     'item.bank' => 'Bank',
     'item.bank_upload' => 'Upload',
     'item.bank_consolidate' => 'Konsolidasi',

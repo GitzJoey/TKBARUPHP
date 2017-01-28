@@ -221,18 +221,27 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::patch('edit/{id}', 'WarehouseController@update');
                 Route::delete('edit/{id}', 'WarehouseController@delete')->name('db.master.warehouse.delete');
 
-                Route::get('inflow', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
-                Route::get('inflow/receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
-                Route::post('inflow/receipt/{id?}', 'WarehouseInflowController@saveReceipt');
+                Route::group(['prefix' => 'inflow'], function() {
+                    Route::get('', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
+                    Route::get('receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
+                    Route::post('receipt/{id?}', 'WarehouseInflowController@saveReceipt');
+                });
 
-                Route::get('outflow', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow.index');
-                Route::get('outflow/deliver/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
-                Route::post('outflow/deliver/{id?}', 'WarehouseOutflowController@saveDeliver');
+                Route::group(['prefix' => 'outflow'], function() {
+                    Route::get('', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow.index');
+                    Route::get('deliver/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
+                    Route::post('deliver/{id?}', 'WarehouseOutflowController@saveDeliver');
+                });
 
                 Route::group(['prefix' => 'stockopname'], function () {
                     Route::get('', 'WarehouseController@stockopname')->name('db.warehouse.stockopname.index');
                     Route::get('adjust/{id}', 'WarehouseController@adjust')->name('db.warehouse.stockopname.adjust');
                     Route::post('adjust/{id}', 'WarehouseController@saveAdjustment');
+                });
+
+                Route::group(['prefix' => 'trf/stock'], function() {
+                    Route::get('', 'WarehouseTransferStockController@index')->name('db.warehouse.transfer_stock.index');
+                    Route::get('from/{from_id}/to/{to_id}', 'WarehouseTransferStockController@transfer')->name('db.warehouse.transfer_stock.transfer');
                 });
             });
 
@@ -265,7 +274,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::patch('edit/{id}', 'SalaryController@update');
                 Route::delete('edit/{id}', 'SalaryController@delete')->name('db.master.salary.delete');
             });
-
 
             Route::group(['prefix' => 'vendor'], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
