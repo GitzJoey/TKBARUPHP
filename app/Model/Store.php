@@ -66,6 +66,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereThousandSeparator($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDecimalSeparator($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDecimalDigit($value)
+ * @property string $ribbon
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereRibbon($value)
  */
 class Store extends Model
 {

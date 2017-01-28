@@ -15,6 +15,35 @@ use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Model\AccountingCash
+ *
+ * @property int $id
+ * @property int $store_id
+ * @property string $code
+ * @property string $name
+ * @property bool $is_default
+ * @property string $status
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereIsDefault($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class AccountingCash extends Model
 {
     use SoftDeletes;

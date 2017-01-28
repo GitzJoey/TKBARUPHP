@@ -57,6 +57,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ProductCategory[] $productCategories
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereBarcode($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereMinimalInStock($value)
+ * @property int $minimum_in_stock
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereMinimumInStock($value)
  */
 class Product extends Model
 {

@@ -44,6 +44,18 @@ use Vinkla\Hashids\Facades\Hashids;
  * @mixin \Eloquent
  * @property integer $deleted_by
  * @property-read \App\Model\Store $store
+ * @property int $store_id
+ * @property string $address
+ * @property string $start_date
+ * @property bool $freelance
+ * @property int $base_salary
+ * @property string $status
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereStartDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereFreelance($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereBaseSalary($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereStatus($value)
  */
 class Employee extends Model
 {
