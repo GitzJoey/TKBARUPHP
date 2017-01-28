@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-use Illuminate\Http\Request;
 use Doctrine\Common\Collections\Collection;
 
 interface StoreService
