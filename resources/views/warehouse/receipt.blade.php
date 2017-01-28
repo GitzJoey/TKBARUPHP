@@ -202,9 +202,7 @@
                     }
                 },
                 mounted: function() {
-                    alert('a');
                     this.createReceipt();
-                    console.log(this.inflow.receipts);
                 }
             });
 
