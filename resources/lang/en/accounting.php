@@ -21,6 +21,21 @@ return [
             'page_title' => 'Cash',
             'page_title_desc' => '',
         ],
+        'create' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+        ],
+        'edit' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+        ],
+        'show' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+        ],
     ],
     'cost' => [
         'category' => [

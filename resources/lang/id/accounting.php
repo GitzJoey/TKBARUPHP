@@ -21,6 +21,21 @@ return [
             'page_title' => 'Kas',
             'page_title_desc' => '',
         ],
+        'create' => [
+            'title' => 'Tambah Kas',
+            'page_title' => 'Tambah Kas',
+            'page_title_desc' => '',
+        ],
+        'edit' => [
+            'title' => 'Ubah Kas',
+            'page_title' => 'Ubah Kas',
+            'page_title_desc' => '',
+        ],
+        'show' => [
+            'title' => 'Tampilkan Kas',
+            'page_title' => 'Tampilkan Kas',
+            'page_title_desc' => '',
+        ],
     ],
     'cost' => [
         'category' => [
