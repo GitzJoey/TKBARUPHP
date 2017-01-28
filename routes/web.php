@@ -261,7 +261,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
                 Route::group(['prefix' => 'trf/stock'], function() {
                     Route::get('', 'WarehouseTransferStockController@index')->name('db.warehouse.transfer_stock.index');
-                    Route::get('from/{from_id}/to/{to_id}', 'WarehouseTransferStockController@transfer')->name('db.warehouse.transfer_stock.transfer');
+                    Route::get('transfer', 'WarehouseTransferStockController@transfer')->name('db.warehouse.transfer_stock.transfer');
                 });
             });
 

@@ -30,34 +30,34 @@
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center">@lang('product.index.table.header.type')</th>
-                    <th class="text-center">@lang('product.index.table.header.name')</th>
-                    <th class="text-center">@lang('product.index.table.header.short_code')</th>
-                    <th class="text-center">@lang('product.index.table.header.description')</th>
-                    <th class="text-center">@lang('product.index.table.header.status')</th>
-                    <th class="text-center">@lang('product.index.table.header.remarks')</th>
-                    <th class="text-center">@lang('labels.ACTION')</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">@lang('product.index.table.header.type')</th>
+                        <th class="text-center">@lang('product.index.table.header.name')</th>
+                        <th class="text-center">@lang('product.index.table.header.short_code')</th>
+                        <th class="text-center">@lang('product.index.table.header.description')</th>
+                        <th class="text-center">@lang('product.index.table.header.status')</th>
+                        <th class="text-center">@lang('product.index.table.header.remarks')</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ($productlist as $key => $product)
-                    <tr>
-                        <td width="10%">{{ $product->type->name }}</td>
-                        <td width="20%">{{ $product->name }}</td>
-                        <td width="10%" class="text-center">{{ $product->short_code }}</td>
-                        <td width="20%">{{ $product->description }}</td>
-                        <td width="10%" class="text-center">@lang('lookup.'.$product->status)</td>
-                        <td width="15%">{{ $product->remarks }}</td>
-                        <td class="text-center" width="10%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.master.product.show', $product->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.product.edit', $product->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.product.delete', $product->hId()], 'style'=>'display:inline'])  !!}
-                                <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach ($productlist as $key => $product)
+                        <tr>
+                            <td width="10%">{{ $product->type->name }}</td>
+                            <td width="20%">{{ $product->name }}</td>
+                            <td width="10%" class="text-center">{{ $product->short_code }}</td>
+                            <td width="20%">{{ $product->description }}</td>
+                            <td width="10%" class="text-center">@lang('lookup.'.$product->status)</td>
+                            <td width="15%">{{ $product->remarks }}</td>
+                            <td class="text-center" width="10%">
+                                <a class="btn btn-xs btn-info" href="{{ route('db.master.product.show', $product->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.master.product.edit', $product->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.product.delete', $product->hId()], 'style'=>'display:inline'])  !!}
+                                    <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

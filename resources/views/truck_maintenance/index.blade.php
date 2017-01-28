@@ -41,28 +41,28 @@
             <br>
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center">@lang('truckmtc.index.table.header.plate_number')</th>
-                    <th class="text-center">@lang('truckmtc.index.table.header.maintenance_type')</th>
-                    <th class="text-center">@lang('truckmtc.index.table.header.cost')</th>
-                    <th class="text-center">@lang('truckmtc.index.table.header.odometer')</th>
-                    <th class="text-center">@lang('truckmtc.index.table.header.remarks')</th>
-                    <th class="text-center" width="10%">&nbsp;</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">@lang('truckmtc.index.table.header.plate_number')</th>
+                        <th class="text-center">@lang('truckmtc.index.table.header.maintenance_type')</th>
+                        <th class="text-center">@lang('truckmtc.index.table.header.cost')</th>
+                        <th class="text-center">@lang('truckmtc.index.table.header.odometer')</th>
+                        <th class="text-center">@lang('truckmtc.index.table.header.remarks')</th>
+                        <th class="text-center" width="10%">&nbsp;</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ($trucklist as $key => $truck)
-                    <tr>
-                        <td class="text-center">{{ $truck->truck->plate_number }}</td>
-                        <td class="text-center">@lang('lookup.'.$truck->maintenance_type)</td>
-                        <td>{{ $truck->cost }}</td>
-                        <td>{{ $truck->odometer }}</td>
-                        <td>{{ $truck->remarks }}</td>
-                        <td class="text-center">
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.truck.maintenance.edit', $truck->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach ($trucklist as $key => $truck)
+                        <tr>
+                            <td class="text-center">{{ $truck->truck->plate_number }}</td>
+                            <td class="text-center">@lang('lookup.'.$truck->maintenance_type)</td>
+                            <td>{{ $truck->cost }}</td>
+                            <td>{{ $truck->odometer }}</td>
+                            <td>{{ $truck->remarks }}</td>
+                            <td class="text-center">
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.truck.maintenance.edit', $truck->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
