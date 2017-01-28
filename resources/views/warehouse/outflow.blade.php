@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-mail-reply fa-rotate-90 fa-fw"></span>&nbsp;@lang('warehouse.outflow.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('warehouse.outflow.index.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('outflow') !!}
 @endsection
