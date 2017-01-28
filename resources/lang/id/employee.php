@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 return [
     'create' => [
@@ -7,9 +7,6 @@ return [
         'page_title_desc' => '',
         'header' => [
             'title' => 'Create Pegawai',
-        ],
-        'tab' => [
-            'store' => 'Pegawai Data',
         ],
         'table_employee' => [
             'header' => [
@@ -49,9 +46,10 @@ return [
         'table' => [
             'header' => [
                 'name' => 'Name',
-                'email' => 'Email',
-                'ic_number' => 'identity Card Number',
-                'image_path' => 'Nomer KTP',
+                'ic_number' => 'Nomor KTP',
+                'address' => 'Address',
+                'start_date' => 'Tanggal Mulai',
+                'freelance' => 'Freelance',
             ],
         ],
     ],

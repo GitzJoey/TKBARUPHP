@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 return [
     'create' => [
@@ -8,14 +8,13 @@ return [
         'header' => [
             'title' => 'Create Employee',
         ],
-        'tab' => [
-            'store' => 'Employee Data',
-        ],
         'table_employee' => [
             'header' => [
                 'name' => 'Name',
-                'email' => 'Email',
-                'ic_number' => 'identity Card Number',
+                'ic_number' => 'IC Number',
+                'address' => 'Address',
+                'start_date' => 'Start Date',
+                'freelance' => 'Freelance',
             ],
         ],
     ],
