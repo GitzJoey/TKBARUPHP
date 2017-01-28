@@ -43,4 +43,14 @@ class StockServiceImpl implements StockService
 
         return $stocks;
     }
+
+    /**
+     * Get the information of all stocks at current time. 
+     *
+     * @return Collection
+     */
+    public function getCurrentStocks()
+    {
+        return Stock::with('product')->get();
+    }
 }

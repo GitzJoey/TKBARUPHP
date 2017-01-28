@@ -95,9 +95,9 @@ class Stock extends Model
         return $this->belongsTo('App\Model\PurchaseOrder', 'po_id');
     }
 
-    public function priceHistory()
+    public function priceHistory($rangeOfDay = 10)
     {
-        return Price::where('input_date', '>=', Carbon::today()->subDays(10))
+        return Price::where('input_date', '>=', Carbon::today()->subDays($rangeOfDay))
             ->where('stock_id', '=', $this->id)
             ->orderBy('input_date', 'asc')
             ->orderBy('price_level_id', 'asc')->get();

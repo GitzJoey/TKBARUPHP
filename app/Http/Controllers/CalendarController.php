@@ -29,7 +29,7 @@ class CalendarController extends Controller
     public function retrieveEvents()
     {
         $user = User::with('eventCalendars')->where('id', '=', Auth::user()->id);
-
+        
         dd($user);
 
         return $user;

@@ -46,7 +46,7 @@ Route::group(['prefix' => 'customer'], function ()
 {
     Route::get('search', 'CustomerController@searchCustomers')->name('api.customer.search');
 
-    Route::get('lastorder', 'CustomerController@getCustomerLastOrder')->name('api.customer.lastorder');
+    Route::get('last_order', 'CustomerController@getCustomerLastOrder')->name('api.customer.last_order');
 });
 
 Route::group(['prefix' => 'phone_provider'], function()
@@ -62,4 +62,9 @@ Route::group(['prefix' => 'purchase_order'], function()
 Route::group(['prefix' => 'sales_order'], function()
 {
     Route::get('due_sales_order', 'SalesOrderController@getDueSO')->name('api.sales_order.due_sales_order');
+});
+
+Route::group(['prefix' => 'stock'], function()
+{
+    Route::get('current_stocks', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
 });
