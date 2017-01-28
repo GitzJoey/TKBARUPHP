@@ -63,7 +63,7 @@
                             </td>
                             <td class="text-center">@{{ po.shipping_date }}</td>
                             <td class="text-center" width="10%">
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.inflow') }}/@{{ po.id }}" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" v-bind:href="'{{ route('db.warehouse.inflow') }}/' + po.id" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
                         <tr v-show="selectedWarehouse != '' && !POs.length">
@@ -93,6 +93,9 @@
                             this.POs = data.data;
                         });
                     }
+                },
+                ready: function() {
+
                 }
             });
         });

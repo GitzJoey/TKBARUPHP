@@ -61,7 +61,7 @@
                             <td v-show="so.customer_type == 'CUSTOMERTYPE.WI'" class="text-center">@{{ so.walk_in_cust }}</td>
                             <td class="text-center">@{{ so.shipping_date }}</td>
                             <td class="text-center" width="10%">
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.outflow') }}/@{{ so.id }}" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" v-bind:href="'{{ route('db.warehouse.outflow') }}/' + so.id" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
                         <tr v-show="selectedWarehouse != '' && !SOs.length">
