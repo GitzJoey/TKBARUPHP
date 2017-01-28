@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Validator;
 use Illuminate\Http\Request;
 
 use App\Model\AccountingCash;
@@ -47,10 +49,11 @@ class AccountingCashController extends Controller
             return redirect(route('db.acc.cash.create'))->withInput()->withErrors($validator);
         } else {
             AccountingCash::create([
+                'store_id' => Auth::user()->store->id,
                 'name' => $data['name'],
                 'code' => $data['code'],
                 'status' => $data['status'],
-                'is_default' => $data['is_default'],
+                'is_default' => $data['is_default'] == 'on' ? true:false,
             ]);
 
             return redirect(route('db.acc.cash'));
@@ -76,7 +79,14 @@ class AccountingCashController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.cash.edit'))->withInput()->withErrors($validator);
         } else {
-            AccountingCash::find($id)->update($req->all());
+            $acc = AccountingCash::find($id);
+            $acc->code = $req['code'];
+            $acc->name = $req['name'];
+            $acc->is_default = $req['is_default'] == 'on' ? true:false;
+            $acc->status = $req['status'];
+
+            $acc->save();
+
             return redirect(route('db.acc.cash'));
         }
     }

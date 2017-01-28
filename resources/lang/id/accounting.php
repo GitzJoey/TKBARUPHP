@@ -20,21 +20,47 @@ return [
             'title' => 'Kas',
             'page_title' => 'Kas',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Kas',
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'name' => 'Nama',
+                    'is_default' => 'Utama',
+                    'status' => 'Status',
+                ],
+            ],
         ],
         'create' => [
-            'title' => 'Tambah Kas',
-            'page_title' => 'Tambah Kas',
+            'title' => 'Kas',
+            'page_title' => 'Kas',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Tambah Kas',
+            ],
         ],
         'edit' => [
-            'title' => 'Ubah Kas',
-            'page_title' => 'Ubah Kas',
+            'title' => 'Kas',
+            'page_title' => 'Kas',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Ubah Kas',
+            ],
         ],
         'show' => [
-            'title' => 'Tampilkan Kas',
-            'page_title' => 'Tampilkan Kas',
+            'title' => 'Kas',
+            'page_title' => 'Kas',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Tampilkan Kas',
+            ],
+        ],
+        'field' => [
+            'code' => 'Kode',
+            'name' => 'Nama',
+            'is_default' => 'Utama',
+            'status' => 'Status',
         ],
     ],
     'cost' => [

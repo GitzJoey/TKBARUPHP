@@ -52,6 +52,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::delete('edit/{id}', 'AccountingCashController@delete')->name('db.acc.cash.delete');
             });
 
+            Route::group(['prefix' => 'capital'], function() {
+                Route::get('', 'AccountingCapitalController@index')->name('db.acc.capital');
+            });
+
             Route::group(['prefix' => 'cost'], function() {
                 Route::get('', 'AccountingCostController@index')->name('db.acc.cost');
                 Route::get('category', 'AccountingCostController@index')->name('db.acc.cost.category');

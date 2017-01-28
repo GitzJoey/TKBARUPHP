@@ -8,8 +8,12 @@
 
 namespace App\Model;
 
+use App\Traits\StoreFilter;
 
+use Auth;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AccountingCash extends Model
 {
