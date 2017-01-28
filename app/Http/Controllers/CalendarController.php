@@ -18,7 +18,7 @@ class CalendarController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'retrieveEvents']);
     }
 
     public function index()
@@ -28,11 +28,11 @@ class CalendarController extends Controller
 
     public function retrieveEvents()
     {
-        $user = User::with('eventCalendars')->where('id', '=', Auth::user()->id);
-        
-        dd($user);
+        $user = User::whereId(Auth::user()->id)->first();
 
-        return $user;
+        return response()->json([
+            'return' => 'success'
+        ]);
     }
 
     public function storeEvent(Request $request)

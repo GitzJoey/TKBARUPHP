@@ -60,6 +60,8 @@ Route::group(['prefix' => 'stock'], function() {
     Route::get('current_stocks', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
 });
 
+Route::get('/user/get/calendar', 'CalendarController@retrieveEvents')->name('api.user.get.calendar');
+
 Route::get('/get/unfinish/store', 'StoreController@isUnfinishedStoreExist')->name('api.get.unfinish.store');
 
 Route::get('/get/unfinish/warehouse', 'WarehouseController@isUnfinishedWarehouseExist')->name('api.get.unfinish.warehouse');
