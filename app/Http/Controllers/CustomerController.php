@@ -446,9 +446,11 @@ class CustomerController extends Controller
 
     // ===================== REST API HANDLER METHODS ====================== //
 
-    public function searchCustomers($param = "")
+    public function searchCustomers(Request $request)
     {
-        Log::info("CustomerController@searchCustomers\nparam : $param");
+        Log::info("CustomerController@searchCustomers");
+
+        $param = $request->query('q');
 
         if(empty($param))
             return collect([]);
