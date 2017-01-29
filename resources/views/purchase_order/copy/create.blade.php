@@ -361,20 +361,16 @@
 @section('custom_js')
     <script type="application/javascript">
         var currentPo = JSON.parse('{!! htmlspecialchars_decode($poToBeCopied->toJson()) !!}');
-
         var poApp = new Vue({
             el: '#po-vue',
             data: {
                 po: {
                     supplier: _.cloneDeep(currentPo.supplier),
                     items: [],
-                    warehouse: {
-                        id: currentPo.warehouse.id,
-                        name: currentPo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
-                        name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
+                    warehouse: _.cloneDeep(currentPo.warehouse),
+                    vendorTrucking: _.cloneDeep(currentPo.vendor_trucking),
+                    product: {
+                        id: ''
                     }
                 }
             },
@@ -388,20 +384,22 @@
                     return result;
                 },
                 insertItem: function (product) {
-                    var vm = this;
-                    vm.po.items.push({
-                        id: null,
-                        product: _.cloneDeep(product),
-                        base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                        selected_unit: {
-                            unit: {
-                                id: ''
+                    if(product.id != ''){
+                        var vm = this;
+                        vm.po.items.push({
+                            id: null,
+                            product: _.cloneDeep(product),
+                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
                             },
-                            conversion_value: 1
-                        },
-                        quantity: 0,
-                        price: 0
-                    });
+                            quantity: 0,
+                            price: 0
+                        });
+                    }
                 },
                 removeItem: function (index) {
                     var vm = this;
@@ -413,9 +411,9 @@
         for (var i = 0; i < currentPo.items.length; i++) {
             poApp.po.items.push({
                 id: currentPo.items[i].id,
-                product: currentPo.items[i].product,
-                base_unit: _.find(currentPo.items[i].product.product_units, isBase),
-                selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
+                product: _.cloneDeep(currentPo.items[i].product),
+                base_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, isBase)),
+                selected_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id))),
                 quantity: parseFloat(currentPo.items[i].quantity).toFixed(0),
                 price: parseFloat(currentPo.items[i].price).toFixed(0)
             });
