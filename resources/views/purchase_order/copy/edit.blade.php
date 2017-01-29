@@ -370,13 +370,10 @@
                 po: {
                     supplier: _.cloneDeep(currentPo.supplier),
                     items: [],
-                    warehouse: {
-                        id: currentPo.warehouse.id,
-                        name: currentPo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
-                        name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
+                    warehouse: _.cloneDeep(currentPo.warehouse),
+                    vendorTrucking: _.cloneDeep(currentPo.vendor_trucking),
+                    product: {
+                        id: ''
                     }
                 }
             },
@@ -415,9 +412,9 @@
         for (var i = 0; i < currentPo.items.length; i++) {
             poApp.po.items.push({
                 id: currentPo.items[i].id,
-                product: currentPo.items[i].product,
-                base_unit: _.find(currentPo.items[i].product.product_units, isBase),
-                selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
+                product: _.cloneDeep(currentPo.items[i].product),
+                base_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, isBase)),
+                selected_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id))),
                 quantity: parseFloat(currentPo.items[i].quantity).toFixed(0),
                 price: parseFloat(currentPo.items[i].price).toFixed(0)
             });
