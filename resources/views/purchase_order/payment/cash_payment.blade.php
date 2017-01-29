@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <div ng-app="poModule" ng-controller="poController">
+    <div id="po-payment-vue">
         {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.cash', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
@@ -81,8 +81,8 @@
                                                     Rp
                                                 </div>
                                                 <input type="text" class="form-control" id="inputPaymentAmount"
-                                                       name="total_amount" ng-model="total_amount"
-                                                       data-parsley-required="true" fcsa-number>
+                                                       name="total_amount" v-model="total_amount"
+                                                       data-parsley-required="true">
                                             </div>
                                         </div>
                                     </div>
@@ -111,80 +111,83 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('poModule', ['fcsa-number']);
-        app.controller('poController', ['$scope', function ($scope) {
-            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
-
-            var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
-
-            $scope.po = {
-                supplier: currentPo.supplier,
-                items: [],
-                warehouse: {
-                    id: currentPo.warehouse.id,
-                    name: currentPo.warehouse.name
-                },
-                vendorTrucking: {
-                    id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
-                    name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
-                },
-                expenses: []
-            };
-
-            for (var i = 0; i < currentPo.items.length; i++) {
-                $scope.po.items.push({
-                    id: currentPo.items[i].id,
-                    product: currentPo.items[i].product,
-                    base_unit: _.find(currentPo.items[i].product.product_units, isBase),
-                    selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
-                    quantity: currentPo.items[i].quantity % 1 != 0 ? parseFloat(currentPo.items[i].quantity).toFixed(2):parseFloat(currentPo.items[i].quantity).toFixed(0),
-                    price: currentPo.items[i].price % 1 != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0)
-                });
-            }
-
-            for (var i = 0; i < currentPo.expenses.length; i++) {
-                var type = _.find($scope.expenseTypes, function (type) {
-                    return type.code === currentPo.expenses[i].type;
-                });
-
-                $scope.po.expenses.push({
-                    id: currentPo.expenses[i].id,
-                    name: currentPo.expenses[i].name,
-                    type: {
-                        code: currentPo.expenses[i].type,
-                        description: type ? type.description : ''
+        var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
+        
+        var poPaymentApp = new Vue({
+            el: '#po-payment-vue',
+            data: {
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                po: {
+                    supplier: _.cloneDeep(currentPo.supplier),
+                    items: [],
+                    warehouse: {
+                        id: currentPo.warehouse.id,
+                        name: currentPo.warehouse.name
                     },
-                    amount: parseFloat(currentPo.expenses[i].amount).toFixed(0),
-                    remarks: currentPo.expenses[i].remarks
-                });
-            }
-
-            $scope.grandTotal = function () {
-                var result = 0;
-                angular.forEach($scope.po.items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
-
-            $scope.expenseTotal = function () {
-                var result = 0;
-                angular.forEach($scope.po.expenses, function (expense, key) {
-                    result += parseInt(expense.amount);
-                });
-                return result;
-            };
-
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
+                    vendorTrucking: {
+                        id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
+                        name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
+                    },
+                    expenses: []
                 }
+            },
+            methods: {
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                },
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        result += parseInt(expense.amount);
+                    });
+                    return result;
+                };
             }
+        });
 
-            function isBase(unit) {
-                return unit.is_base == 1;
+        for (var i = 0; i < currentPo.items.length; i++) {
+            poPaymentApp.po.items.push({
+                id: currentPo.items[i].id,
+                product: currentPo.items[i].product,
+                base_unit: _.find(currentPo.items[i].product.product_units, isBase),
+                selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
+                quantity: currentPo.items[i].quantity % 1 != 0 ? parseFloat(currentPo.items[i].quantity).toFixed(2):parseFloat(currentPo.items[i].quantity).toFixed(0),
+                price: currentPo.items[i].price % 1 != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0)
+            });
+        }
+
+        for (var i = 0; i < currentPo.expenses.length; i++) {
+            var type = _.find(poPaymentApp.expenseTypes, function (type) {
+                return type.code === currentPo.expenses[i].type;
+            });
+
+            poPaymentApp.po.expenses.push({
+                id: currentPo.expenses[i].id,
+                name: currentPo.expenses[i].name,
+                type: {
+                    code: currentPo.expenses[i].type,
+                    description: type ? type.description : ''
+                },
+                amount: parseFloat(currentPo.expenses[i].amount).toFixed(0),
+                remarks: currentPo.expenses[i].remarks
+            });
+        }
+
+        function getSelectedUnit(selectedUnitId) {
+            return function (element) {
+                return element.unit_id == selectedUnitId;
             }
-        }]);
+        }
+
+        function isBase(unit) {
+            return unit.is_base == 1;
+        }
 
         $("#inputPaymentDate").daterangepicker({
             locale: {
