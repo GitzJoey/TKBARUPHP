@@ -20,21 +20,47 @@ return [
             'title' => 'Cash',
             'page_title' => 'Cash',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Cash Lists',
+            ],
+            'table' => [
+                'header' => [
+                    'code' => 'Code',
+                    'name' => 'Name',
+                    'is_default' => 'Is Default',
+                    'status' => 'Status',
+                ],
+            ],
         ],
         'create' => [
-            'title' => '',
-            'page_title' => '',
+            'title' => 'Cash',
+            'page_title' => 'Cash',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Create Cash',
+            ],
         ],
         'edit' => [
-            'title' => '',
-            'page_title' => '',
+            'title' => 'Cash',
+            'page_title' => 'Cash',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Edit Cash',
+            ],
         ],
         'show' => [
-            'title' => '',
-            'page_title' => '',
+            'title' => 'Cash',
+            'page_title' => 'Cash',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Show Cash',
+            ],
+        ],
+        'field' => [
+            'code' => 'Code',
+            'name' => 'Name',
+            'is_default' => 'Is Default',
+            'status' => 'Status',
         ],
     ],
     'cost' => [

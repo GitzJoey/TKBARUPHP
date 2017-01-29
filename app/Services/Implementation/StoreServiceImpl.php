@@ -8,8 +8,6 @@
 
 namespace App\Services\Implementation;
 
-use Illuminate\Http\Request;
-
 use App\Model\Store;
 use App\Model\Lookup;
 
@@ -112,14 +110,18 @@ class StoreServiceImpl implements StoreService
      */
     public function getUnfinishedStore()
     {
-        return Store::orWhereNull('name')
-        ->orWhereNull('address')
-        ->orWhereNull('phone_num')
-        ->orWhereNull('fax_num')
-        ->orWhereNull('tax_id')
-        ->orWhereNull('frontweb')
-        ->orWhereNull('image_filename')
-        ->get();
+        $storeList = Store::orWhereNull('name')
+            ->orWhereNull('address')
+            ->orWhereNull('phone_num')
+            ->orWhereNull('fax_num')
+            ->orWhereNull('tax_id')
+            ->orWhereNull('frontweb')
+            ->orWhereNull('image_filename')
+            ->get();
+
+        Log::info('testing');
+
+        return $storeList;
     }
 
     /**
@@ -130,6 +132,6 @@ class StoreServiceImpl implements StoreService
      */
     public function isUnfinishedStoreExist()
     {
-        return count(getUnfinishedStore()) > 0;
+        return count($this->getUnfinishedStore()) > 0;
     }
 }

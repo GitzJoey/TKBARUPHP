@@ -49,13 +49,21 @@
                 <div class="form-group">
                     <label for="inputIsDefault" class="col-sm-2 control-label">@lang('accounting.cash.field.is_default')</label>
                     <div class="col-sm-10">
-
+                        <div class="checkbox icheck">
+                            <label>
+                                @if ($acccash->is_default)
+                                    <input type="checkbox" name="is_default" class="is_icheck" checked>&nbsp;
+                                @else
+                                    <input type="checkbox" name="is_default" class="is_icheck">&nbsp;
+                                @endif
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                     <label for="inputStatus" class="col-sm-2 control-label">@lang('accounting.cash.field.status')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, $unit->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
+                        {{ Form::select('status', $statusDDL, $acccash->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
                         <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
@@ -70,4 +78,16 @@
             <div class="box-footer"></div>
         {!! Form::close() !!}
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('input.is_icheck').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
 @endsection

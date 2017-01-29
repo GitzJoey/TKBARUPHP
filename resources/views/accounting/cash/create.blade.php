@@ -50,7 +50,11 @@
                 <div class="form-group">
                     <label for="inputIsDefault" class="col-sm-2 control-label">@lang('accounting.cash.field.is_default')</label>
                     <div class="col-sm-10">
-
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" name="is_default" class="is_icheck">&nbsp;
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
@@ -63,7 +67,7 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.acc.cash.create') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                        <a href="{{ route('db.acc.cash') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
                         <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                     </div>
                 </div>
@@ -71,4 +75,16 @@
             <div class="box-footer"></div>
         </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('input.is_icheck').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
 @endsection

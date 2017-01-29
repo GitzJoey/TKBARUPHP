@@ -30,34 +30,34 @@
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center">@lang('bank.index.table.header.name')</th>
-                    <th class="text-center">@lang('bank.index.table.header.short_name')</th>
-                    <th class="text-center">@lang('bank.index.table.header.branch')</th>
-                    <th class="text-center">@lang('bank.index.table.header.branch_code')</th>
-                    <th class="text-center">@lang('bank.index.table.header.status')</th>
-                    <th class="text-center">@lang('bank.index.table.header.remarks')</th>
-                    <th class="text-center">@lang('labels.ACTION')</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">@lang('bank.index.table.header.name')</th>
+                        <th class="text-center">@lang('bank.index.table.header.short_name')</th>
+                        <th class="text-center">@lang('bank.index.table.header.branch')</th>
+                        <th class="text-center">@lang('bank.index.table.header.branch_code')</th>
+                        <th class="text-center">@lang('bank.index.table.header.status')</th>
+                        <th class="text-center">@lang('bank.index.table.header.remarks')</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ($banks as $key => $bank)
-                    <tr>
-                        <td>{{ $bank->name }}</td>
-                        <td>{{ $bank->short_name }}</td>
-                        <td class="text-center">{{ $bank->branch }}</td>
-                        <td class="text-center">{{ $bank->branch_code }}</td>
-                        <td class="text-center">@lang('lookup.' . $bank->status)</td>
-                        <td>{{ $bank->remarks }}</td>
-                        <td class="text-center" width="10%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.master.bank.show', $bank->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.bank.edit', $bank->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.bank.delete', $bank->hId()], 'style'=>'display:inline'])  !!}
-                                <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach ($banks as $key => $bank)
+                        <tr>
+                            <td>{{ $bank->name }}</td>
+                            <td>{{ $bank->short_name }}</td>
+                            <td class="text-center">{{ $bank->branch }}</td>
+                            <td class="text-center">{{ $bank->branch_code }}</td>
+                            <td class="text-center">@lang('lookup.' . $bank->status)</td>
+                            <td>{{ $bank->remarks }}</td>
+                            <td class="text-center" width="10%">
+                                <a class="btn btn-xs btn-info" href="{{ route('db.master.bank.show', $bank->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.master.bank.edit', $bank->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.bank.delete', $bank->hId()], 'style'=>'display:inline'])  !!}
+                                    <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

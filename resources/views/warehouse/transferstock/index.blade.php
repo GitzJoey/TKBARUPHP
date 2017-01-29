@@ -41,7 +41,13 @@
                 </thead>
                 <tbody>
                 </tbody>
+                <tfoot>
+
+                </tfoot>
             </table>
+        </div>
+        <div class="box-footer clearfix">
+            <a class="btn btn-success" href="{{ route('db.warehouse.transfer_stock.transfer') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
         </div>
     </div>
 @endsection

@@ -17,4 +17,12 @@ class WarehouseTransferStockController extends Controller
 
         return view('warehouse.transferstock.index');
     }
+
+    public function transfer()
+    {
+
+
+        return view('warehouse.transferstock.create');
+    }
+
 }

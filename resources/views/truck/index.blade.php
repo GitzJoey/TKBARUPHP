@@ -30,34 +30,34 @@
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center">@lang('truck.index.table.header.truck_type')</th>
-                    <th class="text-center">@lang('truck.index.table.header.plate_number')</th>
-                    <th class="text-center">@lang('truck.index.table.header.inspection_date')</th>
-                    <th class="text-center">@lang('truck.index.table.header.driver')</th>
-                    <th class="text-center">@lang('truck.index.table.header.status')</th>
-                    <th class="text-center">@lang('truck.index.table.header.remarks')</th>
-                    <th class="text-center">@lang('labels.ACTION')</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">@lang('truck.index.table.header.truck_type')</th>
+                        <th class="text-center">@lang('truck.index.table.header.plate_number')</th>
+                        <th class="text-center">@lang('truck.index.table.header.inspection_date')</th>
+                        <th class="text-center">@lang('truck.index.table.header.driver')</th>
+                        <th class="text-center">@lang('truck.index.table.header.status')</th>
+                        <th class="text-center">@lang('truck.index.table.header.remarks')</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ($trucklist as $key => $truck)
-                    <tr>
-                        <td>@lang('lookup.'.$truck->type)</td>
-                        <td class="text-center">{{ $truck->plate_number }}</td>
-                        <td class="text-center">{{ $truck->inspection_date }}</td>
-                        <td>{{ $truck->driver }}</td>
-                        <td>@lang('lookup.' . $truck->status)</td>
-                        <td>{{ $truck->remarks }}</td>
-                        <td class="text-center" width="10%">
-                            <a class="btn btn-xs btn-info" href="{{ route('db.master.truck.show', $truck->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
-                            <a class="btn btn-xs btn-primary" href="{{ route('db.master.truck.edit', $truck->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.truck.delete', $truck->hId()], 'style'=>'display:inline'])  !!}
-                                <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
+                    @foreach ($trucklist as $key => $truck)
+                        <tr>
+                            <td>@lang('lookup.'.$truck->type)</td>
+                            <td class="text-center">{{ $truck->plate_number }}</td>
+                            <td class="text-center">{{ $truck->inspection_date }}</td>
+                            <td>{{ $truck->driver }}</td>
+                            <td>@lang('lookup.' . $truck->status)</td>
+                            <td>{{ $truck->remarks }}</td>
+                            <td class="text-center" width="10%">
+                                <a class="btn btn-xs btn-info" href="{{ route('db.master.truck.show', $truck->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.master.truck.edit', $truck->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.master.truck.delete', $truck->hId()], 'style'=>'display:inline'])  !!}
+                                    <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

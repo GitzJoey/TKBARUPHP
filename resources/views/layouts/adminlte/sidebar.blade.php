@@ -13,7 +13,7 @@
 
         <ul class="sidebar-menu">
             <li class="header">&nbsp;</li>
-            <li class="treeview">
+            <li class="treeview {{ active_class(Active::checkRoutePattern('db.acc.*')) }}">
                 <a href="#">
                     <i class="fa fa-table fa-fw"></i> <span>@lang('menu.item.accounting')</span>
                     <span class="pull-right-container">
@@ -21,7 +21,7 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('db.acc.cash') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash')</a></li>
+                    <li class="{{ active_class(Active::checkRoutePattern('db.acc.cash') || Active::checkRoutePattern('db.acc.cash.*')) }}"><a href="{{ route('db.acc.cash') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash')</a></li>
                     <li><a href="{{ route('db.acc.capital') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital')</a></li>
                     <li>
                         <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost')

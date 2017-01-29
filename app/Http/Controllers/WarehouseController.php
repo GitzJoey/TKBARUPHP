@@ -17,6 +17,7 @@ use App\Model\Warehouse;
 use App\Model\WarehouseSection;
 
 use App\Repos\LookupRepo;
+use App\Services\WarehouseService;
 
 use Auth;
 use Illuminate\Support\Facades\Log;
@@ -24,9 +25,12 @@ use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
-    public function __construct()
+    private $warehouseService;
+
+    public function __construct(WarehouseService $warehouseService)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'isUnfinishedWarehouseExist']);
+        $this->warehouseService = $warehouseService;
     }
 
     public function index()
@@ -198,5 +202,12 @@ class WarehouseController extends Controller
         $stock->save();
 
         return redirect(route('db.warehouse.stockopname.index'));
+    }
+
+    public function isUnfinishedWarehouseExist()
+    {
+        return response()->json([
+           'return' => $this->warehouseService->isUnfinishedWarehouseExist() ? 'true':'false'
+        ]);
     }
 }

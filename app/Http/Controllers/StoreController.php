@@ -32,7 +32,7 @@ class StoreController extends Controller
     public function __construct(StoreService $storeService)
     {
         $this->storeService = $storeService;
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'isUnfinishedStoreExist']);
     }
 
     public function index()
@@ -238,6 +238,13 @@ class StoreController extends Controller
     {
         return response()->json([
             'return' => 'success'
+        ]);
+    }
+
+    public function isUnfinishedStoreExist()
+    {
+        return response()->json([
+            'return' => $this->storeService->isUnfinishedStoreExist() ? 'true':'false'
         ]);
     }
 }
