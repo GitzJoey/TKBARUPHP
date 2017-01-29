@@ -27,7 +27,7 @@
         </div>
     @endif
 
-    <div ng-app="poCopyModule" ng-controller="poCopyController" ng-cloak>
+    <div id="po-vue">
         {!! Form::model($currentPOCopy, ['method' => 'PATCH', 'route' => ['db.po.copy.edit', $poCode, $currentPOCopy->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         {{ csrf_field() }}
         <div class="row">
@@ -198,14 +198,14 @@
                                     <div class="col-md-11">
                                         <select id="inputProduct"
                                                 class="form-control"
-                                                ng-model="po.product"
-                                                ng-options="product as product.name for product in po.supplier.products track by product.id">
-                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                v-model="po.product">
+                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="product in po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
                                         </select>
                                     </div>
                                     <div class="col-md-1">
                                         <button type="button" class="btn btn-primary btn-md"
-                                                ng-click="insertItem(po.product)"><span class="fa fa-plus"/></button>
+                                                v-on:click="insertItem(po.product)"><span class="fa fa-plus"/></button>
                                     </div>
                                 </div>
                                 <hr>
@@ -227,38 +227,39 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="item in po.items">
-                                                <input type="hidden" name="item_id[]" ng-value="item.id">
-                                                <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                                <input type="hidden" name="base_unit_id[]" ng-value="item.base_unit.unit.id">
+                                            <tr v-for="(item, itemIndex) in po.items">
+                                                <input type="hidden" name="item_id[]" v-bind:value="item.id">
+                                                <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
                                                     <input type="text" class="form-control text-right"
                                                            data-parsley-required="true" data-parsley-type="number"
                                                            name="quantity[]"
-                                                           ng-model="item.quantity">
+                                                           v-model="item.quantity">
                                                 </td>
                                                 <td>
+                                                    <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id"
                                                     <select name="selected_unit_id[]"
                                                             class="form-control"
                                                             data-parsley-required="true"
-                                                            ng-model="item.selected_unit"
-                                                            ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
-                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                            v-model="item.selected_unit">
+                                                        <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="price[]"
-                                                           ng-model="item.price" data-parsley-required="true"
-                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number>
+                                                           v-model="item.price" data-parsley-required="true"
+                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md"
-                                                            ng-click="removeItem($index)"><span class="fa fa-minus"/>
+                                                            v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
                                                     </button>
                                                 </td>
                                                 <td class="text-right valign-middle">
-                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
+                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -273,7 +274,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('purchase_order.copy.edit.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ grandTotal() | number }}</span>
+                                                    <span class="control-label-normal">@{{ grandTotal() }}</span>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -361,67 +362,76 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('poCopyModule', ['fcsa-number']);
-        app.controller('poCopyController', ['$scope', function ($scope) {
-            var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPOCopy->toJson()) !!}');
-
-            $scope.po = {
-                supplier: currentPo.supplier,
-                items: [],
-                warehouse: {
-                    id: currentPo.warehouse.id,
-                    name: currentPo.warehouse.name
+        var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPOCopy->toJson()) !!}');
+        
+        var poApp = new Vue({
+            el: '#po-vue',
+            data: {
+                po: {
+                    supplier: _.cloneDeep(currentPo.supplier),
+                    items: [],
+                    warehouse: {
+                        id: currentPo.warehouse.id,
+                        name: currentPo.warehouse.name
+                    },
+                    vendorTrucking: {
+                        id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
+                        name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
+                    }
+                }
+            },
+            methods: {
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach($scope.po.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
                 },
-                vendorTrucking: {
-                    id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
-                    name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
-                }
-            };
-
-            for (var i = 0; i < currentPo.items.length; i++) {
-                $scope.po.items.push({
-                    id: currentPo.items[i].id,
-                    product: currentPo.items[i].product,
-                    base_unit: _.find(currentPo.items[i].product.product_units, isBase),
-                    selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
-                    quantity: parseFloat(currentPo.items[i].quantity).toFixed(0),
-                    price: parseFloat(currentPo.items[i].price).toFixed(0)
-                });
-            }
-
-            $scope.grandTotal = function () {
-                var result = 0;
-                angular.forEach($scope.po.items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
-
-            $scope.insertItem = function (product) {
-                $scope.po.items.push({
-                    id: null,
-                    product: product,
-                    base_unit: _.find(product.product_units, isBase),
-                    selected_unit: null,
-                    quantity: 0,
-                    price: 0
-                });
-            };
-
-            $scope.removeItem = function (index) {
-                $scope.po.items.splice(index, 1);
-            };
-
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
+                insertItem: function (product) {
+                    var vm = this;
+                    vm.po.items.push({
+                        id: null,
+                        product: _.cloneDeep(product),
+                        base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                        selected_unit: {
+                            unit: {
+                                id: ''
+                            },
+                            conversion_value = 1
+                        },
+                        quantity: 0,
+                        price: 0
+                    });
+                },
+                removeItem: function (index) {
+                    var vm = this;
+                    vm.po.items.splice(index, 1);
                 }
             }
+        });
 
-            function isBase(unit) {
-                return unit.is_base == 1;
+        for (var i = 0; i < currentPo.items.length; i++) {
+            poApp.po.items.push({
+                id: currentPo.items[i].id,
+                product: currentPo.items[i].product,
+                base_unit: _.find(currentPo.items[i].product.product_units, isBase),
+                selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
+                quantity: parseFloat(currentPo.items[i].quantity).toFixed(0),
+                price: parseFloat(currentPo.items[i].price).toFixed(0)
+            });
+        }
+
+        function getSelectedUnit(selectedUnitId) {
+            return function (element) {
+                return element.unit_id == selectedUnitId;
             }
-        }]);
+        }
+
+        function isBase(unit) {
+            return unit.is_base == 1;
+        }
 
         $(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
