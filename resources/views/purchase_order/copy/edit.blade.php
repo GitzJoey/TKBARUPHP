@@ -387,20 +387,22 @@
                     return result;
                 },
                 insertItem: function (product) {
-                    var vm = this;
-                    vm.po.items.push({
-                        id: null,
-                        product: _.cloneDeep(product),
-                        base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                        selected_unit: {
-                            unit: {
-                                id: ''
+                    if(product.id != ''){
+                        var vm = this;
+                        vm.po.items.push({
+                            id: null,
+                            product: _.cloneDeep(product),
+                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value = 1
                             },
-                            conversion_value = 1
-                        },
-                        quantity: 0,
-                        price: 0
-                    });
+                            quantity: 0,
+                            price: 0
+                        });
+                    }
                 },
                 removeItem: function (index) {
                     var vm = this;
