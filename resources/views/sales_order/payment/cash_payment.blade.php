@@ -26,7 +26,7 @@
         </div>
     @endif
 
-    <div ng-app="soModule" ng-controller="soController">
+    <div id="so-payment-vue">
         {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.cash', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
@@ -74,8 +74,8 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input type="text" class="form-control" id="inputPaymentAmount" ng-model="total_amount"
-                                                           name="total_amount" data-parsley-required="true" fcsa-number>
+                                                    <input type="text" class="form-control" id="inputPaymentAmount" v-model="total_amount"
+                                                           name="total_amount" data-parsley-required="true">
                                                 </div>
                                             </div>
                                         </div>
@@ -104,80 +104,77 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soModule", ['fcsa-number']);
-        app.controller("soController", ['$scope', function ($scope) {
-            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
+        var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
 
-            var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
-
-            $scope.so = {
-                customer: currentSo.customer,
-                items: [],
-                warehouse: {
-                    id: currentSo.warehouse.id,
-                    name: currentSo.warehouse.name
-                },
-                vendorTrucking: {
-                    id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                    name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
-                },
-                expenses: []
-            };
-
-            for (var i = 0; i < currentSo.items.length; i++) {
-                $scope.so.items.push({
-                    id: currentSo.items[i].id,
-                    product: currentSo.items[i].product,
-                    base_unit: _.find(currentSo.items[i].product.product_units, isBase),
-                    selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
-                    quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
-                    price: parseFloat(currentSo.items[i].price).toFixed(0)
-                });
-            }
-
-            for (var i = 0; i < currentSo.expenses.length; i++) {
-                var type = _.find($scope.expenseTypes, function (type) {
-                    return type.code === currentSo.expenses[i].type;
-                });
-
-                $scope.so.expenses.push({
-                    id: currentSo.expenses[i].id,
-                    name: currentSo.expenses[i].name,
-                    type: {
-                        code: currentSo.expenses[i].type,
-                        description: type ? type.description : ''
-                    },
-                    amount: currentSo.expenses[i].amount,
-                    remarks: currentSo.expenses[i].remarks
-                });
-            }
-
-            $scope.grandTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
-
-            $scope.expenseTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.expenses, function (expense, key) {
-                    result += parseInt(expense.amount);
-                });
-                return result;
-            };
-
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
+        var soPaymentApp = new Vue({
+            el: '#so-payment-vue',
+            data: {
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                so: {
+                    customer: _.cloneDeep(currentSo.customer),
+                    warehouse: _.cloneDeep(currentSo.warehouse),
+                    vendorTrucking: _.cloneDeep(currentSo.vendor_trucking),
+                    items: [],
+                    expenses: []
                 }
+            },
+            methods: {
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.so.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                },
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.so.expenses, function (expense, key) {
+                        result += parseInt(expense.amount);
+                    });
+                    return result;
+                };
             }
+        });
 
-            function isBase(unit) {
-                return unit.is_base == 1;
+        for (var i = 0; i < currentSo.items.length; i++) {
+            soPaymentApp.so.items.push({
+                id: currentSo.items[i].id,
+                product: _.cloneDeep(currentSo.items[i].product),
+                base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
+                selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
+                quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
+                price: parseFloat(currentSo.items[i].price).toFixed(0)
+            });
+        }
+
+        for (var i = 0; i < currentSo.expenses.length; i++) {
+            var type = _.find(soPaymentApp.expenseTypes, function (type) {
+                return type.code === currentSo.expenses[i].type;
+            });
+
+            soPaymentApp.so.expenses.push({
+                id: currentSo.expenses[i].id,
+                name: currentSo.expenses[i].name,
+                type: {
+                    code: currentSo.expenses[i].type,
+                    description: type ? type.description : ''
+                },
+                amount: currentSo.expenses[i].amount,
+                remarks: currentSo.expenses[i].remarks
+            });
+        }
+
+        function getSelectedUnit(selectedUnitId) {
+            return function (element) {
+                return element.unit_id == selectedUnitId;
             }
-        }]);
+        }
+
+        function isBase(unit) {
+            return unit.is_base == 1;
+        }
 
         $("#inputPaymentDate").daterangepicker({
             locale: {

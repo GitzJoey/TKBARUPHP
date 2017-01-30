@@ -177,25 +177,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="item in po.items">
+                                    <tr v-for="(item, itemIndex) in po.items">
                                         <td class="valign-middle">@{{ item.product.name }}</td>
                                         <td>
                                             <input type="text" class="form-control text-right"
                                                    data-parsley-required="true" data-parsley-type="number"
                                                    name="quantity[]"
-                                                   ng-model="item.quantity" readonly>
+                                                   v-model="item.quantity" readonly>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" readonly
-                                                   value="@{{ item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')' }}">
+                                                   v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
-                                                   ng-model="item.price" data-parsley-required="true" fcsa-number
+                                                   v-model="item.price" data-parsley-required="true"
                                                    readonly>
                                         </td>
                                         <td class="text-right valign-middle">
-                                            @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
+                                            @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
                                         </td>
                                     </tr>
                                     </tbody>
@@ -244,25 +244,25 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="expense in po.expenses">
+                                    <tr v-for="(expense, expenseIndex) in po.expenses">
                                         <td>
                                             <input name="expense_name[]" type="text" class="form-control"
-                                                   ng-model="expense.name"
+                                                   v-model="expense.name"
                                                    readonly>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control"
-                                                   value="@{{ expense.type.description }}" readonly>
+                                                   v-bind:value="expense.type.description" readonly>
                                         </td>
                                         <td>
                                             <input name="expense_remarks[]" type="text" class="form-control"
-                                                   ng-model="expense.remarks"
+                                                   v-model="expense.remarks"
                                                    readonly>
                                         </td>
                                         <td></td>
                                         <td>
                                             <input name="expense_amount[]" type="text" class="form-control text-right"
-                                                   ng-model="expense.amount" fcsa-number readonly>
+                                                   v-model="expense.amount" readonly>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -277,7 +277,7 @@
                                         <td width="80%"
                                             class="text-right">@lang('purchase_order.payment.summary.table.total.body.total')</td>
                                         <td width="20%" class="text-right">
-                                            <span class="control-label-normal">@{{ expenseTotal() | number }}</span>
+                                            <span class="control-label-normal">@{{ expenseTotal() }}</span>
                                         </td>
                                     </tr>
                                     </tbody>

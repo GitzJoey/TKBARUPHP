@@ -26,7 +26,7 @@
         </div>
     @endif
 
-        <div ng-app="poCopyModule" ng-controller="poCopyController">
+        <div id="po-copy-vue">
             <form class="form-horizontal">
                 <div class="box box-info">
                     <div class="box-header with-border">
@@ -35,10 +35,10 @@
                     <div class="box-body">
                         <div class="form-group">
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputSearchPOCode" ng-model="poCode" placeholder="Purchase Order Code">
+                                <input type="text" class="form-control" id="inputSearchPOCode" v-model="poCode" placeholder="Purchase Order Code">
                             </div>
                             <div class="col-sm-2">
-                                <a class="btn btn-block btn-md btn-primary" href="{{ route('db.po.copy.index') }}/@{{ poCode }}">Search</a>
+                                <a class="btn btn-block btn-md btn-primary" v-bind:href="'{{ route('db.po.copy.index') }}/' + poCode">Search</a>
                             </div>
                         </div>
                     </div>
@@ -49,9 +49,11 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('poCopyModule', []);
-        app.controller('poCopyController', ['$scope', function($scope) {
-            $scope.poCode = '{{ Session::get('code') }}'
-        }]);
+        var poCopyApp = new Vue({
+            el: '#po-copy-vue',
+            data: {
+                poCode: '{{ Session::get('code') }}'
+            }
+        });
     </script>
 @endsection

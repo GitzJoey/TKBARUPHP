@@ -36,8 +36,7 @@ class CustomerController extends Controller
         $this->customerService = $customerService;
         $this->middleware('auth', [ 
             'except' => [ 
-                'searchCustomers', 
-                'getCustomerLastOrder'
+                'searchCustomers'
             ] 
         ]);
     }
@@ -446,23 +445,31 @@ class CustomerController extends Controller
 
     // ===================== REST API HANDLER METHODS ====================== //
 
-    public function searchCustomers($param = "")
+    public function searchCustomers(Request $request)
     {
-        Log::info("CustomerController@searchCustomers\nparam : $param");
+        Log::info("CustomerController@searchCustomers");
+
+        $param = $request->query('q');
 
         if(empty($param))
             return collect([]);
 
-        return Customer::with('profiles.phoneNumbers.provider', 'expenseTemplates', 'bankAccounts.bank', 'priceLevel')->where('name', 'like', "%$param%")
+        $customers = Customer::with('profiles.phoneNumbers.provider', 'expenseTemplates', 'bankAccounts.bank', 'priceLevel')->where('name', 'like', "%$param%")
             ->orWhereHas('profiles', function ($query) use ($param)
             {
                 $query->where('first_name', 'like', "%$param%")
                       ->orWhere('last_name', 'like', "%$param%");
-            })->get();
-    }
+        })->get();
 
-    public function getCustomerLastOrder(Request $request)
-    {
-        return $this->customerService->getCustomerLastOrder($request->query('customerId'));
+        // Assign additional attribute like customer unpaid sales order amount
+        // and its last sales order.
+        $customers = collect($customers->map(function ($customer){
+            return array_merge([
+                'last_order' => $this->customerService->getCustomerLastOrder($customer->id),
+                'unpaid_sales_order_amount' => $this->customerService->getCustomerUnpaidSalesOrderTotalAmount($customer->id)
+            ], $customer->toArray());
+        })->all());
+
+        return $customers;           
     }
 }
