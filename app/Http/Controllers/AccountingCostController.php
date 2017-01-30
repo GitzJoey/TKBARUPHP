@@ -13,6 +13,12 @@ class AccountingCostController extends Controller
 
     public function index()
     {
-        return view('accounting.cost_index');
+        return view('accounting.cost.index');
+    }
+
+    public function category_index()
+    {
+
+        return view('accounting.cost.category.index');
     }
 }
