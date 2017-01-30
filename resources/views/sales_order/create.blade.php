@@ -203,7 +203,7 @@
                                                                             class="form-control"
                                                                             v-model="so.vendorTrucking">
                                                                         <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.description }}</option>
+                                                                        <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }} - @{{ vendorTrucking.description }}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
