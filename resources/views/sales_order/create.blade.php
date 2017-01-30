@@ -459,7 +459,7 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="modal fade" v-bind:id="'customerDetailModal_' + soIndex" tabindex="-1" role="dialog"
+                                    <div class="modal fade" v-bind:id="'customerDetailModal_' + soIndex" tabindex="-1" role="dialog"
                                          v-bind:aria-labelledby="'customerDetailModalLabel_' + soIndex">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
@@ -496,46 +496,46 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="'inputCity_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.city')</label>
+                                                                    <label v-bind:for="'inputCity_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.city')</label>
                                                                     <div class="col-sm-10">
-                                                                        <label id="inputCity_@{{ $index }}" class="control-label">
+                                                                        <label v-bind:id="'inputCity_' + soIndex" class="control-label">
                                                                             <span class="control-label-normal">@{{ so.customer.city }}</span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="inputPhone_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.phone')</label>
+                                                                    <label v-bind:for="'inputPhone_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.phone')</label>
                                                                     <div class="col-sm-10">
-                                                                        <label id="inputPhone_@{{ $index }}" class="control-label">
+                                                                        <label v-bind:id="'inputPhone_' + soIndex" class="control-label">
                                                                             <span class="control-label-normal">@{{ so.customer.phone }}</span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="inputTaxId_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
+                                                                    <label v-bind:for="'inputTaxId_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
                                                                     <div class="col-sm-10">
-                                                                        <label id="inputTaxId_@{{ $index }}" class="control-label">
+                                                                        <label v-bind:id="'inputTaxId_' + soIndex" class="control-label">
                                                                             <span class="control-label-normal">@{{ so.customer.tax_id }}</span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="inputRemarks_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
+                                                                    <label v-bind:for="'inputRemarks_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
                                                                     <div class="col-sm-10">
-                                                                        <label id="inputRemarks_@{{ $index }}" class="control-label">
+                                                                        <label v-bind:id="'inputRemarks_' + soIndex" class="control-label">
                                                                             <span class="control-label-normal">@{{ so.customer.remarks }}</span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="tab-pane" id="tab_pic_@{{ $index }}">
+                                                            <div class="tab-pane" v-bind:id="'tab_pic_' + soIndex">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
-                                                                        <div ng-repeat="profile in so.customer.profiles">
+                                                                        <div v-for="(profile, profileIndex) in so.customer.profiles">
                                                                             <div class="box box-widget">
                                                                                 <div class="box-header with-border">
                                                                                     <div class="user-block">
-                                                                                        <strong>@lang('customer.field.person_in_charge') @{{ $index + 1 }}</strong><br/>
+                                                                                        <strong>@lang('customer.field.person_in_charge') @{{ profileIndex + 1 }}</strong><br/>
                                                                                         &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
                                                                                     </div>
                                                                                     <div class="box-tools">
@@ -544,39 +544,39 @@
                                                                                 </div>
                                                                                 <div class="box-body">
                                                                                     <div class="form-group">
-                                                                                        <label for="inputFirstName_@{{ $parent.index }}_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
+                                                                                        <label v-bind:for="'inputFirstName_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
                                                                                         <div class="col-sm-10">
-                                                                                            <label id="inputFirstName_@{{ $parent.index }}_@{{ $index }}" class="control-label">
+                                                                                            <label v-bind:id="'inputFirstName_' + soIndex + '_' + profileIndex" class="control-label">
                                                                                                 <span class="control-label-normal">@{{ profile.first_name }}</span>
                                                                                             </label>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="form-group">
-                                                                                        <label for="inputLastName_@{{ $parent.index }}_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
+                                                                                        <label v-bind:for="'inputLastName_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
                                                                                         <div class="col-sm-10">
-                                                                                            <label id="inputLastName_@{{ $parent.index }}_@{{ $index }}" class="control-label">
+                                                                                            <label v-bind:id="'inputLastName_' + soIndex + '_' + profileIndex" class="control-label">
                                                                                                 <span class="control-label-normal">@{{ profile.last_name }}</span>
                                                                                             </label>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="form-group">
-                                                                                        <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
+                                                                                        <label v-bind:for="'inputAddress_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.address')</label>
                                                                                         <div class="col-sm-10">
-                                                                                            <label id="inputAddress_@{{ $parent.index }}_@{{ $index }}" class="control-label">
+                                                                                            <label v-bind:id="'inputAddress_' + soIndex + '_' + profileIndex" class="control-label">
                                                                                                 <span class="control-label-normal">@{{ profile.address }}</span>
                                                                                             </label>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="form-group">
-                                                                                        <label for="inputICNum_@{{ $parent.index }}_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
+                                                                                        <label v-bind:for="'inputICNum_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
                                                                                         <div class="col-sm-10">
-                                                                                            <label id="inputICNum_@{{ $parent.index }}_@{{ $index }}" class="control-label">
+                                                                                            <label v-bind:id="'inputICNum_' + soIndex + '_' + profileIndex" class="control-label">
                                                                                                 <span class="control-label-normal">@{{ profile.ic_num }}</span>
                                                                                             </label>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="form-group">
-                                                                                        <label for="inputPhoneNumber_@{{ $parent.index }}_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.phone_number')</label>
+                                                                                        <label v-bind:for="'inputPhoneNumber_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.phone_number')</label>
                                                                                         <div class="col-sm-10">
                                                                                             <table class="table table-bordered">
                                                                                                 <thead>
@@ -587,7 +587,7 @@
                                                                                                 </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
-                                                                                                    <tr ng-repeat="phone in profile.phone_numbers">
+                                                                                                    <tr v-for="phone in profile.phone_numbers">
                                                                                                         <td>@{{ phone.provider.name }}</td>
                                                                                                         <td>@{{ phone.number }}</td>
                                                                                                         <td>@{{ phone.remarks }}</td>
@@ -602,7 +602,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="tab-pane" id="tab_bank_account_@{{ $index }}">
+                                                            <div class="tab-pane" v-bind:id="'tab_bank_account_' + soIndex">
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
@@ -612,7 +612,7 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr ng-repeat="ba in so.customer.bank_accounts">
+                                                                        <tr v-for="ba in so.customer.bank_accounts">
                                                                             <td>@{{ ba.bank.name }}&nbsp;(@{{ ba.bank.name }})</td>
                                                                             <td>@{{ ba.account_number }}</td>
                                                                             <td>@{{ ba.remarks }}</td>
@@ -620,7 +620,7 @@
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                            <div class="tab-pane" id="tab_expenses_@{{ $index }}">
+                                                            <div class="tab-pane" v-bind:id="'tab_expenses_' + soIndex">
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                     <tr>
@@ -632,7 +632,7 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr ng-repeat="et in so.customer.expense_templates">
+                                                                        <tr v-for="et in so.customer.expense_templates">
                                                                             <td class="text-center valign-middle">
                                                                                 @{{ et.name }}
                                                                             </td>
@@ -643,10 +643,10 @@
                                                                                 @{{ et.amount }}
                                                                             </td>
                                                                             <td class="text-center valign-middle">
-                                                                                <div ng-if="et.is_internal_expense">
+                                                                                <div v-if="et.is_internal_expense">
                                                                                     @lang('lookup.YESNOSELECT.YES')
                                                                                 </div>
-                                                                                <div ng-if="!et.is_internal_expense">
+                                                                                <div v-if="!et.is_internal_expense">
                                                                                     @lang('lookup.YESNOSELECT.NO')
                                                                                 </div>
                                                                             </td>
@@ -657,9 +657,9 @@
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                            <div class="tab-pane" id="tab_settings_@{{ $index }}">
+                                                            <div class="tab-pane" v-bind:id="'tab_settings_' + soIndex">
                                                                 <div class="form-group">
-                                                                    <label for="inputPriceLevel_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
+                                                                    <label v-bind:for="'inputPriceLevel_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
                                                                     <div class="col-sm-10">
                                                                         <label class="control-label">
                                                                             <span class="control-label-normal">@{{ so.customer.price_level.name }}</span>
@@ -667,9 +667,9 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="inputPaymentDueDay_@{{ $index }}" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
+                                                                    <label v-bind:for="'inputPaymentDueDay_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
                                                                     <div class="col-sm-10">
-                                                                        <label id="inputPaymentDueDay_@{{ $index }}" class="control-label">
+                                                                        <label v-bind:id="'inputPaymentDueDay_' + soIndex" class="control-label">
                                                                             <span class="control-label-normal">@{{ so.customer.payment_due_day }}</span>
                                                                         </label>
                                                                     </div>
@@ -683,7 +683,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -729,7 +729,10 @@
                             code: ''
                         },
                         customer: {
-                            id: ''
+                            id: '',
+                            price_level: {
+                                name: ''
+                            }
                         },
                         soType: {
                             code: ''
