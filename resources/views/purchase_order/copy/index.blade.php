@@ -106,7 +106,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var poCopyApp = new Vue({
+        var app = new Vue({
             el: '#poCopyVue',
             data: {
                 poCode: '{{ $poCode }}'
