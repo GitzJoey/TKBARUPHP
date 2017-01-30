@@ -178,7 +178,7 @@
                             series: [
                                 @foreach($priceLevels as $priceLevelKey => $priceLevel)
                                     {
-                                        name: '@lang('price.index.price_history.chart.price_level.' . $priceLevel->name)',
+                                        name: '{{ $priceLevel->name }}',
                                         pointInterval: moment.duration(1, 'hours').asMilliseconds(),
                                         data: [
                                             @foreach($stock->priceHistory() as $priceKey => $price)

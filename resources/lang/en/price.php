@@ -20,11 +20,7 @@ return [
             'chart' => [
                 'subtitle' => 'Prices in last 10 days',
                 'price' => 'Price (IDR)',
-                'price_level' => [
-                    'RETAIL' => 'Retail',
-                    'WHOLESALE 1' => 'Wholesale 1',
-                    'WHOLESALE 2' => 'Wholesale 2',
-                ],
+                'market_price' => 'Market Price'
             ]
         ]
     ],
