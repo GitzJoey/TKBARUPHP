@@ -150,18 +150,18 @@
                                                                 <tbody>
                                                                     <tr v-for="(ph, phIdx) in profile.phone_numbers">
                                                                         <td>
-                                                                            <input type="hidden" name="profile_@{{ profileIdx }}_phone_number_id[]" v-bind:value="ph.id">
-                                                                            <select name="profile_@{{ profileIdx }}_phone_provider[]" class="form-control"
+                                                                            <input type="hidden" v-bind:name="'profile_' + profileIdx +'_phone_number_id[]'" v-bind:value="ph.id">
+                                                                            <select v-bind:name="'profile_' + profileIdx + '_phone_provider[]'" class="form-control"
                                                                                     v-model="ph.phone_provider_id"
                                                                                     data-parsley-required="true" data-parsley-group="tab_pic">
                                                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }} )</option>
                                                                             </select>
                                                                         </td>
-                                                                        <td><input type="text" name="profile_@{{ profileIdx }}_phone_number[]" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
-                                                                        <td><input type="text" class="form-control" name="profile_@{{ $parent.$index }}_remarks[]" v-model="ph.remarks"></td>
+                                                                        <td><input type="text" v-bind:name="'profile_' + profileIdx + '_phone_number[]'" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
+                                                                        <td><input type="text" class="form-control" v-bind:name="'profile_' + profileIdx + '_remarks[]'" v-model="ph.remarks"></td>
                                                                         <td class="text-center">
-                                                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ phIdx }}" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
+                                                                            <button type="button" class="btn btn-xs btn-danger" v-bind:data="phIdx" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
                                                                                 <span class="fa fa-close fa-fw"></span>
                                                                             </button>
                                                                         </td>
