@@ -69,6 +69,43 @@ return [
                 'title' => 'Kategori Biaya',
                 'page_title' => 'Kategori Biaya',
                 'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Daftar Kategori Biaya',
+                ],
+                'table' => [
+                    'header' => [
+                        'group' => 'Grup',
+                        'name' => 'Nama',
+                    ],
+                ],
+            ],
+            'create' => [
+                'title' => 'Kategori Biaya',
+                'page_title' => 'Kategori Biaya',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Tambah Kategori Biaya',
+                ],
+            ],
+            'field' => [
+                'group' => 'Grup',
+                'name' => 'Nama',
+            ],
+            'edit' => [
+                'title' => 'Kategori Biaya',
+                'page_title' => 'Kategori Biaya',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Ubah Kategori Biaya',
+                ],
+            ],
+            'show' => [
+                'title' => 'Kategori Biaya',
+                'page_title' => 'Kategori Biaya',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Tampilkan Kategori Biaya',
+                ],
             ],
         ],
         'index' => [
@@ -83,6 +120,43 @@ return [
                 'title' => 'Kategori Pendapatan',
                 'page_title' => 'Kategori Pendapatan',
                 'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Daftar Kategori Pendapatan',
+                ],
+                'table' => [
+                    'header' => [
+                        'group' => 'Grup',
+                        'name' => 'Nama',
+                    ],
+                ],
+            ],
+            'create' => [
+                'title' => 'Kategori Pendapatan',
+                'page_title' => 'Kategori Pendapatan',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Tambah Kategori Pendapatan',
+                ],
+            ],
+            'field' => [
+                'group' => 'Grup',
+                'name' => 'Nama',
+            ],
+            'edit' => [
+                'title' => 'Kategori Pendapatan',
+                'page_title' => 'Kategori Pendapatan',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Ubah Kategori Pendapatan',
+                ],
+            ],
+            'show' => [
+                'title' => 'Kategori Pendapatan',
+                'page_title' => 'Kategori Pendapatan',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Tampilkan Kategori Pendapatan',
+                ],
             ],
         ],
         'index' => [

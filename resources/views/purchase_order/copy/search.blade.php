@@ -26,7 +26,7 @@
         </div>
     @endif
 
-        <div id="po-copy-vue">
+        <div id="poCopyVue">
             <form class="form-horizontal">
                 <div class="box box-info">
                     <div class="box-header with-border">
@@ -49,8 +49,8 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var poCopyApp = new Vue({
-            el: '#po-copy-vue',
+        var app = new Vue({
+            el: '#poCopyVue',
             data: {
                 poCode: '{{ Session::get('code') }}'
             }

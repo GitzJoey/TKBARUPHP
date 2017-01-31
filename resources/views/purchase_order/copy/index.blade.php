@@ -35,7 +35,7 @@
         </div>
     @endif
 
-    <div id="po-copy-vue">
+    <div id="poCopyVue">
         <form class="form-horizontal" id="searchForm">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -106,8 +106,8 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var poCopyApp = new Vue({
-            el: '#po-copy-Vue',
+        var app = new Vue({
+            el: '#poCopyVue',
             data: {
                 poCode: '{{ $poCode }}'
             },
@@ -127,7 +127,7 @@
                     }, function (isConfirm) {
                         if (isConfirm) form.submit();
                     });
-                };
+                }
             }
         });
     </script>

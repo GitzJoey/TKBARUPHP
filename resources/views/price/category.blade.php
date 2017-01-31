@@ -24,7 +24,7 @@
         </div>
     @endif
 
-    <div ng-app="categoryPriceModule" ng-controller="categoryPriceController">
+    <div id="categoryPriceVue">
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('price.category.header.title', ['product_type' => $currentProductType->name])</h3>
@@ -55,8 +55,10 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control text-right" name="market_price"
                                        data-parsley-required="true"
-                                       data-parsley-pattern="^\d+(,\d+)?\.?\d*$" id="inputMarketPrice" fcsa-number
-                                       ng-model="market_price"/>
+                                       data-parsley-pattern="^\d+(,\d+)?\.?\d*$" id="inputMarketPrice" autonumeric
+                                       v-model="marketPrice"
+                                       v-on:keyup="updatePrice(marketPrice)"
+                                />
                             </div>
                         </div>
                     </div>
@@ -67,7 +69,7 @@
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control text-right" name="price[]"
                                            data-parsley-required="true" data-parsley-pattern="^\d+(,\d+)?\.?\d*$"
-                                           fcsa-number ng-model="price{{ $key }}" id="inputPrice_{{ $key }}"
+                                           autonumeric v-model="price.price{{ $key }}" id="inputPrice_{{ $key }}"
                                            aria-describedby="helpBlock">
                                     <span id="helpBlock" class="help-block" title="{{ 'Type : ' . Lang::get('lookup.' . $priceLevel->type) . '&#013;' .
                                         ($priceLevel->type === 'PRICELEVELTYPE.INC' ?
@@ -97,56 +99,53 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('categoryPriceModule', ['fcsa-number']);
-        app.controller("categoryPriceController", ['$scope', function ($scope) {
-        }]);
+        $(document).ready(function () {
+            var app = new Vue({
+                el: '#categoryPriceVue',
+                data: {
+                    priceLevels: JSON.parse('{!! htmlspecialchars_decode($priceLevels) !!}'),
+                    marketPrice: $("input[id='inputMarketPrice']").val(),
+                    price: []
+                },
+                mounted: function() {
+                    $("#inputDate").datetimepicker({
+                        format: "DD-MM-YYYY hh:mm A",
+                        defaultDate: moment()
+                    });
+                },
+                methods: {
+                    updatePrice: function(marketPrice) {
+                        if ($.isNumeric(marketPrice))
+                            marketPrice = parseFloat(marketPrice);
+                        else
+                            marketPrice = 0;
 
-        var priceLevels = JSON.parse('{!! htmlspecialchars_decode($priceLevels) !!}');
-        var marketPrice = $("input[id='inputMarketPrice']");
+                        console.log('Inputed market price : ' + marketPrice);
 
-        marketPrice.on('input', function () {
-            updatePrice($(this).val());
-        });
+                        for (var i = 0; i < this.priceLevels.length; i++) {
+                            console.log('Price level ' + (i + 1));
 
-        function updatePrice(marketPrice) {
+                            var priceInput = $("#inputPrice_" + i);
+                            var priceLevel = this.priceLevels[i];
+                            var price = 0;
 
-            console.log('Updating price inputs...');
+                            console.log('Price level type : ' + priceLevel.type);
 
-            if ($.isNumeric(marketPrice))
-                marketPrice = parseFloat(marketPrice);
-            else
-                marketPrice = 0;
+                            if (priceLevel.type === 'PRICELEVELTYPE.INC') {
+                                console.log('Increment value : ' + priceLevel.increment_value);
+                                price = parseFloat(priceLevel.increment_value) + marketPrice;
+                            }
+                            else {
+                                console.log('Percentage value : ' + priceLevel.percentage_value);
+                                price = parseFloat(priceLevel.percentage_value) * marketPrice + marketPrice;
+                            }
 
-            console.log('Inputed market price : ' + marketPrice);
+                            console.log('Calculated price : ' + price);
 
-            for (var i = 0; i < priceLevels.length; i++) {
-                console.log('Price level ' + (i + 1));
-
-                var priceInput = $("#inputPrice_" + i);
-                var priceLevel = priceLevels[i];
-                var price = 0;
-
-                console.log('Price level type : ' + priceLevel.type);
-
-                if (priceLevel.type === 'PRICELEVELTYPE.INC') {
-                    console.log('Increment value : ' + priceLevel.increment_value);
-                    price = parseFloat(priceLevel.increment_value) + marketPrice;
+                            priceInput.val(numeral(price).format('0,0'));
+                        }
+                    }
                 }
-                else {
-                    console.log('Percentage value : ' + priceLevel.percentage_value);
-                    price = parseFloat(priceLevel.percentage_value) * marketPrice + marketPrice;
-                }
-
-                console.log('Calculated price : ' + price);
-
-                priceInput.val(numeral(price).format('0,0'));
-            }
-        }
-
-        $(function () {
-            $("#inputDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
             });
         });
     </script>

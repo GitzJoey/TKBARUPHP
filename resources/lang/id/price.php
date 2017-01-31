@@ -20,11 +20,7 @@ return [
             'chart' => [
                 'subtitle' => 'Harga di 10 hari terakhir',
                 'price' => 'Harga (IDR)',
-                'price_level' => [
-                    'RETAIL' => 'Retail',
-                    'WHOLESALE 1' => 'Wholesale 1',
-                    'WHOLESALE 2' => 'Wholesale 2',
-                ],
+                'market_price' => 'Harga Pasar'
             ]
         ]
     ],

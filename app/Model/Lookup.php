@@ -25,6 +25,8 @@ class Lookup extends Model
 {
     protected $table = 'lookups';
 
+    protected $appends = ['i18nDescription'];
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -33,4 +35,8 @@ class Lookup extends Model
         'category'
     ];
 
+    public function getI18nDescriptionAttribute()
+    {
+        return trans('lookup.'.$this->attributes['code']);
+    }
 }

@@ -49,7 +49,7 @@
                                                     class="form-control"
                                                     v-model="po.supplier_type">
                                                 <option v-bind:value="defaultSupplierType">@lang('labels.PLEASE_SELECT')</option>
-                                                <option v-for="st of supplierTypeDDL" v-bind:value="st">@{{ st.description }}</option>
+                                                <option v-for="st of supplierTypeDDL" v-bind:value="st">@{{ st.i18nDescription }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                                                     class="form-control"
                                                     v-model="po.poType">
                                                 <option v-bind:value="defaultPOType">@lang('labels.PLEASE_SELECT')</option>
-                                                <option v-for="poType of poTypeDDL" v-bind:value="poType">@{{ poType.description }}</option>
+                                                <option v-for="poType of poTypeDDL" v-bind:value="poType">@{{ poType.i18nDescription }}</option>
                                             </select>
                                         </div>
                                     </div>

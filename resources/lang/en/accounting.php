@@ -69,6 +69,43 @@ return [
                 'title' => 'Cost Category',
                 'page_title' => 'Cost Category',
                 'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Cost Category List',
+                ],
+                'table' => [
+                    'header' => [
+                        'group' => 'Group',
+                        'name' => 'Name',
+                    ],
+                ],
+            ],
+            'create' => [
+                'title' => 'Cost Category',
+                'page_title' => 'Cost Category',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Create Cost Category',
+                ],
+            ],
+            'field' => [
+                'group' => 'Group',
+                'name' => 'Name',
+            ],
+            'edit' => [
+                'title' => 'Cost Category',
+                'page_title' => 'Cost Category',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Edit Cost Category',
+                ],
+            ],
+            'show' => [
+                'title' => 'Cost Category',
+                'page_title' => 'Cost Category',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Show Cost Category',
+                ],
             ],
         ],
         'index' => [
@@ -83,6 +120,43 @@ return [
                 'title' => 'Revenue Category',
                 'page_title' => 'Revenue Category',
                 'page_title_desc' => '',
+                'header' => [
+                    'title' => '',
+                ],
+                'table' => [
+                    'header' => [
+                        'group' => 'Group',
+                        'name' => 'Name',
+                    ],
+                ],
+            ],
+            'create' => [
+                'title' => 'Revenue Category',
+                'page_title' => 'Revenue Category',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Create Revenue Category',
+                ],
+            ],
+            'field' => [
+                'group' => 'Group',
+                'name' => 'Name',
+            ],
+            'edit' => [
+                'title' => 'Revenue Category',
+                'page_title' => 'Revenue Category',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Edit Revenue Category',
+                ],
+            ],
+            'show' => [
+                'title' => 'Revenue Category',
+                'page_title' => 'Revenue Category',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Show Revenue Category',
+                ],
             ],
         ],
         'index' => [
