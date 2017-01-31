@@ -203,7 +203,7 @@
                                                                             class="form-control"
                                                                             v-model="so.vendorTrucking">
                                                                         <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.description }}</option>
+                                                                        <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -308,7 +308,7 @@
                                                                                 </button>
                                                                             </td>
                                                                             <td class="text-right valign-middle">
-                                                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
+                                                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
                                                                             </td>
                                                                         </tr>
                                                                         </tbody>
