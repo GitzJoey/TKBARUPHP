@@ -32,7 +32,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('accounting.cost.category.edit.header.title')</h3>
         </div>
-        {!! Form::model($unit, ['method' => 'PATCH', 'route' => ['db.acc.cost.category.edit', $cc->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($cc, ['method' => 'PATCH', 'route' => ['db.acc.cost.category.edit', $cc->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputGroup" class="col-sm-2 control-label">@lang('accounting.cost.category.field.group')</label>

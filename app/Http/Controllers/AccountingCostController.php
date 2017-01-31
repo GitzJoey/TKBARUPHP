@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\AccountingCostCategory;
 
+use Auth;
+use Validator;
 use Illuminate\Http\Request;
 
 class AccountingCostController extends Controller
@@ -34,7 +36,6 @@ class AccountingCostController extends Controller
 
     public function categoryCreate()
     {
-
         return view('accounting.cost.category.create', compact('groupdistinct'));
     }
 
@@ -49,6 +50,7 @@ class AccountingCostController extends Controller
             return redirect(route('db.acc.cost.category.create'))->withInput()->withErrors($validator);
         } else {
             AccountingCostCategory::create([
+                'store_id' => Auth::user()->store->id,
                 'name' => $data['name'],
                 'group' => $data['group'],
             ]);
@@ -61,9 +63,7 @@ class AccountingCostController extends Controller
     {
         $cc = AccountingCostCategory::find($id);
 
-
-
-        return view('unit.edit', compact('cc'));
+        return view('accounting.cost.category.edit', compact('cc'));
     }
 
     public function categoryUpdate($id, Request $req)

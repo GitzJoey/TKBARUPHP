@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('admin_unit_show', $unit->hId()) !!}
+
 @endsection
 
 @section('content')
@@ -26,7 +26,9 @@
                 <div class="form-group">
                     <label for="inputGroup" class="col-sm-2 control-label">@lang('accounting.cost.category.field.group')</label>
                     <div class="col-sm-10">
-                        <input id="inputGroup" name="group" type="text" class="form-control" value="{{ $cc->group }}" placeholder="@lang('accounting.cost.category.field.group')">
+                        <label id="inputGroup" class="control-label">
+                            <span class="control-label-normal">{{ $cc->group }}</span>
+                        </label>
                     </div>
                 </div>
                 <div class="form-group">
