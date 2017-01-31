@@ -76,7 +76,7 @@
                                                                             class="form-control"
                                                                             v-model="so.customer_type">
                                                                         <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="customerType in customerTypeDDL" v-bind:value="customerType">@{{ customerType.description }}</option>
+                                                                        <option v-for="customerType in customerTypeDDL" v-bind:value="customerType">@{{ customerType.i18nDescription }}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -138,7 +138,7 @@
                                                                             class="form-control"
                                                                             v-model="so.soType">
                                                                         <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="salesType in soTypeDDL" v-bind:value="salesType">@{{ salesType.description }}</option>
+                                                                        <option v-for="salesType in soTypeDDL" v-bind:value="salesType">@{{ salesType.i18nDescription }}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
