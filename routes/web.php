@@ -58,12 +58,30 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'cost'], function() {
                 Route::get('', 'AccountingCostController@index')->name('db.acc.cost');
-                Route::get('category', 'AccountingCostController@index')->name('db.acc.cost.category');
+
+                Route::group(['prefix' => 'category'], function() {
+                    Route::get('', 'AccountingCostController@categoryIndex')->name('db.acc.cost.category');
+                    Route::get('show/{id}', 'AccountingCostController@categoryShow')->name('db.acc.cost.category.show');
+                    Route::get('create', 'AccountingCostController@categoryCreate')->name('db.acc.cost.category.create');
+                    Route::post('create', 'AccountingCostController@categoryStore');
+                    Route::get('edit/{id}', 'AccountingCostController@categoryEdit')->name('db.acc.cost.category.edit');
+                    Route::patch('edit/{id}', 'AccountingCostController@categoryUpdate');
+                    Route::delete('edit/{id}', 'AccountingCostController@categoryDelete')->name('db.acc.cost.category.delete');
+                });
             });
 
             Route::group(['prefix' => 'revenue'], function() {
                 Route::get('', 'AccountingRevenueController@index')->name('db.acc.revenue');
-                Route::get('category', 'AccountingRevenueController@index')->name('db.acc.revenue.category');
+
+                Route::group(['prefix' => 'category'], function() {
+                    Route::get('', 'AccountingRevenueController@categoryIndex')->name('db.acc.revenue.category');
+                    Route::get('show/{id}', 'AccountingRevenueController@categoryShow')->name('db.acc.revenue.category.show');
+                    Route::get('create', 'AccountingRevenueController@categoryCreate')->name('db.acc.revenue.category.create');
+                    Route::post('create', 'AccountingRevenueController@categoryStore');
+                    Route::get('edit/{id}', 'AccountingRevenueController@categoryEdit')->name('db.acc.revenue.category.edit');
+                    Route::patch('edit/{id}', 'AccountingRevenueController@categoryUpdate');
+                    Route::delete('edit/{id}', 'AccountingRevenueController@categoryDelete')->name('db.acc.revenue.category.delete');
+                });
             });
 
             Route::group(['prefix' => 'cash_flow'], function() {
