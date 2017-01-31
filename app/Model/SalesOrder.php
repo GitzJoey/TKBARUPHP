@@ -179,18 +179,18 @@ class SalesOrder extends Model
 
     public function totalAmount()
     {
-        return itemTotalAmount() + expenseTotalAmount();
+        return $this->itemTotalAmount() + $this->expenseTotalAmount();
     }
 
     public function totalAmountPaid()
     {
-        $confirmedPayments = getConfirmedPayment();
+        $confirmedPayments = $this->getConfirmedPayment();
         return count($confirmedPayments) > 0 ? $confirmedPayments->sum('total_amount') : 0;
     }
 
     public function totalAmountUnpaid()
     {
-        return totalAmount() - totalAmountPaid();
+        return $this->totalAmount() - $this->totalAmountPaid();
     }
 
     public function updatePaymentStatus()

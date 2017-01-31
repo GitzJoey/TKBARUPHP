@@ -133,10 +133,10 @@
                                                             <div class="form-group">
                                                                 <label v-bind:for="'inputSoType_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="hidden" name="sales_type[]" v-bind:value="so.soType.code">
+                                                                    <input type="hidden" name="sales_type[]" v-bind:value="so.sales_type.code">
                                                                     <select v-bind:id="'inputSoType_' + (soIndex + 1)" data-parsley-required="true"
                                                                             class="form-control"
-                                                                            v-model="so.soType">
+                                                                            v-model="so.sales_type">
                                                                         <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                                         <option v-for="salesType in soTypeDDL" v-bind:value="salesType">@{{ salesType.i18nDescription }}</option>
                                                                     </select>
@@ -234,7 +234,7 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="row">
-                                                                <div v-show="so.soType.code === 'SOTYPE.SVC'">
+                                                                <div v-show="so.sales_type.code === 'SOTYPE.SVC'">
                                                                     <div class="col-md-11">
                                                                         <select v-bind:id="'inputProduct_' + (soIndex + 1)"
                                                                                 class="form-control"
@@ -248,7 +248,7 @@
                                                                                 v-on:click="insertProduct(soIndex, so.product)"><span class="fa fa-plus"/></button>
                                                                     </div>
                                                                 </div>
-                                                                <div v-show="so.soType.code === 'SOTYPE.S'">
+                                                                <div v-show="so.sales_type.code === 'SOTYPE.S'">
                                                                     <div class="col-md-11">
                                                                         <select v-bind:id="'inputStock_' + (soIndex + 1)"
                                                                                 class="form-control"
@@ -696,7 +696,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function () {
+//        $(document).ready(function () {
             var soApp = new Vue({
             el: '#soVue',
             data: {
@@ -734,7 +734,7 @@
                                 name: ''
                             }
                         },
-                        soType: {
+                        sales_type: {
                             code: ''
                         },
                         warehouse: {
@@ -890,11 +890,13 @@
                         data: [ vm.SOs[index].customer ],
                         ajax: {
                             url: function(params){
+                                console.log('{{ route('api.customer.search') }}?q=' + params.term);
                                 return '{{ route('api.customer.search') }}?q=' + params.term;
                             },
                             delay: 250,
                             dataType: 'json',
                             processResults: function (data, params) {
+                                console.log(data);
                                 return {
                                     results: data
                                 }
@@ -935,11 +937,13 @@
                     data: [ vm.SOs[index].customer ],
                     ajax: {
                         url: function(params){
+                            console.log('{{ route('api.customer.search') }}?q=' + params.term);
                             return '{{ route('api.customer.search') }}?q=' + params.term;
                         },
                         delay: 250,
                         dataType: 'json',
                         processResults: function (data, params) {
+                            console.log(data);
                             return {
                                 results: data
                             }
@@ -966,6 +970,6 @@
             form.parsley().destroy();
             form.submit();
         });
-    });
+//    });
 </script>
 @endsection

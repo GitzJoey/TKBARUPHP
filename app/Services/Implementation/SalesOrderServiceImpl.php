@@ -231,6 +231,8 @@ class SalesOrderServiceImpl implements SalesOrderService
         $SOs = [];
 
         for($i = 0; $i < count($request->input('so_code')); $i++){
+            $customer = Customer::find($request->input("customer_id.$i"));
+
             $items = [];
             for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
                 $items[] = [
@@ -272,7 +274,7 @@ class SalesOrderServiceImpl implements SalesOrderService
                 'customer_type' => [
                     'code' => $request->input("customer_type.$i")
                 ],
-                'customer' => Customer::find($request->input("customer_id.$i")),
+                'customer' => is_null($customer) ? ['id' => '', 'price_level' => ''] : $customer,
                 'walk_in_cust' => $request->input("walk_in_customer.$i"),
                 'walk_in_cust_details' => $request->input("walk_in_customer_details.$i"),
                 'so_code' => $request->input("so_code.$i"),
