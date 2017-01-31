@@ -121,33 +121,41 @@ return [
                 'page_title' => 'Kategori Pendapatan',
                 'page_title_desc' => '',
                 'header' => [
-                    'title' => '',
+                    'title' => 'Daftar Kategori Pendapatan',
                 ],
                 'table' => [
                     'header' => [
-                        'group' => '',
-                        'name' => '',
+                        'group' => 'Grup',
+                        'name' => 'Nama',
                     ],
                 ],
             ],
             'create' => [
-                'header' => [
-                    'title' => '',
-                ],
-                'title' => '',
-                'page_title' => '',
+                'title' => 'Kategori Pendapatan',
+                'page_title' => 'Kategori Pendapatan',
                 'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Tambah Kategori Pendapatan',
+                ],
             ],
             'field' => [
-                'group' => '',
-                'name' => '',
+                'group' => 'Grup',
+                'name' => 'Nama',
             ],
             'edit' => [
-                'title' => '',
-                'page_title' => '',
+                'title' => 'Kategori Pendapatan',
+                'page_title' => 'Kategori Pendapatan',
                 'page_title_desc' => '',
                 'header' => [
-                    'title' => '',
+                    'title' => 'Ubah Kategori Pendapatan',
+                ],
+            ],
+            'show' => [
+                'title' => 'Kategori Pendapatan',
+                'page_title' => 'Kategori Pendapatan',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Tampilkan Kategori Pendapatan',
                 ],
             ],
         ],

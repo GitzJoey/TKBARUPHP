@@ -150,6 +150,14 @@ return [
                     'title' => 'Edit Revenue Category',
                 ],
             ],
+            'show' => [
+                'title' => 'Revenue Category',
+                'page_title' => 'Revenue Category',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Show Revenue Category',
+                ],
+            ],
         ],
         'index' => [
             'title' => 'Revenue',

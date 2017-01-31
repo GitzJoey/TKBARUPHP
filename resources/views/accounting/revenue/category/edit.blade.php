@@ -32,18 +32,18 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('accounting.revenue.category.edit.header.title')</h3>
         </div>
-        {!! Form::model($rc, ['method' => 'PATCH', 'route' => ['db.acc.revenue.category.edit', $cc->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        {!! Form::model($rc, ['method' => 'PATCH', 'route' => ['db.acc.revenue.category.edit', $rc->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label for="inputGroup" class="col-sm-2 control-label">@lang('accounting.revenue.category.field.group')</label>
                     <div class="col-sm-10">
-                        <input id="inputGroup" name="group" type="text" class="form-control" value="{{ $cc->group }}" placeholder="@lang('accounting.revenue.category.field.group')">
+                        <input id="inputGroup" name="group" type="text" class="form-control" value="{{ $rc->group }}" placeholder="@lang('accounting.revenue.category.field.group')">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">@lang('accounting.revenue.category.field.name')</label>
                     <div class="col-sm-10">
-                        <input id="inputName" name="name" type="text" class="form-control" value="{{ $cc->name }}" placeholder="Name" data-parsley-required="true">
+                        <input id="inputName" name="name" type="text" class="form-control" value="{{ $rc->name }}" placeholder="Name" data-parsley-required="true">
                     </div>
                 </div>
                 <div class="form-group">

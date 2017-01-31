@@ -7,6 +7,7 @@ use App\Model\AccountingCostCategory;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
+use Vinkla\Hashids\Facades\Hashids;
 
 class AccountingCostController extends Controller
 {
@@ -70,11 +71,11 @@ class AccountingCostController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string|max:255',
-            'symbol' => 'required|string|max:255',
+            'group' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('db.acc.cost.category.edit'))->withInput()->withErrors($validator);
+            return redirect(route('db.acc.cost.category.edit', Hashids::encode($id)))->withInput()->withErrors($validator);
         } else {
             AccountingCostCategory::find($id)->update($req->all());
             return redirect(route('db.acc.cost.category'));
@@ -86,5 +87,4 @@ class AccountingCostController extends Controller
         AccountingCostCategory::find($id)->delete();
         return redirect(route('db.acc.cost.category'));
     }
-
 }

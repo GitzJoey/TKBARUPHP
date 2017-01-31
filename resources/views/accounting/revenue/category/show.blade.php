@@ -1,64 +1,48 @@
 @extends('layouts.adminlte.master')
 
 @section('title')
-    @lang('unit.show.title')
+    @lang('accounting.revenue.category.show.title')
 @endsection
 
 @section('page_title')
-    <span class="glyphicon glyphicon-flash"></span>&nbsp;@lang('unit.show.page_title')
+    <span class="glyphicon glyphicon-flash"></span>&nbsp;@lang('accounting.revenue.category.show.page_title')
 @endsection
 
 @section('page_title_desc')
-    @lang('unit.show.page_title_desc')
+    @lang('accounting.revenue.category.show.page_title_desc')
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('admin_unit_show', $unit->hId()) !!}
+    
 @endsection
 
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('unit.show.header.title') : {{ $unit->name }}</h3>
+            <h3 class="box-title">@lang('accounting.revenue.category.show.header.title') : {{ $rc->name }}</h3>
         </div>
         <form class="form-horizontal">
             <div class="box-body">
                 <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">@lang('unit.field.name')</label>
+                    <label for="inputGroup" class="col-sm-2 control-label">@lang('accounting.revenue.category.field.group')</label>
+                    <div class="col-sm-10">
+                        <label id="inputGroup" class="control-label control-label-normal">
+                            <span class="control-label-normal">{{ $rc->group }}</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">@lang('accounting.revenue.category.field.name')</label>
                     <div class="col-sm-10">
                         <label id="inputName" class="control-label">
-                            <span class="control-label-normal">{{ $unit->name }}</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputSymbol" class="col-sm-2 control-label">@lang('unit.field.symbol')</label>
-                    <div class="col-sm-10">
-                        <label id="inputSymbol" class="control-label control-label-normal">
-                            <span class="control-label-normal">{{ $unit->symbol }}</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputStatus" class="col-sm-2 control-label">@lang('unit.field.status')</label>
-                    <div class="col-sm-10">
-                        <label class="control-label control-label-normal">
-                            <span class="control-label-normal">@lang('lookup.'.$unit->status)</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('unit.field.remarks')</label>
-                    <div class="col-sm-10">
-                        <label id="inputRemarks" class="control-label control-label-normal">
-                            <span class="control-label-normal">{{ $unit->remarks }}</span>
+                            <span class="control-label-normal">{{ $rc->name }}</span>
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.admin.unit') }}" class="btn btn-default">@lang('buttons.back_button')</a>
+                        <a href="{{ route('db.acc.revenue.category') }}" class="btn btn-default">@lang('buttons.back_button')</a>
                     </div>
                 </div>
             </div>
