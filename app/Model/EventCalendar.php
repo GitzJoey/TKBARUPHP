@@ -56,7 +56,7 @@ class EventCalendar extends Model
     ];
 
     protected $appends = [
-        'start', 'title'
+        'start', 'end', 'title'
     ];
 
     protected $hidden = [
@@ -76,6 +76,11 @@ class EventCalendar extends Model
     public function getTitleAttribute()
     {
         return $this->attributes['event_title'];
+    }
+
+    public function getEndAttribute()
+    {
+        return $this->attributes['end_date'];
     }
 
     public function user()
