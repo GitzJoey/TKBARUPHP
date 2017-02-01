@@ -18,7 +18,12 @@
 
 @section('custom_css')
     <link rel="stylesheet" href="{{ asset('adminlte/css/fullcalendar.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte/css/fullcalendar.print.css') }}" media="print">
+    <link rel="stylesheet" href="{{ asset('adminlte/css/fullcalendar.print.min.css') }}" media="print">
+    <style type="text/css">
+        .fc-state-highlight {
+            background-color: #f8edba
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -87,7 +92,6 @@
 
     <script type="application/javascript">
         $(document).ready(function() {
-            var initialLocaleCode = '{!! LaravelLocalization::getCurrentLocale() !!}';
             var app = new Vue({
                 el: '#calendarVue',
                 data: {
@@ -95,8 +99,35 @@
                 },
                 methods: {
                     loadEvents: function() {
-                        this.$http.get('{{ route('api.user.get.calendar') }}').then(function(data) {
-                            console.log(data.data);
+                        $.ajax({
+                            url: '{{ route('api.user.get.calendar') }}',
+                            data: {
+                                id: '{{ Auth::user()->id }}'
+                            },
+                            type: 'GET',
+                            async: false,
+                            success: function(response) {
+                                $('#calendar').fullCalendar({
+                                    header: {
+                                        left: 'prev, next today',
+                                        center: 'title',
+                                        right: 'month, agendaWeek, agendaDay'
+                                    },
+                                    locale: '{!! LaravelLocalization::getCurrentLocale() !!}',
+                                    events: response.userCalendar,
+                                    dayClick: function(date, jsEvent, view) {
+                                        $(".fc-state-highlight").removeClass("fc-state-highlight");
+                                        $("td[data-date=" + date.format('YYYY-MM-DD') + "]").addClass("fc-state-highlight");
+                                        $('#inputStartDate').data('DateTimePicker').date(moment(date));
+                                        $('#inputEndDate').data('DateTimePicker').date(moment(date).add(1, 'd'));
+                                    },
+                                    eventRender: function(event, element) {
+                                        $(element).tooltip({
+                                            title: event.title
+                                        });
+                                    }
+                                });
+                            }
                         });
                     }
                 },
@@ -109,45 +140,6 @@
                 format: "DD-MM-YYYY hh:mm A",
                 defaultDate: moment()
             });
-
-            /*
-            $.ajax({
-                url :
-                dataType: 'application/json',
-                type : "GET",
-                async: false,
-                success : function(response) {
-                    console.log(response);
-                    var obj = JSON.parse(response);
-                    var evvL = [];
-
-                    $('#calendar').fullCalendar({
-                        header: {
-                            left: 'prev, next today',
-                            center: 'title',
-                            right: 'month, agendaWeek, agendaDay'
-                        },
-                        locale: initialLocaleCode,
-                        buttonText: {
-                            today: 'today',
-                            month: 'month',
-                            week: 'week',
-                            day: 'day'
-                        },
-                        events: evvL,
-                        dayClick: function(day) {
-                            console.log('a day has been clicked!');
-                        }
-                    });
-                },
-                error : function(xhr, status, error) {
-                    console.log(xhr.responseText);
-                },
-                complete: function(response) {
-                    console.log(response);
-                }
-            });
-            */
         });
     </script>
 @endsection

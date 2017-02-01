@@ -13,6 +13,7 @@ use App\Model\EventCalendar;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class CalendarController extends Controller
 {
@@ -28,9 +29,9 @@ class CalendarController extends Controller
 
     public function retrieveEvents()
     {
-        $user = User::whereId(Auth::user()->id)->first();
+        $userCalendar = User::whereId(Input::get('id'))->first()->eventCalendars;
 
-        return response()->json(compact('user'), 200);
+        return response()->json(compact('userCalendar'), 200);
     }
 
     public function storeEvent(Request $request)
