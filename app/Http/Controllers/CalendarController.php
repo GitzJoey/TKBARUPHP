@@ -30,9 +30,7 @@ class CalendarController extends Controller
     {
         $user = User::whereId(Auth::user()->id)->first();
 
-        return response()->json([
-            'return' => 'success'
-        ]);
+        return response()->json(compact('user'), 200);
     }
 
     public function storeEvent(Request $request)

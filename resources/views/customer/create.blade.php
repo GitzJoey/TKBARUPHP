@@ -154,7 +154,11 @@
                                                                                 <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }})</option>
                                                                             </select>
                                                                         </td>
-                                                                        <td><input type="text" v-bind:name="'profile_' + profileIdx + '_phone_number[]'" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"
+                                                                                   v-bind:name="'profile_' + profileIdx + '_phone_number[]'"
+                                                                                   v-on:keyup="checkPrefix(ph.number)">
+                                                                        </td>
                                                                         <td><input type="text" class="form-control" v-bind:name="'profile_' + profileIdx + '_remarks[]'" v-model="ph.remarks"></td>
                                                                         <td class="text-center">
                                                                             <button type="button" class="btn btn-xs btn-danger" v-bind:data="phIdx" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
@@ -374,6 +378,31 @@
                     },
                     removeSelectedExpense: function(idx) {
                         this.expenses.splice(idx, 1);
+                    },
+                    checkPrefix: function(prefix) {
+                        if (prefix.length > 3) {
+                            $.ajax({
+                                url: '{{ route('api.phone_provider.search') }}' + '/' + prefix,
+                                type: "GET",
+                                success: function (response) {
+                                    /*
+                                    $('#unfinishedSettingsNotice').noty({
+                                        text: 'Unfinish Store Detected',
+                                        type: 'warning',
+                                        timeout: 30000,
+                                        progressBar: true
+                                    });
+                                    */
+                                    console.log('success');
+                                },
+                                error: function(err) {
+                                    console.log(err);
+                                },
+                                complete: function(c) {
+                                    console.log('c' + c);
+                                }
+                            });
+                        }
                     }
                 },
                 mounted: function() {
