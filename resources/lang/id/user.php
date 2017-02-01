@@ -23,6 +23,7 @@ return [
         'start_date' => 'Start Date',
         'end_date' => 'End Date',
         'ext_url' => 'URL',
+        'email_to_user' => 'Kirim Acara Untuk Pengguna Lain',
     ],
     'edit' => [
         'title' => 'Pengguna',

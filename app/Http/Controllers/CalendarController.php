@@ -12,6 +12,8 @@ use App\User;
 use App\Model\EventCalendar;
 
 use Auth;
+use Validator;
+use LaravelLocalization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -36,17 +38,37 @@ class CalendarController extends Controller
 
     public function storeEvent(Request $request)
     {
-        $user = User::whereId(Auth::user()->id)->first();
+        Validator::extend('user_is_exists', function ($field, $value, $parameters) {
+            return empty($value) ? false:count(User::whereEmail($value)->get()) == 0 ? false:true;
+        });
 
-        $eventc = new EventCalendar();
+        $inputs = array(
+            'email_to_user' => $request['email_to_user']
+        );
 
-        $eventc->event_title = $request->input('event_title');
-        $eventc->start_date = date('Y-m-d H:i:s', strtotime($request->input('start_date')));
-        $eventc->end_date = date('Y-m-d H:i:s', strtotime($request->input('end_date')));
-        $eventc->ext_url = $request->input('ext_url');
+        $rules = array('email_to_user' => 'user_is_exists');
 
-        $user->eventCalendars()->save($eventc);
+        $messages = array(
+            'user_is_exists' => LaravelLocalization::getCurrentLocale() == 'en' ? 'Email Not Found':'Email Tidak Ditemukan'
+        );
 
-        return redirect()->route('db.user.calendar.show');
+        $validator = Validator::make($inputs, $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect(route('db.user.calendar.show'))->withErrors($validator);
+        } else {
+            $user = User::whereId(Auth::user()->id)->first();
+
+            $eventc = new EventCalendar();
+
+            $eventc->event_title = $request->input('event_title');
+            $eventc->start_date = date('Y-m-d H:i:s', strtotime($request->input('start_date')));
+            $eventc->end_date = date('Y-m-d H:i:s', strtotime($request->input('end_date')));
+            $eventc->ext_url = $request->input('ext_url');
+
+            $user->eventCalendars()->save($eventc);
+
+            return redirect()->route('db.user.calendar.show');
+        }
     }
 }

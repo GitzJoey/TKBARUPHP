@@ -23,6 +23,7 @@ return [
         'start_date' => 'Start Date',
         'end_date' => 'End Date',
         'ext_url' => 'URL',
+        'email_to_user' => 'Send Event To Other User',
     ],
     'edit' => [
         'title' => 'User',

@@ -41,42 +41,39 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('user.calendar.header.title')</h3>
                     </div>
-                    <form action="{{ route('db.user.calendar.store') }}" method="post" data-parsley-validate="parsley">
+                    <form id="calendarForm" action="{{ route('db.user.calendar.store') }}" method="post" data-parsley-validate="parsley">
                         {{ csrf_field() }}
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputTitle" class="col-sm-3 control-label">@lang('user.field.title')</label>
-                                <div class="col-sm-12">
-                                    <input id="inputTitle" name="event_title" type="text" class="form-control" placeholder="@lang('user.field.title')" data-parsley-required="true">
-                                    <span class="help-block"></span>
-                                </div>
+                                <label for="inputTitle" class="control-label">@lang('user.field.title')</label>
+                                <input id="inputTitle" name="event_title" type="text" class="form-control" placeholder="@lang('user.field.title')" data-parsley-required="true">
+                                <span class="help-block"></span>
                             </div>
                             <div class="form-group">
-                                <label for="inputStartDate" class="col-sm-4 control-label">@lang('user.field.start_date')</label>
-                                <div class="col-sm-12">
-                                    <input id="inputStartDate" name="start_date" type="text" class="form-control" placeholder="@lang('user.field.start_date')" data-parsley-required="true">
-                                    <span class="help-block"></span>
-                                </div>
+                                <label for="inputStartDate" class="control-label">@lang('user.field.start_date')</label>
+                                <input id="inputStartDate" name="start_date" type="text" class="form-control" placeholder="@lang('user.field.start_date')" data-parsley-required="true">
+                                <span class="help-block"></span>
                             </div>
                             <div class="form-group">
-                                <label for="inputEndDate" class="col-sm-4 control-label">@lang('user.field.end_date')</label>
-                                <div class="col-sm-12">
-                                    <input id="inputEndDate" name="end_date" type="text" class="form-control" placeholder="@lang('user.field.end_date')">
-                                    <span class="help-block"></span>
-                                </div>
+                                <label for="inputEndDate" class="control-label">@lang('user.field.end_date')</label>
+                                <input id="inputEndDate" name="end_date" type="text" class="form-control" placeholder="@lang('user.field.end_date')">
+                                <span class="help-block"></span>
                             </div>
                             <div class="form-group">
-                                <label for="inputExtUrl" class="col-sm-3 control-label">@lang('user.field.ext_url')</label>
-                                <div class="col-sm-12">
-                                    <input id="inputExtUrl" name="ext_url" type="text" class="form-control" placeholder="@lang('user.field.ext_url')">
-                                    <span class="help-block"></span>
-                                </div>
+                                <label for="inputExtUrl" class="control-label">@lang('user.field.ext_url')</label>
+                                <input id="inputExtUrl" name="ext_url" type="text" class="form-control" placeholder="@lang('user.field.ext_url')">
+                                <span class="help-block"></span>
                             </div>
+                            <hr>
+                            <div class="form-group {{ $errors->has('email_to_user') ? 'has-error' : '' }}">
+                                <label for="inputEmailToUser" class="control-label">@lang('user.field.email_to_user')</label>
+                                <input id="inputEmailToUser" name="email_to_user" type="text" class="form-control" placeholder="@lang('user.field.email_to_user')" data-parsley-type="email" data-parsley-checkvalid="true">
+                                <span class="help-block">{{ $errors->has('email_to_user') ? $errors->first('email_to_user') : '' }}</span>
+                            </div>
+                            <hr>
                             <div class="form-group">
-                                <label for="inputButton" class="col-sm-2 control-label"></label>
-                                <div class="col-sm-12">
-                                    <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                                </div>
+                                <label for="inputButton" class="control-label"></label>
+                                <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                             </div>
                         </div>
                     </form>
@@ -140,6 +137,8 @@
                 format: "DD-MM-YYYY hh:mm A",
                 defaultDate: moment()
             });
+
+            $('#calendarForm').parsley();
         });
     </script>
 @endsection

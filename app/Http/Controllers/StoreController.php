@@ -208,7 +208,7 @@ class StoreController extends Controller
 
         $store = Store::find($id);
 
-        $validator = Validator::extend('isdefault', function ($field, $value, $parameters) {
+        Validator::extend('isdefault', function ($field, $value, $parameters) {
             return $value == 'YESNOSELECT.YES' ? false : true;
         });
 
