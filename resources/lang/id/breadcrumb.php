@@ -81,4 +81,6 @@ return [
     'truck_maintenance' => 'Pemeliharaan Truk',
     'truck_maintenance.create' => 'Tambah Pemeliharaan Truk',
     'truck_maintenance.edit' => 'Ubah Pemeliharaan Truk',
+    'user.profile' => 'Profil Pengguna',
+    'user.calendar' => 'Kalender Pengguna',
 ];

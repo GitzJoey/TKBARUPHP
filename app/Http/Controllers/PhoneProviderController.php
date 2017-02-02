@@ -20,7 +20,7 @@ class PhoneProviderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'getPhoneProviderByDigit']);
     }
 
     public function index()

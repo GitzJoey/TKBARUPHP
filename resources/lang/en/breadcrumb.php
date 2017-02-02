@@ -81,4 +81,6 @@ return [
     'truck_maintenance' => 'Truck Maintenance',
     'truck_maintenance.create' => 'Create Truck Maintenance',
     'truck_maintenance.edit' => 'Edit Truck Maintenance',
+    'user.profile' => 'User Profile',
+    'user.calender' => 'User Calendar'
 ];

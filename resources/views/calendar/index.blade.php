@@ -13,12 +13,17 @@
 @endsection
 
 @section('breadcrumbs')
-
+    {!! Breadcrumbs::render('user_calendar') !!}
 @endsection
 
 @section('custom_css')
     <link rel="stylesheet" href="{{ asset('adminlte/css/fullcalendar.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte/css/fullcalendar.print.css') }}" media="print">
+    <link rel="stylesheet" href="{{ asset('adminlte/css/fullcalendar.print.min.css') }}" media="print">
+    <style type="text/css">
+        .fc-state-highlight {
+            background-color: #f8edba
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -36,42 +41,39 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">@lang('user.calendar.header.title')</h3>
                     </div>
-                    <form action="{{ route('db.user.calendar.store') }}" method="post" data-parsley-validate="parsley">
+                    <form id="calendarForm" action="{{ route('db.user.calendar.store') }}" method="post" data-parsley-validate="parsley">
                         {{ csrf_field() }}
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputTitle" class="col-sm-3 control-label">@lang('user.field.title')</label>
-                                <div class="col-sm-12">
-                                    <input id="inputTitle" name="event_title" type="text" class="form-control" placeholder="@lang('user.field.title')" data-parsley-required="true">
-                                    <span class="help-block"></span>
-                                </div>
+                                <label for="inputTitle" class="control-label">@lang('user.field.title')</label>
+                                <input id="inputTitle" name="event_title" type="text" class="form-control" placeholder="@lang('user.field.title')" data-parsley-required="true">
+                                <span class="help-block"></span>
                             </div>
                             <div class="form-group">
-                                <label for="inputStartDate" class="col-sm-4 control-label">@lang('user.field.start_date')</label>
-                                <div class="col-sm-12">
-                                    <input id="inputStartDate" name="start_date" type="text" class="form-control" placeholder="@lang('user.field.start_date')" data-parsley-required="true">
-                                    <span class="help-block"></span>
-                                </div>
+                                <label for="inputStartDate" class="control-label">@lang('user.field.start_date')</label>
+                                <input id="inputStartDate" name="start_date" type="text" class="form-control" placeholder="@lang('user.field.start_date')" data-parsley-required="true">
+                                <span class="help-block"></span>
                             </div>
                             <div class="form-group">
-                                <label for="inputEndDate" class="col-sm-4 control-label">@lang('user.field.end_date')</label>
-                                <div class="col-sm-12">
-                                    <input id="inputEndDate" name="end_date" type="text" class="form-control" placeholder="@lang('user.field.end_date')">
-                                    <span class="help-block"></span>
-                                </div>
+                                <label for="inputEndDate" class="control-label">@lang('user.field.end_date')</label>
+                                <input id="inputEndDate" name="end_date" type="text" class="form-control" placeholder="@lang('user.field.end_date')">
+                                <span class="help-block"></span>
                             </div>
                             <div class="form-group">
-                                <label for="inputExtUrl" class="col-sm-3 control-label">@lang('user.field.ext_url')</label>
-                                <div class="col-sm-12">
-                                    <input id="inputExtUrl" name="ext_url" type="text" class="form-control" placeholder="@lang('user.field.ext_url')">
-                                    <span class="help-block"></span>
-                                </div>
+                                <label for="inputExtUrl" class="control-label">@lang('user.field.ext_url')</label>
+                                <input id="inputExtUrl" name="ext_url" type="text" class="form-control" placeholder="@lang('user.field.ext_url')">
+                                <span class="help-block"></span>
                             </div>
+                            <hr>
+                            <div class="form-group {{ $errors->has('email_to_user') ? 'has-error' : '' }}">
+                                <label for="inputEmailToUser" class="control-label">@lang('user.field.email_to_user')</label>
+                                <input id="inputEmailToUser" name="email_to_user" type="text" class="form-control" placeholder="@lang('user.field.email_to_user')" data-parsley-type="email" data-parsley-checkvalid="true">
+                                <span class="help-block">{{ $errors->has('email_to_user') ? $errors->first('email_to_user') : '' }}</span>
+                            </div>
+                            <hr>
                             <div class="form-group">
-                                <label for="inputButton" class="col-sm-2 control-label"></label>
-                                <div class="col-sm-12">
-                                    <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                                </div>
+                                <label for="inputButton" class="control-label"></label>
+                                <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                             </div>
                         </div>
                     </form>
@@ -87,7 +89,6 @@
 
     <script type="application/javascript">
         $(document).ready(function() {
-            var initialLocaleCode = '{!! LaravelLocalization::getCurrentLocale() !!}';
             var app = new Vue({
                 el: '#calendarVue',
                 data: {
@@ -95,8 +96,35 @@
                 },
                 methods: {
                     loadEvents: function() {
-                        this.$http.get('{{ route('api.user.get.calendar') }}').then(function(data) {
-                            console.log(data.data);
+                        $.ajax({
+                            url: '{{ route('api.user.get.calendar') }}',
+                            data: {
+                                id: '{{ Auth::user()->id }}'
+                            },
+                            type: 'GET',
+                            async: false,
+                            success: function(response) {
+                                $('#calendar').fullCalendar({
+                                    header: {
+                                        left: 'prev, next today',
+                                        center: 'title',
+                                        right: 'month, agendaWeek, agendaDay'
+                                    },
+                                    locale: '{!! LaravelLocalization::getCurrentLocale() !!}',
+                                    events: response.userCalendar,
+                                    dayClick: function(date, jsEvent, view) {
+                                        $(".fc-state-highlight").removeClass("fc-state-highlight");
+                                        $("td[data-date=" + date.format('YYYY-MM-DD') + "]").addClass("fc-state-highlight");
+                                        $('#inputStartDate').data('DateTimePicker').date(moment(date));
+                                        $('#inputEndDate').data('DateTimePicker').date(moment(date).add(1, 'd'));
+                                    },
+                                    eventRender: function(event, element) {
+                                        $(element).tooltip({
+                                            title: event.title
+                                        });
+                                    }
+                                });
+                            }
                         });
                     }
                 },
@@ -110,44 +138,7 @@
                 defaultDate: moment()
             });
 
-            /*
-            $.ajax({
-                url :
-                dataType: 'application/json',
-                type : "GET",
-                async: false,
-                success : function(response) {
-                    console.log(response);
-                    var obj = JSON.parse(response);
-                    var evvL = [];
-
-                    $('#calendar').fullCalendar({
-                        header: {
-                            left: 'prev, next today',
-                            center: 'title',
-                            right: 'month, agendaWeek, agendaDay'
-                        },
-                        locale: initialLocaleCode,
-                        buttonText: {
-                            today: 'today',
-                            month: 'month',
-                            week: 'week',
-                            day: 'day'
-                        },
-                        events: evvL,
-                        dayClick: function(day) {
-                            console.log('a day has been clicked!');
-                        }
-                    });
-                },
-                error : function(xhr, status, error) {
-                    console.log(xhr.responseText);
-                },
-                complete: function(response) {
-                    console.log(response);
-                }
-            });
-            */
+            $('#calendarForm').parsley();
         });
     </script>
 @endsection

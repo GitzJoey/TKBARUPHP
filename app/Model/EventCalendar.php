@@ -55,6 +55,10 @@ class EventCalendar extends Model
         'user_id', 'start_date', 'end_date', 'event_title', 'ext_url'
     ];
 
+    protected $appends = [
+        'start', 'end', 'title'
+    ];
+
     protected $hidden = [
         'created_by',
         'created_at',
@@ -63,6 +67,21 @@ class EventCalendar extends Model
         'deleted_by',
         'deleted_at',
     ];
+
+    public function getStartAttribute()
+    {
+        return $this->attributes['start_date'];
+    }
+
+    public function getTitleAttribute()
+    {
+        return $this->attributes['event_title'];
+    }
+
+    public function getEndAttribute()
+    {
+        return $this->attributes['end_date'];
+    }
 
     public function user()
     {
