@@ -404,3 +404,13 @@ Breadcrumbs::register('customer_confirmation_confirm', function($breadcrumbs, $i
     $breadcrumbs->parent('customer_confirmation');
     $breadcrumbs->push(trans('breadcrumb.customer.confirmation.confirm'), route('db.customer.confirmation.confirm', $id));
 });
+
+Breadcrumbs::register('user_profile', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.user.profile'), route('db.user.profile.show', $id));
+});
+
+Breadcrumbs::register('user_calendar', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.user.calendar'), route('db.user.calendar.show'));
+});

@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-
+    {!! Breadcrumbs::render('user_calendar') !!}
 @endsection
 
 @section('custom_css')
