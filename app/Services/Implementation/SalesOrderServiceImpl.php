@@ -237,15 +237,10 @@ class SalesOrderServiceImpl implements SalesOrderService
             for ($j = 0; $j < count($request->input("so_$i"."_product_id")); $j++) {
                 $items[] = [
                     'quantity' => $request->input("so_$i"."_quantity.$j"),
-                    'selected_unit' => [
-                        'conversion_value' => ProductUnit::where([
-                            'product_id' => $request->input("so_$i"."_product_id.$j"),
-                            'unit_id' => $request->input("so_$i"."_selected_unit_id.$j")
-                        ])->first()->conversion_value,
-                        'unit' => [
-                            'id' => $request->input("so_$i"."_selected_unit_id.$j")
-                        ]
-                    ],
+                    'selected_unit' => ProductUnit::with('unit')->where([
+                        'product_id' => $request->input("so_$i"."_product_id.$j"),
+                        'unit_id' => $request->input("so_$i"."_selected_unit_id.$j")
+                    ])->first(),
                     'product' => Product::with('productUnits.unit')->find($request->input("so_$i"."_product_id.$j")),
                     'stock_id' => empty($request->input("so_$i"."stock_id.$i")) ? 0 : $request->input("so_$i"."_stock_id.$j"),
                     'base_unit' => [
@@ -262,7 +257,9 @@ class SalesOrderServiceImpl implements SalesOrderService
                 $expenses[]  = [
                     'name' => $request->input("so_$i"."_expense_name.$j"),
                     'type' => [
-                        'code' => $request->input("so_$i"."_expense_type.$j")
+                        'code' => $request->input("so_$i"."_expense_type.$j"),
+                        'description' => $request->input("so_$i"."_expense_type_description.$j"),
+                        'i18nDescription' => $request->input("so_$i"."_expense_type_i18nDescription.$j")
                     ],
                     'is_internal_expense' => $request->input("so_$i" . "_is_internal_expense.$j"),
                     'amount' => floatval(str_replace(',', '', $request->input("so_$i"."_expense_amount.$j"))),
@@ -272,23 +269,32 @@ class SalesOrderServiceImpl implements SalesOrderService
 
             $SOs[] = [
                 'customer_type' => [
-                    'code' => $request->input("customer_type.$i")
+                    'code' => $request->input("customer_type.$i"),
+                    'description' => $request->input("customer_type_description.$i"),
+                    'i18nDescription' => $request->input("customer_type_i18nDescription.$i"),
                 ],
                 'customer' => is_null($customer) ? ['id' => '', 'price_level' => ''] : $customer,
                 'walk_in_cust' => $request->input("walk_in_customer.$i"),
                 'walk_in_cust_details' => $request->input("walk_in_customer_details.$i"),
                 'so_code' => $request->input("so_code.$i"),
                 'sales_type' => [
-                    'code' => $request->input("sales_type.$i")
+                    'code' => $request->input("sales_type.$i"),
+                    'description' => $request->input("sales_type_description.$i"),
+                    'i18nDescription' => $request->input("sales_type_i18nDescription.$i"),
                 ],
                 'so_created' => $request->input("so_created.$i"),
                 'shipping_date' => $request->input("shipping_date.$i"),
                 'warehouse' => [
-                    'id' => $request->input("warehouse_id.$i")
+                    'id' => strval($request->input("warehouse_id.$i")),
+                    'name' => $request->input("warehouse_name.$i"),
+                    'hid' => $request->input("warehouse_hid.$i")
                 ],
                 'vendorTrucking' => [
-                    'id' => empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i")
+                    'id' => strval(empty($request->input("vendor_trucking_id.$i")) ? 0 : $request->input("vendor_trucking_id.$i")),
+                    'name' => empty($request->input("vendor_trucking_name.$i")) ? '' : $request->input("vendor_trucking_name.$i")
                 ],
+                'product' => ['id' => ''],
+                'stock' => ['id' => ''],
                 'remarks' => $request->input("remarks.$i"),
                 'items' => $items,
                 'expenses' => $expenses

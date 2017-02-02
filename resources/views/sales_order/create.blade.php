@@ -72,6 +72,8 @@
                                                                 <label v-bind:for="'inputCustomerType_' + ( soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_type')</label>
                                                                 <div class="col-sm-6">
                                                                     <input type="hidden" name="customer_type[]" v-bind:value="so.customer_type.code">
+                                                                    <input type="hidden" name="customer_type_description[]" v-bind:value="so.customer_type.description">
+                                                                    <input type="hidden" name="customer_type_i18nDescription[]" v-bind:value="so.customer_type.i18nDescription">
                                                                     <select v-bind:id="'inputCustomerType_' + (soIndex + 1)" data-parsley-required="true"
                                                                             class="form-control"
                                                                             v-model="so.customer_type">
@@ -134,6 +136,8 @@
                                                                 <label v-bind:for="'inputSoType_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="hidden" name="sales_type[]" v-bind:value="so.sales_type.code">
+                                                                    <input type="hidden" name="sales_type_description[]" v-bind:value="so.sales_type.description">
+                                                                    <input type="hidden" name="sales_type_i18nDescription[]" v-bind:value="so.sales_type.i18nDescription">
                                                                     <select v-bind:id="'inputSoType_' + (soIndex + 1)" data-parsley-required="true"
                                                                             class="form-control"
                                                                             v-model="so.sales_type">
@@ -186,11 +190,13 @@
                                                             <div class="form-group">
                                                                 <label v-bind:for="'inputWarehouse_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
                                                                 <div class="col-sm-9">
+                                                                    <input type="hidden" name="warehouse_hid[]" v-bind:value="so.warehouse.hid">
                                                                     <input type="hidden" name="warehouse_id[]" v-bind:value="so.warehouse.id">
+                                                                    <input type="hidden" name="warehouse_name[]" v-bind:value="so.warehouse.name">
                                                                     <select v-bind:id="'inputWarehouse_' + (soIndex + 1)" data-parsley-required="true"
                                                                             class="form-control"
                                                                             v-model="so.warehouse">
-                                                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                        <option v-bind:value="{id: 0}">@lang('labels.PLEASE_SELECT')</option>
                                                                         <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{warehouse.name}}</option>
                                                                     </select>
                                                                 </div>
@@ -199,11 +205,12 @@
                                                                 <label v-bind:for="'inputVendorTrucking_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="hidden" name="vendor_trucking_id[]" v-bind:value="so.vendorTrucking.id">
+                                                                    <input type="hidden" name="vendor_trucking_name[]" v-bind:value="so.vendorTrucking.name">
                                                                     <select v-bind:id="'inputVendorTrucking_' + (soIndex + 1)"
                                                                             class="form-control"
                                                                             v-model="so.vendorTrucking">
-                                                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }} - @{{ vendorTrucking.description }}</option>
+                                                                        <option v-bind:value="{id: 0, name: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                        <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -367,8 +374,10 @@
                                                                                        v-model="expense.name" data-parsley-required="true">
                                                                             </td>
                                                                             <td>
-                                                                                <select v-bind:name="'so_' + soIndex + '_expense_type[]'" data-parsley-required="true"
-                                                                                        class="form-control" v-model="expense.type">
+                                                                                <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type[]'" v-bind:value="expense.type.code">
+                                                                                <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_description[]'" v-bind:value="expense.type.description">
+                                                                                <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_i18nDescription[]'" v-bind:value="expense.type.i18nDescription">
+                                                                                <select class="form-control" v-model="expense.type">
                                                                                     <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                                                     <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
                                                                                 </select>
@@ -738,10 +747,11 @@
                             code: ''
                         },
                         warehouse: {
-                            id: ''
+                            id: 0
                         },
                         vendorTrucking: {
-                            id: ''
+                            id: 0,
+                            name: ''
                         },
                         product: {
                             id: ''
@@ -934,7 +944,7 @@
                 $("#customerSelect" + i).select2({
                     allowClear: true,
                     width: '100%',
-                    data: [ vm.SOs[index].customer ],
+                    data: [ soApp.SOs[index].customer ],
                     ajax: {
                         url: function(params){
                             console.log('{{ route('api.customer.search') }}?q=' + params.term);
@@ -957,7 +967,7 @@
                         return customer.name;
                     }
                 });
-                $("#customerSelect" + index).val(vm.SOs[index].customer.id).trigger('change');
+                $("#customerSelect" + index).val(soApp.SOs[index].customer.id).trigger('change');
             }
         }
 
