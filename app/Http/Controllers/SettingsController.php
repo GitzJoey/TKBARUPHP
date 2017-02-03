@@ -8,33 +8,44 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Model\Setting;
 
+use Auth;
 use Illuminate\Http\Request;
+
+use App\Services\SettingService;
 
 class SettingsController extends Controller
 {
-    public function __construct()
+    private $settingService;
+
+    public function __construct(SettingService $settingService)
     {
         $this->middleware('auth');
+
+        $this->settingService = $settingService;
     }
 
     public function index()
     {
-        $settings = Setting::paginate(10);
-        return view('setting.index')->with('data', $settings);
+        $userDDL = User::where('store_id', '=', Auth::user()->store->id)->get();
+        return view('setting.index', compact('userDDL'));
     }
 
-    public function edit($id)
+    public function update()
     {
-        $settings = Setting::find($id);
 
-        return view('setting.edit', compact('settings'));
-
+        return redirect(route('db.admin.settings'));
     }
 
-    public function update(Request $data)
+    public function userSettings()
     {
+        return view('setting.per_user');
+    }
 
+    public function userSettingsUpdate()
+    {
+        return view('setting.per_user');
     }
 }

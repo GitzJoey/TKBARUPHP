@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('user_profile') !!}
+    {!! Breadcrumbs::render('user_profile', Auth::user()->id) !!}
 @endsection
 
 @section('content')

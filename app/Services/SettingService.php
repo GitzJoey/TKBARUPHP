@@ -15,5 +15,5 @@ interface SettingService
      *
      * @return Collection settings.
      */
-    public function generateDefaultSettings();
+    public function generateDefaultSettingsIfNotExists($id);
 }

@@ -23,41 +23,40 @@
             <h3 class="box-title">@lang('settings.index.header.title')</h3>
         </div>
         <div class="box-body">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th class="text-center">@lang('settings.index.table.header.user')</th>
-                    <th class="text-center">@lang('settings.index.table.header.category')</th>
-                    <th class="text-center">@lang('settings.index.table.header.skey')</th>
-                    <th class="text-center">@lang('settings.index.table.header.value')</th>
-                    <th class="text-center">@lang('settings.index.table.header.description')</th>
-                    <th class="text-center">@lang('labels.ACTION')</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach ($data as $key => $item)
-                        <tr>
-                            <td>
-                                @if(is_null($item->user()))
-                                    Default
-                                @else
-                                    $item->user()->name
-                                @endif
-                            </td>
-                            <td>{{ $item->category }}</td>
-                            <td>{{ $item->skey }}</td>
-                            <td>{{ $item->value }}</td>
-                            <td>{{ $item->description }}</td>
-                            <td class="text-center">
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.admin.settings.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div id="settingsVue">
+                <form id="settingsForm" class="form-horizontal" action="{{ route('db.admin.settings.update') }}" method="post" data-parsley-validate="parsley">
+                    <div class="form-group">
+                        <label for="inputForUserEmail" class="col-sm-3 control-label">@lang('settings.field.for_user_email')</label>
+                        <div class="col-sm-9">
+                            <select name="usr_id" class="form-control" v-model="selectedUserId">
+                                <option v-for="user in userDDL" v-bind:value="user.id">@{{ user.name }} @{{ user.email }}</option>
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="box-footer clearfix">
-            {!! $data->render() !!}
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            var app = new Vue({
+                el: '#settingsVue',
+                data: {
+                    userDDL: JSON.parse('{!! htmlspecialchars_decode($userDDL) !!}'),
+                    selectedUserId: ''
+                },
+                methods: {
+                    loadSettings: function(userId) {
+
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

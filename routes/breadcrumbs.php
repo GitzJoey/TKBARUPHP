@@ -405,7 +405,7 @@ Breadcrumbs::register('customer_confirmation_confirm', function($breadcrumbs, $i
     $breadcrumbs->push(trans('breadcrumb.customer.confirmation.confirm'), route('db.customer.confirmation.confirm', $id));
 });
 
-Breadcrumbs::register('user_profile', function($breadcrumbs){
+Breadcrumbs::register('user_profile', function($breadcrumbs, $id){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.user.profile'), route('db.user.profile.show', $id));
 });
