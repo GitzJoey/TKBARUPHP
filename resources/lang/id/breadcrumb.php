@@ -1,10 +1,5 @@
-<?php
-/**
- * Tambah d by PhpStorm.
- * Pengguna: Sugito
- * Date: 12/27/2016
- * Time: 1:27 PM
- */
+<?php 
+
 return [
     'dashboard' => 'Dashboard',
     'po.create' => 'Pembelian',
@@ -47,6 +42,7 @@ return [
     'admin.phone_provider.create' => 'Tambah Provider Telepon',
     'admin.phone_provider.show' => 'Tampilkan Provider Telepon',
     'admin.phone_provider.edit' => 'Ubah Provider Telepon',
+    'admin.settings' => 'Pengaturan',
     'master.customer' => 'Pelanggan',
     'master.customer.create' => 'Tambah Pelanggan',
     'master.customer.show' => 'Tampilkan Pelanggan',
@@ -82,5 +78,6 @@ return [
     'truck_maintenance.create' => 'Tambah Pemeliharaan Truk',
     'truck_maintenance.edit' => 'Ubah Pemeliharaan Truk',
     'user.profile' => 'Profil Pengguna',
+    'user.settings' => 'Pengaturan Pengguna',
     'user.calendar' => 'Kalender Pengguna',
 ];

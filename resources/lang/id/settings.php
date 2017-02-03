@@ -10,6 +10,15 @@ return [
         ],
     ],
     'field' => [
-        'for_user_email' => 'Pengaturan Untuk Pengguna'
+        'for_user_email' => 'Pengaturan Untuk Pengguna',
+        'fav_po_warehouse' => '',
+    ],
+    'user' => [
+        'title' => 'Pengaturan Pengguna',
+        'page_title' => 'Pengaturan Pengguna',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Pengaturan Pengguna',
+        ],
     ],
 ];

@@ -26,4 +26,5 @@ return [
     'download_excel_button' => 'Download Excel',
     'download_pdf_button' => 'Download PDF',
     'calendar_button' => 'Calendar',
+    'settings_button' => 'Settings',
 ];

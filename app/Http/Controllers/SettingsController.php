@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Model\Setting;
+use App\Model\Warehouse;
 
 use Auth;
 use Illuminate\Http\Request;
@@ -41,11 +42,13 @@ class SettingsController extends Controller
 
     public function userSettings()
     {
-        return view('setting.per_user');
+        $warehouseDDL = Warehouse::get();
+
+        return view('setting.user', compact('warehouseDDL'));
     }
 
     public function userSettingsUpdate()
     {
-        return view('setting.per_user');
+        return view('setting.user');
     }
 }
