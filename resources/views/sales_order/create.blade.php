@@ -82,12 +82,11 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <div v-show="so.customer_type.code === 'CUSTOMERTYPE.R'">
+                                                            <template v-if="so.customer_type.code == 'CUSTOMERTYPE.R'">
                                                                 <div class="form-group">
                                                                     <label v-bind:for="'inputCustomerId_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-6">
                                                                         <select class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex">
-                                                                            <option></option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-sm-2">
@@ -96,25 +95,25 @@
                                                                                     class="fa fa-info-circle fa-lg"></span></button>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div v-show="so.customer_type.code === 'CUSTOMERTYPE.WI'">
+                                                            </template>
+                                                            <template v-if="so.customer_type.code == 'CUSTOMERTYPE.WI'">
                                                                 <div class="form-group">
                                                                     <label v-bind:for="'inputCustomerName_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-8">
                                                                         <input type="text" class="form-control" v-bind:id="'inputCustomerName_' + (soIndex + 1)"
-                                                                               name="walk_in_customer[]" placeholder="Customer Name"
-                                                                               v-model="so.walk_in_cust">
+                                                                            name="walk_in_customer[]" placeholder="Customer Name"
+                                                                            v-model="so.walk_in_cust">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label v-bind:for="'inputCustomerDetails_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_details')</label>
                                                                     <div class="col-sm-8">
                                                                     <textarea v-bind:id="'inputCustomerDetails_' + (soIndex + 1)" class="form-control"
-                                                                          rows="5" name="walk_in_customer_details[]"
-                                                                          v-model="so.walk_in_cust_details"></textarea>
+                                                                        rows="5" name="walk_in_customer_details[]"
+                                                                        v-model="so.walk_in_cust_details"></textarea>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </template>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -894,6 +893,10 @@
             for(var i = 0; i < vm.SOs.length; i++){
                 var index = i;
                 $("#customerSelect" + i).select2({
+                    placeholder: {
+                        id: "",
+                        placeholder: "Choose customer..."
+                    },
                     allowClear: true,
                     width: '100%',
                     data: [ vm.SOs[index].customer ],
@@ -906,15 +909,31 @@
                         dataType: 'json',
                         processResults: function (data, params) {
                             console.log(data);
-                            return {
-                                results: data
+                            if(data.length > 0){
+                                return {
+                                    results: data
+                                }
+                            } else {
+                                return {
+                                    results: [{id: ''}]
+                                }
                             }
                         }
                     },
                     templateResult: function(customer){
+                        if (customer.placeholder) return customer.placeholder;
                         return customer.name;
                     },
                     templateSelection: function(customer){
+                        if (customer.placeholder) {
+                            vm.SOs[index].customer = {
+                            id: '',
+                            price_level: {
+                                name: ''
+                            }
+                        };
+                            return customer.placeholder;
+                        }
                         vm.SOs[index].customer = _.cloneDeep(customer);
                         return customer.name;
                     }
@@ -941,6 +960,10 @@
         for(var i = 0; i < soApp.SOs.length; i++){
             var index = i;
             $("#customerSelect" + i).select2({
+                placeholder: {
+                    id: "",
+                    placeholder: "Choose customer..."
+                },
                 allowClear: true,
                 width: '100%',
                 data: [ soApp.SOs[index].customer ],
@@ -953,16 +976,32 @@
                     dataType: 'json',
                     processResults: function (data, params) {
                         console.log(data);
-                        return {
-                            results: data
+                        if(data.length > 0){
+                            return {
+                                results: data
+                            }
+                        } else {
+                            return {
+                                results: [{id: ''}]
+                            }
                         }
                     }
                 },
                 templateResult: function(customer){
+                    if (customer.placeholder) return customer.placeholder;
                     return customer.name;
                 },
                 templateSelection: function(customer){
-                    soApp.SOs[index].customer = _.cloneDeep(customer);
+                    if (customer.placeholder) {
+                        vm.SOs[index].customer = {
+                        id: '',
+                        price_level: {
+                            name: ''
+                        }
+                    };
+                        return customer.placeholder;
+                    }
+                    vm.SOs[index].customer = _.cloneDeep(customer);
                     return customer.name;
                 }
             });
