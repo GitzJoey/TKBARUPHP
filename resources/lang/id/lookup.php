@@ -24,6 +24,7 @@ return [
     'TRFPAYMENTSTATUS.confirmed' => '',
     'SOTYPE.SVC' => 'Penjualan Jasa',
     'SOTYPE.S' => 'Penjualan Biasa',
+    'SOTYPE.AC' => 'Penjualan Langsung Tunai',
     'SOSTATUS.WP' => 'Menunggu Pembayaran',
     'SOSTATUS.WD' => 'Menunggu Pengiriman',
     'SOSTATUS.RJT' => 'Ditolak',

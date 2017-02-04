@@ -24,6 +24,7 @@ return [
     'TRFPAYMENTSTATUS.confirmed' => '',
     'SOTYPE.SVC' => 'Service Sales',
     'SOTYPE.S' => 'Standard Sales',
+    'SOTYPE.AC' => 'Auto Cash Sales',
     'SOSTATUS.WP' => 'Waiting Payment',
     'SOSTATUS.WD' => 'Waiting Delivery',
     'SOSTATUS.RJT' => 'Rejected',
