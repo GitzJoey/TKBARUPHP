@@ -36,15 +36,13 @@
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
-                    <label for="inputMaintenanceDate"
-                           class="col-sm-3 control-label">@lang('truckmtc.field.maintenance_date')</label>
-                    <div class="col-sm-9">
+                    <label for="inputMaintenanceDate" class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_date')</label>
+                    <div class="col-sm-10">
                         <div class="input-group date">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control" id="inputMaintenanceDate"
-                                   name="maintenance_date" data-parsley-required="true">
+                            <input type="text" class="form-control" id="inputMaintenanceDate" name="maintenance_date" data-parsley-required="true">
                         </div>
                     </div>
                 </div>
@@ -99,4 +97,15 @@
             <div class="box-footer"></div>
         </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('#inputMaintenanceDate').datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
+            });
+        });
+    </script>
 @endsection

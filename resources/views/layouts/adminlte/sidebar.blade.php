@@ -240,7 +240,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="{{ active_class(Active::checkRoutePattern('db.truck.maintenance') || Active::checkRoutePattern('db.truck.maintenance.*')) }}">
-                            <a href="{{ route('db.truck.maintenance') }}"><i class="fa fa-gears fa-fw"></i>&nbsp;@lang('menu.item.truck_maintenance')</a>
+                            <a href="{{ route('db.truck.maintenance') }}"><i class="fa fa-truck fa-flip-horizontal fa-fw"></i>&nbsp;@lang('menu.item.truck_maintenance')</a>
                         </li>
                     </ul>
                 </li>

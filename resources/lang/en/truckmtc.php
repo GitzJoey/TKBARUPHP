@@ -34,6 +34,7 @@ return [
         'table' => [
             'header' => [
                 'plate_number' => 'Plate Number',
+                'maintenance_date' => 'Maintenance Date',
                 'maintenance_type' => 'Maintenance Type',
                 'cost' => 'Cost',
                 'odometer' => 'Odometer',
