@@ -33,8 +33,10 @@
                     <div class="form-group">
                         <label for="inputForUserEmail" class="col-sm-3 control-label">@lang('settings.field.for_user_email')</label>
                         <div class="col-sm-9">
-                            <select name="usr_id" class="form-control" v-model="selectedUserId">
-                                <option v-for="u in userDDL" v-bind:value="u.id" selected>@{{ u.name }}</option>
+                            <select name="usr_id" class="form-control">
+                                @foreach($userDDL as $key => $user)
+                                    <option value="{{ $user->id }}">{{ $user->name.' - '.$user->email }}</option>
+                                @endforeach
                             </select>
                             <span class="help-block"></span>
                         </div>
@@ -53,8 +55,6 @@
             var app = new Vue({
                 el: '#settingsVue',
                 data: {
-                    userDDL: JSON.parse('{!! htmlspecialchars_decode($userDDL) !!}'),
-                    selectedUserId: ''
                 },
                 methods: {
                     loadSettings: function(userId) {
