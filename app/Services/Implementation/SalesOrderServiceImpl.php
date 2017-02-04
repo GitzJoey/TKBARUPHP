@@ -13,8 +13,10 @@ use App\Model\Lookup;
 use App\Model\Product;
 use App\Model\Expense;
 use App\Model\Customer;
+use App\Model\CashPayment;
 use App\Model\SalesOrder;
 use App\Model\ProductUnit;
+use App\Model\Payment;
 
 use DB;
 use Illuminate\Http\Request;
@@ -91,6 +93,26 @@ class SalesOrderServiceImpl implements SalesOrderService
                 $expense->is_internal_expense = !empty($request->input("so_$index" . "_is_internal_expense.$j"));
                 $expense->amount = floatval(str_replace(',', '', $request->input("so_$index" . "_expense_amount.$j")));
                 $expense->remarks = $request->input("so_$index" . "_expense_remarks.$j");
+            }
+
+            // If auto cash, create cash payment immediately
+            // I think we should think a more efficient way than this algorithm :D
+            if($so->so_type === 'SOTYPE.AC'){
+                $paymentParam = [
+                    'payment_date' => $so->so_created,
+                    'total_amount' => $so->totalAmount(),
+                    'status' => 'CASHPAYMENTSTATUS.C',
+                    'type' => 'PAYMENTTYPE.C'
+                ];
+
+                $payment = Payment::create($paymentParam);
+
+                $cashPayment = new CashPayment();
+                $cashPayment->save();
+                $cashPayment->payment()->save($payment);
+
+                $so->payments()->save($payment);
+                $so->updatePaymentStatus();
             }
 
             $userSOs = session('userSOs');

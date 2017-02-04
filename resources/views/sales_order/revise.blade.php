@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <div ng-app="soModule" ng-controller="soController" ng-cloak>
+    <div id="soVue">
         {!! Form::model($currentSo, ['method' => 'PATCH', 'route' => ['db.so.revise', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         {{ csrf_field() }}
         <div class="row">
@@ -162,12 +162,13 @@
                                            class="col-sm-3 control-label">@lang('sales_order.revise.field.warehouse')</label>
                                     <div class="col-sm-9">
                                         @if($currentSo->status == 'SOSTATUS.WD')
+                                            <input type="hidden" name="warehouse_id" v-bind:value="so.warehouse.id">
+                                            <input type="hidden" name="warehouse_name" v-bind:value="so.warehouse.name">
                                             <select id="inputWarehouse" data-parsley-required="true"
-                                                    name="warehouse_id"
                                                     class="form-control"
-                                                    ng-model="so.warehouse"
-                                                    ng-options="warehouse as warehouse.name for warehouse in warehouseDDL track by warehouse.id">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    v-model="so.warehouse">
+                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
                                             </select>
                                         @else
                                             <input type="text" class="form-control" readonly
@@ -182,12 +183,13 @@
                                            class="col-sm-3 control-label">@lang('sales_order.revise.field.vendor_trucking')</label>
                                     <div class="col-sm-9">
                                         @if($currentSo->status == 'SOSTATUS.WD')
+                                            <input type="hidden" name="vendor_trucking_id" v-bind:value="so.vendorTrucking.id">
+                                            <input type="hidden" name="vendor_trucking_name" v-bind:value="so.vendorTrucking.name">
                                             <select id="inputVendorTrucking"
-                                                    name="vendor_trucking_id"
                                                     class="form-control"
-                                                    ng-model="so.vendorTrucking"
-                                                    ng-options="vendorTrucking as vendorTrucking.name for vendorTrucking in vendorTruckingDDL track by vendorTrucking.id">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    v-model="so.vendorTrucking">
+                                                <option v-bind:value="{id: 0, name: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
                                             </select>
                                         @else
                                             <input type="text" class="form-control" readonly
@@ -229,28 +231,28 @@
                                             <div class="col-md-11">
                                                 <select id="inputProduct"
                                                         class="form-control"
-                                                        ng-model="so.product"
-                                                        ng-options="product as product.name for product in productDDL track by product.id">
-                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        v-model="so.product">
+                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-1">
                                                 <button type="button" class="btn btn-primary btn-md"
-                                                        ng-click="insertProduct(so.product)"><span class="fa fa-plus"/>
+                                                        v-on:click="insertProduct(so.product)"><span class="fa fa-plus"/>
                                                 </button>
                                             </div>
                                         @else
                                             <div class="col-md-11">
                                                 <select id="inputStock"
                                                         class="form-control"
-                                                        ng-model="so.stock"
-                                                        ng-options="stock as stock.product.name for stock in stocksDDL track by stock.id">
-                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        v-model="so.stock">
+                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-for="stock in stocksDDL" v-bind:value="stock">@{{ stock.product.name }}</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-1">
                                                 <button type="button" class="btn btn-primary btn-md"
-                                                        ng-click="insertStock(so.stock)"><span class="fa fa-plus"/>
+                                                        v-on:click="insertStock(so.stock)"><span class="fa fa-plus"/>
                                                 </button>
                                             </div>
                                         @endif
@@ -274,50 +276,48 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="item in so.items">
-                                                <input type="hidden" name="item_id[]" ng-value="item.id">
-                                                <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                                <input type="hidden" name="stock_id[]" ng-value="item.stock.id">
-                                                <input type="hidden" name="base_unit_id[]"
-                                                       ng-value="item.base_unit.unit.id">
+                                            <tr v-for="(item, itemIndex) in so.items">
+                                                <input type="hidden" name="item_id[]" v-bind:value="item.id">
+                                                <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
+                                                <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="quantity[]"
-                                                           ng-model="item.quantity" data-parsley-required="true"
+                                                           v-model="item.quantity" data-parsley-required="true"
                                                            data-parsley-type="number" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}>
                                                 </td>
                                                 <td>
                                                     @if($currentSo->status == 'SOSTATUS.WD')
-                                                        <select name="selected_unit_id[]" data-parsley-required="true"
-                                                                class="form-control"
-                                                                ng-model="item.selected_unit"
-                                                                data-parsley-required="true"
-                                                                ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
-                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
+                                                        <select class="form-control"
+                                                                v-model="item.selected_unit"
+                                                                data-parsley-required="true">
+                                                            <option v-bind:value="{unit: {id: '', conversion_value: 1}}">@lang('labels.PLEASE_SELECT')</option>
+                                                            <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
                                                         </select>
                                                     @else
                                                         <input type="text" class="form-control" readonly
-                                                               value="@{{ item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')' }}">
+                                                               v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
                                                         <input type="hidden" name="selected_unit_id[]"
-                                                               ng-value="item.selected_unit.unit.id">
+                                                               v-bind:value="item.selected_unit.unit.id">
                                                     @endif
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="price[]"
-                                                           ng-model="item.price" data-parsley-required="true"
-                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"
-                                                           fcsa-number>
+                                                           v-model="item.price" data-parsley-required="true"
+                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
                                                 </td>
                                                 <td class="text-center">
                                                     @if($currentSo->status == 'SOSTATUS.WD')
                                                         <button type="button" class="btn btn-danger btn-md"
-                                                                ng-click="removeItem($index)"><span
+                                                                v-on:click="removeItem(itemIndex)"><span
                                                                     class="fa fa-minus"/>
                                                         </button>
                                                     @endif
                                                 </td>
                                                 <td class="text-right valign-middle">
-                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
+                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -332,7 +332,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('sales_order.revise.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ grandTotal() | number }}</span>
+                                                    <span class="control-label-normal">@{{ grandTotal() }}</span>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -350,7 +350,7 @@
                                 <h3 class="box-title">@lang('sales_order.revise.box.expenses')</h3>
                                 @if($currentSo->status == 'SOSTATUS.WD')
                                     <button type="button" class="btn btn-primary btn-xs pull-right"
-                                            ng-click="insertExpense()"><span class="fa fa-plus fa-fw"/></button>
+                                            v-on:click="insertExpense()"><span class="fa fa-plus fa-fw"/></button>
                                 @endif
                             </div>
                             <div class="box-body">
@@ -370,35 +370,36 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="expense in so.expenses">
+                                            <tr v-for="(expense, expenseIndex) in so.expenses">
                                                 <td>
                                                     <input type="hidden" name="expense_id[]" ng-value="expense.id"/>
                                                     <input name="expense_name[]" type="text" class="form-control"
-                                                           ng-model="expense.name"
+                                                           v-model="expense.name"
                                                            data-parsley-required="true" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
                                                 </td>
                                                 <td>
                                                     @if($currentSo->status == 'SOSTATUS.WD')
-                                                        <select name="expense_type[]" data-parsley-required="true"
-                                                                class="form-control" ng-model="expense.type"
-                                                                ng-options="expenseType as expenseType.description for expenseType in expenseTypes track by expenseType.code">
-                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                        <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code">
+                                                        <select data-parsley-required="true"
+                                                                class="form-control" v-model="expense.type">
+                                                            <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                            <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
                                                         </select>
                                                     @else
                                                         <input type="text" class="form-control" readonly
-                                                               value="@{{ expense.type.description }}">
+                                                               v-bind:value="expense.type.description">
                                                         <input type="hidden" name="expense_type[]"
-                                                               ng-value="expense.type.code"/>
+                                                               v-bind:value="expense.type.code"/>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     <input name="expense_remarks[]" type="text" class="form-control"
-                                                           ng-model="expense.remarks" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}/>
+                                                           v-model="expense.remarks" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}/>
                                                 </td>
                                                 <td class="text-center">
                                                     @if($currentSo->status == 'SOSTATUS.WD')
                                                         <button type="button" class="btn btn-danger btn-md"
-                                                                ng-click="removeExpense($index)"><span
+                                                                v-on:click="removeExpense(expenseIndex)"><span
                                                                     class="fa fa-minus"></span>
                                                         </button>
                                                     @endif
@@ -406,8 +407,8 @@
                                                 <td>
                                                     <input name="expense_amount[]" type="text"
                                                            class="form-control text-right"
-                                                           ng-model="expense.amount" data-parsley-required="true"
-                                                           data-parsley-pattern="^\d+(,\d+)?$" fcsa-number/>
+                                                           v-model="expense.amount" data-parsley-required="true"
+                                                           data-parsley-pattern="^\d+(,\d+)?$"/>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -422,7 +423,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ expenseTotal() | number }}</span>
+                                                    <span class="control-label-normal">@{{ expenseTotal() }}</span>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -489,135 +490,140 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soModule", ['fcsa-number']);
-        app.controller("soController", ['$scope', function ($scope) {
-            $scope.warehouseDDL = JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}');
-            $scope.vendorTruckingDDL = JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}');
-            $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
-            $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
-            $scope.customerDDL = JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}');
-            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
+        var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
 
-            var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
-
-            $scope.so = {
-                customer: currentSo.customer,
-                items: [],
-                warehouse: {
-                    id: currentSo.warehouse.id,
-                    name: currentSo.warehouse.name
+        var soAppVue = new Vue({
+            el: '#soVue',
+            data: {
+                vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                customerDDL: JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}'),
+                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+                stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
+                so: {
+                    customer: _.cloneDeep(currentSo.customer),
+                    warehouse: _.cloneDeep(currentSo.warehouse),
+                    vendorTrucking: currentSo.vendor_trucking == null ? {id: 0, name: ''} : _.cloneDeep(currentSo.vendor_trucking),
+                    items: [],
+                    expenses: []
+                }
+            },
+            methods: {
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.so.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
                 },
-                vendorTrucking: {
-                    id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                    name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.so.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numeral().unformat(expense.amount));
+                        else
+                            result -= parseInt(numeral().unformat(expense.amount));
+                    });
+                    return result;
                 },
-                expenses: []
-            };
+                insertProduct: function (product) {
+                    if(product.id !== ''){
+                        var vm = this;
+                        vm.so.items.push({
+                            stock_id: 0,
+                            product: product,
+                            selected_unit: {
+                                conversion_value: 1
+                            },
+                            base_unit: _.find(product.product_units, isBase),
+                            quantity: 0,
+                            price: 0
+                        });
+                    }
+                },
+                insertStock: function (stock) {
+                    if(stock.id !== ''){
+                        var vm = this;
+                        var stock_price = _.find(stock.today_prices, function (price) {
+                            return price.price_level_id === vm.so.customer.price_level_id;
+                        });
 
-            for (var i = 0; i < currentSo.items.length; i++) {
-                $scope.so.items.push({
-                    id: currentSo.items[i].id,
-                    product: currentSo.items[i].product,
-                    base_unit: _.find(currentSo.items[i].product.product_units, isBase),
-                    selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
-                    quantity: currentSo.items[i].quantity % 1 != 0 ? parseFloat(currentSo.items[i].quantity).toFixed(1) : parseFloat(currentSo.items[i].quantity).toFixed(0),
-                    price: parseFloat(currentSo.items[i].price).toFixed(0)
-                });
-            }
-
-            for (var i = 0; i < currentSo.expenses.length; i++) {
-                var type = _.find($scope.expenseTypes, function (type) {
-                    return type.code === currentSo.expenses[i].type;
-                });
-
-                $scope.so.expenses.push({
-                    id: currentSo.expenses[i].id,
-                    name: currentSo.expenses[i].name,
-                    type: {
-                        code: currentSo.expenses[i].type,
-                        description: type ? type.description : ''
-                    },
-                    amount: currentSo.expenses[i].amount,
-                    remarks: currentSo.expenses[i].remarks
-                });
-            }
-
-            $scope.grandTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
-
-            $scope.expenseTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.expenses, function (expense, key) {
-                    if (expense.type.code === 'EXPENSETYPE.ADD')
-                        result += parseInt(numeral().unformat(expense.amount));
-                    else
-                        result -= parseInt(numeral().unformat(expense.amount));
-                });
-                return result;
-            };
-
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
+                        vm.so.items.push({
+                            stock_id: stock.id,
+                            product: _.cloneDeep(stock.product),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(stock.product.product_units, isBase)),
+                            quantity: 0,
+                            price: stock_price ? stock_price : 0
+                        });
+                    }
+                },
+                removeItem: function (index) {
+                    this.so.items.splice(index, 1);
+                },
+                insertExpense: function () {
+                    this.so.expenses.push({
+                        name: '',
+                        type: {
+                            code: ''
+                        },
+                        is_internal_expense: false,
+                        amount: 0,
+                        remarks: ''
+                    });
+                },
+                removeExpense: function (index) {
+                    this.so.expenses.splice(index, 1);
                 }
             }
+        });
 
-            function isBase(unit) {
-                return unit.is_base == 1;
+        for (var i = 0; i < currentSo.items.length; i++) {
+            soAppVue.so.items.push({
+                id: currentSo.items[i].id,
+                product: _.cloneDeep(currentSo.items[i].product),
+                base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
+                selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
+                quantity: currentSo.items[i].quantity % 1 != 0 ? parseFloat(currentSo.items[i].quantity).toFixed(1) : parseFloat(currentSo.items[i].quantity).toFixed(0),
+                price: parseFloat(currentSo.items[i].price).toFixed(0)
+            });
+        }
+
+        for (var i = 0; i < currentSo.expenses.length; i++) {
+            var type = _.find(soAppVue.expenseTypes, function (type) {
+                return type.code === currentSo.expenses[i].type;
+            });
+
+            soAppVue.so.expenses.push({
+                id: currentSo.expenses[i].id,
+                name: currentSo.expenses[i].name,
+                type: {
+                    code: currentSo.expenses[i].type,
+                    description: type ? type.description : ''
+                },
+                is_internal_expense: currentSo.expenses[i].is_internal_expense == 1,
+                amount: currentSo.expenses[i].amount,
+                remarks: currentSo.expenses[i].remarks
+            });
+        }
+
+        function getSelectedUnit(selectedUnitId) {
+            return function (element) {
+                return element.unit_id == selectedUnitId;
             }
+        }
 
-            $scope.insertProduct = function (product) {
-                $scope.so.items.push({
-                    stock_id: 0,
-                    product: product,
-                    selected_unit: {
-                        conversion_value: 1
-                    },
-                    base_unit: _.find(product.product_units, isBase),
-                    quantity: 0,
-                    price: 0
-                });
-            };
-
-            $scope.insertStock = function (stock) {
-                var stock_price = _.find(stock.today_prices, function (price) {
-                    return price.price_level_id === $scope.so.customer.price_level_id;
-                });
-
-                $scope.so.items.push({
-                    stock_id: stock.id,
-                    product: stock.product,
-                    selected_unit: {
-                        conversion_value: 1
-                    },
-                    base_unit: _.find(stock.product.product_units, isBase),
-                    quantity: 0,
-                    price: stock_price ? stock_price : 0
-                });
-            };
-
-            $scope.removeItem = function (index) {
-                $scope.so.items.splice(index, 1);
-            };
-
-            $scope.insertExpense = function () {
-                $scope.so.expenses.push({
-                    name: '',
-                    type: '',
-                    amount: 0,
-                    remarks: ''
-                });
-            };
-
-            $scope.removeExpense = function (index) {
-                $scope.so.expenses.splice(index, 1);
-            };
-        }]);
+        function isBase(unit) {
+            return unit.is_base == 1;
+        }
 
         $(function () {
             $("#inputSoDate").datetimepicker({

@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <div ng-app="soModule" ng-controller="soController">
+    <div id="soPaymentVue">
         {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.transfer', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
@@ -60,22 +60,23 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.bank_from')</label>
                                                 <div class="col-sm-4">
+                                                    <input type="hidden" name="bank_account_from" v-bind:value="bankAccountFrom.id">
                                                     <select id="inputBankAccountFrom"
-                                                            name="bank_account_from"
                                                             class="form-control"
-                                                            ng-model="bankAccountFrom"
-                                                            ng-options="bankAccountFrom as (bankAccountFrom.account_number + ' ' + bankAccountFrom.bank.short_name) for bankAccountFrom in customerBankAccounts track by bankAccountFrom.id">
-                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                            v-model="bankAccountFrom">
+                                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="bankAccountFrom in customerBankAccounts" v-bind:value="bankAccountFrom">@{{ bankAccountFrom.account_number + ' ' + bankAccountFrom.bank.short_name }}</option>
                                                     </select>
                                                 </div>
                                                 <label class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.bank_to')</label>
                                                 <div class="col-sm-4">
+                                                    <input type="hidden" name="bank_account_to" v-bind:value="bankAccountTo.id">
                                                     <select id="inputBankAccountTo"
                                                             name="bank_account_to"
                                                             class="form-control"
-                                                            ng-model="bankAccountTo"
-                                                            ng-options="bankAccountTo as (bankAccountTo.account_number + ' ' + bankAccountFrom.bank.short_name) for bankAccountTo in storeBankAccounts track by bankAccountTo.id">
-                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                            v-model="bankAccountTo">
+                                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="bankAccountTo in storeBankAccounts" v-bind:value="bankAccountTo">@{{ bankAccountTo.account_number + ' ' + bankAccountFrom.bank.short_name }}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -120,8 +121,8 @@
                                                             Rp
                                                         </div>
                                                         <input type="text" class="form-control" id="inputPaymentAmount"
-                                                               name="total_amount" ng-model="total_amount"
-                                                               data-parsley-required="true" fcsa-number>
+                                                               name="total_amount" v-model="total_amount"
+                                                               data-parsley-required="true">
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,81 +153,84 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soModule", ['fcsa-number']);
-        app.controller("soController", ['$scope', function ($scope) {
-            var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
-            $scope.storeBankAccounts = JSON.parse('{!! htmlspecialchars_decode($storeBankAccounts) !!}');
-            $scope.customerBankAccounts = JSON.parse('{!! htmlspecialchars_decode($customerBankAccounts) !!}');
-            $scope.expenseTypes = JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}');
-
-            $scope.so = {
-                customer: currentSo.customer,
-                items: [],
-                warehouse: {
-                    id: currentSo.warehouse.id,
-                    name: currentSo.warehouse.name
-                },
-                vendorTrucking: {
-                    id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                    name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
-                },
-                expenses: []
-            };
-
-            for (var i = 0; i < currentSo.items.length; i++) {
-                $scope.so.items.push({
-                    id: currentSo.items[i].id,
-                    product: currentSo.items[i].product,
-                    base_unit: _.find(currentSo.items[i].product.product_units, isBase),
-                    selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
-                    quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
-                    price: parseFloat(currentSo.items[i].price).toFixed(0)
-                });
-            }
-
-            for (var i = 0; i < currentSo.expenses.length; i++) {
-                var type = _.find($scope.expenseTypes, function (type) {
-                    return type.code === currentSo.expenses[i].type;
-                });
-
-                $scope.so.expenses.push({
-                    id: currentSo.expenses[i].id,
-                    name: currentSo.expenses[i].name,
-                    type: {
-                        code: currentSo.expenses[i].type,
-                        description: type ? type.description : ''
+        var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
+        var soPaymentApp = new Vue({
+            el: '#soPaymentVue',
+            data: {
+                storeBankAccounts: JSON.parse('{!! htmlspecialchars_decode($storeBankAccounts) !!}'),
+                customerBankAccounts: JSON.parse('{!! htmlspecialchars_decode($customerBankAccounts) !!}'),
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                so: {
+                    customer: _.cloneDeep(currentSo.customer),
+                    warehouse: {
+                        id: currentSo.warehouse.id,
+                        name: currentSo.warehouse.name
                     },
-                    amount: currentSo.expenses[i].amount,
-                    remarks: currentSo.expenses[i].remarks
-                });
-            }
-
-            $scope.grandTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
-
-            $scope.expenseTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.expenses, function (expense, key) {
-                    result += parseInt(expense.amount);
-                });
-                return result;
-            };
-
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
+                    vendorTrucking: {
+                        id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
+                        name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
+                    },
+                    items: [],
+                    expenses: []
+                }
+            },
+            methods: {
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.so.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                },
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.so.expenses, function (expense, key) {
+                        result += parseInt(expense.amount);
+                    });
+                    return result;
                 }
             }
+        });
 
-            function isBase(unit) {
-                return unit.is_base == 1;
+        for (var i = 0; i < currentSo.items.length; i++) {
+            soPaymentApp.so.items.push({
+                id: currentSo.items[i].id,
+                product: _.cloneDeep(currentSo.items[i].product),
+                base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
+                selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
+                quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
+                price: parseFloat(currentSo.items[i].price).toFixed(0)
+            });
+        }
+
+        for (var i = 0; i < currentSo.expenses.length; i++) {
+            var type = _.find(soPaymentApp.expenseTypes, function (type) {
+                return type.code === currentSo.expenses[i].type;
+            });
+
+            soPaymentApp.so.expenses.push({
+                id: currentSo.expenses[i].id,
+                name: currentSo.expenses[i].name,
+                type: {
+                    code: currentSo.expenses[i].type,
+                    description: type ? type.description : ''
+                },
+                amount: currentSo.expenses[i].amount,
+                remarks: currentSo.expenses[i].remarks
+            });
+        }
+
+        function getSelectedUnit(selectedUnitId) {
+            return function (element) {
+                return element.unit_id == selectedUnitId;
             }
-        }]);
+        }
+
+        function isBase(unit) {
+            return unit.is_base == 1;
+        }
 
         $(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({

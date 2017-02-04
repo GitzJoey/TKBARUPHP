@@ -12,6 +12,7 @@ use App\Model\Lookup;
 use App\Model\Warehouse;
 use App\Model\PurchaseOrder;
 use App\Model\VendorTrucking;
+use App\Model\Product;
 
 use App\Repos\LookupRepo;
 
@@ -43,13 +44,14 @@ class PurchaseOrderController extends Controller
         $warehouseDDL = Warehouse::where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name']);
         $vendorTruckingDDL = VendorTrucking::where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name']);
         $poTypeDDL = LookupRepo::findByCategory('POTYPE');
+        $productDDL = Product::with('productUnits.unit')->get();
         $supplierTypeDDL = LookupRepo::findByCategory('SUPPLIERTYPE');
         $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
         $poStatusDraft = Lookup::where('code', '=', 'POSTATUS.D')->get(['description', 'code']);
         $poCode = POCodeGenerator::generateCode();
 
         return view('purchase_order.create', compact('supplierDDL', 'warehouseDDL', 'vendorTruckingDDL',
-            'supplierTypeDDL', 'poTypeDDL', 'unitDDL', 'poStatusDraft', 'poCode', 'expenseTypes'));
+            'supplierTypeDDL', 'poTypeDDL', 'unitDDL', 'poStatusDraft', 'poCode', 'expenseTypes', 'productDDL'));
     }
 
     public function store(Request $request)
@@ -92,8 +94,9 @@ class PurchaseOrderController extends Controller
         $warehouseDDL = Warehouse::all();
         $vendorTruckingDDL = VendorTrucking::all();
         $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
+        $productDDL = Product::with('productUnits.unit')->get();
 
-        return view('purchase_order.revise', compact('currentPo', 'warehouseDDL', 'vendorTruckingDDL', 'expenseTypes'));
+        return view('purchase_order.revise', compact('currentPo', 'warehouseDDL', 'vendorTruckingDDL', 'expenseTypes', 'productDDL'));
     }
 
     public function saveRevision(Request $request, $id)

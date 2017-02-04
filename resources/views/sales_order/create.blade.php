@@ -82,12 +82,11 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <div v-show="so.customer_type.code === 'CUSTOMERTYPE.R'">
+                                                            <template v-if="so.customer_type.code == 'CUSTOMERTYPE.R'">
                                                                 <div class="form-group">
                                                                     <label v-bind:for="'inputCustomerId_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-6">
                                                                         <select class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex">
-                                                                            <option></option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-sm-2">
@@ -96,25 +95,25 @@
                                                                                     class="fa fa-info-circle fa-lg"></span></button>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div v-show="so.customer_type.code === 'CUSTOMERTYPE.WI'">
+                                                            </template>
+                                                            <template v-if="so.customer_type.code == 'CUSTOMERTYPE.WI'">
                                                                 <div class="form-group">
                                                                     <label v-bind:for="'inputCustomerName_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                                     <div class="col-sm-8">
                                                                         <input type="text" class="form-control" v-bind:id="'inputCustomerName_' + (soIndex + 1)"
-                                                                               name="walk_in_customer[]" placeholder="Customer Name"
-                                                                               v-model="so.walk_in_cust">
+                                                                            name="walk_in_customer[]" placeholder="Customer Name"
+                                                                            v-model="so.walk_in_cust">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label v-bind:for="'inputCustomerDetails_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_details')</label>
                                                                     <div class="col-sm-8">
                                                                     <textarea v-bind:id="'inputCustomerDetails_' + (soIndex + 1)" class="form-control"
-                                                                          rows="5" name="walk_in_customer_details[]"
-                                                                          v-model="so.walk_in_cust_details"></textarea>
+                                                                        rows="5" name="walk_in_customer_details[]"
+                                                                        v-model="so.walk_in_cust_details"></textarea>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </template>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -705,223 +704,65 @@
 
 @section('custom_js')
     <script type="application/javascript">
-//        $(document).ready(function () {
-            var soApp = new Vue({
-            el: '#soVue',
-            data: {
-                vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
-                customerTypeDDL: JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}'),
-                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
-                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
-                stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
-                soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
-                SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
-                defaultTabLabel: '@lang('sales_order.create.tab.sales')'
+        var soApp = new Vue({
+        el: '#soVue',
+        data: {
+            vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
+            customerTypeDDL: JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}'),
+            expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+            warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+            productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+            stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
+            soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
+            SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
+            defaultTabLabel: '@lang('sales_order.create.tab.sales')'
+        },
+        methods: {
+            setSOCode: function(so){
+                this.$http.get('{{ route('api.so.code') }}').then(function(data){
+                    so.so_code = data.data;
+                });
             },
-            methods: {
-                setSOCode: function(so){
-                    this.$http.get('{{ route('api.so.code') }}').then(function(data){
-                        so.so_code = data.data;
-                    });
-                },
-                insertTab: function(SOs){
-                    var vm = this;
-
-                    if(!$("#so-form").parsley().validate()){
-                        return;
-                    }
-
-                    var so = {
-                        so_code: '',
-                        customer_type: {
-                            code: ''
-                        },
-                        customer: {
-                            id: '',
-                            price_level: {
-                                name: ''
-                            }
-                        },
-                        sales_type: {
-                            code: ''
-                        },
-                        warehouse: {
-                            id: 0
-                        },
-                        vendorTrucking: {
-                            id: 0,
-                            name: ''
-                        },
-                        product: {
-                            id: ''
-                        },
-                        stock: {
-                            id: ''
-                        },
-                        items : [],
-                        expenses: []
-                    };
-
-                    vm.setSOCode(so);
-                    SOs.push(so);
-
-                    $(function () {
-                        $(".inputSoDate").datetimepicker({
-                            format: "DD-MM-YYYY hh:mm A",
-                            defaultDate: moment()
-                        });
-                        $(".inputShippingDate").datetimepicker({
-                            format: "DD-MM-YYYY hh:mm A",
-                            defaultDate: moment()
-                        });
-                    });
-                },
-                grandTotal: function (index) {
-                    var vm = this;
-                    var result = 0;
-                    _.forEach(vm.SOs[index].items, function (item, key) {
-                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                    });
-                    return result;
-                },
-                expenseTotal: function (index) {
-                    var vm = this;
-                    var result = 0;
-                    _.forEach(vm.SOs[index].expenses, function (expense, key) {
-                        if(expense.type.code === 'EXPENSETYPE.ADD')
-                            result += parseInt(numeral().unformat(expense.amount));
-                        else
-                            result -= parseInt(numeral().unformat(expense.amount));
-                    });
-                    return result;
-                },
-                insertProduct: function (index, product) {
-                    var vm = this;
-                    if(product.id != ''){
-                        vm.SOs[index].items.push({
-                            stock_id: 0,
-                            product: _.cloneDeep(product),
-                            selected_unit: {
-                                unit: {
-                                    id: ''
-                                },
-                                conversion_value: 1
-                            },
-                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                            quantity: 0,
-                            price: 0
-                        });
-                    }
-                },
-                insertStock: function (index, stock) {
-                    var vm = this;
-                    if(stock.id != ''){
-                        var stock_price = _.find(stock.today_prices, function (price) {
-                            return price.price_level_id === vm.SOs[index].customer.price_level_id;
-                        });
-
-                        vm.SOs[index].items.push({
-                            stock_id: stock.id,
-                            product: _.cloneDeep(stock.product),
-                            selected_unit: {
-                                unit: {
-                                    id: ''
-                                },
-                                conversion_value: 1
-                            },
-                            base_unit: _.cloneDeep(_.find(stock.product.product_units, isBase)),
-                            quantity: 0,
-                            price: stock_price ? stock_price.price : 0
-                        });
-                    }
-                },
-                removeItem: function (SOIndex, index) {
-                    this.SOs[SOIndex].items.splice(index, 1);
-                },
-                insertDefaultExpense: function (SOIndex, customer) {
-                    var vm = this;
-                    if(customer.id != ''){
-                        vm.SOs[SOIndex].expenses = [];
-                        for(var i = 0; i < customer.expense_templates.length; i++){
-                            vm.SOs[SOIndex].expenses.push({
-                                name: customer.expense_templates[i].name,
-                                type: {
-                                    code: customer.expense_templates[i].type,
-                                    description: _.find(expenseTypes, function(expenseType){ return expenseType.code === customer.expense_templates[i].type})
-                                },
-                                is_internal_expense: customer.expense_templates[i].is_internal_expense === 1,
-                                amount: numeral(customer.expense_templates[i].amount).format('0,0'),
-                                remarks: customer.expense_templates[i].remarks
-                            });
-                        }
-
-                        $(function () {
-                            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                                checkboxClass: 'icheckbox_square-blue',
-                                radioClass: 'iradio_square-blue'
-                            });
-                        });
-                    }
-                    else{
-                        vm.SOs[SOIndex].expenses = [];
-                    }
-                },
-                insertExpense: function (index) {
-                    var vm = this;
-                    this.SOs[index].expenses.push({
-                        name: '',
-                        type: {
-                            code: ''
-                        },
-                        is_internal_expense: false,
-                        amount: 0,
-                        remarks: ''
-                    });
-
-                    $(function () {
-                        $('input[type="checkbox"], input[type="radio"]').iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue'
-                        });
-                    });
-                },
-                removeExpense: function (SOIndex, index) {
-                    this.SOs[SOIndex].expenses.splice(index, 1);
-                },
-            },
-            updated: function(){
+            insertTab: function(SOs){
                 var vm = this;
-                for(var i = 0; i < vm.SOs.length; i++){
-                    var index = i;
-                    $("#customerSelect" + i).select2({
-                        allowClear: true,
-                        width: '100%',
-                        data: [ vm.SOs[index].customer ],
-                        ajax: {
-                            url: function(params){
-                                console.log('{{ route('api.customer.search') }}?q=' + params.term);
-                                return '{{ route('api.customer.search') }}?q=' + params.term;
-                            },
-                            delay: 250,
-                            dataType: 'json',
-                            processResults: function (data, params) {
-                                console.log(data);
-                                return {
-                                    results: data
-                                }
-                            }
-                        },
-                        templateResult: function(customer){
-                            return customer.name;
-                        },
-                        templateSelection: function(customer){
-                            vm.SOs[index].customer = _.cloneDeep(customer);
-                            return customer.name;
-                        }
-                    });
-                    $("#customerSelect" + index).val(vm.SOs[index].customer.id).trigger('change');
+
+                if(!$("#so-form").parsley().validate()){
+                    return;
                 }
+
+                var so = {
+                    so_code: '',
+                    customer_type: {
+                        code: ''
+                    },
+                    customer: {
+                        id: '',
+                        price_level: {
+                            name: ''
+                        }
+                    },
+                    sales_type: {
+                        code: ''
+                    },
+                    warehouse: {
+                        id: 0
+                    },
+                    vendorTrucking: {
+                        id: 0,
+                        name: ''
+                    },
+                    product: {
+                        id: ''
+                    },
+                    stock: {
+                        id: ''
+                    },
+                    items : [],
+                    expenses: []
+                };
+
+                vm.setSOCode(so);
+                SOs.push(so);
 
                 $(function () {
                     $(".inputSoDate").datetimepicker({
@@ -932,19 +773,133 @@
                         format: "DD-MM-YYYY hh:mm A",
                         defaultDate: moment()
                     });
-                });    
-            }
-        });
+                });
+            },
+            grandTotal: function (index) {
+                var vm = this;
+                var result = 0;
+                _.forEach(vm.SOs[index].items, function (item, key) {
+                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                });
+                return result;
+            },
+            expenseTotal: function (index) {
+                var vm = this;
+                var result = 0;
+                _.forEach(vm.SOs[index].expenses, function (expense, key) {
+                    if(expense.type.code === 'EXPENSETYPE.ADD')
+                        result += parseInt(numeral().unformat(expense.amount));
+                    else
+                        result -= parseInt(numeral().unformat(expense.amount));
+                });
+                return result;
+            },
+            insertProduct: function (index, product) {
+                var vm = this;
+                if(product.id != ''){
+                    vm.SOs[index].items.push({
+                        stock_id: 0,
+                        product: _.cloneDeep(product),
+                        selected_unit: {
+                            unit: {
+                                id: ''
+                            },
+                            conversion_value: 1
+                        },
+                        base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                        quantity: 0,
+                        price: 0
+                    });
+                }
+            },
+            insertStock: function (index, stock) {
+                var vm = this;
+                if(stock.id != ''){
+                    var stock_price = _.find(stock.today_prices, function (price) {
+                        return price.price_level_id === vm.SOs[index].customer.price_level_id;
+                    });
 
-        if(soApp.SOs.length == 0){
-            soApp.insertTab(soApp.SOs);
-        }else{
-            for(var i = 0; i < soApp.SOs.length; i++){
+                    vm.SOs[index].items.push({
+                        stock_id: stock.id,
+                        product: _.cloneDeep(stock.product),
+                        selected_unit: {
+                            unit: {
+                                id: ''
+                            },
+                            conversion_value: 1
+                        },
+                        base_unit: _.cloneDeep(_.find(stock.product.product_units, isBase)),
+                        quantity: 0,
+                        price: stock_price ? stock_price.price : 0
+                    });
+                }
+            },
+            removeItem: function (SOIndex, index) {
+                this.SOs[SOIndex].items.splice(index, 1);
+            },
+            insertDefaultExpense: function (SOIndex, customer) {
+                var vm = this;
+                if(customer.id != ''){
+                    vm.SOs[SOIndex].expenses = [];
+                    for(var i = 0; i < customer.expense_templates.length; i++){
+                        vm.SOs[SOIndex].expenses.push({
+                            name: customer.expense_templates[i].name,
+                            type: {
+                                code: customer.expense_templates[i].type,
+                                description: _.find(expenseTypes, function(expenseType){ return expenseType.code === customer.expense_templates[i].type})
+                            },
+                            is_internal_expense: customer.expense_templates[i].is_internal_expense == 1,
+                            amount: numeral(customer.expense_templates[i].amount).format('0,0'),
+                            remarks: customer.expense_templates[i].remarks
+                        });
+                    }
+
+                    $(function () {
+                        $('input[type="checkbox"], input[type="radio"]').iCheck({
+                            checkboxClass: 'icheckbox_square-blue',
+                            radioClass: 'iradio_square-blue'
+                        });
+                    });
+                }
+                else{
+                    vm.SOs[SOIndex].expenses = [];
+                }
+            },
+            insertExpense: function (index) {
+                var vm = this;
+                this.SOs[index].expenses.push({
+                    name: '',
+                    type: {
+                        code: ''
+                    },
+                    is_internal_expense: false,
+                    amount: 0,
+                    remarks: ''
+                });
+
+                $(function () {
+                    $('input[type="checkbox"], input[type="radio"]').iCheck({
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue'
+                    });
+                });
+            },
+            removeExpense: function (SOIndex, index) {
+                this.SOs[SOIndex].expenses.splice(index, 1);
+            },
+        },
+        updated: function(){
+            var vm = this;
+            for(var i = 0; i < vm.SOs.length; i++){
                 var index = i;
                 $("#customerSelect" + i).select2({
+                    placeholder: {
+                        id: "",
+                        placeholder: "Choose customer..."
+                    },
                     allowClear: true,
                     width: '100%',
-                    data: [ soApp.SOs[index].customer ],
+                    data: [ vm.SOs[index].customer ],
                     ajax: {
                         url: function(params){
                             console.log('{{ route('api.customer.search') }}?q=' + params.term);
@@ -954,32 +909,114 @@
                         dataType: 'json',
                         processResults: function (data, params) {
                             console.log(data);
-                            return {
-                                results: data
+                            if(data.length > 0){
+                                return {
+                                    results: data
+                                }
+                            } else {
+                                return {
+                                    results: [{id: ''}]
+                                }
                             }
                         }
                     },
                     templateResult: function(customer){
+                        if (customer.placeholder) return customer.placeholder;
                         return customer.name;
                     },
                     templateSelection: function(customer){
-                        soApp.SOs[index].customer = _.cloneDeep(customer);
+                        if (customer.placeholder) {
+                            vm.SOs[index].customer = {
+                            id: '',
+                            price_level: {
+                                name: ''
+                            }
+                        };
+                            return customer.placeholder;
+                        }
+                        vm.SOs[index].customer = _.cloneDeep(customer);
                         return customer.name;
                     }
                 });
-                $("#customerSelect" + index).val(soApp.SOs[index].customer.id).trigger('change');
+                $("#customerSelect" + index).val(vm.SOs[index].customer.id).trigger('change');
             }
-        }
 
-        function isBase(unit) {
-            return unit.is_base == 1;
+            $(function () {
+                $(".inputSoDate").datetimepicker({
+                    format: "DD-MM-YYYY hh:mm A",
+                    defaultDate: moment()
+                });
+                $(".inputShippingDate").datetimepicker({
+                    format: "DD-MM-YYYY hh:mm A",
+                    defaultDate: moment()
+                });
+            });    
         }
+    });
 
-        $('.cancelButton').on('click', function(e){
-            var form = $("#so-form");
-            form.parsley().destroy();
-            form.submit();
-        });
-//    });
+    if(soApp.SOs.length == 0){
+        soApp.insertTab(soApp.SOs);
+    }else{
+        for(var i = 0; i < soApp.SOs.length; i++){
+            var index = i;
+            $("#customerSelect" + i).select2({
+                placeholder: {
+                    id: "",
+                    placeholder: "Choose customer..."
+                },
+                allowClear: true,
+                width: '100%',
+                data: [ soApp.SOs[index].customer ],
+                ajax: {
+                    url: function(params){
+                        console.log('{{ route('api.customer.search') }}?q=' + params.term);
+                        return '{{ route('api.customer.search') }}?q=' + params.term;
+                    },
+                    delay: 250,
+                    dataType: 'json',
+                    processResults: function (data, params) {
+                        console.log(data);
+                        if(data.length > 0){
+                            return {
+                                results: data
+                            }
+                        } else {
+                            return {
+                                results: [{id: ''}]
+                            }
+                        }
+                    }
+                },
+                templateResult: function(customer){
+                    if (customer.placeholder) return customer.placeholder;
+                    return customer.name;
+                },
+                templateSelection: function(customer){
+                    if (customer.placeholder) {
+                        vm.SOs[index].customer = {
+                        id: '',
+                        price_level: {
+                            name: ''
+                        }
+                    };
+                        return customer.placeholder;
+                    }
+                    vm.SOs[index].customer = _.cloneDeep(customer);
+                    return customer.name;
+                }
+            });
+            $("#customerSelect" + index).val(soApp.SOs[index].customer.id).trigger('change');
+        }
+    }
+
+    function isBase(unit) {
+        return unit.is_base == 1;
+    }
+
+    $('.cancelButton').on('click', function(e){
+        var form = $("#so-form");
+        form.parsley().destroy();
+        form.submit();
+    });
 </script>
 @endsection
