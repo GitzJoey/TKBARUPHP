@@ -18,9 +18,10 @@ class PaymentServiceImpl implements PaymentService {
         $paymentParam = [
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
             'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
-            'status' => Lookup::whereCode('CASHPAYMENTSTATUS.C')->first()->code,
-            'type' => Lookup::whereCode('PAYMENTTYPE.C')->first()->code
+            'status' => 'CASHPAYMENTSTATUS.C',
+            'type' => 'PAYMENTTYPE.C'
         ];
+
         $payment = Payment::create($paymentParam);
 
         $cashPayment = new CashPayment();
@@ -35,8 +36,8 @@ class PaymentServiceImpl implements PaymentService {
         $paymentParam = [
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
             'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
-            'status' => Lookup::whereCode('TRFPAYMENTSTATUS.UNCONFIRMED')->first()->code,
-            'type' => Lookup::whereCode('PAYMENTTYPE.T')->first()->code
+            'status' => 'TRFPAYMENTSTATUS.UNCONFIRMED',
+            'type' => 'PAYMENTTYPE.T'
         ];
         $payment = Payment::create($paymentParam);
 
@@ -55,8 +56,8 @@ class PaymentServiceImpl implements PaymentService {
         $paymentParam = [
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
             'total_amount' => floatval(str_replace(',', '', $request->input('amount'))),
-            'status' => Lookup::whereCode('GIROPAYMENTSTATUS.WE')->first()->code,
-            'type' => Lookup::whereCode('PAYMENTTYPE.G')->first()->code
+            'status' => 'GIROPAYMENTSTATUS.WE',
+            'type' => 'PAYMENTTYPE.G'
         ];
         $payment = Payment::create($paymentParam);
 
