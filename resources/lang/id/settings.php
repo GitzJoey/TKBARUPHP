@@ -11,7 +11,7 @@ return [
     ],
     'field' => [
         'for_user_email' => 'Pengaturan Untuk Pengguna',
-        'fav_po_warehouse' => '',
+        'fav_po_warehouse' => 'Gudang PO Pilihan',
     ],
     'user' => [
         'title' => 'Pengaturan Pengguna',
