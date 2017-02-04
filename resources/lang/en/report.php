@@ -57,6 +57,9 @@ return [
         'title' => 'Report Management',
         'page_title' => 'Monitoring',
         'page_title_desc' => '',
+        'header' => [
+            'title' => 'Monitoring'
+        ]
     ],
     'tax' => [
         'title' => 'Report Management',

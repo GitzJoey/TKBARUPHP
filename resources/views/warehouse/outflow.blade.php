@@ -72,6 +72,7 @@
         </div>
     </div>
 @endsection
+
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
