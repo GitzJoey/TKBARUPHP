@@ -66,7 +66,7 @@ class SalesOrderPaymentController extends Controller
     public function saveCashPayment(Request $request, $id)
     {
         Log::info('[SalesOrderController@saveCashPayment]');
-
+ 
         $payment = $this->paymentService->createCashPayment($request);
 
         $currentSo = SalesOrder::find($id);

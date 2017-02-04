@@ -130,6 +130,11 @@ class LookupTableSeeder extends Seeder
                 'category' => 'SOTYPE',
             ],
             [
+                'code' => 'SOTYPE.AC',
+                'description' => 'Auto Cash SO',
+                'category' => 'SOTYPE',
+            ],
+            [
                 'code' => 'SOSTATUS.D',
                 'description' => 'Draft',
                 'category' => 'SOSTATUS',
