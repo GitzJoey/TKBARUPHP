@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-money fa-fw"></span>&nbsp;@lang('sales_order.payment.cash.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('sales_order.payment.cash.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('sales_order_payment_cash', $currentSo->hId()) !!}
 @endsection
@@ -134,7 +136,7 @@
                         result += parseInt(expense.amount);
                     });
                     return result;
-                };
+                }
             }
         });
 

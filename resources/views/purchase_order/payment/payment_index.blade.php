@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-calculator fa-fw"></span>&nbsp;@lang('purchase_order.payment.index.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('purchase_order.payment.index.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('purchase_order_payment') !!}
 @endsection

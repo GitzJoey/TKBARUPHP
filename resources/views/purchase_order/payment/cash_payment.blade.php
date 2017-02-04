@@ -147,7 +147,7 @@
                         result += parseInt(expense.amount);
                     });
                     return result;
-                };
+                }
             }
         });
 

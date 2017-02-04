@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-book fa-fw"></span>&nbsp;@lang('sales_order.payment.giro.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('sales_order.payment.giro.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('sales_order_payment_giro', $currentSo->hId()) !!}
 @endsection
