@@ -34,7 +34,7 @@
                         v-model="selectedWarehouse"
                         v-on:change="getWarehouseSOs(selectedWarehouse)">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
-                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
+                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                 </select>
             </div>
         </div>
@@ -57,8 +57,7 @@
                         <tr v-for="so in SOs">
                             <td class="text-center">@{{ so.code }}</td>
                             <td class="text-center">@{{ so.so_created }}</td>
-                            <td v-show="so.customer_type == 'CUSTOMERTYPE.R'" class="text-center">@{{ so.customer.name }}</td>
-                            <td v-show="so.customer_type == 'CUSTOMERTYPE.WI'" class="text-center">@{{ so.walk_in_cust }}</td>
+                            <td class="text-center">@{{ so.customer_type == 'CUSTOMERTYPE.R' ? so.customer.name:so.walk_in_cust }}</td>
                             <td class="text-center">@{{ so.shipping_date }}</td>
                             <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-primary" v-bind:href="'{{ route('db.warehouse.outflow') }}/' + so.id" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
@@ -73,6 +72,7 @@
         </div>
     </div>
 @endsection
+
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
@@ -85,7 +85,7 @@
                 },
                 methods: {
                     getWarehouseSOs: function (selectedWarehouse) {
-                        this.$http.get('{{ route('api.warehouse.outflow.so') }}/' + this.selectedWarehouse.id).then(function (data) {
+                        this.$http.get('{{ route('api.warehouse.outflow.so') }}/' + this.selectedWarehouse).then(function (data) {
                             this.SOs = data.data;
                         });
                     }

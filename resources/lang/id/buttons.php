@@ -23,7 +23,8 @@ return [
     'close_button' => 'Tutup',
     'register_button' => 'Daftar',
     'calendar_button' => 'Kalender',
-    'download_excel_button' => '',
-    'download_pdf_button' => '',
-    'download_button' => '',
+    'download_excel_button' => 'Unduh Excel',
+    'download_pdf_button' => 'Unduh PDF',
+    'download_button' => 'Unduh',
+    'settings_button' => 'Pengaturan',
 ];

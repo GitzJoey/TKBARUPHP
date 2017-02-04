@@ -13,6 +13,7 @@ use App\Services\Implementation\PurchaseOrderServiceImpl;
 use App\Services\Implementation\ReportServiceImpl;
 use App\Services\Implementation\SalesOrderCopyServiceImpl;
 use App\Services\Implementation\SalesOrderServiceImpl;
+use App\Services\Implementation\SettingServiceImpl;
 use App\Services\Implementation\StockServiceImpl;
 use App\Services\Implementation\StoreServiceImpl;
 use App\Services\Implementation\SupplierServiceImpl;
@@ -28,6 +29,7 @@ use App\Services\PurchaseOrderService;
 use App\Services\ReportService;
 use App\Services\SalesOrderCopyService;
 use App\Services\SalesOrderService;
+use App\Services\SettingService;
 use App\Services\StockService;
 use App\Services\StoreService;
 use App\Services\SupplierService;
@@ -113,6 +115,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(WarehouseService::class, function (){
             return new WarehouseServiceImpl();
         });
+
+        $this->app->singleton(SettingService::class, function (){
+            return new SettingServiceImpl();
+        });
     }
 
     /**
@@ -136,7 +142,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\StoreService',
             'App\Services\SupplierService',
             'App\Services\VendorTruckingService',
-            'App\Services\WarehouseService'
+            'App\Services\WarehouseService',
+            'App\Services\SettingService',
         ];
     }
 }

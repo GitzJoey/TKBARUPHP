@@ -200,6 +200,11 @@ Breadcrumbs::register('admin_unit_edit', function($breadcrumbs, $id){
     $breadcrumbs->push(trans('breadcrumb.admin.unit.edit'), route('db.admin.unit.edit', $id));
 });
 
+Breadcrumbs::register('admin_settings', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.admin.settings'), route('db.admin.settings'));
+});
+
 Breadcrumbs::register('admin_phone_provider', function($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.admin.phone_provider'), route('db.admin.phone_provider'));
@@ -405,12 +410,18 @@ Breadcrumbs::register('customer_confirmation_confirm', function($breadcrumbs, $i
     $breadcrumbs->push(trans('breadcrumb.customer.confirmation.confirm'), route('db.customer.confirmation.confirm', $id));
 });
 
-Breadcrumbs::register('user_profile', function($breadcrumbs){
+Breadcrumbs::register('user_profile', function($breadcrumbs, $id){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.user.profile'), route('db.user.profile.show', $id));
+});
+
+Breadcrumbs::register('user_settings', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.user.settings'), route('db.user.settings.show', $id));
 });
 
 Breadcrumbs::register('user_calendar', function($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.user.calendar'), route('db.user.calendar.show'));
 });
+

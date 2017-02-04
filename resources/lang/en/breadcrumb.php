@@ -1,10 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Sugito
- * Date: 12/27/2016
- * Time: 1:27 PM
- */
+<?php 
+
 return [
     'dashboard' => 'Dashboard',
     'po.create' => 'Create Purchase Order',
@@ -47,6 +42,7 @@ return [
     'admin.phone_provider.create' => 'Create Phone Provider',
     'admin.phone_provider.show' => 'Show Phone Provider',
     'admin.phone_provider.edit' => 'Edit Phone Provider',
+    'admin.settings' => 'Settings',
     'master.customer' => 'Customer',
     'master.customer.create' => 'Create Customer',
     'master.customer.show' => 'Show Customer',
@@ -82,5 +78,6 @@ return [
     'truck_maintenance.create' => 'Create Truck Maintenance',
     'truck_maintenance.edit' => 'Edit Truck Maintenance',
     'user.profile' => 'User Profile',
-    'user.calender' => 'User Calendar'
+    'user.settings' => 'User Settings',
+    'user.calendar' => 'User Calendar',
 ];

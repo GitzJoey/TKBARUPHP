@@ -49,7 +49,7 @@ class TruckMaintenance extends Model
 
     use StoreFilter;
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['maintenance_date', 'deleted_at'];
 
     protected $table = 'truck_maintenances';
 

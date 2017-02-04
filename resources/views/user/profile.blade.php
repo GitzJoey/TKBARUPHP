@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('user_profile') !!}
+    {!! Breadcrumbs::render('user_profile', Auth::user()->id) !!}
 @endsection
 
 @section('content')
@@ -74,6 +74,7 @@
                     </table>
                     <br>
                     <a class="btn btn-default" href="{{ route('db.user.calendar.show') }}">@lang('buttons.calendar_button')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-default" href="{{ route('db.user.settings.show') }}">@lang('buttons.settings_button')</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button class="btn btn-default">@lang('buttons.change_password_button')</button>
                     <button class="btn btn-default">@lang('buttons.reset_password_button')</button>
                 </div>

@@ -385,21 +385,15 @@
                                 url: '{{ route('api.phone_provider.search') }}' + '/' + prefix,
                                 type: "GET",
                                 success: function (response) {
-                                    /*
-                                    $('#unfinishedSettingsNotice').noty({
-                                        text: 'Unfinish Store Detected',
-                                        type: 'warning',
-                                        timeout: 30000,
+                                    noty({
+                                        text: 'Provider: ' + response.provider,
+                                        type: 'success',
+                                        timeout: 3000,
                                         progressBar: true
                                     });
-                                    */
-                                    console.log('success');
                                 },
                                 error: function(err) {
                                     console.log(err);
-                                },
-                                complete: function(c) {
-                                    console.log('c' + c);
                                 }
                             });
                         }

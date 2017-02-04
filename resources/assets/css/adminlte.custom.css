@@ -226,3 +226,25 @@ ol.breadcrumb {
 .menu-separator {
     border-bottom: 1px solid #444 !important;
 }
+
+.select2-container--default .select2-selection--single {
+    border-radius: 0px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 32px;
+}
+
+.select2-container .select2-selection--single {
+    height: 32px;
+}
+
+.select2-dropdown {
+    border-radius: 0px;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 2px;
+    margin-top: -7px;
+}
+

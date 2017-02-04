@@ -57,6 +57,9 @@ return [
         'title' => '',
         'page_title' => '',
         'page_title_desc' => '',
+        'header' => [
+            'title' => 'Monitoring'
+        ]
     ],
     'tax' => [
         'title' => '',

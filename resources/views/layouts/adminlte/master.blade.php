@@ -62,7 +62,7 @@
                 container.on('click', function () {
                     $(this).fadeOut("slow");
                 });
-                container.delay(500).fadeOut("slow");
+                container.delay(350).fadeOut("slow");
 
                 window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
 

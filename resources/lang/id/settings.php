@@ -1,21 +1,6 @@
 <?php 
 
 return [
-    'edit' => [
-        'title' => 'Pengaturan',
-        'page_title' => 'Pengaturan',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => 'Ubah Pengaturan',
-        ],
-    ],
-    'field' => [
-        'user_id' => 'User ID',
-        'category' => 'Kategori',
-        'skey' => 'Kunci',
-        'value' => 'Nilai',
-        'description' => 'Deskripsi',
-    ],
     'index' => [
         'title' => 'Pengaturan',
         'page_title' => 'Pengaturan',
@@ -23,14 +8,17 @@ return [
         'header' => [
             'title' => 'Daftar Pengaturan',
         ],
-        'table' => [
-            'header' => [
-                'user' => 'User ID',
-                'category' => 'Kategori',
-                'skey' => 'Kunci',
-                'value' => 'Nilai',
-                'description' => 'Deskripsi',
-            ],
+    ],
+    'field' => [
+        'for_user_email' => 'Pengaturan Untuk Pengguna',
+        'fav_po_warehouse' => 'Gudang PO Pilihan',
+    ],
+    'user' => [
+        'title' => 'Pengaturan Pengguna',
+        'page_title' => 'Pengaturan Pengguna',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => 'Pengaturan Pengguna',
         ],
     ],
 ];

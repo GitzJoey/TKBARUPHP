@@ -25,6 +25,8 @@ class PhoneProviderController extends Controller
 
     public function index()
     {
+        $p = PhonePrefix::get()->where('prefix', '=', '0812');
+        dd($p);
         $phoneProvider = PhoneProvider::paginate(10);
         return view('phone_provider.index')->with('phoneProviderList', $phoneProvider);
     }
@@ -91,8 +93,6 @@ class PhoneProviderController extends Controller
             'status' => 'required',
         ]);
 
-
-
         if ($validator->fails()) {
             return redirect(route('db.admin.phone_provider.edit', $ph->hId()))->withInput()->withErrors($validator);
         } else {
@@ -130,6 +130,11 @@ class PhoneProviderController extends Controller
 
     public function getPhoneProviderByDigit($digit)
     {
-        return PhoneProvider::where('prefixes.prefix', '=', $digit)->get()->first();
+        $p = PhonePrefix::get();
+
+        return response()->json([
+            'digit' => $digit,
+            'provider' => count($p) > 0 ? $p:''
+        ], 200);
     }
 }

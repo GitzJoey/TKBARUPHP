@@ -43,6 +43,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">@lang('truckmtc.index.table.header.plate_number')</th>
+                        <th class="text-center">@lang('truckmtc.index.table.header.maintenance_date')</th>
                         <th class="text-center">@lang('truckmtc.index.table.header.maintenance_type')</th>
                         <th class="text-center">@lang('truckmtc.index.table.header.cost')</th>
                         <th class="text-center">@lang('truckmtc.index.table.header.odometer')</th>
@@ -54,9 +55,10 @@
                     @foreach ($trucklist as $key => $truck)
                         <tr>
                             <td class="text-center">{{ $truck->truck->plate_number }}</td>
-                            <td class="text-center">@lang('lookup.'.$truck->maintenance_type)</td>
-                            <td>{{ $truck->cost }}</td>
-                            <td>{{ $truck->odometer }}</td>
+                            <td>{{ \Carbon\Carbon::parse($truck->maintenance_date)->format('d-m-Y') }}</td>
+                            <td>@lang('lookup.'.$truck->maintenance_type)</td>
+                            <td class="text-center">{{ $truck->cost }}</td>
+                            <td class="text-center">{{ $truck->odometer }}</td>
                             <td>{{ $truck->remarks }}</td>
                             <td class="text-center">
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.truck.maintenance.edit', $truck->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>

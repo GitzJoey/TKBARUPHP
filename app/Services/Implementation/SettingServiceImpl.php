@@ -14,7 +14,7 @@ use App\Services\SettingService;
 
 class SettingServiceImpl implements SettingService
 {
-    public function generateDefaultSettings()
+    public function generateDefaultSettingsIfNotExists($id)
     {
         $result = [];
 

@@ -7,9 +7,11 @@
 @section('page_title')
     <span class="fa fa-book fa-fw"></span>&nbsp;@lang('purchase_order.payment.giro.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('purchase_order.payment.giro.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('purchase_order_payment_giro', $currentPo->hId()) !!}
 @endsection
@@ -207,7 +209,7 @@
                         result += parseInt(expense.amount);
                     });
                     return result;
-                };
+                }
             }
         });
 
