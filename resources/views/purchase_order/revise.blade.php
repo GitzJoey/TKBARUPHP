@@ -229,7 +229,12 @@
                                                         class="form-control"
                                                         v-model="po.product">
                                                     <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
+                                                    <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
+                                                        <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
+                                                    </template>
+                                                    <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
+                                                        <option v-for="product of productDDL" v-bind:value="product">@{{ product.name }}</option>
+                                                    </template> 
                                                 </select>
                                             </div>
                                             <div class="col-md-1">
@@ -474,6 +479,7 @@
                     warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
                     vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
                     expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                    productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                     po: {
                         supplier: _.cloneDeep(currentPo.supplier),
                         items: [],
