@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Lookup;
+use App\Model\Product;
 use App\Model\PurchaseOrder;
 use App\Model\PurchaseOrderCopy;
 
@@ -61,10 +62,11 @@ class PurchaseOrderCopyController extends Controller
         Log::info('PurchaseOrderCopyController@create');
 
         $poToBeCopied = $this->purchaseOrderService->getPOForCopy($poCode);
+        $productDDL = Product::with('productUnits.unit')->get();
 
         $poCopyCode = POCopyCodeGenerator::generateCode($poCode);
 
-        return view('purchase_order.copy.create', compact('poToBeCopied', 'poCopyCode', 'poCode'));
+        return view('purchase_order.copy.create', compact('poToBeCopied', 'poCopyCode', 'poCode', 'productDDL'));
     }
 
     public function store(Request $request, $poCode)
