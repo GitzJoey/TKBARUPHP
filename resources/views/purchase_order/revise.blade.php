@@ -381,7 +381,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                             <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
-                                                        </td>
+                                                    </td>
                                                     <td>
                                                         <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
                                                     </td>
