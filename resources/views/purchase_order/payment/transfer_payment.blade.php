@@ -118,8 +118,7 @@
                                                     Rp
                                                 </div>
                                                 <input type="text" class="form-control" id="inputPaymentAmount"
-                                                       name="total_amount" v-model="total_amount"
-                                                       data-parsley-required="true">
+                                                       name="total_amount" data-parsley-required="true">
                                             </div>
                                         </div>
                                     </div>
@@ -153,20 +152,14 @@
         var poPaymentApp = new Vue({
             el: '#po-payment-vue',
             data: {
+                bankAccountFrom: {id: ''},
+                bankAccountTo: {id: ''},
                 storeBankAccounts: JSON.parse('{!! htmlspecialchars_decode($storeBankAccounts) !!}'),
                 supplierBankAccounts: JSON.parse('{!! htmlspecialchars_decode($supplierBankAccounts) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 po: {
                     supplier: _.cloneDeep(currentPo.supplier),
                     items: [],
-                    warehouse: {
-                        id: currentPo.warehouse.id,
-                        name: currentPo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
-                        name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
-                    },
                     expenses: []
                 }
             },
@@ -213,6 +206,7 @@
                     code: currentPo.expenses[i].type,
                     description: type ? type.description : ''
                 },
+                is_internal_expense: currentPo.expenses[i].is_internal_expense == 1,
                 amount: parseFloat(currentPo.expenses[i].amount).toFixed(0),
                 remarks: currentPo.expenses[i].remarks
             });
