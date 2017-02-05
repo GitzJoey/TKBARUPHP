@@ -86,6 +86,7 @@
                 el: '#poVue',
                 methods: {
                     showAlert: function (event) {
+                        console.log('Hai');
                         var buttonId = event.currentTarget.id;
                         var form = $('#'+buttonId).parents('form');
                         swal({
