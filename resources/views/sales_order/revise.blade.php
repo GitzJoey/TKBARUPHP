@@ -276,50 +276,52 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr v-for="(item, itemIndex) in so.items">
-                                                <input type="hidden" name="item_id[]" v-bind:value="item.id">
-                                                <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
-                                                <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
-                                                <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
-                                                <td class="valign-middle">@{{ item.product.name }}</td>
-                                                <td>
-                                                    <input type="text" class="form-control text-right" name="quantity[]"
-                                                           v-model="item.quantity" data-parsley-required="true"
-                                                           data-parsley-type="number" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}>
-                                                </td>
-                                                <td>
-                                                    @if($currentSo->status == 'SOSTATUS.WD')
-                                                        <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
-                                                        <select class="form-control"
-                                                                v-model="item.selected_unit"
-                                                                data-parsley-required="true">
-                                                            <option v-bind:value="{unit: {id: '', conversion_value: 1}}">@lang('labels.PLEASE_SELECT')</option>
-                                                            <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
-                                                        </select>
-                                                    @else
-                                                        <input type="text" class="form-control" readonly
-                                                               v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
-                                                        <input type="hidden" name="selected_unit_id[]"
-                                                               v-bind:value="item.selected_unit.unit.id">
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control text-right" name="price[]"
-                                                           v-model="item.price" data-parsley-required="true"
-                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
-                                                </td>
-                                                <td class="text-center">
-                                                    @if($currentSo->status == 'SOSTATUS.WD')
-                                                        <button type="button" class="btn btn-danger btn-md"
-                                                                v-on:click="removeItem(itemIndex)"><span
-                                                                    class="fa fa-minus"/>
-                                                        </button>
-                                                    @endif
-                                                </td>
-                                                <td class="text-right valign-middle">
-                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                                </td>
-                                            </tr>
+                                            <template v-for="(item, itemIndex) in so.items">
+                                                <tr>
+                                                    <input type="hidden" name="item_id[]" v-bind:value="item.id">
+                                                    <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                    <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
+                                                    <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
+                                                    <td class="valign-middle">@{{ item.product.name }}</td>
+                                                    <td>
+                                                        <input type="text" class="form-control text-right" name="quantity[]"
+                                                            v-model="item.quantity" data-parsley-required="true"
+                                                            data-parsley-type="number" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}>
+                                                    </td>
+                                                    <td>
+                                                        @if($currentSo->status == 'SOSTATUS.WD')
+                                                            <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
+                                                            <select class="form-control"
+                                                                    v-model="item.selected_unit"
+                                                                    data-parsley-required="true">
+                                                                <option v-bind:value="{unit: {id: '', conversion_value: 1}}">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                            </select>
+                                                        @else
+                                                            <input type="text" class="form-control" readonly
+                                                                v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
+                                                            <input type="hidden" name="selected_unit_id[]"
+                                                                v-bind:value="item.selected_unit.unit.id">
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control text-right" name="price[]"
+                                                            v-model="item.price" data-parsley-required="true"
+                                                            data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if($currentSo->status == 'SOSTATUS.WD')
+                                                            <button type="button" class="btn btn-danger btn-md"
+                                                                    v-on:click="removeItem(itemIndex)"><span
+                                                                        class="fa fa-minus"/>
+                                                            </button>
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-right valign-middle">
+                                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                    </td>
+                                                </tr>
+                                            </template>
                                             </tbody>
                                         </table>
                                     </div>
@@ -502,6 +504,7 @@
                 productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                 stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 so: {
+                    product: {id: ''},
                     customer: _.cloneDeep(currentSo.customer),
                     warehouse: _.cloneDeep(currentSo.warehouse),
                     vendorTrucking: currentSo.vendor_trucking == null ? {id: 0, name: ''} : _.cloneDeep(currentSo.vendor_trucking),
@@ -533,9 +536,14 @@
                     if(product.id !== ''){
                         var vm = this;
                         vm.so.items.push({
-                            stock_id: 0,
+                            stock: {
+                                id: 0
+                            },
                             product: product,
                             selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
                                 conversion_value: 1
                             },
                             base_unit: _.find(product.product_units, isBase),
@@ -552,7 +560,7 @@
                         });
 
                         vm.so.items.push({
-                            stock_id: stock.id,
+                            stock: _.cloneDeep(stock),
                             product: _.cloneDeep(stock.product),
                             selected_unit: {
                                 unit: {
@@ -589,6 +597,9 @@
         for (var i = 0; i < currentSo.items.length; i++) {
             soAppVue.so.items.push({
                 id: currentSo.items[i].id,
+                stock: {
+                    id: currentSo.items[i].stock_id
+                },
                 product: _.cloneDeep(currentSo.items[i].product),
                 base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
                 selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),

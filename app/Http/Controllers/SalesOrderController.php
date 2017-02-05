@@ -132,8 +132,8 @@ class SalesOrderController extends Controller
         Log::info('SalesOrderController@revise');
 
         $currentSo = $this->salesOrderService->getSOForRevise($id);
-        $warehouseDDL = Warehouse::all(['id', 'name']);
-        $vendorTruckingDDL = VendorTrucking::all(['id', 'name']);
+        $warehouseDDL = Warehouse::all();
+        $vendorTruckingDDL = VendorTrucking::all();
         $productDDL = Product::with('productUnits.unit')->get();
         $stocksDDL = $this->stockService->getStocksForSO();
         $customerDDL = collect([$currentSo->customer->toArray()]);
