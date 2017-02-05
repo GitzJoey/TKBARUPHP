@@ -483,7 +483,7 @@
                     po: {
                         supplier: currentPo.supplier ? _.cloneDeep(currentPo.supplier) : {id: ''},
                         warehouse: _.cloneDeep(currentPo.warehouse),
-                        vendorTrucking: _.cloneDeep(currentPo.vendor_trucking),
+                        vendorTrucking: currentPo.vendor_trucking ? _.cloneDeep(currentPo.vendor_trucking) : {id: ''},
                         items: [],
                         expenses: [],
                         supplier_type: {
