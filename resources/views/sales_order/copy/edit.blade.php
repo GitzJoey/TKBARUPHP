@@ -384,16 +384,8 @@
                 productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                 stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 so: {
-                    customer: _.cloneDeep(currentSo.customer),
+                    customer: currentSo.customer ? _.cloneDeep(currentSo.customer) : {id: ''},
                     items: [],
-                    warehouse: {
-                        id: currentSo.warehouse.id,
-                        name: currentSo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                        name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
-                    }
                 }
             },
             methods: {
@@ -413,7 +405,7 @@
                             selected_unit: {
                                 unit: {
                                     id: ''
-                                }
+                                },
                                 conversion_value: 1
                             },
                             base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
@@ -446,13 +438,16 @@
                 },
                 removeItem: function (index) {
                     this.so.items.splice(index, 1);
-                };
+                }
             }
         });
 
         for (var i = 0; i < currentSo.items.length; i++) {
             soCopyApp.so.items.push({
                 id: currentSo.items[i].id,
+                stock: {
+                    id: currentSo.items[i].stock_id
+                },
                 product: _.cloneDeep(currentSo.items[i].product),
                 base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
                 selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
