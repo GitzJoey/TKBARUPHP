@@ -76,7 +76,7 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input type="text" class="form-control" id="inputPaymentAmount" v-model="total_amount"
+                                                    <input type="text" class="form-control" id="inputPaymentAmount"
                                                            name="total_amount" data-parsley-required="true">
                                                 </div>
                                             </div>
@@ -113,15 +113,7 @@
             data: {
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 so: {
-                   customer: _.cloneDeep(currentSo.customer),
-                    warehouse: {
-                        id: currentSo.warehouse.id,
-                        name: currentSo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                        name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
-                    },
+                    customer: _.cloneDeep(currentSo.customer),
                     items: [],
                     expenses: []
                 }
