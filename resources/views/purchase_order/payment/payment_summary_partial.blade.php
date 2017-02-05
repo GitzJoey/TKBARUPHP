@@ -131,7 +131,7 @@
                                    class="col-sm-2 control-label">@lang('purchase_order.payment.summary.field.vendor_trucking')</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" readonly
-                                       value="{{ empty($currentPo->vendorTrucking->name) ? '':$currentPo->vendorTrucking->name }}">
+                                       value="{{ empty($currentPo->vendorTrucking) ? '':$currentPo->vendorTrucking->name }}">
                             </div>
                         </div>
                     </div>
@@ -236,9 +236,10 @@
                                         <th width="30%">@lang('purchase_order.payment.summary.table.expense.header.name')</th>
                                         <th width="20%"
                                             class="text-center">@lang('purchase_order.payment.summary.table.expense.header.type')</th>
+                                        <th width="20%"
+                                            class="text-center">@lang('purchase_order.payment.summary.table.expense.header.internal_expense')</th>
                                         <th width="25%"
                                             class="text-center">@lang('purchase_order.payment.summary.table.expense.header.remarks')</th>
-                                        <th width="5%"></th>
                                         <th width="20%"
                                             class="text-center">@lang('purchase_order.payment.summary.table.expense.header.amount')</th>
                                     </tr>
@@ -254,12 +255,14 @@
                                             <input type="text" class="form-control"
                                                    v-bind:value="expense.type.description" readonly>
                                         </td>
+                                        <td class="text-center">
+                                                <input v-model="expense.is_internal_expense" type="checkbox">
+                                        </td>
                                         <td>
                                             <input name="expense_remarks[]" type="text" class="form-control"
                                                    v-model="expense.remarks"
                                                    readonly>
                                         </td>
-                                        <td></td>
                                         <td>
                                             <input name="expense_amount[]" type="text" class="form-control text-right"
                                                    v-model="expense.amount" readonly>
