@@ -81,8 +81,9 @@ class PurchaseOrderCopyController extends Controller
     public function edit($poCode, $id)
     {
         $currentPOCopy = $this->purchaseOrderCopyService->getPOCopyForEdit($id);
+        $productDDL = Product::with('productUnits.unit')->get();
 
-        return view('purchase_order.copy.edit', compact('poCode', 'currentPOCopy'));
+        return view('purchase_order.copy.edit', compact('poCode', 'currentPOCopy', 'productDDL'));
     }
 
     public function update(Request $request, $poCode, $id)

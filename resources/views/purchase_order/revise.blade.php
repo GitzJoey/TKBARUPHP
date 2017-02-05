@@ -349,7 +349,7 @@
                                                     <th width="20%"
                                                         class="text-center">@lang('purchase_order.revise.table.expense.header.type')</th>
                                                     <th width="20%"
-                                                            class="text-center">@lang('purchase_order.create.table.expense.header.internal_expense')</th>    
+                                                            class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>    
                                                     <th width="25%"
                                                         class="text-center">@lang('purchase_order.revise.table.expense.header.remarks')</th>
                                                     <th width="5%">&nbsp;</th>
