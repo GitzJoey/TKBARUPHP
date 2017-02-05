@@ -121,8 +121,7 @@
                                                             Rp
                                                         </div>
                                                         <input type="text" class="form-control" id="inputPaymentAmount"
-                                                               name="total_amount" v-model="total_amount"
-                                                               data-parsley-required="true">
+                                                               name="total_amount" data-parsley-required="true">
                                                     </div>
                                                 </div>
                                             </div>
@@ -157,19 +156,13 @@
         var soPaymentApp = new Vue({
             el: '#soPaymentVue',
             data: {
+                bankAccountFrom: {id: ''},
+                bankAccountTo: {id: ''},
                 storeBankAccounts: JSON.parse('{!! htmlspecialchars_decode($storeBankAccounts) !!}'),
                 customerBankAccounts: JSON.parse('{!! htmlspecialchars_decode($customerBankAccounts) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 so: {
                     customer: _.cloneDeep(currentSo.customer),
-                    warehouse: {
-                        id: currentSo.warehouse.id,
-                        name: currentSo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                        name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
-                    },
                     items: [],
                     expenses: []
                 }
