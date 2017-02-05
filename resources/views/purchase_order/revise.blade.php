@@ -75,7 +75,7 @@
                                             <label for="inputSupplierDetails"
                                                    class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_details')</label>
                                             <div class="col-sm-10">
-                                            <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_details }}
+                                            <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_detail }}
                                             </textarea>
                                             </div>
                                         </div>
@@ -481,11 +481,14 @@
                     expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                     productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                     po: {
-                        supplier: _.cloneDeep(currentPo.supplier),
-                        items: [],
+                        supplier: currentPo.supplier ? _.cloneDeep(currentPo.supplier) : {id: ''},
                         warehouse: _.cloneDeep(currentPo.warehouse),
                         vendorTrucking: _.cloneDeep(currentPo.vendor_trucking),
+                        items: [],
                         expenses: [],
+                        supplier_type: {
+                            code: currentPo.supplier_type
+                        },
                         product: {
                             id: ''
                         }
