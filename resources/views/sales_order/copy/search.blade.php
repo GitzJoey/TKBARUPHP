@@ -52,7 +52,7 @@
         var app = new Vue({
             el: '#soCopyVue',
             data: {
-                soCode: "{{ Session::get('code') }}""
+                soCode: "{{ Session::get('code') }}"
             }
         });
     </script>
