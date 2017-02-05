@@ -27,7 +27,7 @@
         </div>
     @endif
 
-    <div ng-app="soCopyModule" ng-controller="soCopyController" ng-cloak>
+    <div id="soCopyVue">
         {!! Form::model($soToBeCopied, ['method' => 'POST', 'route' => ['db.so.copy.create', $soCode], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
         {{ csrf_field() }}
         <div class="row">
@@ -197,28 +197,28 @@
                                         <div class="col-md-11">
                                             <select id="inputProduct"
                                                     class="form-control"
-                                                    ng-model="so.product"
-                                                    ng-options="product as product.name for product in productDDL track by product.id">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    v-model="so.product">
+                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
                                             </select>
                                         </div>
                                         <div class="col-md-1">
                                             <button type="button" class="btn btn-primary btn-md"
-                                                    ng-click="insertProduct(so.product)"><span class="fa fa-plus"/>
+                                                    v-on:click="insertProduct(so.product)"><span class="fa fa-plus"/>
                                             </button>
                                         </div>
                                     @else
                                         <div class="col-md-11">
                                             <select id="inputStock"
                                                     class="form-control"
-                                                    ng-model="so.stock"
-                                                    ng-options="stock as stock.product.name for stock in stocksDDL track by stock.id">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    v-model="so.stock">
+                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-for="stock in stocksDDL" v-bind:value="stock">@{{ stock.product.name }}</option>
                                             </select>
                                         </div>
                                         <div class="col-md-1">
                                             <button type="button" class="btn btn-primary btn-md"
-                                                    ng-click="insertStock(so.stock)"><span class="fa fa-plus"/>
+                                                    v-on:click="insertStock(so.stock)"><span class="fa fa-plus"/>
                                             </button>
                                         </div>
                                     @endif
@@ -241,40 +241,39 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr ng-repeat="item in so.items">
-                                                <input type="hidden" name="product_id[]" ng-value="item.product.id">
-                                                <input type="hidden" name="stock_id[]" ng-value="item.stock.id">
+                                            <tr v-for="(item, itemIndex) in so.items">
+                                                <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
                                                 <input type="hidden" name="base_unit_id[]"
-                                                       ng-value="item.base_unit.unit.id">
+                                                       v-bind:value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="quantity[]"
-                                                           ng-model="item.quantity" data-parsley-required="true"
+                                                           v-model="item.quantity" data-parsley-required="true"
                                                            data-parsley-type="number">
                                                 </td>
                                                 <td>
-                                                    <select name="selected_unit_id[]" data-parsley-required="true"
+                                                    <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
+                                                    <select data-parsley-required="true"
                                                             class="form-control"
-                                                            ng-model="item.selected_unit"
-                                                            data-parsley-required="true"
-                                                            ng-options="product_unit as product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' for product_unit in item.product.product_units track by product_unit.unit.id">
-                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                            v-model="item.selected_unit">
+                                                        <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="price[]"
-                                                           ng-model="item.price" data-parsley-required="true"
-                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"
-                                                           fcsa-number>
+                                                           v-model="item.price" data-parsley-required="true"
+                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md"
-                                                            ng-click="removeItem($index)"><span
+                                                            v-on:click="removeItem(itemIndex)"><span
                                                                 class="fa fa-minus"></span>
                                                     </button>
                                                 </td>
                                                 <td class="text-right valign-middle">
-                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price | number }}
+                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -289,7 +288,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('sales_order.copy.create.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ grandTotal() | number }}</span>
+                                                    <span class="control-label-normal">@{{ grandTotal() }}</span>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -377,89 +376,101 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soCopyModule", ['fcsa-number']);
-        app.controller("soCopyController", ['$scope', function ($scope) {
-            $scope.productDDL = JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}');
-            $scope.stocksDDL = JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}');
-
-            var currentSo = JSON.parse('{!! htmlspecialchars_decode($soToBeCopied->toJson()) !!}');
-
-            $scope.so = {
-                customer: currentSo.customer,
-                items: [],
-                warehouse: {
-                    id: currentSo.warehouse.id,
-                    name: currentSo.warehouse.name
+        var currentSo = JSON.parse('{!! htmlspecialchars_decode($soToBeCopied->toJson()) !!}');
+        
+        var soCopyApp = new Vue({
+            el: '#soCopyVue',
+            data: {
+                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+                stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
+                so: {
+                    customer: _.cloneDeep(currentSo.customer),
+                    items: [],
+                    warehouse: {
+                        id: currentSo.warehouse.id,
+                        name: currentSo.warehouse.name
+                    },
+                    vendorTrucking: {
+                        id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
+                        name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
+                    }
+                }
+            },
+            methods : {
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.so.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
                 },
-                vendorTrucking: {
-                    id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                    name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
+                insertProduct: function (product) {
+                    if(product.id != ''){
+                        var vm = this;
+                        vm.so.items.push({
+                            stock_id: 0,
+                            product: _.cloneDeep(product),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                            quantity: 0,
+                            price: 0
+                        });
+                    }
+                },
+                insertStock: function (stock) {
+                    if(stock.id != ''){
+                        var vm = this;
+                        var stock_price = _.find(stock.today_prices, function (price) {
+                            return price.price_level_id === vm.so.customer.price_level_id;
+                        });
+
+                        vm.so.items.push({
+                            stock_id: stock.id,
+                            product: _.cloneDeep(stock.product),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(stock.product.product_units, isBase)),
+                            quantity: 0,
+                            price: stock_price ? stock_price : 0
+                        });
+                    }
+                },
+                removeItem: function (index) {
+                    this.so.items.splice(index, 1);
                 }
-            };
-
-            for (var i = 0; i < currentSo.items.length; i++) {
-                $scope.so.items.push({
-                    id: currentSo.items[i].id,
-                    product: currentSo.items[i].product,
-                    base_unit: _.find(currentSo.items[i].product.product_units, isBase),
-                    selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
-                    quantity: currentSo.items[i].quantity % 1 != 0 ? parseFloat(currentSo.items[i].quantity).toFixed(1) : parseFloat(currentSo.items[i].quantity).toFixed(0),
-                    price: parseFloat(currentSo.items[i].price).toFixed(0)
-                });
             }
+        });
 
-            $scope.grandTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
+        for (var i = 0; i < currentSo.items.length; i++) {
+            soCopyApp.so.items.push({
+                id: currentSo.items[i].id,
+                product: _.cloneDeep(currentSo.items[i].product),
+                base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
+                selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
+                quantity: currentSo.items[i].quantity % 1 != 0 ? parseFloat(currentSo.items[i].quantity).toFixed(1) : parseFloat(currentSo.items[i].quantity).toFixed(0),
+                price: parseFloat(currentSo.items[i].price).toFixed(0)
+            });
+        }
 
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
-                }
+        function getSelectedUnit(selectedUnitId) {
+            return function (element) {
+                return element.unit_id == selectedUnitId;
             }
+        }
 
-            function isBase(unit) {
-                return unit.is_base == 1;
-            }
-
-            $scope.insertProduct = function (product) {
-                $scope.so.items.push({
-                    stock_id: 0,
-                    product: product,
-                    selected_unit: {
-                        conversion_value: 1
-                    },
-                    base_unit: _.find(product.product_units, isBase),
-                    quantity: 0,
-                    price: 0
-                });
-            };
-
-            $scope.insertStock = function (stock) {
-                var stock_price = _.find(stock.today_prices, function (price) {
-                    return price.price_level_id === $scope.so.customer.price_level_id;
-                });
-
-                $scope.so.items.push({
-                    stock_id: stock.id,
-                    product: stock.product,
-                    selected_unit: {
-                        conversion_value: 1
-                    },
-                    base_unit: _.find(stock.product.product_units, isBase),
-                    quantity: 0,
-                    price: stock_price ? stock_price : 0
-                });
-            };
-
-            $scope.removeItem = function (index) {
-                $scope.so.items.splice(index, 1);
-            };
-        }]);
+        function isBase(unit) {
+            return unit.is_base == 1;
+        }
 
         $(function () {
             $("#inputSoDate").datetimepicker({

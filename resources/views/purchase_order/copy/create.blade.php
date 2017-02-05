@@ -74,7 +74,7 @@
                                             <label for="inputSupplierDetails"
                                                    class="col-sm-2 control-label">@lang('purchase_order.copy.create.field.supplier_details')</label>
                                             <div class="col-sm-10">
-                                            <textarea class="form-control" rows="5" readonly>{{ $poToBeCopied->walk_in_supplier_details }}
+                                            <textarea class="form-control" rows="5" readonly>{{ $poToBeCopied->walk_in_supplier_detail }}
                                             </textarea>
                                             </div>
                                         </div>
@@ -200,7 +200,11 @@
                                                     class="form-control"
                                                     v-model="po.product">
                                                 <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                <option v-for="product in po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
+                                                @if($poToBeCopied->supplier_type == 'SUPPLIERTYPE.R')
+                                                    <option v-for="product in po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
+                                                @else
+                                                    <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
+                                                @endif    
                                             </select>
                                         </div>
                                         <div class="col-md-1">
@@ -227,39 +231,40 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr v-for="(item, itemIndex) in po.items">
-                                                    <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
-                                                    <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
-                                                    <td class="valign-middle">@{{ item.product.name }}</td>
-                                                    <td>
-                                                        <input type="text" class="form-control text-right"
-                                                               data-parsley-required="true" data-parsley-type="number"
-                                                               name="quantity[]"
-                                                               v-model="item.quantity">
-                                                    </td>
-                                                    <td>
-                                                        <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id"
-                                                        <select class="form-control"
-                                                                data-parsley-required="true"
-                                                                v-model="item.selected_unit">
-                                                            <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                            <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control text-right" name="price[]"
-                                                               v-model="item.price" data-parsley-required="true"
-                                                               data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button type="button" class="btn btn-danger btn-md"
-                                                                v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
-                                                        </button>
-                                                    </td>
-                                                    <td class="text-right valign-middle">
-                                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                                    </td>
-                                                </tr>
+                                                <template v-for="(item, itemIndex) in po.items">
+                                                    <tr>
+                                                        <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                        <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
+                                                        <td class="valign-middle">@{{ item.product.name }}</td>
+                                                        <td>
+                                                            <input type="text" class="form-control text-right"
+                                                                data-parsley-required="true" data-parsley-type="number"
+                                                                name="quantity[]" v-model="item.quantity">
+                                                        </td>
+                                                        <td>
+                                                            <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
+                                                            <select class="form-control"
+                                                                    data-parsley-required="true"
+                                                                    v-model="item.selected_unit">
+                                                                <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control text-right" name="price[]"
+                                                                v-model="item.price" data-parsley-required="true"
+                                                                data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <button type="button" class="btn btn-danger btn-md"
+                                                                    v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
+                                                            </button>
+                                                        </td>
+                                                        <td class="text-right valign-middle">
+                                                            @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                        </td>
+                                                    </tr>
+                                                </template>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -364,21 +369,21 @@
             var currentPo = JSON.parse('{!! htmlspecialchars_decode($poToBeCopied->toJson()) !!}');
 
             var poApp = new Vue({
-                el: '#po-vue',
+                el: '#poCopyVue',
                 data: {
+                    productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                     po: {
-                        supplier: _.cloneDeep(currentPo.supplier),
+                        supplier: currentPo.supplier ? _.cloneDeep(currentPo.supplier) : {id: ''},
                         items: [],
-                        warehouse: _.cloneDeep(currentPo.warehouse),
-                        vendorTrucking: _.cloneDeep(currentPo.vendor_trucking),
                         product: {
                             id: ''
                         }
                     }
                 },
                 mounted: function() {
+                    var vm = this;
                     for (var i = 0; i < currentPo.items.length; i++) {
-                        poApp.po.items.push({
+                        vm.po.items.push({
                             id: currentPo.items[i].id,
                             product: _.cloneDeep(currentPo.items[i].product),
                             base_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, isBase)),

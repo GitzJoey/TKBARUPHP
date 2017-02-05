@@ -75,7 +75,7 @@
                                             <label for="inputSupplierDetails"
                                                    class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_details')</label>
                                             <div class="col-sm-10">
-                                            <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_details }}
+                                            <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_detail }}
                                             </textarea>
                                             </div>
                                         </div>
@@ -348,6 +348,8 @@
                                                     <th width="30%">@lang('purchase_order.revise.table.expense.header.name')</th>
                                                     <th width="20%"
                                                         class="text-center">@lang('purchase_order.revise.table.expense.header.type')</th>
+                                                    <th width="20%"
+                                                            class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>    
                                                     <th width="25%"
                                                         class="text-center">@lang('purchase_order.revise.table.expense.header.remarks')</th>
                                                     <th width="5%">&nbsp;</th>
@@ -377,6 +379,9 @@
                                                                    v-bind:value="expense.type.code"/>
                                                         @endif
                                                     </td>
+                                                    <td class="text-center">
+                                                            <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
+                                                        </td>
                                                     <td>
                                                         <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
                                                     </td>
@@ -481,11 +486,14 @@
                     expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                     productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                     po: {
-                        supplier: _.cloneDeep(currentPo.supplier),
-                        items: [],
+                        supplier: currentPo.supplier ? _.cloneDeep(currentPo.supplier) : {id: ''},
                         warehouse: _.cloneDeep(currentPo.warehouse),
-                        vendorTrucking: _.cloneDeep(currentPo.vendor_trucking),
+                        vendorTrucking: currentPo.vendor_trucking ? _.cloneDeep(currentPo.vendor_trucking) : {id: ''},
+                        items: [],
                         expenses: [],
+                        supplier_type: {
+                            code: currentPo.supplier_type
+                        },
                         product: {
                             id: ''
                         }
@@ -533,7 +541,6 @@
                         this.po.items.splice(index, 1);
                     },
                     insertExpense: function () {
-                        console.log('Inserting expense');
                         this.po.expenses.push({
                             name: '',
                             type: {
@@ -542,6 +549,13 @@
                             amount: 0,
                             remarks: ''
                         });
+
+                        $(function () {
+                            $('input[type="checkbox"], input[type="radio"]').iCheck({
+                                checkboxClass: 'icheckbox_square-blue',
+                                radioClass: 'iradio_square-blue'
+                            });
+                        });    
                     },
                     removeExpense: function (index) {
                         this.po.expenses.splice(index, 1);
@@ -569,6 +583,7 @@
                     id: currentPo.expenses[i].id,
                     name: currentPo.expenses[i].name,
                     type: _.cloneDeep(type),
+                    is_internal_expense: currentPo.expenses[i].is_internal_expense == 1,
                     amount: currentPo.expenses[i].amount,
                     remarks: currentPo.expenses[i].remarks
                 });

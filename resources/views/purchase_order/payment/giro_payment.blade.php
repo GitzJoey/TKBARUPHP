@@ -63,7 +63,7 @@
                                             <select id="inputGiro"
                                                     class="form-control"
                                                     v-model="giro" data-parsley-required="true">
-                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-bind:value="{id: '', bank: {name: ''}}">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="giro in availableGiros" v-bind:value="giro">@{{ giro.bank.short_name + ' ' + giro.serial_number + ' ' + giro.printed_name }}</option>
                                             </select>
                                         </div>
@@ -177,19 +177,12 @@
         var poPaymentApp = new Vue({
             el: '#po-payment-vue',
             data: {
+                giro: {id: '', bank: {name: ''}},
                 availableGiros: JSON.parse('{!! htmlspecialchars_decode($availableGiros) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 po: {
                     supplier: _.cloneDeep(currentPo.supplier),
                     items: [],
-                    warehouse: {
-                        id: currentPo.warehouse.id,
-                        name: currentPo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.id,
-                        name: (currentPo.vendor_trucking == null) ? '' : currentPo.vendor_trucking.name
-                    },
                     expenses: []
                 }
             },
@@ -240,6 +233,7 @@
                     code: currentPo.expenses[i].type,
                     description: type ? type.description : ''
                 },
+                is_internal_expense: currentPo.expenses[i].is_internal_expense == 1,
                 amount: parseFloat(currentPo.expenses[i].amount).toFixed(0),
                 remarks: currentPo.expenses[i].remarks
             });

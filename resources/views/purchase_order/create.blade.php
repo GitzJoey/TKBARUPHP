@@ -347,7 +347,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="expense in po.expenses">
+                                                    <tr v-for="(expense, expenseIndex) in po.expenses">
                                                         <td>
                                                             <input name="expense_name[]" type="text" class="form-control"
                                                                    v-model="expense.name" data-parsley-required="true">
@@ -369,7 +369,7 @@
                                                         </td>
                                                         <td class="text-center">
                                                             <button type="button" class="btn btn-danger btn-md"
-                                                                    v-on:click="removeExpense($index)"><span
+                                                                    v-on:click="removeExpense(expenseIndex)"><span
                                                                         class="fa fa-minus"></span>
                                                             </button>
                                                         </td>

@@ -200,6 +200,12 @@
                                                     class="form-control"
                                                     v-model="po.product">
                                                 <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
+                                                    <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
+                                                </template>
+                                                <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
+                                                    <option v-for="product of productDDL" v-bind:value="product">@{{ product.name }}</option>
+                                                </template> 
                                                 <option v-for="product in po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
                                             </select>
                                         </div>
@@ -239,7 +245,7 @@
                                                                v-model="item.quantity">
                                                     </td>
                                                     <td>
-                                                        <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id"
+                                                        <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
                                                         <select name="selected_unit_id[]"
                                                                 class="form-control"
                                                                 data-parsley-required="true"
@@ -366,21 +372,24 @@
         
         $(document).ready(function () {
             var poApp = new Vue({
-                el: '#po-vue',
+                el: '#poCopyVue',
                 data: {
+                    productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                     po: {
-                        supplier: _.cloneDeep(currentPo.supplier),
+                        supplier: currentPo.supplier ? _.cloneDeep(currentPo.supplier) : {id: ''},
+                        supplier_type: {
+                            code: currentPo.supplier_type 
+                        },
                         items: [],
-                        warehouse: _.cloneDeep(currentPo.warehouse),
-                        vendorTrucking: _.cloneDeep(currentPo.vendor_trucking),
                         product: {
                             id: ''
                         }
                     }
                 },
                 mounted: function() {
+                    var vm = this;
                     for (var i = 0; i < currentPo.items.length; i++) {
-                        poApp.po.items.push({
+                        vm.po.items.push({
                             id: currentPo.items[i].id,
                             product: _.cloneDeep(currentPo.items[i].product),
                             base_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, isBase)),
@@ -404,7 +413,7 @@
                     grandTotal: function () {
                         var vm = this;
                         var result = 0;
-                        _.forEach($scope.po.items, function (item, key) {
+                        _.forEach(vm.po.items, function (item, key) {
                             result += (item.selected_unit.conversion_value * item.quantity * item.price);
                         });
                         return result;

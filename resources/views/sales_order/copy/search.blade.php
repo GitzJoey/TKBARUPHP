@@ -26,7 +26,7 @@
         </div>
     @endif
 
-    <div ng-app="soCopyModule" ng-controller="soCopyController">
+    <div id="soCopyVue">
         <form class="form-horizontal">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -35,10 +35,10 @@
                 <div class="box-body">
                     <div class="form-group">
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputSearchSOCode" ng-model="soCode" placeholder="Sales Order Code">
+                            <input type="text" class="form-control" id="inputSearchSOCode" v-model="soCode" placeholder="Sales Order Code">
                         </div>
                         <div class="col-sm-2">
-                            <a class="btn btn-block btn-md btn-primary" href="{{ route('db.so.copy.index') }}/@{{ soCode }}">Search</a>
+                            <a class="btn btn-block btn-md btn-primary" v-bind:href="'{{ route('db.so.copy.index') }}/' + soCode">Search</a>
                         </div>
                     </div>
                 </div>
@@ -49,9 +49,11 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module('soCopyModule', []);
-        app.controller('soCopyController', ['$scope', function($scope) {
-            $scope.soCode = '{{ Session::get('code') }}'
-        }]);
+        var app = new Vue({
+            el: '#soCopyVue',
+            data: {
+                soCode: "{{ Session::get('code') }}""
+            }
+        });
     </script>
 @endsection
