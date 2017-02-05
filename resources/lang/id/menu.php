@@ -4,6 +4,8 @@ return [
     'item.accounting' => 'Keuangan',
     'item.accounting.cash' => 'Kas',
     'item.accounting.capital' => 'Modal',
+    'item.accounting.capital.deposit' => 'Tambah Modal',
+    'item.accounting.capital.withdrawal' => 'Tarik Modal',
     'item.accounting.cost' => 'Biaya',
     'item.accounting.cost.cost' => 'Biaya',
     'item.accounting.cost.category' => 'Kategori',

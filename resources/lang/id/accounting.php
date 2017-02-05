@@ -1,13 +1,6 @@
 <?php 
 
 return [
-    'capital' => [
-        'index' => [
-            'title' => 'Modal',
-            'page_title' => 'Modal',
-            'page_title_desc' => '',
-        ],
-    ],
     'cash_flow' => [
         'index' => [
             'title' => 'Arus Kas',
@@ -163,6 +156,68 @@ return [
             'title' => 'Pendapatan',
             'page_title' => 'Pendapatan',
             'page_title_desc' => '',
+        ],
+    ],
+    'capital' => [
+        'deposit' => [
+            'title' => 'Tambah Modal',
+            'page_title' => 'Tambah Modal',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Tambah Modal',
+            ],
+            'field' => [
+                'date' => 'Tanggal',
+                'destination_account' => 'Akun Tujuan',
+                'amount' => 'Jumlah',
+                'remarks' => 'Keterangan',
+            ],
+            'index' => [
+                'title' => 'Tambah Modal',
+                'page_title' => 'Tambah Modal',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Daftar Tambah Modal',
+                ],
+                'table' => [
+                    'header' => [
+                        'date' => 'Tanggal',
+                        'destination_account' => 'Akun Tujuan',
+                        'amount' => 'Jumlah',
+                        'remarks' => 'Keterangan',
+                    ],
+                ],
+            ],
+        ],
+        'withdrawal' => [
+            'title' => 'Tarik Modal',
+            'page_title' => 'Tarik Modal',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Tarik Modal',
+            ],
+            'field' => [
+                'date' => 'Tanggal',
+                'source_account' => 'Akun Sumber',
+                'amount' => 'Jumlah',
+                'remarks' => 'Keterangan',
+            ],
+            'index' => [
+                'title' => 'Tarik Modal',
+                'page_title' => 'Tarik Modal',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Daftar Tarik Modal',
+                ],
+                'table' => [
+                    'header' => [
+                        'date' => 'Tanggal',
+                        'source_account' => 'Akun Sumber',
+                        'amount' => 'Jumlah',
+                        'remarks' => 'Keterangan',
+                    ],
+                ],
+            ],
         ],
     ],
 ];

@@ -53,7 +53,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
 
             Route::group(['prefix' => 'capital'], function() {
-                Route::get('', 'AccountingCapitalController@index')->name('db.acc.capital');
+                Route::get('list/deposit', 'AccountingCapitalController@listDeposit')->name('db.acc.capital.deposit.index');
+                Route::get('/add/deposit', 'AccountingCapitalController@addDeposit')->name('db.acc.capital.deposit.add');
+                Route::post('/add/deposit', 'AccountingCapitalController@saveDeposit');
+                Route::get('list/withdrawal', 'AccountingCapitalController@listWithdrawal')->name('db.acc.capital.withdrawal.index');
+                Route::get('/add/withdrawal', 'AccountingCapitalController@addWithdrawal')->name('db.acc.capital.withdrawal.add');
+                Route::post('/add/withdrawal', 'AccountingCapitalController@saveWithdrawal');
             });
 
             Route::group(['prefix' => 'cost'], function() {

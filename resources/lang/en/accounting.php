@@ -1,13 +1,6 @@
 <?php 
 
 return [
-    'capital' => [
-        'index' => [
-            'title' => 'Capital',
-            'page_title' => 'Capital',
-            'page_title_desc' => '',
-        ],
-    ],
     'cash_flow' => [
         'index' => [
             'title' => 'Cash Flow',
@@ -163,6 +156,68 @@ return [
             'title' => 'Revenue',
             'page_title' => 'Revenue',
             'page_title_desc' => '',
+        ],
+    ],
+    'capital' => [
+        'deposit' => [
+            'title' => 'Deposit',
+            'page_title' => 'Deposit',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Capital Deposit',
+            ],
+            'field' => [
+                'date' => 'Date',
+                'destination_account' => 'Destination Account',
+                'amount' => 'Amount',
+                'remarks' => 'Remarks',
+            ],
+            'index' => [
+                'title' => 'Deposit',
+                'page_title' => 'Deposit',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Capital Deposit Lists',
+                ],
+                'table' => [
+                    'header' => [
+                        'date' => 'Date',
+                        'destination_account' => 'Destination Account',
+                        'amount' => 'Amount',
+                        'remarks' => 'Remarks',
+                    ],
+                ],
+            ],
+        ],
+        'withdrawal' => [
+            'title' => 'Withdrawal',
+            'page_title' => 'Withdrawal',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Capital Withdrawal',
+            ],
+            'field' => [
+                'date' => 'Date',
+                'source_account' => 'Source Account',
+                'amount' => 'Amount',
+                'remarks' => 'Remarks',
+            ],
+            'index' => [
+                'title' => 'Withdrawal',
+                'page_title' => 'Withdrawal',
+                'page_title_desc' => '',
+                'header' => [
+                    'title' => 'Capital Withdrawal Lists',
+                ],
+                'table' => [
+                    'header' => [
+                        'date' => 'Date',
+                        'source_account' => 'Source Account',
+                        'amount' => 'Amount',
+                        'remarks' => 'Remarks',
+                    ],
+                ],
+            ],
         ],
     ],
 ];

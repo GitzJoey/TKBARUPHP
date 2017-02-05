@@ -22,7 +22,15 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="{{ active_class(Active::checkRoutePattern('db.acc.cash') || Active::checkRoutePattern('db.acc.cash.*')) }}"><a href="{{ route('db.acc.cash') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash')</a></li>
-                    <li><a href="{{ route('db.acc.capital') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital')</a></li>
+                    <li>
+                        <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital')
+                            <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ route('db.acc.capital.deposit.index') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital.deposit')</a></li>
+                            <li><a href="{{ route('db.acc.capital.withdrawal.index') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital.withdrawal')</a></li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost')
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>

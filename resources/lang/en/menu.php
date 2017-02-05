@@ -4,6 +4,8 @@ return [
     'item.accounting' => 'Accounting',
     'item.accounting.cash' => 'Cash',
     'item.accounting.capital' => 'Capital',
+    'item.accounting.capital.deposit' => 'Deposit',
+    'item.accounting.capital.withdrawal' => 'Withdrawal',
     'item.accounting.cost' => 'Cost',
     'item.accounting.cost.cost' => 'Cost',
     'item.accounting.cost.category' => 'Category',
