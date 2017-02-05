@@ -348,6 +348,8 @@
                                                     <th width="30%">@lang('purchase_order.revise.table.expense.header.name')</th>
                                                     <th width="20%"
                                                         class="text-center">@lang('purchase_order.revise.table.expense.header.type')</th>
+                                                    <th width="20%"
+                                                            class="text-center">@lang('purchase_order.create.table.expense.header.internal_expense')</th>    
                                                     <th width="25%"
                                                         class="text-center">@lang('purchase_order.revise.table.expense.header.remarks')</th>
                                                     <th width="5%">&nbsp;</th>
@@ -377,6 +379,9 @@
                                                                    v-bind:value="expense.type.code"/>
                                                         @endif
                                                     </td>
+                                                    <td class="text-center">
+                                                            <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
+                                                        </td>
                                                     <td>
                                                         <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
                                                     </td>
@@ -536,7 +541,6 @@
                         this.po.items.splice(index, 1);
                     },
                     insertExpense: function () {
-                        console.log('Inserting expense');
                         this.po.expenses.push({
                             name: '',
                             type: {
@@ -545,6 +549,13 @@
                             amount: 0,
                             remarks: ''
                         });
+
+                        $(function () {
+                            $('input[type="checkbox"], input[type="radio"]').iCheck({
+                                checkboxClass: 'icheckbox_square-blue',
+                                radioClass: 'iradio_square-blue'
+                            });
+                        });    
                     },
                     removeExpense: function (index) {
                         this.po.expenses.splice(index, 1);
@@ -572,6 +583,7 @@
                     id: currentPo.expenses[i].id,
                     name: currentPo.expenses[i].name,
                     type: _.cloneDeep(type),
+                    is_internal_expense: currentPo.expenses[i].is_internal_expense == 1,
                     amount: currentPo.expenses[i].amount,
                     remarks: currentPo.expenses[i].remarks
                 });

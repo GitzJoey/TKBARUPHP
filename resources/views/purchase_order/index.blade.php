@@ -100,7 +100,7 @@
                         }, function (isConfirm) {
                             if (isConfirm) form.submit();
                         });
-                    };
+                    }
                 }
             });
         });
