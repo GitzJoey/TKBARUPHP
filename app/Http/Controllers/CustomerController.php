@@ -10,6 +10,7 @@ use App\Model\Deliver;
 use App\Model\Customer;
 use App\Model\SalesOrder;
 use App\Model\PriceLevel;
+use App\Model\ProductUnit;
 use App\Model\BankAccount;
 use App\Model\PhoneNumber;
 use App\Model\PhoneProvider;
