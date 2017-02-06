@@ -17,9 +17,6 @@
   },
   "dependencies": {
     "admin-lte": "^2.3.6",
-    "angular": "^1.5.8",
-    "angular-fcsa-number": "^1.5.7",
-    "angular-sanitize": "^1.5.8",
     "animate.css": "^3.5.2",
     "autonumeric": "^1.9.46",
     "awesome-bootstrap-checkbox": "^1.0.0-alpha.4",
@@ -45,7 +42,6 @@
     "pdfjs-dist": "^1.6.377 ",
     "pdfobject": "^2.0.201604172",
     "tooltipster": "^4.1.6",
-    "ui-select": "^0.19.4",
     "select2": "^4.0.3"
   }
 }
