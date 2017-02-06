@@ -193,7 +193,7 @@
                             </div>
                             <div class="box-body">
                                 <div class="row">
-                                    @if($soToBeCopied->so_type == 'SOTYPE.SVC' || $soToBeCopied->so_type == 'SOTYPE.AC')
+                                    @if($soToBeCopied->so_type == 'SOTYPE.SVC')
                                         <div class="col-md-11">
                                             <select id="inputProduct"
                                                     class="form-control"

@@ -193,7 +193,7 @@
                             </div>
                             <div class="box-body">
                                 <div class="row">
-                                    @if($currentSOCopy->so_type == 'SOTYPE.SVC' || $currentSOCopy->so_type == 'SOTYPE.AC')
+                                    @if($currentSOCopy->so_type == 'SOTYPE.SVC')
                                         <div class="col-md-11">
                                             <select id="inputProduct"
                                                     class="form-control"
