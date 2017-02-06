@@ -16,6 +16,7 @@ class CreateAccCashTable extends Migration
         Schema::create('acc_cash', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
+            $table->string('type')->nullable();
             $table->string('code')->nullable();
             $table->string('name')->nullable();
             $table->boolean('is_default')->nullable();

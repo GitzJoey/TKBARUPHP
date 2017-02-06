@@ -18,6 +18,7 @@ return [
             ],
             'table' => [
                 'header' => [
+                    'type' => 'Tipe',
                     'code' => 'Kode',
                     'name' => 'Nama',
                     'is_default' => 'Utama',
@@ -50,6 +51,7 @@ return [
             ],
         ],
         'field' => [
+            'type' => 'Tipe',
             'code' => 'Kode',
             'name' => 'Nama',
             'is_default' => 'Utama',

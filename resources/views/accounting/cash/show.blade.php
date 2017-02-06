@@ -24,6 +24,14 @@
         <form class="form-horizontal">
             <div class="box-body">
                 <div class="form-group">
+                    <label for="inputType" class="col-sm-2 control-label">@lang('accounting.cash.field.type')</label>
+                    <div class="col-sm-10">
+                        <label class="control-label control-label-normal">
+                            <span class="control-label-normal">@lang('lookup.'.$acccash->type)</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="inputCode" class="col-sm-2 control-label">@lang('accounting.cash.field.code')</label>
                     <div class="col-sm-10">
                         <label id="inputCode" class="control-label control-label-normal">
