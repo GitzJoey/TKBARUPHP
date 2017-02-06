@@ -227,7 +227,7 @@
                             <div class="box-body">
                                 <div class="row">
                                     @if($currentSo->status == 'SOSTATUS.WD')
-                                        @if($currentSo->so_type == 'SOTYPE.SVC')
+                                        @if($currentSo->so_type == 'SOTYPE.SVC' || $currentSo->so_type == 'SOTYPE.AC')
                                             <div class="col-md-11">
                                                 <select id="inputProduct"
                                                         class="form-control"

@@ -240,7 +240,7 @@
                                                         </div>
                                                         <div class="box-body">
                                                             <div class="row">
-                                                                <div v-show="so.sales_type.code === 'SOTYPE.SVC'">
+                                                                <div v-show="so.sales_type.code === 'SOTYPE.SVC' || so.sales_type.code === 'SOTYPE.AC'">
                                                                     <div class="col-md-11">
                                                                         <select v-bind:id="'inputProduct_' + (soIndex + 1)"
                                                                                 class="form-control"
