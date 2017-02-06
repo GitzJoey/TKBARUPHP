@@ -381,7 +381,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('confirmation', 'CustomerController@confirmationIndex')->name('db.customer.confirmation.index');
             Route::get('confirmation/{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.customer');
             Route::get('confirmation/confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
-            Route::patch('confirmation/confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
+            Route::post('confirmation/confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
 
             Route::get('payment', 'CustomerController@paymentIndex')->name('db.customer.payment.index');
             Route::get('payment/cash/{id}', 'CustomerController@paymentCashCustomer')->name('db.customer.payment.cash');

@@ -35,6 +35,12 @@
         {!! Form::model($acccash, ['method' => 'PATCH', 'route' => ['db.acc.cash.edit', $acccash->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             <div class="box-body">
                 <div class="form-group">
+                    <label for="inputType" class="col-sm-2 control-label">@lang('accounting.cash.field.type')</label>
+                    <div class="col-sm-10">
+
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="inputCode" class="col-sm-2 control-label">@lang('accounting.cash.field.code')</label>
                     <div class="col-sm-10">
                         <input id="inputCode" class="form-control" name="symbol" type="text" value="{{ $acccash->symbol }}" placeholder="Code">

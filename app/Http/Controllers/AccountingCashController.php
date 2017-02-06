@@ -20,8 +20,9 @@ class AccountingCashController extends Controller
     public function index()
     {
         $acccash = AccountingCash::paginate(10);
+        $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
-        return view('accounting.cash.index', compact('acccash'));
+        return view('accounting.cash.index', compact('acccash', 'typeDDL'));
     }
 
     public function show($id)
@@ -34,8 +35,9 @@ class AccountingCashController extends Controller
     public function create()
     {
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
-        return view('accounting.cash.create', compact('statusDDL'));
+        return view('accounting.cash.create', compact('statusDDL', 'typeDDL'));
     }
 
     public function store(Request $data)
@@ -65,8 +67,9 @@ class AccountingCashController extends Controller
         $acccash = AccountingCash::find($id);
 
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
-        return view('accounting.cash.edit', compact('acccash', 'statusDDL'));
+        return view('accounting.cash.edit', compact('acccash', 'statusDDL', 'typeDDL'));
     }
 
     public function update($id, Request $req)

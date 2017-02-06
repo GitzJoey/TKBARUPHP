@@ -77,7 +77,12 @@ return [
     'truck_maintenance' => 'Truck Maintenance',
     'truck_maintenance.create' => 'Create Truck Maintenance',
     'truck_maintenance.edit' => 'Edit Truck Maintenance',
+    'employee.employee' => 'Employee Lists',
+    'employee.employee.create' => 'Create Employee',
+    'employee.employee.edit' => 'Edit Employee',
+    'employee.employee.show' => 'Show Employee',
     'user.profile' => 'User Profile',
     'user.settings' => 'User Settings',
     'user.calendar' => 'User Calendar',
+    'customer.confirmation' => 'Confirmation',
 ];

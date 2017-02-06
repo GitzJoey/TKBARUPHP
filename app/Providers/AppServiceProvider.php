@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\PurchaseOrderPaymentController;
-
 use App\Services\Implementation\CustomerServiceImpl;
 use App\Services\Implementation\InflowServiceImpl;
 use App\Services\Implementation\PaymentServiceImpl;
@@ -19,6 +17,7 @@ use App\Services\Implementation\StoreServiceImpl;
 use App\Services\Implementation\SupplierServiceImpl;
 use App\Services\Implementation\VendorTruckingServiceImpl;
 use App\Services\Implementation\WarehouseServiceImpl;
+use App\Services\Implementation\DatabaseServiceImpl;
 
 use App\Services\CustomerService;
 use App\Services\InflowService;
@@ -35,7 +34,7 @@ use App\Services\StoreService;
 use App\Services\SupplierService;
 use App\Services\VendorTruckingService;
 use App\Services\WarehouseService;
-
+use App\Services\DatabaseService;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -119,6 +118,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(SettingService::class, function (){
             return new SettingServiceImpl();
         });
+
+        $this->app->singleton(DatabaseService::class, function (){
+            return new DatabaseServiceImpl();
+        });
     }
 
     /**
@@ -144,6 +147,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\VendorTruckingService',
             'App\Services\WarehouseService',
             'App\Services\SettingService',
+            'App\Services\DatabaseService',
         ];
     }
 }

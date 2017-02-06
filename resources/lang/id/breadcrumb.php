@@ -77,7 +77,12 @@ return [
     'truck_maintenance' => 'Pemeliharaan Truk',
     'truck_maintenance.create' => 'Tambah Pemeliharaan Truk',
     'truck_maintenance.edit' => 'Ubah Pemeliharaan Truk',
+    'employee.employee' => 'Employee Lists',
+    'employee.employee.create' => 'Tambah Pegawai',
+    'employee.employee.edit' => 'Ubah Pegawai',
+    'employee.employee.show' => 'Tampilkan Pegawai',
     'user.profile' => 'Profil Pengguna',
     'user.settings' => 'Pengaturan Pengguna',
     'user.calendar' => 'Kalender Pengguna',
+    'customer.confirmation' => 'Konfirmasi',
 ];

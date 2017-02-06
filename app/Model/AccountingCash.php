@@ -56,6 +56,7 @@ class AccountingCash extends Model
 
     protected $fillable = [
         'store_id',
+        'type',
         'code',
         'name',
         'is_default',

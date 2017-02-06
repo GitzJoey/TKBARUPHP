@@ -6,7 +6,7 @@ return [
         'page_title' => 'Pegawai',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Create Pegawai',
+            'title' => 'Tambah Pegawai',
         ],
         'table_employee' => [
             'header' => [
@@ -33,7 +33,7 @@ return [
         'page_title' => 'Pegawai',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Edit Pegawai',
+            'title' => 'Ubah Pegawai',
         ],
     ],
     'index' => [
@@ -41,7 +41,7 @@ return [
         'page_title' => 'Pegawai',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Pegawai Lists',
+            'title' => 'Daftar Pegawai',
         ],
         'table' => [
             'header' => [
@@ -58,7 +58,7 @@ return [
         'page_title' => 'Pegawai',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Show Pegawai',
+            'title' => 'Tampilkan Pegawai',
         ],
     ],
 ];

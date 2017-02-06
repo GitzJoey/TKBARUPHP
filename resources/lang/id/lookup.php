@@ -1,6 +1,8 @@
 <?php 
 
 return [
+    'ACCCASH.COH' => 'Kas Tunai',
+    'ACCCASH.CIB' => 'Kas Di Bank',
     'STATUS.ACTIVE' => 'Aktif',
     'STATUS.INACTIVE' => 'Inaktif',
     'YESNOSELECT.YES' => 'Ya',

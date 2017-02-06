@@ -50,6 +50,7 @@ return [
             ],
         ],
         'field' => [
+            'type' => 'Type',
             'code' => 'Code',
             'name' => 'Name',
             'is_default' => 'Is Default',

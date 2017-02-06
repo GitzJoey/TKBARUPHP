@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <div ng-app="soModule" ng-controller="soController">
+    <div id="customerCashVue">
         {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.customer.payment.cash', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
@@ -100,46 +100,42 @@
                 </div>
             </div>
         {!! Form::close() !!}
-    </div>
+    </divid>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        var app = angular.module("soModule", ['fcsa-number']);
-        app.controller("soController", ['$scope', function ($scope) {
-            var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
-
-            $scope.so = {
-                customer: currentSo.customer,
-                items: [],
-                warehouse: {
-                    id: currentSo.warehouse.id,
-                    name: currentSo.warehouse.name
+        $(document).ready(function() {
+            var app = new Vue({
+                el: '#customerCashVue',
+                data: {
+                    currentSo: JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}'),
+                    so: []
                 },
-                vendorTrucking: {
-                    id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                    name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
+                methods: {
+                    initSO: function() {
+                        this.so = {
+                            customer: this.currentSo.customer,
+                            items: [],
+                            warehouse: {
+                                id: this.currentSo.warehouse.id,
+                            name: this.currentSo.warehouse.name
+                            },
+                            vendorTrucking: {
+                                id: (this.currentSo.vendor_trucking == null) ? '' : this.currentSo.vendor_trucking.id,
+                                name: (this.currentSo.vendor_trucking == null) ? '' : this.currentSo.vendor_trucking.name
+                            }
+                        }
+                    },
+                    grandTotal: function () {
+                        var result = 0;
+                        _.forEach(this.so.items, function (item, key) {
+                            result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                        });
+                        return result;
+                    }
                 }
-            };
-
-            for (var i = 0; i < currentSo.items.length; i++) {
-                $scope.so.items.push({
-                    id: currentSo.items[i].id,
-                    product: currentSo.items[i].product,
-                    base_unit: _.find(currentSo.items[i].product.product_units, isBase),
-                    selected_unit: _.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id)),
-                    quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
-                    price: parseFloat(currentSo.items[i].price).toFixed(0)
-                });
-            }
-
-            $scope.grandTotal = function () {
-                var result = 0;
-                angular.forEach($scope.so.items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            };
+            });
 
             function getSelectedUnit(selectedUnitId) {
                 return function (element) {
@@ -150,14 +146,14 @@
             function isBase(unit) {
                 return unit.is_base == 1;
             }
-        }]);
 
-        $("#inputPaymentDate").daterangepicker({
-            locale: {
-                format: 'DD-MM-YYYY'
-            },
-            singleDatePicker: true,
-            showDropdowns: true
+            $("#inputPaymentDate").daterangepicker({
+                locale: {
+                    format: 'DD-MM-YYYY'
+                },
+                singleDatePicker: true,
+                showDropdowns: true
+            });
         });
     </script>
 @endsection

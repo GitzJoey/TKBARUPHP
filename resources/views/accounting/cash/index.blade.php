@@ -31,6 +31,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th class="text-center" width="20%">@lang('accounting.cash.index.table.header.type')</th>
                         <th class="text-center" width="20%">@lang('accounting.cash.index.table.header.code')</th>
                         <th class="text-center" width="20%">@lang('accounting.cash.index.table.header.name')</th>
                         <th class="text-center" width="10%">@lang('accounting.cash.index.table.header.is_default')</th>
@@ -41,6 +42,7 @@
                 <tbody>
                     @foreach ($acccash as $key => $ac)
                         <tr>
+                            <td>@lang('lookup.'.$ac->type)</td>
                             <td>{{ $ac->code }}</td>
                             <td>{{ $ac->name }}</td>
                             <td class="text-center">

@@ -14,7 +14,7 @@ return [
         'retype_password' => 'Ulangi Password',
         'agree_1' => 'Saya Menyetujui ',
         'agree_2' => 'Syarat Dan Ketentuan',
-        'already_member' => 'Sudah Memiliki Login',
+        'already_member' => 'Sudah Memiliki Akun',
         'terms_and_cond' => 'Syarat Dan Ketentuan',
     ],
     'frontweb' => [

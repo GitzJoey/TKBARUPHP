@@ -36,6 +36,16 @@
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
+                    <label for="inputType" class="col-sm-2 control-label">@lang('accounting.cash.field.type')</label>
+                    <div class="col-sm-10">
+                        <select name="type" class="form-control">
+                            @foreach($typeDDL as $key => $value)
+                                <option value="{{ $key }}">{{ $value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="inputCode" class="col-sm-2 control-label">@lang('accounting.cash.field.code')</label>
                     <div class="col-sm-10">
                         <input id="inputCode" name="code" type="text" class="form-control" placeholder="@lang('accounting.cash.field.code')">
