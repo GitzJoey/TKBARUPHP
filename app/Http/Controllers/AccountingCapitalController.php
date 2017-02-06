@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\AccountingCapitalDeposit;
 use App\Model\AccountingCapitalWithdrawal;
 
+use App\Model\AccountingCash;
 use Illuminate\Http\Request;
 
 class AccountingCapitalController extends Controller
@@ -23,7 +24,8 @@ class AccountingCapitalController extends Controller
 
     public function addDeposit()
     {
-        return view('accounting.capital.deposit');
+        $accountDDL = AccountingCash::get()->pluck('name', 'code');
+        return view('accounting.capital.deposit', compact('accountDDL'));
     }
 
     public function saveDeposit()
@@ -40,7 +42,8 @@ class AccountingCapitalController extends Controller
 
     public function addWithdrawal()
     {
-        return view('accounting.capital.withdrawal');
+        $accountDDL = AccountingCash::get()->pluck('name', 'code');
+        return view('accounting.capital.withdrawal', compact('accountDDL'));
     }
 
     public function saveWithdrawal()
