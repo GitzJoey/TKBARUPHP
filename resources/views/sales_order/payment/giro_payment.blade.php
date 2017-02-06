@@ -170,18 +170,11 @@
         var soPaymentApp = new Vue({
             el: '#soPaymentVue',
             data: {
+                giro: {id: '', bank: {id: ''}},
                 bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 so: {
                     customer: _.cloneDeep(currentSo.customer),
-                    warehouse: {
-                        id: currentSo.warehouse.id,
-                        name: currentSo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                        name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
-                    },
                     items: [],
                     expenses: []
                 }

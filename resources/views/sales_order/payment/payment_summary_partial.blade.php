@@ -170,7 +170,7 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" readonly
-                                                   value="@{{ item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')' }}">
+                                                   v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
@@ -234,7 +234,7 @@
                                                    readonly />
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" value="@{{ expense.type.description }}" readonly />
+                                            <input type="text" class="form-control" v-bind:value="expense.type.description" readonly />
                                         </td>
                                         <td>
                                             <input name="expense_amount[]" type="text" class="form-control text-right"

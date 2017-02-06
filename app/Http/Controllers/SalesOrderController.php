@@ -136,7 +136,6 @@ class SalesOrderController extends Controller
         $vendorTruckingDDL = VendorTrucking::all();
         $productDDL = Product::with('productUnits.unit')->get();
         $stocksDDL = $this->stockService->getStocksForSO();
-        $customerDDL = collect([$currentSo->customer->toArray()]);
         $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
         return view('sales_order.revise',

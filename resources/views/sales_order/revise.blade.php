@@ -364,6 +364,8 @@
                                                 <th width="30%">@lang('sales_order.revise.table.expense.header.name')</th>
                                                 <th width="20%"
                                                     class="text-center">@lang('sales_order.revise.table.expense.header.type')</th>
+                                                <th width="20%"
+                                                            class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>    
                                                 <th width="25%"
                                                     class="text-center">@lang('sales_order.revise.table.expense.header.remarks')</th>
                                                 <th width="5%">&nbsp;</th>
@@ -374,7 +376,7 @@
                                             <tbody>
                                             <tr v-for="(expense, expenseIndex) in so.expenses">
                                                 <td>
-                                                    <input type="hidden" name="expense_id[]" ng-value="expense.id"/>
+                                                    <input type="hidden" name="expense_id[]" v-bind:value="expense.id"/>
                                                     <input name="expense_name[]" type="text" class="form-control"
                                                            v-model="expense.name"
                                                            data-parsley-required="true" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
@@ -393,6 +395,9 @@
                                                         <input type="hidden" name="expense_type[]"
                                                                v-bind:value="expense.type.code"/>
                                                     @endif
+                                                </td>
+                                                <td class="text-center">
+                                                        <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
                                                 </td>
                                                 <td>
                                                     <input name="expense_remarks[]" type="text" class="form-control"
@@ -500,14 +505,14 @@
                 vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
                 warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
-                customerDDL: JSON.parse('{!! htmlspecialchars_decode($customerDDL) !!}'),
                 productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                 stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 so: {
+                    stock: {id: ''},
                     product: {id: ''},
-                    customer: _.cloneDeep(currentSo.customer),
+                    customer: currentSo.customer ? _.cloneDeep(currentSo.customer) : {id: ''},
                     warehouse: _.cloneDeep(currentSo.warehouse),
-                    vendorTrucking: currentSo.vendor_trucking == null ? {id: 0, name: ''} : _.cloneDeep(currentSo.vendor_trucking),
+                    vendorTrucking: currentSo.vendor_trucking ?  _.cloneDeep(currentSo.vendor_trucking) : {id: 0, name: ''},
                     items: [],
                     expenses: []
                 }
@@ -587,6 +592,11 @@
                         amount: 0,
                         remarks: ''
                     });
+
+                    $('input[type="checkbox"], input[type="radio"]').iCheck({
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue'
+                    });
                 },
                 removeExpense: function (index) {
                     this.so.expenses.splice(index, 1);
@@ -616,10 +626,7 @@
             soAppVue.so.expenses.push({
                 id: currentSo.expenses[i].id,
                 name: currentSo.expenses[i].name,
-                type: {
-                    code: currentSo.expenses[i].type,
-                    description: type ? type.description : ''
-                },
+                type: _.cloneDeep(type),
                 is_internal_expense: currentSo.expenses[i].is_internal_expense == 1,
                 amount: currentSo.expenses[i].amount,
                 remarks: currentSo.expenses[i].remarks
@@ -637,6 +644,11 @@
         }
 
         $(function () {
+            $('input[type="checkbox"], input[type="radio"]').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue'
+            });
+
             $("#inputSoDate").datetimepicker({
                 format: "DD-MM-YYYY hh:mm A",
                 defaultDate: moment()

@@ -93,6 +93,7 @@ class SalesOrderServiceImpl implements SalesOrderService
                 $expense->is_internal_expense = !empty($request->input("so_$index" . "_is_internal_expense.$j"));
                 $expense->amount = floatval(str_replace(',', '', $request->input("so_$index" . "_expense_amount.$j")));
                 $expense->remarks = $request->input("so_$index" . "_expense_remarks.$j");
+                $so->expenses()->save($expense);
             }
 
             // If auto cash, create cash payment immediately

@@ -384,16 +384,10 @@
                 productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                 stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 so: {
-                    customer: _.cloneDeep(currentSo.customer),
+                    stock: {id: ''},
+                    product: {id: ''},
+                    customer: currentSo.customer ? _.cloneDeep(currentSo.customer) : {id: ''},
                     items: [],
-                    warehouse: {
-                        id: currentSo.warehouse.id,
-                        name: currentSo.warehouse.name
-                    },
-                    vendorTrucking: {
-                        id: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.id,
-                        name: (currentSo.vendor_trucking == null) ? '' : currentSo.vendor_trucking.name
-                    }
                 }
             },
             methods : {
@@ -453,6 +447,9 @@
 
         for (var i = 0; i < currentSo.items.length; i++) {
             soCopyApp.so.items.push({
+                stock: {
+                    id: currentSo.items[i].stock_id
+                },
                 id: currentSo.items[i].id,
                 product: _.cloneDeep(currentSo.items[i].product),
                 base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
