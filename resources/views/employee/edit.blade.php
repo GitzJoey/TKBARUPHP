@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-
+    {!! Breadcrumbs::render('employee.employee_edit', $employee->hId()) !!}
 @endsection
 
 @section('content')

@@ -400,6 +400,26 @@ Breadcrumbs::register('truck_maintenance_edit', function($breadcrumbs, $id){
     $breadcrumbs->push(trans('breadcrumb.truck_maintenance.edit'), route('db.truck.maintenance.edit', $id));
 });
 
+Breadcrumbs::register('employee.employee', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.employee.employee'), route('db.employee.employee'));
+});
+
+Breadcrumbs::register('employee.employee_create', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.employee.employee.create'), route('db.employee.employee.create'));
+});
+
+Breadcrumbs::register('employee.employee_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.employee.employee.show'), route('db.employee.show', $id));
+});
+
+Breadcrumbs::register('employee.employee_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.employee.employee.edit'), route('db.employee.employee.edit', $id));
+});
+
 Breadcrumbs::register('customer_confirmation', function($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.customer.confirmation'), route('db.customer.confirmation.index'));
@@ -408,6 +428,11 @@ Breadcrumbs::register('customer_confirmation', function($breadcrumbs){
 Breadcrumbs::register('customer_confirmation_confirm', function($breadcrumbs, $id){
     $breadcrumbs->parent('customer_confirmation');
     $breadcrumbs->push(trans('breadcrumb.customer.confirmation.confirm'), route('db.customer.confirmation.confirm', $id));
+});
+
+Breadcrumbs::register('customer.approval', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.customer.approval'), route('db.customer.approval'));
 });
 
 Breadcrumbs::register('user_profile', function($breadcrumbs, $id){

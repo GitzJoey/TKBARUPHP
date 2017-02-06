@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-
+    {!! Breadcrumbs::render('employee.employee') !!}
 @endsection
 
 @section('content')
