@@ -44,13 +44,13 @@
                 <div class="form-group">
                     <label for="inputAccount" class="col-sm-2 control-label">@lang('accounting.capital.withdrawal.field.source_account')</label>
                     <div class="col-sm-10">
-
+                        {{ Form::select('source_account', $accountDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'),'data-parsley-required' => 'true' )) }}
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputAmount" class="col-sm-2 control-label">@lang('accounting.capital.withdrawal.field.amount')</label>
                     <div class="col-sm-10">
-                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.capital.withdrawal.field.amount')">
+                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.capital.withdrawal.field.amount')" autonumeric>
                     </div>
                 </div>
                 <div class="form-group">
@@ -70,4 +70,15 @@
             <div class="box-footer"></div>
         </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $("#inputDate").datetimepicker({
+                format: "DD-MM-YYYY hh:mm A",
+                defaultDate: moment()
+            });
+        });
+    </script>
 @endsection
