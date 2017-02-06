@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Services\DatabaseService;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -20,6 +21,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    private $databaseService;
+
     /**
      * Where to redirect users after login / registration.
      *
@@ -32,8 +35,18 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(DatabaseService $databaseService)
     {
         $this->middleware('guest', ['except' => 'logout']);
+        $this->databaseService = $databaseService;
+    }
+
+    public function showLoginForm()
+    {
+        if (!$this->databaseService->isOnline()) {
+            return "Database Is Not Online";
+        }
+
+        return view('auth.login');
     }
 }
