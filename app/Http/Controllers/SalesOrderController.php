@@ -22,6 +22,7 @@ use App\Util\SOCodeGenerator;
 use App\Repos\LookupRepo;
 
 use App;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -37,7 +38,14 @@ class SalesOrderController extends Controller
     {
         $this->salesOrderService = $salesOrderService;
         $this->stockService = $stockService;
-        $this->middleware('auth', [ 'except' => [ 'getDueSO' ] ]);
+        $this->middleware('auth', [ 
+            'except' => [ 
+                'getDueSO', 
+                'getTodaySO', 
+                'getTodaySOTotalAmount', 
+                'getTodayAndYesterdaySO' 
+            ]
+        ]);
     }
 
     public function create()
@@ -175,5 +183,25 @@ class SalesOrderController extends Controller
         } else {
             return $this->salesOrderService->getDueSO();
         }
+    }
+
+    public function getTodaySO()
+    {
+        return $this->salesOrderService->getSOInOneDay(Carbon::today());
+    }
+
+    public function getTodaySOTotalAmount()
+    {
+        return $this->salesOrderService->getSOTotalAmountInOneDay(Carbon::today());
+    }
+
+    public function getTodayAndYesterdaySO()
+    {
+        $todayDate = Carbon::today();
+
+        $todaySO = $this->salesOrderService->getSOInOneDay($todayDate);
+        $yesterdaySO = $this->salesOrderService->getSOInOneDay($todayDate->addDays(-1));
+
+        return compact('todaySO', 'yesterdaySO');
     }
 }

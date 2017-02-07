@@ -21,6 +21,7 @@ use App\Model\SalesOrder;
 use App\Model\Stock;
 use App\Model\StockOut;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -409,5 +410,39 @@ class SalesOrderServiceImpl implements SalesOrderService
         });
 
         return $dueSO;
+    }
+
+    /**
+     * Get all sales order created on given date
+     *
+     * @param Carbon $date target date
+     * @return Collection
+     */
+    public function getSOInOneDay($date)
+    {
+       //Defensive copy, because still don't know immutability' 
+       $dateCopy = $date->copy();
+
+       $startOfDay = $dateCopy->startOfDay()->toDateTimeString();
+       $endOfDay = $dateCopy->endOfDay()->toDateTimeString();
+
+       return SalesOrder::with('items')->whereBetween('so_created', [$startOfDay, $endOfDay])->get();
+    }
+
+    /**
+     * Get total amount of all sales created on given date
+     * 
+     * @param Carbon $date target date
+     * @return float
+     */
+    public function getSOTotalAmountInOneDay($date)
+    {
+       $soInGivenDate = $this->getSOInOneDay($date);
+
+       $soTotalAmount = $soInGivenDate->sum(function($so){
+           return $so->itemTotalAmount();
+       });
+
+       return $soTotalAmount;
     }
 }
