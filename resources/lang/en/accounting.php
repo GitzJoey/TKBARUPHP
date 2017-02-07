@@ -22,6 +22,7 @@ return [
                     'name' => 'Name',
                     'is_default' => 'Is Default',
                     'status' => 'Status',
+                    'type' => '',
                 ],
             ],
         ],
@@ -106,6 +107,18 @@ return [
             'title' => 'Cost',
             'page_title' => 'Cost',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Cost List',
+            ],
+            'table' => [
+                'header' => [
+                    'date' => 'Date',
+                    'source_account' => 'Source Account',
+                    'cost_category' => 'Cost Category',
+                    'amount' => 'Amount',
+                    'remarks' => 'Remarks',
+                ],
+            ],
         ],
     ],
     'revenue' => [
@@ -157,6 +170,18 @@ return [
             'title' => 'Revenue',
             'page_title' => 'Revenue',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Revenue Lists',
+            ],
+            'table' => [
+                'header' => [
+                    'date' => 'Date',
+                    'destination_account' => 'Destination Account',
+                    'cost_category' => 'Cost Category',
+                    'amount' => 'Amount',
+                    'remarks' => 'Remarks',
+                ],
+            ],
         ],
     ],
     'capital' => [
