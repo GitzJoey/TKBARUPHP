@@ -37,6 +37,8 @@ class AccountingCostController extends Controller
 
     public function categoryCreate()
     {
+        $groupdistinct = AccountingCostCategory::select('group')->groupBy('group')->get();
+
         return view('accounting.cost.category.create', compact('groupdistinct'));
     }
 
@@ -44,7 +46,6 @@ class AccountingCostController extends Controller
     {
         $validator = Validator::make($data->all(), [
             'name' => 'required|string|max:255',
-            'group' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -53,7 +54,7 @@ class AccountingCostController extends Controller
             AccountingCostCategory::create([
                 'store_id' => Auth::user()->store->id,
                 'name' => $data['name'],
-                'group' => $data['group'],
+                'group' => empty($data['group_select']) ? $data['group_text']:'',
             ]);
 
             return redirect(route('db.acc.cost.category'));
@@ -63,21 +64,26 @@ class AccountingCostController extends Controller
     public function categoryEdit($id)
     {
         $cc = AccountingCostCategory::find($id);
+        $groupdistinct = AccountingCostCategory::select(['group', 'group'])->groupBy('group')->get();
 
-        return view('accounting.cost.category.edit', compact('cc'));
+        return view('accounting.cost.category.edit', compact('cc', 'groupdistinct'));
     }
 
     public function categoryUpdate($id, Request $req)
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string|max:255',
-            'group' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.acc.cost.category.edit', Hashids::encode($id)))->withInput()->withErrors($validator);
         } else {
-            AccountingCostCategory::find($id)->update($req->all());
+            $acc = AccountingCostCategory::find($id);
+            $acc->group = empty($data['group_select']) ? $data['group_text']:'';
+            $acc->name = $data['name'];
+
+            $acc->save();
+
             return redirect(route('db.acc.cost.category'));
         }
     }

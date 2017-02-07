@@ -37,7 +37,13 @@
                 <div class="form-group">
                     <label for="inputGroup" class="col-sm-2 control-label">@lang('accounting.cost.category.field.group')</label>
                     <div class="col-sm-10">
-                        <input id="inputGroup" name="group" type="text" class="form-control" value="{{ $cc->group }}" placeholder="@lang('accounting.cost.category.field.group')">
+                        <select id="inputGroupSelect" class="form-control">
+                            @foreach ($groupdistinct as $g)
+                                <option value="{{ $g->group }}">{{ $g->group }}</option>
+                            @endforeach
+                            <option value="">@lang('labels.SELECT_OTHER')</option>
+                        </select>
+                        <input id="inputGroupText" name="group_text" type="text" class="form-control" value="" placeholder="@lang('accounting.cost.category.field.group')" readonly>
                     </div>
                 </div>
                 <div class="form-group">
@@ -57,4 +63,16 @@
             <div class="box-footer"></div>
         {!! Form::close() !!}
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $('#inputGroupSelect').change(function() {
+            if ($(this).val() == '') {
+                $('#inputGroupText').attr('readonly', false);
+            } else {
+                $('#inputGroupText').val('').attr('readonly', true);
+            }
+        });
+    </script>
 @endsection

@@ -8,6 +8,7 @@
 return [
     'SHOW_ALL' => 'Show All',
     'PLEASE_SELECT' => 'Please Select',
+    'SELECT_OTHER' => 'Other...',
     'ACTION' => 'Action',
     'GENERAL_ERROR_TITLE' => 'Whoops!',
     'GENERAL_ERROR_DESC' => 'There were some problems with your input.',

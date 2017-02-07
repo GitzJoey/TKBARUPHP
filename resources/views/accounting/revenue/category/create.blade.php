@@ -38,7 +38,13 @@
                 <div class="form-group">
                     <label for="inputGroup" class="col-sm-2 control-label">@lang('accounting.revenue.category.field.group')</label>
                     <div class="col-sm-10">
-                        <input id="inputGroup" name="group" type="text" class="form-control" placeholder="@lang('accounting.revenue.category.field.group')">
+                        <select id="inputGroupSelect" class="form-control">
+                            @foreach ($groupdistinct as $g)
+                                <option value="{{ $g->group }}">{{ $g->group }}</option>
+                            @endforeach
+                            <option value="">@lang('labels.SELECT_OTHER')</option>
+                        </select>
+                        <input id="inputGroupText" name="group" type="text" class="form-control" placeholder="@lang('accounting.revenue.category.field.group')" readonly>
                     </div>
                 </div>
                 <div class="form-group">

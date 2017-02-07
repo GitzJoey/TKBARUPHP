@@ -36,6 +36,8 @@ class AccountingRevenueController extends Controller
 
     public function categoryCreate()
     {
+        $groupdistinct = AccountingRevenueCategory::select(['group', 'group'])->groupBy('group')->get();
+
         return view('accounting.revenue.category.create', compact('groupdistinct'));
     }
 
@@ -43,7 +45,6 @@ class AccountingRevenueController extends Controller
     {
         $validator = Validator::make($data->all(), [
             'name' => 'required|string|max:255',
-            'group' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +53,7 @@ class AccountingRevenueController extends Controller
             AccountingRevenueCategory::create([
                 'store_id' => Auth::user()->store->id,
                 'name' => $data['name'],
-                'group' => $data['group'],
+                'group' => empty($data['group_select']) ? $data['group_text']:'',
             ]);
 
             return redirect(route('db.acc.revenue.category'));
@@ -62,21 +63,26 @@ class AccountingRevenueController extends Controller
     public function categoryEdit($id)
     {
         $rc = AccountingRevenueCategory::find($id);
+        $groupdistinct = AccountingRevenueCategory::select(['group', 'group'])->groupBy('group')->get();
 
-        return view('accounting.revenue.category.edit', compact('rc'));
+        return view('accounting.revenue.category.edit', compact('rc', 'groupdistinct'));
     }
 
     public function categoryUpdate($id, Request $req)
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required|string|max:255',
-            'group' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return redirect(route('db.acc.revenue.category.edit', Hashids::encode($id)))->withInput()->withErrors($validator);
         } else {
-            AccountingRevenueCategory::find($id)->update($req->all());
+            $ac = AccountingRevenueCategory::find($id);
+            $ac->group = empty($data['group_select']) ? $data['group_text']:'';
+            $ac->name = $data['name'];
+
+            $ac->save();
+
             return redirect(route('db.acc.revenue.category'));
         }
     }

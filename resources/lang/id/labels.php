@@ -8,6 +8,7 @@
 return [
     'SHOW_ALL' => 'Tampilkan Semua',
     'PLEASE_SELECT' => 'Silahkan Pilih',
+    'SELECT_OTHER' => 'Selain...',
     'ACTION' => 'Action',
     'GENERAL_ERROR_TITLE' => 'Whoops!',
     'GENERAL_ERROR_DESC' => 'Ada masalah dengan masukan anda.',
