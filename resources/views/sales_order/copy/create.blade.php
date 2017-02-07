@@ -263,8 +263,7 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="price[]"
-                                                           v-model="item.price" data-parsley-required="true"
-                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
+                                                           v-model="item.price" data-parsley-required="true">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md"
