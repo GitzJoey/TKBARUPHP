@@ -8,15 +8,18 @@
 
 namespace App\Services\Implementation;
 
+use App\Model\Customer;
+use App\Model\CashPayment;
+use App\Model\Deliver;
+use App\Model\Expense;
 use App\Model\Item;
 use App\Model\Lookup;
 use App\Model\Product;
-use App\Model\Expense;
-use App\Model\Customer;
-use App\Model\CashPayment;
-use App\Model\SalesOrder;
 use App\Model\ProductUnit;
 use App\Model\Payment;
+use App\Model\SalesOrder;
+use App\Model\Stock;
+use App\Model\StockOut;
 
 use DB;
 use Illuminate\Http\Request;
@@ -96,9 +99,54 @@ class SalesOrderServiceImpl implements SalesOrderService
                 $so->expenses()->save($expense);
             }
 
-            // If auto cash, create cash payment immediately
-            // I think we should think a more efficient way than this algorithm :D
+            // If auto cash, create cash payment immediately (Should be refactored).
             if($so->so_type === 'SOTYPE.AC'){
+                $items = $so->items;
+
+                //Create delivers
+                for($i = 0; $i < sizeof($items); $i++){
+                    $conversionValue = ProductUnit::where([
+                        'product_id' => $items[$i]->product_id,
+                        'unit_id' => $items[$i]->selected_unit_id
+                    ])->first()->conversion_value;
+
+                    $deliverParams = [
+                        'deliver_date' => $so->so_created,
+                        'conversion_value' => $conversionValue,
+                        'brutto' => $items[$i]->quantity,
+                        'base_brutto' => $conversionValue * $items[$i]->quantity,
+                        'netto' => 0,
+                        'base_netto' => 0,
+                        'tare' => 0,
+                        'base_tare' => 0,
+                        'license_plate' => '',
+                        'item_id' => $items[$i]->id,
+                        'selected_unit_id' => $items[$i]->selected_unit_id,
+                        'base_unit_id' => $items[$i]->base_unit_id,
+                        'store_id' => Auth::user()->store_id,
+                        'status' => ''
+                    ];
+
+                    $deliver = Deliver::create($deliverParams);
+
+                    if($items[$i]->stock_id != 0){
+                        $stockOutParams = [
+                            'store_id' => Auth::user()->store_id,
+                            'so_id' => $so->id,
+                            'product_id' => $items[$i]->product_id,
+                            'warehouse_id' => $so->warehouse_id,
+                            'stock_id' => $items[$i]->stock_id,
+                            'quantity' => $items[$i]->quantity
+                        ];
+
+                        $stockOut = StockOut::create($stockOutParams);
+
+                        $stock = Stock::find($items[$i]->stock_id);
+                        $stock->current_quantity -= $items[$i]->quantity;
+                        $stock->save();
+                    }
+                }
+                
                 $paymentParam = [
                     'payment_date' => $so->so_created,
                     'total_amount' => $so->totalAmount(),
@@ -265,7 +313,7 @@ class SalesOrderServiceImpl implements SalesOrderService
                         'unit_id' => $request->input("so_$i"."_selected_unit_id.$j")
                     ])->first(),
                     'product' => Product::with('productUnits.unit')->find($request->input("so_$i"."_product_id.$j")),
-                    'stock_id' => empty($request->input("so_$i"."stock_id.$i")) ? 0 : $request->input("so_$i"."_stock_id.$j"),
+                    'stock_id' => empty($request->input("so_$i"."_stock_id.$i")) ? 0 : $request->input("so_$i"."_stock_id.$j"),
                     'base_unit' => [
                         'unit' => [
                             'id' => $request->input("so_$i"."_base_unit_id.$j")

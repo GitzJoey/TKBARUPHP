@@ -254,7 +254,7 @@
                                                                                 v-on:click="insertProduct(soIndex, so.product)"><span class="fa fa-plus"/></button>
                                                                     </div>
                                                                 </div>
-                                                                <div v-show="so.sales_type.code === 'SOTYPE.S'">
+                                                                <div v-show="so.sales_type.code === 'SOTYPE.S' || so.sales_type.code === 'SOTYPE.AC'">
                                                                     <div class="col-md-11">
                                                                         <select v-bind:id="'inputStock_' + (soIndex + 1)"
                                                                                 class="form-control"
@@ -670,7 +670,7 @@
                                                                     <label v-bind:for="'inputPriceLevel_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
                                                                     <div class="col-sm-10">
                                                                         <label class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.price_level.name }}</span>
+                                                                            <span class="control-label-normal">@{{ so.customer.price_level ? so.customer.price_level.name : '' }}</span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -993,7 +993,7 @@
                 },
                 templateSelection: function(customer){
                     if (customer.placeholder) {
-                        vm.SOs[index].customer = {
+                        soApp.SOs[index].customer = {
                         id: '',
                         price_level: {
                             name: ''
@@ -1001,7 +1001,7 @@
                     };
                         return customer.placeholder;
                     }
-                    vm.SOs[index].customer = _.cloneDeep(customer);
+                    soApp.SOs[index].customer = _.cloneDeep(customer);
                     return customer.name;
                 }
             });
