@@ -107,6 +107,18 @@ return [
             'title' => 'Biaya',
             'page_title' => 'Biaya',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Biaya',
+            ],
+            'table' => [
+                'header' => [
+                    'date' => 'Tanggal',
+                    'source_account' => 'Rekening Sumber',
+                    'cost_category' => 'Kategori',
+                    'amount' => 'Jumlah',
+                    'remarks' => 'Keterangan',
+                ],
+            ],
         ],
     ],
     'revenue' => [
@@ -158,6 +170,18 @@ return [
             'title' => 'Pendapatan',
             'page_title' => 'Pendapatan',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Pendapatan',
+            ],
+            'table' => [
+                'header' => [
+                    'date' => 'Tanggal',
+                    'destination_account' => 'Rekening Tujuan',
+                    'cost_category' => 'Kategori',
+                    'amount' => 'Jumlah',
+                    'remarks' => 'Keterangan',
+                ],
+            ],
         ],
     ],
     'capital' => [

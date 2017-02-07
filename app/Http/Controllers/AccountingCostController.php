@@ -18,7 +18,8 @@ class AccountingCostController extends Controller
 
     public function index()
     {
-        return view('accounting.cost.index');
+        $costlist = [];
+        return view('accounting.cost.index', compact('costlist'));
     }
 
     public function categoryIndex()
