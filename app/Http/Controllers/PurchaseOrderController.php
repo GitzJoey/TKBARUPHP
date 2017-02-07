@@ -33,7 +33,7 @@ class PurchaseOrderController extends Controller
     {
         $this->purchaseOrderService = $purchaseOrderService;
         $this->supplierService = $supplierService;
-        $this->middleware('auth', [ 'except' => [ 'getDuePO' ] ]);
+        $this->middleware('auth', [ 'except' => [ 'getDuePO', 'getUnreceivedPO' ] ]);
     }
 
     public function create()
@@ -120,5 +120,10 @@ class PurchaseOrderController extends Controller
         } else {
             return $this->purchaseOrderService->getDuePO();
         }
+    }
+
+    public function getUnreceivedPO()
+    {
+        return $this->purchaseOrderService->getUnreceivedPO();
     }
 }

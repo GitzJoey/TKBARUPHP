@@ -95,4 +95,13 @@ interface PurchaseOrderService
      * @return Collection purchase order that due for payment.
      */
     public function getDuePO($daysToDue = 1);
+
+     /**
+     * Get all purchase orders that have not been received in more than 
+     * given threshold days since its shipping date.
+     *
+     * @param int $threshold threshold in day
+     * @return Collection
+     */
+    public function getUnreceivedPO($threshold = 3);
 }
