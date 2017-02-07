@@ -108,4 +108,13 @@ interface SalesOrderService
      * @return float
      */
     public function getSOTotalAmountInOneDay($date);
+
+    /**
+     * Get all sales orders that have not been delivered in more than 
+     * given threshold days since its shipping date.
+     *
+     * @param int $threshold threshold in day
+     * @return Collection
+     */
+    public function getUndeliveredSO($threshold = 3);
 }

@@ -445,4 +445,18 @@ class SalesOrderServiceImpl implements SalesOrderService
 
        return $soTotalAmount;
     }
+
+    /**
+     * Get all sales orders that have not been delivered in more than 
+     * given threshold days since its shipping date.
+     *
+     * @param int $threshold threshold in day
+     * @return Collection
+     */
+    public function getUndeliveredSO($threshold = 3)
+    {
+        return SalesOrder::where('status', '=', 'SOSTATUS.WD')
+        ->where('shipping_date', '<', Carbon::now()->addDays(-$threshold))
+        ->doesntHave('delivers')->get();
+    }
 }

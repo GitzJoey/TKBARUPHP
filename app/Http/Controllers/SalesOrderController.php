@@ -43,7 +43,8 @@ class SalesOrderController extends Controller
                 'getDueSO', 
                 'getTodaySO', 
                 'getTodaySOTotalAmount', 
-                'getTodayAndYesterdaySO' 
+                'getTodayAndYesterdaySO',
+                'getUndeliveredSO' 
             ]
         ]);
     }
@@ -203,5 +204,10 @@ class SalesOrderController extends Controller
         $yesterdaySO = $this->salesOrderService->getSOInOneDay($todayDate->addDays(-1));
 
         return compact('todaySO', 'yesterdaySO');
+    }
+
+    public function getUndeliveredSO()
+    {
+        return $this->salesOrderService->getUndeliveredSO();
     }
 }
