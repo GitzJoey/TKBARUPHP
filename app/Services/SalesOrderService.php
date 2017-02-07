@@ -92,4 +92,12 @@ interface SalesOrderService
      * @return Collection sales order that due for payment.
      */
     public function getDueSO($daysToDue = 1);
+
+    /**
+     * Get all sales order created on given date
+     *
+     * @param Carbon $date target date
+     * @return Collection
+     */
+    public function getSOInOneDay($date);
 }

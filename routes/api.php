@@ -53,6 +53,7 @@ Route::group(['prefix' => 'purchase_order'], function() {
 
 Route::group(['prefix' => 'sales_order'], function() {
     Route::get('due_sales_order', 'SalesOrderController@getDueSO')->name('api.sales_order.due_sales_order');
+    Route::get('today_sales_order', 'SalesOrderController@getTodaySO')->name('api.sales_order.today_sales_order');
 });
 
 Route::group(['prefix' => 'stock'], function() {
