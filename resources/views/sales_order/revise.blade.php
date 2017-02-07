@@ -276,8 +276,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <template v-for="(item, itemIndex) in so.items">
-                                                    <tr>
+                                                    <tr v-for="(item, itemIndex) in so.items">
                                                         <input type="hidden" name="item_id[]" v-bind:value="item.id">
                                                         <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
                                                         <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
@@ -321,7 +320,6 @@
                                                             @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
                                                         </td>
                                                     </tr>
-                                                </template>
                                                 </tbody>
                                             </table>
                                         </div>
