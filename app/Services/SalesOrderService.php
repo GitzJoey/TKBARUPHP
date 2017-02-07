@@ -100,4 +100,12 @@ interface SalesOrderService
      * @return Collection
      */
     public function getSOInOneDay($date);
+
+    /**
+     * Get total amount of all sales created on given date
+     * 
+     * @param Carbon $date target date
+     * @return float
+     */
+    public function getSOTotalAmountInOneDay($date);
 }

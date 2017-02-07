@@ -38,7 +38,7 @@ class SalesOrderController extends Controller
     {
         $this->salesOrderService = $salesOrderService;
         $this->stockService = $stockService;
-        $this->middleware('auth', [ 'except' => [ 'getDueSO', 'getTodaySO' ] ]);
+        $this->middleware('auth', [ 'except' => [ 'getDueSO', 'getTodaySO', 'getTodaySOTotalAmount' ] ]);
     }
 
     public function create()
@@ -181,5 +181,10 @@ class SalesOrderController extends Controller
     public function getTodaySO()
     {
         return $this->salesOrderService->getSOInOneDay(Carbon::today());
+    }
+
+    public function getTodaySOTotalAmount()
+    {
+        return $this->salesOrderService->getSOTotalAmountInOneDay(Carbon::today());
     }
 }
