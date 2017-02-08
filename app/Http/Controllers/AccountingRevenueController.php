@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\AccountingRevenue;
 use App\Model\AccountingRevenueCategory;
 
 use Auth;
@@ -17,8 +18,28 @@ class AccountingRevenueController extends Controller
 
     public function index()
     {
-        $revlist = [];
+        $revlist = AccountingRevenue::paginate(10);
         return view('accounting.revenue_index', compact('revlist'));
+    }
+
+    public function create()
+    {
+        return view('accounting.revenue.create');
+    }
+
+    public function store()
+    {
+        return redirect(route('db.revenue.cost'));
+    }
+
+    public function edit()
+    {
+        return view('accounting.revenue.edit');
+    }
+
+    public function update()
+    {
+        return redirect(route('db.revenue.cost'));
     }
 
     public function categoryIndex()

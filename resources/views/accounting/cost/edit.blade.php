@@ -38,7 +38,7 @@
                 <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
                     <label for="inputDate" class="col-sm-2 control-label">@lang('accounting.cost.field.date')</label>
                     <div class="col-sm-10">
-                        <input id="inputDate" name="name" value="{{ $c->date }}" type="text" class="form-control" placeholder="@lang('accounting.cost.field.name')" data-parsley-required="true">
+                        <input id="inputDate" name="name" type="text" class="form-control" placeholder="@lang('accounting.cost.field.name')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('date') ? $errors->first('date') : '' }}</span>
                     </div>
                 </div>
@@ -69,19 +69,11 @@
                         <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('accounting.cost.field.remarks')">
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
-                    <label for="inputImagePath" class="col-sm-2 control-label">@lang('employee.field.image_path')</label>
+                <div class="form-group">
+                    <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <input id="inputImagePath" name="image_path" type="file" class="form-control"
-                               placeholder="@lang('employee.field.image_path')" data-parsley-required="true">
-                        <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <label for="inputStatus" class="col-sm-2 control-label">@lang('employee.field.status')</label>
-                    <div class="col-sm-5">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
+                        <a href="{{ route('db.acc.cost') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                        <button class="btn btn-default" type="submit">@lang('buttons.create_new_button')</button>
                     </div>
                 </div>
                 <div class="form-group">

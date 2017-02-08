@@ -47,6 +47,11 @@ class LoginController extends Controller
             return "Database Is Not Online";
         }
 
+        if (isset($_SERVER['HTTP_USER_AGENT']) &&
+            (strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/') !== false)) {
+            return "Internet Explorer Browser Is Not Supported";
+        }
+
         return view('auth.login');
     }
 }

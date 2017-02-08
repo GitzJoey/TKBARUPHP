@@ -18,6 +18,7 @@ use App\Services\Implementation\SupplierServiceImpl;
 use App\Services\Implementation\VendorTruckingServiceImpl;
 use App\Services\Implementation\WarehouseServiceImpl;
 use App\Services\Implementation\DatabaseServiceImpl;
+use App\Services\Implementation\AccountingServiceImpl;
 
 use App\Services\CustomerService;
 use App\Services\InflowService;
@@ -35,6 +36,7 @@ use App\Services\SupplierService;
 use App\Services\VendorTruckingService;
 use App\Services\WarehouseService;
 use App\Services\DatabaseService;
+use App\Services\AccountingService;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -122,6 +124,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(DatabaseService::class, function (){
             return new DatabaseServiceImpl();
         });
+
+        $this->app->singleton(AccountingService::class, function (){
+            return new AccountingServiceImpl();
+        });
     }
 
     /**
@@ -148,6 +154,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\WarehouseService',
             'App\Services\SettingService',
             'App\Services\DatabaseService',
+            'App\Services\AccountingServie',
         ];
     }
 }

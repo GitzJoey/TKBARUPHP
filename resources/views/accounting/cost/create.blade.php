@@ -30,7 +30,7 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('employee.create.header.title')</h3>
+            <h3 class="box-title">@lang('accounting.cost.create.header.title')</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.acc.cost.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
@@ -67,21 +67,6 @@
                     <label for="inputRemarks" class="col-sm-2 control-label">@lang('accounting.cost.field.remarks')</label>
                     <div class="col-sm-5">
                         <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('accounting.cost.field.remarks')">
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
-                    <label for="inputImagePath" class="col-sm-2 control-label">@lang('employee.field.image_path')</label>
-                    <div class="col-sm-10">
-                        <input id="inputImagePath" name="image_path" type="file" class="form-control"
-                               placeholder="@lang('employee.field.image_path')" data-parsley-required="true">
-                        <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <label for="inputStatus" class="col-sm-2 control-label">@lang('employee.field.status')</label>
-                    <div class="col-sm-5">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">

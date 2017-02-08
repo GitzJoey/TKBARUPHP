@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\AccountingCost;
 use App\Model\AccountingCostCategory;
 
 use Auth;
@@ -18,8 +19,28 @@ class AccountingCostController extends Controller
 
     public function index()
     {
-        $costlist = Accountingcost;
+        $costlist = AccountingCost::paginate(10);
         return view('accounting.cost.index', compact('costlist'));
+    }
+
+    public function create()
+    {
+        return view('accounting.cost.create');
+    }
+
+    public function store()
+    {
+        return redirect(route('db.acc.cost'));
+    }
+
+    public function edit()
+    {
+        return view('accounting.cost.edit');
+    }
+
+    public function update()
+    {
+        return redirect(route('db.acc.cost'));
     }
 
     public function categoryIndex()
