@@ -41,10 +41,9 @@ class SalesOrderController extends Controller
         $this->middleware('auth', [ 
             'except' => [ 
                 'getDueSO', 
-                'getTodaySO', 
-                'getTodaySOTotalAmount', 
-                'getTodayAndYesterdaySO',
-                'getUndeliveredSO' 
+                'getUndeliveredSO',
+                'getNumberOfCreatedSOPerDay',
+                'getTotalSOAmountPerDay' 
             ]
         ]);
     }
@@ -186,28 +185,48 @@ class SalesOrderController extends Controller
         }
     }
 
-    public function getTodaySO()
-    {
-        return $this->salesOrderService->getSOInOneDay(Carbon::today());
-    }
-
-    public function getTodaySOTotalAmount()
-    {
-        return $this->salesOrderService->getSOTotalAmountInOneDay(Carbon::today());
-    }
-
-    public function getTodayAndYesterdaySO()
-    {
-        $todayDate = Carbon::today();
-
-        $todaySO = $this->salesOrderService->getSOInOneDay($todayDate);
-        $yesterdaySO = $this->salesOrderService->getSOInOneDay($todayDate->addDays(-1));
-
-        return compact('todaySO', 'yesterdaySO');
-    }
-
     public function getUndeliveredSO()
     {
         return $this->salesOrderService->getUndeliveredSO();
+    }
+
+    public function getNumberOfCreatedSOPerDay(Request $request)
+    {
+        $rangeOfDay = $request->query('rod');
+
+        //Default range of day is 3 days
+        if(empty($rangeOfDay)){
+            $rangeOfDay = 3;
+        }
+
+        $date = Carbon::today();
+        $createdSOPerDay = collect([]);
+
+        for($i = 0; $i <= $rangeOfDay; $i++){
+            $createdSOPerDay->push(['date' => $date->copy()->toDateTimeString(), 'numberOfCreatedSO' => count($this->salesOrderService->getSOInOneDay($date))]);
+            $date->addDays(-1);
+        }
+
+        return $createdSOPerDay;
+    }
+
+    public function getTotalSOAmountPerDay(Request $request)
+    {
+        $rangeOfDay = $request->query('rod');
+
+        //Default range of day is 3 days
+        if(empty($rangeOfDay)){
+            $rangeOfDay = 3;
+        }
+
+        $date = Carbon::today();
+        $totalSOAmountPerDay = collect([]);
+
+        for($i = 0; $i <= $rangeOfDay; $i++){
+            $totalSOAmountPerDay->push(['date' => $date->copy()->toDateTimeString(), 'totalSOAmount' => $this->salesOrderService->getSOTotalAmountInOneDay($date)]);
+            $date->addDays(-1);
+        }
+
+        return $totalSOAmountPerDay;
     }
 }

@@ -117,4 +117,12 @@ interface SalesOrderService
      * @return Collection
      */
     public function getUndeliveredSO($threshold = 3);
+
+    /**
+     * Get all created sales order from given date until current date.
+     * 
+     * @param Carbon
+     * @return Collection
+     */
+    public function getAllCreatedSOFromDate($date);
 }

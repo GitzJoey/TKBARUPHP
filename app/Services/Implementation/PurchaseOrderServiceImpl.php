@@ -283,7 +283,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
     public function getUnreceivedPO($threshold = 3)
     {
         return PurchaseOrder::where('status', '=', 'POSTATUS.WA')
-        ->where('shipping_date', '<', Carbon::now()->addDays(-$threshold))
+        ->where('shipping_date', '<', Carbon::today()->addDays(-$threshold))
         ->doesntHave('receipts')->get();
     }
 }

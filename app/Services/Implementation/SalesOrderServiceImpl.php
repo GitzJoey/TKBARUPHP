@@ -456,7 +456,20 @@ class SalesOrderServiceImpl implements SalesOrderService
     public function getUndeliveredSO($threshold = 3)
     {
         return SalesOrder::where('status', '=', 'SOSTATUS.WD')
-        ->where('shipping_date', '<', Carbon::now()->addDays(-$threshold))
+        ->where('shipping_date', '<', Carbon::today()->addDays(-$threshold))
         ->doesntHave('delivers')->get();
+    }
+
+    /**
+     * Get all created sales order from given date.
+     * 
+     * @param Carbon
+     * @return Collection
+     */
+    public function getAllCreatedSOFromDate($date)
+    {
+        $startDate = $date->copy()->startOfDay();
+
+        return SalesOrder::where('so_created', '>=', $startDate)->get();
     }
 }
