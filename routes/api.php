@@ -49,10 +49,15 @@ Route::group(['prefix' => 'phone_provider'], function() {
 
 Route::group(['prefix' => 'purchase_order'], function() {
     Route::get('due_purchase_order', 'PurchaseOrderController@getDuePO')->name('api.purchase_order.due_purchase_order');
+    Route::get('unreceived_purchase_order', 'PurchaseOrderController@getUnreceivedPO')->name('api.purchase_order.unreceived_purchase_order');
 });
 
 Route::group(['prefix' => 'sales_order'], function() {
     Route::get('due_sales_order', 'SalesOrderController@getDueSO')->name('api.sales_order.due_sales_order');
+    Route::get('today_sales_order', 'SalesOrderController@getTodaySO')->name('api.sales_order.today_sales_order');
+    Route::get('today_sales_order_amount', 'SalesOrderController@getTodaySOTotalAmount')->name('api.sales_order.today_sales_order_amount');
+    Route::get('today_yesterday_sales_order', 'SalesOrderController@getTodayAndYesterdaySO')->name('api.sales_order.today_yesterday_sales_order');
+    Route::get('undelivered_sales_order', 'SalesOrderController@getUndeliveredSO')->name('api.sales_order.undelivered_sales_order');
 });
 
 Route::group(['prefix' => 'stock'], function() {

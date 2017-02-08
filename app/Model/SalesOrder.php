@@ -201,7 +201,7 @@ class SalesOrder extends Model
         $this->save();
     }
 
-    private function itemTotalAmount()
+    public function itemTotalAmount()
     {
         $itemAmounts = $this->items->map(function($item){
             return $item->price * $item->to_base_quantity;
