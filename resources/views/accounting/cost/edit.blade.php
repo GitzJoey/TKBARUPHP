@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-circle fa-fw"></span>&nbsp;@lang('accounting.cost.edit.page_title')
+    <span class="fa fa-circle-o fa-fw"></span>&nbsp;@lang('accounting.cost.edit.page_title')
 @endsection
 
 @section('page_title_desc')
