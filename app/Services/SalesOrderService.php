@@ -92,4 +92,29 @@ interface SalesOrderService
      * @return Collection sales order that due for payment.
      */
     public function getDueSO($daysToDue = 1);
+
+    /**
+     * Get all sales order created on given date
+     *
+     * @param Carbon $date target date
+     * @return Collection
+     */
+    public function getSOInOneDay($date);
+
+    /**
+     * Get total amount of all sales created on given date
+     * 
+     * @param Carbon $date target date
+     * @return float
+     */
+    public function getSOTotalAmountInOneDay($date);
+
+    /**
+     * Get all sales orders that have not been delivered in more than 
+     * given threshold days since its shipping date.
+     *
+     * @param int $threshold threshold in day
+     * @return Collection
+     */
+    public function getUndeliveredSO($threshold = 3);
 }

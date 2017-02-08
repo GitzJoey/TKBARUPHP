@@ -63,6 +63,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'cost'], function() {
                 Route::get('', 'AccountingCostController@index')->name('db.acc.cost');
+                Route::get('create', 'AccountingCostController@create')->name('db.acc.cost.create');
+                Route::post('create', 'AccountingCostController@store');
+                Route::get('edit/{id}', 'AccountingCostController@edit')->name('db.acc.cost.edit');
+                Route::patch('edit/{id}', 'AccountingCostController@update');
 
                 Route::group(['prefix' => 'category'], function() {
                     Route::get('', 'AccountingCostController@categoryIndex')->name('db.acc.cost.category');
@@ -77,6 +81,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'revenue'], function() {
                 Route::get('', 'AccountingRevenueController@index')->name('db.acc.revenue');
+                Route::get('create', 'AccountingRevenueController@create')->name('db.acc.revenue.create');
+                Route::post('create', 'AccountingRevenueController@store');
+                Route::get('edit/{id}', 'AccountingRevenueController@edit')->name('db.acc.revenue.edit');
+                Route::patch('edit/{id}', 'AccountingRevenueController@update');
 
                 Route::group(['prefix' => 'category'], function() {
                     Route::get('', 'AccountingRevenueController@categoryIndex')->name('db.acc.revenue.category');

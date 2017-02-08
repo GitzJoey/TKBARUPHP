@@ -140,6 +140,7 @@ return [
                     'type' => 'Tipe',
                     'remarks' => 'Keterangan',
                     'amount' => 'Jumlah',
+                    'internal_expense' => '',
                 ],
             ],
         ],
@@ -333,6 +334,7 @@ return [
                         'type' => 'Tipe',
                         'remarks' => 'Keterangan',
                         'amount' => 'Jumlah',
+                        'internal_expense' => '',
                     ],
                 ],
                 'payments' => [

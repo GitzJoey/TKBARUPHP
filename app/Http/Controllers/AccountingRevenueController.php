@@ -17,7 +17,8 @@ class AccountingRevenueController extends Controller
 
     public function index()
     {
-        return view('accounting.revenue_index');
+        $revlist = [];
+        return view('accounting.revenue_index', compact('revlist'));
     }
 
     public function categoryIndex()
