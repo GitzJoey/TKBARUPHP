@@ -71,16 +71,16 @@ class ReportTransactionController extends Controller
             compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'poStatusDDL', 'currentUser', 'reportDate', 'showParameter'))
             ->save(storage_path("app/public/reports/$fileName.pdf"));
 
-//        //Save excel report
-//        Excel::create($fileName, function ($excel)
-//        use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
-//            $excel->sheet('Sheet 1', function ($sheet)
-//            use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
-//                $sheet->loadView('report_template.excel.purchase_order_report',
-//                    compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'poStatusDDL', 'currentUser', 'reportDate', 'showParameter'));
-//                $sheet->setPageMargin(0.30);
-//            });
-//        })->store('xlsx', storage_path("app/public/reports"));
+        //Save excel report
+        Excel::create($fileName, function ($excel)
+        use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
+            $excel->sheet('Sheet 1', function ($sheet)
+            use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
+                $sheet->loadView('report_template.excel.purchase_order_report',
+                    compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'poStatusDDL', 'currentUser', 'reportDate', 'showParameter'));
+                $sheet->setPageMargin(0.30);
+            });
+        })->store('xlsx', storage_path("app/public/reports"));
 
         return redirect(route('db.report.view', $fileName));
     }
@@ -101,7 +101,7 @@ class ReportTransactionController extends Controller
         $deliverDate = $request->input('deliver_date');
         $customer = $request->input('customer');
 
-        $salesOrders = SalesOrder::with('customer', 'warehouse', 'vendorTrucking', 'items', 'expenses')
+        $salesOrders = SalesOrder::with('customer', 'warehouse', 'vendorTrucking', 'items.selectedUnit.unit', 'expenses')
             ->when(!empty($soCode), function ($query) use ($soCode) {
                 return $query->orWhere('code', 'like', "%$soCode%");
             })
