@@ -54,10 +54,9 @@ Route::group(['prefix' => 'purchase_order'], function() {
 
 Route::group(['prefix' => 'sales_order'], function() {
     Route::get('due_sales_order', 'SalesOrderController@getDueSO')->name('api.sales_order.due_sales_order');
-    Route::get('today_sales_order', 'SalesOrderController@getTodaySO')->name('api.sales_order.today_sales_order');
-    Route::get('today_sales_order_amount', 'SalesOrderController@getTodaySOTotalAmount')->name('api.sales_order.today_sales_order_amount');
-    Route::get('today_yesterday_sales_order', 'SalesOrderController@getTodayAndYesterdaySO')->name('api.sales_order.today_yesterday_sales_order');
     Route::get('undelivered_sales_order', 'SalesOrderController@getUndeliveredSO')->name('api.sales_order.undelivered_sales_order');
+    Route::get('number_of_created_sales_order_per_day', 'SalesOrderController@getNumberOfCreatedSOPerDay')->name('api.sales_order.number_of_created_sales_order_per_day');
+    Route::get('total_sales_order_amount_per_day', 'SalesOrderController@getTotalSOAmountPerDay')->name('api.sales_order.total_sales_order_amount_per_day');
 });
 
 Route::group(['prefix' => 'stock'], function() {
