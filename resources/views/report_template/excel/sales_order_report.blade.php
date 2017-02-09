@@ -5,45 +5,45 @@
 <table>
     <tr class="title-row">
         <td colspan="6">
-            <h2><b>@lang('report.template.purchase_order.report_name')</b></h2>
+            <h2><b>@lang('report.template.sales_order.report_name')</b></h2>
         </td>
     </tr>
     <tr>
         <td colspan="6">&nbsp;</td>
     </tr>
     @if($showParameter)
-        @if(!empty($poCode))
+        @if(!empty($soCode))
             <tr>
                 <td colspan="6">
-                    @lang('report.template.purchase_order.parameter.po_code') {{ ': ' . $poCode }}
+                    @lang('report.template.sales_order.parameter.so_code') {{ ': ' . $soCode }}
                 </td>
             </tr>
         @endif
-        @if(!empty($poDate))
+        @if(!empty($soDate))
             <tr>
                 <td colspan="6">
-                    @lang('report.template.purchase_order.parameter.po_date') {{ ': ' . $poDate }}
+                    @lang('report.template.sales_order.parameter.so_date') {{ ': ' . $soDate }}
                 </td>
             </tr>
         @endif
         @if(!empty($shippingDate))
             <tr>
                 <td colspan="6">
-                    @lang('report.template.purchase_order.parameter.shipping_date') {{ ': ' . $shippingDate }}
+                    @lang('report.template.sales_order.parameter.shipping_date') {{ ': ' . $shippingDate }}
                 </td>
             </tr>
         @endif
-        @if(!empty($receiptDate))
+        @if(!empty($deliverDate))
             <tr>
                 <td colspan="6">
-                    @lang('report.template.purchase_order.parameter.receipt_date') {{ ': ' . $receiptDate }}
+                    @lang('report.template.sales_order.parameter.receipt_date') {{ ': ' . $deliverDate }}
                 </td>
             </tr>
         @endif
         @if(!empty($supplier))
             <tr>
                 <td colspan="6">
-                    @lang('report.template.purchase_order.parameter.supplier') {{ ': ' . $supplier }}
+                    @lang('report.template.sales_order.parameter.supplier') {{ ': ' . $supplier }}
                 </td>
             </tr>
         @endif
@@ -51,69 +51,69 @@
     <tr>
         <td colspan="6">&nbsp;</td>
     </tr>
-    @foreach($purchaseOrders as $key => $purchase_order)
+    @foreach($salesOrders as $key => $sales_order)
         <tr class="data-row">
             <td>
                 @lang('report.template.purchase_order.header.code')
             </td>
             <td colspan="2">
-                {{ $purchase_order->code }}
+                {{ $sales_order->code }}
             </td>
             <td>
-                @lang('report.template.purchase_order.header.supplier')
+                @lang('report.template.sales_order.header.customer')
             </td>
             <td colspan="2">
-                {{ $purchase_order->supplier ? $purchase_order->supplier->name : $purchase_order->walk_in_supplier }}
+                {{ $sales_order->customer ? $sales_order->customer->name : $purchase_order->walk_in_cust }}
             </td>
         </tr>
         <tr class="data-row">
             <td>
-                @lang('report.template.purchase_order.header.po_type')
+                @lang('report.template.sales_order.header.so_type')
             </td>
             <td colspan="2">
-                {{ $purchase_order->po_type }}
+                {{ $sales_order->so_type }}
             </td>
             <td>
-                @lang('report.template.purchase_order.header.po_created')
+                @lang('report.template.sales_order.header.so_created')
             </td>
             <td colspan="2">
-                {{ $purchase_order->po_created }}
+                {{ $sales_order->so_created }}
             </td>
         </tr>
         <tr class="data-row">
             <td>
-                @lang('report.template.purchase_order.header.status')
+                @lang('report.template.sales_order.header.status')
             </td>
             <td colspan="2">
-                {{ $purchase_order->status }}
+                {{ $sales_order->status }}
             </td>
             <td>
-                @lang('report.template.purchase_order.header.shipping_date')
+                @lang('report.template.sales_order.header.shipping_date')
             </td>
             <td colspan="2">
-                {{ $purchase_order->shipping_date }}
+                {{ $sales_order->shipping_date }}
             </td>
         </tr>
         <tr class="data-row">
             <td>
-                @lang('report.template.purchase_order.header.warehouse')
+                @lang('report.template.sales_order.header.warehouse')
             </td>
             <td colspan="2">
-                {{ $purchase_order->warehouse ? $purchase_order->warehouse->name : '' }}
+                {{ $sales_order->warehouse ? $sales_order->warehouse->name : '' }}
             </td>
             <td>
-                @lang('report.template.purchase_order.header.vendor_trucking')
+                @lang('report.template.sales_order.header.vendor_trucking')
             </td>
             <td colspan="2">
-                {{ $purchase_order->vendorTrucking ? $purchase_order->vendorTrucking->name : ''}}
+                {{ $sales_order->vendorTrucking ? $sales_order->vendorTrucking->name : ''}}
             </td>
         </tr>
         <tr class="data-row">
             <td>
-                @lang('report.template.purchase_order.header.remarks')
+                @lang('report.template.sales_order.header.remarks')
             </td>
             <td colspan="2">
-                {{ $purchase_order->remarks }}
+                {{ $sales_order->remarks }}
             </td>
             <td>
             </td>
@@ -124,17 +124,17 @@
             <td colspan="6">&nbsp;</td>
         </tr>
         <tr class="header-row">
-            <th colspan="6">@lang('report.template.purchase_order.header.items')</th>
+            <th colspan="6">@lang('report.template.sales_order.header.items')</th>
         </tr>
         <tr class="header-row">
             <th>No</th>
-            <th>@lang('report.template.purchase_order.header.product')</th>
-            <th>@lang('report.template.purchase_order.header.quantity')</th>
-            <th>@lang('report.template.purchase_order.header.unit')</th>
-            <th>@lang('report.template.purchase_order.header.price')</th>
-            <th>@lang('report.template.purchase_order.header.total_price')</th>
+            <th>@lang('report.template.sales_order.header.product')</th>
+            <th>@lang('report.template.sales_order.header.quantity')</th>
+            <th>@lang('report.template.sales_order.header.unit')</th>
+            <th>@lang('report.template.sales_order.header.price')</th>
+            <th>@lang('report.template.sales_order.header.total_price')</th>
         </tr>
-        @foreach($purchase_order->items as $itemKey => $item)
+        @foreach($sales_order->items as $itemKey => $item)
             <tr class="data-row">
                 <td class="text-center">{{ $itemKey + 1 }}</td>
                 <td>{{ $item->product->name }}</td>

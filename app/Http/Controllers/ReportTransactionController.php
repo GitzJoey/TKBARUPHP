@@ -38,7 +38,7 @@ class ReportTransactionController extends Controller
         $receiptDate = $request->input('receipt_date');
         $supplier = $request->input('supplier');
 
-        $purchaseOrders = PurchaseOrder::with('supplier', 'warehouse', 'vendorTrucking', 'items', 'expenses')
+        $purchaseOrders = PurchaseOrder::with('supplier', 'warehouse', 'vendorTrucking', 'items.selectedUnit.unit', 'expenses')
             ->when(!empty($poCode), function ($query) use ($poCode) {
                 return $query->orWhere('code', 'like', "%$poCode%");
             })
@@ -101,7 +101,7 @@ class ReportTransactionController extends Controller
         $deliverDate = $request->input('deliver_date');
         $customer = $request->input('customer');
 
-        $salesOrders = SalesOrder::with('customer', 'warehouse', 'vendorTrucking', 'items', 'expenses')
+        $salesOrders = SalesOrder::with('customer', 'warehouse', 'vendorTrucking', 'items.selectedUnit.unit', 'expenses')
             ->when(!empty($soCode), function ($query) use ($soCode) {
                 return $query->orWhere('code', 'like', "%$soCode%");
             })

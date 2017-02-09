@@ -349,7 +349,60 @@ return [
             'footer' => 'Printed by :user on :date',
         ],
         'purchase_order' => [
-            'report_name' => '',
+            'parameter' => [
+                'po_date' => 'PO Date',
+                'po_code' => 'PO Code',
+                'shipping_date' => 'Shipping Date',
+                'receipt_date' =>  'Receipt Date',
+                'supplier' => 'Supplier'
+            ],
+            'header' => [
+                'code' => 'Code',
+                'supplier' => 'Supplier',
+                'po_type' => 'PO Type',
+                'po_created' => 'Created Date',
+                'status' => 'Status',
+                'shipping_date' => 'Shipping Date',
+                'warehouse' => 'Warehouse',
+                'vendor_trucking' => 'Vendor Trucking',
+                'remarks' => 'Remarks',
+                'items' => 'Items',
+                'product' => 'Product',
+                'quantity' => 'Quantity',
+                'unit' => 'Unit',
+                'price' => 'Price',
+                'total_price' => 'Total Price'
+            ],
+            'report_name' => 'Purchase Order Report',
+            'footer' => 'Printed by :user on :date',
         ],
+        'sales_order' => [
+            'parameter' => [
+                'so_date' => 'SO Date',
+                'so_code' => 'SO Code',
+                'shipping_date' => 'Shipping Date',
+                'deliver_date' =>  'Deliver Date',
+                'customer' => 'Customer'
+            ],
+            'header' => [
+                'code' => 'Code',
+                'customer' => 'Customer',
+                'so_type' => 'SO Type',
+                'so_created' => 'Created Date',
+                'status' => 'Status',
+                'shipping_date' => 'Shipping Date',
+                'warehouse' => 'Warehouse',
+                'vendor_trucking' => 'Vendor Trucking',
+                'remarks' => 'Remarks',
+                'items' => 'Items',
+                'product' => 'Product',
+                'quantity' => 'Quantity',
+                'unit' => 'Unit',
+                'price' => 'Price',
+                'total_price' => 'Total Price'
+            ],
+            'report_name' => 'Sales Order Report',
+            'footer' => 'Printed by :user on :date',
+        ]
     ],
 ];
