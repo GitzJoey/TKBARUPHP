@@ -38,7 +38,7 @@ class ReportTransactionController extends Controller
         $receiptDate = $request->input('receipt_date');
         $supplier = $request->input('supplier');
 
-        $purchaseOrders = PurchaseOrder::with('supplier', 'warehouse', 'vendorTrucking', 'items', 'expenses')
+        $purchaseOrders = PurchaseOrder::with('supplier', 'warehouse', 'vendorTrucking', 'items.selectedUnit.unit', 'expenses')
             ->when(!empty($poCode), function ($query) use ($poCode) {
                 return $query->orWhere('code', 'like', "%$poCode%");
             })
@@ -71,16 +71,16 @@ class ReportTransactionController extends Controller
             compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'poStatusDDL', 'currentUser', 'reportDate', 'showParameter'))
             ->save(storage_path("app/public/reports/$fileName.pdf"));
 
-        //Save excel report
-        Excel::create($fileName, function ($excel)
-        use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
-            $excel->sheet('Sheet 1', function ($sheet)
-            use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
-                $sheet->loadView('report_template.excel.purchase_order_report',
-                    compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'poStatusDDL', 'currentUser', 'reportDate', 'showParameter'));
-                $sheet->setPageMargin(0.30);
-            });
-        })->store('xlsx', storage_path("app/public/reports"));
+//        //Save excel report
+//        Excel::create($fileName, function ($excel)
+//        use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
+//            $excel->sheet('Sheet 1', function ($sheet)
+//            use ($poCode, $poDate, $shippingDate, $receiptDate, $supplier, $purchaseOrders, $poStatusDDL, $currentUser, $reportDate, $showParameter) {
+//                $sheet->loadView('report_template.excel.purchase_order_report',
+//                    compact('poCode', 'poDate', 'shippingDate', 'receiptDate', 'supplier', 'purchaseOrders', 'poStatusDDL', 'currentUser', 'reportDate', 'showParameter'));
+//                $sheet->setPageMargin(0.30);
+//            });
+//        })->store('xlsx', storage_path("app/public/reports"));
 
         return redirect(route('db.report.view', $fileName));
     }
