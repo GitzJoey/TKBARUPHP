@@ -153,7 +153,7 @@
                                                                             <i class="fa fa-calendar"></i>
                                                                         </div>
                                                                         <input type="text" class="form-control inputSoDate" v-bind:id="'inputSoDate_' + (soIndex + 1)"
-                                                                               name="so_created[]" data-parsley-required="true">
+                                                                               name="so_created[]" data-parsley-required="true" v-bind:value="so.so_created">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -182,7 +182,7 @@
                                                                             <i class="fa fa-calendar"></i>
                                                                         </div>
                                                                         <input type="text" class="form-control inputShippingDate" v-bind:id="'inputShippingDate_' + (soIndex + 1)"
-                                                                               name="shipping_date[]" data-parsley-required="true">
+                                                                               name="shipping_date[]" data-parsley-required="true" v-bind:value="so.shipping_date">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -958,6 +958,22 @@
         soApp.insertTab(soApp.SOs);
     }else{
         for(var i = 0; i < soApp.SOs.length; i++){
+            if(soApp.SOs[i].warehouse.id == 0){
+                soApp.SOs[i].warehouse = {id: 0};
+            }else{
+                soApp.SOs[i].warehouse = _.find(soApp.warehouseDDL, function(warehouse){
+                    return warehouse.id == soApp.SOs[i].warehouse.id
+                });
+            }
+
+            if(soApp.SOs[i].vendorTrucking.id == 0){
+                soApp.SOs[i].vendorTrucking = {id: 0, name: ''};
+            }else{
+                soApp.SOs[i].vendorTrucking = _.find(soApp.vendorTruckingDDL, function(vendorTrucking){
+                    return vendorTrucking.id == soApp.SOs[i].vendorTrucking.id
+                });
+            }
+
             var index = i;
             $("#customerSelect" + i).select2({
                 placeholder: {

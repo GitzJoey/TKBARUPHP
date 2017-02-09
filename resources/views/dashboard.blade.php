@@ -93,6 +93,8 @@
 
             Highcharts.chart('total-so-amount-chart-container', {
                 chart: {
+                    animation: Highcharts.svg,
+                    marginTop: 75,
                     events: {
                         load: function () {
                             // set up the updating of the sales order chart
@@ -149,6 +151,7 @@
 
             Highcharts.chart('number-of-created-po-so-chart-container', {
                 chart: {
+                    marginTop: 75,
                     events: {
                         load: function () {
                             // set up the updating of the sales order chart
