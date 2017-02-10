@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Validator;
+use Illuminate\Http\Request;
 use App\Model\AccountingCapitalDeposit;
 use App\Model\AccountingCapitalWithdrawal;
 
 use App\Model\AccountingCash;
-use Illuminate\Http\Request;
 
 class AccountingCapitalController extends Controller
 {
@@ -24,13 +26,31 @@ class AccountingCapitalController extends Controller
 
     public function addDeposit()
     {
-        $accountDDL = AccountingCash::get()->pluck('name', 'code');
+        $accountDDL = AccountingCash::get()->pluck('codeAndName', 'id');
         return view('accounting.capital.deposit', compact('accountDDL'));
     }
 
-    public function saveDeposit()
+    public function saveDeposit(Request $data)
     {
-        return redirect(route('db.acc.capital.deposit.index'));
+        $validator = Validator::make($data->all(), [
+            'date' => 'required',
+            'destination_account' => 'required',
+            'amount' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('db.acc.capital.deposit.create'))->withInput()->withErrors($validator);
+        } else {
+            AccountingCapitalDeposit::create([
+                'store_id' => Auth::user()->store->id,
+                'date' => date('Y-m-d', strtotime($data['date'])),
+                'destination_acc_cash_id' => $data['destination_account'],
+                'amount' => floatval(str_replace(',', '', $data['amount'])),
+                'remarks' => $data['remarks'],
+            ]);
+
+            return redirect(route('db.acc.capital.deposit.index'));
+        }
     }
 
     public function listWithdrawal()
@@ -42,12 +62,31 @@ class AccountingCapitalController extends Controller
 
     public function addWithdrawal()
     {
-        $accountDDL = AccountingCash::get()->pluck('name', 'code');
+        $accountDDL = AccountingCash::get()->pluck('codeAndName', 'id');
+
         return view('accounting.capital.withdrawal', compact('accountDDL'));
     }
 
-    public function saveWithdrawal()
+    public function saveWithdrawal(Request $data)
     {
-        return redirect(route('db.acc.capital.withdrawal.index'));
+        $validator = Validator::make($data->all(), [
+            'date' => 'required',
+            'source_account' => 'required',
+            'amount' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect(route('db.acc.capital.withdrawal.create'))->withInput()->withErrors($validator);
+        } else {
+            AccountingCapitalWithdrawal::create([
+                'store_id' => Auth::user()->store->id,
+                'date' => date('Y-m-d', strtotime($data['date'])),
+                'source_acc_cash_id' => $data['source_account'],
+                'amount' => floatval(str_replace(',', '', $data['amount'])),
+                'remarks' => $data['remarks'],
+            ]);
+
+            return redirect(route('db.acc.capital.withdrawal.index'));
+        }
     }
 }

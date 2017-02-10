@@ -41,7 +41,7 @@
                 @foreach ($capdep as $key => $cd)
                     <tr>
                         <td>{{ $cd->date }}</td>
-                        <td>{{ $cd->destination_account }}</td>
+                        <td>{{ $cd->accountingCash->name }} ({{ $cd->accountingCash->code }})</td>
                         <td>{{ $cd->amount }}</td>
                         <td>{{ $cd->remarks }}</td>
                     </tr>

@@ -37,13 +37,17 @@
                 <div class="form-group">
                     <label for="inputType" class="col-sm-2 control-label">@lang('accounting.cash.field.type')</label>
                     <div class="col-sm-10">
-
+                        <select name="type" class="form-control">
+                            @foreach($typeDDL as $key => $value)
+                                <option value="{{ $key }}" {{ $acccash->type == $key ? 'selected':'' }}>{{ $value }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputCode" class="col-sm-2 control-label">@lang('accounting.cash.field.code')</label>
                     <div class="col-sm-10">
-                        <input id="inputCode" class="form-control" name="symbol" type="text" value="{{ $acccash->symbol }}" placeholder="Code">
+                        <input id="inputCode" class="form-control" name="code" type="text" value="{{ $acccash->code }}" placeholder="Code">
                     </div>
                 </div>
                 <div class="form-group">

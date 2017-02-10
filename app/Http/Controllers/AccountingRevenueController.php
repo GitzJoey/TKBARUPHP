@@ -19,7 +19,7 @@ class AccountingRevenueController extends Controller
     public function index()
     {
         $revlist = AccountingRevenue::paginate(10);
-        return view('accounting.revenue_index', compact('revlist'));
+        return view('accounting.revenue.index', compact('revlist'));
     }
 
     public function create()
@@ -29,7 +29,7 @@ class AccountingRevenueController extends Controller
 
     public function store()
     {
-        return redirect(route('db.revenue.cost'));
+        return redirect(route('db.revenue.index'));
     }
 
     public function edit()
@@ -39,7 +39,7 @@ class AccountingRevenueController extends Controller
 
     public function update()
     {
-        return redirect(route('db.revenue.cost'));
+        return redirect(route('db.revenue.index'));
     }
 
     public function categoryIndex()

@@ -120,6 +120,27 @@ return [
                 ],
             ],
         ],
+        'create' => [
+            'title' => 'Cost',
+            'page_title' => 'Cost',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Create Cost',
+            ],
+        ],
+        'field' => [
+            'date' => 'Date',
+            'name' => 'Name',
+            'source_account' => 'Source Account',
+            'category' => 'Category',
+            'amount' => 'Amount',
+            'remarks' => 'Remarks',
+        ],
+        'edit' => [
+            'title' => 'Cost',
+            'page_title' => 'Cost',
+            'page_title_desc' => '',
+        ],
     ],
     'revenue' => [
         'category' => [
@@ -182,6 +203,19 @@ return [
                     'remarks' => 'Remarks',
                 ],
             ],
+        ],
+        'edit' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+        ],
+        'field' => [
+            'date' => '',
+            'name' => '',
+            'source_account' => '',
+            'category' => '',
+            'amount' => '',
+            'remarks' => '',
         ],
     ],
     'capital' => [

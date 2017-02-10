@@ -47,6 +47,11 @@ class AccountingCapitalDeposit extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function accountingCash()
+    {
+        return $this->belongsTo('App\Model\AccountingCash', 'destination_acc_cash_id');
+    }
+
     public static function boot()
     {
         parent::boot();

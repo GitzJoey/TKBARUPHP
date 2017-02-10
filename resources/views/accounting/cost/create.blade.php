@@ -45,7 +45,7 @@
                 <div class="form-group {{ $errors->has('source_account') ? 'has-error' : '' }}">
                     <label for="inputSourceAccount" class="col-sm-2 control-label">@lang('accounting.cost.field.source_account')</label>
                     <div class="col-sm-10">
-
+                        {{ Form::select('source_account', $accountDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'),'data-parsley-required' => 'true' )) }}
                         <span class="help-block">{{ $errors->has('source_account') ? $errors->first('source_account') : '' }}</span>
                     </div>
                 </div>

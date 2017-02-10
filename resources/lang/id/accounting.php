@@ -120,6 +120,27 @@ return [
                 ],
             ],
         ],
+        'create' => [
+            'title' => 'Biaya',
+            'page_title' => 'Biaya',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Tambah Biaya',
+            ],
+        ],
+        'field' => [
+            'date' => 'Tanggal',
+            'name' => 'Nama',
+            'source_account' => 'Rekening Sumber',
+            'category' => 'Kategori',
+            'amount' => 'Jumlah',
+            'remarks' => 'Keterangan',
+        ],
+        'edit' => [
+            'title' => 'Biaya',
+            'page_title' => 'Biaya',
+            'page_title_desc' => '',
+        ],
     ],
     'revenue' => [
         'category' => [
@@ -182,6 +203,19 @@ return [
                     'remarks' => 'Keterangan',
                 ],
             ],
+        ],
+        'edit' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+        ],
+        'field' => [
+            'date' => '',
+            'name' => '',
+            'source_account' => '',
+            'category' => '',
+            'amount' => '',
+            'remarks' => '',
         ],
     ],
     'capital' => [

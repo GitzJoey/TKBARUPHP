@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\AccountingCash;
 use App\Model\AccountingCost;
 use App\Model\AccountingCostCategory;
 
@@ -25,7 +26,8 @@ class AccountingCostController extends Controller
 
     public function create()
     {
-        return view('accounting.cost.create');
+        $accountDDL = AccountingCash::get()->pluck('codeAndName', 'id');
+        return view('accounting.cost.create', compact('accountDDL'));
     }
 
     public function store()

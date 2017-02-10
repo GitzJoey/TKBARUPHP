@@ -41,7 +41,7 @@
                     @foreach ($capwith as $key => $cw)
                         <tr>
                             <td>{{ $cw->date }}</td>
-                            <td>{{ $cw->source_account }}</td>
+                            <td>{{ $cw->accountingCash->codeAndName }}</td>
                             <td>{{ $cw->amount }}</td>
                             <td>{{ $cw->remarks }}</td>
                         </tr>

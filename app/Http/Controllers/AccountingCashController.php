@@ -20,6 +20,7 @@ class AccountingCashController extends Controller
     public function index()
     {
         $acccash = AccountingCash::paginate(10);
+
         $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
         return view('accounting.cash.index', compact('acccash', 'typeDDL'));
@@ -52,6 +53,7 @@ class AccountingCashController extends Controller
         } else {
             AccountingCash::create([
                 'store_id' => Auth::user()->store->id,
+                'type' => $data['type'],
                 'name' => $data['name'],
                 'code' => $data['code'],
                 'status' => $data['status'],
@@ -83,6 +85,7 @@ class AccountingCashController extends Controller
             return redirect(route('db.acc.cash.edit'))->withInput()->withErrors($validator);
         } else {
             $acc = AccountingCash::find($id);
+            $acc->type = $req['type'];
             $acc->code = $req['code'];
             $acc->name = $req['name'];
             $acc->is_default = $req['is_default'] == 'on' ? true:false;

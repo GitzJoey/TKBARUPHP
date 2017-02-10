@@ -54,6 +54,8 @@ class AccountingCash extends Model
 
     protected $table = 'acc_cash';
 
+    protected $appends = ['codeAndName'];
+
     protected $fillable = [
         'store_id',
         'type',
@@ -75,6 +77,21 @@ class AccountingCash extends Model
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function getCodeAndNameAttribute()
+    {
+        return $this->attributes['name'].' ('.$this->attributes['code'].')';
+    }
+
+    public function accountingCapitalDeposits()
+    {
+        return $this->hasMany('App\Model\AccountingCapitalDeposit', 'destination_acc_cash_id');
+    }
+
+    public function accountingCapitalWithdrawals()
+    {
+        return $this->hasMany('App\Model\AccountingCapitalWithdrawal', 'source_acc_cash_id');
     }
 
     public static function boot()

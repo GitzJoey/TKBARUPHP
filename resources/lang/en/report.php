@@ -58,8 +58,8 @@ return [
         'page_title' => 'Monitoring',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Monitoring'
-        ]
+            'title' => 'Monitoring',
+        ],
     ],
     'tax' => [
         'title' => 'Report Management',
@@ -353,8 +353,8 @@ return [
                 'po_date' => 'PO Date',
                 'po_code' => 'PO Code',
                 'shipping_date' => 'Shipping Date',
-                'receipt_date' =>  'Receipt Date',
-                'supplier' => 'Supplier'
+                'receipt_date' => 'Receipt Date',
+                'supplier' => 'Supplier',
             ],
             'header' => [
                 'code' => 'Code',
@@ -371,7 +371,7 @@ return [
                 'quantity' => 'Quantity',
                 'unit' => 'Unit',
                 'price' => 'Price',
-                'total_price' => 'Total Price'
+                'total_price' => 'Total Price',
             ],
             'report_name' => 'Purchase Order Report',
             'footer' => 'Printed by :user on :date',
@@ -381,8 +381,11 @@ return [
                 'so_date' => 'SO Date',
                 'so_code' => 'SO Code',
                 'shipping_date' => 'Shipping Date',
-                'deliver_date' =>  'Deliver Date',
-                'customer' => 'Customer'
+                'deliver_date' => 'Deliver Date',
+                'customer' => 'Customer',
+                'receipt_date' => '',
+                'supplier' => '',
+                'po_date' => '',
             ],
             'header' => [
                 'code' => 'Code',
@@ -399,10 +402,10 @@ return [
                 'quantity' => 'Quantity',
                 'unit' => 'Unit',
                 'price' => 'Price',
-                'total_price' => 'Total Price'
+                'total_price' => 'Total Price',
             ],
             'report_name' => 'Sales Order Report',
             'footer' => 'Printed by :user on :date',
-        ]
+        ],
     ],
 ];

@@ -47,6 +47,11 @@ class AccountingCapitalWithdrawal extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function accountingCash()
+    {
+        return $this->belongsTo('App\Model\AccountingCash', 'source_acc_cash_id');
+    }
+
     public static function boot()
     {
         parent::boot();
