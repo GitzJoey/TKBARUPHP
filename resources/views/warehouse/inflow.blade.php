@@ -54,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="po in POs">
+                        <tr v-for="po in POs" v-cloak>
                             <td class="text-center">@{{ po.code }}</td>
                             <td class="text-center">@{{ po.po_created }}</td>
                             <td class="text-center">@{{ po.supplier_type == 'SUPPLIERTYPE.R' ? po.supplier.name:po.walk_in_supplier }}</td>
@@ -63,7 +63,7 @@
                                 <a class="btn btn-xs btn-primary" v-bind:href="'{{ route('db.warehouse.inflow') }}/' + po.id" title="Receipt"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
-                        <tr v-show="selectedWarehouse != '' && !POs.length">
+                        <tr v-show="selectedWarehouse != '' && !POs.length" v-cloak>
                             <td colspan="5" class="text-center animated shake">@lang('labels.DATA_NOT_FOUND')</td>
                         </tr>
                     </tbody>

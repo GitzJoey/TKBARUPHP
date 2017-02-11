@@ -54,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="so in SOs">
+                        <tr v-for="so in SOs" v-cloak>
                             <td class="text-center">@{{ so.code }}</td>
                             <td class="text-center">@{{ so.so_created }}</td>
                             <td class="text-center">@{{ so.customer_type == 'CUSTOMERTYPE.R' ? so.customer.name:so.walk_in_cust }}</td>
@@ -63,7 +63,7 @@
                                 <a class="btn btn-xs btn-primary" v-bind:href="'{{ route('db.warehouse.outflow') }}/' + so.id" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
-                        <tr v-show="selectedWarehouse != '' && !SOs.length">
+                        <tr v-show="selectedWarehouse != '' && !SOs.length" v-cloak>
                             <td colspan="5" class="text-center animated shake">@lang('labels.DATA_NOT_FOUND')</td>
                         </tr>
                     </tbody>

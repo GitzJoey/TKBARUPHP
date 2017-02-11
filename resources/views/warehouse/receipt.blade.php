@@ -128,21 +128,21 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input id="brutto_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="brutto[]" v-model="receipt.brutto"
+                                                    <input v-bind:id="'brutto_' + receipt.item.id" type="text" class="form-control text-right" name="brutto[]" v-model="receipt.brutto"
                                                            data-parsley-required="true"
                                                            data-parsley-type="number"
                                                            data-parsley-checkequal="@{{ receipt.item.id }}"
                                                            data-parsley-trigger="change">
                                                 </td>
                                                 <td>
-                                                    <input id="netto_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="netto[]" v-model="receipt.netto"
+                                                    <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]" v-model="receipt.netto"
                                                            data-parsley-required="true"
                                                            data-parsley-type="number"
                                                            data-parsley-checkequal="@{{ receipt.item.id }}"
                                                            data-parsley-trigger="change">
                                                 </td>
                                                 <td>
-                                                    <input id="tare_@{{ receipt.item.id }}" type="text" class="form-control text-right" name="tare[]" v-model="receipt.tare"
+                                                    <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]" v-model="receipt.tare"
                                                            data-parsley-required="true"
                                                            data-parsley-type="number"
                                                            data-parsley-checkequal="@{{ receipt.item.id }}"
