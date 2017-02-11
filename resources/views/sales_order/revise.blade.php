@@ -305,8 +305,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control text-right" name="price[]"
-                                                                v-model="item.price" data-parsley-required="true"
-                                                                data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
+                                                                v-model="item.price" data-parsley-required="true" autonumeric>
                                                         </td>
                                                         <td class="text-center">
                                                             @if($currentSo->status == 'SOSTATUS.WD')
@@ -358,64 +357,63 @@
                                         <div class="col-md-12">
                                             <table id="expensesListTable" class="table table-bordered table-hover">
                                                 <thead>
-                                                <tr>
-                                                    <th width="30%">@lang('sales_order.revise.table.expense.header.name')</th>
-                                                    <th width="20%"
-                                                        class="text-center">@lang('sales_order.revise.table.expense.header.type')</th>
-                                                    <th width="20%"
-                                                                class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>
-                                                    <th width="25%"
-                                                        class="text-center">@lang('sales_order.revise.table.expense.header.remarks')</th>
-                                                    <th width="5%">&nbsp;</th>
-                                                    <th width="20%"
-                                                        class="text-center">@lang('sales_order.revise.table.expense.header.amount')</th>
-                                                </tr>
+                                                    <tr>
+                                                        <th width="20%">@lang('sales_order.revise.table.expense.header.name')</th>
+                                                        <th width="20%"
+                                                            class="text-center">@lang('sales_order.revise.table.expense.header.type')</th>
+                                                        <th width="10%"
+                                                                    class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>
+                                                        <th width="25%"
+                                                            class="text-center">@lang('sales_order.revise.table.expense.header.remarks')</th>
+                                                        <th width="5%">&nbsp;</th>
+                                                        <th width="20%"
+                                                            class="text-center">@lang('sales_order.revise.table.expense.header.amount')</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr v-for="(expense, expenseIndex) in so.expenses">
-                                                    <td>
-                                                        <input type="hidden" name="expense_id[]" v-bind:value="expense.id"/>
-                                                        <input name="expense_name[]" type="text" class="form-control"
-                                                               v-model="expense.name"
-                                                               data-parsley-required="true" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
-                                                    </td>
-                                                    <td>
-                                                        @if($currentSo->status == 'SOSTATUS.WD')
-                                                            <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code">
-                                                            <select data-parsley-required="true"
-                                                                    class="form-control" v-model="expense.type">
-                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
-                                                            </select>
-                                                        @else
-                                                            <input type="text" class="form-control" readonly
-                                                                   v-bind:value="expense.type.description">
-                                                            <input type="hidden" name="expense_type[]"
-                                                                   v-bind:value="expense.type.code"/>
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center">
-                                                            <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
-                                                    </td>
-                                                    <td>
-                                                        <input name="expense_remarks[]" type="text" class="form-control"
-                                                               v-model="expense.remarks" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}/>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if($currentSo->status == 'SOSTATUS.WD')
-                                                            <button type="button" class="btn btn-danger btn-md"
-                                                                    v-on:click="removeExpense(expenseIndex)"><span
-                                                                        class="fa fa-minus"></span>
-                                                            </button>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input name="expense_amount[]" type="text"
-                                                               class="form-control text-right"
-                                                               v-model="expense.amount" data-parsley-required="true"
-                                                               data-parsley-pattern="^\d+(,\d+)?$"/>
-                                                    </td>
-                                                </tr>
+                                                    <tr v-for="(expense, expenseIndex) in so.expenses">
+                                                        <td>
+                                                            <input type="hidden" name="expense_id[]" v-bind:value="expense.id"/>
+                                                            <input name="expense_name[]" type="text" class="form-control"
+                                                                   v-model="expense.name"
+                                                                   data-parsley-required="true" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
+                                                        </td>
+                                                        <td>
+                                                            @if($currentSo->status == 'SOSTATUS.WD')
+                                                                <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code">
+                                                                <select data-parsley-required="true"
+                                                                        class="form-control" v-model="expense.type">
+                                                                    <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                    <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                                </select>
+                                                            @else
+                                                                <input type="text" class="form-control" readonly
+                                                                       v-bind:value="expense.type.description">
+                                                                <input type="hidden" name="expense_type[]"
+                                                                       v-bind:value="expense.type.code"/>
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-center" width="10%">
+                                                                <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
+                                                        </td>
+                                                        <td>
+                                                            <input name="expense_remarks[]" type="text" class="form-control"
+                                                                   v-model="expense.remarks" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}/>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if($currentSo->status == 'SOSTATUS.WD')
+                                                                <button type="button" class="btn btn-danger btn-md"
+                                                                        v-on:click="removeExpense(expenseIndex)"><span
+                                                                            class="fa fa-minus"></span>
+                                                                </button>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <input name="expense_amount[]" type="text"
+                                                                   class="form-control text-right"
+                                                                   v-model="expense.amount" data-parsley-required="true">
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>

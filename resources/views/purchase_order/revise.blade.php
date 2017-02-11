@@ -292,8 +292,7 @@
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control text-right" name="price[]"
-                                                               v-model="item.price" data-parsley-required="true"
-                                                               data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
+                                                               v-model="item.price" data-parsley-required="true">
                                                     </td>
                                                     <td class="text-center">
                                                         @if($currentPo->status == 'POSTATUS.WA')
@@ -345,10 +344,10 @@
                                             <table id="expensesListTable" class="table table-bordered table-hover">
                                                 <thead>
                                                 <tr>
-                                                    <th width="30%">@lang('purchase_order.revise.table.expense.header.name')</th>
+                                                    <th width="20%">@lang('purchase_order.revise.table.expense.header.name')</th>
                                                     <th width="20%"
                                                         class="text-center">@lang('purchase_order.revise.table.expense.header.type')</th>
-                                                    <th width="20%"
+                                                    <th width="10%"
                                                             class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>    
                                                     <th width="25%"
                                                         class="text-center">@lang('purchase_order.revise.table.expense.header.remarks')</th>
@@ -394,8 +393,7 @@
                                                     </td>
                                                     <td>
                                                         <input name="expense_amount[]" type="text" class="form-control text-right"
-                                                               v-model="expense.amount" data-parsley-required="true"
-                                                               data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"/>
+                                                               v-model="expense.amount" data-parsley-required="true"/>
                                                     </td>
                                                 </tr>
                                                 </tbody>
