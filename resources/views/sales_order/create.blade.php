@@ -354,10 +354,10 @@
                                                                     <table v-bind:id="'expensesListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
                                                                         <thead>
                                                                         <tr>
-                                                                            <th width="30%">@lang('sales_order.create.table.expense.header.name')</th>
+                                                                            <th width="20%">@lang('sales_order.create.table.expense.header.name')</th>
                                                                             <th width="20%"
                                                                                 class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
-                                                                            <th width="20%"
+                                                                            <th width="10%"
                                                                                 class="text-center">@lang('sales_order.create.table.expense.header.internal_expense')</th>
                                                                             <th width="25%"
                                                                                 class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>

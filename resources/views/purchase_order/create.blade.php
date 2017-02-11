@@ -334,10 +334,10 @@
                                             <table id="expensesListTable" class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th width="30%">@lang('purchase_order.create.table.expense.header.name')</th>
+                                                        <th width="20%">@lang('purchase_order.create.table.expense.header.name')</th>
                                                         <th width="20%"
                                                             class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
-                                                        <th width="20%"
+                                                        <th width="10%"
                                                             class="text-center">@lang('purchase_order.create.table.expense.header.internal_expense')</th>
                                                         <th width="25%"
                                                             class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
