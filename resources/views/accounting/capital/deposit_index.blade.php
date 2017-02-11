@@ -30,22 +30,22 @@
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center" width="20%">@lang('accounting.capital.deposit.index.table.header.date')</th>
-                    <th class="text-center" width="20%">@lang('accounting.capital.deposit.index.table.header.destination_account')</th>
-                    <th class="text-center" width="10%">@lang('accounting.capital.deposit.index.table.header.amount')</th>
-                    <th class="text-center" width="20%">@lang('accounting.capital.deposit.index.table.header.remarks')</th>
-                </tr>
+                    <tr>
+                        <th class="text-center" width="20%">@lang('accounting.capital.deposit.index.table.header.date')</th>
+                        <th class="text-center" width="20%">@lang('accounting.capital.deposit.index.table.header.destination_account')</th>
+                        <th class="text-center" width="10%">@lang('accounting.capital.deposit.index.table.header.amount')</th>
+                        <th class="text-center" width="20%">@lang('accounting.capital.deposit.index.table.header.remarks')</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach ($capdep as $key => $cd)
-                    <tr>
-                        <td>{{ $cd->date }}</td>
-                        <td>{{ $cd->accountingCash->name }} ({{ $cd->accountingCash->code }})</td>
-                        <td>{{ $cd->amount }}</td>
-                        <td>{{ $cd->remarks }}</td>
-                    </tr>
-                @endforeach
+                    @foreach ($capdep as $key => $cd)
+                        <tr>
+                            <td>{{ $cd->date }}</td>
+                            <td>{{ $cd->accountingCash->name }} ({{ $cd->accountingCash->code }})</td>
+                            <td>{{ $cd->amount }}</td>
+                            <td>{{ $cd->remarks }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -17,36 +17,54 @@
                 <a href="#">
                     <i class="fa fa-table fa-fw"></i> <span>@lang('menu.item.accounting')</span>
                     <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li class="{{ active_class(Active::checkRoutePattern('db.acc.cash') || Active::checkRoutePattern('db.acc.cash.*')) }}"><a href="{{ route('db.acc.cash') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash')</a></li>
-                    <li>
+                    <li class="{{ active_class(Active::checkRoutePattern('db.acc.capital.*')) }}">
                         <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital')
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('db.acc.capital.deposit.index') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital.deposit')</a></li>
-                            <li><a href="{{ route('db.acc.capital.withdrawal.index') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital.withdrawal')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.acc.capital.deposit.*')) }}"><a href="{{ route('db.acc.capital.deposit.index') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital.deposit')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.acc.capital.withdrawal.*')) }}"><a href="{{ route('db.acc.capital.withdrawal.index') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital.withdrawal')</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="{{ active_class( Active::checkRoutePattern('db.acc.cost') ||
+                                                Active::checkRoutePattern('db.acc.cost.*') ||
+                                                Active::checkRoutePattern('db.acc.cost.category') ||
+                                                Active::checkRoutePattern('db.acc.cost.category.*')) }}">
                         <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost')
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('db.acc.cost') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.cost')</a></li>
-                            <li><a href="{{ route('db.acc.cost.category') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.category')</a></li>
+                            <li class="{{ active_class( Active::checkRoutePattern('db.acc.cost') ||
+                                                        Active::checkRoutePattern('db.acc.cost.*')) }}">
+                                <a href="{{ route('db.acc.cost') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.cost')</a>
+                            </li>
+                            <li class="{{ active_class( Active::checkRoutePattern('db.acc.cost.category') ||
+                                                        Active::checkRoutePattern('db.acc.cost.category.*')) }}">
+                                <a href="{{ route('db.acc.cost.category') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.category')</a>
+                            </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="{{ active_class( Active::checkRoutePattern('db.acc.revenue') ||
+                                                Active::checkRoutePattern('db.acc.revenue.*') ||
+                                                Active::checkRoutePattern('db.acc.revenue.category') ||
+                                                Active::checkRoutePattern('db.acc.revenue.category.*')) }}">
                         <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue')
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ route('db.acc.revenue') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue.revenue')</a></li>
-                            <li><a href="{{ route('db.acc.revenue.category') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue.category')</a></li>
+                            <li class="{{ active_class( Active::checkRoutePattern('db.acc.revenue') ||
+                                                        Active::checkRoutePattern('db.acc.revenue.*')) }}">
+                                <a href="{{ route('db.acc.revenue') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue.revenue')</a>
+                            </li>
+                            <li class="{{ active_class( Active::checkRoutePattern('db.acc.revenue.category') ||
+                                                        Active::checkRoutePattern('db.acc.revenue.category.*')) }}">
+                                <a href="{{ route('db.acc.revenue.category') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue.category')</a>
+                            </li>
                         </ul>
                     </li>
                     <li><a href="{{ route('db.acc.cash_flow') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash_flow')</a></li>
