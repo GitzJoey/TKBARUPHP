@@ -13,4 +13,5 @@ return [
     'GENERAL_ERROR_TITLE' => 'Whoops!',
     'GENERAL_ERROR_DESC' => 'Ada masalah dengan masukan anda.',
     'DATA_NOT_FOUND' => 'Data tidak ditemukan.',
+    'CREATE_NEW' => 'Buat Baru',
 ];

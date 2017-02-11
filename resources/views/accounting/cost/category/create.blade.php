@@ -38,13 +38,13 @@
                 <div class="form-group">
                     <label for="inputGroup" class="col-sm-2 control-label">@lang('accounting.cost.category.field.group')</label>
                     <div class="col-sm-10">
-                        <select id="inputGroupSelect" class="form-control">
+                        <select id="inputGroupSelect" name="group_select" class="form-control">
+                            <option value="">@lang('labels.PLEASE_SELECT')</option>
                             @foreach ($groupdistinct as $g)
                                 <option value="{{ $g->group }}">{{ $g->group }}</option>
                             @endforeach
-                            <option value="">@lang('labels.SELECT_OTHER')</option>
                         </select>
-                        <input id="inputGroupText" name="group_text" type="text" class="form-control" placeholder="@lang('accounting.cost.category.field.group')" readonly>
+                        <input id="inputGroupText" name="group_text" type="text" class="form-control" placeholder="@lang('labels.CREATE_NEW')">
                     </div>
                 </div>
                 <div class="form-group">
