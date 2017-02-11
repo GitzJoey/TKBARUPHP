@@ -39,7 +39,7 @@ class PurchaseOrderCopyController extends Controller
         Log::info('PurchaseOrderCopyController@index');
         $request->session()->forget(['code', 'error']);
 
-        $po = PurchaseOrder::with('copies.supplier')->whereCode($poCode)->first();
+        $po = PurchaseOrder::with('copies.supplier')->whereCode(strtoupper($poCode))->first();
 
         Log::info($po);
 

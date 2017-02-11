@@ -43,7 +43,7 @@ class SalesOrderCopyController extends Controller
         Log::info('SalesOrderCopyController@index');
         $request->session()->forget(['code', 'error']);
 
-        $so = SalesOrder::with('copies.customer')->whereCode($soCode)->first();
+        $so = SalesOrder::with('copies.customer')->whereCode(strtoupper($soCode))->first();
 
         Log::info($so);
 

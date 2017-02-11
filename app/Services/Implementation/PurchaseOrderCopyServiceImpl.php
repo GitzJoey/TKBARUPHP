@@ -48,7 +48,7 @@ class PurchaseOrderCopyServiceImpl implements PurchaseOrderCopyService
             $poToBeCopied = PurchaseOrder::whereCode($poCode)->first();
 
             $params = [
-                'code' => $request->input('code'),
+                'code' => strtoupper($request->input('code')),
                 'remarks' => $request->input('remarks'),
                 'main_po_id' => $poToBeCopied->id,
                 'main_po_code' => $poToBeCopied->code,

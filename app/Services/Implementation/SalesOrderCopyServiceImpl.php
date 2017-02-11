@@ -46,7 +46,7 @@ class SalesOrderCopyServiceImpl implements SalesOrderCopyService
             $soToBeCopied = SalesOrder::whereCode($soCode)->first();
 
             $params = [
-                'code' => $request->input('code'),
+                'code' => strtoupper($request->input('code')),
                 'remarks' => $request->input('remarks'),
                 'main_so_id' => $soToBeCopied->id,
                 'main_so_code' => $soToBeCopied->code,
