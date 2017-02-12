@@ -52,7 +52,7 @@
                 <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
                     <label for="inputCategory" class="col-sm-2 control-label">@lang('accounting.cost.field.category')</label>
                     <div class="col-sm-5">
-
+                        {{ Form::select('category', $costGroup, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'),'data-parsley-required' => 'true' )) }}
                         <span class="help-block">{{ $errors->has('category') ? $errors->first('category') : '' }}</span>
                     </div>
                 </div>

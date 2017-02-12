@@ -45,6 +45,16 @@ class AccountingCostCategory extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function getGroupAndNameAttribute()
+    {
+        return $this->attributes['group'].' - '.$this->attributes['name'];
+    }
+
+    public function accountingCosts()
+    {
+        $this->hasMany('App\Model\AccountingCost', 'acc_cost_category_id');
+    }
+
     public static function boot()
     {
         parent::boot();

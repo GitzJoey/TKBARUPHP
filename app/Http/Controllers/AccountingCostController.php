@@ -27,7 +27,9 @@ class AccountingCostController extends Controller
     public function create()
     {
         $accountDDL = AccountingCash::get()->pluck('codeAndName', 'id');
-        return view('accounting.cost.create', compact('accountDDL'));
+        $costGroup = AccountingCostCategory::get()->pluck('groupAndName', 'id');
+
+        return view('accounting.cost.create', compact('accountDDL', 'costGroup'));
     }
 
     public function store()

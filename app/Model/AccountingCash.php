@@ -94,6 +94,11 @@ class AccountingCash extends Model
         return $this->hasMany('App\Model\AccountingCapitalWithdrawal', 'source_acc_cash_id');
     }
 
+    public function accountingCosts()
+    {
+        return $this->hasMany('App\Model\AccountingCost', 'source_acc_cash_id');
+    }
+
     public static function boot()
     {
         parent::boot();

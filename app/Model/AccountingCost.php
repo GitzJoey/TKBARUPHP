@@ -48,6 +48,16 @@ class AccountingCost extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function sourceAccountingCash()
+    {
+        return $this->belongsTo('App\Model\AccountingCash', 'source_acc_cash_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Model\AccountingCostCategory', 'acc_cost_category_id');
+    }
+
     public static function boot()
     {
         parent::boot();
