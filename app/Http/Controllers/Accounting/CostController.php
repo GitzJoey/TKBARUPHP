@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Accounting;
 
-use App\Model\AccountingCash;
-use App\Model\AccountingCost;
-use App\Model\AccountingCostCategory;
+use App\Model\Accounting\Cost;
+use App\Model\Accounting\CashAccount;
+use App\Model\Accounting\CostCategory;
 
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
 use Vinkla\Hashids\Facades\Hashids;
+use App\Http\Controllers\Controller;
 
-class AccountingCostController extends Controller
+class CostController extends Controller
 {
     public function __construct()
     {
@@ -20,14 +21,14 @@ class AccountingCostController extends Controller
 
     public function index()
     {
-        $costlist = AccountingCost::paginate(10);
+        $costlist = Cost::paginate(10);
         return view('accounting.cost.index', compact('costlist'));
     }
 
     public function create()
     {
-        $accountDDL = AccountingCash::get()->pluck('codeAndName', 'id');
-        $costGroup = AccountingCostCategory::get()->pluck('groupAndName', 'id');
+        $accountDDL = CashAccount::get()->pluck('codeAndName', 'id');
+        $costGroup = CostCategory::get()->pluck('groupAndName', 'id');
 
         return view('accounting.cost.create', compact('accountDDL', 'costGroup'));
     }
@@ -49,21 +50,21 @@ class AccountingCostController extends Controller
 
     public function categoryIndex()
     {
-        $costcat = AccountingCostCategory::paginate(10);
+        $costcat = CostCategory::paginate(10);
 
         return view('accounting.cost.category.index', compact('costcat'));
     }
 
     public function categoryShow($id)
     {
-        $cc = AccountingCostCategory::find($id);
+        $cc = CostCategory::find($id);
 
         return view('accounting.cost.category.show', compact('cc'));
     }
 
     public function categoryCreate()
     {
-        $groupdistinct = AccountingCostCategory::select('group')->groupBy('group')->get();
+        $groupdistinct = CostCategory::select('group')->groupBy('group')->get();
 
         return view('accounting.cost.category.create', compact('groupdistinct'));
     }
@@ -77,7 +78,7 @@ class AccountingCostController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.cost.category.create'))->withInput()->withErrors($validator);
         } else {
-            AccountingCostCategory::create([
+            CostCategory::create([
                 'store_id' => Auth::user()->store->id,
                 'name' => $data['name'],
                 'group' => empty($data['group_select']) ? $data['group_text']:'',
@@ -89,7 +90,7 @@ class AccountingCostController extends Controller
 
     public function categoryEdit($id)
     {
-        $cc = AccountingCostCategory::find($id);
+        $cc = CostCategory::find($id);
         $groupdistinct = AccountingCostCategory::select(['group', 'group'])->groupBy('group')->get();
 
         return view('accounting.cost.category.edit', compact('cc', 'groupdistinct'));
@@ -104,7 +105,7 @@ class AccountingCostController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.cost.category.edit', Hashids::encode($id)))->withInput()->withErrors($validator);
         } else {
-            $acc = AccountingCostCategory::find($id);
+            $acc = CostCategory::find($id);
             $acc->group = empty($data['group_select']) ? $data['group_text']:'';
             $acc->name = $data['name'];
 
@@ -116,7 +117,7 @@ class AccountingCostController extends Controller
 
     public function categoryDelete($id)
     {
-        AccountingCostCategory::find($id)->delete();
+        CostCategory::find($id)->delete();
         return redirect(route('db.acc.cost.category'));
     }
 }

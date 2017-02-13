@@ -6,7 +6,7 @@
  * Time: 11:57 PM
  */
 
-namespace App\Model;
+namespace App\Model\Accounting;
 
 use App\Traits\StoreFilter;
 
@@ -43,8 +43,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\AccountingCash whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read mixed $code_and_name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\CapitalDeposit[] $accountingCapitalDeposits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\CapitalWithdrawal[] $accountingCapitalWithdrawals
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\Cost[] $accountingCosts
  */
-class AccountingCash extends Model
+class CashAccount extends Model
 {
     use SoftDeletes;
 
@@ -86,17 +90,17 @@ class AccountingCash extends Model
 
     public function accountingCapitalDeposits()
     {
-        return $this->hasMany('App\Model\AccountingCapitalDeposit', 'destination_acc_cash_id');
+        return $this->hasMany('App\Model\Accounting\CapitalDeposit', 'destination_acc_cash_id');
     }
 
     public function accountingCapitalWithdrawals()
     {
-        return $this->hasMany('App\Model\AccountingCapitalWithdrawal', 'source_acc_cash_id');
+        return $this->hasMany('App\Model\Accounting\CapitalWithdrawal', 'source_acc_cash_id');
     }
 
     public function accountingCosts()
     {
-        return $this->hasMany('App\Model\AccountingCost', 'source_acc_cash_id');
+        return $this->hasMany('App\Model\Accounting\Cost', 'source_acc_cash_id');
     }
 
     public static function boot()

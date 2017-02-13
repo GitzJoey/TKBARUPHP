@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Accounting;
 
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class AccountingCashFlowController extends Controller
+class CashFlowController extends Controller
 {
     public function __construct()
     {
@@ -15,7 +16,9 @@ class AccountingCashFlowController extends Controller
 
     public function index()
     {
-        return view('accounting.cash_flow.index');
+        $cashflow = [];
+
+        return view('accounting.cash_flow.index', compact('cashflow'));
     }
 
     public function show($id)

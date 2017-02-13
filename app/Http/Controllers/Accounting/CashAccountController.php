@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Accounting;
 
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-use App\Model\AccountingCash;
+use App\Model\Accounting\CashAccount;
 
 use App\Repos\LookupRepo;
 
-class AccountingCashController extends Controller
+class CashAccountController extends Controller
 {
     public function __construct()
     {
@@ -19,7 +20,7 @@ class AccountingCashController extends Controller
 
     public function index()
     {
-        $acccash = AccountingCash::paginate(10);
+        $acccash = CashAccount::paginate(10);
 
         $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
@@ -28,7 +29,7 @@ class AccountingCashController extends Controller
 
     public function show($id)
     {
-        $acccash = AccountingCash::find($id);
+        $acccash = CashAccount::find($id);
 
         return view('accounting.cash.show', compact('acccash'));
     }
@@ -51,7 +52,7 @@ class AccountingCashController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.cash.create'))->withInput()->withErrors($validator);
         } else {
-            AccountingCash::create([
+            CashAccount::create([
                 'store_id' => Auth::user()->store->id,
                 'type' => $data['type'],
                 'name' => $data['name'],
@@ -66,7 +67,7 @@ class AccountingCashController extends Controller
 
     public function edit($id)
     {
-        $acccash = AccountingCash::find($id);
+        $acccash = CashAccount::find($id);
 
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
@@ -84,7 +85,7 @@ class AccountingCashController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.cash.edit'))->withInput()->withErrors($validator);
         } else {
-            $acc = AccountingCash::find($id);
+            $acc = CashAccount::find($id);
             $acc->type = $req['type'];
             $acc->code = $req['code'];
             $acc->name = $req['name'];
@@ -99,7 +100,7 @@ class AccountingCashController extends Controller
 
     public function delete($id)
     {
-        AccountingCash::find($id)->delete();
+        CashAccount::find($id)->delete();
         return redirect(route('db.acc.cash'));
     }
 }

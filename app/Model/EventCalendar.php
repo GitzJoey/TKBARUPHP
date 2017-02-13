@@ -42,6 +42,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read mixed $start
+ * @property-read mixed $title
+ * @property-read mixed $end
  */
 class EventCalendar extends Model
 {

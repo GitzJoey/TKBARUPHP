@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Lookup whereDescription($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Lookup whereCategory($value)
  * @mixin \Eloquent
+ * @property-read mixed $i18n_description
  */
 class Lookup extends Model
 {
