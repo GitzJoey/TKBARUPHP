@@ -56,7 +56,7 @@ class CashAccount extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'acc_cash';
+    protected $table = 'acc_cash_account';
 
     protected $appends = ['codeAndName'];
 

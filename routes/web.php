@@ -43,67 +43,67 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         Route::group(['prefix' => 'acc'], function() {
             Route::group(['prefix' => 'cash'], function() {
-                Route::get('', 'AccountingCashController@index')->name('db.acc.cash');
-                Route::get('show/{id}', 'AccountingCashController@show')->name('db.acc.cash.show');
-                Route::get('create', 'AccountingCashController@create')->name('db.acc.cash.create');
-                Route::post('create', 'AccountingCashController@store');
-                Route::get('edit/{id}', 'AccountingCashController@edit')->name('db.acc.cash.edit');
-                Route::patch('edit/{id}', 'AccountingCashController@update');
-                Route::delete('edit/{id}', 'AccountingCashController@delete')->name('db.acc.cash.delete');
+                Route::get('', 'Accounting\CashAccountController@index')->name('db.acc.cash');
+                Route::get('show/{id}', 'Accounting\CashAccountController@show')->name('db.acc.cash.show');
+                Route::get('create', 'Accounting\CashAccountController@create')->name('db.acc.cash.create');
+                Route::post('create', 'Accounting\CashAccountController@store');
+                Route::get('edit/{id}', 'Accounting\CashAccountController@edit')->name('db.acc.cash.edit');
+                Route::patch('edit/{id}', 'Accounting\CashAccountController@update');
+                Route::delete('edit/{id}', 'Accounting\CashAccountController@delete')->name('db.acc.cash.delete');
             });
 
             Route::group(['prefix' => 'capital'], function() {
-                Route::get('list/deposit', 'AccountingCapitalController@listDeposit')->name('db.acc.capital.deposit.index');
-                Route::get('/add/deposit', 'AccountingCapitalController@addDeposit')->name('db.acc.capital.deposit.add');
-                Route::post('/add/deposit', 'AccountingCapitalController@saveDeposit');
-                Route::get('list/withdrawal', 'AccountingCapitalController@listWithdrawal')->name('db.acc.capital.withdrawal.index');
-                Route::get('/add/withdrawal', 'AccountingCapitalController@addWithdrawal')->name('db.acc.capital.withdrawal.add');
-                Route::post('/add/withdrawal', 'AccountingCapitalController@saveWithdrawal');
+                Route::get('list/deposit', 'Accounting\CapitalController@listDeposit')->name('db.acc.capital.deposit.index');
+                Route::get('/add/deposit', 'Accounting\CapitalController@addDeposit')->name('db.acc.capital.deposit.add');
+                Route::post('/add/deposit', 'Accounting\CapitalController@saveDeposit');
+                Route::get('list/withdrawal', 'Accounting\CapitalController@listWithdrawal')->name('db.acc.capital.withdrawal.index');
+                Route::get('/add/withdrawal', 'Accounting\CapitalController@addWithdrawal')->name('db.acc.capital.withdrawal.add');
+                Route::post('/add/withdrawal', 'Accounting\CapitalController@saveWithdrawal');
             });
 
             Route::group(['prefix' => 'cost'], function() {
-                Route::get('', 'AccountingCostController@index')->name('db.acc.cost');
-                Route::get('create', 'AccountingCostController@create')->name('db.acc.cost.create');
-                Route::post('create', 'AccountingCostController@store');
-                Route::get('edit/{id}', 'AccountingCostController@edit')->name('db.acc.cost.edit');
-                Route::patch('edit/{id}', 'AccountingCostController@update');
+                Route::get('', 'Accounting\CostController@index')->name('db.acc.cost');
+                Route::get('create', 'Accounting\CostController@create')->name('db.acc.cost.create');
+                Route::post('create', 'Accounting\CostController@store');
+                Route::get('edit/{id}', 'Accounting\CostController@edit')->name('db.acc.cost.edit');
+                Route::patch('edit/{id}', 'Accounting\CostController@update');
 
                 Route::group(['prefix' => 'category'], function() {
-                    Route::get('', 'AccountingCostController@categoryIndex')->name('db.acc.cost.category');
-                    Route::get('show/{id}', 'AccountingCostController@categoryShow')->name('db.acc.cost.category.show');
-                    Route::get('create', 'AccountingCostController@categoryCreate')->name('db.acc.cost.category.create');
-                    Route::post('create', 'AccountingCostController@categoryStore');
-                    Route::get('edit/{id}', 'AccountingCostController@categoryEdit')->name('db.acc.cost.category.edit');
-                    Route::patch('edit/{id}', 'AccountingCostController@categoryUpdate');
-                    Route::delete('edit/{id}', 'AccountingCostController@categoryDelete')->name('db.acc.cost.category.delete');
+                    Route::get('', 'Accounting\CostController@categoryIndex')->name('db.acc.cost.category');
+                    Route::get('show/{id}', 'Accounting\CostController@categoryShow')->name('db.acc.cost.category.show');
+                    Route::get('create', 'Accounting\CostController@categoryCreate')->name('db.acc.cost.category.create');
+                    Route::post('create', 'Accounting\CostController@categoryStore');
+                    Route::get('edit/{id}', 'Accounting\CostController@categoryEdit')->name('db.acc.cost.category.edit');
+                    Route::patch('edit/{id}', 'Accounting\CostController@categoryUpdate');
+                    Route::delete('edit/{id}', 'AccountingC\ostController@categoryDelete')->name('db.acc.cost.category.delete');
                 });
             });
 
             Route::group(['prefix' => 'revenue'], function() {
-                Route::get('', 'AccountingRevenueController@index')->name('db.acc.revenue');
-                Route::get('create', 'AccountingRevenueController@create')->name('db.acc.revenue.create');
-                Route::post('create', 'AccountingRevenueController@store');
-                Route::get('edit/{id}', 'AccountingRevenueController@edit')->name('db.acc.revenue.edit');
-                Route::patch('edit/{id}', 'AccountingRevenueController@update');
+                Route::get('', 'Accounting\RevenueController@index')->name('db.acc.revenue');
+                Route::get('create', 'Accounting\RevenueController@create')->name('db.acc.revenue.create');
+                Route::post('create', 'Accounting\RevenueController@store');
+                Route::get('edit/{id}', 'Accounting\RevenueController@edit')->name('db.acc.revenue.edit');
+                Route::patch('edit/{id}', 'Accounting\RevenueController@update');
 
                 Route::group(['prefix' => 'category'], function() {
-                    Route::get('', 'AccountingRevenueController@categoryIndex')->name('db.acc.revenue.category');
-                    Route::get('show/{id}', 'AccountingRevenueController@categoryShow')->name('db.acc.revenue.category.show');
-                    Route::get('create', 'AccountingRevenueController@categoryCreate')->name('db.acc.revenue.category.create');
-                    Route::post('create', 'AccountingRevenueController@categoryStore');
-                    Route::get('edit/{id}', 'AccountingRevenueController@categoryEdit')->name('db.acc.revenue.category.edit');
-                    Route::patch('edit/{id}', 'AccountingRevenueController@categoryUpdate');
-                    Route::delete('edit/{id}', 'AccountingRevenueController@categoryDelete')->name('db.acc.revenue.category.delete');
+                    Route::get('', 'Accounting\RevenueController@categoryIndex')->name('db.acc.revenue.category');
+                    Route::get('show/{id}', 'Accounting\RevenueController@categoryShow')->name('db.acc.revenue.category.show');
+                    Route::get('create', 'Accounting\RevenueController@categoryCreate')->name('db.acc.revenue.category.create');
+                    Route::post('create', 'Accounting\RevenueController@categoryStore');
+                    Route::get('edit/{id}', 'Accounting\RevenueController@categoryEdit')->name('db.acc.revenue.category.edit');
+                    Route::patch('edit/{id}', 'Accounting\RevenueController@categoryUpdate');
+                    Route::delete('edit/{id}', 'Accounting\RevenueController@categoryDelete')->name('db.acc.revenue.category.delete');
                 });
             });
 
             Route::group(['prefix' => 'cash_flow'], function() {
-                Route::get('', 'AccountingCashFlowController@index')->name('db.acc.cash_flow');
-                Route::get('show/{id}', 'AccountingCashFlowController@show')->name('db.acc.cash_flow.show');
-                Route::get('create', 'AccountingCashFlowController@create')->name('db.acc.cash_flow.create');
-                Route::post('create', 'AccountingCashFlowController@store');
-                Route::get('edit/{id}', 'AccountingCashFlowController@edit')->name('db.acc.cash_flow.edit');
-                Route::patch('edit/{id}', 'AccountingCashFlowController@update');
+                Route::get('', 'Accounting\CashFlowController@index')->name('db.acc.cash_flow');
+                Route::get('show/{id}', 'Accounting\CashFlowController@show')->name('db.acc.cash_flow.show');
+                Route::get('create', 'Accounting\CashFlowController@create')->name('db.acc.cash_flow.create');
+                Route::post('create', 'Accounting\CashFlowController@store');
+                Route::get('edit/{id}', 'Accounting\CashFlowController@edit')->name('db.acc.cash_flow.edit');
+                Route::patch('edit/{id}', 'Accounting\CashFlowController@update');
             });
         });
 
