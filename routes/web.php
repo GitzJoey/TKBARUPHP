@@ -99,6 +99,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'cash_flow'], function() {
                 Route::get('', 'AccountingCashFlowController@index')->name('db.acc.cash_flow');
+                Route::get('show/{id}', 'AccountingCashFlowController@show')->name('db.acc.cash_flow.show');
+                Route::get('create', 'AccountingCashFlowController@create')->name('db.acc.cash_flow.create');
+                Route::post('create', 'AccountingCashFlowController@store');
+                Route::get('edit/{id}', 'AccountingCashFlowController@edit')->name('db.acc.cash_flow.edit');
+                Route::patch('edit/{id}', 'AccountingCashFlowController@update');
             });
         });
 
