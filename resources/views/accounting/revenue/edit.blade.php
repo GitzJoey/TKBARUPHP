@@ -30,50 +30,43 @@
 
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">@lang('employee.create.header.title')</h3>
+            <h3 class="box-title">@lang('accounting.revenue.edit.header.title')</h3>
         </div>
         <form class="form-horizontal" action="{{ route('db.acc.revenue.edit', $r->hId()) }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
-                    <label for="inputDate" class="col-sm-2 control-label">@lang('accounting.revenue.field.date')</label>
+                    <label for="inputDate" class="col-sm-2 control-label">@lang('accounting.revenue.edit.field.date')</label>
                     <div class="col-sm-10">
-                        <input id="inputDate" name="name" type="text" class="form-control" placeholder="@lang('accounting.revenue.field.name')" data-parsley-required="true">
+                        <input id="inputDate" name="name" type="text" class="form-control" placeholder="@lang('accounting.revenue.edit.field.name')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('date') ? $errors->first('date') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('source_account') ? 'has-error' : '' }}">
-                    <label for="inputSourceAccount" class="col-sm-2 control-label">@lang('accounting.revenue.field.source_account')</label>
+                    <label for="inputSourceAccount" class="col-sm-2 control-label">@lang('accounting.revenue.edit.field.source_account')</label>
                     <div class="col-sm-10">
 
                         <span class="help-block">{{ $errors->has('source_account') ? $errors->first('source_account') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
-                    <label for="inputCategory" class="col-sm-2 control-label">@lang('accounting.revenue.field.category')</label>
+                    <label for="inputCategory" class="col-sm-2 control-label">@lang('accounting.revenue.edit.field.category')</label>
                     <div class="col-sm-5">
 
                         <span class="help-block">{{ $errors->has('category') ? $errors->first('category') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
-                    <label for="inputAmount" class="col-sm-2 control-label">@lang('accounting.revenue.field.amount')</label>
+                    <label for="inputAmount" class="col-sm-2 control-label">@lang('accounting.revenue.edit.field.amount')</label>
                     <div class="col-sm-5">
-                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.revenue.field.amount')" data-parsley-required="true" autonumeric>
+                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.revenue.edit.field.amount')" data-parsley-required="true" autonumeric>
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('accounting.revenue.field.remarks')</label>
+                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('accounting.revenue.edit.field.remarks')</label>
                     <div class="col-sm-5">
-                        <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('accounting.revenue.field.remarks')">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputButton" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                        <a href="{{ route('db.acc.cost') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.create_new_button')</button>
+                        <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('accounting.revenue.edit.field.remarks')">
                     </div>
                 </div>
                 <div class="form-group">

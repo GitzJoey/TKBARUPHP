@@ -119,8 +119,6 @@ class StoreServiceImpl implements StoreService
             ->orWhereNull('image_filename')
             ->get();
 
-        Log::info('testing');
-
         return $storeList;
     }
 

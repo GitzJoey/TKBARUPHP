@@ -32,7 +32,8 @@
                         </ul>
                     </li>
                     <li class="{{ active_class( Active::checkRoutePattern('db.acc.cost') ||
-                                                Active::checkRoutePattern('db.acc.cost.*') ||
+                                                Active::checkRoutePattern('db.acc.cost.create') ||
+                                                Active::checkRoutePattern('db.acc.cost.edit') ||
                                                 Active::checkRoutePattern('db.acc.cost.category') ||
                                                 Active::checkRoutePattern('db.acc.cost.category.*')) }}">
                         <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost')
@@ -40,7 +41,8 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="{{ active_class( Active::checkRoutePattern('db.acc.cost') ||
-                                                        Active::checkRoutePattern('db.acc.cost.*')) }}">
+                                                        Active::checkRoutePattern('db.acc.cost.create') ||
+                                                        Active::checkRoutePattern('db.acc.cost.edit')) }}">
                                 <a href="{{ route('db.acc.cost') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cost.cost')</a>
                             </li>
                             <li class="{{ active_class( Active::checkRoutePattern('db.acc.cost.category') ||
@@ -50,7 +52,8 @@
                         </ul>
                     </li>
                     <li class="{{ active_class( Active::checkRoutePattern('db.acc.revenue') ||
-                                                Active::checkRoutePattern('db.acc.revenue.*') ||
+                                                Active::checkRoutePattern('db.acc.revenue.create') ||
+                                                Active::checkRoutePattern('db.acc.revenue.edit') ||
                                                 Active::checkRoutePattern('db.acc.revenue.category') ||
                                                 Active::checkRoutePattern('db.acc.revenue.category.*')) }}">
                         <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue')
@@ -58,7 +61,8 @@
                         </a>
                         <ul class="treeview-menu">
                             <li class="{{ active_class( Active::checkRoutePattern('db.acc.revenue') ||
-                                                        Active::checkRoutePattern('db.acc.revenue.*')) }}">
+                                                        Active::checkRoutePattern('db.acc.revenue.create') ||
+                                                        Active::checkRoutePattern('db.acc.revenue.edit')) }}">
                                 <a href="{{ route('db.acc.revenue') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.revenue.revenue')</a>
                             </li>
                             <li class="{{ active_class( Active::checkRoutePattern('db.acc.revenue.category') ||
