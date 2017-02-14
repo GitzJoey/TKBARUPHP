@@ -67,14 +67,12 @@ class SalesOrderPaymentController extends Controller
     {
         Log::info('[SalesOrderController@saveCashPayment]');
  
-        $payment = $this->paymentService->createCashPayment($request);
-
         $currentSo = SalesOrder::find($id);
+        $paymentDate = date('Y-m-d', strtotime($request->input('payment_date')));
+        $paymentAmount = floatval(str_replace(',', '', $request->input('total_amount')));
 
-        $currentSo->payments()->save($payment);
-
-        $currentSo->updatePaymentStatus();
-
+        $this->paymentService->createCashPayment($currentSo, $paymentDate, $paymentAmount);
+        
         return redirect(route('db.so.payment.index'));
     }
 

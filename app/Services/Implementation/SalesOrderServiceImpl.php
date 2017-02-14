@@ -21,6 +21,8 @@ use App\Model\SalesOrder;
 use App\Model\Stock;
 use App\Model\StockOut;
 
+use App\Services\PaymentService;
+
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -32,6 +34,13 @@ use App\Services\SalesOrderService;
 class SalesOrderServiceImpl implements SalesOrderService
 {
 
+    private $paymentService;
+
+    public function __construct(PaymentService $paymentService)
+    {
+        $this->paymentService = $paymentService;
+    }
+    
     /**
      * Save(create) a newly sales order. The saved(created) sales order will be returned.
      * Multiple sales orders can be created at once and all of them will be saved to user session as an array by default.
@@ -100,7 +109,7 @@ class SalesOrderServiceImpl implements SalesOrderService
                 $so->expenses()->save($expense);
             }
 
-            // If auto cash, create cash payment immediately (Should be refactored).
+            // If auto cash, create cash payment immediately.
             if($so->so_type === 'SOTYPE.AC'){
                 $items = $so->items;
 
@@ -148,21 +157,7 @@ class SalesOrderServiceImpl implements SalesOrderService
                     }
                 }
                 
-                $paymentParam = [
-                    'payment_date' => $so->so_created,
-                    'total_amount' => $so->totalAmount(),
-                    'status' => 'CASHPAYMENTSTATUS.C',
-                    'type' => 'PAYMENTTYPE.C'
-                ];
-
-                $payment = Payment::create($paymentParam);
-
-                $cashPayment = new CashPayment();
-                $cashPayment->save();
-                $cashPayment->payment()->save($payment);
-
-                $so->payments()->save($payment);
-                $so->updatePaymentStatus();
+                $this->paymentService->createCashPayment($so, $so->so_created, $so->totalAmount());
             }
 
             $userSOs = session('userSOs');
