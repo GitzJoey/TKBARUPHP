@@ -38,21 +38,29 @@
                 <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
                     <label for="inputDate" class="col-sm-2 control-label">@lang('accounting.cost.field.date')</label>
                     <div class="col-sm-10">
-                        <input id="inputDate" name="name" type="text" class="form-control" placeholder="@lang('accounting.cost.field.name')" data-parsley-required="true">
+                        <input id="inputDate" name="date" type="text" class="form-control" placeholder="@lang('accounting.cost.field.date')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('date') ? $errors->first('date') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('source_account') ? 'has-error' : '' }}">
                     <label for="inputSourceAccount" class="col-sm-2 control-label">@lang('accounting.cost.field.source_account')</label>
                     <div class="col-sm-10">
-
+                        <select name="type" class="form-control">
+                            @foreach($accountDDL as $key => $value)
+                                <option value="{{ $key }}" {{ $c->source_acc_cash_id == $key ? 'selected':'' }}>{{ $value }}</option>
+                            @endforeach
+                        </select>
                         <span class="help-block">{{ $errors->has('source_account') ? $errors->first('source_account') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
                     <label for="inputCategory" class="col-sm-2 control-label">@lang('accounting.cost.field.category')</label>
                     <div class="col-sm-5">
-
+                        <select name="type" class="form-control">
+                            @foreach($costGroup as $key => $value)
+                                <option value="{{ $key }}" {{ $c->acc_cost_category_id == $key ? 'selected':'' }}>{{ $value }}</option>
+                            @endforeach
+                        </select>
                         <span class="help-block">{{ $errors->has('category') ? $errors->first('category') : '' }}</span>
                     </div>
                 </div>

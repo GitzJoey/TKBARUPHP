@@ -149,7 +149,7 @@ return [
                 'page_title' => 'Revenue Category',
                 'page_title_desc' => '',
                 'header' => [
-                    'title' => '',
+                    'title' => 'Revenue Category Lists',
                 ],
                 'table' => [
                     'header' => [
@@ -205,17 +205,43 @@ return [
             ],
         ],
         'edit' => [
-            'title' => '',
-            'page_title' => '',
+            'title' => 'Revenue',
+            'page_title' => 'Revenue',
             'page_title_desc' => '',
+            'header' => [
+                'title' => 'Edit Revenue',
+            ],
+            'field' => [
+                'date' => 'Date',
+                'name' => 'Name',
+                'source_account' => 'Source Account',
+                'category' => 'Category',
+                'amount' => 'Amount',
+                'remarks' => 'Remarks',
+            ],
         ],
         'field' => [
-            'date' => '',
-            'name' => '',
-            'source_account' => '',
-            'category' => '',
-            'amount' => '',
-            'remarks' => '',
+            'date' => 'Date',
+            'name' => 'Name',
+            'source_account' => 'Source Account',
+            'category' => 'Category',
+            'amount' => 'Amount',
+            'remarks' => 'Remarks',
+        ],
+        'create' => [
+            'page_title' => 'Revenue',
+            'page_title_desc' => 'Revenue',
+            'header' => [
+                'title' => 'Create Revenue',
+            ],
+            'field' => [
+                'date' => 'Date',
+                'name' => 'Name',
+                'source_account' => 'Source Account',
+                'category' => 'Category',
+                'amount' => 'Amount',
+                'remarks' => 'Remarks',
+            ],
         ],
     ],
     'capital' => [

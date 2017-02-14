@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-01-29.
+    * Generated on 2017-02-13.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -152,6 +152,9 @@ namespace PHPSTORM_META {
             'App\Services\StoreService' instanceof \App\Services\Implementation\StoreServiceImpl,
             'App\Services\SupplierService' instanceof \App\Services\Implementation\SupplierServiceImpl,
             'App\Services\WarehouseService' instanceof \App\Services\Implementation\WarehouseServiceImpl,
+            'App\Services\SettingService' instanceof \App\Services\Implementation\SettingServiceImpl,
+            'App\Services\DatabaseService' instanceof \App\Services\Implementation\DatabaseServiceImpl,
+            'App\Services\AccountingService' instanceof \App\Services\Implementation\AccountingServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -301,6 +304,9 @@ namespace PHPSTORM_META {
             'App\Services\StoreService' instanceof \App\Services\Implementation\StoreServiceImpl,
             'App\Services\SupplierService' instanceof \App\Services\Implementation\SupplierServiceImpl,
             'App\Services\WarehouseService' instanceof \App\Services\Implementation\WarehouseServiceImpl,
+            'App\Services\SettingService' instanceof \App\Services\Implementation\SettingServiceImpl,
+            'App\Services\DatabaseService' instanceof \App\Services\Implementation\DatabaseServiceImpl,
+            'App\Services\AccountingService' instanceof \App\Services\Implementation\AccountingServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -450,6 +456,9 @@ namespace PHPSTORM_META {
             'App\Services\StoreService' instanceof \App\Services\Implementation\StoreServiceImpl,
             'App\Services\SupplierService' instanceof \App\Services\Implementation\SupplierServiceImpl,
             'App\Services\WarehouseService' instanceof \App\Services\Implementation\WarehouseServiceImpl,
+            'App\Services\SettingService' instanceof \App\Services\Implementation\SettingServiceImpl,
+            'App\Services\DatabaseService' instanceof \App\Services\Implementation\DatabaseServiceImpl,
+            'App\Services\AccountingService' instanceof \App\Services\Implementation\AccountingServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -599,6 +608,9 @@ namespace PHPSTORM_META {
             'App\Services\StoreService' instanceof \App\Services\Implementation\StoreServiceImpl,
             'App\Services\SupplierService' instanceof \App\Services\Implementation\SupplierServiceImpl,
             'App\Services\WarehouseService' instanceof \App\Services\Implementation\WarehouseServiceImpl,
+            'App\Services\SettingService' instanceof \App\Services\Implementation\SettingServiceImpl,
+            'App\Services\DatabaseService' instanceof \App\Services\Implementation\DatabaseServiceImpl,
+            'App\Services\AccountingService' instanceof \App\Services\Implementation\AccountingServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,

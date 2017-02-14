@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Accounting;
 
-use App\Model\AccountingRevenue;
-use App\Model\AccountingRevenueCategory;
+use App\Model\Accounting\Revenue;
+use App\Model\Accounting\RevenueCategory;
 
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class AccountingRevenueController extends Controller
+class RevenueController extends Controller
 {
     public function __construct()
     {
@@ -18,7 +19,7 @@ class AccountingRevenueController extends Controller
 
     public function index()
     {
-        $revlist = AccountingRevenue::paginate(10);
+        $revlist = Revenue::paginate(10);
         return view('accounting.revenue.index', compact('revlist'));
     }
 
@@ -44,21 +45,21 @@ class AccountingRevenueController extends Controller
 
     public function categoryIndex()
     {
-        $revcat = AccountingRevenueCategory::paginate(10);
+        $revcat = RevenueCategory::paginate(10);
 
         return view('accounting.revenue.category.index', compact('revcat'));
     }
 
     public function categoryShow($id)
     {
-        $rc = AccountingRevenueCategory::find($id);
+        $rc = RevenueCategory::find($id);
 
         return view('accounting.revenue.category.show', compact('rc'));
     }
 
     public function categoryCreate()
     {
-        $groupdistinct = AccountingRevenueCategory::select(['group', 'group'])->groupBy('group')->get();
+        $groupdistinct = RevenueCategory::select(['group', 'group'])->groupBy('group')->get();
 
         return view('accounting.revenue.category.create', compact('groupdistinct'));
     }
@@ -72,7 +73,7 @@ class AccountingRevenueController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.revenue.category.create'))->withInput()->withErrors($validator);
         } else {
-            AccountingRevenueCategory::create([
+            RevenueCategory::create([
                 'store_id' => Auth::user()->store->id,
                 'name' => $data['name'],
                 'group' => empty($data['group_select']) ? $data['group_text']:'',
@@ -84,8 +85,8 @@ class AccountingRevenueController extends Controller
 
     public function categoryEdit($id)
     {
-        $rc = AccountingRevenueCategory::find($id);
-        $groupdistinct = AccountingRevenueCategory::select(['group', 'group'])->groupBy('group')->get();
+        $rc = RevenueCategory::find($id);
+        $groupdistinct = RevenueCategory::select(['group', 'group'])->groupBy('group')->get();
 
         return view('accounting.revenue.category.edit', compact('rc', 'groupdistinct'));
     }
@@ -99,7 +100,7 @@ class AccountingRevenueController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.revenue.category.edit', Hashids::encode($id)))->withInput()->withErrors($validator);
         } else {
-            $ac = AccountingRevenueCategory::find($id);
+            $ac = RevenueCategory::find($id);
             $ac->group = empty($data['group_select']) ? $data['group_text']:'';
             $ac->name = $data['name'];
 
@@ -111,7 +112,7 @@ class AccountingRevenueController extends Controller
 
     public function categoryDelete($id)
     {
-        AccountingRevenueCategory::find($id)->delete();
+        RevenueCategory::find($id)->delete();
         return redirect(route('db.acc.revenue.category'));
     }
 }

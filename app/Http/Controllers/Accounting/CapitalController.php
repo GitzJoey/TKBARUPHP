@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Accounting;
+
 
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
-use App\Model\AccountingCapitalDeposit;
-use App\Model\AccountingCapitalWithdrawal;
+use App\Http\Controllers\Controller;
 
-use App\Model\AccountingCash;
+use App\Model\Accounting\CashAccount;
+use App\Model\Accounting\CapitalDeposit;
+use App\Model\Accounting\CapitalWithdrawal;
 
-class AccountingCapitalController extends Controller
+class CapitalController extends Controller
 {
     public function __construct()
     {
@@ -19,14 +21,14 @@ class AccountingCapitalController extends Controller
 
     public function listDeposit()
     {
-        $capdep = AccountingCapitalDeposit::paginate(10);
+        $capdep = CapitalDeposit::paginate(10);
 
         return view('accounting.capital.deposit_index', compact('capdep'));
     }
 
     public function addDeposit()
     {
-        $accountDDL = AccountingCash::get()->pluck('codeAndName', 'id');
+        $accountDDL = CashAccount::get()->pluck('codeAndName', 'id');
         return view('accounting.capital.deposit', compact('accountDDL'));
     }
 
@@ -41,7 +43,7 @@ class AccountingCapitalController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.capital.deposit.create'))->withInput()->withErrors($validator);
         } else {
-            AccountingCapitalDeposit::create([
+            CapitalDeposit::create([
                 'store_id' => Auth::user()->store->id,
                 'date' => date('Y-m-d', strtotime($data['date'])),
                 'destination_acc_cash_id' => $data['destination_account'],
@@ -55,14 +57,14 @@ class AccountingCapitalController extends Controller
 
     public function listWithdrawal()
     {
-        $capwith = AccountingCapitalWithdrawal::paginate(10);
+        $capwith = CapitalWithdrawal::paginate(10);
 
         return view('accounting.capital.withdrawal_index', compact('capwith'));
     }
 
     public function addWithdrawal()
     {
-        $accountDDL = AccountingCash::get()->pluck('codeAndName', 'id');
+        $accountDDL = CashAccount::get()->pluck('codeAndName', 'id');
 
         return view('accounting.capital.withdrawal', compact('accountDDL'));
     }
@@ -78,7 +80,7 @@ class AccountingCapitalController extends Controller
         if ($validator->fails()) {
             return redirect(route('db.acc.capital.withdrawal.create'))->withInput()->withErrors($validator);
         } else {
-            AccountingCapitalWithdrawal::create([
+            CapitalWithdrawal::create([
                 'store_id' => Auth::user()->store->id,
                 'date' => date('Y-m-d', strtotime($data['date'])),
                 'source_acc_cash_id' => $data['source_account'],

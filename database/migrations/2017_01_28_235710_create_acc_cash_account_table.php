@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccCashTable extends Migration
+class CreateAccCashAccountTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAccCashTable extends Migration
      */
     public function up()
     {
-        Schema::create('acc_cash', function(Blueprint $table) {
+        Schema::create('acc_cash_account', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->string('type')->nullable();
@@ -36,6 +36,6 @@ class CreateAccCashTable extends Migration
      */
     public function down()
     {
-        Schema::drop('acc_cash');
+        Schema::drop('acc_cash_account');
     }
 }
