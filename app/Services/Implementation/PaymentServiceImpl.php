@@ -9,31 +9,32 @@ use App\Model\Payment;
 use App\Model\TransferPayment;
 use App\Services\PaymentService;
 
+use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentServiceImpl implements PaymentService {
 
-    public function createCashPayment(Request $request)
+    public function createCashPayment($payable, $paymenDate, $paymentAmount)
     {
-        $paymentParam = [
-            'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
-            'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
-            'status' => 'CASHPAYMENTSTATUS.C',
-            'type' => 'PAYMENTTYPE.C'
-        ];
+        DB::transaction(function() use ($payable, $paymenDate, $paymentAmount){
+            $payment = $this->createBasicPayment($paymentDate, $paymentAmount, 'CASHPAYMENTSTATUS.C', 'PAYMENTTYPE.C');
 
-        $payment = Payment::create($paymentParam);
+            $cashPayment = new CashPayment();
+            $cashPayment->save();
+            $cashPayment->payment()->save($payment);
 
-        $cashPayment = new CashPayment();
-        $cashPayment->save();
-        $cashPayment->payment()->save($payment);
+            $payable->payments()->save($payment);
+            $payable->updatePaymentStatus();
 
-        return $payment;
+            return $payment;
+        });
     }
 
     public function createTransferPayment(Request $request)
     {
         $paymentParam = [
+            'store_id' => Auth::user()->store_id,
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
             'total_amount' => floatval(str_replace(',', '', $request->input('total_amount'))),
             'status' => 'TRFPAYMENTSTATUS.UNCONFIRMED',
@@ -54,11 +55,13 @@ class PaymentServiceImpl implements PaymentService {
     public function createGiroPayment(Request $request, Giro $giro)
     {
         $paymentParam = [
+            'store_id' => Auth::user()->store_id,
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
             'total_amount' => floatval(str_replace(',', '', $request->input('amount'))),
             'status' => 'GIROPAYMENTSTATUS.WE',
             'type' => 'PAYMENTTYPE.G'
         ];
+        
         $payment = Payment::create($paymentParam);
 
         $giroPayment = new GiroPayment();
@@ -67,5 +70,18 @@ class PaymentServiceImpl implements PaymentService {
         $giroPayment->payment()->save($payment);
 
         return $payment;
+    }
+
+    private function createBasicPayment($paymentDate, $paymentAmount, $paymentStatus, $paymentType)
+    {
+        $paymentParam = [
+            'store_id' => Auth::user()->store_id,
+            'payment_date' => $paymentDate,
+            'total_amount' => $paymentAmount,
+            'status' => $paymentStatus,
+            'type' => $paymentType
+        ];
+
+        return Payment::create($paymentParam);
     }
 }

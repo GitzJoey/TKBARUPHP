@@ -264,18 +264,18 @@
                                                 <tbody>
                                                 <tr v-for="(item, itemIndex) in po.items">
                                                     <input type="hidden" name="item_id[]" v-bind:value="item.id">
-                                                    <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                    <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
                                                     <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
                                                     <td class="valign-middle">@{{ item.product.name }}</td>
                                                     <td>
                                                         <input type="text" class="form-control text-right"
                                                                data-parsley-required="true" data-parsley-type="number"
-                                                               name="quantity[]"
+                                                               name="item_quantity[]"
                                                                v-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}>
                                                     </td>
                                                     <td>
                                                         @if($currentPo->status == 'POSTATUS.WA')
-                                                            <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
+                                                            <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
                                                             <select data-parsley-required="true"
                                                                     class="form-control"
                                                                     v-model="item.selected_unit"
@@ -286,12 +286,12 @@
                                                         @else
                                                             <input type="text" class="form-control" readonly
                                                                    v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
-                                                            <input type="hidden" name="selected_unit_id[]"
+                                                            <input type="hidden" name="item_selected_unit_id[]"
                                                                    v-bind:value="item.selected_unit.unit.id">
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control text-right" name="price[]"
+                                                        <input type="text" class="form-control text-right" name="item_price[]"
                                                                v-model="item.price" data-parsley-required="true">
                                                     </td>
                                                     <td class="text-center">

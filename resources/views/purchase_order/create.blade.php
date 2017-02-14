@@ -261,18 +261,18 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="(item, itemIndex) in po.items">
-                                                        <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                        <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
                                                         <input type="hidden" name="base_unit_id[]"
                                                                v-bind:value="item.base_unit.unit.id">
                                                         <td class="valign-middle">@{{ item.product.name }}</td>
                                                         <td>
                                                             <input type="text" class="form-control text-right"
-                                                                   name="quantity[]"
+                                                                   name="item_quantity[]"
                                                                    v-model="item.quantity" data-parsley-required="true"
                                                                    data-parsley-type="number">
                                                         </td>
                                                         <td>
-                                                            <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
+                                                            <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
                                                             <select data-parsley-required="true"
                                                                     class="form-control"
                                                                     v-model="item.selected_unit"
@@ -283,7 +283,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control text-right"
-                                                                   name="price[]"
+                                                                   name="item_price[]"
                                                                    v-model="item.price" data-parsley-required="true"
                                                                    data-parsley-pattern="^\d+(,\d+)?$"/>
                                                         </td>
@@ -522,11 +522,11 @@
                                 product: _.cloneDeep(product),
                                 selected_unit: {
                                     unit: {
-                                        id: ''
+                                        id: 0
                                     },
                                     conversion_value: 1
                                 },
-                                base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                                base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
                                 quantity: 0,
                                 price: 0
                             });
@@ -623,7 +623,7 @@
                     defaultProductUnit: function(){
                         return {
                             unit: {
-                                id: ''
+                                id: 0
                             },
                             conversion_value: 1
                         };
@@ -635,6 +635,23 @@
                     }
                 }
             });
+
+            @if(old('item_product_id'))
+                @foreach(old('item_product_id') as $key => $productId)
+                    var product = _.cloneDeep(_.find(poApp.productDDL, {id: {{ old("item_product_id.$key") }}}));
+                    var productUnit = _.cloneDeep(_.find(product.product_units, function(pu){
+                        return pu.unit.id == {{ old("item_selected_unit_id.$key") }};
+                    }));
+
+                    poApp.po.items.push({
+                        product: product,
+                        selected_unit: productUnit,
+                        base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
+                        quantity: {{ old("item_quantity.$key") }},
+                        price: {{ old("item_price.$key") }}
+                    });
+                @endforeach
+            @endif
 
             function isBase(unit) {
                 return unit.is_base == 1;

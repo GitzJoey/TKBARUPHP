@@ -69,13 +69,11 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@saveCashPayment]');
 
-        $payment = $this->paymentService->createCashPayment($request);
-
         $currentPo = PurchaseOrder::find($id);
+        $paymentDate = date('Y-m-d', strtotime($request->input('payment_date')));
+        $paymentAmount = floatval(str_replace(',', '', $request->input('total_amount')));
 
-        $currentPo->payments()->save($payment);
-
-        $currentPo->updatePaymentStatus();
+        $this->paymentService->createCashPayment($currentPo, $paymentDate, $paymentAmount);
 
         return redirect(route('db.po.payment.index'));
     }

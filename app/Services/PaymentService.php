@@ -14,12 +14,14 @@ use Illuminate\Http\Request;
 interface PaymentService
 {
     /**
-     * Make a cash payment.
+     * Make a cash payment for given payable.
      *
-     * @param Request $request request containing data for cash payment.
-     * @return Payment created cash payment.
+     * @param mixed $payable payable object (SalesOrder and PurchaseOrder). *Should be bounded to an interface later
+     * @param mixed $paymentDate date of payment.
+     * @param float $paymentAmount amount of payment.
+     * @return Payment 
      */
-    public function createCashPayment(Request $request);
+    public function createCashPayment($payable, $paymentDate, $paymentAmount);
 
     /**
      * Make a transfer payment.

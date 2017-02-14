@@ -60,18 +60,18 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
 
             $po = PurchaseOrder::create($params);
 
-            for ($i = 0; $i < count($request->input('product_id')); $i++) {
+            for ($i = 0; $i < count($request->input('item_product_id')); $i++) {
                 $item = new Item();
-                $item->product_id = $request->input("product_id.$i");
+                $item->product_id = $request->input("item_product_id.$i");
                 $item->store_id = Auth::user()->store_id;
-                $item->selected_unit_id = $request->input("selected_unit_id.$i");
+                $item->selected_unit_id = $request->input("item_selected_unit_id.$i");
                 $item->base_unit_id = $request->input("base_unit_id.$i");
                 $item->conversion_value = ProductUnit::where([
                     'product_id' => $item->product_id,
                     'unit_id' => $item->selected_unit_id
                 ])->first()->conversion_value;
-                $item->quantity = $request->input("quantity.$i");
-                $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
+                $item->quantity = $request->input("item_quantity.$i");
+                $item->price = floatval(str_replace(',', '', $request->input("item_price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $po->items()->save($item);
@@ -139,16 +139,16 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
 
             for ($i = 0; $i < count($request->input('item_id')); $i++) {
                 $item = Item::findOrNew($request->input("item_id.$i"));
-                $item->product_id = $request->input("product_id.$i");
+                $item->product_id = $request->input("item_product_id.$i");
                 $item->store_id = Auth::user()->store_id;
-                $item->selected_unit_id = $request->input("selected_unit_id.$i");
+                $item->selected_unit_id = $request->input("item_selected_unit_id.$i");
                 $item->base_unit_id = $request->input("base_unit_id.$i");
                 $item->conversion_value = ProductUnit::where([
                     'product_id' => $item->product_id,
                     'unit_id' => $item->selected_unit_id
                 ])->first()->conversion_value;
-                $item->quantity = $request->input("quantity.$i");
-                $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
+                $item->quantity = $request->input("item_quantity.$i");
+                $item->price = floatval(str_replace(',', '', $request->input("item_price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $currentPo->items()->save($item);
