@@ -94,9 +94,27 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'supplier_id' => [
+            'required_if' => 'Supplier must be selected'
+        ], 
+        'walk_in_supplier' => [
+            'required_if' => 'Supplier name must be inputed'
         ],
+        'warehouse_id' => [
+            'required' => 'Warehouse must be selected'
+        ],
+        'item_product_id' => [
+            'required' => 'At least one item is required'
+        ],
+        'item_selected_unit_id.*' => [
+            'required' => 'Item unit must be selected'
+        ],
+        'item_quantity.*' => [
+            'required' => 'Item quantity is required'
+        ],
+        'item_price.*' => [
+            'required' => 'Item price is required'
+        ]
     ],
 
     /*
