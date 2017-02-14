@@ -41,7 +41,8 @@
     "parsleyjs": "^2.5.0",
     "pdfjs-dist": "^1.6.377 ",
     "pdfobject": "^2.0.201604172",
+    "select2": "^4.0.3",
     "tooltipster": "^4.1.6",
-    "select2": "^4.0.3"
+    "urijs": "^1.18.7"
   }
 }
