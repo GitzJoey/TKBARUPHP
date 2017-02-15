@@ -89,7 +89,7 @@ class WarehouseOutflowController extends Controller
         $so->status = 'SOSTATUS.WCC';
         $so->save();
 
-        return redirect(route('db.warehouse.outflow.index'));
+        return redirect(route('db.warehouse.outflow.index', array('w' => $request->input('warehouse_id'))));
     }
 
     public function getWarehouseSOs(Request $request, $id)
