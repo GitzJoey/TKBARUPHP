@@ -85,14 +85,20 @@
                 },
                 methods: {
                     getWarehousePOs: function (selectedWarehouse) {
+                        console.log(this.selectedWarehouse.id);
                         this.POs = [];
                         this.$http.get('{{ route('api.warehouse.inflow.po') }}/' + this.selectedWarehouse.id).then(function(data) {
                             this.POs = data.data;
                         });
+                    },
+                    loadWarehouse: function(w) {
+                        if (w == undefined || w == null) return;
+                        this.selectedWarehouse = _.find(this.warehouseDDL, function(wh) { return wh.id == w; });
+                        this.getWarehousePOs(this.selectedWarehouse);
                     }
                 },
                 mounted: function() {
-
+                    this.loadWarehouse(new URI().query(true)['w']);
                 }
             });
         });

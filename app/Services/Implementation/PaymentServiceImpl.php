@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentServiceImpl implements PaymentService {
 
-    public function createCashPayment($payable, $paymenDate, $paymentAmount)
+    public function createCashPayment($payable, $paymentDate, $paymentAmount)
     {
-        DB::transaction(function() use ($payable, $paymenDate, $paymentAmount){
+        DB::transaction(function() use ($payable, $paymentDate, $paymentAmount){
             $payment = $this->createBasicPayment($paymentDate, $paymentAmount, 'CASHPAYMENTSTATUS.C', 'PAYMENTTYPE.C');
 
             $cashPayment = new CashPayment();
