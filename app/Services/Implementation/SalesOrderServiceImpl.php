@@ -8,23 +8,23 @@
 
 namespace App\Services\Implementation;
 
-use App\Model\Customer;
-use App\Model\CashPayment;
+use App\Model\Item;
+use App\Model\Stock;
+use App\Model\Lookup;
 use App\Model\Deliver;
 use App\Model\Expense;
-use App\Model\Item;
-use App\Model\Lookup;
 use App\Model\Product;
-use App\Model\ProductUnit;
 use App\Model\Payment;
-use App\Model\SalesOrder;
-use App\Model\Stock;
+use App\Model\Customer;
 use App\Model\StockOut;
+use App\Model\SalesOrder;
+use App\Model\CashPayment;
+use App\Model\ProductUnit;
 
 use App\Services\PaymentService;
 
-use Carbon\Carbon;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;

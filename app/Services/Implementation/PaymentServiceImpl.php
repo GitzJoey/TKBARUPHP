@@ -1,12 +1,13 @@
 <?php
 namespace App\Services\Implementation;
 
-use App\Model\CashPayment;
 use App\Model\Giro;
-use App\Model\GiroPayment;
 use App\Model\Lookup;
 use App\Model\Payment;
+use App\Model\CashPayment;
+use App\Model\GiroPayment;
 use App\Model\TransferPayment;
+
 use App\Services\PaymentService;
 
 use DB;
@@ -15,9 +16,9 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentServiceImpl implements PaymentService {
 
-    public function createCashPayment($payable, $paymenDate, $paymentAmount)
+    public function createCashPayment($payable, $paymentDate, $paymentAmount)
     {
-        DB::transaction(function() use ($payable, $paymenDate, $paymentAmount){
+        DB::transaction(function() use ($payable, $paymentDate, $paymentAmount){
             $payment = $this->createBasicPayment($paymentDate, $paymentAmount, 'CASHPAYMENTSTATUS.C', 'PAYMENTTYPE.C');
 
             $cashPayment = new CashPayment();
