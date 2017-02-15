@@ -36,9 +36,7 @@ class StockServiceImpl implements StockService
 
         //Assign today prices additional attribute
         $stocks = collect($stocks->map(function ($stock){
-            return array_merge([
-                'today_prices' => $stock->todayPrices()
-            ], $stock->toArray());
+            return array_merge(['today_prices' => $stock->todayPrices()], $stock->toArray());
         })->all());
 
         return $stocks;
@@ -51,6 +49,13 @@ class StockServiceImpl implements StockService
      */
     public function getCurrentStocks()
     {
-        return Stock::with('product')->get();
+        $stocks = Stock::with('product')->get();
+
+        //Assign latest prices additional attribute
+        $stocks = collect($stocks->map(function ($stock){
+            return array_merge(['latest_prices' => $stock->latestPrices()], $stock->toArray());
+        })->all());
+
+        return $stocks;
     }
 }
