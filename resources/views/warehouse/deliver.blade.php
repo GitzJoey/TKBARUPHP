@@ -147,7 +147,7 @@
                 <div class="btn-toolbar">
                     <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                     <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.outflow.index') }}" >@lang('buttons.cancel_button')</a>
+                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.outflow.index', array('w' => $so->warehouse->id)) }}" >@lang('buttons.cancel_button')</a>
                 </div>
             </div>
         </div>
