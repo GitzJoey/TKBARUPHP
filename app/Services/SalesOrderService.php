@@ -124,5 +124,12 @@ interface SalesOrderService
      * @param Carbon
      * @return Collection
      */
-    public function getAllCreatedSOFromDate($date);
+    public function getCreatedSOFromDate($date);
+
+    /**
+     * Get all sales order that already delivered but still waiting for customer confirmation.
+     *
+     * @return Collection
+     */
+    public function getUncorfirmedSO();
 }

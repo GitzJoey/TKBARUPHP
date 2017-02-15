@@ -461,10 +461,20 @@ class SalesOrderServiceImpl implements SalesOrderService
      * @param Carbon
      * @return Collection
      */
-    public function getAllCreatedSOFromDate($date)
+    public function getCreatedSOFromDate($date)
     {
         $startDate = $date->copy()->startOfDay();
 
         return SalesOrder::where('so_created', '>=', $startDate)->get();
+    }
+
+    /**
+     * Get all sales order that already delivered but still waiting for customer confirmation.
+     *
+     * @return Collection
+     */
+    public function getUncorfirmedSO()
+    {
+        return SalesOrder::where('status', '=', 'SOSTATUS.WCC')->get();
     }
 }

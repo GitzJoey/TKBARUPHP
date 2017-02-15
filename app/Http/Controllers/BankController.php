@@ -27,7 +27,7 @@ class BankController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['getLastBankUpload']]);
     }
 
     public function index()
@@ -77,14 +77,6 @@ class BankController extends Controller
         }
     }
 
-    public function upload()
-    {
-        $bankDDL = LookupRepo::findByCategory('BANKUPLOAD')->pluck('description', 'code');
-        $bankUploads = BankUpload::all();
-
-        return view('bank.upload', compact('bankDDL', 'bankUploads'));
-    }
-
     public function edit($id)
     {
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
@@ -103,6 +95,14 @@ class BankController extends Controller
     {
         Bank::find($id)->delete();
         return redirect(route('db.master.bank'));
+    }
+
+    public function upload()
+    {
+        $bankDDL = LookupRepo::findByCategory('BANKUPLOAD')->pluck('description', 'code');
+        $bankUploads = BankUpload::all();
+
+        return view('bank.upload', compact('bankDDL', 'bankUploads'));
     }
 
     public function storeUpload(Request $data)
@@ -151,5 +151,10 @@ class BankController extends Controller
 
         $data->session()->flash('success', 'Upload success.');
         return redirect()->action('BankController@upload');
+    }
+
+    public function getLastBankUpload()
+    {
+        return BankUpload::orderBy('created_at', 'desc')->take(1)->get();
     }
 }

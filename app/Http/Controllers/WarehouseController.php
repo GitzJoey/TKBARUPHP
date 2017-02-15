@@ -29,7 +29,7 @@ class WarehouseController extends Controller
 
     public function __construct(WarehouseService $warehouseService)
     {
-        $this->middleware('auth', ['except' => 'isUnfinishedWarehouseExist']);
+        $this->middleware('auth', ['except' => ['isUnfinishedWarehouseExist', 'getLastStockOpname']]);
         $this->warehouseService = $warehouseService;
     }
 
@@ -209,5 +209,10 @@ class WarehouseController extends Controller
         return response()->json([
            'return' => $this->warehouseService->isUnfinishedWarehouseExist() ? 'true':'false'
         ]);
+    }
+
+    public function getLastStockOpname()
+    {
+        return StockOpname::orderBy('opname_date', 'desc')->take(1)->get();
     }
 }
