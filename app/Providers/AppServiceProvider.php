@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Implementation\CustomerServiceImpl;
+use App\Services\Implementation\GiroServiceImpl;
 use App\Services\Implementation\InflowServiceImpl;
 use App\Services\Implementation\PaymentServiceImpl;
 use App\Services\Implementation\ProductServiceImpl;
@@ -21,6 +22,7 @@ use App\Services\Implementation\DatabaseServiceImpl;
 use App\Services\Implementation\AccountingServiceImpl;
 
 use App\Services\CustomerService;
+use App\Services\GiroService;
 use App\Services\InflowService;
 use App\Services\PaymentService;
 use App\Services\ProductService;
@@ -63,6 +65,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(CustomerService::class, function (){
             return new CustomerServiceImpl();
+        });
+
+        $this->app->singleton(GiroService::class, function (){
+            return new GiroServiceImpl();
         });
 
         $this->app->singleton(InflowService::class, function (){
@@ -139,6 +145,7 @@ class AppServiceProvider extends ServiceProvider
     {
         return [
             'App\Services\CustomerService',
+            'App\Services\GiroService',
             'App\Services\InflowService',
             'App\Services\PaymentService',
             'App\Services\ProductService',

@@ -14,12 +14,16 @@ use Illuminate\Http\Request;
 
 use App\Model\Bank;
 use App\Model\Giro;
+use App\Services\GiroService;
 
 class GiroController extends Controller
 {
-    public function __construct()
+    private $giroService;
+
+    public function __construct(GiroService $giroService)
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['getDueGiro']]);
+        $this->giroService = $giroService;
     }
 
     public function index()
@@ -111,5 +115,10 @@ class GiroController extends Controller
     {
 
         return redirect(route('db.bank.giro'));
+    }
+
+    public function getDueGiro()
+    {
+        return $this->giroService->getDueGiro();
     }
 }

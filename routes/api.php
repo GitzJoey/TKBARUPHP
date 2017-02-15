@@ -13,34 +13,47 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
+Route::get('user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
 Route::group(['prefix' => 'secure/api', 'middleware' => 'auth:api'], function() {
-    Route::post('/user/set_settings', 'StoreController@applySettings')->name('api.user.apply_settings');
+    Route::post('user/set_settings', 'StoreController@applySettings')->name('api.user.apply_settings');
 });
 
-Route::get('/po/code', function () {
+Route::get('po/code', function () {
     return \App\Util\POCodeGenerator::generateCode();
 })->name('api.po.code');
 
-Route::get('/so/code', function () {
+Route::get('so/code', function () {
     return \App\Util\SOCodeGenerator::generateCode();
 })->name('api.so.code');
 
 Route::group(['prefix' => 'warehouse'], function () {
     Route::group(['prefix' => 'outflow'], function () {
-        Route::get('/so/{id?}', 'WarehouseOutflowController@getWarehouseSOs')->name('api.warehouse.outflow.so');
+        Route::get('so/{id?}', 'WarehouseOutflowController@getWarehouseSOs')->name('api.warehouse.outflow.so');
     });
-
     Route::group(['prefix' => 'inflow'], function () {
-        Route::get('/po/{id?}', 'WarehouseInflowController@getWarehousePOs')->name('api.warehouse.inflow.po');
+        Route::get('po/{id?}', 'WarehouseInflowController@getWarehousePOs')->name('api.warehouse.inflow.po');
+    });
+    Route::group(['prefix' => 'stock_opname'], function () {
+        Route::get('last', 'WarehouseController@getLastStockOpname')->name('api.warehouse.stock_opname.last');
     });
 });
 
+Route::group(['prefix' => 'bank'], function () {
+    Route::group(['prefix' => 'upload'], function () {
+        Route::get('last', 'BankController@getLastBankUpload')->name('api.bank.upload.last');
+    });
+});
+
+Route::group(['prefix' => 'giro'], function () {
+    Route::get('due_giro', 'GiroController@getDueGiro')->name('api.giro.due_giro');
+});
+
 Route::group(['prefix' => 'customer'], function () {
-    Route::get('search', 'CustomerController@searchCustomers')->name('api.customer.search');
+    Route::get('search_customer', 'CustomerController@searchCustomers')->name('api.customer.search');
+    Route::get('passive_customer', 'CustomerController@getPassiveCustomer')->name('api.customer.passive_customer');
 });
 
 Route::group(['prefix' => 'phone_provider'], function() {
@@ -63,8 +76,8 @@ Route::group(['prefix' => 'stock'], function() {
     Route::get('current_stocks', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
 });
 
-Route::get('/user/get/calendar', 'CalendarController@retrieveEvents')->name('api.user.get.calendar');
+Route::get('user/get/calendar', 'CalendarController@retrieveEvents')->name('api.user.get.calendar');
 
-Route::get('/get/unfinish/store', 'StoreController@isUnfinishedStoreExist')->name('api.get.unfinish.store');
+Route::get('get/unfinish/store', 'StoreController@isUnfinishedStoreExist')->name('api.get.unfinish.store');
 
-Route::get('/get/unfinish/warehouse', 'WarehouseController@isUnfinishedWarehouseExist')->name('api.get.unfinish.warehouse');
+Route::get('get/unfinish/warehouse', 'WarehouseController@isUnfinishedWarehouseExist')->name('api.get.unfinish.warehouse');
