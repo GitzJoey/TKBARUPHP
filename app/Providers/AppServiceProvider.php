@@ -94,7 +94,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(SalesOrderService::class, function (){
-            return new SalesOrderServiceImpl();
+            return new SalesOrderServiceImpl($this->app->make('App\Services\PaymentService'));
         });
 
         $this->app->singleton(StockService::class, function (){
