@@ -13,5 +13,5 @@ interface GiroService
      * @param int $dayToDue number of days before giro is due.
      * @return Collection
      */
-    public function getAlmostDueGiro($dayToDue = 1);
+    public function getDueGiro($dayToDue = 1);
 }

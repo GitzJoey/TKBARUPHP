@@ -37,7 +37,8 @@ class CustomerController extends Controller
         $this->customerService = $customerService;
         $this->middleware('auth', [ 
             'except' => [ 
-                'searchCustomers'
+                'searchCustomers',
+                'getPassiveCustomer'
             ] 
         ]);
     }
@@ -462,7 +463,7 @@ class CustomerController extends Controller
                       ->orWhere('last_name', 'like', "%$param%");
         })->get();
 
-        // Assign additional attribute like customer unpaid sales order amount
+        // Assign additional attribute, unpaid sales order amount
         // and its last sales order.
         $customers = collect($customers->map(function ($customer){
             return array_merge([
@@ -472,5 +473,10 @@ class CustomerController extends Controller
         })->all());
 
         return $customers;           
+    }
+
+    public function getPassiveCustomer()
+    {
+        return $this->customerService->getPassiveCustomer();
     }
 }

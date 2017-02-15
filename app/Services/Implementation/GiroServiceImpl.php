@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Impl;
+namespace App\Services\Implementation;
 
 use App\Model\Giro;
 
@@ -17,7 +17,7 @@ class GiroServiceImpl implements GiroService
      * @param int $dayToDue number of days before giro is due.
      * @return Collection
      */
-    public function getAlmostDueGiro($dayToDue = 1)
+    public function getDueGiro($dayToDue = 1)
     {
         $avaiableGiros = Giro::where('status', '<>', 'GIROSTATUS.R')->get();
 
