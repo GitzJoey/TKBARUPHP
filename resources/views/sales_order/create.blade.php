@@ -153,7 +153,7 @@
                                                                             <i class="fa fa-calendar"></i>
                                                                         </div>
                                                                         <input type="text" class="form-control inputSoDate" v-bind:id="'inputSoDate_' + (soIndex + 1)"
-                                                                               name="so_created[]" data-parsley-required="true" v-bind:value="so.so_created">
+                                                                               name="so_created[]" data-parsley-required="true">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -182,7 +182,7 @@
                                                                             <i class="fa fa-calendar"></i>
                                                                         </div>
                                                                         <input type="text" class="form-control inputShippingDate" v-bind:id="'inputShippingDate_' + (soIndex + 1)"
-                                                                               name="shipping_date[]" data-parsley-required="true" v-bind:value="so.shipping_date">
+                                                                               name="shipping_date[]" data-parsley-required="true">
                                                                     </div>
                                                                 </div>
                                                             </div>
