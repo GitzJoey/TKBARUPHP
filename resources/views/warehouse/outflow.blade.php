@@ -88,7 +88,15 @@
                         this.$http.get('{{ route('api.warehouse.outflow.so') }}/' + this.selectedWarehouse).then(function (data) {
                             this.SOs = data.data;
                         });
+                    },
+                    loadWarehouse: function(w) {
+                        if (w == undefined || w == null) return;
+                        this.selectedWarehouse = _.find(this.warehouseDDL, function(wh) { return wh.id == w; }).id;
+                        this.getWarehouseSOs(this.selectedWarehouse);
                     }
+                },
+                mounted: function() {
+                    this.loadWarehouse(new URI().query(true)['w']);
                 }
             });
         });
