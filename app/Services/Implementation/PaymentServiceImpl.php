@@ -1,12 +1,13 @@
 <?php
 namespace App\Services\Implementation;
 
-use App\Model\CashPayment;
 use App\Model\Giro;
-use App\Model\GiroPayment;
 use App\Model\Lookup;
 use App\Model\Payment;
+use App\Model\CashPayment;
+use App\Model\GiroPayment;
 use App\Model\TransferPayment;
+
 use App\Services\PaymentService;
 
 use DB;
