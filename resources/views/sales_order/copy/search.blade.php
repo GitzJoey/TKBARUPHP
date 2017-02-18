@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-copy fa-rotate-180 fa-fw"></span>&nbsp;@lang('sales_order.copy.search.page_title')
+    <span class="fa fa-copy fa-fw"></span>&nbsp;@lang('sales_order.copy.search.page_title')
 @endsection
 
 @section('page_title_desc')
