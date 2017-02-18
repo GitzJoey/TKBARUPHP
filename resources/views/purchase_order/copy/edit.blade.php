@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-code-fork fa-rotate-180 fa-fw"></span>&nbsp;@lang('purchase_order.copy.edit.page_title')
+    <span class="fa fa-copy fa-rotate-180 fa-fw"></span>&nbsp;@lang('purchase_order.copy.edit.page_title')
 @endsection
 
 @section('page_title_desc')
@@ -31,268 +31,251 @@
         {!! Form::model($currentPOCopy, ['method' => 'PATCH', 'route' => ['db.po.copy.edit', $poCode, $currentPOCopy->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
             <div class="row">
-                <div class="col-md-10">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="box box-info">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">@lang('purchase_order.copy.edit.box.supplier')</h3>
-                                </div>
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="inputSupplierType"
-                                               class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_type')</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" readonly
-                                                   value="@lang('lookup.'.$currentPOCopy->supplier_type)">
-                                        </div>
-                                    </div>
-                                    @if($currentPOCopy->supplier_type == 'SUPPLIERTYPE.R')
-                                        <div class="form-group">
-                                            <label for="inputSupplierId"
-                                                   class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_name')</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" readonly
-                                                       value="{{ $currentPOCopy->supplier->name }}">
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <button id="supplierDetailButton" type="button" class="btn btn-primary btn-sm"
-                                                        data-toggle="modal" data-target="#supplierDetailModal"><span
-                                                            class="fa fa-info-circle fa-lg"></span></button>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="form-group">
-                                            <label for="inputSupplierName"
-                                                   class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_name')</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" readonly
-                                                       value="{{ $currentPOCopy->walk_in_supplier }}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputSupplierDetails"
-                                                   class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_details')</label>
-                                            <div class="col-sm-10">
-                                            <textarea class="form-control" rows="5" readonly>{{ $currentPOCopy->walk_in_supplier_details }}
-                                            </textarea>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.copy.edit.box.supplier')</h3>
                         </div>
-                        <div class="col-md-6">
-                            <div class="box box-info">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">@lang('purchase_order.copy.edit.box.purchase_order_detail')</h3>
-                                </div>
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="inputPoCode"
-                                               class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.po_code')</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" readonly value="{{ $currentPOCopy->main_po_code }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPoCopyCode"
-                                               class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.po_copy_code')</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" readonly value="{{ $currentPOCopy->code }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPoType"
-                                               class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.po_type')</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" readonly
-                                                   value="@lang('lookup.'.$currentPOCopy->po_type)">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPoDate"
-                                               class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.po_date')</label>
-                                        <div class="col-sm-10">
-                                            <div class="input-group date">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
-                                                <input type="text" class="form-control" readonly
-                                                       value="{{ $currentPOCopy->po_created->format('d-m-Y') }}">
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputSupplierType"
+                                       class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_type')</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" readonly
+                                           value="@lang('lookup.'.$currentPOCopy->supplier_type)">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="box box-info">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">@lang('purchase_order.copy.edit.box.shipping')</h3>
-                                </div>
-                                <div class="box-body">
-                                    <div class="form-group">
-                                        <label for="inputShippingDate"
-                                               class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.shipping_date')</label>
-                                        <div class="col-sm-5">
-                                            <div class="input-group date">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </div>
-                                                <input type="text" class="form-control" name="shipping_date" readonly
-                                                       value="{{ $currentPOCopy->shipping_date->format('d-m-Y') }}"
-                                                       data-parsley-required="true">
-                                            </div>
-                                        </div>
+                            @if($currentPOCopy->supplier_type == 'SUPPLIERTYPE.R')
+                                <div class="form-group">
+                                    <label for="inputSupplierId"
+                                           class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_name')</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" readonly
+                                               value="{{ $currentPOCopy->supplier->name }}">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputWarehouse"
-                                               class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.warehouse')</label>
-                                        <div class="col-sm-5">
-                                            <input type="text" class="form-control" readonly
-                                                   value="{{ $currentPOCopy->warehouse->name }}">
-                                            <input type="hidden" name="warehouse_id" value="{{ $currentPOCopy->warehouse->id }}">
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="form-group">
-                                        <label for="inputVendorTrucking"
-                                               class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.vendor_trucking')</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" readonly
-                                                   value="{{ empty($currentPOCopy->vendorTrucking->name) ? '':$currentPOCopy->vendorTrucking->name }}">
-                                            <input type="hidden" name="vendor_trucking_id"
-                                                   value="{{ empty($currentPOCopy->vendorTrucking->id) ? '':$currentPOCopy->vendorTrucking->id }}">
-                                        </div>
+                                    <div class="col-sm-2">
+                                        <button id="supplierDetailButton" type="button" class="btn btn-primary btn-sm"
+                                                data-toggle="modal" data-target="#supplierDetailModal"><span
+                                                    class="fa fa-info-circle fa-lg"></span></button>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="form-group">
+                                    <label for="inputSupplierName"
+                                           class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_name')</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" readonly
+                                               value="{{ $currentPOCopy->walk_in_supplier }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSupplierDetails"
+                                           class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_details')</label>
+                                    <div class="col-sm-10">
+                                                <textarea class="form-control" rows="5" readonly>{{ $currentPOCopy->walk_in_supplier_details }}
+                                                </textarea>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-6">
                     <div class="box box-info">
                         <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.copy.edit.box.purchase_order_detail')</h3>
                         </div>
                         <div class="box-body">
-                            @for ($i = 0; $i < 23; $i++)
-                                <br/>
-                            @endfor
+                            <div class="form-group">
+                                <label for="inputPoCode"
+                                       class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.po_code')</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly value="{{ $currentPOCopy->main_po_code }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPoCopyCode"
+                                       class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.po_copy_code')</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly value="{{ $currentPOCopy->code }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPoType"
+                                       class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.po_type')</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" readonly
+                                           value="@lang('lookup.'.$currentPOCopy->po_type)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPoDate"
+                                       class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.po_date')</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control" readonly
+                                               value="{{ $currentPOCopy->po_created->format('d-m-Y') }}">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-9">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="box box-info">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">@lang('purchase_order.copy.edit.box.transactions')</h3>
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.copy.edit.box.shipping')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputShippingDate"
+                                       class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.shipping_date')</label>
+                                <div class="col-sm-5">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control" name="shipping_date" readonly
+                                               value="{{ $currentPOCopy->shipping_date->format('d-m-Y') }}"
+                                               data-parsley-required="true">
+                                    </div>
                                 </div>
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="col-md-11">
-                                            <select id="inputProduct"
-                                                    class="form-control"
-                                                    v-model="po.product">
-                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
-                                                    <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
-                                                </template>
-                                                <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
-                                                    <option v-for="product of productDDL" v-bind:value="product">@{{ product.name }}</option>
-                                                </template> 
-                                                <option v-for="product in po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <button type="button" class="btn btn-primary btn-md"
-                                                    v-on:click="insertItem(po.product)"><span class="fa fa-plus"/></button>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <table id="itemsListTable" class="table table-bordered table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th width="30%">@lang('purchase_order.copy.edit.table.item.header.product_name')</th>
-                                                    <th width="15%"
-                                                        class="text-center">@lang('purchase_order.copy.edit.table.item.header.quantity')</th>
-                                                    <th width="15%"
-                                                        class="text-center">@lang('purchase_order.copy.edit.table.item.header.unit')</th>
-                                                    <th width="15%"
-                                                        class="text-center">@lang('purchase_order.copy.edit.table.item.header.price_unit')</th>
-                                                    <th width="5%">&nbsp;</th>
-                                                    <th width="20%"
-                                                        class="text-center">@lang('purchase_order.revise.table.item.header.total_price')</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr v-for="(item, itemIndex) in po.items">
-                                                    <input type="hidden" name="item_id[]" v-bind:value="item.id">
-                                                    <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
-                                                    <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
-                                                    <td class="valign-middle">@{{ item.product.name }}</td>
-                                                    <td>
-                                                        <input type="text" class="form-control text-right"
-                                                               data-parsley-required="true" data-parsley-type="number"
-                                                               name="quantity[]"
-                                                               v-model="item.quantity">
-                                                    </td>
-                                                    <td>
-                                                        <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
-                                                        <select name="selected_unit_id[]"
-                                                                class="form-control"
-                                                                data-parsley-required="true"
-                                                                v-model="item.selected_unit">
-                                                            <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                            <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control text-right" name="price[]"
-                                                               v-model="item.price" data-parsley-required="true"
-                                                               data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button type="button" class="btn btn-danger btn-md"
-                                                                v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
-                                                        </button>
-                                                    </td>
-                                                    <td class="text-right valign-middle">
-                                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <table id="itemsTotalListTable" class="table table-bordered">
-                                                <tbody>
-                                                <tr>
-                                                    <td width="80%"
-                                                        class="text-right">@lang('purchase_order.copy.edit.table.total.body.total')</td>
-                                                    <td width="20%" class="text-right">
-                                                        <span class="control-label-normal">@{{ grandTotal() }}</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputWarehouse"
+                                       class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.warehouse')</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" readonly
+                                           value="{{ $currentPOCopy->warehouse->name }}">
+                                    <input type="hidden" name="warehouse_id" value="{{ $currentPOCopy->warehouse->id }}">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label for="inputVendorTrucking"
+                                       class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.vendor_trucking')</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" readonly
+                                           value="{{ empty($currentPOCopy->vendorTrucking->name) ? '':$currentPOCopy->vendorTrucking->name }}">
+                                    <input type="hidden" name="vendor_trucking_id"
+                                           value="{{ empty($currentPOCopy->vendorTrucking->id) ? '':$currentPOCopy->vendorTrucking->id }}">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.copy.edit.box.transactions')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-11">
+                                    <select id="inputProduct"
+                                            class="form-control"
+                                            v-model="po.product">
+                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                        <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
+                                            <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
+                                        </template>
+                                        <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
+                                            <option v-for="product of productDDL" v-bind:value="product">@{{ product.name }}</option>
+                                        </template>
+                                        <option v-for="product in po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-primary btn-md"
+                                            v-on:click="insertItem(po.product)"><span class="fa fa-plus"/></button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="itemsListTable" class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th width="30%">@lang('purchase_order.copy.edit.table.item.header.product_name')</th>
+                                            <th width="15%"
+                                                class="text-center">@lang('purchase_order.copy.edit.table.item.header.quantity')</th>
+                                            <th width="15%"
+                                                class="text-center">@lang('purchase_order.copy.edit.table.item.header.unit')</th>
+                                            <th width="15%"
+                                                class="text-center">@lang('purchase_order.copy.edit.table.item.header.price_unit')</th>
+                                            <th width="5%">&nbsp;</th>
+                                            <th width="20%"
+                                                class="text-center">@lang('purchase_order.revise.table.item.header.total_price')</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(item, itemIndex) in po.items">
+                                            <input type="hidden" name="item_id[]" v-bind:value="item.id">
+                                            <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                            <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
+                                            <td class="valign-middle">@{{ item.product.name }}</td>
+                                            <td>
+                                                <input type="text" class="form-control text-right"
+                                                       data-parsley-required="true" data-parsley-type="number"
+                                                       name="quantity[]"
+                                                       v-model="item.quantity">
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
+                                                <select name="selected_unit_id[]"
+                                                        class="form-control"
+                                                        data-parsley-required="true"
+                                                        v-model="item.selected_unit">
+                                                    <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control text-right" name="price[]"
+                                                       v-model="item.price" data-parsley-required="true"
+                                                       data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-danger btn-md"
+                                                        v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
+                                                </button>
+                                            </td>
+                                            <td class="text-right valign-middle">
+                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="itemsTotalListTable" class="table table-bordered">
+                                        <tbody>
+                                        <tr>
+                                            <td width="80%"
+                                                class="text-right">@lang('purchase_order.copy.edit.table.total.body.total')</td>
+                                            <td width="20%" class="text-right">
+                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('purchase_order.copy.edit.box.transaction_summary')</h3>
