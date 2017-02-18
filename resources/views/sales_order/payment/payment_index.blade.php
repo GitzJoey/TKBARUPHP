@@ -31,13 +31,13 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center">@lang('sales_order.payment.index.table.header.code')</th>
-                        <th class="text-center">@lang('sales_order.payment.index.table.header.customer')</th>
-                        <th class="text-center">@lang('sales_order.payment.index.table.header.so_date')</th>
-                        <th class="text-center">@lang('sales_order.payment.index.table.header.total')</th>
-                        <th class="text-center">@lang('sales_order.payment.index.table.header.paid')</th>
-                        <th class="text-center">@lang('sales_order.payment.index.table.header.rest')</th>
-                        <th class="text-center">@lang('labels.ACTION')</th>
+                        <th class="text-center" width="10%">@lang('sales_order.payment.index.table.header.code')</th>
+                        <th class="text-center" width="15%">@lang('sales_order.payment.index.table.header.customer')</th>
+                        <th class="text-center" width="10%">@lang('sales_order.payment.index.table.header.so_date')</th>
+                        <th class="text-center" width="15%">@lang('sales_order.payment.index.table.header.total')</th>
+                        <th class="text-center" width="15%">@lang('sales_order.payment.index.table.header.paid')</th>
+                        <th class="text-center" width="15%">@lang('sales_order.payment.index.table.header.rest')</th>
+                        <th class="text-center" width="10%">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,9 +53,9 @@
                                     @endif
                                 </td>
                                 <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
-                                <td class="text-center">{{ number_format($so->totalAmount(), 0) }}</td>
-                                <td class="text-center">{{ number_format($so->totalAmountPaid(), 0) }}</td>
-                                <td class="text-center">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 0) }}</td>
+                                <td class="text-right">{{ number_format($so->totalAmount(), 0) }}</td>
+                                <td class="text-right">{{ number_format($so->totalAmountPaid(), 0) }}</td>
+                                <td class="text-right">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 0) }}</td>
                                 <td class="text-center" width="10%">
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.cash', $so->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.transfer', $so->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>
@@ -75,5 +75,6 @@
 @endsection
 @section('custom_js')
     <script type="application/javascript">
+
     </script>
 @endsection

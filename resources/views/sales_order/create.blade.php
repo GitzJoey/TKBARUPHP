@@ -60,370 +60,351 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-11">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="box box-info">
-                                                        <div class="box-header with-border">
-                                                            <h3 class="box-title">@lang('sales_order.create.box.customer')</h3>
-                                                        </div>
-                                                        <div class="box-body">
-                                                            <div class="form-group">
-                                                                <label v-bind:for="'inputCustomerType_' + ( soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_type')</label>
-                                                                <div class="col-sm-6">
-                                                                    <input type="hidden" name="customer_type[]" v-bind:value="so.customer_type.code">
-                                                                    <input type="hidden" name="customer_type_description[]" v-bind:value="so.customer_type.description">
-                                                                    <input type="hidden" name="customer_type_i18nDescription[]" v-bind:value="so.customer_type.i18nDescription">
-                                                                    <select v-bind:id="'inputCustomerType_' + (soIndex + 1)" data-parsley-required="true"
-                                                                            class="form-control"
-                                                                            v-model="so.customer_type">
-                                                                        <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="customerType in customerTypeDDL" v-bind:value="customerType">@{{ customerType.i18nDescription }}</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <template v-if="so.customer_type.code == 'CUSTOMERTYPE.R'">
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputCustomerId_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
-                                                                    <div class="col-sm-6">
-                                                                        <select class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex">
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-sm-2">
-                                                                        <button v-bind:id="'customerDetailButton_' + soIndex" type="button" class="btn btn-primary btn-sm"
-                                                                                data-toggle="modal" v-bind:data-target="'#customerDetailModal_' + soIndex"><span
-                                                                                    class="fa fa-info-circle fa-lg"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                            <template v-if="so.customer_type.code == 'CUSTOMERTYPE.WI'">
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputCustomerName_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_name')</label>
-                                                                    <div class="col-sm-8">
-                                                                        <input type="text" class="form-control" v-bind:id="'inputCustomerName_' + (soIndex + 1)"
-                                                                            name="walk_in_customer[]" placeholder="Customer Name"
-                                                                            v-model="so.walk_in_cust">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputCustomerDetails_' + (soIndex + 1)" class="col-sm-4 control-label">@lang('sales_order.create.field.customer_details')</label>
-                                                                    <div class="col-sm-8">
-                                                                    <textarea v-bind:id="'inputCustomerDetails_' + (soIndex + 1)" class="form-control"
-                                                                        rows="5" name="walk_in_customer_details[]"
-                                                                        v-model="so.walk_in_cust_details"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </template>
-                                                        </div>
-                                                    </div>
+                                        <div class="col-md-6">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">@lang('sales_order.create.box.customer')</h3>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="box box-info">
-                                                        <div class="box-header with-border">
-                                                            <h3 class="box-title">@lang('sales_order.create.box.sales_order_detail')</h3>
-                                                        </div>
-                                                        <div class="box-body">
-                                                            <div class="form-group">
-                                                                <label v-bind:for="'inputSoCode_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_code')</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="text" class="form-control" v-bind:id="'inputSoCode_' + (soIndex + 1)"
-                                                                           name="so_code[]" placeholder="SO Code" readonly
-                                                                           v-model="so.so_code">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label v-bind:for="'inputSoType_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="hidden" name="sales_type[]" v-bind:value="so.sales_type.code">
-                                                                    <input type="hidden" name="sales_type_description[]" v-bind:value="so.sales_type.description">
-                                                                    <input type="hidden" name="sales_type_i18nDescription[]" v-bind:value="so.sales_type.i18nDescription">
-                                                                    <select v-bind:id="'inputSoType_' + (soIndex + 1)" data-parsley-required="true"
-                                                                            class="form-control"
-                                                                            v-model="so.sales_type">
-                                                                        <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="salesType in soTypeDDL" v-bind:value="salesType">@{{ salesType.i18nDescription }}</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label v-bind:for="'inputSoDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_date')</label>
-                                                                <div class="col-sm-9">
-                                                                    <div class="input-group date">
-                                                                        <div class="input-group-addon">
-                                                                            <i class="fa fa-calendar"></i>
-                                                                        </div>
-                                                                        <input type="text" class="form-control inputSoDate" v-bind:id="'inputSoDate_' + (soIndex + 1)"
-                                                                               name="so_created[]" data-parsley-required="true">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label v-bind:for="'inputSoStatus_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_status')</label>
-                                                                <div class="col-sm-9">
-                                                                    <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
-                                                                </div>
-                                                            </div>
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <label v-bind:for="'inputCustomerType_' + ( soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_type')</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="hidden" name="customer_type[]" v-bind:value="so.customer_type.code">
+                                                            <input type="hidden" name="customer_type_description[]" v-bind:value="so.customer_type.description">
+                                                            <input type="hidden" name="customer_type_i18nDescription[]" v-bind:value="so.customer_type.i18nDescription">
+                                                            <select v-bind:id="'inputCustomerType_' + (soIndex + 1)" data-parsley-required="true"
+                                                                    class="form-control"
+                                                                    v-model="so.customer_type">
+                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="customerType in customerTypeDDL" v-bind:value="customerType">@{{ customerType.i18nDescription }}</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="box box-info">
-                                                        <div class="box-header with-border">
-                                                            <h3 class="box-title">@lang('sales_order.create.box.shipping')</h3>
-                                                        </div>
-                                                        <div class="box-body">
-                                                            <div class="form-group">
-                                                                <label v-bind:for="'inputShippingDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
-                                                                <div class="col-sm-9">
-                                                                    <div class="input-group date">
-                                                                        <div class="input-group-addon">
-                                                                            <i class="fa fa-calendar"></i>
-                                                                        </div>
-                                                                        <input type="text" class="form-control inputShippingDate" v-bind:id="'inputShippingDate_' + (soIndex + 1)"
-                                                                               name="shipping_date[]" data-parsley-required="true">
-                                                                    </div>
-                                                                </div>
+                                                    <template v-if="so.customer_type.code == 'CUSTOMERTYPE.R'">
+                                                        <div class="form-group">
+                                                            <label v-bind:for="'inputCustomerId_' + (soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex"></select>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label v-bind:for="'inputWarehouse_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="hidden" name="warehouse_hid[]" v-bind:value="so.warehouse.hid">
-                                                                    <input type="hidden" name="warehouse_id[]" v-bind:value="so.warehouse.id">
-                                                                    <input type="hidden" name="warehouse_name[]" v-bind:value="so.warehouse.name">
-                                                                    <select v-bind:id="'inputWarehouse_' + (soIndex + 1)" data-parsley-required="true"
-                                                                            class="form-control"
-                                                                            v-model="so.warehouse">
-                                                                        <option v-bind:value="{id: 0}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{warehouse.name}}</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label v-bind:for="'inputVendorTrucking_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
-                                                                <div class="col-sm-9">
-                                                                    <input type="hidden" name="vendor_trucking_id[]" v-bind:value="so.vendorTrucking.id">
-                                                                    <input type="hidden" name="vendor_trucking_name[]" v-bind:value="so.vendorTrucking.name">
-                                                                    <select v-bind:id="'inputVendorTrucking_' + (soIndex + 1)"
-                                                                            class="form-control"
-                                                                            v-model="so.vendorTrucking">
-                                                                        <option v-bind:value="{id: 0, name: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
-                                                                    </select>
-                                                                </div>
+                                                            <div class="col-sm-2">
+                                                                <button v-bind:id="'customerDetailButton_' + soIndex" type="button" class="btn btn-primary btn-sm"
+                                                                        data-toggle="modal" v-bind:data-target="'#customerDetailModal_' + soIndex">
+                                                                    <span class="fa fa-info-circle fa-lg"></span>
+                                                                </button>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </template>
+                                                    <template v-if="so.customer_type.code == 'CUSTOMERTYPE.WI'">
+                                                        <div class="form-group">
+                                                            <label v-bind:for="'inputCustomerName_' + (soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control" v-bind:id="'inputCustomerName_' + (soIndex + 1)"
+                                                                       name="walk_in_customer[]" placeholder="Customer Name"
+                                                                       v-model="so.walk_in_cust">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label v-bind:for="'inputCustomerDetails_' + (soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_details')</label>
+                                                            <div class="col-sm-10">
+                                                                <textarea v-bind:id="'inputCustomerDetails_' + (soIndex + 1)" class="form-control" rows="5" name="walk_in_customer_details[]" v-model="so.walk_in_cust_details"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </template>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-6">
                                             <div class="box box-info">
                                                 <div class="box-header with-border">
+                                                    <h3 class="box-title">@lang('sales_order.create.box.sales_order_detail')</h3>
                                                 </div>
                                                 <div class="box-body">
-                                                    @for ($i = 0; $i < 23; $i++)
-                                                        <br/>
-                                                    @endfor
+                                                    <div class="form-group">
+                                                        <label v-bind:for="'inputSoCode_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_code')</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" v-bind:id="'inputSoCode_' + (soIndex + 1)"
+                                                                   name="so_code[]" placeholder="SO Code" readonly
+                                                                   v-model="so.so_code">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label v-bind:for="'inputSoType_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="hidden" name="sales_type[]" v-bind:value="so.sales_type.code">
+                                                            <input type="hidden" name="sales_type_description[]" v-bind:value="so.sales_type.description">
+                                                            <input type="hidden" name="sales_type_i18nDescription[]" v-bind:value="so.sales_type.i18nDescription">
+                                                            <select v-bind:id="'inputSoType_' + (soIndex + 1)" data-parsley-required="true"
+                                                                    class="form-control"
+                                                                    v-model="so.sales_type">
+                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="salesType in soTypeDDL" v-bind:value="salesType">@{{ salesType.i18nDescription }}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label v-bind:for="'inputSoDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_date')</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-calendar"></i>
+                                                                </div>
+                                                                <input type="text" class="form-control inputSoDate" v-bind:id="'inputSoDate_' + (soIndex + 1)"
+                                                                       name="so_created[]" data-parsley-required="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label v-bind:for="'inputSoStatus_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_status')</label>
+                                                        <div class="col-sm-9">
+                                                            <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-9">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="box box-info">
-                                                        <div class="box-header with-border">
-                                                            <h3 class="box-title">@lang('sales_order.create.box.transactions')</h3>
-                                                        </div>
-                                                        <div class="box-body">
-                                                            <div class="row">
-                                                                <div v-show="so.sales_type.code === 'SOTYPE.SVC'">
-                                                                    <div class="col-md-11">
-                                                                        <select v-bind:id="'inputProduct_' + (soIndex + 1)"
-                                                                                class="form-control"
-                                                                                v-model="so.product">
-                                                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                            <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-md-1">
-                                                                        <button type="button" class="btn btn-primary btn-md"
-                                                                                v-on:click="insertProduct(soIndex, so.product)"><span class="fa fa-plus"/></button>
-                                                                    </div>
+                                        <div class="col-md-12">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">@lang('sales_order.create.box.shipping')</h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <label v-bind:for="'inputShippingDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="input-group date">
+                                                                <div class="input-group-addon">
+                                                                    <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <div v-show="so.sales_type.code === 'SOTYPE.S' || so.sales_type.code === 'SOTYPE.AC'">
-                                                                    <div class="col-md-11">
-                                                                        <select v-bind:id="'inputStock_' + (soIndex + 1)"
-                                                                                class="form-control"
-                                                                                v-model="so.stock">
-                                                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                            <option v-for="stock in stocksDDL" v-bind:value="stock">@{{ stock.product.name }}</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-md-1">
-                                                                        <button type="button" class="btn btn-primary btn-md"
-                                                                                v-on:click="insertStock(soIndex, so.stock)"><span class="fa fa-plus"/></button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <table v-bind:id="'itemsListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
-                                                                            <th width="15%">@lang('sales_order.create.table.item.header.quantity')</th>
-                                                                            <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.unit')</th>
-                                                                            <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.price_unit')</th>
-                                                                            <th width="5%">&nbsp;</th>
-                                                                            <th width="20%" class="text-right">@lang('sales_order.create.table.item.header.total_price')</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                        <tr v-for="(item, itemIndex) in so.items">
-                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_product_id[]'" v-bind:value="item.product.id">
-                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_stock_id[]'" v-bind:value="item.stock_id">
-                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_base_unit_id[]'" v-bind:value="item.base_unit.unit.id">
-                                                                            <td class="valign-middle">@{{ item.product.name }}</td>
-                                                                            <td>
-                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_quantity[]'"
-                                                                                       v-model="item.quantity" data-parsley-required="true"
-                                                                                       data-parsley-type="number">
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="hidden" v-bind:name="'so_' + soIndex + '_selected_unit_id[]'" v-bind:value="item.selected_unit.unit.id">
-                                                                                <select data-parsley-required="true" class="form-control"
-                                                                                        v-model="item.selected_unit"
-                                                                                        data-parsley-required="true">
-                                                                                    <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                                                    <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
-                                                                                </select>
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_price[]'"
-                                                                                       v-model="item.price" data-parsley-required="true"
-                                                                                       data-parsley-pattern="^\d+(,\d+)*$">
-                                                                            </td>
-                                                                            <td class="text-center">
-                                                                                <button type="button" class="btn btn-danger btn-md"
-                                                                                        v-on:click="removeItem(soIndex, itemIndex)"><span class="fa fa-minus"/>
-                                                                                </button>
-                                                                            </td>
-                                                                            <td class="text-right valign-middle">
-                                                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                                                            </td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <table v-bind:id="'itemsTotalListTable_' + (soIndex + 1)" class="table table-bordered">
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td width="80%"
-                                                                                class="text-right">@lang('sales_order.create.table.total.body.total')</td>
-                                                                            <td width="20%" class="text-right">
-                                                                                <span class="control-label-normal">@{{ grandTotal(soIndex) }}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
+                                                                <input type="text" class="form-control inputShippingDate" v-bind:id="'inputShippingDate_' + (soIndex + 1)"
+                                                                       name="shipping_date[]" data-parsley-required="true">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="box box-info">
-                                                        <div class="box-header with-border">
-                                                            <h3 class="box-title">@lang('sales_order.create.box.expenses')</h3>
-                                                            <button type="button" class="btn btn-primary btn-xs pull-right"
-                                                                    v-on:click="insertExpense(soIndex)"><span class="fa fa-plus fa-fw"></span></button>
+                                                    <div class="form-group">
+                                                        <label v-bind:for="'inputWarehouse_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="hidden" name="warehouse_hid[]" v-bind:value="so.warehouse.hid">
+                                                            <input type="hidden" name="warehouse_id[]" v-bind:value="so.warehouse.id">
+                                                            <input type="hidden" name="warehouse_name[]" v-bind:value="so.warehouse.name">
+                                                            <select v-bind:id="'inputWarehouse_' + (soIndex + 1)" data-parsley-required="true"
+                                                                    class="form-control"
+                                                                    v-model="so.warehouse">
+                                                                <option v-bind:value="{id: 0}">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{warehouse.name}}</option>
+                                                            </select>
                                                         </div>
-                                                        <div class="box-body">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <table v-bind:id="'expensesListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th width="20%">@lang('sales_order.create.table.expense.header.name')</th>
-                                                                            <th width="20%"
-                                                                                class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
-                                                                            <th width="10%"
-                                                                                class="text-center">@lang('sales_order.create.table.expense.header.internal_expense')</th>
-                                                                            <th width="25%"
-                                                                                class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
-                                                                            <th width="5%">&nbsp;</th>
-                                                                            <th width="20%"
-                                                                                class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                        <tr v-for="(expense, expenseIndex) in so.expenses">
-                                                                            <td>
-                                                                                <input v-bind:name="'so_' + soIndex + '_expense_name[]'" type="text" class="form-control"
-                                                                                       v-model="expense.name" data-parsley-required="true">
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type[]'" v-bind:value="expense.type.code">
-                                                                                <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_description[]'" v-bind:value="expense.type.description">
-                                                                                <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_i18nDescription[]'" v-bind:value="expense.type.i18nDescription">
-                                                                                <select class="form-control" v-model="expense.type">
-                                                                                    <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                                    <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
-                                                                                </select>
-                                                                            </td>
-                                                                            <td class="text-center">
-                                                                                <input v-bind:name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense" type="checkbox">
-                                                                            </td>
-                                                                            <td>
-                                                                                <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control"
-                                                                                       v-model="expense.remarks"/>
-                                                                            </td>
-                                                                            <td class="text-center">
-                                                                                <button type="button" class="btn btn-danger btn-md"
-                                                                                        v-on:click="removeExpense(soIndex, expenseIndex)"><span class="fa fa-minus"/>
-                                                                                </button>
-                                                                            </td>
-                                                                            <td>
-                                                                                <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
-                                                                                       v-model="expense.amount" data-parsley-required="true"
-                                                                                       data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"/>
-                                                                            </td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <table v-bind:id="'expensesTotalListTable_' + (soIndex + 1)" class="table table-bordered">
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td width="80%"
-                                                                                class="text-right">@lang('sales_order.create.table.total.body.total')</td>
-                                                                            <td width="20%" class="text-right">
-                                                                                <span class="control-label-normal">@{{ expenseTotal(soIndex)}}</span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label v-bind:for="'inputVendorTrucking_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="hidden" name="vendor_trucking_id[]" v-bind:value="so.vendorTrucking.id">
+                                                            <input type="hidden" name="vendor_trucking_name[]" v-bind:value="so.vendorTrucking.name">
+                                                            <select v-bind:id="'inputVendorTrucking_' + (soIndex + 1)"
+                                                                    class="form-control"
+                                                                    v-model="so.vendorTrucking">
+                                                                <option v-bind:value="{id: 0, name: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">@lang('sales_order.create.box.transactions')</h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div v-show="so.sales_type.code === 'SOTYPE.SVC'">
+                                                            <div class="col-md-11">
+                                                                <select v-bind:id="'inputProduct_' + (soIndex + 1)"
+                                                                        class="form-control"
+                                                                        v-model="so.product">
+                                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                    <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <button type="button" class="btn btn-primary btn-md"
+                                                                        v-on:click="insertProduct(soIndex, so.product)"><span class="fa fa-plus"/></button>
+                                                            </div>
+                                                        </div>
+                                                        <div v-show="so.sales_type.code === 'SOTYPE.S' || so.sales_type.code === 'SOTYPE.AC'">
+                                                            <div class="col-md-11">
+                                                                <select v-bind:id="'inputStock_' + (soIndex + 1)"
+                                                                        class="form-control"
+                                                                        v-model="so.stock">
+                                                                    <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                    <option v-for="stock in stocksDDL" v-bind:value="stock">@{{ stock.product.name }}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <button type="button" class="btn btn-primary btn-md"
+                                                                        v-on:click="insertStock(soIndex, so.stock)"><span class="fa fa-plus"/></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table v-bind:id="'itemsListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
+                                                                    <th width="15%">@lang('sales_order.create.table.item.header.quantity')</th>
+                                                                    <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.unit')</th>
+                                                                    <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.price_unit')</th>
+                                                                    <th width="5%">&nbsp;</th>
+                                                                    <th width="20%" class="text-right">@lang('sales_order.create.table.item.header.total_price')</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr v-for="(item, itemIndex) in so.items">
+                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_product_id[]'" v-bind:value="item.product.id">
+                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_stock_id[]'" v-bind:value="item.stock_id">
+                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_base_unit_id[]'" v-bind:value="item.base_unit.unit.id">
+                                                                    <td class="valign-middle">@{{ item.product.name }}</td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_quantity[]'"
+                                                                               v-model="item.quantity" data-parsley-required="true"
+                                                                               data-parsley-type="number">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_selected_unit_id[]'" v-bind:value="item.selected_unit.unit.id">
+                                                                        <select data-parsley-required="true" class="form-control"
+                                                                                v-model="item.selected_unit"
+                                                                                data-parsley-required="true">
+                                                                            <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                                            <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_price[]'"
+                                                                               v-model="item.price" data-parsley-required="true"
+                                                                               data-parsley-pattern="^\d+(,\d+)*$">
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                                v-on:click="removeItem(soIndex, itemIndex)"><span class="fa fa-minus"/>
+                                                                        </button>
+                                                                    </td>
+                                                                    <td class="text-right valign-middle">
+                                                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table v-bind:id="'itemsTotalListTable_' + (soIndex + 1)" class="table table-bordered">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td width="80%"
+                                                                        class="text-right">@lang('sales_order.create.table.total.body.total')</td>
+                                                                    <td width="20%" class="text-right">
+                                                                        <span class="control-label-normal">@{{ grandTotal(soIndex) }}</span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">@lang('sales_order.create.box.expenses')</h3>
+                                                    <button type="button" class="btn btn-primary btn-xs pull-right"
+                                                            v-on:click="insertExpense(soIndex)"><span class="fa fa-plus fa-fw"></span></button>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table v-bind:id="'expensesListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th width="20%">@lang('sales_order.create.table.expense.header.name')</th>
+                                                                    <th width="20%"
+                                                                        class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
+                                                                    <th width="10%"
+                                                                        class="text-center">@lang('sales_order.create.table.expense.header.internal_expense')</th>
+                                                                    <th width="25%"
+                                                                        class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
+                                                                    <th width="5%">&nbsp;</th>
+                                                                    <th width="20%"
+                                                                        class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr v-for="(expense, expenseIndex) in so.expenses">
+                                                                    <td>
+                                                                        <input v-bind:name="'so_' + soIndex + '_expense_name[]'" type="text" class="form-control"
+                                                                               v-model="expense.name" data-parsley-required="true">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type[]'" v-bind:value="expense.type.code">
+                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_description[]'" v-bind:value="expense.type.description">
+                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_i18nDescription[]'" v-bind:value="expense.type.i18nDescription">
+                                                                        <select class="form-control" v-model="expense.type">
+                                                                            <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                            <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <input v-bind:name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense" type="checkbox">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control"
+                                                                               v-model="expense.remarks"/>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                                v-on:click="removeExpense(soIndex, expenseIndex)"><span class="fa fa-minus"/>
+                                                                        </button>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
+                                                                               v-model="expense.amount" data-parsley-required="true"
+                                                                               data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"/>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table v-bind:id="'expensesTotalListTable_' + (soIndex + 1)" class="table table-bordered">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td width="80%"
+                                                                        class="text-right">@lang('sales_order.create.table.total.body.total')</td>
+                                                                    <td width="20%" class="text-right">
+                                                                        <span class="control-label-normal">@{{ expenseTotal(soIndex)}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <div class="box box-info">
                                                 <div class="box-header with-border">
                                                     <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>

@@ -32,12 +32,12 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th class="text-center">@lang('sales_order.revise.index.table.header.code')</th>
-                            <th class="text-center">@lang('sales_order.revise.index.table.header.so_date')</th>
-                            <th class="text-center">@lang('sales_order.revise.index.table.header.customer')</th>
-                            <th class="text-center">@lang('sales_order.revise.index.table.header.shipping_date')</th>
-                            <th class="text-center">@lang('sales_order.revise.index.table.header.status')</th>
-                            <th class="text-center">@lang('labels.ACTION')</th>
+                            <th class="text-center" width="15%">@lang('sales_order.revise.index.table.header.code')</th>
+                            <th class="text-center" width="15%">@lang('sales_order.revise.index.table.header.so_date')</th>
+                            <th class="text-center" width="25%">@lang('sales_order.revise.index.table.header.customer')</th>
+                            <th class="text-center" width="15">@lang('sales_order.revise.index.table.header.shipping_date')</th>
+                            <th class="text-center" width="20">@lang('sales_order.revise.index.table.header.status')</th>
+                            <th class="text-center" width="10">@lang('labels.ACTION')</th>
                         </tr>
                     </thead>
                     <tbody>
