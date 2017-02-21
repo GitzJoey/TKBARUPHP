@@ -63,6 +63,7 @@ return [
     'item.adm_store' => 'Toko',
     'item.adm_role' => 'Peran',
     'item.adm_unit' => 'Satuan',
+    'item.adm_currencies' => 'Mata Uang',
     'item.adm_settings' => 'Pengaturan',
     'item.adm_phone_provider' => 'Provider Telepon',
     'item.employee' => 'Pegawai',

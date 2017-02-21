@@ -63,6 +63,7 @@ return [
     'item.adm_store' => 'Store',
     'item.adm_role' => 'Role',
     'item.adm_unit' => 'Unit',
+    'item.adm_currencies' => 'Currencies',
     'item.adm_settings' => 'Settings',
     'item.adm_phone_provider' => 'Phone Provider',
     'item.employee' => 'Employee',
