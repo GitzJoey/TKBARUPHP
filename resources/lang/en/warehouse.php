@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 return [
     'inflow' => [
@@ -211,6 +211,9 @@ return [
             'title' => 'Create Transfer Stock',
             'page_title' => 'Create Transfer Stock',
             'page_title_desc' => '',
+            'label' => [
+                'source_warehouse' => 'Source Warehouse',
+            ],
         ],
         'index' => [
             'title' => 'Transfer Stock',

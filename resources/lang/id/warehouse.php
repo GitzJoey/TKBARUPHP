@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 return [
     'inflow' => [
@@ -211,6 +211,9 @@ return [
             'title' => 'Tambah Pindah Stok',
             'page_title' => 'Tambah Pindah Stok',
             'page_title_desc' => '',
+            'label' => [
+                'source_warehouse' => 'Sumber Gudang',
+            ],
         ],
         'index' => [
             'title' => 'Pindah Stok',

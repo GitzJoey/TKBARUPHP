@@ -13,7 +13,7 @@ class CreateStockTransferTable extends Migration
      */
     public function up()
     {
-        Schema::create('stock_transfer', function (Blueprint $table) {
+        Schema::create('stock_transfers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('po_id')->default(0);
