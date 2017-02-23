@@ -59,8 +59,8 @@ class Revenue extends Model
     protected $fillable = [
         'store_id',
         'date',
-        'destination_acc_cash_id',
-        'acc_cost_category_id',
+        'destination_cash_account_id',
+        'revenue_category_id',
         'amount',
         'remarks',
     ];
@@ -77,6 +77,16 @@ class Revenue extends Model
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function destinationCashAccount()
+    {
+        return $this->belongsTo('App\Model\Accounting\CashAccount', 'destination_cash_account_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Model\Accounting\CostCategory', 'cost_category_id');
     }
 
     public static function boot()

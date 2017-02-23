@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccCapitalDepositTable extends Migration
+class CreateAccCashFlowTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateAccCapitalDepositTable extends Migration
      */
     public function up()
     {
-        Schema::create('acc_capital_deposit', function(Blueprint $table) {
+        Schema::create('acc_cash_flow', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->dateTime('date')->nullable();
-            $table->unsignedBigInteger('destination_cash_account_id')->default(0);
+            $table->unsignedBigInteger('from_cash_account_id')->default(0);
+            $table->unsignedBigInteger('to_cash_account_id')->default(0);
             $table->decimal('amount', 19, 2)->default(0);
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
@@ -26,6 +27,7 @@ class CreateAccCapitalDepositTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
     }
 
     /**
@@ -35,6 +37,6 @@ class CreateAccCapitalDepositTable extends Migration
      */
     public function down()
     {
-        Schema::drop('acc_capital_deposit');
+        Schema::drop('acc_cash_flow');
     }
 }

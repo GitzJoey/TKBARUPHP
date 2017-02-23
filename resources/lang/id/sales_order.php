@@ -3,63 +3,21 @@
 return [
     'payment' => [
         'giro' => [
-            'title' => '',
-            'page_title' => '',
+            'title' => 'Pembayaran Giro',
+            'page_title' => 'Pembayaran Giro',
             'page_title_desc' => '',
             'box' => [
-                'payment' => '',
-                'customer' => '',
-                'sales_order_detail' => '',
-                'shipping' => '',
-                'transactions' => '',
-                'remarks' => '',
-                'payment_history' => '',
+                'payment' => 'Tambah Pembayaran Giro',
             ],
             'field' => [
-                'payment_type' => '',
-                'bank' => '',
-                'serial_number' => '',
-                'payment_date' => '',
-                'effective_date' => '',
-                'payment_amount' => '',
-                'printed_name' => '',
-                'remarks' => '',
-                'customer_type' => '',
-                'customer_name' => '',
-                'customer_details' => '',
-                'shipping_date' => '',
-                'warehouse' => '',
-                'vendor_trucking' => '',
-            ],
-            'so_code' => '',
-            'so_type' => '',
-            'so_date' => '',
-            'so_status' => '',
-            'table' => [
-                'item' => [
-                    'header' => [
-                        'product_name' => '',
-                        'unit' => '',
-                        'price_unit' => '',
-                        'total_price' => '',
-                        'quantity' => '',
-                    ],
-                ],
-                'total' => [
-                    'body' => [
-                        'total' => '',
-                        'paid_amount' => '',
-                        'to_be_paid_amount' => '',
-                    ],
-                ],
-                'payments' => [
-                    'header' => [
-                        'payment_type' => '',
-                        'payment_date' => '',
-                        'payment_amount' => '',
-                        'payment_status' => '',
-                    ],
-                ],
+                'payment_type' => 'Tipe Pembayaran',
+                'bank' => 'Bank',
+                'serial_number' => 'Nomor Seri',
+                'payment_date' => 'Tanggal Pembayaran',
+                'effective_date' => 'Tanggal Efektif',
+                'payment_amount' => 'Jumlah',
+                'printed_name' => 'Nama Tertera',
+                'remarks' => 'Keterangan',
             ],
         ],
         'cash' => [
@@ -67,63 +25,12 @@ return [
             'page_title' => 'Pembayaran Tunai',
             'page_title_desc' => '',
             'box' => [
-                'payment' => 'Pembayaran',
-                'customer' => 'Pelanggan',
-                'sales_order_detail' => 'Detail Penjualan',
-                'shipping' => 'Pengiriman',
-                'transactions' => 'Transaksi',
-                'remarks' => 'Keterangan',
-                'payment_history' => 'Catatan Pembayaran',
+                'payment' => 'Tambah Pembayaran Tunai',
             ],
             'field' => [
-                'payment_type' => 'Tipe',
-                'payment_date' => 'Tanggal',
+                'payment_type' => 'Tipe Pembayaran',
+                'payment_date' => 'Tanggal Pembayaran',
                 'payment_amount' => 'Jumlah',
-                'customer_type' => 'Tipe',
-                'customer_name' => 'Nama',
-                'customer_details' => 'Detail',
-                'shipping_date' => 'Tanggal Kirim',
-                'warehouse' => 'Gudang',
-                'vendor_trucking' => 'Layanan Angkutan',
-            ],
-            'so_code' => 'Kode',
-            'so_type' => 'Tipe',
-            'so_date' => 'Tanggal',
-            'so_status' => 'Status',
-            'table' => [
-                'item' => [
-                    'header' => [
-                        'product_name' => 'Nama Produk',
-                        'quantity' => 'Jumlah',
-                        'unit' => 'Satuan',
-                        'price_unit' => 'Harga',
-                        'total_price' => 'Total Harga',
-                    ],
-                ],
-                'total' => [
-                    'body' => [
-                        'total' => 'Total',
-                        'paid_amount' => 'Total Bayar',
-                        'to_be_paid_amount' => 'Kurang Bayar',
-                    ],
-                ],
-                'payments' => [
-                    'header' => [
-                        'cash' => 'Pembayaran Tunai',
-                        'payment_date' => 'Tanggal',
-                        'payment_status' => 'Status',
-                        'payment_amount' => 'Jumlah',
-                        'transfer' => 'Pembayaran Transfer',
-                        'effective_date' => 'Tanggal Efektif',
-                        'account_from' => 'Dari Akun',
-                        'account_to' => 'Ke Akun',
-                        'giro' => 'Pembayaran Giro',
-                        'bank' => 'Bank',
-                        'serial_number' => 'Nomor Seri',
-                        'printed_name' => 'Nama Tertera',
-                        'payment_type' => 'Tipe Pembayaran',
-                    ],
-                ],
             ],
         ],
         'index' => [
@@ -131,7 +38,7 @@ return [
             'page_title' => 'Pembayaran',
             'page_title_desc' => '',
             'header' => [
-                'title' => 'Pembayaran',
+                'title' => 'Daftar Pembayaran',
             ],
             'table' => [
                 'header' => [
@@ -141,17 +48,11 @@ return [
                     'total' => 'Total',
                     'paid' => 'Pembayaran',
                     'rest' => 'Sisa Pembayaran',
-                    'po_date' => '',
-                    'supplier' => '',
                 ],
             ],
         ],
-        'transfer' => [
-            'title' => 'Pembayaran Transfer',
-            'page_title' => 'Pembayaran Transfer',
-            'page_title_desc' => '',
+        'summary' => [
             'box' => [
-                'payment' => 'Pembayaran Transfer',
                 'customer' => 'Pelanggan',
                 'sales_order_detail' => 'Detail',
                 'shipping' => 'Pengiriman',
@@ -160,23 +61,17 @@ return [
                 'payment_history' => 'Catatan Pembayaran',
             ],
             'field' => [
-                'payment_type' => 'Tipe',
-                'bank_from' => 'Dari Bank',
-                'bank_to' => 'Ke Bank',
-                'payment_date' => 'Tgl Bayar',
-                'effective_date' => 'Tgl Efektif',
-                'payment_amount' => 'Jumlah',
                 'customer_type' => 'Tipe',
                 'customer_name' => 'Nama',
                 'customer_details' => 'Detail',
+                'so_code' => 'Kode',
+                'so_type' => 'Tipe',
+                'so_date' => 'Tanggal',
+                'so_status' => 'Status',
                 'shipping_date' => 'Pengiriman',
                 'warehouse' => 'Gudang',
                 'vendor_trucking' => 'Layanan Angkutan',
             ],
-            'so_code' => 'Kode',
-            'so_type' => 'Tipe',
-            'so_date' => 'Tanggal',
-            'so_status' => 'Status',
             'table' => [
                 'item' => [
                     'header' => [
@@ -189,19 +84,51 @@ return [
                 ],
                 'total' => [
                     'body' => [
-                        'total' => '',
-                        'paid_amount' => '',
-                        'to_be_paid_amount' => '',
+                        'total' => 'Total',
+                        'paid_amount' => 'Total Yang Sudah Dibayar',
+                        'to_be_paid_amount' => 'Total Yang Harus Dibayar',
+                    ],
+                ],
+                'total_discount' => [
+                    'header' => [
+                        'total_discount_desc' => '',
+                        'percentage' => 'Persentase',
+                        'value' => 'Nilai',
+                        'total_discount' => 'Diskon',
                     ],
                 ],
                 'payments' => [
                     'header' => [
-                        'payment_type' => '',
-                        'payment_date' => '',
-                        'payment_amount' => '',
-                        'payment_status' => '',
+                        'cash' => 'Tunai',
+                        'payment_date' => 'Tanggal Bayar',
+                        'payment_status' => 'Status',
+                        'payment_amount' => 'Jumlah',
+                        'transfer' => 'Transfer',
+                        'effective_date' => 'Tgl Efektif',
+                        'account_from' => 'Dari Akun',
+                        'account_to' => 'Ke Akun',
+                        'giro' => 'Giro',
+                        'bank' => 'Bank',
+                        'serial_number' => 'Nomor Seri',
+                        'printed_name' => 'Nama Tertera',
                     ],
                 ],
+            ],
+        ],
+        'transfer' => [
+            'title' => 'Pembayaran Transfer',
+            'page_title' => 'Pembayaran Transfer',
+            'page_title_desc' => '',
+            'box' => [
+                'payment' => 'Pembayaran Transfer',
+            ],
+            'field' => [
+                'payment_type' => 'Tipe',
+                'bank_from' => 'Dari Bank',
+                'bank_to' => 'Ke Bank',
+                'payment_date' => 'Tgl Bayar',
+                'effective_date' => 'Tgl Efektif',
+                'payment_amount' => 'Jumlah',
             ],
         ],
     ],
@@ -217,7 +144,6 @@ return [
                 'transactions' => 'Transaksi',
                 'remarks' => 'Keterangan',
                 'so_copy_remarks' => 'Keterangan Duplikat',
-                'transaction_summary' => 'Transaksi',
             ],
             'field' => [
                 'customer_type' => 'Tipe',
@@ -260,7 +186,6 @@ return [
                 'transactions' => 'Transaksi',
                 'remarks' => 'Keterangan',
                 'so_copy_remarks' => 'Keterangan Duplikat',
-                'transaction_summary' => 'Transaksi',
             ],
             'field' => [
                 'customer_type' => 'Tipe',
@@ -273,7 +198,6 @@ return [
                 'shipping_date' => 'Tgl Kirim',
                 'warehouse' => 'Gudang',
                 'vendor_trucking' => 'Layanan Angkutan',
-                'so_status' => 'Status',
             ],
             'table' => [
                 'item' => [
@@ -310,24 +234,12 @@ return [
             ],
         ],
         'search' => [
+            'so_not_found' => 'Kode Penjualan Tidak Ditemukan',
             'title' => 'Duplikat Penjualan',
             'page_title' => 'Duplikat Penjualan',
             'page_title_desc' => '',
-            'so_not_found' => 'Kode Penjualan Tidak Ditemukan',
             'header' => [
                 'search' => 'Cari Penjualan',
-            ],
-        ],
-        'title' => '',
-        'page_title' => '',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => '',
-        ],
-        'table' => [
-            'header' => [
-                'copy_code' => '',
-                'remarks' => '',
             ],
         ],
     ],
@@ -335,11 +247,11 @@ return [
         'box' => [
             'transaction_summary' => 'Transaksi',
             'customer' => 'Pelanggan',
+            'sales_order_detail' => 'Detail Penjualan',
             'shipping' => 'Pengiriman',
             'transactions' => 'Transaksi',
             'expenses' => 'Biaya',
             'remarks' => 'Keterangan',
-            'sales_order_detail' => 'Detail Penjualan',
         ],
         'title' => 'Penjualan',
         'page_title' => 'Penjualan',
@@ -380,6 +292,14 @@ return [
                     'internal_expense' => 'Internal',
                 ],
             ],
+            'total_discount' => [
+                'header' => [
+                    'total_discount_desc' => '',
+                    'percentage' => 'Persentase',
+                    'value' => 'Nilai',
+                    'total_discount' => 'Diskon',
+                ],
+            ],
         ],
         'tab' => [
             'sales' => 'Penjualan',
@@ -387,11 +307,8 @@ return [
     ],
     'edit' => [
         'box' => [
-            'transaction_summary' => '',
+            'transaction_summary' => 'Ringkasan Transaksi',
         ],
-    ],
-    'field' => [
-        'so_code' => '',
     ],
     'revise' => [
         'index' => [
@@ -455,6 +372,14 @@ return [
                     'type' => 'Tipe',
                     'remarks' => 'Keterangan',
                     'amount' => 'Jumlah',
+                ],
+            ],
+            'total_discount' => [
+                'header' => [
+                    'total_discount_desc' => '',
+                    'percentage' => 'Persentase',
+                    'value' => 'Nilai',
+                    'total_discount' => 'Diskon',
                 ],
             ],
         ],

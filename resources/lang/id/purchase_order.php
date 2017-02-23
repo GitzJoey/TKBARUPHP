@@ -143,6 +143,17 @@ return [
                     'internal_expense' => '',
                 ],
             ],
+            'total_discount' => [
+                'header' => [
+                    'total_discount_desc' => '',
+                    'percentage' => 'Persentase',
+                    'value' => 'Nilai',
+                    'total_discount' => 'Diskon',
+                ],
+                'body' => [
+                    'total_discount_desc' => 'Total Diskon',
+                ],
+            ],
         ],
         'index' => [
             'title' => 'Revisi Pembelian',
@@ -172,6 +183,7 @@ return [
             'expenses' => 'Biaya',
             'transaction_summary' => 'Transaksi',
             'remarks' => 'Keterangan',
+            'total_discount' => 'Diskon',
         ],
         'field' => [
             'supplier_type' => 'Tipe',
@@ -198,6 +210,7 @@ return [
             'expenses' => 'Biaya',
             'transaction_summary' => 'Transaksi',
             'remarks' => 'Keterangan',
+            'total_discount' => 'Diskon',
         ],
         'field' => [
             'supplier_type' => 'Tipe',
@@ -233,6 +246,17 @@ return [
                     'remarks' => 'Keterangan',
                     'amount' => 'Jumlah',
                     'internal_expense' => 'Internal',
+                ],
+            ],
+            'total_discount' => [
+                'header' => [
+                    'total_discount_desc' => '',
+                    'percentage' => 'Persentase',
+                    'value' => 'Nilai',
+                    'total_discount' => 'Total Diskon',
+                ],
+                'body' => [
+                    'total_discount_desc' => 'Total Diskon',
                 ],
             ],
         ],
@@ -298,6 +322,7 @@ return [
                 'transaction_summary' => 'Transaksi',
                 'remarks' => 'Keterangan',
                 'payment_history' => 'Catatan Pembayaran',
+                'total_discount' => 'Diskon',
             ],
             'field' => [
                 'supplier_type' => 'Tipe',
@@ -353,6 +378,17 @@ return [
                         'printed_name' => 'Nama Tertera',
                     ],
                 ],
+                'total_discount' => [
+                    'header' => [
+                        'total_discount_desc' => '',
+                        'percentage' => 'Persentase',
+                        'value' => 'Nilai',
+                        'total_discount' => 'Diskon',
+                    ],
+                    'body' => [
+                        'total_discount_desc' => 'Total Diskon',
+                    ],
+                ],
             ],
         ],
         'transfer' => [
@@ -369,6 +405,22 @@ return [
                 'payment_date' => 'Tgl Pembayaran',
                 'effective_date' => 'Tgl Efektif',
                 'payment_amount' => 'Jumlah',
+            ],
+        ],
+        'box' => [
+            'total_discount' => '',
+        ],
+        'table' => [
+            'total_discount' => [
+                'header' => [
+                    'total_discount_desc' => '',
+                    'percentage' => '',
+                    'value' => '',
+                    'total_discount' => '',
+                ],
+                'body' => [
+                    'total_discount_desc' => '',
+                ],
             ],
         ],
     ],
