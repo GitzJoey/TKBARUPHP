@@ -11,6 +11,7 @@ return [
         'tab' => [
             'store' => 'Data Toko',
             'bank_account' => 'Rekening Bank',
+            'currencies' => 'Mata Uang',
             'settings' => 'Pengaturan',
         ],
         'table_bank' => [
@@ -21,6 +22,14 @@ return [
                 'remarks' => 'Catatan',
             ],
         ],
+        'table_currencies' =>[
+            'header' => [
+                'currencies' => 'Mata Uang',
+                'base_currencies' => 'Mata Uang Dasar',
+                'conversion_value' => 'Nilai Tukar',
+                'remarks' => 'Catatan',
+            ]
+        ]
     ],
     'field' => [
         'name' => 'Nama',

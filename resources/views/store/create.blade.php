@@ -40,6 +40,7 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab_store" data-toggle="tab">@lang('store.create.tab.store')&nbsp;<span id="storeDataTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_bank_account" data-toggle="tab">@lang('store.create.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li><a href="#tab_currencies" data-toggle="tab">@lang('store.create.tab.currencies')&nbsp;<span id="currenciesTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_settings" data-toggle="tab">@lang('store.create.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                         </ul>
                         <div class="tab-content">
@@ -149,6 +150,45 @@
                                     </tbody>
                                 </table>
                                 <button class="btn btn-xs btn-default" type="button" v-on:click="addNewBank()">@lang('buttons.create_new_button')</button>
+                            </div>
+                            <div class="tab-pane" id="tab_currencies">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">@lang('store.create.table_currencies.header.currencies')</th>
+                                            <th class="text-center">@lang('store.create.table_currencies.header.base_currencies')</th>
+                                            <th class="text-center">@lang('store.create.table_currencies.header.conversion_value')</th>
+                                            <th class="text-center">@lang('store.create.table_currencies.header.remarks')</th>
+                                            <th class="text-center">@lang('labels.ACTION')</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item,idx) in currencies">
+                                            <td>
+                                                <select class="form-control"
+                                                        name="currencies[]"
+                                                        v-model="item.currencies_id" data-parsley-required="true">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-for="c in currenciesDDL" v-bind:value="c.id">@{{ c.name }} (@{{ c.symbol }})</option>
+                                                </select>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="checkbox" v-model="item.is_base" v-on:click="selectedBaseCurrencies(idx)"/>
+                                                <input type="hidden" name="base_currencies[]" v-model="item.is_base">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="currencies_conversion_value[]" v-model="item.conversion_value" v-bind:readonly="(item.is_base != 0)" data-parsley-required="true" data-parsley-group="tab_currencies">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="currencies_remarks[]" v-model="item.remarks">
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedCurencies(idx)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-xs btn-default" type="button" v-on:click="addNewCurrencies()">@lang('buttons.create_new_button')</button>                          
                             </div>
                             <div class="tab-pane" id="tab_settings">
                                 <div class="form-group {{ $errors->has('date_format') ? 'has-error' : '' }}">
@@ -290,7 +330,9 @@
                 el: '#storeVue',
                 data: {
                     banks: [],
-                    bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}')
+                    currencies: [],
+                    bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
+                    currenciesDDL: JSON.parse('{!! htmlspecialchars_decode($currenciesDDL) !!}')
                 },
                 methods: {
                     addNewBank: function() {
@@ -303,6 +345,27 @@
                     },
                     removeSelectedBank: function(idx) {
                         this.banks.splice(idx, 1);
+                    },
+                    addNewCurrencies: function(){
+                        this.currencies.push({
+                            'currencies_id': '',
+                            'is_base': 0,
+                            'conversion_value': '',
+                            'remarks': ''
+                        });
+                    },
+                    selectedBaseCurrencies: function(idx){
+                        for (var i = 0; i < this.currencies.length; i++) {
+                            if (idx == i) {
+                                this.currencies[i].conversion_value = 1;
+                                this.currencies[i].is_base = 1;
+                            } else {
+                                this.currencies[i].is_base = 0;
+                            }
+                        }
+                    },
+                    removeSelectedCurencies: function(idx){
+                        this.currencies.splice(idx, 1);
                     }
                 }
             });
@@ -328,6 +391,12 @@
                     $('#bankAccountTabError').addClass('hidden');
                 } else {
                     $('#bankAccountTabError').removeClass('hidden');
+                }
+
+                if (true === $('#storeForm').parsley().isValid("tab_currencies", false)) {
+                    $('#currenciesTabError').addClass('hidden');
+                } else {
+                    $('#currenciesTabError').removeClass('hidden');
                 }
 
                 if (true === $('#storeForm').parsley().isValid("tab_settings", false)) {

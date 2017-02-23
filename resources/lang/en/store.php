@@ -11,6 +11,7 @@ return [
         'tab' => [
             'store' => 'Store Data',
             'bank_account' => 'Bank Account',
+            'currencies' => 'Currencies',
             'settings' => 'Settings',
         ],
         'table_bank' => [
@@ -21,6 +22,14 @@ return [
                 'remarks' => 'Remarks',
             ],
         ],
+        'table_currencies' =>[
+            'header' => [
+                'currencies' => 'Currencies',
+                'base_currencies' => 'Base Currencies',
+                'conversion_value' => 'Conversion Value',
+                'remarks' => 'Remarks',
+            ]
+        ]
     ],
     'field' => [
         'name' => 'Name',
