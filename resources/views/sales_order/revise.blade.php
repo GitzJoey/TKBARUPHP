@@ -422,6 +422,43 @@
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
+                            <h3 class="box-title">@lang('aales_order.revise.box.total_discount')</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">@lang('sales_order.revise.table.total_discount.header.total_discount_desc')</th>
+                                        <th width="10%" class="text-center">@lang('sales_order.revise.table.total_discount.header.percentage')</th>
+                                        <th width="20%" class="text-center">@lang('sales_order.revise.table.total_discount.header.value')</th>
+                                        <th width="20%" class="text-center">@lang('sales_order.revise.table.total_discount.header.total_discount')</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="50%" class="valign-middle">
+                                            @lang('purchase_order.revise.table.total_discount.body.total_discount_desc')
+                                        </td>
+                                        <td width="10%" class="text-right">
+                                            <input name="total_discount" type="text" class="form-control text-right" autonumeric/>
+                                        </td>
+                                        <td width="20%" class="text-right">
+                                            <input name="total_discount" type="text" class="form-control text-right" autonumeric/>
+                                        </td>
+                                        <td width="20%" class="text-right">
+                                            <input name="total_discount" type="text" class="form-control text-right" autonumeric readonly/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
                             <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                         </div>
                         <div class="box-body">

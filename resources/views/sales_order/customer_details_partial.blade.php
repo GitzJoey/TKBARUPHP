@@ -13,14 +13,16 @@
                         <div class="col-md-12">
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab_customer"
-                                                          data-toggle="tab">@lang('customer.create.tab.customer')</a>
+                                    <li class="active">
+                                        <a href="#tab_customer" data-toggle="tab">@lang('customer.create.tab.customer')</a>
                                     </li>
                                     <li><a href="#tab_pic" data-toggle="tab">@lang('customer.create.tab.pic')</a></li>
-                                    <li><a href="#tab_bank_account"
-                                           data-toggle="tab">@lang('customer.create.tab.bank_account')</a></li>
-                                    <li><a href="#tab_settings"
-                                           data-toggle="tab">@lang('customer.create.tab.settings')</a></li>
+                                    <li>
+                                        <a href="#tab_bank_account" data-toggle="tab">@lang('customer.create.tab.bank_account')</a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab_settings" data-toggle="tab">@lang('customer.create.tab.settings')</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_customer">
@@ -29,24 +31,21 @@
                                                 <label for="inputName"
                                                        class="col-sm-2 control-label">@lang('customer.field.name')</label>
                                                 <div class="col-sm-8">
-                                                    <input id="inputName" type="text" class="form-control" readonly
-                                                           v-model="so.customer.name">
+                                                    <input id="inputName" type="text" class="form-control" readonly v-model="so.customer.name">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputAddress"
                                                        class="col-sm-2 control-label">@lang('customer.field.address')</label>
                                                 <div class="col-sm-8">
-                                                            <textarea id="inputAddress" class="form-control"
-                                                                      readonly rows="4">@{{ so.customer.address }}</textarea>
+                                                    <textarea id="inputAddress" class="form-control" readonly rows="4">@{{ so.customer.address }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputCity"
                                                        class="col-sm-2 control-label">@lang('customer.field.city')</label>
                                                 <div class="col-sm-8">
-                                                    <input id="inputCity" type="text" class="form-control" readonly
-                                                           v-model="so.customer.city">
+                                                    <input id="inputCity" type="text" class="form-control" readonly v-model="so.customer.city">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -87,9 +86,9 @@
                                                                 &nbsp;@{{ profile.last_name }}
                                                             </div>
                                                             <div class="box-tools">
-                                                                <button type="button" class="btn btn-box-tool"
-                                                                        data-widget="collapse"><i
-                                                                            class="fa fa-minus"></i></button>
+                                                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                                    <i class="fa fa-minus"></i>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div class="box-body">
@@ -139,18 +138,18 @@
                                                                 <div class="col-sm-10">
                                                                     <table class="table table-bordered">
                                                                         <thead>
-                                                                        <tr>
-                                                                            <th>@lang('customer.create.table_phone.header.provider')</th>
-                                                                            <th>@lang('customer.create.table_phone.header.number')</th>
-                                                                            <th>@lang('customer.create.table_phone.header.remarks')</th>
-                                                                        </tr>
+                                                                            <tr>
+                                                                                <th>@lang('customer.create.table_phone.header.provider')</th>
+                                                                                <th>@lang('customer.create.table_phone.header.number')</th>
+                                                                                <th>@lang('customer.create.table_phone.header.remarks')</th>
+                                                                            </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <tr v-for="(phoneNumber, phoneNumberIndex) in profile.phone_numbers">
-                                                                            <td>@{{ phoneNumber.provider.name }}</td>
-                                                                            <td>@{{ phoneNumber.number }}</td>
-                                                                            <td>@{{ phoneNumber.remarks }}</td>
-                                                                        </tr>
+                                                                            <tr v-for="(phoneNumber, phoneNumberIndex) in profile.phone_numbers">
+                                                                                <td>@{{ phoneNumber.provider.name }}</td>
+                                                                                <td>@{{ phoneNumber.number }}</td>
+                                                                                <td>@{{ phoneNumber.remarks }}</td>
+                                                                            </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -164,18 +163,18 @@
                                     <div class="tab-pane" id="tab_bank_account">
                                         <table class="table table-bordered">
                                             <thead>
-                                            <tr>
-                                                <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
-                                                <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
-                                                <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
-                                            </tr>
+                                                <tr>
+                                                    <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
+                                                    <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
+                                                    <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            <tr v-for="(bankAccount, bankAccountIndex) in so.customer.bank_accounts">
-                                                <td>@{{ bankAccount.bank.name }}</td>
-                                                <td>@{{ bankAccount.account_number }}</td>
-                                                <td>@{{ bankAccount.remarks }}</td>
-                                            </tr>
+                                                <tr v-for="(bankAccount, bankAccountIndex) in so.customer.bank_accounts">
+                                                    <td>@{{ bankAccount.bank.name }}</td>
+                                                    <td>@{{ bankAccount.account_number }}</td>
+                                                    <td>@{{ bankAccount.remarks }}</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

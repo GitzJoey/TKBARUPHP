@@ -6,6 +6,45 @@ return [
             'title' => 'Cash Flow',
             'page_title' => 'Cash Flow',
             'page_title_desc' => '',
+            'header' => [
+                'title' => '',
+            ],
+            'table' => [
+                'header' => [
+                    'date' => '',
+                    'source_account' => '',
+                    'destination_account' => '',
+                    'amount' => '',
+                    'status' => '',
+                    'remarks' => '',
+                ],
+            ],
+        ],
+        'create' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => '',
+            ],
+        ],
+        'field' => [
+            'date' => '',
+            'source_account' => '',
+            'destination_account' => '',
+            'amount' => '',
+            'status' => '',
+            'remarks' => '',
+        ],
+        'edit' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
+        ],
+        'show' => [
+            'title' => '',
+            'page_title' => '',
+            'page_title_desc' => '',
         ],
     ],
     'cash' => [

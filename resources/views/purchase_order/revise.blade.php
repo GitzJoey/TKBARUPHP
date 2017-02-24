@@ -73,8 +73,7 @@
                                     <label for="inputSupplierDetails"
                                            class="col-sm-2 control-label">@lang('purchase_order.revise.field.supplier_details')</label>
                                     <div class="col-sm-10">
-                                                <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_detail }}
-                                                </textarea>
+                                        <textarea class="form-control" rows="5" readonly>{{ $currentPo->walk_in_supplier_detail }}</textarea>
                                     </div>
                                 </div>
                             @endif
@@ -231,63 +230,63 @@
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="30%">@lang('purchase_order.revise.table.item.header.product_name')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.revise.table.item.header.quantity')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.revise.table.item.header.unit')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.revise.table.item.header.price_unit')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.revise.table.item.header.total_price')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="30%">@lang('purchase_order.revise.table.item.header.product_name')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.revise.table.item.header.quantity')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.revise.table.item.header.unit')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.revise.table.item.header.price_unit')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.revise.table.item.header.total_price')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(item, itemIndex) in po.items">
-                                            <input type="hidden" name="item_id[]" v-bind:value="item.id">
-                                            <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
-                                            <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
-                                            <td class="valign-middle">@{{ item.product.name }}</td>
-                                            <td>
-                                                <input type="text" class="form-control text-right"
-                                                       data-parsley-required="true" data-parsley-type="number"
-                                                       name="item_quantity[]"
-                                                       v-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}>
-                                            </td>
-                                            <td>
-                                                @if($currentPo->status == 'POSTATUS.WA')
-                                                    <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
-                                                    <select data-parsley-required="true"
-                                                            class="form-control"
-                                                            v-model="item.selected_unit"
-                                                            data-parsley-required="true">
-                                                        <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
-                                                    </select>
-                                                @else
-                                                    <input type="text" class="form-control" readonly
-                                                           v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
-                                                    <input type="hidden" name="item_selected_unit_id[]"
-                                                           v-bind:value="item.selected_unit.unit.id">
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="item_price[]"
-                                                       v-model="item.price" data-parsley-required="true">
-                                            </td>
-                                            <td class="text-center">
-                                                @if($currentPo->status == 'POSTATUS.WA')
-                                                    <button type="button" class="btn btn-danger btn-md"
-                                                            v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
-                                                    </button>
-                                                @endif
-                                            </td>
-                                            <td class="text-right valign-middle">
-                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                            </td>
-                                        </tr>
+                                            <tr v-for="(item, itemIndex) in po.items">
+                                                <input type="hidden" name="item_id[]" v-bind:value="item.id">
+                                                <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
+                                                <td class="valign-middle">@{{ item.product.name }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right"
+                                                           data-parsley-required="true" data-parsley-type="number"
+                                                           name="item_quantity[]"
+                                                           v-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}>
+                                                </td>
+                                                <td>
+                                                    @if($currentPo->status == 'POSTATUS.WA')
+                                                        <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
+                                                        <select data-parsley-required="true"
+                                                                class="form-control"
+                                                                v-model="item.selected_unit"
+                                                                data-parsley-required="true">
+                                                            <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                            <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
+                                                        </select>
+                                                    @else
+                                                        <input type="text" class="form-control" readonly
+                                                               v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
+                                                        <input type="hidden" name="item_selected_unit_id[]"
+                                                               v-bind:value="item.selected_unit.unit.id">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="item_price[]"
+                                                           v-model="item.price" data-parsley-required="true">
+                                                </td>
+                                                <td class="text-center">
+                                                    @if($currentPo->status == 'POSTATUS.WA')
+                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                                <td class="text-right valign-middle">
+                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -296,13 +295,13 @@
                                 <div class="col-md-12">
                                     <table id="itemsTotalListTable" class="table table-bordered">
                                         <tbody>
-                                        <tr>
-                                            <td width="80%"
-                                                class="text-right">@lang('purchase_order.revise.table.total.body.total')</td>
-                                            <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td width="80%"
+                                                    class="text-right">@lang('purchase_order.revise.table.total.body.total')</td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -326,59 +325,59 @@
                                 <div class="col-md-12">
                                     <table id="expensesListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="20%">@lang('purchase_order.revise.table.expense.header.name')</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.revise.table.expense.header.type')</th>
-                                            <th width="10%"
-                                                class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>
-                                            <th width="25%"
-                                                class="text-center">@lang('purchase_order.revise.table.expense.header.remarks')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.revise.table.expense.header.amount')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="20%">@lang('purchase_order.revise.table.expense.header.name')</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.revise.table.expense.header.type')</th>
+                                                <th width="10%"
+                                                    class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>
+                                                <th width="25%"
+                                                    class="text-center">@lang('purchase_order.revise.table.expense.header.remarks')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.revise.table.expense.header.amount')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(expense, expenseIndex) in po.expenses">
-                                            <td>
-                                                <input type="hidden" name="expense_id[]" v-bind:value="expense.id" />
-                                                <input name="expense_name[]" type="text" class="form-control" v-model="expense.name"
-                                                       data-parsley-required="true" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }} />
-                                            </td>
-                                            <td>
-                                                @if($currentPo->status == 'POSTATUS.WA')
-                                                    <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
-                                                    <select data-parsley-required="true"
-                                                            class="form-control" v-model="expense.type">
-                                                        <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
-                                                    </select>
-                                                @else
-                                                    <input type="text" class="form-control" readonly
-                                                           v-bind:value="expense.type.description">
-                                                    <input type="hidden" name="expense_type[]"
-                                                           v-bind:value="expense.type.code"/>
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
-                                                <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
-                                            </td>
-                                            <td>
-                                                <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
-                                            </td>
-                                            <td class="text-center">
-                                                @if($currentPo->status == 'POSTATUS.WA')
-                                                    <button type="button" class="btn btn-danger btn-md"
-                                                            v-on:click="removeExpense(expenseIndex)"><span class="fa fa-minus"/>
-                                                    </button>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <input name="expense_amount[]" type="text" class="form-control text-right"
-                                                       v-model="expense.amount" data-parsley-required="true"/>
-                                            </td>
-                                        </tr>
+                                            <tr v-for="(expense, expenseIndex) in po.expenses">
+                                                <td>
+                                                    <input type="hidden" name="expense_id[]" v-bind:value="expense.id" />
+                                                    <input name="expense_name[]" type="text" class="form-control" v-model="expense.name"
+                                                           data-parsley-required="true" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }} />
+                                                </td>
+                                                <td>
+                                                    @if($currentPo->status == 'POSTATUS.WA')
+                                                        <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
+                                                        <select data-parsley-required="true"
+                                                                class="form-control" v-model="expense.type">
+                                                            <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                            <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                        </select>
+                                                    @else
+                                                        <input type="text" class="form-control" readonly
+                                                               v-bind:value="expense.type.description">
+                                                        <input type="hidden" name="expense_type[]"
+                                                               v-bind:value="expense.type.code"/>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
+                                                </td>
+                                                <td>
+                                                    <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
+                                                </td>
+                                                <td class="text-center">
+                                                    @if($currentPo->status == 'POSTATUS.WA')
+                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                v-on:click="removeExpense(expenseIndex)"><span class="fa fa-minus"/>
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <input name="expense_amount[]" type="text" class="form-control text-right"
+                                                           v-model="expense.amount" data-parsley-required="true"/>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -387,17 +386,54 @@
                                 <div class="col-md-12">
                                     <table id="expensesTotalListTable" class="table table-bordered">
                                         <tbody>
-                                        <tr>
-                                            <td width="80%"
-                                                class="text-right">@lang('purchase_order.revise.table.total.body.total')</td>
-                                            <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ expenseTotal() }}</span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td width="80%"
+                                                    class="text-right">@lang('purchase_order.revise.table.total.body.total')</td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal">@{{ expenseTotal() }}</span>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.revise.box.total_discount')</h3>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">@lang('purchase_order.revise.table.total_discount.header.total_discount_desc')</th>
+                                        <th width="10%" class="text-center">@lang('purchase_order.revise.table.total_discount.header.percentage')</th>
+                                        <th width="20%" class="text-center">@lang('purchase_order.revise.table.total_discount.header.value')</th>
+                                        <th width="20%" class="text-center">@lang('purchase_order.revise.table.total_discount.header.total_discount')</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="50%" class="valign-middle">
+                                            @lang('purchase_order.revise.table.total_discount.body.total_discount_desc')
+                                        </td>
+                                        <td width="10%" class="text-right">
+                                            <input name="total_discount" type="text" class="form-control text-right" autonumeric/>
+                                        </td>
+                                        <td width="20%" class="text-right">
+                                            <input name="total_discount" type="text" class="form-control text-right" autonumeric/>
+                                        </td>
+                                        <td width="20%" class="text-right">
+                                            <input name="total_discount" type="text" class="form-control text-right" autonumeric readonly/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

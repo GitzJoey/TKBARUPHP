@@ -17,8 +17,8 @@ class CreateAccRevenueTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->dateTime('date')->nullable();
-            $table->unsignedBigInteger('destination_acc_cash_id')->default(0);
-            $table->unsignedBigInteger('acc_revenue_category_id')->default(0);
+            $table->unsignedBigInteger('destination_cash_account_id')->default(0);
+            $table->unsignedBigInteger('revenue_category_id')->default(0);
             $table->decimal('amount', 19, 2)->default(0);
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);

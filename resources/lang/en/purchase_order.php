@@ -13,6 +13,7 @@ return [
             'expenses' => 'Expenses',
             'transaction_summary' => 'Transaction Summary',
             'remarks' => 'Remarks',
+            'total_discount' => 'Discount',
         ],
         'field' => [
             'supplier_type' => 'Type',
@@ -48,6 +49,17 @@ return [
                     'internal_expense' => 'Internal Expense',
                     'remarks' => 'Remarks',
                     'amount' => 'Amount',
+                ],
+            ],
+            'total_discount' => [
+                'header' => [
+                    'total_discount_desc' => '',
+                    'percentage' => 'Percentage',
+                    'value' => 'Value',
+                    'total_discount' => 'Discount',
+                ],
+                'body' => [
+                    'total_discount_desc' => 'Total Discount',
                 ],
             ],
         ],
@@ -81,6 +93,7 @@ return [
             'expenses' => 'Expenses',
             'transaction_summary' => 'Transaction Summary',
             'remarks' => 'Remarks',
+            'total_discount' => 'Discount',
         ],
         'field' => [
             'supplier_type' => 'Type',
@@ -116,6 +129,17 @@ return [
                     'internal_expense' => 'Internal Expense',
                     'remarks' => 'Remarks',
                     'amount' => 'Amount',
+                ],
+            ],
+            'total_discount' => [
+                'header' => [
+                    'total_discount_desc' => '',
+                    'percentage' => 'Percentage',
+                    'value' => 'Value',
+                    'total_discount' => 'Discount',
+                ],
+                'body' => [
+                    'total_discount_desc' => 'Total Discount',
                 ],
             ],
         ],
@@ -181,6 +205,7 @@ return [
                 'transaction_summary' => 'Transaction Summary',
                 'remarks' => 'Remarks',
                 'payment_history' => 'Payment Hiatory',
+                'total_discount' => 'Discount',
             ],
             'field' => [
                 'supplier_type' => 'Type',
@@ -236,6 +261,17 @@ return [
                         'printed_name' => 'Printed Name',
                     ],
                 ],
+                'total_discount' => [
+                    'header' => [
+                        'total_discount_desc' => '',
+                        'percentage' => 'Percentage',
+                        'value' => 'Value',
+                        'total_discount' => 'Discount',
+                    ],
+                    'body' => [
+                        'total_discount_desc' => 'Total Discount',
+                    ],
+                ],
             ],
         ],
         'transfer' => [
@@ -252,6 +288,22 @@ return [
                 'payment_date' => 'Payment Date',
                 'effective_date' => 'Effective Date',
                 'payment_amount' => 'Amount',
+            ],
+        ],
+        'box' => [
+            'total_discount' => '',
+        ],
+        'table' => [
+            'total_discount' => [
+                'header' => [
+                    'total_discount_desc' => '',
+                    'percentage' => '',
+                    'value' => '',
+                    'total_discount' => '',
+                ],
+                'body' => [
+                    'total_discount_desc' => '',
+                ],
             ],
         ],
     ],

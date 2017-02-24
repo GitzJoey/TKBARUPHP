@@ -130,9 +130,8 @@ class SalesOrderController extends Controller
 
         $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])
             ->paginate(10);
-        $soStatusDDL = LookupRepo::findByCategory('SOSTATUS')->pluck('description', 'code');
 
-        return view('sales_order.index', compact('salesOrders', 'soStatusDDL'));
+        return view('sales_order.index', compact('salesOrders'));
     }
 
     public function revise($id)
