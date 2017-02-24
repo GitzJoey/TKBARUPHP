@@ -61,8 +61,8 @@ class Cost extends Model
     protected $fillable = [
         'store_id',
         'date',
-        'source_acc_cash_id',
-        'acc_cost_category_id',
+        'source_cash_account_id',
+        'cost_category_id',
         'amount',
         'remarks',
     ];
@@ -83,12 +83,12 @@ class Cost extends Model
 
     public function sourceCashAccount()
     {
-        return $this->belongsTo('App\Model\Accounting\CashAccount', 'source_acc_cash_id');
+        return $this->belongsTo('App\Model\Accounting\CashAccount', 'source_cash_account_id');
     }
 
     public function category()
     {
-        return $this->belongsTo('App\Model\Accounting\CostCategory', 'acc_cost_category_id');
+        return $this->belongsTo('App\Model\Accounting\CostCategory', 'cost_category_id');
     }
 
     public static function boot()

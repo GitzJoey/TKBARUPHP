@@ -407,6 +407,43 @@
                                         <div class="col-md-12">
                                             <div class="box box-info">
                                                 <div class="box-header with-border">
+                                                    <h3 class="box-title">@lang('aales_order.create.box.total_discount')</h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="50%">@lang('sales_order.create.table.total_discount.header.total_discount_desc')</th>
+                                                                <th width="10%" class="text-center">@lang('sales_order.create.table.total_discount.header.percentage')</th>
+                                                                <th width="20%" class="text-center">@lang('sales_order.create.table.total_discount.header.value')</th>
+                                                                <th width="20%" class="text-center">@lang('sales_order.create.table.total_discount.header.total_discount')</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td width="50%" class="valign-middle">
+                                                                    @lang('purchase_order.create.table.total_discount.body.total_discount_desc')
+                                                                </td>
+                                                                <td width="10%" class="text-right">
+                                                                    <input name="total_discount" type="text" class="form-control text-right" autonumeric/>
+                                                                </td>
+                                                                <td width="20%" class="text-right">
+                                                                    <input name="total_discount" type="text" class="form-control text-right" autonumeric/>
+                                                                </td>
+                                                                <td width="20%" class="text-right">
+                                                                    <input name="total_discount" type="text" class="form-control text-right" autonumeric readonly/>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
                                                     <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                                                 </div>
                                                 <div class="box-body">
@@ -569,11 +606,11 @@
                                                                                         <div class="col-sm-10">
                                                                                             <table class="table table-bordered">
                                                                                                 <thead>
-                                                                                                <tr>
-                                                                                                    <th>@lang('customer.show.table_phone.header.provider')</th>
-                                                                                                    <th>@lang('customer.show.table_phone.header.number')</th>
-                                                                                                    <th>@lang('customer.show.table_phone.header.remarks')</th>
-                                                                                                </tr>
+                                                                                                    <tr>
+                                                                                                        <th>@lang('customer.show.table_phone.header.provider')</th>
+                                                                                                        <th>@lang('customer.show.table_phone.header.number')</th>
+                                                                                                        <th>@lang('customer.show.table_phone.header.remarks')</th>
+                                                                                                    </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
                                                                                                     <tr v-for="phone in profile.phone_numbers">
@@ -612,13 +649,13 @@
                                                             <div class="tab-pane" v-bind:id="'tab_expenses_' + soIndex">
                                                                 <table class="table table-bordered">
                                                                     <thead>
-                                                                    <tr>
-                                                                        <th class="text-center">@lang('customer.show.table_expense.header.name')</th>
-                                                                        <th class="text-center">@lang('customer.show.table_expense.header.type')</th>
-                                                                        <th class="text-center">@lang('customer.show.table_expense.header.amount')</th>
-                                                                        <th class="text-center">@lang('customer.show.table_expense.header.internal_expense')</th>
-                                                                        <th class="text-center">@lang('customer.show.table_expense.header.remarks')</th>
-                                                                    </tr>
+                                                                        <tr>
+                                                                            <th class="text-center">@lang('customer.show.table_expense.header.name')</th>
+                                                                            <th class="text-center">@lang('customer.show.table_expense.header.type')</th>
+                                                                            <th class="text-center">@lang('customer.show.table_expense.header.amount')</th>
+                                                                            <th class="text-center">@lang('customer.show.table_expense.header.internal_expense')</th>
+                                                                            <th class="text-center">@lang('customer.show.table_expense.header.remarks')</th>
+                                                                        </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr v-for="et in so.customer.expense_templates">
@@ -787,7 +824,9 @@
                             },
                             conversion_value: 1
                         },
-                        base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                        base_unit: _.cloneDeep(_.find(product.product_units, function(unit) {
+                            return unit.is_base == 1
+                        })),
                         quantity: 0,
                         price: 0
                     });
@@ -809,7 +848,9 @@
                             },
                             conversion_value: 1
                         },
-                        base_unit: _.cloneDeep(_.find(stock.product.product_units, isBase)),
+                        base_unit: _.cloneDeep(_.find(stock.product.product_units, function(unit) {
+                            return unit.is_base == 1
+                        })),
                         quantity: 0,
                         price: stock_price ? stock_price.price : 0
                     });
@@ -1004,10 +1045,6 @@
             });
             $("#customerSelect" + index).val(soApp.SOs[index].customer.id).trigger('change');
         }
-    }
-
-    function isBase(unit) {
-        return unit.is_base == 1;
     }
 
     $('.cancelButton').on('click', function(e){

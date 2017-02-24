@@ -88,19 +88,24 @@ class CashAccount extends Model
         return $this->attributes['name'].' ('.$this->attributes['code'].')';
     }
 
-    public function accountingCapitalDeposits()
+    public function capitalDeposits()
     {
-        return $this->hasMany('App\Model\Accounting\CapitalDeposit', 'destination_acc_cash_id');
+        return $this->hasMany('App\Model\Accounting\CapitalDeposit', 'destination_cash_account_id');
     }
 
-    public function accountingCapitalWithdrawals()
+    public function capitalWithdrawals()
     {
-        return $this->hasMany('App\Model\Accounting\CapitalWithdrawal', 'source_acc_cash_id');
+        return $this->hasMany('App\Model\Accounting\CapitalWithdrawal', 'source_cash_account_id');
     }
 
-    public function accountingCosts()
+    public function costs()
     {
-        return $this->hasMany('App\Model\Accounting\Cost', 'source_acc_cash_id');
+        return $this->hasMany('App\Model\Accounting\Cost', 'source_cash_account_id');
+    }
+
+    public function revenues()
+    {
+        return $this->hasMany('App\Model\Accounting\Revenue', 'destination_cash_account_id');
     }
 
     public static function boot()

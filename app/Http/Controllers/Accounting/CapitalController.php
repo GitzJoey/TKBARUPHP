@@ -46,7 +46,7 @@ class CapitalController extends Controller
             CapitalDeposit::create([
                 'store_id' => Auth::user()->store->id,
                 'date' => date('Y-m-d', strtotime($data['date'])),
-                'destination_acc_cash_id' => $data['destination_account'],
+                'destination_cash_account_id' => $data['destination_account'],
                 'amount' => floatval(str_replace(',', '', $data['amount'])),
                 'remarks' => $data['remarks'],
             ]);
@@ -83,7 +83,7 @@ class CapitalController extends Controller
             CapitalWithdrawal::create([
                 'store_id' => Auth::user()->store->id,
                 'date' => date('Y-m-d', strtotime($data['date'])),
-                'source_acc_cash_id' => $data['source_account'],
+                'source_cash_account_id' => $data['source_account'],
                 'amount' => floatval(str_replace(',', '', $data['amount'])),
                 'remarks' => $data['remarks'],
             ]);

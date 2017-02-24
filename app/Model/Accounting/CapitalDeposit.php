@@ -58,7 +58,7 @@ class CapitalDeposit extends Model
     protected $fillable = [
         'store_id',
         'date',
-        'destination_acc_cash_id',
+        'destination_cash_account_id',
         'amount',
         'remarks',
     ];
@@ -79,7 +79,7 @@ class CapitalDeposit extends Model
 
     public function cashAccount()
     {
-        return $this->belongsTo('App\Model\Accounting\CashAccount', 'destination_acc_cash_id');
+        return $this->belongsTo('App\Model\Accounting\CashAccount', 'destination_cash_account_id');
     }
 
     public static function boot()

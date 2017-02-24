@@ -88,9 +88,8 @@ class PurchaseOrderController extends Controller
 
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])
             ->paginate(10);
-        $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');
 
-        return view('purchase_order.index', compact('purchaseOrders', 'poStatusDDL'));
+        return view('purchase_order.index', compact('purchaseOrders'));
     }
 
     public function revise($id)

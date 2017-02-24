@@ -53,7 +53,7 @@
                                     @endif
                                 </td>
                                 <td class="text-center">{{ $so->shipping_date }}</td>
-                                <td class="text-center">{{ $soStatusDDL[$so->status] }}</td>
+                                <td class="text-center">@lang('lookup.'.$so->status)</td>
                                 <td class="text-center" width="10%">
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.revise', $so->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>
                                     @if($so->status == 'SOSTATUS.WD')

@@ -58,7 +58,7 @@ class CapitalWithdrawal extends Model
     protected $fillable = [
         'store_id',
         'date',
-        'source_acc_cash_id',
+        'source_cash_account_id',
         'amount',
         'remarks',
     ];
@@ -79,7 +79,7 @@ class CapitalWithdrawal extends Model
 
     public function cashAccount()
     {
-        return $this->belongsTo('App\Model\Accounting\CashAccount', 'source_acc_cash_id');
+        return $this->belongsTo('App\Model\Accounting\CashAccount', 'source_cash_account_id');
     }
 
     public static function boot()

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Accounting;
 
+use App\Model\Accounting\CashAccount;
+use App\Model\Accounting\CashFlow;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -16,14 +18,14 @@ class CashFlowController extends Controller
 
     public function index()
     {
-        $cashflow = [];
+        $cashflow = CashFlow::paginate(10);
 
         return view('accounting.cash_flow.index', compact('cashflow'));
     }
 
     public function show($id)
     {
-        $cashflow = [];
+        $cashflow = CashAccount::find($id);
 
         return view('accounting.cash_flow.show', compact('cashflow'));
     }
@@ -31,8 +33,8 @@ class CashFlowController extends Controller
     public function create()
     {
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
-        $dest_acc = [];
-        $source_acc = [];
+        $dest_acc = CashAccount::get()->pluck('codeAndName', 'id');
+        $source_acc = CashAccount::get()->pluck('codeAndName', 'id');
 
         return view('accounting.cash_flow.create', compact('source_acc', 'dest_acc', 'statusDDL'));
     }
@@ -57,9 +59,9 @@ class CashFlowController extends Controller
 
     public function edit($id)
     {
-        $cashflow = [];
-        $dest_acc = [];
-        $source_acc = [];
+        $cashflow = CashAccount::find($id);
+        $dest_acc = CashAccount::get()->pluck('codeAndName', 'id');
+        $source_acc = CashAccount::get()->pluck('codeAndName', 'id');
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
         return view('accounting.cash_flow.edit', compact('cashflow', 'dest_acc', 'source_acc', 'statusDDL'));
@@ -85,7 +87,8 @@ class CashFlowController extends Controller
 
     public function delete($id)
     {
-
+        $cashflow = CashAccount::find($id);
+        $cashflow->delete();
         return redirect(route('db.acc.cash_flow'));
     }
 }

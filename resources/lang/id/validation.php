@@ -73,6 +73,33 @@ return [
         'attribute-name' => [
             'rule-name' => '',
         ],
+        'supplier_id' => [
+            'required_if' => '',
+        ],
+        'walk_in_supplier' => [
+            'required_if' => '',
+        ],
+        'warehouse_id' => [
+            'required' => '',
+        ],
+        'item_product_id' => [
+            'required' => '',
+        ],
+        'item_selected_unit_id' => [
+            '*' => [
+                'required' => '',
+            ],
+        ],
+        'item_quantity' => [
+            '*' => [
+                'required' => '',
+            ],
+        ],
+        'item_price' => [
+            '*' => [
+                'required' => '',
+            ],
+        ],
     ],
     'attributes' => '',
 ];
