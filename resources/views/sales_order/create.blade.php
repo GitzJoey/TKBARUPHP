@@ -407,7 +407,7 @@
                                         <div class="col-md-12">
                                             <div class="box box-info">
                                                 <div class="box-header with-border">
-                                                    <h3 class="box-title">@lang('aales_order.create.box.total_discount')</h3>
+                                                    <h3 class="box-title">@lang('sales_order.create.box.total_discount')</h3>
                                                 </div>
                                                 <div class="box-body">
                                                     <table class="table table-bordered">

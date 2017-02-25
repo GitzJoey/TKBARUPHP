@@ -35,7 +35,6 @@
                         <th class="text-center" width="20%">@lang('accounting.cash_flow.index.table.header.source_account')</th>
                         <th class="text-center" width="20%">@lang('accounting.cash_flow.index.table.header.destination_account')</th>
                         <th class="text-center" width="10%">@lang('accounting.cash_flow.index.table.header.amount')</th>
-                        <th class="text-center" width="20%">@lang('accounting.cash_flow.index.table.header.status')</th>
                         <th class="text-center" width="20%">@lang('accounting.cash_flow.index.table.header.remarks')</th>
                         <th class="text-center" width="10%">@lang('labels.ACTION')</th>
                     </tr>
@@ -47,7 +46,6 @@
                             <td>{{ $cf->source_account }}</td>
                             <td>{{ $ac->destination_account }}</td>
                             <td class="text-center">{{ $cf->amount }}</td>
-                            <td>@lang('lookup.' . $ac->status)</td>
                             <td>{{ $cf->remarks }}</td>
                             <td class="text-center">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.acc.cash_flow.show', $cf->hId()) }}"><span class="fa fa-info fa-fw"></span></a>

@@ -59,6 +59,7 @@ return [
                 'transactions' => 'Transaksi',
                 'remarks' => 'Keterangan',
                 'payment_history' => 'Catatan Pembayaran',
+                'payment' => '',
             ],
             'field' => [
                 'customer_type' => 'Tipe',
@@ -252,6 +253,7 @@ return [
             'transactions' => 'Transaksi',
             'expenses' => 'Biaya',
             'remarks' => 'Keterangan',
+            'total_discount' => 'Diskon',
         ],
         'title' => 'Penjualan',
         'page_title' => 'Penjualan',
@@ -304,6 +306,7 @@ return [
         'tab' => [
             'sales' => 'Penjualan',
         ],
+        'so_copy_code' => '',
     ],
     'edit' => [
         'box' => [

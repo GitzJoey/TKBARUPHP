@@ -157,6 +157,7 @@ return [
                 'shipping_date' => 'Shipping Date',
                 'warehouse' => 'Warehouse',
                 'vendor_trucking' => 'Vendor Trucking',
+                'so_status' => '',
             ],
             'table' => [
                 'item' => [
@@ -250,8 +251,9 @@ return [
             'sales_order_detail' => 'Sales Order Detail',
             'shipping' => 'Shipping',
             'transactions' => 'Transactions',
-            'expenses' => '',
+            'expenses' => 'Expenses',
             'remarks' => 'Remarks',
+            'total_discount' => 'Discount',
         ],
         'title' => 'Create SO Copy',
         'page_title' => 'Create SO Copy',

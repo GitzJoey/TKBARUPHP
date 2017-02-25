@@ -58,13 +58,6 @@
                         <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.cash_flow.field.amount')" autonumeric>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <label for="inputStatus" class="col-sm-2 control-label">@lang('accounting.cash_flow.field.status')</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label for="inputRemarks" class="col-sm-2 control-label">@lang('accounting.cash_flow.field.remarks')</label>
                     <div class="col-sm-10">
