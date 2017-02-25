@@ -47,6 +47,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Cost whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Cost whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property int $source_cash_account_id
+ * @property int $cost_category_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Cost whereSourceCashAccountId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Cost whereCostCategoryId($value)
  */
 class Cost extends Model
 {

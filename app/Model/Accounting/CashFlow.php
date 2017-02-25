@@ -14,6 +14,39 @@ use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Model\Accounting\CashFlow
+ *
+ * @property int $id
+ * @property int $store_id
+ * @property string $date
+ * @property int $from_cash_account_id
+ * @property int $to_cash_account_id
+ * @property float $amount
+ * @property string $remarks
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\Accounting\CashAccount $fromCashAccount
+ * @property-read \App\Model\Accounting\CashAccount $toCashAccount
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereFromCashAccountId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereToCashAccountId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereAmount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class CashFlow extends Model
 {
     use SoftDeletes;

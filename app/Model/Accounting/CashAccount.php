@@ -47,6 +47,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\CapitalDeposit[] $accountingCapitalDeposits
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\CapitalWithdrawal[] $accountingCapitalWithdrawals
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\Cost[] $accountingCosts
+ * @property string $type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\CapitalDeposit[] $capitalDeposits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\CapitalWithdrawal[] $capitalWithdrawals
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\Cost[] $costs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\Revenue[] $revenues
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashAccount whereType($value)
  */
 class CashAccount extends Model
 {

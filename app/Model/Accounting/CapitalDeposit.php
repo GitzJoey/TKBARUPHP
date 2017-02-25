@@ -44,6 +44,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CapitalDeposit whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CapitalDeposit whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property int $destination_cash_account_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CapitalDeposit whereDestinationCashAccountId($value)
  */
 class CapitalDeposit extends Model
 {

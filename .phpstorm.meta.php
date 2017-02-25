@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-02-13.
+    * Generated on 2017-02-25.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -140,6 +140,7 @@ namespace PHPSTORM_META {
             'auth.password.broker' instanceof \Illuminate\Auth\Passwords\PasswordBroker,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'App\Services\CustomerService' instanceof \App\Services\Implementation\CustomerServiceImpl,
+            'App\Services\GiroService' instanceof \App\Services\Implementation\GiroServiceImpl,
             'App\Services\InflowService' instanceof \App\Services\Implementation\InflowServiceImpl,
             'App\Services\PaymentService' instanceof \App\Services\Implementation\PaymentServiceImpl,
             'App\Services\ProductService' instanceof \App\Services\Implementation\ProductServiceImpl,
@@ -292,6 +293,7 @@ namespace PHPSTORM_META {
             'auth.password.broker' instanceof \Illuminate\Auth\Passwords\PasswordBroker,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'App\Services\CustomerService' instanceof \App\Services\Implementation\CustomerServiceImpl,
+            'App\Services\GiroService' instanceof \App\Services\Implementation\GiroServiceImpl,
             'App\Services\InflowService' instanceof \App\Services\Implementation\InflowServiceImpl,
             'App\Services\PaymentService' instanceof \App\Services\Implementation\PaymentServiceImpl,
             'App\Services\ProductService' instanceof \App\Services\Implementation\ProductServiceImpl,
@@ -444,6 +446,7 @@ namespace PHPSTORM_META {
             'auth.password.broker' instanceof \Illuminate\Auth\Passwords\PasswordBroker,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'App\Services\CustomerService' instanceof \App\Services\Implementation\CustomerServiceImpl,
+            'App\Services\GiroService' instanceof \App\Services\Implementation\GiroServiceImpl,
             'App\Services\InflowService' instanceof \App\Services\Implementation\InflowServiceImpl,
             'App\Services\PaymentService' instanceof \App\Services\Implementation\PaymentServiceImpl,
             'App\Services\ProductService' instanceof \App\Services\Implementation\ProductServiceImpl,
@@ -596,6 +599,7 @@ namespace PHPSTORM_META {
             'auth.password.broker' instanceof \Illuminate\Auth\Passwords\PasswordBroker,
             'validation.presence' instanceof \Illuminate\Validation\DatabasePresenceVerifier,
             'App\Services\CustomerService' instanceof \App\Services\Implementation\CustomerServiceImpl,
+            'App\Services\GiroService' instanceof \App\Services\Implementation\GiroServiceImpl,
             'App\Services\InflowService' instanceof \App\Services\Implementation\InflowServiceImpl,
             'App\Services\PaymentService' instanceof \App\Services\Implementation\PaymentServiceImpl,
             'App\Services\ProductService' instanceof \App\Services\Implementation\ProductServiceImpl,
