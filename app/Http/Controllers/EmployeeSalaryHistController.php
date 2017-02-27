@@ -9,8 +9,10 @@
 namespace  App\Http\Controllers;
 
 use App\Model\Employee;
+use App\Model\EmployeeSalaryHist;
 
 use App\Repos\LookupRepo;
+use Carbon\Carbon;
 
 use Validator;
 use Illuminate\Http\Request;
@@ -25,51 +27,48 @@ class EmployeeSalaryHistController extends Controller
     public function index()
     {
         $employeelist = Employee::paginate(10);
+        $employeelist=Employee::select('employees.*','employee_salary_hist.*')
+            ->leftJoin('employee_salary_hist','employee_id','=','employees.id')
+            ->whereRaw('is_last=1 or is_last is null')
+            ->paginate(10);
+            
         return view('employee_salary_hist.index', compact('employeelist'));
     }
 
     public function show($id)
     {
         $employee = Employee::find($id);
-
-        return view('employee_salary_hist.show')->with('employee', $employee);
+        $salaryList=EmployeeSalaryHist::where('employee_id',$employee->id)
+                ->orderBy('id','desc')
+                ->paginate(10);
+        return view('employee_salary_hist.show',compact('employee','salaryList'));
     }
 
     public function create()
     {
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
-
-        return view('employee_salary_hist.create', compact('statusDDL'));
+        $employeeList=Employee::pluck('name','id');
+        return view('employee_salary_hist.create', compact('statusDDL','employeeList'));
     }
 
     public function store(Request $data)
     {
+
+        $data['amount']=floatval(str_replace(',', '', $data['amount']));
         $validator = Validator::make($data->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255',
-            'ic_number' => 'required|string|max:255',
-            'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'employee_id' => 'required|integer',
+            'amount' => 'required|integer',
+            'title' => 'required|string|max:255',
         ]);
-
-        $imageName = '';
-
-        if (!empty($data->image_path)) {
-            $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
-            $path = public_path('images') . '/' . $imageName;
-
-            Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
-        }
-
+        // dd($data->all());
+        // dd($validator->errors());
         if ($validator->fails()) {
-            return redirect(route('db.employee_salary_hist.employee_salary_hist.create'))->withInput()->withErrors($validator);
+            return redirect(route('db.employee.employee_salary.create'))->withInput()->withErrors($validator);
         } else {
-            Employee::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'ic_number' => $data['ic_number'],
-                'image_path' => $imageName
-            ]);
-            return redirect(route('db.employee_salary_hist.employee'));
+            $employee=Employee::find($data['employee_id']);
+            $employee->transaction($data['amount']*$data['type'],$data['title'],$data['description'],$is_salary=0);
+            // return 'cek';
+            return redirect(route('db.employee.employee_salary'));
         }
     }
 
@@ -98,16 +97,48 @@ class EmployeeSalaryHistController extends Controller
         $employee->image_path = $imageName;
         $employee->save();
 
-        return redirect(route('db.employee_salary_hist.employee'));
+        return redirect(route('db.employee.employee_salary.employee'));
     }
 
 
     public function delete($id)
     {
         Employee::find($id)->delete();
-        return redirect(route('db.employee_salary_hist.employee'));
+        return redirect(route('db.employee.employee_salary.employee'));
     }
     public function calculateSalary(){
-        
+        $month=date('m');
+        $year=date('Y');
+        $day="1";
+        $salaryTitle="Salary ".date('M').' '.date('Y');
+        $employeelist=Employee::select('employees.*')
+            ->whereRaw("employees.id not in (select employee_id from employee_salary_hist where title='$salaryTitle')")
+            ->get();
+        $monthNow=Carbon::createFromDate($year,$month,$day);
+        $monthStart=$monthNow->copy()->subMonth();
+        $success=0;
+        try {
+            \DB::beginTransaction();
+            foreach ($employeelist as $employee) {
+                // dd($monthNow);
+                $join=Carbon::createFromFormat('Y-m-d H:m:i', $employee->start_date);
+                $lamaHari=$monthStart->diffInDays($monthNow,false);
+                $lamaKerja=$join->diffInDays($monthNow);
+                if($lamaHari-$lamaKerja>1){
+                    $amount=($lamaKerja/$lamaHari)*$employee->base_salary;
+                }else{
+                    $amount=$employee->base_salary;
+                }
+                $employee->transaction($amount,$salaryTitle,'',$is_salary=1);
+                if($hist) $success++;
+            }   
+            \DB::commit();
+            $act=true;
+        } catch (\Exception $e) {
+            $act=false;
+            // dd($e);
+            \DB::rollBack();
+        }
+        return redirect()->back();
     }
 }

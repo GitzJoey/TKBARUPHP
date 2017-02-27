@@ -15,11 +15,17 @@ class CreateHistoryEmployeeSalaryTable extends Migration
     {
         Schema::create('employee_salary_hist', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('employee_id');
             $table->string('title');
             $table->string('description');
             $table->integer('amount');
+            $table->integer('balance');
+            $table->integer('is_last');
             $table->unsignedBigInteger('created_by')->default(0);
+            $table->unsignedBigInteger('updated_by')->default(0);
+            $table->unsignedBigInteger('deleted_by')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
