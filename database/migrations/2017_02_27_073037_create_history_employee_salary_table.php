@@ -13,9 +13,10 @@ class CreateHistoryEmployeeSalaryTable extends Migration
      */
     public function up()
     {
-        Schema::create('history_employee_salary', function (Blueprint $table) {
+        Schema::create('employee_salary_hist', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('description');
             $table->integer('amount');
             $table->unsignedBigInteger('created_by')->default(0);
             $table->timestamps();
@@ -29,6 +30,7 @@ class CreateHistoryEmployeeSalaryTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('employee_salary_hist');
+        Schema::dropIfExists('history_employee_salary');
     }
 }
