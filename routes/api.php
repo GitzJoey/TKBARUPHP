@@ -81,3 +81,5 @@ Route::get('user/get/calendar', 'CalendarController@retrieveEvents')->name('api.
 Route::get('get/unfinish/store', 'StoreController@isUnfinishedStoreExist')->name('api.get.unfinish.store');
 
 Route::get('get/unfinish/warehouse', 'WarehouseController@isUnfinishedWarehouseExist')->name('api.get.unfinish.warehouse');
+
+Route::get('currencies/conversion', 'CurrenciesController@conversion')->name('api.currencies.conversion');

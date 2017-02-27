@@ -5,12 +5,17 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Repos\LookupRepo;
 use App\Model\Currencies;
+use App\Model\CurrenciesConversion;
 
 class CurrenciesController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('auth');
+		$this->middleware('auth',[ 
+            'except' => [ 
+                'conversion'
+            ] 
+        ]);
 	}
 	public function index()
 	{
@@ -72,5 +77,14 @@ class CurrenciesController extends Controller
     {
         Currencies::find($id)->delete();
         return redirect(route('db.admin.currencies'));
+    }
+    public function conversion(Request $req){
+        $currencies_id = $req->query('currencies_id');
+        $store_id = $req->query('store_id');
+        $con = CurrenciesConversion::where('currencies_id',$currencies_id)->where('store_id',$store_id)->first();
+        $conVal = isset($con->conversion_value) ? $con->conversion_value : 0;
+        return response()->json([
+            'data' => $conVal
+        ], 200);
     }
 }
