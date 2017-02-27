@@ -24,6 +24,7 @@ return [
         'ic_number' => 'IC Number',
         'image_path' => 'Image Path',
         'start_date' => 'Start Date',
+        'email' => 'Email',
         'freelance' => 'Freelance',
         'base_salary' => 'Base Salary',
         'status' => 'Status',

@@ -27,4 +27,5 @@ return [
     'download_pdf_button' => 'Unduh PDF',
     'download_button' => 'Unduh',
     'settings_button' => 'Pengaturan',
+    'calculate_salary' => 'Hitung Gaji',
 ];
