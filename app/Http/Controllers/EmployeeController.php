@@ -47,9 +47,7 @@ class EmployeeController extends Controller
     {
         $validator = Validator::make($data->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255',
             'ic_number' => 'required|string|max:255',
-            'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $imageName = '';
@@ -66,8 +64,12 @@ class EmployeeController extends Controller
         } else {
             Employee::create([
                 'name' => $data['name'],
-                'email' => $data['email'],
+                'address' => $data['address'],
+                'start_date' => date('Y-m-d', strtotime($data->input('start_date'))),
+                'freelance' => !empty($data['freelance']) ? true:false,
+                'base_salary'=> floatval(str_replace(',', '', $data['base_salary'])),
                 'ic_number' => $data['ic_number'],
+                'status' => $data['status'],
                 'image_path' => $imageName
             ]);
             return redirect(route('db.employee.employee'));
@@ -77,8 +79,9 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::find($id);
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
-        return View('employee.edit', compact('employee'));
+        return View('employee.edit', compact('employee', 'statusDDL'));
     }
 
     public function update($id, Request $data)
@@ -94,7 +97,11 @@ class EmployeeController extends Controller
         }
 
         $employee->name = $data['name'];
-        $employee->email = $data['email'];
+        $employee->address = $data['address'];
+        $employee->start_date = date('Y-m-d', strtotime($data->input('start_date')));
+        $employee->freelance = !empty($data['freelance']) ? true:false;
+        $employee->base_salary = floatval(str_replace(',', '', $data['base_salary']));
+        $employee->status = $data['status'];
         $employee->ic_number = $data['ic_number'];
         $employee->image_path = $imageName;
         $employee->save();

@@ -92,7 +92,7 @@
                     <label for="inputImagePath" class="col-sm-2 control-label">@lang('employee.field.image_path')</label>
                     <div class="col-sm-10">
                         <input id="inputImagePath" name="image_path" type="file" class="form-control"
-                               placeholder="@lang('employee.field.image_path')" data-parsley-required="true">
+                               placeholder="@lang('employee.field.image_path')">
                         <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
                     </div>
                 </div>
