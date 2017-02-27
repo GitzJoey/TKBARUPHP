@@ -47,7 +47,7 @@
                     <label for="inputAddress" class="col-sm-2 control-label">@lang('employee.field.address')</label>
                     <div class="col-sm-10">
                         <input id="inputAddress" name="address" type="text" class="form-control"
-                               placeholder="@lang('employee.field.address')" data-parsley-required="true">
+                               placeholder="@lang('employee.field.address')" value="{{ $employee->address }}" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                     </div>
                 </div>
@@ -70,11 +70,19 @@
                 <div class="form-group {{ $errors->has('freelance') ? 'has-error' : '' }}">
                     <label for="inputFreelance" class="col-sm-2 control-label">@lang('employee.field.freelance')</label>
                     <div class="col-sm-5">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox" name="freelance" class="is_icheck">&nbsp;
-                            </label>
-                        </div>
+                        @if (boolval($employee->freelance))
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox" name="freelance" class="is_icheck" checked>&nbsp;
+                                </label>
+                            </div>
+                        @else
+                            <div class="checkbox icheck">
+                                <label>
+                                    <input type="checkbox" name="freelance" class="is_icheck">&nbsp;
+                                </label>
+                            </div>
+                        @endif
                         <span class="help-block">{{ $errors->has('freelance') ? $errors->first('freelance') : '' }}</span>
                     </div>
                 </div>
@@ -83,7 +91,7 @@
                     <div class="col-sm-5">
                         <input id="inputBaseSalary" name="base_salary" type="text" class="form-control"
                                placeholder="@lang('employee.field.base_salary')" data-parsley-required="true"
-                               autonumeric>
+                               value="{{ $employee->base_salary }}" autonumeric>
                         <span class="help-block">{{ $errors->has('base_salary') ? $errors->first('base_salary') : '' }}</span>
                     </div>
                 </div>
