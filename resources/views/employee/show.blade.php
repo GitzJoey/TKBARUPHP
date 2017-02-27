@@ -49,19 +49,24 @@
                             </label>
                         </div>
                     </div>
-                    <div class="form-group>
+                    <div class="form-group">
                         <label for="inputStartDate" class="col-sm-2 control-label">@lang('employee.field.start_date')</label>
                         <div class="col-sm-5">
+                            <label id="inputStartDate" class="control-label">
+                                <span class="control-label-normal">{{ $employee->start_date }}</span>
+                            </label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputFreelance" class="col-sm-2 control-label">@lang('employee.field.freelance')</label>
                         <div class="col-sm-5">
-                            <div class="checkbox icheck">
-                                <label>
-                                    <input type="checkbox" name="freelance" class="is_icheck" disabled>&nbsp;
-                                </label>
-                            </div>
+                            <span class="control-label-normal">
+                                <div class="checkbox icheck">
+                                    <label>
+                                        <input type="checkbox" name="freelance" class="is_icheck" disabled>&nbsp;
+                                    </label>
+                                </div>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -90,7 +95,7 @@
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('employee.field.status')</label>
                         <div class="col-sm-5">
                             <label id="inputStatus" class="control-label control-label-normal">
-                                <span class="control-label-normal">@lang('lookup.'.$product->status)</span>
+                                <span class="control-label-normal">@lang('lookup.'.$employee->status)</span>
                             </label>
                         </div>
                     </div>
@@ -106,4 +111,16 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="text/javascript">
+        $(function () {
+            $('input.is_icheck').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+    </script>
 @endsection

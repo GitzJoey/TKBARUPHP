@@ -412,7 +412,7 @@ Breadcrumbs::register('employee.employee_create', function($breadcrumbs){
 
 Breadcrumbs::register('employee.employee_show', function($breadcrumbs, $id){
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push(trans('breadcrumb.employee.employee.show'), route('db.employee.show', $id));
+    $breadcrumbs->push(trans('breadcrumb.employee.employee.show'), route('db.employee.employee.show', $id));
 });
 
 Breadcrumbs::register('employee.employee_edit', function($breadcrumbs, $id){

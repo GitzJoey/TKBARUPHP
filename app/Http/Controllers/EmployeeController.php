@@ -79,8 +79,9 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::find($id);
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
 
-        return View('employee.edit', compact('employee'));
+        return View('employee.edit', compact('employee', 'statusDDL'));
     }
 
     public function update($id, Request $data)

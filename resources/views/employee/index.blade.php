@@ -45,8 +45,14 @@
                             <td class="text-center">{{ $employee->name }}</td>
                             <td class="text-center">{{ $employee->address }}</td>
                             <td class="text-center">{{ $employee->ic_number }}</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
+                            <td class="text-center">{{ $employee->start_date }}</td>
+                            <td class="text-center">
+                                @if(boolval($employee->freelance))
+                                    <span class="fa fa-check-square-o fa-fw"></span>
+                                @else
+                                    <span class="fa fa-square-o fa-fw"></span>
+                                @endif
+                            </td>
                             <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.employee.employee.show', $employee->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.employee.employee.edit', $employee->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
