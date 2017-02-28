@@ -72,40 +72,6 @@ class EmployeeSalaryHistController extends Controller
         }
     }
 
-    public function edit($id)
-    {
-        $employee = Employee::find($id);
-
-        return View('employee_salary_hist.edit', compact('employee'));
-    }
-
-    public function update($id, Request $data)
-    {
-        $employee = Employee::find($id);
-
-        $imageName = '';
-
-        if (!empty($data->image_path)) {
-            $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
-            $path = public_path('images') . '/' . $imageName;
-            Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
-        }
-
-        $employee->name = $data['name'];
-        $employee->email = $data['email'];
-        $employee->ic_number = $data['ic_number'];
-        $employee->image_path = $imageName;
-        $employee->save();
-
-        return redirect(route('db.employee.employee_salary.employee'));
-    }
-
-
-    public function delete($id)
-    {
-        Employee::find($id)->delete();
-        return redirect(route('db.employee.employee_salary.employee'));
-    }
     public function calculateSalary(){
         $month=date('m');
         $year=date('Y');
@@ -120,12 +86,12 @@ class EmployeeSalaryHistController extends Controller
         try {
             \DB::beginTransaction();
             foreach ($employeelist as $employee) {
-                // dd($monthNow);
                 $join=Carbon::createFromFormat('Y-m-d H:m:i', $employee->start_date);
-                $lamaHari=$monthStart->diffInDays($monthNow,false);
-                $lamaKerja=$join->diffInDays($monthNow);
-                if($lamaHari-$lamaKerja>1){
-                    $amount=($lamaKerja/$lamaHari)*$employee->base_salary;
+                $numberOfDays=$monthStart->diffInDays($monthNow,false);
+                $workingDays=$join->diffInDays($monthNow);
+                //if the employee works have not reached 1 month
+                if($numberOfDays-$workingDays>1){
+                    $amount=($workingDays/$numberOfDays)*$employee->base_salary;
                 }else{
                     $amount=$employee->base_salary;
                 }
