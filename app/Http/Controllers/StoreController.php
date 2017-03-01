@@ -20,6 +20,8 @@ use Intervention\Image\Facades\Image;
 use App\Model\Bank;
 use App\Model\Store;
 use App\Model\BankAccount;
+use App\Model\Currencies;
+use App\Model\CurrenciesConversion;
 
 use App\Repos\LookupRepo;
 
@@ -60,8 +62,8 @@ class StoreController extends Controller
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
-
-        return view('store.create', compact('statusDDL', 'yesnoDDL', 'bankDDL'));
+        $currenciesDDL = Currencies::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
+        return view('store.create', compact('statusDDL', 'yesnoDDL', 'bankDDL', 'currenciesDDL'));
     }
 
     public function store(Request $data)
@@ -77,7 +79,6 @@ class StoreController extends Controller
             'is_default' => 'required',
             'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
         DB::transaction(function() use($data) {
             $imageName = '';
 
@@ -124,6 +125,16 @@ class StoreController extends Controller
 
                 $store->bankAccounts()->save($ba);
             }
+
+            for ($i = 0; $i < count($data['currencies']); $i++) {
+                $curConv = new CurrenciesConversion();
+                $curConv->currencies_id = $data["currencies"][$i];
+                $curConv->is_base = $data["base_currencies"][$i] == '1'?true:false;
+                $curConv->conversion_value = $data["currencies_conversion_value"][$i];
+                $curConv->remarks = $data["currencies_remarks"][$i];
+
+                $store->currenciesConversions()->save($curConv);
+            }
         });
 
         return redirect(route('db.admin.store'));
@@ -138,8 +149,9 @@ class StoreController extends Controller
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
+        $currenciesDDL = Currencies::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
 
-        return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL', 'bankDDL'));
+        return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL', 'bankDDL','currenciesDDL'));
     }
 
     public function update($id, Request $data)
@@ -176,6 +188,17 @@ class StoreController extends Controller
                 $ba->remarks = $data["bank_remarks"][$i];
 
                 $store->bankAccounts()->save($ba);
+            }
+
+            $store->currenciesConversions->each(function($curConv) { $curConv->delete(); });
+            for ($i = 0; $i < count($data['currencies']); $i++) {
+                $curConv = new CurrenciesConversion();
+                $curConv->currencies_id = $data["currencies"][$i];
+                $curConv->is_base = $data["base_currencies"][$i] == '1'?true:false;
+                $curConv->conversion_value = $data["currencies_conversion_value"][$i];
+                $curConv->remarks = $data["currencies_remarks"][$i];
+
+                $store->currenciesConversions()->save($curConv);
             }
 
             $store->name = $data['name'];

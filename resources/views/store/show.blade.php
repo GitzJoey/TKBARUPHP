@@ -27,6 +27,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab_store" data-toggle="tab">@lang('store.create.tab.store')&nbsp;<span id="storeDataTabError" class="parsley-asterisk hidden">*</span></a></li>
                         <li><a href="#tab_bank_account" data-toggle="tab">@lang('store.create.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
+                        <li><a href="#tab_currencies" data-toggle="tab">@lang('store.create.tab.currencies')&nbsp;<span id="currenciesTabError" class="parsley-asterisk hidden">*</span></a></li>
                         <li><a href="#tab_settings" data-toggle="tab">@lang('store.create.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
                     </ul>
                     <div class="tab-content">
@@ -123,6 +124,28 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="tab-pane" id="tab_currencies">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">@lang('store.create.table_currencies.header.currencies')</th>
+                                        <th class="text-center">@lang('store.create.table_currencies.header.base_currencies')</th>
+                                        <th class="text-center">@lang('store.create.table_currencies.header.conversion_value')</th>
+                                        <th class="text-center">@lang('store.create.table_currencies.header.remarks')</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($store->currenciesConversions as $curConv)
+                                        <tr>
+                                            <td>{{ $curConv->currencies()->first()->name }}</td>
+                                            <td>{{ $curConv->is_base ? trans('lookup.YESNOSELECT.YES'):trans('lookup.YESNOSELECT.NO') }}</td>
+                                            <td>{{ $curConv->conversion_value }}</td>
+                                            <td>{{ $curConv->remarks }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>                          
                         </div>
                         <div class="tab-pane" id="tab_settings">
                             <div class="form-group {{ $errors->has('date_format') ? 'has-error' : '' }}">
