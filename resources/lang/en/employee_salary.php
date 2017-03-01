@@ -2,11 +2,11 @@
 
 return [
     'create' => [
-        'title' => 'Employee',
-        'page_title' => 'Employee',
+        'title' => 'Employee Salary',
+        'page_title' => 'Employee Salary',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Create Employee',
+            'title' => 'Create Employee Transaction',
         ],
         'table_employee' => [
             'header' => [
@@ -15,34 +15,33 @@ return [
                 'address' => 'Address',
                 'start_date' => 'Start Date',
                 'freelance' => 'Freelance',
+                'balance' => 'Balance',
             ],
         ],
     ],
     'field' => [
-        'name' => 'Name',
-        'address' => 'Address',
-        'ic_number' => 'IC Number',
-        'image_path' => 'Image Path',
-        'start_date' => 'Start Date',
-        'email' => 'Email',
-        'freelance' => 'Freelance',
-        'base_salary' => 'Base Salary',
-        'status' => 'Status',
+        'created_at' => 'Created At',
+        'employee' => 'Employee',
+        'amount' => 'Amount',
+        'balance' => 'Balance',
+        'title' => 'Title',
+        'type' => 'Type',
+        'description' => 'Description',
     ],
     'edit' => [
-        'title' => 'Employee',
-        'page_title' => 'Employee',
+        'title' => 'Employee Salary',
+        'page_title' => 'Employee Salary',
         'page_title_desc' => '',
         'header' => [
             'title' => 'Edit Employee',
         ],
     ],
     'index' => [
-        'title' => 'Employee',
-        'page_title' => 'Employee',
+        'title' => 'Employee Salary',
+        'page_title' => 'Employee Salary',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Employee Lists',
+            'title' => 'Employee Salary Lists',
         ],
         'table' => [
             'header' => [
@@ -51,12 +50,13 @@ return [
                 'ic_number' => 'IC Number',
                 'start_date' => 'Start Date',
                 'freelance' => 'Freelance',
+                'balance' => 'Balance',
             ],
         ],
     ],
     'show' => [
-        'title' => 'Employee',
-        'page_title' => 'Employee',
+        'title' => 'Employee Salary',
+        'page_title' => 'Employee Salary',
         'page_title_desc' => '',
         'header' => [
             'title' => 'Show Employee',

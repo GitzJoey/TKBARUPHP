@@ -420,6 +420,10 @@ Breadcrumbs::register('truck_maintenance_edit', function($breadcrumbs, $id){
     $breadcrumbs->push(trans('breadcrumb.truck_maintenance.edit'), route('db.truck.maintenance.edit', $id));
 });
 
+Breadcrumbs::register('employee_salary.employee_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.employee.employee.show'), route('db.employee.employee.show', $id));
+});
 Breadcrumbs::register('employee.employee', function($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.employee.employee'), route('db.employee.employee'));

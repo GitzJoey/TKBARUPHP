@@ -24,6 +24,7 @@ return [
         'ic_number' => 'Nomer KTP',
         'start_date' => 'Mulai Kerja',
         'freelance' => 'Paruh Waktu',
+        'email' => 'Email',
         'base_salary' => 'Gaji',
         'image_path' => 'Image Path',
         'status' => 'Status',

@@ -123,4 +123,26 @@ class Employee extends Model
             }
         });
     }
+    public function transaction($amount,$salaryTitle,$description,$is_salary=0){
+        $lastHist=EmployeeSalaryHist::where('employee_id',$this->id)
+                        ->where('is_last',1)
+                        ->first();
+        if($lastHist==null){
+            $lastBalance=0;
+        }else{
+            $lastBalance=$lastHist->balance;
+            $lastHist->is_last=0;
+            $lastHist->save();
+        }
+        $hist=EmployeeSalaryHist::create([
+            'employee_id'=>$this->id,
+            'title'=>$salaryTitle,
+            'description'=>$description,
+            'amount'=>$amount,
+            'balance'=>$lastBalance+$amount,
+            'is_last'=>1,
+            'is_salary'=>$is_salary,
+        ]);
+        return $hist;
+    }
 }

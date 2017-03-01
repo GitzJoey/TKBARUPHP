@@ -398,7 +398,16 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::patch('edit/{id}', 'EmployeeController@update');
             Route::delete('edit/{id}', 'EmployeeController@delete')->name('db.employee.employee.delete');
         });
-
+        Route::group(['prefix' => 'employeeSalaryHist'], function () {
+            Route::get('', 'EmployeeSalaryHistController@index')->name('db.employee.employee_salary');
+            Route::get('calculate_salary', 'EmployeeSalaryHistController@calculateSalary')->name('db.employee.employee_salary.calculate_salary');
+            Route::get('show/{id}', 'EmployeeSalaryHistController@show')->name('db.employee.employee_salary.show');
+            Route::get('create', 'EmployeeSalaryHistController@create')->name('db.employee.employee_salary.create');
+            Route::post('create/', 'EmployeeSalaryHistController@store');
+            Route::get('edit/{id}', 'EmployeeSalaryHistController@edit')->name('db.employee.employee_salary.edit');
+            Route::patch('edit/{id}', 'EmployeeSalaryHistController@update');
+            Route::delete('edit/{id}', 'EmployeeSalaryHistController@delete')->name('db.employee.employee_salary.delete');
+        });
         Route::group(['prefix' => 'customer'], function () {
             Route::get('confirmation', 'CustomerController@confirmationIndex')->name('db.customer.confirmation.index');
             Route::get('confirmation/{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.customer');

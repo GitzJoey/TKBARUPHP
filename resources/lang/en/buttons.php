@@ -27,4 +27,5 @@ return [
     'download_pdf_button' => 'Download PDF',
     'calendar_button' => 'Calendar',
     'settings_button' => 'Settings',
+    'calculate_salary' => 'Calculate Salary',
 ];

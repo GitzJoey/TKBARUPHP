@@ -289,6 +289,9 @@
                         <li class="{{ active_class(Active::checkRoutePattern('db.employee.employee') || Active::checkRoutePattern('db.employee.employee.*')) }}">
                             <a href="{{ route('db.employee.employee') }}"><i class="fa fa-odnoklassniki fa-fw"></i>&nbsp;@lang('menu.item.employee.employee_list')</a>
                         </li>
+                        <li class="{{ active_class(Active::checkRoutePattern('db.employee.employee_salary') || Active::checkRoutePattern('db.employee.employee_salary.*')) }}">
+                            <a href="{{ route('db.employee.employee_salary') }}"><i class="fa fa-money fa-fw"></i>&nbsp;@lang('menu.item.employee.salary')</a>
+                        </li>
                     </ul>
                 </li>
             @endif
