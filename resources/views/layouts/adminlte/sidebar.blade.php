@@ -578,7 +578,7 @@
                         @if(Entrust::can('admin.settings-list') OR
                             Entrust::can('admin.settings-edit'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.admin.settings') || Active::checkRoutePattern('db.admin.settings.*')) }}">
-                                <a href="{{ route('db.admin.settings') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;@lang('menu.item.adm_settings')</a>
+                                <a href="{{ route('db.admin.settings') }}"><i class="glyphicon glyphicon-th"></i>&nbsp;@lang('menu.item.adm_settings')</a>
                             </li>
                         @endif
                         @if(Entrust::can('admin.phoneprovider-list') OR
