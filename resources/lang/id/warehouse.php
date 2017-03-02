@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 return [
     'inflow' => [
@@ -208,12 +208,26 @@ return [
     ],
     'transfer_stock' => [
         'create' => [
-            'title' => 'Tambah Pindah Stok',
-            'page_title' => 'Tambah Pindah Stok',
+            'title' => 'Pindah Stok',
+            'page_title' => 'Pindah Stok',
             'page_title_desc' => '',
-            'label' => [
-                'source_warehouse' => 'Sumber Gudang',
+            'header' => [
+                'title' => [
+                    'warehouse' => 'Gudang',
+                    'stocks' => 'Stok',
+                ],
             ],
+            'table' => [
+                'header' => [
+                    'product' => 'Produk',
+                    'current_qty' => 'Total Jumlah',
+                    'detail' => 'Detil',
+                ],
+            ],
+        ],
+        'field' => [
+            'source_warehouse' => 'Gudang Sumber',
+            'destination_warehouse' => 'Gudang Tujuan',
         ],
         'index' => [
             'title' => 'Pindah Stok',
@@ -224,7 +238,7 @@ return [
             ],
             'table' => [
                 'header' => [
-                    'transfer_date' => 'Tanggal Pindah',
+                    'transfer_date' => 'Tanggal',
                     'product' => 'Produk',
                     'from' => 'Dari',
                     'to' => 'Ke',

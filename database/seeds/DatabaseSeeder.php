@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DefaultListUnitTableSeeder::class);
         $this->call(PhoneProviderTableSeeder::class);
         $this->call(LookupTableSeeder::class);
+        $this->call(CurrenciesTableSeeder::class);
 
         /* DUMMY DATA */
         if (App::environment('local', 'dev')) {

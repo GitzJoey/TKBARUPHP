@@ -16,6 +16,10 @@
     {!! Breadcrumbs::render('master_product_create') !!}
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/fileinput/fileinput.css') }}">
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -92,7 +96,8 @@
                     <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
                         <label for="inputImagePath" class="col-sm-2 control-label">&nbsp;</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control" id="inputImagePath" name="image_path">
+                            <input type="file" class="file form-control" id="inputImagePath" name="image_path"
+                                data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'>
                             <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
                         </div>
                     </div>
@@ -205,6 +210,9 @@
 @endsection
 
 @section('custom_js')
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/fileinput.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
+
     <script type="application/javascript">
         var app = new Vue({
             el: '#productVue',

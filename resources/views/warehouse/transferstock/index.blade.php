@@ -40,19 +40,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($stock_transfer as $key => $stock_transfer_item)
-                    <tr>
-                        <td>{{ $stock_transfer_item->transfer_date }}</td>
-                        <td>{{ $stock_transfer_item->product->name }}</td>
-                        <td>{{ $stock_transfer_item->source_warehouse->name }}</td>
-                        <td>{{ $stock_transfer_item->destination_warehouse->name }}</td>
-                        <td>{{ $stock_transfer_item->quantity }}</td>
-                        <td class="text-center" width="10%">
-                            <a class="btn btn-xs btn-primary" href="#"><span class="fa fa-pencil fa-fw"></span></a>
-                        </td>
-
-                    </tr>
-                @endforeach
+                    @foreach ($stock_transfer as $key => $stock_transfer_item)
+                        <tr>
+                            <td>{{ $stock_transfer_item->transfer_date }}</td>
+                            <td>{{ $stock_transfer_item->product->name }}</td>
+                            <td>{{ $stock_transfer_item->source_warehouse->name }}</td>
+                            <td>{{ $stock_transfer_item->destination_warehouse->name }}</td>
+                            <td>{{ $stock_transfer_item->quantity }}</td>
+                            <td class="text-center" width="10%">
+                                <a class="btn btn-xs btn-primary" href="#"><span class="fa fa-pencil fa-fw"></span></a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
                 <tfoot>
 

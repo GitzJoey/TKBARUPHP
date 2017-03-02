@@ -229,57 +229,57 @@
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.quantity')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.quantity')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(item, itemIndex) in po.items">
-                                            <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
-                                            <input type="hidden" name="base_unit_id[]"
-                                                   v-bind:value="item.base_unit.unit.id">
-                                            <td class="valign-middle">@{{ item.product.name }}</td>
-                                            <td>
-                                                <input type="text" class="form-control text-right"
-                                                       name="item_quantity[]"
-                                                       v-model="item.quantity" data-parsley-required="true"
-                                                       data-parsley-type="number">
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
-                                                <select data-parsley-required="true"
-                                                        class="form-control"
-                                                        v-model="item.selected_unit"
-                                                        data-parsley-required="true">
-                                                    <option v-bind:value="defaultProductUnit">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right"
-                                                       name="item_price[]"
-                                                       v-model="item.price" data-parsley-required="true"
-                                                       data-parsley-pattern="^\d+(,\d+)?$"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md"
-                                                        v-on:click="removeItem(itemIndex)"><span
-                                                            class="fa fa-minus"></span>
-                                                </button>
-                                            </td>
-                                            <td class="text-right valign-middle">
-                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price}}
-                                            </td>
-                                        </tr>
+                                            <tr v-for="(item, itemIndex) in po.items">
+                                                <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="base_unit_id[]"
+                                                       v-bind:value="item.base_unit.unit.id">
+                                                <td class="valign-middle">@{{ item.product.name }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right"
+                                                           name="item_quantity[]"
+                                                           v-model="item.quantity" data-parsley-required="true"
+                                                           data-parsley-type="number">
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
+                                                    <select data-parsley-required="true"
+                                                            class="form-control"
+                                                            v-model="item.selected_unit"
+                                                            data-parsley-required="true">
+                                                        <option v-bind:value="defaultProductUnit">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right"
+                                                           name="item_price[]"
+                                                           v-model="item.price" data-parsley-required="true"
+                                                           data-parsley-pattern="^\d+(,\d+)?$"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md"
+                                                            v-on:click="removeItem(itemIndex)"><span
+                                                                class="fa fa-minus"></span>
+                                                    </button>
+                                                </td>
+                                                <td class="text-right valign-middle">
+                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price}}
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -316,53 +316,53 @@
                                 <div class="col-md-12">
                                     <table id="expensesListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="20%">@lang('purchase_order.create.table.expense.header.name')</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
-                                            <th width="10%"
-                                                class="text-center">@lang('purchase_order.create.table.expense.header.internal_expense')</th>
-                                            <th width="25%"
-                                                class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="20%">@lang('purchase_order.create.table.expense.header.name')</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.create.table.expense.header.type')</th>
+                                                <th width="10%"
+                                                    class="text-center">@lang('purchase_order.create.table.expense.header.internal_expense')</th>
+                                                <th width="25%"
+                                                    class="text-center">@lang('purchase_order.create.table.expense.header.remarks')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.create.table.expense.header.amount')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(expense, expenseIndex) in po.expenses">
-                                            <td>
-                                                <input name="expense_name[]" type="text" class="form-control"
-                                                       v-model="expense.name" data-parsley-required="true">
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
-                                                <select data-parsley-required="true"
-                                                        class="form-control" v-model="expense.type">
-                                                    <option v-bind:value="defaultExpenseType">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
-                                                </select>
-                                            </td>
-                                            <td class="text-center">
-                                                <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
-                                            </td>
-                                            <td>
-                                                <input name="expense_remarks[]" type="text" class="form-control"
-                                                       v-model="expense.remarks"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md"
-                                                        v-on:click="removeExpense(expenseIndex)"><span
-                                                            class="fa fa-minus"></span>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <input name="expense_amount[]" type="text"
-                                                       class="form-control text-right"
-                                                       v-model="expense.amount" data-parsley-required="true"
-                                                       data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"/>
-                                            </td>
-                                        </tr>
+                                            <tr v-for="(expense, expenseIndex) in po.expenses">
+                                                <td>
+                                                    <input name="expense_name[]" type="text" class="form-control"
+                                                           v-model="expense.name" data-parsley-required="true">
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
+                                                    <select data-parsley-required="true"
+                                                            class="form-control" v-model="expense.type">
+                                                        <option v-bind:value="defaultExpenseType">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-center">
+                                                    <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
+                                                </td>
+                                                <td>
+                                                    <input name="expense_remarks[]" type="text" class="form-control"
+                                                           v-model="expense.remarks"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md"
+                                                            v-on:click="removeExpense(expenseIndex)"><span
+                                                                class="fa fa-minus"></span>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <input name="expense_amount[]" type="text"
+                                                           class="form-control text-right"
+                                                           v-model="expense.amount" data-parsley-required="true"
+                                                           data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"/>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -371,13 +371,13 @@
                                 <div class="col-md-12">
                                     <table id="expensesTotalListTable" class="table table-bordered">
                                         <tbody>
-                                        <tr>
-                                            <td width="80%"
-                                                class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
-                                            <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ expenseTotal() }}</span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td width="80%"
+                                                    class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal">@{{ expenseTotal() }}</span>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

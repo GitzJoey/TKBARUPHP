@@ -73,7 +73,7 @@ Route::group(['prefix' => 'sales_order'], function() {
 });
 
 Route::group(['prefix' => 'stock'], function() {
-    Route::get('current_stocks', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
+    Route::get('current_stocks/{wId}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
 });
 
 Route::get('user/get/calendar', 'CalendarController@retrieveEvents')->name('api.user.get.calendar');

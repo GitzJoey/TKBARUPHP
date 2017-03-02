@@ -85,7 +85,6 @@
                 },
                 methods: {
                     getWarehousePOs: function (selectedWarehouse) {
-                        console.log(this.selectedWarehouse.id);
                         this.POs = [];
                         this.$http.get('{{ route('api.warehouse.inflow.po') }}/' + this.selectedWarehouse.id).then(function(data) {
                             this.POs = data.data;

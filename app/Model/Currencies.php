@@ -11,14 +11,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Currencies extends Model
 {
 	use SoftDeletes;
+
 	protected $dates = ['deleted_at'];
-	protected $table = 'currencies'; 
+
+	protected $table = 'currencies';
+
 	protected $fillable = [
         'name',
         'symbol',
         'status',
         'remarks',
     ];
+
     protected $hidden = [
         'created_by',
         'created_at',
@@ -32,6 +36,7 @@ class Currencies extends Model
     {
         return HashIds::encode($this->attributes['id']);
     }
+
 	public static function boot()
     {
         parent::boot();
