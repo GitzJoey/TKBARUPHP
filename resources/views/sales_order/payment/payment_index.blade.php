@@ -58,7 +58,7 @@
                                 <td class="text-right">{{ number_format($so->totalAmountPaid(), 0) }}</td>
                                 <td class="text-right">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 0) }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-xs btn-primary"><span class="fa fa-arrow-circle-right fa-fw"></span></button>
+                                    <button id="bf_{{ $so->code }}" class="btn btn-xs btn-primary"><span class="fa fa-arrow-circle-right fa-fw"></span></button>
                                 </td>
                                 <td class="text-center" width="10%">
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.cash', $so->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
@@ -81,7 +81,17 @@
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
-
+            $('button[id^="bf_"]').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: '{{ route('api.so.bf') }}' + '?api_token=' + $('#secapi').val(),
+                    data: { code: $(this).attr('id').split('_')[1] },
+                    dataType: 'application/json',
+                    complete: function(response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
         });
     </script>
 @endsection
