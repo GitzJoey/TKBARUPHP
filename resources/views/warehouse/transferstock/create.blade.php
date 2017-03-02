@@ -80,11 +80,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(s, sIdx) in stocks">
+                                        <tr v-for="(s, sIdx) in stocks" v-cloak>
+                                            <td>@{{ s.product.name }}</td>
+                                            <td>@{{ s.current_quantity }}</td>
                                             <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="valign-middle text-center">
+                                                <a href="#" class="btn btn-xs btn-primary"><span class="fa fa-info fa-fw"></span></a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -118,9 +120,8 @@
                 methods: {
                     showStocks: function(warehouseId) {
                         this.stocks = [];
-                        this.$http.get(ctxpath +'/dashboard/stock/current_stocks/' + this.ts.source_warehouse.id).then(function(data) {
+                        this.$http.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.source_warehouse.id).then(function(data) {
                             this.stocks = data.data;
-                            console.log(this.stocks);
                         });
                     }
                 },
