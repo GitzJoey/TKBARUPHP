@@ -251,12 +251,3 @@ ol.breadcrumb {
 [v-cloak] {
     display:none;
 }
-.mb-10{
-	margin-bottom: 20px;
-}
-.mb-20{
-	margin-bottom: 20px;
-}
-.table-no-bg{
-	background-color: transparent !important;
-}

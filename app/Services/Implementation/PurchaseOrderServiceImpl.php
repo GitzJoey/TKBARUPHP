@@ -13,7 +13,6 @@ use App\Model\Lookup;
 use App\Model\Expense;
 use App\Model\ProductUnit;
 use App\Model\PurchaseOrder;
-use App\Model\ItemDiscounts;
 use App\Services\PurchaseOrderService;
 
 use Carbon\Carbon;
@@ -75,14 +74,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $item->price = floatval(str_replace(',', '', $request->input("item_price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
-                $item_saved = $po->items()->save($item);
-				
-				for ($ia = 0; $ia < count($request->input('item_disc_percent.'.$i)); $ia++) {
-					$itemDiscounts = new ItemDiscounts();
-					$itemDiscounts->item_disc_percent = $request->input('item_disc_percent.'.$i.'.'.$ia);
-					$itemDiscounts->item_disc_value = $request->input('item_disc_value.'.$i.'.'.$ia);
-					$item_saved->discounts()->save($itemDiscounts);
-				}
+                $po->items()->save($item);
             }
 
             for($i = 0; $i < count($request->input('expense_name')); $i++){
