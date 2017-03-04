@@ -14,6 +14,7 @@ return [
             'transaction_summary' => 'Transaction Summary',
             'remarks' => 'Remarks',
             'total_discount' => 'Discount',
+            'discount_per_item' => 'Discount Per Item',
         ],
         'field' => [
             'supplier_type' => 'Type',
@@ -35,11 +36,17 @@ return [
                     'unit' => 'Unit',
                     'price_unit' => 'Price',
                     'total_price' => 'Total Price',
+                    'discount_percent' => 'Discount %',
+                    'discount_nominal' => 'Discount Nominal',
                 ],
             ],
             'total' => [
                 'body' => [
                     'total' => 'Total Amount',
+                    'sub_total_discount' => 'Sub Total Discount',
+                    'total_discount' => 'Total Discount',
+                    'invoice_discount' => 'Invoice Discount',
+                    'total_transaction' => 'Total Transaction',
                 ],
             ],
             'expense' => [

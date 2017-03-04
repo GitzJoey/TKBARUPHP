@@ -307,7 +307,7 @@
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Discount Per Item</h3>
+                            <h3 class="box-title">@lang('purchase_order.create.box.discount_per_item')</h3>
                         </div>
                         <div class="box-body">
                             <div class="row">
@@ -315,52 +315,58 @@
                                     <table id="discountsListTable" class="table table-bordered table-hover">
                                         <thead>
 											<tr>
-												<th width="20%">Product Name</th>
-												<th width="20%">Total Price</th>
-												<th width="30%" class="text-left">Discount %</th>
+												<th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
+												<th width="30%">@lang('purchase_order.create.table.item.header.total_price')</th>
+												<th width="40%" class="text-left" colspan="3">@lang('purchase_order.create.table.item.header.total_price')</th>
 											</tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(item, itemIndex) in po.items">
-    											<td>@{{ item.product.name }}</td>
-    											<td>@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
-    											<td>
-    												
-    												<table class="table table-no-bg">
-                                                        <tr>
-                                                            <td colspan="4"> <button type="button" class="btn btn-primary btn-md pull-right mb-10"
-                                                            v-on:click="insertDiscount(item)"><span class="fa fa-plus"/>
-                                                    </button> </td>
-                                                        </tr>
-    													<tr v-for="(discount, discountIndex) in item.discounts">
-    														<td width="20%"><input type="text" class="form-control text-right" v-bind:name="'item_disc_percent['+itemIndex+'][]'" v-model="discount.disc_percent" placeholder="%" v-on:keyup="discountPercentToNominal(item, discount)" /></td>
-    														<td width="70%"><input type="text" class="form-control text-right" v-bind:name="'item_disc_value['+itemIndex+'][]'" v-model="discount.disc_value" placeholder="Nominal" v-on:keyup="discountNominalToPercent(item, discount)" /></td>
-    														<td width="10%" class="text-center">
-    															<button type="button" class="btn btn-danger btn-md"
-    																	v-on:click="removeDiscount(itemIndex, discountIndex)"><span
-    																		class="fa fa-minus"></span>
-    															</button>
-    														</td>
-    													</tr>
-                                                        <tr>
-                                                            <td width="30%" colspan="2">Sub Total Discount</td>
-                                                            <td width="70%" class="text-right">@{{ discountItemSubTotal(item.discounts) }}</td>
-                                                        </tr>
-    												</table>
-    											</td>
-                                            </tr>
+                                            <template v-for="(item, itemIndex) in po.items">
+                                                <tr>
+        											<td width="30%">@{{ item.product.name }}</td>
+        											<td width="30%">@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
+                                                    <td colspan="3" width="40%">
+                                                        <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
+                                                            <span class="fa fa-plus"/>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" width="65%" ></td>
+                                                    <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
+                                                    <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
+                                                </tr>
+                                                <tr v-for="(discount, discountIndex) in item.discounts">
+                                                    <td colspan="2" width="60%"></td>
+                                                    <td class="text-center valign-middle" width="5%">
+                                                        <button type="button" class="btn btn-danger btn-md" v-on:click="removeDiscount(itemIndex, discountIndex)">
+                                                                <span class="fa fa-minus"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td width="10%">
+                                                        <input type="text" class="form-control text-right" v-bind:name="'item_disc_percent['+itemIndex+'][]'" v-model="discount.disc_percent" placeholder="%" v-on:keyup="discountPercentToNominal(item, discount)" />
+                                                    </td>
+                                                    <td width="25%">
+                                                        <input type="text" class="form-control text-right" v-bind:name="'item_disc_value['+itemIndex+'][]'" v-model="discount.disc_value" placeholder="Nominal" v-on:keyup="discountNominalToPercent(item, discount)" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
+                                                    <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
+                                                </tr>
+                                            </template>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table id="discountsTotalListTable" class="table table-bordered">
+                                    <table class="table table-bordered">
                                         <tbody>
                                         <tr>
-                                            <td width="70%"
-                                                class="text-right">Total Discount</td>
-                                            <td width="30%" class="text-right">
+                                            <td width="65%"
+                                                class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                            <td width="35%" class="text-right">
                                                 <span class="control-label-normal">@{{ discountTotal() }}</span>
                                             </td>
                                         </tr>
@@ -467,9 +473,9 @@
                                     <table id="discountsListTable" class="table table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th width="30%" class="text-right">Total Amount</th>
-                                            <th width="30%" class="text-left">Invoice Discount</th>
-                                            <th width="40%" class="text-right">Total Transaction</th>
+                                            <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
+                                            <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
+                                            <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -700,6 +706,11 @@
                     insertItem: function (product) {
                         if(product.id != ''){
                             var vm = this;
+                            var item_init_discount = [];
+                            item_init_discount.push({
+                                disc_percent : 0,
+                                disc_value : 0,
+                            });
                             vm.po.items.push({
                                 product: _.cloneDeep(product),
                                 selected_unit: {
@@ -711,7 +722,7 @@
                                 base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
                                 quantity: 0,
                                 price: 0,
-								discounts: []
+								discounts: item_init_discount
                             });
                         }
                     },

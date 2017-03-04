@@ -93,7 +93,9 @@ class PurchaseOrder extends Model
         'supplier_id',
         'vendor_trucking_id',
         'warehouse_id',
-        'store_id'
+        'store_id',
+        'disc_percent',
+        'disc_value',
     ];
 
     protected $hidden = [
@@ -174,13 +176,21 @@ class PurchaseOrder extends Model
 
         $itemTotalAmount = count($itemAmounts) > 0 ? $itemAmounts->sum() : 0;
 
+        $itemDiscounts = $this->items->map(function ($item) {
+            return $item->discounts->map(function ($discount) {
+                return $discount->item_disc_value;
+            })->all();
+        })->flatten();
+
+        $itemDiscountAmount = count($itemDiscounts) > 0 ? $itemDiscounts->sum() : 0;
+
         $expenseAmounts = $this->expenses->map(function ($expense){
             return $expense->type === 'EXPENSETYPE.ADD' ? $expense->amount : ($expense->amount * -1);
         });
 
         $expenseTotalAmount = count($expenseAmounts) > 0 ? $expenseAmounts->sum() : 0;
 
-        return $itemTotalAmount + $expenseTotalAmount;
+        return $itemTotalAmount + $expenseTotalAmount - $itemDiscountAmount - $this->disc_value;
     }
 
     public function totalAmountPaid()

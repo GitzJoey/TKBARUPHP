@@ -40,7 +40,7 @@ class PurchaseOrderPaymentController extends Controller
     }
 
     public function paymentHistory($id){
-        $currentPo = $currentPo = $this->purchaseOrderService->getPOForPayment($id);
+        $currentPo = $this->purchaseOrderService->getPOForPayment($id);
         $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
             ->get()->pluck('description', 'code');
@@ -69,7 +69,7 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@saveCashPayment]');
 
-        $currentPo = PurchaseOrder::find($id);
+        $currentPo = $this->purchaseOrderService->getPOForPayment($id);
         $paymentDate = date('Y-m-d', strtotime($request->input('payment_date')));
         $paymentAmount = floatval(str_replace(',', '', $request->input('total_amount')));
 
@@ -113,7 +113,7 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@createGiroPayment]');
 
-        $currentPo = $currentPo = $this->purchaseOrderService->getPOForPayment($id);
+        $currentPo = $this->purchaseOrderService->getPOForPayment($id);
         $availableGiros = Giro::with('bank')->where('status', '=', 'GIROSTATUS.N')->get();
         $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
