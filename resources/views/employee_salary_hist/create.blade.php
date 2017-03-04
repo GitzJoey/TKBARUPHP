@@ -39,15 +39,17 @@
                 <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
                     <label for="inputName" class="col-sm-2 control-label">@lang('employee_salary.field.employee')</label>
                     <div class="col-sm-10">
-                        {{ Form::select('employee_id', $employeeList, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'),'data-parsley-required' => 'true','id'=>'employee-form' )) }}
+                        {{ Form::select('employee_id', $employeeList, $employee_id, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'),'data-parsley-required' => 'true','id'=>'employee-form' )) }}
                         <span class="help-block">{{ $errors->has('employee_id') ? $errors->first('employee_id') : '' }}</span>
                     </div>
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="inputAddress" class="col-sm-2 control-label">@lang('employee_salary.field.type')</label>
                     <div class="col-sm-10">
-                          <label class="radio-inline"><input type="radio" name="type" value="1" checked="checked">Plus</label>
-                          <label class="radio-inline"><input type="radio" name="type" value="-1">Minus</label>
+                        <div class="radio icheck">
+                          <label class="radio"><input type="radio" class="is_icheck" name="type" value="1" checked="checked">Plus</label>
+                          <label class="radio"><input type="radio" class="is_icheck" name="type" value="-1">Minus</label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
@@ -100,6 +102,11 @@
             $("#inputStartDate").datetimepicker({
                 format: "DD-MM-YYYY",
                 defaultDate: moment()
+            });
+             $('input.is_icheck').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
             });
         });
     </script>

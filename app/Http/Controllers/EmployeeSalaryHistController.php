@@ -16,7 +16,8 @@ use Carbon\Carbon;
 
 use Validator;
 use Illuminate\Http\Request;
-
+use DB;
+use Exception;
 class EmployeeSalaryHistController extends Controller
 {
     public function __construct()
@@ -27,41 +28,44 @@ class EmployeeSalaryHistController extends Controller
     public function index()
     {
         $employeelist = Employee::paginate(10);
-        $employeelist=Employee::select('employees.*','employee_salary_hist.*')
+        $employeelist = Employee::select('employees.*','employee_salary_hist.*','employees.id as employee_id','employee_id as id')
             ->leftJoin('employee_salary_hist','employee_id','=','employees.id')
             ->whereRaw('is_last=1 or is_last is null')
             ->paginate(10);
-            
-        return view('employee_salary_hist.index', compact('employeelist'));
+
+        $salaryTitle = "Salary ".date('M').' '.date('Y');
+        $salaryCount = Employee::select('employees.*')
+            ->whereRaw("employees.id in (select employee_id from employee_salary_hist where title='$salaryTitle')")
+            ->count();
+        return view('employee_salary_hist.index', compact('employeelist','salaryCount'));
     }
 
     public function show($id)
     {
         $employee = Employee::find($id);
-        $salaryList=EmployeeSalaryHist::where('employee_id',$employee->id)
+        $salaryList = EmployeeSalaryHist::where('employee_id',$employee->id)
                 ->orderBy('id','desc')
                 ->paginate(10);
         return view('employee_salary_hist.show',compact('employee','salaryList'));
     }
 
-    public function create()
+    public function create(Request $r)
     {
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
-        $employeeList=Employee::pluck('name','id');
-        return view('employee_salary_hist.create', compact('statusDDL','employeeList'));
+        $employeeList = Employee::pluck('name','id');
+        $employee_id = $r->get('employee_id');
+        return view('employee_salary_hist.create', compact('statusDDL','employeeList','employee_id'));
     }
 
     public function store(Request $data)
     {
 
-        $data['amount']=floatval(str_replace(',', '', $data['amount']));
+        $data['amount'] = floatval(str_replace(',', '', $data['amount']));
         $validator = Validator::make($data->all(), [
             'employee_id' => 'required|integer',
             'amount' => 'required|integer',
             'title' => 'required|string|max:255',
         ]);
-        // dd($data->all());
-        // dd($validator->errors());
         if ($validator->fails()) {
             return redirect(route('db.employee.employee_salary.create'))->withInput()->withErrors($validator);
         } else {
@@ -73,37 +77,34 @@ class EmployeeSalaryHistController extends Controller
     }
 
     public function calculateSalary(){
-        $month=date('m');
-        $year=date('Y');
-        $day="1";
-        $salaryTitle="Salary ".date('M').' '.date('Y');
-        $employeelist=Employee::select('employees.*')
+        $month = date('m');
+        $year = date('Y');
+        $day = "1";
+        $salaryTitle = "Salary ".date('M').' '.date('Y');
+        $employeelist = Employee::select('employees.*')
             ->whereRaw("employees.id not in (select employee_id from employee_salary_hist where title='$salaryTitle')")
             ->get();
-        $monthNow=Carbon::createFromDate($year,$month,$day);
-        $monthStart=$monthNow->copy()->subMonth();
-        $success=0;
+        $monthNow = Carbon::createFromDate($year,$month,$day);
+        $monthStart = $monthNow->copy()->subMonth();
+        $success = 0;
         try {
-            \DB::beginTransaction();
+            DB::beginTransaction();
             foreach ($employeelist as $employee) {
-                $join=Carbon::createFromFormat('Y-m-d H:m:i', $employee->start_date);
+                $join = Carbon::createFromFormat('Y-m-d H:m:i', $employee->start_date);
                 $numberOfDays=$monthStart->diffInDays($monthNow,false);
                 $workingDays=$join->diffInDays($monthNow);
                 //if the employee works have not reached 1 month
                 if($numberOfDays-$workingDays>1){
-                    $amount=($workingDays/$numberOfDays)*$employee->base_salary;
+                    $amount = ($workingDays/$numberOfDays)*$employee->base_salary;
                 }else{
-                    $amount=$employee->base_salary;
+                    $amount = $employee->base_salary;
                 }
-                $employee->transaction($amount,$salaryTitle,'',$is_salary=1);
+                $hist = $employee->transaction($amount,$salaryTitle,'',$is_salary=1);
                 if($hist) $success++;
             }   
-            \DB::commit();
-            $act=true;
-        } catch (\Exception $e) {
-            $act=false;
-            // dd($e);
-            \DB::rollBack();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
         }
         return redirect()->back();
     }

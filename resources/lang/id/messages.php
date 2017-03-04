@@ -20,5 +20,10 @@ return [
                 'text' => '',
             ],
         ],
+        'salary'=>[
+            'title'=>'Hitung Gaji',
+            'calculate'=>'Apakah anda yakin akan menghitung gaji?',
+            'calculate_exists'=>'Gaji sudah dihitung sebelumnya. Apakah anda yakin akan menghitung gaji?',
+        ]
     ],
 ];
