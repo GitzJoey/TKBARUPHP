@@ -15,7 +15,8 @@ return [
                 'address' => 'Alamat',
                 'start_date' => 'Mulai Kerja',
                 'freelance' => 'Paruh Waktu',
-                'balance' => 'Balance',
+                'balance' => 'Saldo',
+                'last_payment'=>'Pembayaran Terakhir'
             ],
         ],
     ],
@@ -51,6 +52,7 @@ return [
                 'start_date' => 'Mulai Kerja',
                 'freelance' => 'Paruh Waktu',
                 'balance' => 'Saldo',
+                'last_payment'=>'Pembayaran Terakhir'
             ],
         ],
     ],
