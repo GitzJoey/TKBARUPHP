@@ -16,7 +16,6 @@ return [
                 'start_date' => 'Start Date',
                 'freelance' => 'Freelance',
                 'balance' => 'Balance',
-                'last_payment'=>'Last Payment'
             ],
         ],
     ],
@@ -52,7 +51,6 @@ return [
                 'start_date' => 'Start Date',
                 'freelance' => 'Freelance',
                 'balance' => 'Balance',
-                'last_payment'=>'Last Payment'
             ],
         ],
     ],

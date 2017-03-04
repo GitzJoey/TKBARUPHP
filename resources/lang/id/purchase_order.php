@@ -15,6 +15,7 @@ return [
                 'remarks' => 'Keterangan',
                 'po_copy_remarks' => 'Keterangan Duplikat',
                 'expenses' => 'Biaya',
+                'discount_per_item' => 'Diskon Per Item',
             ],
             'field' => [
                 'supplier_type' => 'Tipe',
@@ -37,11 +38,17 @@ return [
                         'unit' => 'Satuan',
                         'price_unit' => 'Harga',
                         'total_price' => 'Total Harga',
+                        'discount_percent' => 'Diskon %',
+                        'discount_nominal' => 'Diskon Nominal',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Total',
+                        'sub_total_discount' => 'Sub Total Diskon',
+                        'total_discount' => 'Total Diskon',
+                        'invoice_discount' => 'Diskon Invoice',
+                        'total_transaction' => 'Total Transaksi',
                     ],
                 ],
             ],

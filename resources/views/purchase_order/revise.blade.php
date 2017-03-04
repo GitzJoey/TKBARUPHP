@@ -405,7 +405,7 @@
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Discount Per Item</h3>
+                            <h3 class="box-title">@lang('purchase_order.create.box.discount_per_item')</h3>
                         </div>
                         <div class="box-body">
                             <div class="row">
@@ -413,9 +413,9 @@
                                     <table id="discountsListTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th width="30%">Product Name</th>
-                                                <th width="30%">Total Price</th>
-                                                <th width="40%" class="text-left" colspan="3">Total</th>
+                                                <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                <th width="30%">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                                <th width="40%" class="text-left" colspan="3">@lang('purchase_order.create.table.item.header.total_price')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -431,8 +431,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3" width="65%" ></td>
-                                                    <th width="10%" class="small-header">Discount %</th>
-                                                    <th width="25%" class="small-header">Discount Nominal</th>
+                                                    <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
+                                                    <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
                                                 </tr>
                                                 <tr v-for="(discount, discountIndex) in item.discounts">
                                                     <input type="hidden" v-bind:name="'item_discount_id['+itemIndex+'][]'" v-bind:value="discount.id">
@@ -451,7 +451,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-right" colspan="3">Sub Total Discount</td>
+                                                    <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
                                                     <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
                                                 </tr>
                                             </template>
@@ -461,11 +461,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table id="discountsTotalListTable" class="table table-bordered">
+                                    <table class="table table-bordered">
                                         <tbody>
                                         <tr>
                                             <td width="65%"
-                                                class="text-right">Total Discount</td>
+                                                class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
                                             <td width="35%" class="text-right">
                                                 <span class="control-label-normal">@{{ discountTotal() }}</span>
                                             </td>
@@ -487,12 +487,12 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table id="discountsListTable" class="table table-bordered table-hover">
+                                    <table class="table table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th width="30%" class="text-right">Total Amount</th>
-                                            <th width="30%" class="text-left">Invoice Discount</th>
-                                            <th width="40%" class="text-right">Total Transaction</th>
+                                            <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
+                                            <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
+                                            <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
                                         </tr>
                                         </thead>
                                         <tbody>
