@@ -36,19 +36,28 @@
                         <th class="text-center">@lang('employee_salary.index.table.header.ic_number')</th>
                         <th class="text-center">@lang('employee_salary.index.table.header.start_date')</th>
                         <th class="text-center">@lang('employee_salary.index.table.header.freelance')</th>
-                        <th class="text-center">@lang('employee_salary.index.table.header.balance')</th>
+                        <th class="text-center">@lang('employee_salary.index.table.header.last_payment')</th>
                         <th class="text-center">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($employeelist as $key => $employee)
+                        @php($lastPayment=$employee->lastPayment())
                         <tr>
                             <td class="text-center">{{ $employee->name }}</td>
                             <td class="text-center">{{ $employee->address }}</td>
                             <td class="text-center">{{ $employee->ic_number }}</td>
                             <td class="text-center">{{ $employee->start_date}}</td>
-                            <td class="text-center">{{ $employee->freelance }}</td>
-                            <td class="text-center">{{ $employee->balance }}</td>
+                            <td class="text-center">
+                                <label>
+                                        @if($employee->freelace)
+                                        <i class="fa fa-check"></i>
+                                        @else
+                                        <i class="fa fa-minus"></i>
+                                        @endif
+                                    </label>
+                            </td>
+                            <td class="text-center">{{ $lastPayment!=null?$lastPayment->created_at->format('M Y'): '-' }}</td>
                             <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.employee.employee_salary.show', $employee->employee_id) }}"><span class="fa fa-info fa-fw"></span></a>
                             </td>
@@ -58,9 +67,34 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" onclick="return confirm('Apakah anda yakin?')" href="{{ route('db.employee.employee_salary.calculate_salary') }}"><span class="fa fa-money fa-fw"></span>&nbsp;@lang('buttons.calculate_salary') ({{ date('M').' '.date('Y') }})</a>
+            <a class="btn btn-success" id="calculate" href="{{ route('db.employee.employee_salary.calculate_salary') }}"><span class="fa fa-money fa-fw"></span>&nbsp;@lang('buttons.calculate_salary') ({{ date('M').' '.date('Y') }})</a>
             <a class="btn btn-success" href="{{ route('db.employee.employee_salary.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $employeelist->render() !!}
         </div>
     </div>
+@endsection
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function(){
+            $('#calculate').click(function(event){
+                event.preventDefault();
+                swal({
+                    title: "@lang('messages.alert.salary.title')",
+                    text: "@lang($salaryCount?'messages.alert.salary.calculate_exists':'messages.alert.salary.calculate')",
+                    type: "error",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-success",
+                    confirmButtonText: "@lang('buttons.calculate_salary')",
+                    cancelButtonText: "@lang('buttons.cancel_button')",
+                    closeOnConfirm: false
+                }, function (isConfirm) {
+                    if(isConfirm){
+                        console.log(event);
+                        window.location=$('#calculate').attr('href');
+                    }
+                });
+            });
+        })
+        
+    </script>
 @endsection

@@ -19,6 +19,11 @@ return [
                     'text' => 'You will not be able to recover this sales order copy.',
                 ]
             ]
+        ],
+        'salary'=>[
+            'title'=>'Calculate Salary',
+            'calculate'=>'Are you sure to calculate salary?',
+            'calculate_exists'=>'Salary already exists, Are you sure to calculate salary?',
         ]
     ]
 ];

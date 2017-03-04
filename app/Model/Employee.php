@@ -145,4 +145,11 @@ class Employee extends Model
         ]);
         return $hist;
     }
+    public function lastPayment(){
+        $hist=EmployeeSalaryHist::where('amount','<',0)
+            ->where('employee_id',$this->id)
+            ->orderBy('id','desc')
+            ->first();
+        return $hist;
+    }
 }

@@ -20,7 +20,7 @@ class CreateHistoryEmployeeSalaryTable extends Migration
             $table->string('description');
             $table->integer('amount');
             $table->integer('balance');
-            $table->integer('is_last');
+            $table->boolean('is_last');
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);
