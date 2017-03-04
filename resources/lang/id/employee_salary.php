@@ -5,6 +5,7 @@ return [
         'title' => 'Gaji Pegawai',
         'page_title' => 'Gaji Pegawai',
         'page_title_desc' => '',
+        'pay_salary' => 'Bayar Gaji',
         'header' => [
             'title' => 'Tambah Transaksi Pegawai',
         ],
@@ -58,6 +59,8 @@ return [
     ],
     'show' => [
         'title' => 'Gaji Pegawai',
+        'plus' => 'Tambahkan',
+        'minus' => 'Kurangi',
         'page_title' => 'Gaji Pegawai',
         'page_title_desc' => '',
         'header' => [

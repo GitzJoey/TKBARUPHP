@@ -47,8 +47,9 @@
                     <label for="inputAddress" class="col-sm-2 control-label">@lang('employee_salary.field.type')</label>
                     <div class="col-sm-10">
                         <div class="radio icheck">
-                          <label class="radio"><input type="radio" class="is_icheck" name="type" value="1" checked="checked">Plus</label>
-                          <label class="radio"><input type="radio" class="is_icheck" name="type" value="-1">Minus</label>
+                          <label class="radio"><input type="radio" class="is_icheck transaction_type" name="type" value="pay_salary" checked="checked">{{ $salaryTitle }}</label>
+                          <label class="radio"><input type="radio" class="is_icheck transaction_type" name="type" value="1">@lang('employee_salary.show.plus')</label>
+                          <label class="radio"><input type="radio" class="is_icheck transaction_type" name="type" value="-1">@lang('employee_salary.show.minus')</label>
                         </div>
                     </div>
                 </div>
@@ -60,11 +61,11 @@
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                    <label for="inputAddress" class="col-sm-2 control-label">@lang('employee_salary.field.title')</label>
+                <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}" id="title-form">
+                    <label for="inputTitle" class="col-sm-2 control-label">@lang('employee_salary.field.title')</label>
                     <div class="col-sm-10">
-                        <input id="inputAddress" name="title" type="text" class="form-control"
-                               placeholder="@lang('employee_salary.field.title')" data-parsley-required="true">
+                        <input id="inputTitle" name="title" type="text" class="form-control"
+                               placeholder="@lang('employee_salary.field.title')" data-parsley-required="false">
                         <span class="help-block">{{ $errors->has('title') ? $errors->first('title') : '' }}</span>
                     </div>
                 </div>
@@ -79,7 +80,7 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.employee.employee') }}"
+                        <a href="{{ route('db.employee.employee_salary') }}"
                            class="btn btn-default">@lang('buttons.cancel_button')</a>
                         <button class="btn btn-default" type="submit">@lang('buttons.create_new_button')</button>
                     </div>
@@ -98,15 +99,28 @@
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
             });
+             $('input.is_icheck').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
 
             $("#inputStartDate").datetimepicker({
                 format: "DD-MM-YYYY",
                 defaultDate: moment()
             });
-             $('input.is_icheck').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%'
+            $('#title-form').hide();
+            $('input.transaction_type').on('ifChanged', function (event) { 
+                    if($(this).val()=='pay_salary'){
+                        $('#title-form').hide();
+                        $('#inputTitle').attr('data-parsley-required','false')
+                    }else{
+                        $('#inputTitle').attr('data-parsley-required','true')
+                        $('#title-form').show();
+                    }
+                });
+            $('.transaction_type').change(function(){
+                alert($(this).val());
             });
         });
     </script>

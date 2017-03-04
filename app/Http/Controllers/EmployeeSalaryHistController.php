@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Validator;
 use Illuminate\Http\Request;
 use DB;
+use Lang;
 use Exception;
 class EmployeeSalaryHistController extends Controller
 {
@@ -54,13 +55,17 @@ class EmployeeSalaryHistController extends Controller
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $employeeList = Employee::pluck('name','id');
         $employee_id = $r->get('employee_id');
-        return view('employee_salary_hist.create', compact('statusDDL','employeeList','employee_id'));
+        $salaryTitle = Lang::get('employee_salary.create.pay_salary').' '.date('M').' '.date('Y');
+        return view('employee_salary_hist.create', compact('statusDDL','employeeList','employee_id','salaryTitle'));
     }
 
     public function store(Request $data)
     {
-
         $data['amount'] = floatval(str_replace(',', '', $data['amount']));
+        if($data['type'] == 'pay_salary'){
+            $data['type'] = -1;
+            $data['title'] = "Pay Salary ".date('M').' '.date('Y');;
+        }
         $validator = Validator::make($data->all(), [
             'employee_id' => 'required|integer',
             'amount' => 'required|integer',
@@ -71,7 +76,6 @@ class EmployeeSalaryHistController extends Controller
         } else {
             $employee=Employee::find($data['employee_id']);
             $employee->transaction($data['amount']*$data['type'],$data['title'],$data['description'],$is_salary=0);
-            // return 'cek';
             return redirect(route('db.employee.employee_salary'));
         }
     }

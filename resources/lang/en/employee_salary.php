@@ -5,6 +5,7 @@ return [
         'title' => 'Employee Salary',
         'page_title' => 'Employee Salary',
         'page_title_desc' => '',
+        'pay_salary' => 'Pay Salary',
         'header' => [
             'title' => 'Create Employee Transaction',
         ],
@@ -58,6 +59,8 @@ return [
     ],
     'show' => [
         'title' => 'Employee Salary',
+        'plus' => 'Plus',
+        'minus' => 'Minus',
         'page_title' => 'Employee Salary',
         'page_title_desc' => '',
         'header' => [
