@@ -277,35 +277,66 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">@lang('purchase_order.payment.summary.box.total_discount')</h3>
+                <h3 class="box-title">Discount Per Item</h3>
             </div>
             <div class="box-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th width="50%">@lang('purchase_order.payment.summary.table.total_discount.header.total_discount_desc')</th>
-                            <th width="10%" class="text-center">@lang('purchase_order.payment.summary.table.total_discount.header.percentage')</th>
-                            <th width="20%" class="text-center">@lang('purchase_order.payment.summary.table.total_discount.header.value')</th>
-                            <th width="20%" class="text-center">@lang('purchase_order.payment.summary.table.total_discount.header.total_discount')</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td width="50%" class="valign-middle">
-                                @lang('purchase_order.payment.summary.table.total_discount.body.total_discount_desc')
-                            </td>
-                            <td width="10%" class="text-right">
-                                <input name="total_discount" type="text" class="form-control text-right" autonumeric readonly/>
-                            </td>
-                            <td width="20%" class="text-right">
-                                <input name="total_discount" type="text" class="form-control text-right" autonumeric readonly/>
-                            </td>
-                            <td width="20%" class="text-right">
-                                <input name="total_discount" type="text" class="form-control text-right" autonumeric readonly/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="discountsListTable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="30%">Product Name</th>
+                                    <th width="30%">Total Price</th>
+                                    <th width="40%" class="text-left" colspan="3">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-for="(item, itemIndex) in po.items">
+                                    <tr>
+                                        <td width="30%">@{{ item.product.name }}</td>
+                                        <td width="30%">@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
+                                        <td colspan="3" width="40%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" width="65%" ></td>
+                                        <th width="10%" class="small-header">Discount %</th>
+                                        <th width="25%" class="small-header">Discount Nominal</th>
+                                    </tr>
+                                    <tr v-for="(discount, discountIndex) in item.discounts">
+                                        <td colspan="2" width="60%"></td>
+                                        <td class="text-center valign-middle" width="5%">
+                                        </td>
+                                        <td width="10%">
+                                            <input type="text" class="form-control text-right" v-bind:name="'item_disc_percent['+itemIndex+'][]'" v-model="discount.disc_percent" placeholder="%" v-on:keyup="discountPercentToNominal(item, discount)" readonly/>
+                                        </td>
+                                        <td width="25%">
+                                            <input type="text" class="form-control text-right" v-bind:name="'item_disc_value['+itemIndex+'][]'" v-model="discount.disc_value" placeholder="Nominal" v-on:keyup="discountNominalToPercent(item, discount)" readonly />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right" colspan="3">Sub Total Discount</td>
+                                        <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="discountsTotalListTable" class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td width="65%"
+                                    class="text-right">Total Discount</td>
+                                <td width="35%" class="text-right">
+                                    <span class="control-label-normal">@{{ discountTotal() }}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -314,12 +345,38 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">@lang('purchase_order.payment.summary.box.transaction_summary')</h3>
+                <h3 class="box-title"><h3 class="box-title">@lang('purchase_order.create.box.transaction_summary')</h3></h3>
             </div>
             <div class="box-body">
-                @for ($i = 0; $i < 25; $i++)
-                    <br/>
-                @endfor
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="discountsListTable" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th width="30%" class="text-right">Total Amount</th>
+                                <th width="30%" class="text-left">Invoice Discount</th>
+                                <th width="40%" class="text-right">Total Transaction</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() }}</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control text-right" name="disc_total_percent" v-model="po.disc_total_percent" placeholder="%" readonly/>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control text-right" name="disc_total_value" v-model="po.disc_total_value" placeholder="Nominal" readonly />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
