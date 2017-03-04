@@ -141,7 +141,7 @@
             </div>
         {!! Form::close() !!}
 
-        {{-- @include('purchase_order.supplier_details_partial') --}}
+        @include('purchase_order.supplier_details_partial')
     </div>
 @endsection
 
