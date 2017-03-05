@@ -100,6 +100,11 @@ class Item extends Model
         return $this->hasMany('App\Model\Deliver');
     }
 
+    public function discounts()
+    {
+        return $this->morphMany('App\Model\ItemDiscounts', 'discountable');
+    }
+
     public function itemable()
     {
         // SalesOrder | SalesOrderCopy | PurchaseOrder | PurchaseOrderCopy

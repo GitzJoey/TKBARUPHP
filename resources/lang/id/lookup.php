@@ -59,4 +59,8 @@ return [
     'PRICELEVELTYPE.PCT' => 'Kenaikan Persentase',
     'EXPENSETYPE.ADD' => 'Menambah Nilai',
     'EXPENSETYPE.SUB' => 'Mengurangi Nilai',
+    'EMPSALARYACTION.SALARY_PAYMENT' => 'Pembayaran Gaji',
+    'EMPSALARYACTION.BONUS' => 'Bonus',
+    'EMPSALARYACTION.REIMBURSE' => 'Reimburse',
+    'EMPSALARYACTION.SALARY_PAY_UPFRONT' => 'Gaji Dibayar Dimuka',
 ];

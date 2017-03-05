@@ -318,7 +318,27 @@ class LookupTableSeeder extends Seeder
                 'code' => 'BANKUPLOAD.BCA',
                 'description' => 'Bank BCA',
                 'category' => 'BANKUPLOAD',
-            ]
+            ],
+            [
+                'code' => 'EMPSALARYACTION.SALARY_PAYMENT',
+                'description' => 'Salary Payment',
+                'category' => 'EMPSALARYACTION',
+            ],
+            [
+                'code' => 'EMPSALARYACTION.BONUS',
+                'description' => 'Bonus',
+                'category' => 'EMPSALARYACTION',
+            ],
+            [
+                'code' => 'EMPSALARYACTION.REIMBURSE',
+                'description' => 'Reimburse',
+                'category' => 'EMPSALARYACTION',
+            ],
+            [
+                'code' => 'EMPSALARYACTION.SALARY_PAY_UPFRONT',
+                'description' => 'Salary Payed Upfront',
+                'category' => 'EMPSALARYACTION',
+            ],
         ];
         foreach ($lookup as $key => $value) {
             Lookup::create($value);

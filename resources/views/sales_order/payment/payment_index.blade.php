@@ -37,6 +37,7 @@
                         <th class="text-center" width="15%">@lang('sales_order.payment.index.table.header.total')</th>
                         <th class="text-center" width="15%">@lang('sales_order.payment.index.table.header.paid')</th>
                         <th class="text-center" width="15%">@lang('sales_order.payment.index.table.header.rest')</th>
+                        <th width="5%"></th>
                         <th class="text-center" width="10%">@lang('labels.ACTION')</th>
                     </tr>
                 </thead>
@@ -56,6 +57,9 @@
                                 <td class="text-right">{{ number_format($so->totalAmount(), 0) }}</td>
                                 <td class="text-right">{{ number_format($so->totalAmountPaid(), 0) }}</td>
                                 <td class="text-right">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 0) }}</td>
+                                <td class="text-center">
+                                    <button id="bf_{{ $so->code }}" class="btn btn-xs btn-primary"><span class="fa fa-arrow-circle-right fa-fw"></span></button>
+                                </td>
                                 <td class="text-center" width="10%">
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.cash', $so->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.transfer', $so->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>
@@ -65,7 +69,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="7" class="text-center animated shake">@lang('labels.DATA_NOT_FOUND')</td>
+                            <td colspan="8" class="text-center animated shake">@lang('labels.DATA_NOT_FOUND')</td>
                         </tr>
                     @endif
                 </tbody>
@@ -73,8 +77,21 @@
         </div>
     </div>
 @endsection
+
 @section('custom_js')
     <script type="application/javascript">
-
+        $(document).ready(function() {
+            $('button[id^="bf_"]').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: '{{ route('api.so.bf') }}' + '?api_token=' + $('#secapi').val(),
+                    data: { code: $(this).attr('id').split('_')[1] },
+                    dataType: 'application/json',
+                    complete: function(response) {
+                        console.log(response.responseText);
+                    }
+                });
+            });
+        });
     </script>
 @endsection

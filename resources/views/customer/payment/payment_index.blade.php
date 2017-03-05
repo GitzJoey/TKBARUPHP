@@ -35,14 +35,14 @@
         <div class="box-body">
             <table class="table table-bordered">
                 <thead>
-                <tr>
-                    <th class="text-center">@lang('customer.payment.index.table.header.code')</th>
-                    <th class="text-center">@lang('customer.payment.index.table.header.so_date')</th>
-                    <th class="text-center">@lang('customer.payment.index.table.header.total')</th>
-                    <th class="text-center">@lang('customer.payment.index.table.header.paid')</th>
-                    <th class="text-center">@lang('customer.payment.index.table.header.rest')</th>
-                    <th class="text-center">@lang('labels.ACTION')</th>
-                </tr>
+                    <tr>
+                        <th class="text-center">@lang('customer.payment.index.table.header.code')</th>
+                        <th class="text-center">@lang('customer.payment.index.table.header.so_date')</th>
+                        <th class="text-center">@lang('customer.payment.index.table.header.total')</th>
+                        <th class="text-center">@lang('customer.payment.index.table.header.paid')</th>
+                        <th class="text-center">@lang('customer.payment.index.table.header.rest')</th>
+                        <th class="text-center">@lang('labels.ACTION')</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach ($salesOrders as $key => $so)

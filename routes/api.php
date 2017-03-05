@@ -19,6 +19,7 @@ Route::get('user', function (Request $request) {
 
 Route::group(['prefix' => 'secure/api', 'middleware' => 'auth:api'], function() {
     Route::post('user/set_settings', 'StoreController@applySettings')->name('api.user.apply_settings');
+    Route::post('so/bf', 'SalesOrderController@broughtForwardPayment')->name('api.so.bf');
 });
 
 Route::get('po/code', function () {
@@ -73,7 +74,7 @@ Route::group(['prefix' => 'sales_order'], function() {
 });
 
 Route::group(['prefix' => 'stock'], function() {
-    Route::get('current_stocks', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
+    Route::get('current_stocks/{wId?}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
 });
 
 Route::get('user/get/calendar', 'CalendarController@retrieveEvents')->name('api.user.get.calendar');
@@ -81,3 +82,5 @@ Route::get('user/get/calendar', 'CalendarController@retrieveEvents')->name('api.
 Route::get('get/unfinish/store', 'StoreController@isUnfinishedStoreExist')->name('api.get.unfinish.store');
 
 Route::get('get/unfinish/warehouse', 'WarehouseController@isUnfinishedWarehouseExist')->name('api.get.unfinish.warehouse');
+
+Route::get('currencies/conversion', 'CurrenciesController@conversion')->name('api.currencies.conversion');

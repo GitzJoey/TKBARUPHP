@@ -119,7 +119,9 @@
                 po: {
                     supplier: _.cloneDeep(currentPo.supplier),
                     items: [],
-                    expenses: []
+                    expenses: [],
+                    disc_total_percent : currentPo.disc_percent % 1 !== 0 ? currentPo.disc_percent : parseFloat(currentPo.disc_percent).toFixed(0),
+                    disc_total_value : currentPo.disc_value % 1 !== 0 ? currentPo.disc_value : parseFloat(currentPo.disc_value).toFixed(0),
                 }
             },
             methods: {
@@ -138,18 +140,48 @@
                         result += parseInt(expense.amount);
                     });
                     return result;
-                }
+                },
+                discountItemSubTotal: function (discounts) {
+                    var result = 0;
+                    _.forEach(discounts, function (discount) {
+                        result += parseFloat(discount.disc_value);
+                    });
+                    if( result % 1 !== 0 )
+                        result = result.toFixed(2);
+                    return result;
+                },
+                discountTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            result += parseFloat(discount.disc_value);
+                        });
+                    });
+                    return result;
+                },
             }
         });
 
         for (var i = 0; i < currentPo.items.length; i++) {
+            var itemDiscounts = [];
+            if( currentPo.items[i].discounts.length ){
+                for (var ix = 0; ix < currentPo.items[i].discounts.length; ix++) {
+                    itemDiscounts.push({
+                        id : currentPo.items[i].discounts[ix].id,
+                        disc_percent : currentPo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? currentPo.items[i].discounts[ix].item_disc_percent : parseFloat(currentPo.items[i].discounts[ix].item_disc_percent).toFixed(0),
+                        disc_value : currentPo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? currentPo.items[i].discounts[ix].item_disc_value : parseFloat(currentPo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                    });
+                }
+            }
             poPaymentApp.po.items.push({
                 id: currentPo.items[i].id,
                 product: currentPo.items[i].product,
                 base_unit: _.find(currentPo.items[i].product.product_units, isBase),
                 selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
                 quantity: currentPo.items[i].quantity % 1 != 0 ? parseFloat(currentPo.items[i].quantity).toFixed(2):parseFloat(currentPo.items[i].quantity).toFixed(0),
-                price: currentPo.items[i].price % 1 != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0)
+                price: currentPo.items[i].price % 1 != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0),
+                discounts : itemDiscounts
             });
         }
 

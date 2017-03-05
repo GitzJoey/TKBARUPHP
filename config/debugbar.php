@@ -12,7 +12,7 @@ return [
      |
      */
 
-    'enabled' => null,
+    'enabled' => env('APP_ENV') == 'production' ? false:true,
 
     /*
      |--------------------------------------------------------------------------

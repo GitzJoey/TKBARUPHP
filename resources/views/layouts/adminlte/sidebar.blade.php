@@ -515,6 +515,10 @@
                 Entrust::can('admin.unit-create') OR
                 Entrust::can('admin.unit-edit') OR
                 Entrust::can('admin.unit-delete') OR
+                Entrust::can('admin.currencies-list') OR
+                Entrust::can('admin.currencies-create') OR
+                Entrust::can('admin.currencies-edit') OR
+                Entrust::can('admin.currencies-delete') OR
                 Entrust::can('admin.settings-list') OR
                 Entrust::can('admin.settings-edit') OR
                 Entrust::can('admin.phoneprovider-list') OR
@@ -563,10 +567,18 @@
                                 <a href="{{ route('db.admin.unit') }}"><i class="glyphicon glyphicon-flash"></i>&nbsp;@lang('menu.item.adm_unit')</a>
                             </li>
                         @endif
+                        @if(Entrust::can('admin.currencies-list') OR
+                            Entrust::can('admin.currencies-create') OR
+                            Entrust::can('admin.currencies-edit') OR
+                            Entrust::can('admin.currencies-delete'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.admin.currencies') || Active::checkRoutePattern('db.admin.currencies.*')) }}">
+                                <a href="{{ route('db.admin.currencies') }}"><i class="glyphicon glyphicon-usd"></i>&nbsp;@lang('menu.item.adm_currencies')</a>
+                            </li>
+                        @endif
                         @if(Entrust::can('admin.settings-list') OR
                             Entrust::can('admin.settings-edit'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.admin.settings') || Active::checkRoutePattern('db.admin.settings.*')) }}">
-                                <a href="{{ route('db.admin.settings') }}"><i class="fa fa-minus-square fa-fw"></i>&nbsp;@lang('menu.item.adm_settings')</a>
+                                <a href="{{ route('db.admin.settings') }}"><i class="glyphicon glyphicon-th"></i>&nbsp;@lang('menu.item.adm_settings')</a>
                             </li>
                         @endif
                         @if(Entrust::can('admin.phoneprovider-list') OR

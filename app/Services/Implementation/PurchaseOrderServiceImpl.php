@@ -13,6 +13,7 @@ use App\Model\Lookup;
 use App\Model\Expense;
 use App\Model\ProductUnit;
 use App\Model\PurchaseOrder;
+use App\Model\ItemDiscounts;
 use App\Services\PurchaseOrderService;
 
 use Carbon\Carbon;
@@ -55,7 +56,9 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 'supplier_id' => $supplier_id,
                 'vendor_trucking_id' => empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id'),
                 'warehouse_id' => $request->input('warehouse_id'),
-                'store_id' => Auth::user()->store_id
+                'store_id' => Auth::user()->store_id,
+                'disc_percent' => $request->input('disc_total_percent'),
+                'disc_value' => $request->input('disc_total_value'),
             ];
 
             $po = PurchaseOrder::create($params);
@@ -74,7 +77,16 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $item->price = floatval(str_replace(',', '', $request->input("item_price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
-                $po->items()->save($item);
+                $item_saved = $po->items()->save($item);
+				
+				for ($ia = 0; $ia < count($request->input('item_disc_percent.'.$i)); $ia++) {
+                    if( $request->input('item_disc_percent.'.$i.'.'.$ia) > 0 ){
+                        $itemDiscounts = new ItemDiscounts();
+    					$itemDiscounts->item_disc_percent = $request->input('item_disc_percent.'.$i.'.'.$ia);
+    					$itemDiscounts->item_disc_value = $request->input('item_disc_value.'.$i.'.'.$ia);
+    					$item_saved->discounts()->save($itemDiscounts);
+                    }
+				}
             }
 
             for($i = 0; $i < count($request->input('expense_name')); $i++){
@@ -99,7 +111,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      */
     public function getPOForRevise($id)
     {
-        return PurchaseOrder::with('items.product.productUnits.unit', 'supplier.profiles.phoneNumbers.provider',
+        return PurchaseOrder::with('items.product.productUnits.unit', 'items.discounts', 'supplier.profiles.phoneNumbers.provider',
             'supplier.bankAccounts.bank', 'supplier.products.productUnits.unit', 'supplier.products.type',
             'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
     }
@@ -116,6 +128,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
     public function revisePO(Request $request, $id)
     {
         DB::transaction(function() use ($id, $request) {
+                
             // Get current PO
             $currentPo = PurchaseOrder::with('items')->find($id);
 
@@ -136,6 +149,8 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             $currentPo->warehouse_id = $request->input('warehouse_id');
             $currentPo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
             $currentPo->remarks = $request->input('remarks');
+            $currentPo->disc_percent = $request->input('disc_total_percent');
+            $currentPo->disc_value = $request->input('disc_total_value');
 
             for ($i = 0; $i < count($request->input('item_id')); $i++) {
                 $item = Item::findOrNew($request->input("item_id.$i"));
@@ -150,8 +165,29 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $item->quantity = $request->input("item_quantity.$i");
                 $item->price = floatval(str_replace(',', '', $request->input("item_price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
-
                 $currentPo->items()->save($item);
+
+                // Get IDs of current PO's item discount
+                $itemDiscountsId = $item->discounts->map(function ($discount) {
+                    return $discount->id;
+                })->all();
+
+                $inputtedItemDiscountId = $request->input('item_discount_id.'.$i);
+
+                // Get the id of removed item discount
+                $itemDiscountsToBeDeleted = array_diff($itemDiscountsId, isset($inputtedItemDiscountId) ? $inputtedItemDiscountId : []);
+
+                // Remove the item discount that removed on the revise page
+                ItemDiscounts::destroy($itemDiscountsToBeDeleted);
+
+                for ($ia = 0; $ia < count($request->input('item_disc_percent.'.$i)); $ia++) {
+                    if( $request->input('item_disc_percent.'.$i.'.'.$ia) > 0 ){
+                        $itemDiscounts = ItemDiscounts::findOrNew($request->input('item_discount_id.'.$i.'.'.$ia));
+                        $itemDiscounts->item_disc_percent = $request->input('item_disc_percent.'.$i.'.'.$ia);
+                        $itemDiscounts->item_disc_value = $request->input('item_disc_value.'.$i.'.'.$ia);
+                        $item->discounts()->save($itemDiscounts);
+                    }
+                }
             }
 
             // Get IDs of current PO's expenses
@@ -231,7 +267,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      */
     public function getPOForPayment($poId)
     {
-        return PurchaseOrder::with('payments', 'items.product.productUnits.unit',
+        return PurchaseOrder::with('payments', 'items.product.productUnits.unit', 'items.discounts',
             'supplier.profiles.phoneNumbers.provider', 'supplier.bankAccounts.bank', 'supplier.products',
             'supplier.products.type', 'supplier.expenseTemplates', 'vendorTrucking', 'warehouse', 'expenses')->find($poId);
     }

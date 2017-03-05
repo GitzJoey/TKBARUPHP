@@ -208,13 +208,30 @@ return [
     ],
     'transfer_stock' => [
         'create' => [
-            'title' => 'Create Transfer Stock',
-            'page_title' => 'Create Transfer Stock',
+            'title' => 'Transfer Stocks',
+            'page_title' => 'Transfer Stocks',
             'page_title_desc' => '',
+            'header' => [
+                'title' => [
+                    'warehouse' => 'Warehouse',
+                    'stocks' => 'Stocks',
+                ],
+            ],
+            'table' => [
+                'header' => [
+                    'product' => 'Product',
+                    'current_qty' => 'Current Quantity',
+                    'detail' => 'Details',
+                ],
+            ],
+        ],
+        'field' => [
+            'source_warehouse' => 'Source Warehouse',
+            'destination_warehouse' => 'Destination Warehouse',
         ],
         'index' => [
-            'title' => 'Transfer Stock',
-            'page_title' => 'Transfer Stock',
+            'title' => 'Transfer Stocks',
+            'page_title' => 'Transfer Stocks',
             'page_title_desc' => '',
             'header' => [
                 'title' => 'Transfer Stock Lists',

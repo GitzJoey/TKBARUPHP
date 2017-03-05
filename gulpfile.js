@@ -79,5 +79,8 @@ elixir(function (mix) {
         .copy('node_modules/fullcalendar/dist/fullcalendar.print.min.css', 'public/adminlte/css')
         .copy('node_modules/tooltipster/dist/css/tooltipster.bundle.min.css', 'public/adminlte/css')
         .copy('node_modules/tooltipster/dist/css/plugins/tooltipster/sideTip/themes/tooltipster-sideTip-shadow.min.css', 'public/adminlte/css')
+        .copy('node_modules/bootstrap-fileinput/js/fileinput.js', 'public/adminlte/fileinput')
+        .copy('node_modules/bootstrap-fileinput/js/locales/id.js', 'public/adminlte/fileinput')
+        .copy('node_modules/bootstrap-fileinput/css/fileinput.css', 'public/adminlte/fileinput')
         .copy('resources/assets/css/frontweb.css', 'public/frontweb/css');
 });

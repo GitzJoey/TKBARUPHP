@@ -97,6 +97,26 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Delete Unit'
             ],
             [
+                'name' => 'admin.currencies-list',
+                'display_name' => '[Currencies] Display Currencies Listing',
+                'description' => 'See only Listing Of Currencies'
+            ],
+            [
+                'name' => 'admin.currencies-create',
+                'display_name' => '[Currencies] Create Currencies',
+                'description' => 'Create New Currencies'
+            ],
+            [
+                'name' => 'admin.currencies-edit',
+                'display_name' => '[Currencies] Edit Currencies',
+                'description' => 'Edit Currencies'
+            ],
+            [
+                'name' => 'admin.currencies-delete',
+                'display_name' => '[Currencies] Delete Currencies',
+                'description' => 'Delete Currencies'
+            ],
+            [
                 'name' => 'admin.settings-list',
                 'display_name' => '[Settings] Display Settings Listing',
                 'description' => 'See only Listing Of Settings'

@@ -20,8 +20,8 @@ class StockController extends Controller
         ]);
     }
 
-    public function getCurrentStocks()
+    public function getCurrentStocks($warehouseId)
     {
-        return $this->stockService->getCurrentStocks();
+        return $this->stockService->getCurrentStocks($warehouseId);
     }
 }

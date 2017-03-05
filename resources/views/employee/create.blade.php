@@ -16,6 +16,10 @@
     {!! Breadcrumbs::render('employee.employee_create') !!}
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/fileinput/fileinput.css') }}">
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -118,6 +122,9 @@
 @endsection
 
 @section('custom_js')
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/fileinput.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
+
     <script type="application/javascript">
         $(document).ready(function() {
             $('input.is_icheck').iCheck({
@@ -128,6 +135,13 @@
             $("#inputStartDate").datetimepicker({
                 format: "DD-MM-YYYY",
                 defaultDate: moment()
+            });
+
+            $('#inputImagePath').fileinput({
+                language: '{{ App::getLocale() }}',
+                showUpload: false,
+                allowedFileTypes: ['image'],
+                allowedFileExtensions: ['jpg', 'png']
             });
         });
     </script>

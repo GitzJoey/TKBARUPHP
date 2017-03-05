@@ -11,9 +11,4 @@ use Debug;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    public function __construct(){
-    	if(Config::get('app.env')=='production'){
-           Debugbar::disable();
-        }
-    }
 }

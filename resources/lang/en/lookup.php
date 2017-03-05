@@ -59,4 +59,8 @@ return [
     'PRICELEVELTYPE.PCT' => 'Percentage Value',
     'EXPENSETYPE.ADD' => 'Add Value',
     'EXPENSETYPE.SUB' => 'Subtract Value',
+    'EMPSALARYACTION.SALARY_PAYMENT' => 'Salary Payment',
+    'EMPSALARYACTION.BONUS' => 'Bonus',
+    'EMPSALARYACTION.REIMBURSE' => 'Reimburse',
+    'EMPSALARYACTION.SALARY_PAY_UPFRONT' => 'Salary Payed Upfront',
 ];

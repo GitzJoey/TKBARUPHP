@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="fa fa-minus-square fa-fw"></span>&nbsp;@lang('settings.user.page_title')
+    <span class="glyphicon glyphicon-th"></span>&nbsp;@lang('settings.user.page_title')
 @endsection
 
 @section('page_title_desc')

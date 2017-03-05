@@ -45,11 +45,18 @@ class StockServiceImpl implements StockService
     /**
      * Get the information of all stocks at current time. 
      *
+     * @param Integer $warehouseId selected warehouse Id, if null or 0 will return from all warehouses.
      * @return Collection
      */
-    public function getCurrentStocks()
+    public function getCurrentStocks($warehouseId)
     {
-        $stocks = Stock::with('product')->get();
+        $stocks = null;
+
+        if (is_null($warehouseId) || empty($warehouseId) || $warehouseId == 0) {
+            $stocks = Stock::with('product')->get();
+        } else {
+            $stocks = Stock::with('product')->where('warehouse_id', '=', $warehouseId)->get();
+        }
 
         //Assign latest prices additional attribute
         $stocks = collect($stocks->map(function ($stock){
