@@ -137,7 +137,7 @@ class Employee extends Model
         $hist=EmployeeSalaryHist::create([
             'employee_id'=>$this->id,
             'type'=>$type,
-            'store'=>Auth::user()->store->id,
+            'store_id'=>Auth::user()->store->id,
             'salary_period'=>date('Y-m-d'),
             'description'=>$description,
             'amount'=>$amount,
