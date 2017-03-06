@@ -23,10 +23,12 @@ class EmployeeSalaryHist extends Model
 
     protected $fillable = [
         'employee_id',
-        'title',
+        'type',
+        'store_id',
         'description',
         'amount',
         'balance',
+        'salary_period',
         'is_last',
     ];
 

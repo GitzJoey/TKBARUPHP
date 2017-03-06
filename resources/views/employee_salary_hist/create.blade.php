@@ -43,14 +43,11 @@
                         <span class="help-block">{{ $errors->has('employee_id') ? $errors->first('employee_id') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputAddress" class="col-sm-2 control-label">@lang('employee_salary.field.type')</label>
+                <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
+                    <label for="type" class="col-sm-2 control-label">@lang('employee_salary.field.type')</label>
                     <div class="col-sm-10">
-                        <div class="radio icheck">
-                          <label class="radio"><input type="radio" class="is_icheck transaction_type" name="type" value="pay_salary" checked="checked">{{ $salaryTitle }}</label>
-                          <label class="radio"><input type="radio" class="is_icheck transaction_type" name="type" value="1">@lang('employee_salary.show.plus')</label>
-                          <label class="radio"><input type="radio" class="is_icheck transaction_type" name="type" value="-1">@lang('employee_salary.show.minus')</label>
-                        </div>
+                        {{ Form::select('type', $statusDDL, '', array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'),'data-parsley-required' => 'true','id'=>'' )) }}
+                        <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
@@ -59,14 +56,6 @@
                         <input id="inputAddress" name="amount" type="text" class="form-control"
                                placeholder="@lang('employee_salary.field.amount')" data-parsley-required="true" autonumeric>
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}" id="title-form">
-                    <label for="inputTitle" class="col-sm-2 control-label">@lang('employee_salary.field.title')</label>
-                    <div class="col-sm-10">
-                        <input id="inputTitle" name="title" type="text" class="form-control"
-                               placeholder="@lang('employee_salary.field.title')" data-parsley-required="false">
-                        <span class="help-block">{{ $errors->has('title') ? $errors->first('title') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
@@ -108,19 +97,6 @@
             $("#inputStartDate").datetimepicker({
                 format: "DD-MM-YYYY",
                 defaultDate: moment()
-            });
-            $('#title-form').hide();
-            $('input.transaction_type').on('ifChanged', function (event) { 
-                    if($(this).val()=='pay_salary'){
-                        $('#title-form').hide();
-                        $('#inputTitle').attr('data-parsley-required','false')
-                    }else{
-                        $('#inputTitle').attr('data-parsley-required','true')
-                        $('#title-form').show();
-                    }
-                });
-            $('.transaction_type').change(function(){
-                alert($(this).val());
             });
         });
     </script>

@@ -36,7 +36,11 @@ class EmployeeSalaryHistController extends Controller
 
         $salaryTitle = "Salary ".date('M').' '.date('Y');
         $salaryCount = Employee::select('employees.*')
-            ->whereRaw("employees.id in (select employee_id from employee_salary_hist where title='$salaryTitle')")
+            ->whereRaw("employees.id in (select employee_id from employee_salary_hist 
+                                where month(salary_period)=month(now()) 
+                                        and year(salary_period)=year(now())
+                                        and `type`='EMPSALARYACTION.SALARY')
+                                        ")
             ->count();
         return view('employee_salary_hist.index', compact('employeelist','salaryCount'));
     }
@@ -52,7 +56,7 @@ class EmployeeSalaryHistController extends Controller
 
     public function create(Request $r)
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('EMPSALARYACTION')->pluck('description', 'code');
         $employeeList = Employee::pluck('name','id');
         $employee_id = $r->get('employee_id');
         $salaryTitle = Lang::get('employee_salary.create.pay_salary').' '.date('M').' '.date('Y');
@@ -62,20 +66,20 @@ class EmployeeSalaryHistController extends Controller
     public function store(Request $data)
     {
         $data['amount'] = floatval(str_replace(',', '', $data['amount']));
-        if($data['type'] == 'pay_salary'){
-            $data['type'] = -1;
-            $data['title'] = "Pay Salary ".date('M').' '.date('Y');;
+        $minusType=['EMPSALARYACTION.SALARY_PAY_UPFRONT','EMPSALARYACTION.SALARY_PAYMENT'];
+        if(in_array($data['type'], $minusType)){
+            $data['amount'] = $data['amount']*-1;
         }
         $validator = Validator::make($data->all(), [
             'employee_id' => 'required|integer',
             'amount' => 'required|integer',
-            'title' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
         ]);
         if ($validator->fails()) {
             return redirect(route('db.employee.employee_salary.create'))->withInput()->withErrors($validator);
         } else {
             $employee=Employee::find($data['employee_id']);
-            $employee->transaction($data['amount']*$data['type'],$data['title'],$data['description'],$is_salary=0);
+            $employee->transaction($data['amount'],$data['type'],$data['description'],$is_salary=0);
             return redirect(route('db.employee.employee_salary'));
         }
     }
@@ -86,7 +90,10 @@ class EmployeeSalaryHistController extends Controller
         $day = "1";
         $salaryTitle = "Salary ".date('M').' '.date('Y');
         $employeelist = Employee::select('employees.*')
-            ->whereRaw("employees.id not in (select employee_id from employee_salary_hist where title='$salaryTitle')")
+            ->whereRaw("employees.id not in (select employee_id from employee_salary_hist 
+                                where month(salary_period)=month(now()) 
+                                        and year(salary_period)=year(now())
+                                        and `type`='EMPSALARYACTION.SALARY')")
             ->get();
         $monthNow = Carbon::createFromDate($year,$month,$day);
         $monthStart = $monthNow->copy()->subMonth();
@@ -95,15 +102,15 @@ class EmployeeSalaryHistController extends Controller
             DB::beginTransaction();
             foreach ($employeelist as $employee) {
                 $join = Carbon::createFromFormat('Y-m-d H:m:i', $employee->start_date);
-                $numberOfDays=$monthStart->diffInDays($monthNow,false);
-                $workingDays=$join->diffInDays($monthNow);
+                $numberOfDays = $monthStart->diffInDays($monthNow,false);
+                $workingDays = $join->diffInDays($monthNow);
                 //if the employee works have not reached 1 month
                 if($numberOfDays-$workingDays>1){
                     $amount = ($workingDays/$numberOfDays)*$employee->base_salary;
                 }else{
                     $amount = $employee->base_salary;
                 }
-                $hist = $employee->transaction($amount,$salaryTitle,'',$is_salary=1);
+                $hist = $employee->transaction($amount,'EMPSALARYACTION.SALARY','Salary',$is_salary=1);
                 if($hist) $success++;
             }   
             DB::commit();

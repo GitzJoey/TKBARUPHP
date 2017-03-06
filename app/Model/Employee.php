@@ -123,7 +123,7 @@ class Employee extends Model
             }
         });
     }
-    public function transaction($amount,$salaryTitle,$description,$is_salary=0){
+    public function transaction($amount,$type,$description,$is_salary=0){
         $lastHist=EmployeeSalaryHist::where('employee_id',$this->id)
                         ->where('is_last',1)
                         ->first();
@@ -136,7 +136,9 @@ class Employee extends Model
         }
         $hist=EmployeeSalaryHist::create([
             'employee_id'=>$this->id,
-            'title'=>$salaryTitle,
+            'type'=>$type,
+            'store'=>Auth::user()->store->id,
+            'salary_period'=>date('Y-m-d'),
             'description'=>$description,
             'amount'=>$amount,
             'balance'=>$lastBalance+$amount,

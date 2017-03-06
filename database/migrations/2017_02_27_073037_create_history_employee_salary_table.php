@@ -16,11 +16,13 @@ class CreateHistoryEmployeeSalaryTable extends Migration
         Schema::create('employee_salary_hist', function (Blueprint $table) {
             $table->increments('id');
             $table->string('employee_id');
-            $table->string('title');
+            $table->unsignedBigInteger('store_id')->default(0);
+            $table->string('type');
             $table->string('description');
             $table->integer('amount');
             $table->integer('balance');
             $table->boolean('is_last');
+            $table->date('salary_period');
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);
