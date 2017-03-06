@@ -95,7 +95,9 @@ class SalesOrder extends Model
         'walk_in_cust_detail',
         'so_type',
         'status',
-        'remarks'
+        'remarks',
+        'disc_percent',
+        'disc_value',
     ];
 
     protected $hidden = [
@@ -179,7 +181,15 @@ class SalesOrder extends Model
 
     public function totalAmount()
     {
-        return $this->itemTotalAmount() + $this->expenseTotalAmount();
+        $itemDiscounts = $this->items->map(function ($item) {
+            return $item->discounts->map(function ($discount) {
+                return $discount->item_disc_value;
+            })->all();
+        })->flatten();
+
+        $itemDiscountAmount = count($itemDiscounts) > 0 ? $itemDiscounts->sum() : 0;
+
+        return $this->itemTotalAmount() + $this->expenseTotalAmount() - $itemDiscountAmount - $this->disc_value ;
     }
 
     public function totalAmountPaid()

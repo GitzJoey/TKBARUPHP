@@ -176,7 +176,9 @@
                 so: {
                     customer: _.cloneDeep(currentSo.customer),
                     items: [],
-                    expenses: []
+                    expenses: [],
+                    disc_percent : currentSo.disc_percent % 1 !== 0 ? currentSo.disc_percent : parseFloat(currentSo.disc_percent).toFixed(0),
+                    disc_value : currentSo.disc_value % 1 !== 0 ? currentSo.disc_value : parseFloat(currentSo.disc_value).toFixed(0),
                 }
             },
             methods: {
@@ -195,18 +197,48 @@
                         result += parseInt(expense.amount);
                     });
                     return result;
-                }
+                },
+                discountItemSubTotal: function (discounts) {
+                    var result = 0;
+                    _.forEach(discounts, function (discount) {
+                        result += parseFloat(discount.disc_value);
+                    });
+                    if( result % 1 !== 0 )
+                        result = result.toFixed(2);
+                    return result;
+                },
+                discountTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.so.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            result += parseFloat(discount.disc_value);
+                        });
+                    });
+                    return result;
+                },
             }
         });
         
         for (var i = 0; i < currentSo.items.length; i++) {
+            var itemDiscounts = [];
+            if( currentSo.items[i].discounts.length ){
+                for (var ix = 0; ix < currentSo.items[i].discounts.length; ix++) {
+                    itemDiscounts.push({
+                        id : currentSo.items[i].discounts[ix].id,
+                        disc_percent : currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
+                        disc_value : currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? currentSo.items[i].discounts[ix].item_disc_value : parseFloat(currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                    });
+                }
+            }
             soPaymentApp.so.items.push({
                 id: currentSo.items[i].id,
                 product: _.cloneDeep(currentSo.items[i].product),
                 base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
                 selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
                 quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
-                price: parseFloat(currentSo.items[i].price).toFixed(0)
+                price: parseFloat(currentSo.items[i].price).toFixed(0),
+                discounts : itemDiscounts
             });
         }
 
