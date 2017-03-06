@@ -43,13 +43,11 @@
                         <span class="help-block">{{ $errors->has('employee_id') ? $errors->first('employee_id') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputAddress" class="col-sm-2 control-label">@lang('employee_salary.field.type')</label>
+                <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
+                    <label for="type" class="col-sm-2 control-label">@lang('employee_salary.field.type')</label>
                     <div class="col-sm-10">
-                        <div class="radio icheck">
-                          <label class="radio"><input type="radio" class="is_icheck" name="type" value="1" checked="checked">Plus</label>
-                          <label class="radio"><input type="radio" class="is_icheck" name="type" value="-1">Minus</label>
-                        </div>
+                        {{ Form::select('type', $statusDDL, '', array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'),'data-parsley-required' => 'true','id'=>'' )) }}
+                        <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
@@ -58,14 +56,6 @@
                         <input id="inputAddress" name="amount" type="text" class="form-control"
                                placeholder="@lang('employee_salary.field.amount')" data-parsley-required="true" autonumeric>
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                    <label for="inputAddress" class="col-sm-2 control-label">@lang('employee_salary.field.title')</label>
-                    <div class="col-sm-10">
-                        <input id="inputAddress" name="title" type="text" class="form-control"
-                               placeholder="@lang('employee_salary.field.title')" data-parsley-required="true">
-                        <span class="help-block">{{ $errors->has('title') ? $errors->first('title') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
@@ -79,7 +69,7 @@
                 <div class="form-group">
                     <label for="inputButton" class="col-sm-2 control-label"></label>
                     <div class="col-sm-10">
-                        <a href="{{ route('db.employee.employee') }}"
+                        <a href="{{ route('db.employee.employee_salary') }}"
                            class="btn btn-default">@lang('buttons.cancel_button')</a>
                         <button class="btn btn-default" type="submit">@lang('buttons.create_new_button')</button>
                     </div>
@@ -98,15 +88,15 @@
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
             });
-
-            $("#inputStartDate").datetimepicker({
-                format: "DD-MM-YYYY",
-                defaultDate: moment()
-            });
              $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%'
+            });
+
+            $("#inputStartDate").datetimepicker({
+                format: "DD-MM-YYYY",
+                defaultDate: moment()
             });
         });
     </script>

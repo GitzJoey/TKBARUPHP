@@ -320,6 +320,11 @@ class LookupTableSeeder extends Seeder
                 'category' => 'BANKUPLOAD',
             ],
             [
+                'code' => 'EMPSALARYACTION.SALARY',
+                'description' => 'Salary',
+                'category' => 'EMPSALARYACTION',
+            ],
+            [
                 'code' => 'EMPSALARYACTION.SALARY_PAYMENT',
                 'description' => 'Salary Payment',
                 'category' => 'EMPSALARYACTION',
