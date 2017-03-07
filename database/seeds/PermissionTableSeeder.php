@@ -242,6 +242,11 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Create New Employee Salary Record'
             ],
             [
+                'name' => 'employee.employee_salary-show',
+                'display_name' => '[Employee Salary] Show Employee Salary Record',
+                'description' => 'Show Employee Salary Record'
+            ],
+            [
                 'name' => 'master.product.producttype-list',
                 'display_name' => '[Product Type] Display Product Type Listing',
                 'description' => 'See only Listing Of Product Type'

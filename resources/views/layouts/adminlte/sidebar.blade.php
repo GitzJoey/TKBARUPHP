@@ -278,8 +278,15 @@
             @if(Entrust::can('employee.employee-list') OR
                 Entrust::can('employee.employee-create') OR
                 Entrust::can('employee.employee-edit') OR
-                Entrust::can('employee.employee-delete'))
-                <li class="treeview {{ active_class(Active::checkRoutePattern('db.employee.employee') || Active::checkRoutePattern('db.employee.employee.*')) }}">
+                Entrust::can('employee.employee-delete') OR
+                Entrust::can('employee.employee_salary-list') OR
+                Entrust::can('employee.employee_salary-generate') OR
+                Entrust::can('employee.employee_salary-create') OR
+                Entrust::can('employee.employee_salary-show'))
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.employee.employee') ||
+                                                    Active::checkRoutePattern('db.employee.employee.*') ||
+                                                    Active::checkRoutePattern('db.employee.employee_salary') ||
+                                                    Active::checkRoutePattern('db.employee.employee_salary.*')) }}">
                     <a href="#"><i class="fa fa-odnoklassniki fa-fw"></i><span>&nbsp;@lang('menu.item.employee')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
