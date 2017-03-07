@@ -273,6 +273,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="box box-info">
@@ -345,7 +346,7 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title"><h3 class="box-title">@lang('purchase_order.create.box.transaction_summary')</h3></h3>
+                <h3 class="box-title"><h3 class="box-title">@lang('purchase_order.create.box.discount_transaction')</h3></h3>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -364,10 +365,10 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control text-right" name="disc_total_percent" v-model="po.disc_total_percent" placeholder="%" readonly/>
+                                                <input type="text" class="form-control text-right" name="disc_total_percent" v-model="po.disc_total_percent" readonly />
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control text-right" name="disc_total_value" v-model="po.disc_total_value" placeholder="Nominal" readonly />
+                                                <input type="text" class="form-control text-right" name="disc_total_value" v-model="po.disc_total_value" readonly />
                                             </div>
                                         </div>
                                     </td>
@@ -377,6 +378,20 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">@lang('purchase_order.payment.summary.box.transaction_summary')</h3>
+            </div>
+            <div class="box-body">
+                @for ($i = 0; $i < 25; $i++)
+                    <br/>
+                @endfor
             </div>
         </div>
     </div>
