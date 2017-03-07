@@ -1196,11 +1196,13 @@
                 data: [ soApp.SOs[index].customer ],
                 ajax: {
                     url: function(params){
+                        console.log('{{ route('api.customer.search') }}?q=' + params.term);
                         return '{{ route('api.customer.search') }}?q=' + params.term;
                     },
                     delay: 250,
                     dataType: 'json',
                     processResults: function (data, params) {
+                        console.log(data);
                         if(data.length > 0){
                             return {
                                 results: data

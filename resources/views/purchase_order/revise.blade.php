@@ -482,7 +482,7 @@
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><h3 class="box-title">@lang('purchase_order.create.box.transaction_summary')</h3></h3>
+                            <h3 class="box-title"><h3 class="box-title">@lang('purchase_order.create.box.discount_transaction')</h3></h3>
                         </div>
                         <div class="box-body">
                             <div class="row">
@@ -514,6 +514,20 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('purchase_order.revise.box.transaction_summary')</h3>
+                        </div>
+                        <div class="box-body">
+                            @for ($i = 0; $i < 25; $i++)
+                                <br/>
+                            @endfor
                         </div>
                     </div>
                 </div>
