@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Vinkla\Hashids\Facades\Hashids;
 
-
 /**
  * App\Model\Employee
  *
@@ -96,6 +95,15 @@ class Employee extends Model
         return $this->belongsTo('App\Model\Store');
     }
 
+    public function lastPayment(){
+        $hist=EmployeeSalaryHist::where('amount','<',0)
+            ->where('employee_id',$this->id)
+            ->orderBy('id','desc')
+            ->first();
+
+        return $hist;
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -122,36 +130,5 @@ class Employee extends Model
                 $model->save();
             }
         });
-    }
-    public function transaction($amount,$type,$description,$is_salary=0){
-        $lastHist=EmployeeSalaryHist::where('employee_id',$this->id)
-                        ->where('is_last',1)
-                        ->first();
-        if($lastHist==null){
-            $lastBalance=0;
-        }else{
-            $lastBalance=$lastHist->balance;
-            $lastHist->is_last=0;
-            $lastHist->save();
-        }
-        $hist=EmployeeSalaryHist::create([
-            'employee_id'=>$this->id,
-            'type'=>$type,
-            'store_id'=>Auth::user()->store->id,
-            'salary_period'=>date('Y-m-d'),
-            'description'=>$description,
-            'amount'=>$amount,
-            'balance'=>$lastBalance+$amount,
-            'is_last'=>1,
-            'is_salary'=>$is_salary,
-        ]);
-        return $hist;
-    }
-    public function lastPayment(){
-        $hist=EmployeeSalaryHist::where('amount','<',0)
-            ->where('employee_id',$this->id)
-            ->orderBy('id','desc')
-            ->first();
-        return $hist;
     }
 }

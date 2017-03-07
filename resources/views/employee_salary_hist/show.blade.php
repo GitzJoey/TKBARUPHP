@@ -78,7 +78,7 @@
                             <label for="inputBaseSalary" class="col-sm-3 control-label">@lang('employee.field.base_salary')</label>
                             <div class="col-sm-5">
                                 <label class="control-label">
-                                    <span class="control-label-normal">{{ $employee->base_salary }}</span>
+                                    <span class="control-label-normal">{{ number_format($employee->base_salary, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</span>
                                 </label>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                             <thead>
                                 <tr>
                                     <th>@lang('employee_salary.field.created_at')</th>
-                                    <th>@lang('employee_salary.field.title')</th>
+                                    <th>@lang('employee_salary.field.type')</th>
                                     <th>@lang('employee_salary.field.description')</th>
                                     <th>@lang('employee_salary.field.amount')</th>
                                     <th>@lang('employee_salary.field.balance')</th>
@@ -114,10 +114,10 @@
                                 @foreach($salaryList as $salary)
                                     <tr>
                                         <td>{{ $salary->created_at }}</td>
-                                        <td>{{ $salary->title }}</td>
+                                        <td>@lang('lookup.'.$salary->type)</td>
                                         <td>{{ $salary->description }}</td>
-                                        <td style="text-align:right">{{ $salary->amount }}</td>
-                                        <td style="text-align:right">{{ $salary->balance }}</td>
+                                        <td class="text-right">{{ number_format($salary->amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
+                                        <td class="text-right">{{ number_format($salary->balance, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

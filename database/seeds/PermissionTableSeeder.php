@@ -227,6 +227,21 @@ class PermissionTableSeeder extends Seeder
                 'description' => 'Delete Employee'
             ],
             [
+                'name' => 'employee.employee_salary-list',
+                'display_name' => '[Employee Salary] List Employee Salary',
+                'description' => 'See only Listing Employee Salary'
+            ],
+            [
+                'name' => 'employee.employee_salary-generate',
+                'display_name' => '[Employee Salary] Generate Salary',
+                'description' => 'Generate Employee Salary'
+            ],
+            [
+                'name' => 'employee.employee_salary-create',
+                'display_name' => '[Employee Salary] Create Employee Salary Record',
+                'description' => 'Create New Employee Salary Record'
+            ],
+            [
                 'name' => 'master.product.producttype-list',
                 'display_name' => '[Product Type] Display Product Type Listing',
                 'description' => 'See only Listing Of Product Type'
