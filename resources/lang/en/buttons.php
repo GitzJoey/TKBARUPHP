@@ -28,4 +28,5 @@ return [
     'calendar_button' => 'Calendar',
     'settings_button' => 'Settings',
     'calculate_salary' => 'Calculate Salary',
+    'update_button' => 'Update',
 ];

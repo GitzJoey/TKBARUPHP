@@ -28,4 +28,5 @@ return [
     'download_button' => 'Unduh',
     'settings_button' => 'Pengaturan',
     'calculate_salary' => 'Hitung Gaji',
+    'update_button' => 'Perbaharui',
 ];
