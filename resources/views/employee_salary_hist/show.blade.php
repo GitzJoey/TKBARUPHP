@@ -53,7 +53,9 @@
                         <div class="form-group">
                             <label for="inputStartDate" class="col-sm-3 control-label">@lang('employee.field.start_date')</label>
                             <div class="col-sm-5">
-                                {{$employee->start_date}}
+                                <label class="control-label">
+                                    <span class="control-label-normal">{{ $employee->start_date }}</span>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -61,20 +63,23 @@
                         <div class="form-group">
                             <label for="inputFreelance" class="col-sm-3 control-label">@lang('employee.field.freelance')</label>
                             <div class="col-sm-5">
-                                    <label>
+                                <label class="control-label">
+                                    <span class="control-label-normal">
                                         @if($employee->freelace)
-                                        <i class="fa fa-check"></i>
+                                            <i class="fa fa-check-square-o fa-fw"></i>
                                         @else
-                                        <i class="fa fa-minus"></i>
-
+                                            <i class="fa fa-square-o fa-fw"></i>
                                         @endif
-                                    </label>
+                                    </span>
+                                </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputBaseSalary" class="col-sm-3 control-label">@lang('employee.field.base_salary')</label>
                             <div class="col-sm-5">
-                                {{$employee->base_salary}}
+                                <label class="control-label">
+                                    <span class="control-label-normal">{{ $employee->base_salary }}</span>
+                                </label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -117,16 +122,15 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    <div class="form-group">
-                        <div class="col-sm-9">
-                            <a href="{{ route('db.employee.employee_salary') }}"
-                               class="btn btn-default">@lang('buttons.back_button')</a>
-                            <a class="btn btn-success" href="{{ route('db.employee.employee_salary.create').'?employee_id='.$employee->id }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
+                        <div class="form-group">
+                            <div class="col-sm-9">
+                                <a href="{{ route('db.employee.employee_salary') }}"
+                                   class="btn btn-default">@lang('buttons.back_button')</a>
+                                <a class="btn btn-success" href="{{ route('db.employee.employee_salary.create').'?employee_id='.$employee->id }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
+                            </div>
                         </div>
                     </div>
-                    </div>
-                    <div class="clearfix"></div>                    
-                    
+                    <div class="clearfix"></div>
                 </div>
                 <div class="box-footer">
                     {!! $salaryList->render() !!}

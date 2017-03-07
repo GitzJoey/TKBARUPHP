@@ -49,13 +49,11 @@
                             <td class="text-center">{{ $employee->ic_number }}</td>
                             <td class="text-center">{{ $employee->start_date}}</td>
                             <td class="text-center">
-                                <label>
-                                        @if($employee->freelace)
-                                        <i class="fa fa-check"></i>
-                                        @else
-                                        <i class="fa fa-minus"></i>
-                                        @endif
-                                    </label>
+                                @if($employee->freelace)
+                                    <i class="fa fa-check-square-o fa-fw"></i>
+                                @else
+                                    <i class="fa fa-square-o fa-fw"></i>
+                                @endif
                             </td>
                             <td class="text-center">{{ $lastPayment!=null?$lastPayment->created_at->format('M Y'): '-' }}</td>
                             <td class="text-center" width="10%">

@@ -32,8 +32,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('employee_salary.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.employee.employee_salary.create') }}" enctype="multipart/form-data" method="post"
-              data-parsley-validate="parsley">
+        <form class="form-horizontal" action="{{ route('db.employee.employee_salary.create') }}" enctype="multipart/form-data" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
