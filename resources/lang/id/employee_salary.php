@@ -8,6 +8,7 @@ return [
         'pay_salary' => 'Bayar Gaji',
         'header' => [
             'title' => 'Tambah Transaksi Pegawai',
+            'employee_transaction' => 'Transaksi Pegawai',
         ],
         'table_employee' => [
             'header' => [
@@ -29,14 +30,6 @@ return [
         'title' => 'Keperluan',
         'type' => 'Jenis',
         'description' => 'Keterangan',
-    ],
-    'edit' => [
-        'title' => 'Gaji Pegawai',
-        'page_title' => 'Gaji Pegawai',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => 'Edit Pegawai',
-        ],
     ],
     'index' => [
         'title' => 'Gaji Pegawai',
@@ -64,7 +57,7 @@ return [
         'page_title' => 'Gaji Pegawai',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Show Pegawai',
+            'title' => 'Tampilkan Pegawai',
         ],
     ],
 ];

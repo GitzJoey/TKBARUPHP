@@ -64,6 +64,8 @@ class Employee extends Model
 
     protected $table = 'employees';
 
+    protected $appends = ['hId'];
+
     protected $fillable = [
         'store_id',
         'name',
@@ -90,15 +92,20 @@ class Employee extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function getHIdAttribute()
+    {
+        return $this->hId();
+    }
+
     public function store()
     {
         return $this->belongsTo('App\Model\Store');
     }
 
     public function lastPayment(){
-        $hist=EmployeeSalaryHist::where('amount','<',0)
-            ->where('employee_id',$this->id)
-            ->orderBy('id','desc')
+        $hist=EmployeeSalaryHist::where('amount', '<', 0)
+            ->where('employee_id', $this->id)
+            ->orderBy('id', 'desc')
             ->first();
 
         return $hist;

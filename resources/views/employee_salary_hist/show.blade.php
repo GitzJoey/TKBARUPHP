@@ -124,9 +124,7 @@
                         </table>
                         <div class="form-group">
                             <div class="col-sm-9">
-                                <a href="{{ route('db.employee.employee_salary') }}"
-                                   class="btn btn-default">@lang('buttons.back_button')</a>
-                                <a class="btn btn-success" href="{{ route('db.employee.employee_salary.create').'?employee_id='.$employee->id }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
+                                <a href="{{ route('db.employee.employee_salary') }}" class="btn btn-default">@lang('buttons.back_button')</a>
                             </div>
                         </div>
                     </div>

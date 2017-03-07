@@ -15,11 +15,11 @@ use App\Repos\LookupRepo;
 
 use DB;
 use Auth;
-use Lang;
 use Exception;
 use Validator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Vinkla\Hashids\Facades\Hashids;
 
 class EmployeeSalaryHistController extends Controller
 {
@@ -56,11 +56,19 @@ class EmployeeSalaryHistController extends Controller
 
     public function create(Request $r)
     {
-        $statusDDL = LookupRepo::findByCategory('EMPSALARYACTION')->pluck('description', 'code');
-        $employeeList = Employee::pluck('name','id');
-        $employee_id = $r->get('employee_id');
-        $salaryTitle = Lang::get('employee_salary.create.pay_salary').' '.date('M').' '.date('Y');
-        return view('employee_salary_hist.create', compact('statusDDL','employeeList','employee_id','salaryTitle'));
+        $employeeList = Employee::get()->pluck('name','hId');
+        $statusDDL = LookupRepo::findByCategory('EMPSALARYACTION')->pluck('i18nDescription', 'code');
+
+        $employee_id = null;
+        $employee = null;
+        $salaryList = [];
+        if (!empty($r->get('e'))) {
+            $employee_id = Hashids::decode($r->get('e'))[0];
+            $employee = Employee::find($employee_id);
+            $salaryList = EmployeeSalaryHist::where('employee_id', $employee_id)->orderBy('id','desc')->paginate(10);
+        }
+
+        return view('employee_salary_hist.create', compact('statusDDL','employeeList','employee_id','employee', 'salaryList'));
     }
 
     public function store(Request $data)

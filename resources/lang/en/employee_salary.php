@@ -8,6 +8,7 @@ return [
         'pay_salary' => 'Pay Salary',
         'header' => [
             'title' => 'Create Employee Transaction',
+            'employee_transaction' => 'Employee Transactions',
         ],
         'table_employee' => [
             'header' => [
@@ -29,14 +30,6 @@ return [
         'title' => 'Title',
         'type' => 'Type',
         'description' => 'Description',
-    ],
-    'edit' => [
-        'title' => 'Employee Salary',
-        'page_title' => 'Employee Salary',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => 'Edit Employee',
-        ],
     ],
     'index' => [
         'title' => 'Employee Salary',

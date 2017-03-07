@@ -46,7 +46,6 @@ class EmployeeSalaryHist extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-
     public static function boot()
     {
         parent::boot();
