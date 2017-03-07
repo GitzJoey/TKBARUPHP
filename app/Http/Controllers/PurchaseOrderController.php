@@ -71,8 +71,10 @@ class PurchaseOrderController extends Controller
             'supplier_id'               => 'required_if:supplier_type,SUPPLIERTYPE.R|numeric',
             'walk_in_supplier'          => 'required_if:supplier_type,SUPPLIERTYPE.WI|string|max:255',
             'warehouse_id'              => 'required|numeric',
-            'item_disc_percent.*.*'           => 'numeric',
-            'item_disc_value.*.*'              => 'numeric',
+            'item_disc_percent.*.*'     => 'numeric',
+            'item_disc_value.*.*'       => 'numeric',
+            'disc_total_percent'        => 'numeric',
+            'disc_total_value'          => 'numeric',
         ]);
         $this->purchaseOrderService->createPO($request);
 

@@ -84,7 +84,11 @@ class SalesOrderController extends Controller
                 'sales_type.' . $submitIndex => 'required|string|max:255',
                 'so_created.' . $submitIndex => 'required|string|max:255',
                 'shipping_date.' . $submitIndex => 'required|string|max:255',
-                'customer_type.' . $submitIndex => 'required|string|max:255'
+                'customer_type.' . $submitIndex => 'required|string|max:255',
+                'so_.' . $submitIndex .'item_disc_percent.*.*'    => 'numeric',
+                'so_.' . $submitIndex .'_item_disc_value.*.*'    => 'numeric',
+                'so_' . $submitIndex .'_disc_total_percent'        => 'numeric',
+                'so_' . $submitIndex .'_disc_total_value'          => 'numeric',
             ];
 
             $validationMessages = [];
@@ -116,7 +120,7 @@ class SalesOrderController extends Controller
         } elseif (isset($cancelIndex)) {
             $this->salesOrderService->cancelSO($cancelIndex);
         }
-
+        
         if (count($request->input('so_code')) > 1) {
             return redirect(route('db.so.create'));
         } else {

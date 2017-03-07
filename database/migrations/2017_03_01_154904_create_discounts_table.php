@@ -15,8 +15,13 @@ class CreateDiscountsTable extends Migration
     {
         Schema::table('purchase_orders', function($table)
         {
-            $table->decimal('disc_percent', 5,2)->after('status')->nullable();
-            $table->decimal('disc_value', 19,2)->after('disc_percent')->nullable();
+            $table->decimal('disc_percent', 5,2)->unsigned()->after('status')->nullable();
+            $table->decimal('disc_value', 19,2)->unsigned()->after('disc_percent')->nullable();
+        });
+        Schema::table('sales_orders', function($table)
+        {
+            $table->decimal('disc_percent', 5,2)->unsigned()->after('status')->nullable();
+            $table->decimal('disc_value', 19,2)->unsigned()->after('disc_percent')->nullable();
         });
         
         Schema::create('item_discounts', function (Blueprint $table) {

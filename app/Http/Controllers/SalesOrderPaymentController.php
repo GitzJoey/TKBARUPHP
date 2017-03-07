@@ -51,7 +51,7 @@ class SalesOrderPaymentController extends Controller
     {
         Log::info('[SalesOrderController@createCashPayment]');
 
-        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
+        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit', 'items.discounts', 'customer.profiles.phoneNumbers.provider',
             'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
         $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])

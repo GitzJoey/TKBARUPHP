@@ -325,6 +325,81 @@
                                         <div class="col-md-12">
                                             <div class="box box-info">
                                                 <div class="box-header with-border">
+                                                    <h3 class="box-title">@lang('purchase_order.create.box.discount_per_item')</h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table v-bind:id="'discountsListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                                        <th width="30%">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                                                        <th width="40%" class="text-left" colspan="3">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <template v-for="(item, itemIndex) in so.items">
+                                                                        <tr>
+                                                                            <td width="30%">@{{ item.product.name }}</td>
+                                                                            <td width="30%">@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
+                                                                            <td colspan="3" width="40%">
+                                                                                <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
+                                                                                    <span class="fa fa-plus"/>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td colspan="3" width="65%" ></td>
+                                                                            <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
+                                                                            <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
+                                                                        </tr>
+                                                                        <tr v-for="(discount, discountIndex) in item.discounts">
+                                                                            <td colspan="2" width="60%"></td>
+                                                                            <td class="text-center valign-middle" width="5%">
+                                                                                <button type="button" class="btn btn-danger btn-md" v-on:click="removeDiscount(soIndex, itemIndex, discountIndex)">
+                                                                                        <span class="fa fa-minus"></span>
+                                                                                </button>
+                                                                            </td>
+                                                                            <td width="10%">
+                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_percent['+itemIndex+'][]'" v-model="discount.disc_percent" placeholder="%" v-on:keyup="discountPercentToNominal(item, discount)" />
+                                                                            </td>
+                                                                            <td width="25%">
+                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_value['+itemIndex+'][]'" v-model="discount.disc_value" placeholder="Nominal" v-on:keyup="discountNominalToPercent(item, discount)" />
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
+                                                                            <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
+                                                                        </tr>
+                                                                    </template>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table table-bordered">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td width="65%"
+                                                                        class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                                                    <td width="35%" class="text-right">
+                                                                        <span class="control-label-normal">@{{ discountTotal(soIndex) }}</span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="box box-info">
+                                                <div class="box-header with-border">
                                                     <h3 class="box-title">@lang('sales_order.create.box.expenses')</h3>
                                                     <button type="button" class="btn btn-primary btn-xs pull-right"
                                                             v-on:click="insertExpense(soIndex)"><span class="fa fa-plus fa-fw"></span></button>
@@ -407,35 +482,12 @@
                                         <div class="col-md-12">
                                             <div class="box box-info">
                                                 <div class="box-header with-border">
-                                                    <h3 class="box-title">@lang('sales_order.create.box.total_discount')</h3>
+                                                    <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                                                 </div>
                                                 <div class="box-body">
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th width="50%">@lang('sales_order.create.table.total_discount.header.total_discount_desc')</th>
-                                                                <th width="10%" class="text-center">@lang('sales_order.create.table.total_discount.header.percentage')</th>
-                                                                <th width="20%" class="text-center">@lang('sales_order.create.table.total_discount.header.value')</th>
-                                                                <th width="20%" class="text-center">@lang('sales_order.create.table.total_discount.header.total_discount')</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td width="50%" class="valign-middle">
-                                                                    @lang('purchase_order.create.table.total_discount.body.total_discount_desc')
-                                                                </td>
-                                                                <td width="10%" class="text-right">
-                                                                    <input name="total_discount" type="text" class="form-control text-right" autonumeric/>
-                                                                </td>
-                                                                <td width="20%" class="text-right">
-                                                                    <input name="total_discount" type="text" class="form-control text-right" autonumeric/>
-                                                                </td>
-                                                                <td width="20%" class="text-right">
-                                                                    <input name="total_discount" type="text" class="form-control text-right" autonumeric readonly/>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    @for ($i = 0; $i < 25; $i++)
+                                                        <br/>
+                                                    @endfor
                                                 </div>
                                             </div>
                                         </div>
@@ -444,12 +496,38 @@
                                         <div class="col-md-12">
                                             <div class="box box-info">
                                                 <div class="box-header with-border">
-                                                    <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
+                                                    <h3 class="box-title"><h3 class="box-title">@lang('purchase_order.create.box.discount_transaction')</h3></h3>
                                                 </div>
                                                 <div class="box-body">
-                                                    @for ($i = 0; $i < 25; $i++)
-                                                        <br/>
-                                                    @endfor
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table id="discountsListTable" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
+                                                                    <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
+                                                                    <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-right valign-middle">@{{ ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) }}</td>
+                                                                        <td>
+                                                                            <div class="row">
+                                                                                <div class="col-md-4">
+                                                                                    <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + 'disc_percent'" v-model="so.disc_percent" placeholder="%" v-on:keyup="discountTotalPercentToNominal(soIndex)" />
+                                                                                </div>
+                                                                                <div class="col-md-8">
+                                                                                    <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + 'disc_value'" v-model="so.disc_value" placeholder="Nominal" v-on:keyup="discountTotalNominalToPercent(soIndex)" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="text-right valign-middle">@{{ ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value }}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -736,6 +814,37 @@
             defaultTabLabel: '@lang('sales_order.create.tab.sales')'
         },
         methods: {
+            discountPercentToNominal: function(item, discount){
+                var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
+                if( disc_value % 1 !== 0 )
+                    disc_value = disc_value.toFixed(2);
+                discount.disc_value = disc_value;
+            },
+            discountNominalToPercent: function(item, discount){
+                var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
+                if( disc_percent % 1 !== 0 )
+                    disc_percent = disc_percent.toFixed(2);
+                discount.disc_percent = disc_percent;
+            },
+            discountItemSubTotal: function (discounts) {
+                var result = 0;
+                _.forEach(discounts, function (discount) {
+                    result += parseFloat(discount.disc_value);
+                });
+                if( result % 1 !== 0 )
+                    result = result.toFixed(2);
+                return result;
+            },
+            discountTotal: function (index) {
+                var vm = this;
+                var result = 0;
+                _.forEach(vm.SOs[index].items, function (item, key) {
+                    _.forEach(item.discounts, function (discount) {
+                        result += parseFloat(discount.disc_value);
+                    });
+                });
+                return result;
+            },
             setSOCode: function(so){
                 this.$http.get('{{ route('api.so.code') }}').then(function(data){
                     so.so_code = data.data;
@@ -749,6 +858,8 @@
                 }
 
                 var so = {
+                    disc_percent : 0,
+                    disc_value : 0,
                     so_code: '',
                     customer_type: {
                         code: ''
@@ -812,9 +923,70 @@
                 });
                 return result;
             },
+            discountTotalPercentToNominal: function(index){
+                var vm = this;
+                
+                var grandTotal = 0;
+                _.forEach(vm.SOs[index].items, function (item, key) {
+                    grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                });
+                
+                var discountTotal = 0;
+                _.forEach(vm.SOs[index].items, function (item, key) {
+                    _.forEach(item.discounts, function (discount) {
+                        discountTotal += parseFloat(discount.disc_value);
+                    });
+                });
+                
+                var expenseTotal = 0;
+                _.forEach(vm.SOs[index].expenses, function (expense, key) {
+                    if (expense.type.code === 'EXPENSETYPE.ADD')
+                        expenseTotal += parseInt(numeral().unformat(expense.amount));
+                    else
+                        expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                });
+                
+                var disc_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.SOs[index].disc_percent / 100 );
+                if( disc_value % 1 !== 0 )
+                    disc_value = disc_value.toFixed(2);
+                vm.SOs[index].disc_value = disc_value;
+            },
+            discountTotalNominalToPercent: function(index){
+                var vm = this;
+                
+                var grandTotal = 0;
+                _.forEach(vm.SOs[index].items, function (item, key) {
+                    grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                });
+                
+                var discountTotal = 0;
+                _.forEach(vm.SOs[index].items, function (item, key) {
+                    _.forEach(item.discounts, function (discount) {
+                        discountTotal += parseFloat(discount.disc_value);
+                    });
+                });
+                
+                var expenseTotal = 0;
+                _.forEach(vm.SOs[index].expenses, function (expense, key) {
+                    if (expense.type.code === 'EXPENSETYPE.ADD')
+                        expenseTotal += parseInt(numeral().unformat(expense.amount));
+                    else
+                        expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                });
+                
+                var disc_percent = vm.SOs[index].disc_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
+                if( disc_percent % 1 !== 0 )
+                    disc_percent = disc_percent.toFixed(2);
+                vm.SOs[index].disc_percent = disc_percent;
+            },
             insertProduct: function (index, product) {
                 var vm = this;
                 if(product.id != ''){
+                    var item_init_discount = [];
+                    item_init_discount.push({
+                        disc_percent : 0,
+                        disc_value : 0,
+                    });
                     vm.SOs[index].items.push({
                         stock_id: 0,
                         product: _.cloneDeep(product),
@@ -828,7 +1000,8 @@
                             return unit.is_base == 1
                         })),
                         quantity: 0,
-                        price: 0
+                        price: 0,
+                        discounts: item_init_discount,
                     });
                 }
             },
@@ -837,6 +1010,11 @@
                 if(stock.id != ''){
                     var stock_price = _.find(stock.today_prices, function (price) {
                         return price.price_level_id === vm.SOs[index].customer.price_level_id;
+                    });
+                    var item_init_discount = [];
+                    item_init_discount.push({
+                        disc_percent : 0,
+                        disc_value : 0,
                     });
 
                     vm.SOs[index].items.push({
@@ -852,12 +1030,23 @@
                             return unit.is_base == 1
                         })),
                         quantity: 0,
-                        price: stock_price ? stock_price.price : 0
+                        price: stock_price ? stock_price.price : 0,
+                        discounts: item_init_discount,
                     });
                 }
             },
             removeItem: function (SOIndex, index) {
                 this.SOs[SOIndex].items.splice(index, 1);
+            },
+            insertDiscount: function (item) {
+                item.discounts.push({
+                    disc_percent : 0,
+                    disc_value : 0,
+                });
+            },
+            removeDiscount: function (SOIndex, index, discountIndex) {
+                var vm = this;
+                this.SOs[SOIndex].items[index].discounts.splice(discountIndex, 1);
             },
             insertDefaultExpense: function (SOIndex, customer) {
                 var vm = this;

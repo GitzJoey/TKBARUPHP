@@ -12,6 +12,7 @@ return [
             'transactions' => 'Transactions',
             'expenses' => 'Expenses',
             'transaction_summary' => 'Transaction Summary',
+            'discount_transaction' => 'Discount Transaction',
             'remarks' => 'Remarks',
             'total_discount' => 'Discount',
             'discount_per_item' => 'Discount Per Item',
