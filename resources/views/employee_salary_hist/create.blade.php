@@ -42,7 +42,7 @@
                         <span class="help-block">{{ $errors->has('employee_id') ? $errors->first('employee_id') : '' }}</span>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
+                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                     <label for="type" class="col-sm-2 control-label">@lang('employee_salary.field.type')</label>
                     <div class="col-sm-10">
                         {{ Form::select('type', $statusDDL, '', array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'),'data-parsley-required' => 'true','id'=>'' )) }}

@@ -65,7 +65,9 @@
             </table>
         </div>
         <div class="box-footer clearfix">
-            <a class="btn btn-success" id="calculate" href="{{ route('db.employee.employee_salary.calculate_salary') }}"><span class="fa fa-money fa-fw"></span>&nbsp;@lang('buttons.calculate_salary') ({{ date('M').' '.date('Y') }})</a>
+            @if (Auth::user()->can('employee.employee_salary-generate'))
+                <a class="btn btn-success" id="calculate" href="{{ route('db.employee.employee_salary.calculate_salary') }}"><span class="fa fa-money fa-fw"></span>&nbsp;@lang('buttons.calculate_salary') ({{ date('M').' '.date('Y') }})</a>
+            @endif
             <a class="btn btn-success" href="{{ route('db.employee.employee_salary.create') }}"><span class="fa fa-plus fa-fw"></span>&nbsp;@lang('buttons.create_new_button')</a>
             {!! $employeelist->render() !!}
         </div>
@@ -88,7 +90,7 @@
                 }, function (isConfirm) {
                     if(isConfirm){
                         console.log(event);
-                        window.location=$('#calculate').attr('href');
+                        window.location = $('#calculate').attr('href');
                     }
                 });
             });
