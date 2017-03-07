@@ -28,6 +28,13 @@
             <h3 class="box-title">@lang('sales_order.payment.index.header.title')</h3>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <select id="customerSelect" class="form-control">
+                    </select>
+                </div>
+            </div>
+            <br>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -91,6 +98,54 @@
                         console.log(response.responseText);
                     }
                 });
+            });
+
+            var customerList = [];
+
+            $('#customerSelect').select2({
+                placeholder: {
+                    id: "",
+                    placeholder: "Choose customer..."
+                },
+                allowClear: true,
+                width: '100%',
+                data: [customerList],
+                ajax: {
+                    url: function (params) {
+                        return '{{ route('api.customer.search') }}?q=' + params.term;
+                    },
+                    delay: 250,
+                    dataType: 'json',
+                    processResults: function (data, params) {
+                        if (data.length > 0) {
+                            return {
+                                results: data
+                            }
+                        } else {
+                            return {
+                                results: [{id: ''}]
+                            }
+                        }
+                    }
+
+                },
+                templateResult: function (customer) {
+                    if (customer.placeholder) return customer.placeholder;
+                    return customer.name;
+                },
+                templateSelection: function (customer) {
+                    if (customer.placeholder) {
+                        customerList = {
+                            id: '',
+                            price_level: {
+                                name: ''
+                            }
+                        };
+                        return customer.placeholder;
+                    }
+                    customerList = _.cloneDeep(customer);
+                    return customer.name;
+                }
             });
         });
     </script>

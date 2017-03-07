@@ -84,6 +84,7 @@
     <script type="application/javascript">
         $(document).ready(function() {
             $('#employee-form').select2();
+
             $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
