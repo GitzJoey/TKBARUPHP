@@ -44,4 +44,27 @@ class SettingsController extends Controller
 
         return redirect(route('db.admin.settings'));
     }
+
+    private function createDefaultSettings()
+    {
+        $settingLists = [
+            [
+                'user_id'       => Auth::user()->id,
+                'skey'          => 'pagination',
+                'value'         => '10',
+            ],
+            [
+                'user_id'       => Auth::user()->id,
+                'skey'          => 'fav.po_warehouse_id',
+                'value'         => '1',
+            ],
+            [
+                'user_id'       => Auth::user()->id,
+                'skey'          => 'fav.so_warehouse_id',
+                'value'         => '1',
+            ],
+        ];
+
+        return $settingLists;
+    }
 }
