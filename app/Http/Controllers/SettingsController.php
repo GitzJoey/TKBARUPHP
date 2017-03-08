@@ -30,25 +30,18 @@ class SettingsController extends Controller
 
     public function index()
     {
-        $userDDL = User::where('store_id', '=', Auth::user()->store->id)->get();
-        return view('setting.index', compact('userDDL'));
+        Auth::user()->userDetail->type == 'USERTYPE.A' ?
+            $userDDL = User::where('store_id', '=', Auth::user()->store->id)->get() :
+            $userDDL = User::get()->where('store_id', '=', Auth::user()->store->id)->where('id', '=', Auth::user()->id);
+
+        $warehouseDDL = Warehouse::get();
+
+        return view('setting.index', compact('userDDL', 'warehouseDDL'));
     }
 
     public function update()
     {
 
         return redirect(route('db.admin.settings'));
-    }
-
-    public function userSettings()
-    {
-        $warehouseDDL = Warehouse::get();
-
-        return view('setting.user', compact('warehouseDDL'));
-    }
-
-    public function userSettingsUpdate()
-    {
-        return view('setting.user');
     }
 }

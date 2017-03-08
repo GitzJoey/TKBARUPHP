@@ -11,7 +11,9 @@ return [
     ],
     'field' => [
         'for_user_email' => 'Setting For User',
+        'pagination' => 'Pagination',
         'fav_po_warehouse' => 'Favorite PO Warehouse',
+        'fav_so_warehouse' => 'Favorite SO Warehouse',
     ],
     'user' => [
         'title' => 'User Settings',

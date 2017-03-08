@@ -231,7 +231,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'settings'], function () {
                 Route::get('', 'SettingsController@index')->name('db.admin.settings');
-                Route::get('update}', 'SettingsController@update')->name('db.admin.settings.update');
+                Route::post('update', 'SettingsController@update')->name('db.admin.settings.update');
             });
         });
 
@@ -493,11 +493,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('calendar', 'CalendarController@index')->name('db.user.calendar.show');
             Route::get('calendar/retrieve', 'CalendarController@retrieveEvents')->name('db.user.calendar.retrieve');
             Route::post('calendar/save', 'CalendarController@storeEvent')->name('db.user.calendar.store');
-
-            Route::get('settings', 'SettingsController@userSettings')->name('db.user.settings.show');
-            Route::get('settings/update', 'SettingsController@userSettingsUpdate')->name('db.user.settings.update');
         });
-
 
         Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('db.logs');
     });

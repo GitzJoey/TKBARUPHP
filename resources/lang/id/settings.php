@@ -11,14 +11,8 @@ return [
     ],
     'field' => [
         'for_user_email' => 'Pengaturan Untuk Pengguna',
+        'pagination' => 'Data Per Halaman',
         'fav_po_warehouse' => 'Gudang PO Pilihan',
-    ],
-    'user' => [
-        'title' => 'Pengaturan Pengguna',
-        'page_title' => 'Pengaturan Pengguna',
-        'page_title_desc' => '',
-        'header' => [
-            'title' => 'Pengaturan Pengguna',
-        ],
+        'fav_so_warehouse' => 'Gudang SO Pilihan',
     ],
 ];

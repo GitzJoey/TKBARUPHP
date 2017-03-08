@@ -26,7 +26,6 @@ return [
     'download_excel_button' => 'Unduh Excel',
     'download_pdf_button' => 'Unduh PDF',
     'download_button' => 'Unduh',
-    'settings_button' => 'Pengaturan',
     'calculate_salary' => 'Hitung Gaji',
     'update_button' => 'Perbaharui',
 ];

@@ -30,6 +30,7 @@
         <div class="box-body">
             <div id="settingsVue">
                 <form id="settingsForm" class="form-horizontal" action="{{ route('db.admin.settings.update') }}" method="post" data-parsley-validate="parsley">
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label for="inputForUserEmail" class="col-sm-3 control-label">@lang('settings.field.for_user_email')</label>
                         <div class="col-sm-9">
@@ -46,6 +47,26 @@
                         <label for="inputPagination" class="col-sm-3 control-label">@lang('settings.field.pagination')</label>
                         <div class="col-sm-2">
                             <input id="inputPagination" name="pagination" type="text" class="form-control" placeholder="@lang('settings.field.pagination')" autonumeric>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputFavPOWarehouse" class="col-sm-3 control-label">@lang('settings.field.fav_po_warehouse')</label>
+                        <div class="col-sm-9">
+                            <select name="po_warehouse" class="form-control" v-model="user.fav.po_warehouse_id">
+                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="w in warehouseDDL" v-bind:value="w.id">@{{ w.name }} @{{ w.address }}</option>
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputFavSOWarehouse" class="col-sm-3 control-label">@lang('settings.field.fav_so_warehouse')</label>
+                        <div class="col-sm-9">
+                            <select name="so_warehouse" class="form-control" v-model="user.fav.so_warehouse_id">
+                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="w in warehouseDDL" v-bind:value="w.id">@{{ w.name }} @{{ w.address }}</option>
+                            </select>
+                            <span class="help-block"></span>
                         </div>
                     </div>
                     <hr>
@@ -70,6 +91,13 @@
             var app = new Vue({
                 el: '#settingsVue',
                 data: {
+                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                    user: {
+                        fav: {
+                            po_warehouse_id: '',
+                            so_warehouse_id: ''
+                        }
+                    }
                 },
                 methods: {
                     loadSettings: function(userId) {
