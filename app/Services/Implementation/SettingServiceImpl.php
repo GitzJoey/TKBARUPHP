@@ -8,57 +8,45 @@
 
 namespace App\Services\Implementation;
 
+use App\User;
 use App\Model\Setting;
 
 use App\Services\SettingService;
+
+use Auth;
 
 class SettingServiceImpl implements SettingService
 {
     public function generateDefaultSettingsIfNotExists($id)
     {
-        $result = [];
+        if (count(Auth::user()->settings) == 0) {
+            $settingLists = [
+                [
+                    'user_id'       => $id,
+                    'skey'          => 'pagination',
+                    'value'         => '10',
+                ],
+                [
+                    'user_id'       => $id,
+                    'skey'          => 'fav.po_warehouse_id',
+                    'value'         => '1',
+                ],
+                [
+                    'user_id'       => $id,
+                    'skey'          => 'fav.so_warehouse_id',
+                    'value'         => '1',
+                ],
+            ];
 
-        $s1 = new Setting();
-        $s1->skey = '';
-        $s1->svalue = '';
+            $user = User::whereId($id)->first();
 
-        $s2 = new Setting();
-        $s2->skey = '';
-        $s2->svalue = '';
+            foreach ($settingLists as $key => $value) {
+                $s = new Setting();
+                $s->skey = $value['skey'];
+                $s->value = $value['value'];
 
-        $s3 = new Setting();
-        $s3->skey = '';
-        $s3->svalue = '';
-
-        $s4 = new Setting();
-        $s4->skey = '';
-        $s4->svalue = '';
-
-        $s5 = new Setting();
-        $s5->skey = '';
-        $s5->svalue = '';
-
-        $s6 = new Setting();
-        $s6->skey = '';
-        $s6->svalue = '';
-
-        $s7 = new Setting();
-        $s7->skey = '';
-        $s7->svalue = '';
-
-        $s8 = new Setting();
-        $s8->skey = '';
-        $s8->svalue = '';
-
-        array_push($result, $s1);
-        array_push($result, $s2);
-        array_push($result, $s3);
-        array_push($result, $s4);
-        array_push($result, $s5);
-        array_push($result, $s6);
-        array_push($result, $s7);
-        array_push($result, $s8);
-
-        return $result;
+                $user->settings()->save($s);
+            }
+        }
     }
 }

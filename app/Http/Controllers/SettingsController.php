@@ -30,41 +30,20 @@ class SettingsController extends Controller
 
     public function index()
     {
+        $this->settingService->generateDefaultSettingsIfNotExists(Auth::user()->id);
+
         Auth::user()->userDetail->type == 'USERTYPE.A' ?
             $userDDL = User::where('store_id', '=', Auth::user()->store->id)->get() :
             $userDDL = User::get()->where('store_id', '=', Auth::user()->store->id)->where('id', '=', Auth::user()->id);
 
+        $settings = Auth::user()->settings();
         $warehouseDDL = Warehouse::get();
 
-        return view('setting.index', compact('userDDL', 'warehouseDDL'));
+        return view('setting.index', compact('settings', 'userDDL', 'warehouseDDL'));
     }
 
     public function update()
     {
-
         return redirect(route('db.admin.settings'));
-    }
-
-    private function createDefaultSettings()
-    {
-        $settingLists = [
-            [
-                'user_id'       => Auth::user()->id,
-                'skey'          => 'pagination',
-                'value'         => '10',
-            ],
-            [
-                'user_id'       => Auth::user()->id,
-                'skey'          => 'fav.po_warehouse_id',
-                'value'         => '1',
-            ],
-            [
-                'user_id'       => Auth::user()->id,
-                'skey'          => 'fav.so_warehouse_id',
-                'value'         => '1',
-            ],
-        ];
-
-        return $settingLists;
     }
 }
