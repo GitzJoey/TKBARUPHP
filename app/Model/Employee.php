@@ -55,6 +55,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereFreelance($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereBaseSalary($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereStatus($value)
+ * @property-read mixed $h_id
  */
 class Employee extends Model
 {

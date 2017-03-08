@@ -68,6 +68,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereDecimalDigit($value)
  * @property string $ribbon
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereRibbon($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\CurrenciesConversion[] $currenciesConversions
  */
 class Store extends Model
 {

@@ -8,6 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
+/**
+ * App\Model\Currencies
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $symbol
+ * @property string $status
+ * @property string $remarks
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereSymbol($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class Currencies extends Model
 {
 	use SoftDeletes;

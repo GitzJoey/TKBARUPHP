@@ -10,6 +10,48 @@ use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Model\StockTransfer
+ *
+ * @property int $id
+ * @property int $store_id
+ * @property int $po_id
+ * @property int $product_id
+ * @property string $transfer_date
+ * @property int $source_warehouse_id
+ * @property int $destination_warehouse_id
+ * @property float $quantity
+ * @property float $cost
+ * @property string $reason
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @property-read \App\Model\Product $product
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Price[] $prices
+ * @property-read \App\Model\Warehouse $source_warehouse
+ * @property-read \App\Model\Warehouse $destination_warehouse
+ * @property-read \App\Model\PurchaseOrder $purchaseOrder
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer wherePoId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereTransferDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereSourceWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereDestinationWarehouseId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereCost($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereReason($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class StockTransfer extends Model
 {
     use SoftDeletes;

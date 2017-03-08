@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-02-25.
+    * Generated on 2017-03-08.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -58,6 +58,8 @@ namespace PHPSTORM_META {
             'breadcrumbs' instanceof \DaveJamesMiller\Breadcrumbs\Manager,
             'dompdf' instanceof \Dompdf\Dompdf,
             'dompdf.wrapper' instanceof \Barryvdh\DomPDF\PDF,
+            'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
+            'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -211,6 +213,8 @@ namespace PHPSTORM_META {
             'breadcrumbs' instanceof \DaveJamesMiller\Breadcrumbs\Manager,
             'dompdf' instanceof \Dompdf\Dompdf,
             'dompdf.wrapper' instanceof \Barryvdh\DomPDF\PDF,
+            'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
+            'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -364,6 +368,8 @@ namespace PHPSTORM_META {
             'breadcrumbs' instanceof \DaveJamesMiller\Breadcrumbs\Manager,
             'dompdf' instanceof \Dompdf\Dompdf,
             'dompdf.wrapper' instanceof \Barryvdh\DomPDF\PDF,
+            'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
+            'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -517,6 +523,8 @@ namespace PHPSTORM_META {
             'breadcrumbs' instanceof \DaveJamesMiller\Breadcrumbs\Manager,
             'dompdf' instanceof \Dompdf\Dompdf,
             'dompdf.wrapper' instanceof \Barryvdh\DomPDF\PDF,
+            'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
+            'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,

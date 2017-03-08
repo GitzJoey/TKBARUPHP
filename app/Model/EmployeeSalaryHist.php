@@ -13,6 +13,41 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Vinkla\Hashids\Facades\Hashids;
 
+/**
+ * App\Model\EmployeeSalaryHist
+ *
+ * @property int $id
+ * @property int $store_id
+ * @property int $employee_id
+ * @property string $type
+ * @property string $description
+ * @property int $amount
+ * @property int $balance
+ * @property bool $is_last
+ * @property string $salary_period
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int $deleted_by
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereStoreId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereEmployeeId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereAmount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereBalance($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereIsLast($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereSalaryPeriod($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereDeletedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist whereDeletedAt($value)
+ * @mixin \Eloquent
+ */
 class EmployeeSalaryHist extends Model
 {
     use SoftDeletes;

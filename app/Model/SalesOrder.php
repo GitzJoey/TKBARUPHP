@@ -70,6 +70,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property float $disc_percent
+ * @property float $disc_value
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereDiscPercent($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereDiscValue($value)
  */
 class SalesOrder extends Model
 {

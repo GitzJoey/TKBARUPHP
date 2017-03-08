@@ -58,6 +58,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ItemDiscounts[] $discounts
  */
 class Item extends Model
 {
