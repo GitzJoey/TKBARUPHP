@@ -95,12 +95,27 @@ class Stock extends Model
         return $this->belongsTo('App\Model\PurchaseOrder', 'po_id');
     }
 
+    public function soItems()
+    {
+        return $this->hasMany('App\Model\Item')->where('itemable_type', 'App\\Model\\SalesOrder');
+    }
+
     public function priceHistory($rangeOfDay = 10)
     {
         return Price::where('input_date', '>=', Carbon::today()->subDays($rangeOfDay))
             ->where('stock_id', '=', $this->id)
             ->orderBy('input_date', 'asc')
             ->orderBy('price_level_id', 'asc')->get();
+    }
+
+    public function getCleanQuantityAttribute()
+    {
+        return is_numeric( $this->quantity ) && floor( $this->quantity ) != $this->quantity ? $this->quantity : number_format($this->quantity, 0) ;
+    }
+
+    public function getCleanCurrentQuantityAttribute()
+    {
+        return is_numeric( $this->current_quantity ) && floor( $this->current_quantity ) != $this->current_quantity ? $this->current_quantity : number_format($this->current_quantity, 0) ;
     }
 
     public function latestPrices()
