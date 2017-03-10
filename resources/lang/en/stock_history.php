@@ -19,4 +19,6 @@ return [
     'theres_no_data' => 'There\'s No Data',
     'sales_history' => 'Sales History',
     'stock_history' => 'Stock History',
+    'error_data' => 'Failed to fetch data',
+    'try_to_reload' => 'Try To Reload'
 ];

@@ -19,4 +19,6 @@ return [
     'theres_no_data' => 'Tidak ada data',
     'sales_history' => 'Histori Penjualan',
     'stock_history' => 'Histori Stok',
+    'error_data' => 'Gagal Megambil Data',
+    'try_to_reload' => 'Muat Ulang Data'
 ];
