@@ -606,6 +606,11 @@ class PermissionTableSeeder extends Seeder
                 'display_name' => '[Report] Generate Report Sales',
                 'description' => 'Generate Report Sales'
             ],
+            [
+                'name' => 'report.stock-history',
+                'display_name' => '[Report] Generate Report Stock History',
+                'description' => 'Generate Report Stock History'
+            ],
         ];
         foreach ($permission as $key => $value) {
             Permission::create($value);
