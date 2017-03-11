@@ -83,7 +83,7 @@ class RolesController extends Controller
             'description' => 'required',
         ]);
 
-        DB::transaction(function() use ($req) {
+        DB::transaction(function() use ($req, $id) {
             $role = Role::with('permissions')->where('id', '=', $id)->first();
             $pl = Permission::whereIn('id', $req['permission'])->get();
 
