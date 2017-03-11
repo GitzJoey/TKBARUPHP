@@ -13,31 +13,29 @@
 @endsection
 
 @section('content')
-    <div id="warehouseOutflowVue">
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">@lang('report.monitoring.header.title')</h3>
-            </div>
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="nav-tabs-custom">
-                            <ul class="nav nav-tabs">
-                                @if(Entrust::can('report.stock-history'))
-                                <li class="active">
-                                    <a href="#tab_mon_1" data-toggle="tab">
-                                        @lang('stock_history.page_title')
-                                    </a>
-                                </li>
-                                @endif
-                            </ul>
-                            <div class="tab-content" id="tab_monitoring" >
-                                @if(Entrust::can('report.stock-history'))
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@lang('report.monitoring.header.title')</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            @if(Entrust::can('report.stock-history'))
+                            <li class="active">
+                                <a href="#tab_mon_1" data-toggle="tab">
+                                    @lang('stock_history.page_title')
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                        <div class="tab-content" id="tab_monitoring" >
+                            @if(Entrust::can('report.stock-history'))
                                 <div class="tab-pane active" id="tab_mon_1">
                                     @include('report.monitoring_components.stock_histories')
                                 </div>
-                                @endif
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -49,8 +47,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
-
-         var soAppVue = new Vue({
+         var tabStockHistoryVue = new Vue({
             el: '#tab_monitoring',
             data: {
                 @if(Entrust::can('report.stock-history'))

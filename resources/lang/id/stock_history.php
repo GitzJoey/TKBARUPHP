@@ -2,7 +2,6 @@
 
 return [
     'page_title' => 'Histori Stok',
-    'header_title' => 'Daftar Tipe Produk',
     'table' => [
         'header' => [
             'code' => 'PO Code',

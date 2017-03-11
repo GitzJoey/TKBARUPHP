@@ -7,14 +7,10 @@
         </div>
         <table class="table table-bordered" v-if="!stock_histories.error">
             <tbody>
-                <tr>
-                    <td width="5%">&nbsp;</td>
-                    <td class="text-center" width="95%">@lang('stock_history.header_title')</td>
-                </tr>
                 <template v-for="(prodtype, prodtypeIndex) in stock_histories.data">
                     <tr class="accordion-toggle" v-on:click="toggle('#row', prodtype.id)">
-                        <td class="text-center valign-middle"><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
-                        <td class="text-left">@{{ prodtype.name }}</td>
+                        <td width="5%" class="text-center valign-middle"><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
+                        <td width="95%" class="text-left">@{{ prodtype.name }}</td>
                     </tr>
                     <tr>
                         <td colspan="2" class="hiddenRow" style="padding-left: 15px; padding-top: 15px;">
@@ -24,15 +20,15 @@
                                 <template v-if=" prodtype.stocks.length " v-for="(stock, stockIndex) in prodtype.stocks">
                                     <table class="table table-striped">
                                         <thead>
-                                        <tr>
-                                            <th>&nbsp;</th>
-                                            <th class="text-center">@lang('stock_history.table.header.code')</th>
-                                            <th class="text-center">@lang('stock_history.table.header.name')</th>
-                                            <th class="text-center">@lang('stock_history.table.header.short_code')</th>
-                                            <th class="text-center">@lang('stock_history.table.header.description')</th>
-                                            <th class="text-center">@lang('stock_history.table.header.qty')</th>
-                                            <th class="text-center">@lang('stock_history.table.header.current_qty')</th>
-                                        </tr>
+                                            <tr>
+                                                <th>&nbsp;</th>
+                                                <th class="text-center">@lang('stock_history.table.header.code')</th>
+                                                <th class="text-center">@lang('stock_history.table.header.name')</th>
+                                                <th class="text-center">@lang('stock_history.table.header.short_code')</th>
+                                                <th class="text-center">@lang('stock_history.table.header.description')</th>
+                                                <th class="text-center">@lang('stock_history.table.header.qty')</th>
+                                                <th class="text-center">@lang('stock_history.table.header.current_qty')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-on:click="toggle('#rowstock', stock.id)" >

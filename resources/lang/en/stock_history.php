@@ -2,7 +2,6 @@
 
 return [
     'page_title' => 'Stock History',
-    'header_title' => 'List Of Product Type',
     'table' => [
         'header' => [
             'code' => 'PO Code',

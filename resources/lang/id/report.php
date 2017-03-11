@@ -54,15 +54,15 @@ return [
         ],
     ],
     'monitoring' => [
-        'title' => '',
-        'page_title' => '',
+        'title' => 'Monitoring',
+        'page_title' => 'Monitoring',
         'page_title_desc' => '',
         'header' => [
             'title' => 'Monitoring',
         ],
     ],
     'tax' => [
-        'title' => '',
+        'title' => 'Laporan Pajak',
         'page_title' => '',
         'page_title_desc' => '',
     ],
