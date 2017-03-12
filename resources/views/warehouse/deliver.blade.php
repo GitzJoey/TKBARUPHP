@@ -130,7 +130,7 @@
                                                            data-parsley-type="number">
                                                 </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver(deliverIdx)"><span class="fa fa-minus"/></button>
+                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver(deliverIdx)" disabled><span class="fa fa-minus"/></button>
                                                 </td>
                                             </tr>
                                         </tbody>

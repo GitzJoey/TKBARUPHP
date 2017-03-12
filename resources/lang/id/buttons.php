@@ -28,4 +28,5 @@ return [
     'download_button' => 'Unduh',
     'calculate_salary' => 'Hitung Gaji',
     'update_button' => 'Perbaharui',
+    'yes_button' => 'Ya',
 ];

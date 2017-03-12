@@ -226,7 +226,6 @@
                     }
                 });
             }
-            
         });
     </script>
     <script type="application/javascript" src="{{ asset('adminlte/js/highcharts.js') }}"></script>

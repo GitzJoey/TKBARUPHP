@@ -115,6 +115,11 @@ Breadcrumbs::register('sales_order_payment_giro', function ($breadcrumbs, $soId)
     $breadcrumbs->push(trans('breadcrumb.so.payment.giro'), route('db.so.payment.giro', $soId));
 });
 
+Breadcrumbs::register('sales_order_payment_broughtforward', function ($breadcrumbs, $soId){
+    $breadcrumbs->parent('sales_order_payment');
+    $breadcrumbs->push(trans('breadcrumb.so.payment.broughtforward'), route('db.so.payment.bf', $soId));
+});
+
 Breadcrumbs::register('sales_order_copy', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.so.copy'), route('db.so.copy'));

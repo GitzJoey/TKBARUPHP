@@ -19,7 +19,6 @@ Route::get('user', function (Request $request) {
 
 Route::group(['prefix' => 'secure/api', 'middleware' => 'auth:api'], function() {
     Route::post('user/set_settings', 'StoreController@applySettings')->name('api.user.apply_settings');
-    Route::post('so/bf', 'SalesOrderController@broughtForwardPayment')->name('api.so.bf');
 });
 
 Route::get('po/code', function () {

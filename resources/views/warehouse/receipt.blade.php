@@ -114,7 +114,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(receipt, receiptIdx) in inflow.receipts">
+                                            <tr v-for="(receipt, receiptIdx) in inflow.receipts" v-cloak>
                                                 <input type="hidden" name="item_id[]" v-bind:value="receipt.item.id">
                                                 <input type="hidden" name="product_id[]" v-bind:value="receipt.item.product_id">
                                                 <input type="hidden" name="base_unit_id[]" v-bind:value="receipt.item.base_unit_id">
@@ -149,7 +149,7 @@
                                                            data-parsley-trigger="change">
                                                 </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeReceipt(receiptIdx)"><span class="fa fa-minus"/></button>
+                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeReceipt(receiptIdx)" disabled><span class="fa fa-minus"/></button>
                                                 </td>
                                             </tr>
                                         </tbody>

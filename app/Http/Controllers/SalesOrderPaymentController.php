@@ -28,7 +28,7 @@ class SalesOrderPaymentController extends Controller
 
     public function paymentIndex()
     {
-        Log::info('SalesOrderController@paymentIndex');
+        Log::info('SalesOrderPaymentController@paymentIndex');
 
         $salesOrders = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WP')->get();
         $soStatusDDL = LookupRepo::findByCategory('SOSTATUS')->pluck('description', 'code');
@@ -49,7 +49,7 @@ class SalesOrderPaymentController extends Controller
 
     public function createCashPayment($id)
     {
-        Log::info('[SalesOrderController@createCashPayment]');
+        Log::info('[SalesOrderPaymentController@createCashPayment]');
 
         $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit', 'items.discounts', 'customer.profiles.phoneNumbers.provider',
             'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
@@ -65,7 +65,7 @@ class SalesOrderPaymentController extends Controller
 
     public function saveCashPayment(Request $request, $id)
     {
-        Log::info('[SalesOrderController@saveCashPayment]');
+        Log::info('[SalesOrderPaymentController@saveCashPayment]');
  
         $currentSo = SalesOrder::find($id);
         $paymentDate = date('Y-m-d', strtotime($request->input('payment_date')));
@@ -78,7 +78,7 @@ class SalesOrderPaymentController extends Controller
 
     public function createTransferPayment($id)
     {
-        Log::info('[SalesOrderController@createTransferPayment]');
+        Log::info('[SalesOrderPaymentController@createTransferPayment]');
 
         $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
         $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
@@ -97,7 +97,7 @@ class SalesOrderPaymentController extends Controller
 
     public function saveTransferPayment(Request $request, $id)
     {
-        Log::info('[SalesOrderController@saveTransferPayment]');
+        Log::info('[SalesOrderPaymentController@saveTransferPayment]');
 
         $payment = $this->paymentService->createTransferPayment($request);
 
@@ -110,7 +110,7 @@ class SalesOrderPaymentController extends Controller
 
     public function createGiroPayment($id)
     {
-        Log::info('[SalesOrderController@createGiroPayment]');
+        Log::info('[SalesOrderPaymentController@createGiroPayment]');
 
         $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
             'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank',
@@ -128,7 +128,7 @@ class SalesOrderPaymentController extends Controller
 
     public function saveGiroPayment(Request $request, $id)
     {
-        Log::info('[SalesOrderController@saveGiroPayment]');
+        Log::info('[SalesOrderPaymentController@saveGiroPayment]');
 
         $giroParam = [
             'store_id' => Auth::user()->store_id,
@@ -150,5 +150,21 @@ class SalesOrderPaymentController extends Controller
         $currentSo->payments()->save($payment);
 
         return redirect(route('db.so.payment.index'));
+    }
+
+    public function createBroughtForwardPayment(Request $request, $id)
+    {
+        Log::info('[SalesOrderPaymentController@createGiroPayment]');
+
+        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
+            'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank',
+            'vendorTrucking', 'warehouse', 'expenses')->find($id);
+
+        return view('sales_order.payment.broughtforward_payment', compact('currentSo'));
+    }
+
+    public function saveBroughtForwardPayment(Request $request, $id)
+    {
+
     }
 }

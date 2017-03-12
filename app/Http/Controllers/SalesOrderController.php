@@ -232,13 +232,4 @@ class SalesOrderController extends Controller
 
         return $totalSOAmountPerDay;
     }
-
-    public function broughtForwardPayment(Request $request)
-    {
-        return response()->json([
-            'sales_code' => $request->input('code'),
-            'next_sales_code' => '',
-            'error' => '',
-        ]);
-    }
 }
