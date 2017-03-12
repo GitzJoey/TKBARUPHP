@@ -9,11 +9,6 @@ return [
             'header' => [
                 'stock_name' => 'Stock Name',
                 'input_date' => 'Applied Since',
-                'price_level' => [
-                    'RETAIL' => 'Retail',
-                    'WHOLESALE 1' => 'Wholesale 1',
-                    'WHOLESALE 2' => 'Wholesale 2',
-                ],
             ],
         ],
         'price_history' => [
@@ -36,11 +31,6 @@ return [
             'market_price' => 'Market Price',
             'price' => 'Price'
         ],
-        'price_level' => [
-            'RETAIL' => 'Retail',
-            'WHOLESALE 1' => 'Wholesale 1',
-            'WHOLESALE 2' => 'Wholesale 2',
-        ],
     ],
     'stock' => [
         'title' => 'Stock Price',
@@ -53,11 +43,6 @@ return [
             'input_date' => 'Input Date',
             'market_price' => 'Market Price',
             'price' => 'Price'
-        ],
-        'price_level' => [
-            'RETAIL' => 'Retail',
-            'WHOLESALE 1' => 'Wholesale 1',
-            'WHOLESALE 2' => 'Wholesale 2',
         ],
     ],
 ];

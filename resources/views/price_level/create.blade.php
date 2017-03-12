@@ -103,13 +103,19 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $('select[id="priceLevelSelect"]').change(function() {
-            if ($(this).val() == 'PRICELEVELTYPE.inc') {
-                $('#inputIncVal').prop('readonly', false);
-                $('#inputPctVal').val('0').prop('readonly', true);
-            } else {
-                $('#inputIncVal').val('0').prop('readonly', true);
-                $('#inputPctVal').prop('readonly', false);
+        $(document).ready(function() {
+            $('select[id="priceLevelSelect"]').change(function() {
+                if ($(this).val() == 'PRICELEVELTYPE.INC') {
+                    $('#inputIncVal').prop('readonly', false);
+                    $('#inputPctVal').val('0').prop('readonly', true);
+                } else {
+                    $('#inputIncVal').val('0').prop('readonly', true);
+                    $('#inputPctVal').prop('readonly', false);
+                }
+            });
+
+            if ($('select[id="priceLevelSelect"]').val() != '') {
+                $('select[id="priceLevelSelect"]').trigger('change');
             }
         });
     </script>

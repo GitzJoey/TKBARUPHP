@@ -137,7 +137,9 @@ class CustomerController extends Controller
                     }
                 }
 
-                $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+                if (count($data->input('expense_template_id')) > 0) {
+                    $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+                }
             });
 
             return redirect(route('db.master.customer'));
@@ -239,7 +241,9 @@ class CustomerController extends Controller
 
             $customer->save();
 
-            $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+            if (count($data->input('expense_template_id')) > 0) {
+                $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+            }
         });
 
         return redirect(route('db.master.customer'));
