@@ -160,7 +160,9 @@ class SalesOrderPaymentController extends Controller
             'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank',
             'vendorTrucking', 'warehouse', 'expenses')->find($id);
 
-        return view('sales_order.payment.broughtforward_payment', compact('currentSo'));
+        $nextSO = SalesOrder::where('id', '>', $currentSo->id)->get()->pluck('code', 'id');
+
+        return view('sales_order.payment.broughtforward_payment', compact('currentSo', 'nextSO'));
     }
 
     public function saveBroughtForwardPayment(Request $request, $id)
