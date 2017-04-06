@@ -49,9 +49,11 @@ Do Gulp
 ```
 $ gulp --production
 ```
-
 Rename the .env.example to .env and change setting accordingly.
- 
+```
+$ cp .env.example .env
+```
+
 Generate application key
 ```
 $ php artisan key:generate
