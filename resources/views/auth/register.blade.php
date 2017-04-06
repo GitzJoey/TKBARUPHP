@@ -25,6 +25,7 @@
                     </div>
                     <hr>
                 @elseif ($store_mode == 'use_default')
+                    <input type="hidden" name="store_name" value="{{ $store_name }}">
                     <input type="hidden" name="store_id" value="{{ $store_id }}">
                 @elseif ($store_mode == 'store_pick')
                     <select name="picked_store_id" class="form-control">

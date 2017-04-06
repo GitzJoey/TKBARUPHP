@@ -9,6 +9,7 @@ use App\Model\Lookup;
 use App\Model\UserDetail;
 
 use Validator;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -106,23 +107,39 @@ class RegisterController extends Controller
      * Override the RegistersUsers@showRegistrationForm
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showRegistrationForm()
+    public function showRegistrationForm(Request $req)
     {
         $store_mode = '';
         $storeDDL = $this->storeService->getAllStore();
         $store_id = 0;
+        $store_name = '';
 
-        if ($this->storeService->isEmptyStoreTable()) {
-            $store_mode = 'create';
-        } else {
-            if ($this->storeService->defaultStorePresent()) {
-                $store_mode = 'use_default';
-                $store_id = $this->storeService->getDefaultStore()->id;
+        if (!empty($req->query('store_mode'))) {
+            if ($req->query('store_mode') == 'create') {
+                $store_mode = 'create';
             } else {
-                $store_mode = 'store_pick'; //this should never happen
+                if ($req->query('store_mode') == 'use_default' && $this->storeService->defaultStorePresent()) {
+                    $store_mode = 'use_default';
+                    $store_id = $this->storeService->getDefaultStore()->id;
+                    $store_name = $this->storeService->getDefaultStore()->name;
+                } else {
+                    $store_mode = 'store_pick';
+                }
+            }
+        } else {
+            if ($this->storeService->isEmptyStoreTable()) {
+                $store_mode = 'create';
+            } else {
+                if ($this->storeService->defaultStorePresent()) {
+                    $store_mode = 'use_default';
+                    $store_id = $this->storeService->getDefaultStore()->id;
+                    $store_name = $this->storeService->getDefaultStore()->name;
+                } else {
+                    $store_mode = 'store_pick';
+                }
             }
         }
 
-        return view('auth.register', compact('store_mode', 'storeDDL', 'store_id'));
+        return view('auth.register', compact('store_mode', 'storeDDL', 'store_id', 'store_name'));
     }
 }
