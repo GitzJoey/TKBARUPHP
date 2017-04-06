@@ -93,9 +93,9 @@
                             <label>
                                 @if (empty(old('allow_login')))
                                     @if (boolval($user->userDetail()->pluck('allow_login')->first()))
-                                        <input type="checkbox" name="allow_login" checked>&nbsp;
+                                        <input type="checkbox" class="is_icheck" name="allow_login" checked>&nbsp;
                                     @else
-                                        <input type="checkbox" name="allow_login">&nbsp;
+                                        <input type="checkbox" class="is_icheck" name="allow_login">&nbsp;
                                     @endif
                                 @else
                                     @if (old('allow_login') == 'on')
