@@ -50,6 +50,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $soItems
+ * @property-read mixed $clean_quantity
+ * @property-read mixed $clean_current_quantity
  */
 class Stock extends Model
 {
