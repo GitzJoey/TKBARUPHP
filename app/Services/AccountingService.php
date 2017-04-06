@@ -11,5 +11,15 @@ namespace App\Services;
 
 interface AccountingService
 {
+    public function createCashAccount();
 
+    public function createCapitalDeposit();
+
+    public function createCapitalWithdrawal();
+
+    public function createCost();
+
+    public function createRevenue();
+
+    public function createNewCashFlow();
 }

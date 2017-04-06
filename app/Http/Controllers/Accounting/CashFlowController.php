@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Accounting;
 
-use App\Model\Accounting\CashAccount;
 use App\Model\Accounting\CashFlow;
+use App\Model\Accounting\CashAccount;
+
+use App\Repos\LookupRepo;
+
 use Auth;
 use Validator;
 use Illuminate\Http\Request;

@@ -32,7 +32,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">@lang('accounting.cash_flow.create.header.title')</h3>
         </div>
-        <form class="form-horizontal" action="{{ route('db.acc_flow.cash.create') }}" method="post" data-parsley-validate="parsley">
+        <form class="form-horizontal" action="{{ route('db.acc.cash_flow.create') }}" method="post" data-parsley-validate="parsley">
             {{ csrf_field() }}
             <div class="box-body">
                 <div class="form-group">
