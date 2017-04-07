@@ -26,11 +26,21 @@ class SalesOrderPaymentController extends Controller
         $this->middleware('auth');
     }
 
-    public function paymentIndex()
+    public function paymentIndex(Request $request)
     {
         Log::info('SalesOrderPaymentController@paymentIndex');
 
-        $salesOrders = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WP')->get();
+        $salesOrders = null;
+
+        if (!is_null($request->query('s'))) {
+            $q = $request->query('s');
+            $salesOrders = SalesOrder::with(array('customer' => function($query) use ($q) {
+                $query->where('name', 'like', '%'.$q.'%');
+            }))->where('status', '=', 'SOSTATUS.WP')->get();
+        } else {
+            $salesOrders = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WP')->get();
+        }
+
         $soStatusDDL = LookupRepo::findByCategory('SOSTATUS')->pluck('description', 'code');
 
         return view('sales_order.payment.payment_index', compact('salesOrders', 'soStatusDDL'));

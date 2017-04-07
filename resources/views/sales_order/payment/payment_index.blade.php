@@ -28,6 +28,12 @@
             <h3 class="box-title">@lang('sales_order.payment.index.header.title')</h3>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <input id="searchCustomer" type="text" class="form-control" value="{{ is_null($_GET['s']) ? '':$_GET['s'] }}">
+                </div>
+            </div>
+            <br>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -76,4 +82,14 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('#searchCustomer').change(function() {
+                window.location.href = new URI().setQuery('s', $('#searchCustomer').val());
+            });
+        });
+    </script>
 @endsection

@@ -70,6 +70,10 @@ Route::group(['prefix' => 'sales_order'], function() {
     Route::get('undelivered_sales_order', 'SalesOrderController@getUndeliveredSO')->name('api.sales_order.undelivered_sales_order');
     Route::get('number_of_created_sales_order_per_day', 'SalesOrderController@getNumberOfCreatedSOPerDay')->name('api.sales_order.number_of_created_sales_order_per_day');
     Route::get('total_sales_order_amount_per_day', 'SalesOrderController@getTotalSOAmountPerDay')->name('api.sales_order.total_sales_order_amount_per_day');
+
+    Route::group(['prefix' => 'payment'], function() {
+        Route::get('customerList', 'SalesOrderPaymentController@customerList')->name('api.sales_order.payment.customer_list');
+    });
 });
 
 Route::group(['prefix' => 'stock'], function() {
