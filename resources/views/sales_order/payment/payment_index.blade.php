@@ -30,7 +30,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-5">
-                    <input id="searchCustomer" type="text" class="form-control" value="{{ is_null($_GET['s']) ? '':$_GET['s'] }}">
+                    <input id="searchCustomer" type="text" class="form-control" value="{{ is_null(Request::input('s')) ? '':Request::input('s') }}">
                 </div>
             </div>
             <br>

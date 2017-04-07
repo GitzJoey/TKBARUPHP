@@ -34,9 +34,9 @@ class SalesOrderPaymentController extends Controller
 
         if (!is_null($request->query('s'))) {
             $q = $request->query('s');
-            $salesOrders = SalesOrder::with(array('customer' => function($query) use ($q) {
+            $salesOrders = SalesOrder::whereHas('customer', function($query) use ($q) {
                 $query->where('name', 'like', '%'.$q.'%');
-            }))->where('status', '=', 'SOSTATUS.WP')->get();
+            })->where('status', '=', 'SOSTATUS.WP')->orWhere('walk_in_cust', 'like', '%'.$q.'%')->get();
         } else {
             $salesOrders = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WP')->get();
         }
