@@ -601,7 +601,7 @@
             @endif
             <li class="header">&nbsp;</li>
         </ul>
-        <form action="#" method="get" class="sidebar-form">
+        <form action="{{ route('db.search') }}" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search...">
                 <span class="input-group-btn">
