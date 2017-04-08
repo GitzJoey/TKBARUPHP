@@ -32,10 +32,8 @@ elixir(function (mix) {
     .scripts([
         './node_modules/jquery/dist/jquery.min.js',
         './node_modules/bootstrap/dist/js/bootstrap.min.js',
-        './node_modules/angular/angular.min.js',
         './node_modules/vue/dist/vue.min.js',
         './node_modules/vue-resource/dist/vue-resource.js',
-        './node_modules/angular-sanitize/angular-sanitize.min.js',
         './node_modules/moment/min/moment.min.js',
         './node_modules/moment-duration-format/lib/moment-duration-format.js',
         './node_modules/icheck/icheck.min.js',
@@ -53,7 +51,6 @@ elixir(function (mix) {
         './node_modules/bootstrap-sweetalert/dist/sweetalert.min.js',
         './node_modules/lodash/lodash.min.js',
         './node_modules/jquery-gotop/src/jquery.gotop.min.js',
-        './node_modules/angular-fcsa-number/src/fcsaNumber.min.js',
         './node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
         './node_modules/numeral/min/numeral.min.js',
         './node_modules/modernizr/bin/modernizr',
