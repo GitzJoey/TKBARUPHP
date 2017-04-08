@@ -491,6 +491,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         });
 
         Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('db.logs');
+
+        Route::get('search', 'SearchController@search')->name('db.search');
     });
 
     Route::get('/home', 'HomeController@index');
