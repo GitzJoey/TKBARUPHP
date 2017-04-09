@@ -56,7 +56,8 @@ class SupplierTableSeeder extends Seeder
                 }
             }
 
-            $supplier->products()->save(Product::whereId(1)->first());
+            $pId = rand(1, 6);
+            $supplier->products()->save(Product::whereId($pId)->first());
         }
     }
 }
