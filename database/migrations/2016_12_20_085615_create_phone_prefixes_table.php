@@ -32,6 +32,6 @@ class CreatePhonePrefixesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('phone_prefix');
+        Schema::dropIfExists('phone_prefixes');
     }
 }

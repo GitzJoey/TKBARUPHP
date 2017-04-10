@@ -37,6 +37,6 @@ class CreateBankBcaCsvRecordsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('bank_bca_csv_records');
     }
 }
