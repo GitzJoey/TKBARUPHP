@@ -47,7 +47,7 @@ $ npm install
 
 Do Gulp
 ```
-$ gulp --production
+$ npm run production
 ```
 Rename the .env.example to .env and change setting accordingly.
 ```
