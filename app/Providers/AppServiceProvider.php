@@ -20,6 +20,7 @@ use App\Services\Implementation\VendorTruckingServiceImpl;
 use App\Services\Implementation\WarehouseServiceImpl;
 use App\Services\Implementation\DatabaseServiceImpl;
 use App\Services\Implementation\AccountingServiceImpl;
+use App\Services\Implementation\StockTransferServiceImpl;
 
 use App\Services\CustomerService;
 use App\Services\GiroService;
@@ -39,6 +40,7 @@ use App\Services\VendorTruckingService;
 use App\Services\WarehouseService;
 use App\Services\DatabaseService;
 use App\Services\AccountingService;
+use App\Services\StockTransferService;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -134,6 +136,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(AccountingService::class, function (){
             return new AccountingServiceImpl();
         });
+
+        $this->app->singleton(StockTransferService::class, function (){
+            return new StockTransferServiceImpl();
+        });
     }
 
     /**
@@ -161,7 +167,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\WarehouseService',
             'App\Services\SettingService',
             'App\Services\DatabaseService',
-            'App\Services\AccountingServie',
+            'App\Services\AccountingService',
+            'App\Services\StockTransferService',
         ];
     }
 }

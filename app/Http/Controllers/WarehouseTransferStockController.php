@@ -7,14 +7,19 @@ use App\Model\StockTransfer;
 use App\Model\Warehouse;
 use App\Model\WarehouseSection;
 
+use App\Services\StockTransferService;
+
 use Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class WarehouseTransferStockController extends Controller
 {
-    public function __construct()
+    private $stockTransferService;
+
+    public function __construct(StockTransferService $stockTransferService)
     {
+        $this->stockTransferService = $stockTransferService;
         $this->middleware('auth');
     }
 
@@ -28,40 +33,20 @@ class WarehouseTransferStockController extends Controller
 
     public function transfer()
     {
+        Log::info('[WarehouseTransferStockController@transfer]');
+
         $warehouseDDL = Warehouse::where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name']);
 
         return view('warehouse.transferstock.create', compact('warehouseDDL'));
     }
 
-    public function store(Request $request)
+    public function saveTransfer(Request $request)
     {
-        Log::info('[PurchaseOrderController@store]');
+        Log::info('[WarehouseController@saveTransfer]');
 
-        $this->validate($request, [
-            'code'                      => 'required|string|max:255',
-            'po_type'                   => 'required|string|max:255',
-            'po_created'                => 'required|string|max:255',
-            'shipping_date'             => 'required|string|max:255',
-            'supplier_type'             => 'required|string|max:255',
-            'item_product_id'           => 'required',
-            'item_selected_unit_id.*'   => 'required|numeric',
-            'item_quantity.*'           => 'required|numeric',
-            'item_price.*'              => 'required|numeric',
-            'supplier_id'               => 'required_if:supplier_type,SUPPLIERTYPE.R|numeric',
-            'walk_in_supplier'          => 'required_if:supplier_type,SUPPLIERTYPE.WI|string|max:255',
-            'warehouse_id'              => 'required|numeric',
-            'item_disc_percent.*.*'     => 'numeric',
-            'item_disc_value.*.*'       => 'numeric',
-            'disc_total_percent'        => 'numeric',
-            'disc_total_value'          => 'numeric',
-        ]);
-        $this->purchaseOrderService->createPO($request);
+        $this->stockTransferService->transfer($request);
 
-        if (!empty($request->input('submitcreate'))) {
-            return redirect()->action('PurchaseOrderController@create');
-        } else {
-            return redirect(route('db'));
-        }
-
+        return redirect(route('db'));
     }
+
 }

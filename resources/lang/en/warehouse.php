@@ -213,8 +213,10 @@ return [
             'page_title_desc' => '',
             'header' => [
                 'title' => [
-                    'warehouse' => 'Warehouse',
+                    'stock_location' => 'Stock Location',
+                    'transferred_to' => 'Transferred To',
                     'stocks' => 'Stocks',
+                    'stock_transfer' => 'Stock Transfer'
                 ],
             ],
             'table' => [
@@ -223,12 +225,17 @@ return [
                     'product' => 'Product',
                     'current_qty' => 'Current Quantity',
                     'detail' => 'Details',
+                    'remarks' => 'Remarks',
+                    'qty_to_transfer' => 'Qty. to Transfer',
+                    'destination' => 'Destination'
                 ],
             ],
         ],
         'field' => [
             'source_warehouse' => 'Source Warehouse',
             'destination_warehouse' => 'Destination Warehouse',
+            'transfer_date' => 'Transfer Date',
+            'remarks' => 'Remarks'
         ],
         'index' => [
             'title' => 'Transfer Stocks',

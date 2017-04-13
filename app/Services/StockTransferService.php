@@ -9,8 +9,9 @@
 namespace App\Services;
 
 use Doctrine\Common\Collections\Collection;
+use Illuminate\Http\Request;
 
 interface StockTransferService
 {
-    public function transferStock(Request $request);
+    public function transfer(Request $request);
 }

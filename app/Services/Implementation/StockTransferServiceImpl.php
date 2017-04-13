@@ -9,9 +9,16 @@
 namespace App\Services\Implementation;
 
 use App\Model\StockTransfer;
-use App\Services\Request;
-use App\Services\StockService;
+use App\Model\Stock;
+use App\Services\StockTransferService;
+
+use Carbon\Carbon;
+use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Doctrine\Common\Collections\Collection;
+
+use Illuminate\Support\Facades\Log;
 
 class StockTransferServiceImpl implements StockTransferService
 {
@@ -20,19 +27,28 @@ class StockTransferServiceImpl implements StockTransferService
     {
         DB::transaction(function () use ($request) {
 
-            $params = [
-                'store_id' => Auth::user()->store_id,
+            $user = Auth::user();
+
+            Log::info($request);
+
+            $stockTransfer = [
+                'store_id' => $user->store_id,
                 'po_id' => $request->input('po_id'),
                 'product_id' => $request->input('product_id'),
                 'transfer_date' => date('Y-m-d H:i:s', strtotime($request->input('transfer_date'))),
                 'source_warehouse_id' => $request->input('source_warehouse_id'),
                 'destination_warehouse_id' => $request->input('destination_warehouse_id'),
                 'quantity' => $request->input('quantity'),
-                'cost' => $request->input('cost'),
-                'reason' => $request->input('reason')
+                'reason' => $request->input('remarks')
             ];
 
-            $st = StockTransfer::create($params);
+            $stock_id = $request->input('stock_id');
+
+            $stock = Stock::find($stock_id);
+            $stock->current_quantity = $stock->current_quantity - $stockTransfer->quantiy;
+            $stock->save();
+
+            $st = StockTransfer::create($stockTransfer);
 
             return $st;
         });

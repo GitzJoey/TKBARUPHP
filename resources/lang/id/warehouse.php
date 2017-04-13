@@ -213,8 +213,10 @@ return [
             'page_title_desc' => '',
             'header' => [
                 'title' => [
-                    'warehouse' => 'Gudang',
+                    'stock_location' => 'Lokasi Stok',
+                    'transferred_to' => 'Ditransfer Ke',
                     'stocks' => 'Stok',
+                    'stock_transfer' => 'Transfer Stok'
                 ],
             ],
             'table' => [
@@ -223,12 +225,17 @@ return [
                     'product' => 'Produk',
                     'current_qty' => 'Total Jumlah',
                     'detail' => 'Detil',
+                    'remarks' => 'Keterangan',
+                    'qty_to_transfer' => 'Qty. to Transfer',
+                    'destination' => 'Tujuan'
                 ],
             ],
         ],
         'field' => [
             'source_warehouse' => 'Gudang Sumber',
             'destination_warehouse' => 'Gudang Tujuan',
+            'transfer_date' => 'Tanggal Transfer',
+            'remarks' => 'Keterangan'
         ],
         'index' => [
             'title' => 'Pindah Stok',
