@@ -23,6 +23,13 @@ class WarehouseTransferStockController extends Controller
         $this->middleware('auth');
     }
 
+    public function show($id)
+    {
+        $stock_transfer = StockTransfer::find($id);
+
+        return view('warehouse.transferstock.show', compact('stock_transfer'));
+    }
+
     public function index()
     {
         Log::info('[WarehouseController@stocktransfer]');

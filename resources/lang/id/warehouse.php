@@ -232,10 +232,12 @@ return [
             ],
         ],
         'field' => [
+            'product' => 'Gudang Produk',
             'source_warehouse' => 'Gudang Sumber',
             'destination_warehouse' => 'Gudang Tujuan',
             'transfer_date' => 'Tanggal Transfer',
-            'remarks' => 'Keterangan'
+            'remarks' => 'Keterangan',
+            'quantity' => 'Jumlah',
         ],
         'index' => [
             'title' => 'Pindah Stok',
@@ -251,6 +253,30 @@ return [
                     'from' => 'Dari',
                     'to' => 'Ke',
                     'quantity' => 'Jumlah',
+                ],
+            ],
+        ],
+        'show' => [
+            'title' => 'Pindah Stok',
+            'page_title' => 'Pindah Stok',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => [
+                    'stock_location' => 'Lokasi Stok',
+                    'transferred_to' => 'Ditransfer Ke',
+                    'stocks' => 'Stok',
+                    'stock_transfer' => 'Transfer Stok'
+                ],
+            ],
+            'table' => [
+                'header' => [
+                    'select' => 'Pilih',
+                    'product' => 'Produk',
+                    'current_qty' => 'Total Jumlah',
+                    'detail' => 'Detil',
+                    'remarks' => 'Keterangan',
+                    'qty_to_transfer' => 'Qty. to Transfer',
+                    'destination' => 'Tujuan'
                 ],
             ],
         ],

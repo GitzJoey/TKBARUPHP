@@ -48,7 +48,7 @@
                             <td>{{ $stock_transfer_item->destination_warehouse->name }}</td>
                             <td>{{ $stock_transfer_item->quantity }}</td>
                             <td class="text-center" width="10%">
-                                <a class="btn btn-xs btn-primary" href="#"><span class="fa fa-pencil fa-fw"></span></a>
+                                <a class="btn btn-xs btn-info" href="{{ route('db.warehouse.transfer_stock.show', $stock_transfer_item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             </td>
                         </tr>
                     @endforeach
