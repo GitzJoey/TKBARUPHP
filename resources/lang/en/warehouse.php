@@ -219,6 +219,7 @@ return [
             ],
             'table' => [
                 'header' => [
+                    'select' => 'Select',
                     'product' => 'Product',
                     'current_qty' => 'Current Quantity',
                     'detail' => 'Details',

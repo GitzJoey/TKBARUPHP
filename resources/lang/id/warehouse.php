@@ -219,6 +219,7 @@ return [
             ],
             'table' => [
                 'header' => [
+                    'select' => 'Pilih',
                     'product' => 'Produk',
                     'current_qty' => 'Total Jumlah',
                     'detail' => 'Detil',

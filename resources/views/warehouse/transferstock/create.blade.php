@@ -19,7 +19,7 @@
 @section('content')
     <div id="tsVue">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         @lang('warehouse.transfer_stock.create.header.title.warehouse')
@@ -27,10 +27,10 @@
                     <form class="form-horizontal" action="" method="post">
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputsource_Warehouse" class="col-sm-4 control-label">
+                                <label for="inputsource_Warehouse" class="col-sm-2 control-label">
                                     @lang('warehouse.transfer_stock.field.source_warehouse')
                                 </label>
-                                <div class="col-sm-7">
+                                <div class="col-sm-10">
                                     <input type="hidden" name="source_warehouse_id" v-bind:value="ts.source_warehouse.id">
                                     <select id="inputSourceWarehouse" data-parsley-required="true"
                                             class="form-control"
@@ -43,10 +43,10 @@
                             </div>
                             <template v-if="ts.source_warehouse.id != ''">
                                 <div class="form-group">
-                                    <label for="inputDestinationWarehouse" class="col-sm-4 control-label">
+                                    <label for="inputDestinationWarehouse" class="col-sm-2 control-label">
                                         @lang('warehouse.transfer_stock.field.destination_warehouse')
                                     </label>
-                                    <div class="col-sm-7">
+                                    <div class="col-sm-10">
                                         <input type="hidden" name="destination_warehouse_id" v-bind:value="ts.destination_warehouse.id">
                                         <select id="inputDestinationWarehouse" data-parsley-required="true" class="form-control" v-model="ts.destination_warehouse">
                                             <option v-if="destination_warehouse.id != ts.source_warehouse.id"
@@ -73,14 +73,16 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th class="text-center" width="5%">@lang('warehouse.transfer_stock.create.table.header.select')</th>
                                             <th class="text-center" width="20%">@lang('warehouse.transfer_stock.create.table.header.product')</th>
                                             <th class="text-center" width="10%">@lang('warehouse.transfer_stock.create.table.header.current_qty')</th>
-                                            <th class="text-center" width="60%">@lang('warehouse.transfer_stock.create.table.header.detail')</th>
+                                            <th class="text-center" width="50%">@lang('warehouse.transfer_stock.create.table.header.detail')</th>
                                             <th class="text-center" width="10%">@lang('labels.ACTION')</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(s, sIdx) in stocks" v-cloak>
+                                            <td><input type="checkbox" id="checkbox" aria-label="checkbox" value="checkbox"></td>
                                             <td>@{{ s.product.name }}</td>
                                             <td>@{{ s.current_quantity }}</td>
                                             <td></td>
@@ -94,6 +96,17 @@
                         </div>
                     </div>
                     <div class="box-footer"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-offset-md-5">
+                <div class="btn-toolbar">
+                    <button id="transferButton" type="submit"
+                            class="btn btn-primary pull-right" name="transfer"
+                            value="transfer">@lang('buttons.transfer')</button>
+                    <a id="cancelButton" class="btn btn-primary pull-right"
+                       href="{{ route('db') }}">@lang('buttons.cancel_button')</a>
                 </div>
             </div>
         </div>
