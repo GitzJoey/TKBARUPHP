@@ -12,6 +12,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $adminUser = $this->command->ask('Enter Super Admin User Name: ', 'GitzJoey');
+        do {
+            $adminPassword = $this->command->secret('Enter Password: ', true);
+            $adminPasswordConfirm = $this->command->secret('Confirm Password: ', true);
+        } while (strcmp($adminPassword, $adminPasswordConfirm) != 0);
+        $defaultStore = $this->command->ask('Enter Default Store: ', 'Toko Baru');
+
+        $this->call(DefaultStoreTableSeeder::class, $defaultStore);
+
         // $this->call(UsersTableSeeder::class);
         $this->call(PermissionTableSeeder::class);
         $this->call(RolesTableSeeder::class);
@@ -22,7 +31,6 @@ class DatabaseSeeder extends Seeder
 
         /* DUMMY DATA */
         if (App::environment('local', 'dev')) {
-            $this->call(DefaultStoreTableSeeder::class);
             $this->call(BankTableSeeder::class);
             $this->call(ProductTableSeeder::class);
             $this->call(ProductTypeTableSeeder::class);
@@ -35,5 +43,21 @@ class DatabaseSeeder extends Seeder
             $this->call(TrucksTableSeeder::class);
             $this->call(TruckMaintenancesTableSeeder::class);
         }
+    }
+
+    /**
+     * Override the Seeder.php call method, to accept 2 parameters
+     *
+     * @param  string  $class
+     * @param  string  $extra
+     * @return void
+     */
+    public function call($class, $extra = null)
+    {
+        if (isset($this->command)) {
+            $this->command->getOutput()->writeln("<info>Seeding:</info> $class");
+        }
+
+        $this->resolve($class)->run($extra);
     }
 }
