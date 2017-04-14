@@ -10,6 +10,8 @@ namespace App\Services\Implementation;
 
 use App\Model\StockTransfer;
 use App\Model\Stock;
+use App\Model\StockIn;
+use App\Model\StockOut;
 use App\Services\StockTransferService;
 
 use Carbon\Carbon;
@@ -41,14 +43,33 @@ class StockTransferServiceImpl implements StockTransferService
                 'quantity' => $request->input('quantity'),
                 'reason' => $request->input('remarks')
             ];
+            $st = StockTransfer::create($stockTransfer);
 
             $stock_id = $request->input('stock_id');
 
-            $stock = Stock::find($stock_id);
-            $stock->current_quantity = $stock->current_quantity - $stockTransfer->quantiy;
-            $stock->save();
+            $stockOut = [
+                'store_id' => $user->store_id,
+                'product_id' => $st->product_id,
+                'stock_id' => $stock_id,
+                'warehouse_id' => $st->source_warehouse_id,
+                'quantity' => $st->quantity,
+                'stock_trf_id' => $st->id,
+            ];
+            $sto = StockOut::create($stockOut);
 
-            $st = StockTransfer::create($stockTransfer);
+            $stockIn = [
+                'store_id' => $user->store_id,
+                'product_id' => $st->product_id,
+                'stock_id' => $stock_id,
+                'warehouse_id' => $st->destination_warehouse_id,
+                'quantity' => $st->quantity,
+                'stock_trf_id' => $st->id,
+            ];
+            $sti = StockIn::create($stockIn);
+
+            $stock = Stock::find($stock_id);
+            $stock->current_quantity = $stock->current_quantity - $sto->quantity;
+            $stock->save();
 
             return $st;
         });
