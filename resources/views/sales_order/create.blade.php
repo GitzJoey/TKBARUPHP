@@ -76,7 +76,7 @@
                                                                     class="form-control"
                                                                     v-model="so.customer_type">
                                                                 <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                <option v-for="customerType in customerTypeDDL" v-bind:value="customerType">@{{ customerType.i18nDescription }}</option>
+                                                                <option v-for="customerType in customerTypeDDL" v-bind:value="customerType.code">@{{ customerType.i18nDescription }}</option>
                                                             </select>
                                                         </div>
                                                     </div>
