@@ -11,14 +11,14 @@ use App\Model\Store;
 
 class DefaultStoreTableSeeder extends Seeder
 {
-    public function run()
+    public function run($storeName = null)
     {
         $store = [
             [
-                'name'          => 'Toko Baru',
-                'address'       => 'Jln Raya Utara No 67 Wangon',
-                'phone_num'     => '0281 - 531270',
-                'fax_num'       => '0281 - 583358',
+                'name'          => $storeName,
+                'address'       => '',
+                'phone_num'     => '',
+                'fax_num'       => '',
                 'tax_id'        => '0000000000',
                 'status'        => 'STATUS.ACTIVE',
                 'is_default'    => 'YESNOSELECT.YES',
