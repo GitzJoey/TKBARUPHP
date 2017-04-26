@@ -20,6 +20,7 @@
     <div id="unfinishedSettingsNotice"></div>
 
     <div class="row">
+
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-aqua">
                 <div class="inner">
@@ -72,13 +73,104 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="row">
+
         <div class="col-lg-6 col-xs-6">
-            <div id="number-of-created-po-so-chart-container"></div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Number of Created Sales Order</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <div id="number-of-created-po-so-chart-container"></div>
+                    </div>
+                </div>
+                <div class="box-footer clearfix"></div>
+            </div>
         </div>
 
         <div class="col-lg-6 col-xs-6">
-            <div id="total-so-amount-chart-container"></div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Sales Order Total Amount</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <div id="total-so-amount-chart-container"></div>
+                    </div>
+                </div>
+                <div class="box-footer clearfix"></div>
+            </div>
         </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6 col-xs-6" id="due-purchase-order">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Due Purchase Orders - @{{ due_payment_day }}</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-wrench"></i></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders'>All</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(1)'>1 day</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(3)'>3 days</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(5)'>5 days</a></li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                            <tr>
+                                <th>PO Code</th>
+                                <th>Supplier Name</th>
+                                <th>Payment Due Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="duePurchaseOrder in duePurchaseOrders">
+                                <td><a v-bind:href="'{{ route('db.po.payment.index') }}?pocode=' + duePurchaseOrder.code">@{{ duePurchaseOrder.code }}</a></td>
+                                <td>@{{ duePurchaseOrder.supplier.name }}</td>
+                                <td>@{{ countDueDate(duePurchaseOrder.receipts[0].receipt_date, duePurchaseOrder.supplier.payment_due_day) }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix" style="display: block;">
+                    <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Purchase Orders</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+
     </div>
 
     @for ($i = 0; $i < 100; $i++)
@@ -113,7 +205,7 @@
                                         salesOrderAmountSeries.setData(data);
                                     }
                                 });
-                            }, 5000);
+                            }, 50000);
                         }
                     }
                 },
@@ -170,7 +262,7 @@
                                         salesOrderNumberSeries.setData(data);
                                     }
                                 });
-                            }, 5000);
+                            }, 50000);
                         }
                     }
                 },
@@ -226,6 +318,48 @@
                     }
                 });
             }
+
+            var app = new Vue({
+                el: '#due-purchase-order',
+                data: {
+                    duePurchaseOrders: [],
+                    due_payment_day: 'All'
+                },
+                mounted() {
+                    return this.fetchDuePurchaseOrders();
+                },
+                methods: {
+                    fetchDuePurchaseOrders: function(due_payment_day) {
+
+                        var dod = '';
+
+                        if(due_payment_day > 1)
+                            this.due_payment_day = due_payment_day + ' Days';
+                        else if(due_payment_day == 1)
+                            this.due_payment_day = due_payment_day + ' Day';
+                        else
+                            this.due_payment_day = 'All';
+
+                        if(due_payment_day != undefined)
+                            dod = '?dod='+ due_payment_day;
+
+                        this.$http.get('api/purchase_order/due_purchase_order' + dod).then(response => {
+
+                            // get body data
+                            this.duePurchaseOrders = response.data;
+
+                        }, response => {
+
+                            // error callback
+
+                        });
+                    },
+                    countDueDate: function(date, payment_due_day) {
+                        return moment(date).add(payment_due_day, 'days').format('YYYY-MM-DD');
+                    }
+                }
+            });
+
         });
     </script>
     <script type="application/javascript" src="{{ asset('adminlte/js/highcharts.js') }}"></script>

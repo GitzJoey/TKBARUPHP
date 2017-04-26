@@ -29,11 +29,17 @@ class PurchaseOrderPaymentController extends Controller
         $this->middleware('auth');
     }
 
-    public function paymentIndex()
+    public function paymentIndex(Request $request)
     {
         Log::info('[PurchaseOrderController@paymentIndex]');
 
-        $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')->paginate(10);
+        $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP');
+
+        if(!empty($request->query('pocode'))){
+            $purchaseOrders = $purchaseOrders->where('code', '=', $request->query('pocode'));
+        }
+
+        $purchaseOrders = $purchaseOrders->paginate(10);
         $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');
 
         return view('purchase_order.payment.payment_index', compact('purchaseOrders', 'poStatusDDL'));
