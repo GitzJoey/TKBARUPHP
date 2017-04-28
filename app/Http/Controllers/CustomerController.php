@@ -102,7 +102,7 @@ class CustomerController extends Controller
                 $customer->phone_number = $data['phone'];
                 $customer->tax_id = $data['tax_id'];
                 $customer->remarks = $data['remarks'];
-                $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
+                $customer->payment_due_day = empty($data->input('payment_due_day')) ? 0 : $data->input('payment_due_day');
                 $customer->price_level_id = $data['price_level'];
                 $customer->status = $data['status'];
 
@@ -236,7 +236,7 @@ class CustomerController extends Controller
             $customer->tax_id = $data['tax_id'];
             $customer->remarks = $data['remarks'];
             $customer->price_level_id = empty($data['price_level']) ? 0 : $data['price_level'];
-            $customer->payment_due_day = is_int($data['payment_due_day']) ? $data['payment_due_day'] : 0;
+            $customer->payment_due_day = empty($data->input('payment_due_day')) ? 0 : $data->input('payment_due_day');
             $customer->status = $data['status'];
 
             $customer->save();

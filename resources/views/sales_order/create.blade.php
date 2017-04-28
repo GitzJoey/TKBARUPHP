@@ -84,7 +84,7 @@
                                                         <div class="form-group">
                                                             <label v-bind:for="'inputCustomerId_' + (soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-8">
-                                                                <select class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex"></select>
+                                                                <select2_customer class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex"></select2_customer>
                                                             </div>
                                                             <div class="col-sm-2">
                                                                 <button v-bind:id="'customerDetailButton_' + soIndex" type="button" class="btn btn-primary btn-sm"
@@ -800,6 +800,54 @@
 
 @section('custom_js')
     <script type="application/javascript">
+
+        Vue.component('select2_customer', {
+            template: '<select><option></option></select>',
+            mounted: function(){
+                var vm = this;
+                $(this.$el)
+                    .select2({
+                        ajax: {
+                            url: "{{ route('api.customer.search') }}?q=",
+                            dataType: 'json',
+                            data: function(params){
+                                return {
+                                    q: params.term,
+                                    page: params.page
+                                }
+                            },
+                            processResults: function (data, params) {
+                                params.page = params.page || 1;
+                                var output = [];
+                                _.map(data, function(d){
+                                    output.push({id: d.id, text: d.name});
+                                });
+                                return {
+                                    results: output
+                                }
+                            }
+                        },
+                        minimumInputLength: 1
+                    })
+                    .val(this.value)
+                    .trigger('change')
+                    .on('change', function(){
+                        vm.$emit('input', this.value)
+                    })
+            },
+            watch: {
+                value: function(value){
+                    $(this.$el).val(value).trigger('change');
+                },
+                options: function(options) {
+                    $(this.$el).select2({ data: options })
+                }
+            },
+            destroyed: function(){
+                $(this.$el).off().select2('destroy');
+            }
+        });
+
         var soApp = new Vue({
         el: '#soVue',
         data: {
@@ -1101,56 +1149,6 @@
         },
         updated: function(){
             var vm = this;
-            for(var i = 0; i < vm.SOs.length; i++){
-                var index = i;
-                $("#customerSelect" + i).select2({
-                    placeholder: {
-                        id: "",
-                        placeholder: "Choose customer..."
-                    },
-                    allowClear: true,
-                    width: '100%',
-                    data: [ vm.SOs[index].customer ],
-                    ajax: {
-                        url: function(params){
-                            console.log('{{ route('api.customer.search') }}?q=' + params.term);
-                            return '{{ route('api.customer.search') }}?q=' + params.term;
-                        },
-                        delay: 250,
-                        dataType: 'json',
-                        processResults: function (data, params) {
-                            console.log(data);
-                            if(data.length > 0){
-                                return {
-                                    results: data
-                                }
-                            } else {
-                                return {
-                                    results: [{id: ''}]
-                                }
-                            }
-                        }
-                    },
-                    templateResult: function(customer){
-                        if (customer.placeholder) return customer.placeholder;
-                        return customer.name;
-                    },
-                    templateSelection: function(customer){
-                        if (customer.placeholder) {
-                            vm.SOs[index].customer = {
-                            id: '',
-                            price_level: {
-                                name: ''
-                            }
-                        };
-                            return customer.placeholder;
-                        }
-                        vm.SOs[index].customer = _.cloneDeep(customer);
-                        return customer.name;
-                    }
-                });
-                $("#customerSelect" + index).val(vm.SOs[index].customer.id).trigger('change');
-            }
 
             $(function () {
                 $(".inputSoDate").datetimepicker({
