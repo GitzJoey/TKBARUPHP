@@ -13,6 +13,7 @@ use App\Model\Product;
 use App\Model\SalesOrder;
 use App\Model\Warehouse;
 use App\Model\VendorTrucking;
+use App\Model\Customer;
 
 use App\Services\StockService;
 use App\Services\SalesOrderService;
@@ -65,7 +66,7 @@ class SalesOrderController extends Controller
         $userSOs = session('userSOs', collect([]));
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL', 'productDDL',
-            'stocksDDL', 'vendorTruckingDDL', 'soCode', 'soStatusDraft', 'userSOs', 'expenseTypes'));
+            'stocksDDL', 'vendorTruckingDDL', 'soCode', 'soStatusDraft', 'userSOs', 'expenseTypes','customerDDL'));
     }
 
     public function store(Request $request)

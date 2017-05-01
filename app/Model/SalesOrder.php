@@ -242,6 +242,23 @@ class SalesOrder extends Model
         });
     }
 
+    public function to_text(){
+
+        if($this->customer_type == 'CUSTOMERTYPE.R'){
+            $this->customer_text  = $this->customer->name;
+        }else{
+            $this->customer_text  = $this->walk_in_customer;
+        }
+
+        $this->created_text           = date('d-m-Y', strtotime($this->so_created));
+        $this->total_amount_text      = number_format($this->totalAmount(), 0);
+        $this->total_amount_paid_text = number_format($this->totalAmountPaid(), 0);
+        $this->totat_amount_rest_text = number_format($this->totalAmount() - $this->totalAmountPaid(), 0);
+        $this->id_text                = $this->hId();
+
+        return $this;
+    }
+
     public static function boot()
     {
         parent::boot();
@@ -269,4 +286,5 @@ class SalesOrder extends Model
             }
         });
     }
+
 }
