@@ -22,6 +22,7 @@ return [
     'so.payment.cash' => 'Cash Payment',
     'so.payment.transfer' => 'Transfer Payment',
     'so.payment.giro' => 'Giro Payment',
+    'so.payment.broughtforward' => 'Forward Invoice',
     'admin.user' => 'User',
     'admin.user.create' => 'Create User',
     'admin.user.show' => 'Show User',

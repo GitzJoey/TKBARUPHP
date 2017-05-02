@@ -22,6 +22,7 @@ return [
     'so.payment.cash' => 'Pembayaran Tunai',
     'so.payment.transfer' => 'Pembayaran Transfer',
     'so.payment.giro' => 'Pembayaran Giro',
+    'so.payment.broughtforward' => 'Pengalihan Tagihan',
     'admin.user' => 'Pengguna',
     'admin.user.create' => 'Tambah Pengguna',
     'admin.user.show' => 'Tampilkan Pengguna',

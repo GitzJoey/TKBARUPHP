@@ -132,6 +132,22 @@ return [
                 'payment_amount' => 'Jumlah',
             ],
         ],
+        'broughtforward' => [
+            'title'             => 'Forward Invoice',
+            'page_title'        => 'Forward Invoice',
+            'page_title_desc'   => 'Close & forward invoice balance to new invoice',
+            'header'            => [
+                'title'             => 'Forward Invoice'
+            ],
+            'invoice'           => [
+                'current'           => 'Current Invoice',
+                'next'              => 'New Invoice',
+                'so_code'           => 'Sales Code',
+                'customer'          => 'Customer',
+                'created'           => 'Created Date',
+                'total_amount'      => 'Total Amount'
+            ],
+        ]
     ],
     'copy' => [
         'create' => [
