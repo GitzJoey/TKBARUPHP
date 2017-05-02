@@ -800,7 +800,6 @@
 
 @section('custom_js')
     <script type="application/javascript">
-
         Vue.component('select2_customer', {
             template: '<select><option></option></select>',
             mounted: function(){
@@ -817,7 +816,7 @@
                                 }
                             },
                             processResults: function (data, params) {
-                                params.page = params.page || 1;
+                                params.page = params.page || 1;dsdf
                                 var output = [];
                                 _.map(data, function(d){
                                     output.push({id: d.id, text: d.name});
@@ -1149,7 +1148,6 @@
         },
         updated: function(){
             var vm = this;
-
             $(function () {
                 $(".inputSoDate").datetimepicker({
                     format: "DD-MM-YYYY hh:mm A",

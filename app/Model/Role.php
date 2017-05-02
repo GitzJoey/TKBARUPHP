@@ -8,7 +8,7 @@
 
 namespace App\Model;
 
-use Zizaco\Entrust\EntrustRole;
+use Laratrust\LaratrustRole;
 use Vinkla\Hashids\Facades\Hashids;
 
 /**
@@ -31,7 +31,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Role whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Role extends EntrustRole
+class Role extends LaratrustRole
 {
     protected $fillable = [
         'name',
@@ -42,10 +42,5 @@ class Role extends EntrustRole
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
-    }
-
-    public function permissions()
-    {
-        return $this->belongsToMany('App\Model\Permission', 'permission_role', 'role_id', 'permission_id');
     }
 }
