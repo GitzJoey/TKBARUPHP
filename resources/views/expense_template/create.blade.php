@@ -56,7 +56,7 @@
                                placeholder="@lang('expense_template.field.amount')"
                                data-parsley-required="true"
                                data-parsley-pattern="/^\d+(,\d+)*$/"
-                               ng-model="amount" autonumeric data-a-sep="," data-a-dec=".">
+                               autonumeric data-a-sep="," data-a-dec=".">
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>
                 </div>

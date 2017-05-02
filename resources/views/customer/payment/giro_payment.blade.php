@@ -62,7 +62,6 @@
                                             <select id="inputGiro"
                                                     name="bank_id"
                                                     class="form-control"
-                                                    ng-model="giro.bank"
                                                     ng-options="bank as bank.name for bank in bankDDL track by bank.id">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             </select>
@@ -112,7 +111,7 @@
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_amount')</label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" id="inputAmount" ng-value="giro.amount"
-                                                   name="amount" ng-model="amount" data-parsley-required="true"
+                                                   name="amount" data-parsley-required="true"
                                                    autonumeric>
                                         </div>
                                         <label for="inputPrintedName"

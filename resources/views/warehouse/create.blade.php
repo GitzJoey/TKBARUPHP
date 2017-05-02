@@ -75,7 +75,7 @@
                                     <tr v-for="(c, cI) in sections">
                                         <td><input type="text" class="form-control" v-model="c.name" name="section_name[]" data-parsley-required="true"/></td>
                                         <td><input type="text" class="form-control" v-model="c.position" name="section_position[]" data-parsley-required="true"/></td>
-                                        <td><input type="text" class="form-control text-right" ng-model="c.capacity" name="section_capacity[]" data-parsley-required="true" data-parsley-type="number"/></td>
+                                        <td><input type="text" class="form-control text-right" name="section_capacity[]" data-parsley-required="true" data-parsley-type="number"/></td>
                                         <td>
                                             <select class="form-control"
                                                     name="section_capacity_unit[]"
