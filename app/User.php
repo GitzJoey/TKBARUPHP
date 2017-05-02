@@ -4,8 +4,8 @@ namespace App;
 
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Notifications\Notifiable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait;
 
 /**
  * App\User
@@ -46,7 +46,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use EntrustUserTrait;
+    use LaratrustUserTrait;
 
     use Notifiable;
 
@@ -82,10 +82,6 @@ class User extends Authenticatable
 
     public function store() {
         return $this->belongsTo('App\Model\Store', 'store_id');
-    }
-
-    public function roles() {
-        return $this->belongsToMany('App\Model\Role', 'role_user', 'user_id', 'role_id');
     }
 
     public function settings() {
