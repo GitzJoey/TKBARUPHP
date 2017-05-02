@@ -16,7 +16,7 @@ forced to always learn and learn and learn to adapt with the latest technology a
 with the current technology.
 
 # Requirements
-* [Latest PHP](http://php.net)
+* [PHP](http://php.net)
 * [Laravel](http://www.laravel.com)
 * [VueJS](http://www.vuejs.org)
 * [Composer](http://getcomposer.org) 
@@ -45,13 +45,18 @@ Do NPM Install
 $ npm install
 ```
 
-Do Gulp
+Do Mix
 ```
-$ npm run production
+Windows -> $ npm run dev-windows  
+  
+Linux   -> $ npm run dev-linux
 ```
+
 Rename the .env.example to .env and change setting accordingly.
 ```
-$ cp .env.example .env
+Windows -> $ copy .env.example .env
+  
+Linux   -> $ cp .env.example .env
 ```
 
 Generate application key
