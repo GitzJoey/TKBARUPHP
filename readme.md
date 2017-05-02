@@ -45,10 +45,13 @@ Do NPM Install
 $ npm install
 ```
 
-Do Gulp
+Do Mix
 ```
-$ npm run production
+Windows -> $ npm run dev-windows  
+  
+Linux   -> $ npm run dev-linux
 ```
+
 Rename the .env.example to .env and change setting accordingly.
 ```
 $ cp .env.example .env
