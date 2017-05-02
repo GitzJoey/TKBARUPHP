@@ -330,16 +330,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::delete('edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
             });
 
-            // Route::group(['prefix' => 'salary'], function () {
-            //     Route::get('', 'SalaryController@index')->name('db.master.salary');
-            //     Route::get('show/{id}', 'SalaryController@show')->name('db.master.salary.show');
-            //     Route::get('create', 'SalaryController@create')->name('db.master.salary.create');
-            //     Route::post('create/', 'SalaryController@store');
-            //     Route::get('edit/{id}', 'SalaryController@edit')->name('db.master.salary.edit');
-            //     Route::patch('edit/{id}', 'SalaryController@update');
-            //     Route::delete('edit/{id}', 'SalaryController@delete')->name('db.master.salary.delete');
-            // });
-
             Route::group(['prefix' => 'vendor'], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
@@ -501,6 +491,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         });
 
         Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('db.logs');
+
+        Route::get('search', 'SearchController@search')->name('db.search');
+
+        Route::get('about', 'DashboardController@contributors')->name('db.contrib');
     });
 
     Route::get('/home', 'HomeController@index');

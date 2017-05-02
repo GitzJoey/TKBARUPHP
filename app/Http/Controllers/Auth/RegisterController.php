@@ -93,7 +93,7 @@ class RegisterController extends Controller
 
         $usr->save();
 
-        $usr->roles()->attach(Role::where('name', '=', 'r_user')->get());
+        $usr->roles()->attach(Role::where('name', 'user')->get());
 
         $userdetail = new UserDetail();
         $userdetail->allow_login = true;

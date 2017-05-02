@@ -22,7 +22,7 @@
                 <div class="col-md-12">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            @if(Entrust::can('report.stock-history'))
+                            @if(Laratrust::can('report-stock_history'))
                             <li class="active">
                                 <a href="#tab_mon_1" data-toggle="tab">
                                     @lang('stock_history.page_title')
@@ -31,7 +31,7 @@
                             @endif
                         </ul>
                         <div class="tab-content" id="tab_monitoring" >
-                            @if(Entrust::can('report.stock-history'))
+                            @if(Laratrust::can('report-stock_history'))
                                 <div class="tab-pane active" id="tab_mon_1">
                                     @include('report.monitoring_components.stock_histories')
                                 </div>
@@ -50,7 +50,7 @@
          var tabStockHistoryVue = new Vue({
             el: '#tab_monitoring',
             data: {
-                @if(Entrust::can('report.stock-history'))
+                @if(Laratrust::can('report-stock_history'))
                     stock_histories: {
                         data : [],
                         error : false,
@@ -67,7 +67,7 @@
                         value = value.toFixed(2);
                     return value.toFixed(0);
                 },
-                @if(Entrust::can('report.stock-history'))
+                @if(Laratrust::can('report-stock_history'))
                 fetchStockHistories: function () {
                     let vm = this;
                     vm.$http.get('{{ route('db.stockhistory.type.index') }}', {}).then((res) => {
@@ -80,7 +80,7 @@
                  @endif
             },
             mounted () {
-                @if(Entrust::can('report.stock-history'))
+                @if(Laratrust::can('report-stock_history'))
                 let vm = this;
                 vm.fetchStockHistories()
                 
