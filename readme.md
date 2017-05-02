@@ -16,7 +16,7 @@ forced to always learn and learn and learn to adapt with the latest technology a
 with the current technology.
 
 # Requirements
-* [Latest PHP 5](http://php.net)
+* [Latest PHP](http://php.net)
 * [Laravel](http://www.laravel.com)
 * [VueJS](http://www.vuejs.org)
 * [Composer](http://getcomposer.org) 
