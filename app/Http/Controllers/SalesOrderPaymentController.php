@@ -43,6 +43,10 @@ class SalesOrderPaymentController extends Controller
             $salesOrders = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WP')->get();
         }
 
+        if(!empty($request->query('socode'))){
+            $salesOrders = $salesOrders->where('code', '=', $request->query('socode'));
+        }
+
         $soStatusDDL = LookupRepo::findByCategory('SOSTATUS')->pluck('description', 'code');
 
         return view('sales_order.payment.payment_index', compact('salesOrders', 'soStatusDDL'));

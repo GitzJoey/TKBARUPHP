@@ -53,7 +53,7 @@
                     <div class="col-sm-8">
                         <input id="inputAmount" name="amount" type="text" class="form-control"
                                placeholder="@lang('expense_template.field.amount')"
-                               data-parsley-required="true" data-parsley-pattern="/^\d+(,\d+)*$/" ng-model="amount"
+                               data-parsley-required="true" data-parsley-pattern="/^\d+(,\d+)*$/"
                                autonumeric data-a-sep="," data-a-dec=".">
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>

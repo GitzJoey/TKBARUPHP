@@ -49,6 +49,14 @@ class SalesOrderController extends Controller
         ]);
     }
 
+    public function test() {
+
+        Log::info('SalesOrderController@test');
+
+        $customerTypeDDL = LookupRepo::findByCategory('CUSTOMERTYPE');
+        return view('sales_order.test', compact('customerTypeDDL'));
+    }
+
     public function create()
     {
         Log::info('SalesOrderController@create');

@@ -80,8 +80,7 @@
                         <div class="col-sm-8">
                             <input id="inputAdjustedQuantity" name="adjusted_quantity" type="text" class="form-control"
                                    placeholder="@lang('warehouse.stockopname.adjust.field.adjusted_quantity')"
-                                   data-parsley-required="true" data-parsley-pattern="/^\d+(,\d+)*$/" ng-model="adjustedQuantity"
-                                   autonumeric data-a-sep=",">
+                                   data-parsley-required="true" data-parsley-pattern="\d+">
                             <span class="help-block">{{ $errors->has('adjusted_quantity') ? $errors->first('adjusted_quantity') : '' }}</span>
                         </div>
                     </div>

@@ -12,6 +12,7 @@ use App\Model\Stock;
 use App\Services\StockService;
 use Doctrine\Common\Collections\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class StockServiceImpl implements StockService
 {

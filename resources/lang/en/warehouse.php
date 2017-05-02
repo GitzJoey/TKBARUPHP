@@ -213,21 +213,31 @@ return [
             'page_title_desc' => '',
             'header' => [
                 'title' => [
-                    'warehouse' => 'Warehouse',
+                    'stock_location' => 'Stock Location',
+                    'transferred_to' => 'Transferred To',
                     'stocks' => 'Stocks',
+                    'stock_transfer' => 'Stock Transfer'
                 ],
             ],
             'table' => [
                 'header' => [
+                    'select' => 'Select',
                     'product' => 'Product',
                     'current_qty' => 'Current Quantity',
                     'detail' => 'Details',
+                    'remarks' => 'Remarks',
+                    'qty_to_transfer' => 'Qty. to Transfer',
+                    'destination' => 'Destination'
                 ],
             ],
         ],
         'field' => [
+            'product' => 'Product',
             'source_warehouse' => 'Source Warehouse',
             'destination_warehouse' => 'Destination Warehouse',
+            'transfer_date' => 'Transfer Date',
+            'remarks' => 'Remarks',
+            'quantity' => 'Quantity',
         ],
         'index' => [
             'title' => 'Transfer Stocks',
@@ -243,6 +253,30 @@ return [
                     'from' => 'From',
                     'to' => 'To',
                     'quantity' => 'Quantity',
+                ],
+            ],
+        ],
+        'show' => [
+            'title' => 'Transfer Stocks',
+            'page_title' => 'Transfer Stocks',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => [
+                    'stock_location' => 'Stock Location',
+                    'transferred_to' => 'Transferred To',
+                    'stocks' => 'Stocks',
+                    'stock_transfer' => 'Stock Transfer'
+                ],
+            ],
+            'table' => [
+                'header' => [
+                    'select' => 'Select',
+                    'product' => 'Product',
+                    'current_qty' => 'Current Quantity',
+                    'detail' => 'Details',
+                    'remarks' => 'Remarks',
+                    'qty_to_transfer' => 'Qty. to Transfer',
+                    'destination' => 'Destination'
                 ],
             ],
         ],

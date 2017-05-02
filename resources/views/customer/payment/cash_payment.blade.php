@@ -76,7 +76,7 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input type="text" class="form-control" id="inputPaymentAmount" ng-model="total_amount"
+                                                    <input type="text" class="form-control" id="inputPaymentAmount"
                                                            name="total_amount" data-parsley-required="true" fcsa-number>
                                                 </div>
                                             </div>

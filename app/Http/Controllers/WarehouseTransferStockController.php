@@ -7,15 +7,27 @@ use App\Model\StockTransfer;
 use App\Model\Warehouse;
 use App\Model\WarehouseSection;
 
+use App\Services\StockTransferService;
+
 use Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class WarehouseTransferStockController extends Controller
 {
-    public function __construct()
+    private $stockTransferService;
+
+    public function __construct(StockTransferService $stockTransferService)
     {
+        $this->stockTransferService = $stockTransferService;
         $this->middleware('auth');
+    }
+
+    public function show($id)
+    {
+        $stock_transfer = StockTransfer::find($id);
+
+        return view('warehouse.transferstock.show', compact('stock_transfer'));
     }
 
     public function index()
@@ -28,9 +40,20 @@ class WarehouseTransferStockController extends Controller
 
     public function transfer()
     {
+        Log::info('[WarehouseTransferStockController@transfer]');
+
         $warehouseDDL = Warehouse::where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name']);
 
         return view('warehouse.transferstock.create', compact('warehouseDDL'));
+    }
+
+    public function saveTransfer(Request $request)
+    {
+        Log::info('[WarehouseController@saveTransfer]');
+
+        $this->stockTransferService->transfer($request);
+
+        return redirect(route('db'));
     }
 
 }

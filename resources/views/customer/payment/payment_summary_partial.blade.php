@@ -165,7 +165,7 @@
                                         <td class="valign-middle">@{{ item.product.name }}</td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="quantity[]"
-                                                   ng-model="item.quantity" data-parsley-required="true"
+                                                   data-parsley-required="true"
                                                    data-parsley-type="number" readonly>
                                         </td>
                                         <td>
@@ -174,7 +174,7 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control text-right" name="price[]"
-                                                   ng-model="item.price" data-parsley-required="true" readonly
+                                                   ata-parsley-required="true" readonly
                                                    data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$" fcsa-number>
                                         </td>
                                         <td class="text-center">

@@ -801,50 +801,50 @@
 @section('custom_js')
     <script type="application/javascript">
         Vue.component('select2_customer', {
-	        template: '<select><option></option></select>',
-          mounted: function(){
-            var vm = this;
-            $(this.$el)
-              .select2({
-                ajax: {
-                  url: "{{ route('api.customer.search') }}?q=",
-                  dataType: 'json',
-                  data: function(params){
-                    return {
-                      q: params.term,
-                      page: params.page
-                    }
-                  },
-                  processResults: function (data, params) {
-                    params.page = params.page || 1;
-                    var output = [];
-                    _.map(data, function(d){
-                      output.push({id: d.id, text: d.name});
-                    });
-                    return {
-                      results: output
-                    }
-                  }
-                },
-                minimumInputLength: 1
-              })
-              .val(this.value)
-              .trigger('change')
-              .on('change', function(){
-                vm.$emit('input', this.value)
-              })
-          },
-          watch: {
-            value: function(value){
-              $(this.$el).val(value).trigger('change');
+            template: '<select><option></option></select>',
+            mounted: function(){
+                var vm = this;
+                $(this.$el)
+                    .select2({
+                        ajax: {
+                            url: "{{ route('api.customer.search') }}?q=",
+                            dataType: 'json',
+                            data: function(params){
+                                return {
+                                    q: params.term,
+                                    page: params.page
+                                }
+                            },
+                            processResults: function (data, params) {
+                                params.page = params.page || 1;dsdf
+                                var output = [];
+                                _.map(data, function(d){
+                                    output.push({id: d.id, text: d.name});
+                                });
+                                return {
+                                    results: output
+                                }
+                            }
+                        },
+                        minimumInputLength: 1
+                    })
+                    .val(this.value)
+                    .trigger('change')
+                    .on('change', function(){
+                        vm.$emit('input', this.value)
+                    })
             },
-            options: function(options) {
-              $(this.$el).select2({ data: options })
+            watch: {
+                value: function(value){
+                    $(this.$el).val(value).trigger('change');
+                },
+                options: function(options) {
+                    $(this.$el).select2({ data: options })
+                }
+            },
+            destroyed: function(){
+                $(this.$el).off().select2('destroy');
             }
-          },
-          destroyed: function(){
-            $(this.$el).off().select2('destroy');
-          }
         });
 
         var soApp = new Vue({
