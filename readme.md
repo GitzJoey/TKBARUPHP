@@ -47,9 +47,7 @@ $ npm install
 
 Do Mix
 ```
-Windows -> $ npm run dev-windows  
-  
-Linux   -> $ npm run dev-linux
+$ npm run dev
 ```
 
 Rename the .env.example to .env and change setting accordingly.
