@@ -65,6 +65,10 @@ $ php artisan key:generate
 Do Migration and Seeder
 ```
 $ php artisan migrate 
+```
+
+Do Seeder
+```
 $ php artisan db:seed
 ```
 
