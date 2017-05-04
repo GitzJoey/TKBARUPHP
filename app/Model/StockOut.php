@@ -40,6 +40,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @mixin \Eloquent
  * @property int $stock_opname_id
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereStockOpnameId($value)
+ * @property int $stock_trf_id
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOut whereStockTrfId($value)
  */
 class StockOut extends Model
 {

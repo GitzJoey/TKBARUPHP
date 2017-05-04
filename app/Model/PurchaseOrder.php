@@ -73,6 +73,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float $disc_value
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereDiscPercent($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereDiscValue($value)
+ * @property string $internal_remarks
+ * @property string $private_remarks
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder whereInternalRemarks($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder wherePrivateRemarks($value)
  */
 class PurchaseOrder extends Model
 {
