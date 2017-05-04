@@ -113,12 +113,26 @@ class RegisterController extends Controller
         $store_id = 0;
         $store_name = '';
 
-        if ($this->storeService->isEmptyStoreTable()) {
-            $store_mode = 'create';
-        } else if (!empty($req->query('store_mode')) && $req->query('store_mode') == 'create') {
-            $store_mode = 'create';
+        if (!empty($req->query('store_mode'))) {
+            if ($req->query('store_mode') == 'create') {
+                $store_mode = 'create';
+            } else if ($req->query('store_mode') == 'store_pick' && !$this->storeService->isEmptyStoreTable()) {
+                $store_mode = 'store_pick';
+            } else {
+                if ($this->storeService->isEmptyStoreTable()) {
+                    $store_mode = 'create';
+                } else if ($this->storeService->defaultStorePresent()) {
+                    $store_mode = 'use_default';
+                    $store_id = $this->storeService->getDefaultStore()->id;
+                    $store_name = $this->storeService->getDefaultStore()->name;
+                } else {
+                    $store_mode = 'store_pick';
+                }
+            }
         } else {
-            if ($this->storeService->defaultStorePresent()) {
+            if ($this->storeService->isEmptyStoreTable()) {
+                $store_mode = 'create';
+            } else if ($this->storeService->defaultStorePresent()) {
                 $store_mode = 'use_default';
                 $store_id = $this->storeService->getDefaultStore()->id;
                 $store_name = $this->storeService->getDefaultStore()->name;
