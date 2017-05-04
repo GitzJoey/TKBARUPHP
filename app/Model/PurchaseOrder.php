@@ -93,6 +93,8 @@ class PurchaseOrder extends Model
         'walk_in_supplier',
         'walk_in_supplier_detail',
         'remarks',
+        'internal_remarks',
+        'private_remarks',
         'status',
         'supplier_id',
         'vendor_trucking_id',
