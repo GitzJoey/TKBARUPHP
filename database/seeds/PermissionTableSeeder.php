@@ -463,16 +463,16 @@ class PermissionTableSeeder extends Seeder
             [   'name' => 'menu-warehouse_stockopname',
                 'display_name' => '[Warehouse Stock Opname] Show Menu Warehouse Stock Opname',
                 'description' => 'Allowed To See Menu Warehouse Stock Opname In Sidebar' ],
-            // Warehouse -> Stock Transfer
-            [   'name' => 'create-warehouse_stockotransfer',
-                'display_name' => '[Warehouse Stock Transfer] Create Warehouse Stock Transfer',
-                'description' => 'Allowed To Create Warehouse Stock Transfer Data' ],
-            [   'name' => 'read-warehouse_stockotransfer',
-                'display_name' => '[Warehouse Stock Transfer] Read Warehouse Stock Transfer',
-                'description' => 'Allowed To Read Warehouse Stock Transfer Data' ],
-            [   'name' => 'menu-warehouse_stockotransfer',
-                'display_name' => '[Warehouse Stock Transfer] Show Menu Warehouse Stock Transfer',
-                'description' => 'Allowed To See Menu Warehouse Stock Transfer In Sidebar' ],
+            // Warehouse -> Transfer Stock
+            [   'name' => 'create-warehouse_transferstock',
+                'display_name' => '[Warehouse Transfer Stock] Create Warehouse Transfer Stock',
+                'description' => 'Allowed To Create Warehouse Transfer Stock Data' ],
+            [   'name' => 'read-warehouse_transferstock',
+                'display_name' => '[Warehouse Transfer Stock] Read Warehouse Transfer Stock',
+                'description' => 'Allowed To Read Warehouse Transfer Stock Data' ],
+            [   'name' => 'menu-warehouse_transferstock',
+                'display_name' => '[Warehouse Transfer Stock] Show Menu Warehouse Transfer Stock',
+                'description' => 'Allowed To See Menu Warehouse Transfer Stock In Sidebar' ],
             // Bank -> Upload
             [   'name' => 'create-bank_upload',
                 'display_name' => '[Bank Upload] Create Bank Upload',
@@ -483,6 +483,10 @@ class PermissionTableSeeder extends Seeder
             [   'name' => 'menu-bank_upload',
                 'display_name' => '[Bank Upload] Show Menu Bank Upload',
                 'description' => 'Allowed To See Menu Bank Upload In Sidebar' ],
+            // Bank -> Consolidate
+            [   'name' => 'menu-bank_consolidate',
+                'display_name' => '[Bank Consolidate] Show Menu Bank Consolidate',
+                'description' => 'Allowed To See Menu Bank Consolidate In Sidebar' ],
             // Bank -> Giro
             [   'name' => 'create-bank_giro',
                 'display_name' => '[Bank Giro] Create Bank Giro',

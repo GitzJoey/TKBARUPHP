@@ -21,12 +21,12 @@ class RolesTableSeeder extends Seeder
          *  Initializing The First 3 Roles
          *  1. Administrator (All Permissions)
          *  2. User (Only Show Menu Permissions But Not Including Admin Menu)
-         *  3. Customer (Only Show Menu For Customer)
+         *  3. Customer (Only Show Menu For Customer Confirmation And Customer Payment)
          */
 
         $all_permissions = Permission::get();
         $all_menu_permissions = Permission::where('name', 'like', 'menu-%')->get();
-        $all_customer_menu_permissions = Permission::where('name', 'like', 'menu-customer_%')->get();
+        $all_customer_menu_permissions = Permission::whereIn('name', array('menu-customer_confirmation', 'menu-customer_payment'))->get();
 
         $role_admin = new Role;
         $role_admin->name = 'admin';
