@@ -13,20 +13,15 @@ class DefaultStoreTableSeeder extends Seeder
 {
     public function run($storeName = null)
     {
-        $store = [
-            [
-                'name'          => $storeName,
-                'address'       => '',
-                'phone_num'     => '',
-                'fax_num'       => '',
-                'tax_id'        => '0000000000',
-                'status'        => 'STATUS.ACTIVE',
-                'is_default'    => 'YESNOSELECT.YES',
-                'remarks'       => ''
-            ]
-        ];
-        foreach ($store as $key => $value) {
-            Store::create($value);
-        }
+        Store::create([
+            'name'          => $storeName,
+            'address'       => '',
+            'phone_num'     => '',
+            'fax_num'       => '',
+            'tax_id'        => '0000000000',
+            'status'        => 'STATUS.ACTIVE',
+            'is_default'    => 'YESNOSELECT.YES',
+            'remarks'       => ''
+        ]);
     }
 }
