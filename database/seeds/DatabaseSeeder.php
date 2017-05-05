@@ -12,11 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $defaultStore = $this->command->ask('Enter Default Store: ', 'Toko Baru');
-
-        $this->call(DefaultStoreTableSeeder::class, $defaultStore);
-
-        // $this->call(UsersTableSeeder::class);
         $this->call(PermissionTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(DefaultListUnitTableSeeder::class);
