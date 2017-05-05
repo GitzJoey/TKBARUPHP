@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
 
         /* DUMMY DATA */
         if (App::environment('local', 'dev')) {
+
+            $this->command->info('Local/Development Enviroment Detected. Starting Dummy Data Seeder...');
+
             $this->call(BankTableSeeder::class);
             $this->call(ProductTableSeeder::class);
             $this->call(ProductTypeTableSeeder::class);

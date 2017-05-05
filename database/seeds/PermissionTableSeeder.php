@@ -15,603 +15,544 @@ class PermissionTableSeeder extends Seeder
 {
     public function run()
     {
+        /**
+         *  Laratrust Permission Guide
+         *  1. Format is [Permission]-[Module]
+         *  2. Submodule separated by underscore, eg: create-module_submodule
+         *  3. Standard permission is CRUD (Create, Read, Update, Delete)
+         *  4. Custom Permission including
+         *     - Menu -> Able to see the link on the sidebar
+         *     - Reveal -> Reveal all the informations (no asterisk)
+         */
+
         $permission = [
-            [
-                'name' => 'user-list',
-                'display_name' => '[User] Display User Listing',
-                'description' => 'See only Listing Of User'
-            ],
-            [
-                'name' => 'user-create',
+            // User
+            [   'name' => 'create-user',
                 'display_name' => '[User] Create User',
-                'description' => 'Create New User'
-            ],
-            [
-                'name' => 'user-edit',
-                'display_name' => '[User] Edit User',
-                'description' => 'Edit User'
-            ],
-            [
-                'name' => 'user-delete',
+                'description' => 'Allowed To Create User Data' ],
+            [   'name' => 'read-user',
+                'display_name' => '[User] Read User',
+                'description' => 'Allowed To Read User Data' ],
+            [   'name' => 'update-user',
+                'display_name' => '[User] Update User',
+                'description' => 'Allowed To Update User Data' ],
+            [   'name' => 'delete-user',
                 'display_name' => '[User] Delete User',
-                'description' => 'Delete User'
-            ],
-            [
-                'name' => 'role-list',
-                'display_name' => '[Role] Display Role Listing',
-                'description' => 'See only Listing Of Role'
-            ],
-            [
-                'name' => 'role-create',
+                'description' => 'Allowed To Delete User Data' ],
+            [   'name' => 'menu-user',
+                'display_name' => '[User] Show Menu User',
+                'description' => 'Allowed To See Menu User In Sidebar' ],
+            // Role
+            [   'name' => 'create-role',
                 'display_name' => '[Role] Create Role',
-                'description' => 'Create New Role'
-            ],
-            [
-                'name' => 'role-edit',
-                'display_name' => '[Role] Edit Role',
-                'description' => 'Edit Role'
-            ],
-            [
-                'name' => 'role-delete',
+                'description' => 'Allowed To Create Role Data' ],
+            [   'name' => 'read-role',
+                'display_name' => '[Role] Read Role',
+                'description' => 'Allowed To Read Role Data' ],
+            [   'name' => 'update-role',
+                'display_name' => '[Role] Update Role',
+                'description' => 'Allowed To Update Role Data' ],
+            [   'name' => 'delete-role',
                 'display_name' => '[Role] Delete Role',
-                'description' => 'Delete Role'
-            ],
-            [
-                'name' => 'store-list',
-                'display_name' => '[Store] Display Store Listing',
-                'description' => 'See only Listing Of Store'
-            ],
-            [
-                'name' => 'store-create',
+                'description' => 'Allowed To Delete Role Data' ],
+            [   'name' => 'menu-role',
+                'display_name' => '[Role] Show Menu Role',
+                'description' => 'Allowed To See Menu Role In Sidebar' ],
+            // Store
+            [   'name' => 'create-store',
                 'display_name' => '[Store] Create Store',
-                'description' => 'Create New Store'
-            ],
-            [
-                'name' => 'store-edit',
-                'display_name' => '[Store] Edit Store',
-                'description' => 'Edit Store'
-            ],
-            [
-                'name' => 'store-delete',
+                'description' => 'Allowed To Create Store Data' ],
+            [   'name' => 'read-store',
+                'display_name' => '[Store] Read Store',
+                'description' => 'Allowed To Read Store Data' ],
+            [   'name' => 'update-store',
+                'display_name' => '[Store] Update Store',
+                'description' => 'Allowed To Update Store Data' ],
+            [   'name' => 'delete-store',
                 'display_name' => '[Store] Delete Store',
-                'description' => 'Delete Store'
-            ],
-            [
-                'name' => 'unit-list',
-                'display_name' => '[Unit] Display Unit Listing',
-                'description' => 'See only Listing Of Unit'
-            ],
-            [
-                'name' => 'unit-create',
+                'description' => 'Allowed To Delete Store Data' ],
+            [   'name' => 'menu-store',
+                'display_name' => '[Store] Show Menu Store',
+                'description' => 'Allowed To See Menu Store In Sidebar' ],
+            // Unit
+            [   'name' => 'create-unit',
                 'display_name' => '[Unit] Create Unit',
-                'description' => 'Create New Unit'
-            ],
-            [
-                'name' => 'unit-edit',
-                'display_name' => '[Unit] Edit Unit',
-                'description' => 'Edit Unit'
-            ],
-            [
-                'name' => 'unit-delete',
+                'description' => 'Allowed To Create Unit Data' ],
+            [   'name' => 'read-unit',
+                'display_name' => '[Unit] Read Unit',
+                'description' => 'Allowed To Read Unit Data' ],
+            [   'name' => 'update-unit',
+                'display_name' => '[Unit] Update Unit',
+                'description' => 'Allowed To Update Unit Data' ],
+            [   'name' => 'delete-unit',
                 'display_name' => '[Unit] Delete Unit',
-                'description' => 'Delete Unit'
-            ],
-            [
-                'name' => 'currencies-list',
-                'display_name' => '[Currencies] Display Currencies Listing',
-                'description' => 'See only Listing Of Currencies'
-            ],
-            [
-                'name' => 'currencies-create',
+                'description' => 'Allowed To Delete Unit Data' ],
+            [   'name' => 'menu-unit',
+                'display_name' => '[Unit] Show Menu Unit',
+                'description' => 'Allowed To See Menu Unit In Sidebar' ],
+            // Currencies
+            [   'name' => 'create-currencies',
                 'display_name' => '[Currencies] Create Currencies',
-                'description' => 'Create New Currencies'
-            ],
-            [
-                'name' => 'currencies-edit',
-                'display_name' => '[Currencies] Edit Currencies',
-                'description' => 'Edit Currencies'
-            ],
-            [
-                'name' => 'currencies-delete',
+                'description' => 'Allowed To Create Currencies Data' ],
+            [   'name' => 'read-currencies',
+                'display_name' => '[Currencies] Read Currencies',
+                'description' => 'Allowed To Read Currencies Data' ],
+            [   'name' => 'update-currencies',
+                'display_name' => '[Currencies] Update Currencies',
+                'description' => 'Allowed To Update Currencies Data' ],
+            [   'name' => 'delete-currencies',
                 'display_name' => '[Currencies] Delete Currencies',
-                'description' => 'Delete Currencies'
-            ],
-            [
-                'name' => 'settings-list',
-                'display_name' => '[Settings] Display Settings Listing',
-                'description' => 'See only Listing Of Settings'
-            ],
-            [
-                'name' => 'settings-edit',
-                'display_name' => '[Settings] Edit Settings',
-                'description' => 'Edit Settings'
-            ],
-            [
-                'name' => 'phone_provider-list',
-                'display_name' => '[Phone Provider] Display Phone Provider Listing',
-                'description' => 'See only Listing Of Phone Provider'
-            ],
-            [
-                'name' => 'phone_provider-create',
+                'description' => 'Allowed To Delete Currencies Data' ],
+            [   'name' => 'menu-currencies',
+                'display_name' => '[Currencies] Show Menu Currencies',
+                'description' => 'Allowed To See Menu Currencies In Sidebar' ],
+            // Settings
+            [   'name' => 'read-settings',
+                'display_name' => '[Settings] Read Settings',
+                'description' => 'Allowed To Read Settings Data' ],
+            [   'name' => 'update-settings',
+                'display_name' => '[Settings] Update Settings',
+                'description' => 'Allowed To Update Settings Data' ],
+            // Phone Provider
+            [   'name' => 'create-phoneprovider',
                 'display_name' => '[Phone Provider] Create Phone Provider',
-                'description' => 'Create New Phone Provider'
-            ],
-            [
-                'name' => 'phone_provider-edit',
-                'display_name' => '[Phone Provider] Edit Phone Provider',
-                'description' => 'Edit Phone Provider'
-            ],
-            [
-                'name' => 'phone_provider-delete',
+                'description' => 'Allowed To Create Phone Provider Data' ],
+            [   'name' => 'read-phoneprovider',
+                'display_name' => '[Phone Provider] Read Phone Provider',
+                'description' => 'Allowed To Read Phone Provider Data' ],
+            [   'name' => 'update-phoneprovider',
+                'display_name' => '[Phone Provider] Update Phone Provider',
+                'description' => 'Allowed To Update Phone Provider Data' ],
+            [   'name' => 'delete-phoneprovider',
                 'display_name' => '[Phone Provider] Delete Phone Provider',
-                'description' => 'Delete Phone Provider'
-            ],
-            [
-                'name' => 'customer-list',
-                'display_name' => '[Customer] Display Customer Listing',
-                'description' => 'See only Listing Of Customer'
-            ],
-            [
-                'name' => 'customer-create',
+                'description' => 'Allowed To Delete Phone Provider Data' ],
+            [   'name' => 'menu-phoneprovider',
+                'display_name' => '[Phone Provider] Show Menu Phone Provider',
+                'description' => 'Allowed To See Menu Phone Provider In Sidebar' ],
+            // Customer
+            [   'name' => 'create-customer',
                 'display_name' => '[Customer] Create Customer',
-                'description' => 'Create New Customer'
-            ],
-            [
-                'name' => 'customer-edit',
-                'display_name' => '[Customer] Edit Customer',
-                'description' => 'Edit Customer'
-            ],
-            [
-                'name' => 'customer-delete',
+                'description' => 'Allowed To Create Customer Data' ],
+            [   'name' => 'read-customer',
+                'display_name' => '[Customer] Read Customer',
+                'description' => 'Allowed To Read Customer Data' ],
+            [   'name' => 'update-customer',
+                'display_name' => '[Customer] Update Customer',
+                'description' => 'Allowed To Update Customer Data' ],
+            [   'name' => 'delete-customer',
                 'display_name' => '[Customer] Delete Customer',
-                'description' => 'Delete Customer'
-            ],
-            [
-                'name' => 'supplier-list',
-                'display_name' => '[Supplier] Display Supplier Listing',
-                'description' => 'See only Listing Of Supplier'
-            ],
-            [
-                'name' => 'supplier-create',
+                'description' => 'Allowed To Delete Customer Data' ],
+            [   'name' => 'menu-customer',
+                'display_name' => '[Customer] Show Menu Customer',
+                'description' => 'Allowed To See Menu Customer In Sidebar' ],
+            // Supplier
+            [   'name' => 'create-supplier',
                 'display_name' => '[Supplier] Create Supplier',
-                'description' => 'Create New Supplier'
-            ],
-            [
-                'name' => 'supplier-edit',
-                'display_name' => '[Supplier] Edit Supplier',
-                'description' => 'Edit Supplier'
-            ],
-            [
-                'name' => 'supplier-delete',
+                'description' => 'Allowed To Create Supplier Data' ],
+            [   'name' => 'read-supplier',
+                'display_name' => '[Supplier] Read Supplier',
+                'description' => 'Allowed To Read Supplier Data' ],
+            [   'name' => 'update-supplier',
+                'display_name' => '[Supplier] Update Supplier',
+                'description' => 'Allowed To Update Supplier Data' ],
+            [   'name' => 'delete-supplier',
                 'display_name' => '[Supplier] Delete Supplier',
-                'description' => 'Delete Supplier'
-            ],
-            [
-                'name' => 'product-list',
-                'display_name' => '[Product] Display Product Listing',
-                'description' => 'See only Listing Of Product'
-            ],
-            [
-                'name' => 'product-create',
+                'description' => 'Allowed To Delete Supplier Data' ],
+            [   'name' => 'menu-supplier',
+                'display_name' => '[Supplier] Show Menu Supplier',
+                'description' => 'Allowed To See Menu Supplier In Sidebar' ],
+            // Product
+            [   'name' => 'create-product',
                 'display_name' => '[Product] Create Product',
-                'description' => 'Create New Product'
-            ],
-            [
-                'name' => 'product-edit',
-                'display_name' => '[Product] Edit Product',
-                'description' => 'Edit Product'
-            ],
-            [
-                'name' => 'product-delete',
+                'description' => 'Allowed To Create Product Data' ],
+            [   'name' => 'read-product',
+                'display_name' => '[Product] Read Product',
+                'description' => 'Allowed To Read Product Data' ],
+            [   'name' => 'update-product',
+                'display_name' => '[Product] Update Product',
+                'description' => 'Allowed To Update Product Data' ],
+            [   'name' => 'delete-product',
                 'display_name' => '[Product] Delete Product',
-                'description' => 'Delete Product'
-            ],
-            [
-                'name' => 'employee-list',
-                'display_name' => '[Employee] Display Employee Listing',
-                'description' => 'See only Listing Of Employee'
-            ],
-            [
-                'name' => 'employee-create',
-                'display_name' => '[Employee] Create Employee',
-                'description' => 'Create New Employee'
-            ],
-            [
-                'name' => 'employee-edit',
-                'display_name' => '[Employee] Edit Employee',
-                'description' => 'Edit Employee'
-            ],
-            [
-                'name' => 'employee-delete',
-                'display_name' => '[Employee] Delete Employee',
-                'description' => 'Delete Employee'
-            ],
-            [
-                'name' => 'employee_salary-list',
-                'display_name' => '[Employee Salary] List Employee Salary',
-                'description' => 'See only Listing Employee Salary'
-            ],
-            [
-                'name' => 'employee_salary-generate',
-                'display_name' => '[Employee Salary] Generate Salary',
-                'description' => 'Generate Employee Salary'
-            ],
-            [
-                'name' => 'employee_salary-create',
-                'display_name' => '[Employee Salary] Create Employee Salary Record',
-                'description' => 'Create New Employee Salary Record'
-            ],
-            [
-                'name' => 'employee_salary-show',
-                'display_name' => '[Employee Salary] Show Employee Salary Record',
-                'description' => 'Show Employee Salary Record'
-            ],
-            [
-                'name' => 'product_type-list',
-                'display_name' => '[Product Type] Display Product Type Listing',
-                'description' => 'See only Listing Of Product Type'
-            ],
-            [
-                'name' => 'product_type-create',
+                'description' => 'Allowed To Delete Product Data' ],
+            [   'name' => 'menu-product',
+                'display_name' => '[Product] Show Menu Product',
+                'description' => 'Allowed To See Menu Product In Sidebar' ],
+            // Product Type
+            [   'name' => 'create-producttype',
                 'display_name' => '[Product Type] Create Product Type',
-                'description' => 'Create New Product Type'
-            ],
-            [
-                'name' => 'product_type-edit',
-                'display_name' => '[Product Type] Edit Product Type',
-                'description' => 'Edit Product Type'
-            ],
-            [
-                'name' => 'product_type-delete',
+                'description' => 'Allowed To Create Product Type Data' ],
+            [   'name' => 'read-producttype',
+                'display_name' => '[Product Type] Read Product Type',
+                'description' => 'Allowed To Read Product Type Data' ],
+            [   'name' => 'update-producttype',
+                'display_name' => '[Product Type] Update Product Type',
+                'description' => 'Allowed To Update Product Type Data' ],
+            [   'name' => 'delete-producttype',
                 'display_name' => '[Product Type] Delete Product Type',
-                'description' => 'Delete Product Type'
-            ],
-            [
-                'name' => 'warehouse-list',
-                'display_name' => '[Warehouse] Display Warehouse Listing',
-                'description' => 'See only Listing Of Warehouse'
-            ],
-            [
-                'name' => 'warehouse-create',
+                'description' => 'Allowed To Delete Product Type Data' ],
+            [   'name' => 'menu-producttype',
+                'display_name' => '[Product Type] Show Menu Product Type',
+                'description' => 'Allowed To See Menu Product Type In Sidebar' ],
+            // Employee
+            [   'name' => 'create-employee',
+                'display_name' => '[Employee] Create Employee',
+                'description' => 'Allowed To Create Employee Data' ],
+            [   'name' => 'read-employee',
+                'display_name' => '[Employee] Read Employee',
+                'description' => 'Allowed To Read Employee Data' ],
+            [   'name' => 'update-employee',
+                'display_name' => '[Employee] Update Employee',
+                'description' => 'Allowed To Update Employee Data' ],
+            [   'name' => 'delete-employee',
+                'display_name' => '[Employee] Delete Employee',
+                'description' => 'Allowed To Delete Employee Data' ],
+            [   'name' => 'menu-employee',
+                'display_name' => '[Employee] Show Menu Employee',
+                'description' => 'Allowed To See Menu Employee In Sidebar' ],
+            // Employee Salary
+            [   'name' => 'create-employeesalary',
+                'display_name' => '[Employee Salary] Create Employee Salary',
+                'description' => 'Allowed To Create Employee Salary Data' ],
+            [   'name' => 'read-employeesalary',
+                'display_name' => '[Employee Salary] Read Employee Salary',
+                'description' => 'Allowed To Read Employee Salary Data' ],
+            [   'name' => 'update-employeesalary',
+                'display_name' => '[Employee Salary] Update Employee Salary',
+                'description' => 'Allowed To Update Employee Salary Data' ],
+            [   'name' => 'delete-employeesalary',
+                'display_name' => '[Employee Salary] Delete Employee Salary',
+                'description' => 'Allowed To Delete Employee Salary Data' ],
+            [   'name' => 'menu-employeesalary',
+                'display_name' => '[Employee Salary] Show Menu Employee Salary',
+                'description' => 'Allowed To See Menu Employee Salary In Sidebar' ],
+            // Warehouse
+            [   'name' => 'create-warehouse',
                 'display_name' => '[Warehouse] Create Warehouse',
-                'description' => 'Create New Warehouse'
-            ],
-            [
-                'name' => 'warehouse-edit',
-                'display_name' => '[Warehouse] Edit Warehouse',
-                'description' => 'Edit Warehouse'
-            ],
-            [
-                'name' => 'warehouse-delete',
+                'description' => 'Allowed To Create Warehouse Data' ],
+            [   'name' => 'read-warehouse',
+                'display_name' => '[Warehouse] Read Warehouse',
+                'description' => 'Allowed To Read Warehouse Data' ],
+            [   'name' => 'update-warehouse',
+                'display_name' => '[Warehouse] Update Warehouse',
+                'description' => 'Allowed To Update Warehouse Data' ],
+            [   'name' => 'delete-warehouse',
                 'display_name' => '[Warehouse] Delete Warehouse',
-                'description' => 'Delete Warehouse'
-            ],
-            [
-                'name' => 'bank-list',
-                'display_name' => '[Bank] Display Bank Listing',
-                'description' => 'See only Listing Of Bank'
-            ],
-            [
-                'name' => 'bank-create',
+                'description' => 'Allowed To Delete Warehouse Data' ],
+            [   'name' => 'menu-warehouse',
+                'display_name' => '[Warehouse] Show Menu Warehouse',
+                'description' => 'Allowed To See Menu Warehouse In Sidebar' ],
+            // Bank
+            [   'name' => 'create-bank',
                 'display_name' => '[Bank] Create Bank',
-                'description' => 'Create New Bank'
-            ],
-            [
-                'name' => 'bank-edit',
-                'display_name' => '[Bank] Edit Bank',
-                'description' => 'Edit Bank'
-            ],
-            [
-                'name' => 'bank-delete',
+                'description' => 'Allowed To Create Bank Data' ],
+            [   'name' => 'read-bank',
+                'display_name' => '[Bank] Read Bank',
+                'description' => 'Allowed To Read Bank Data' ],
+            [   'name' => 'update-bank',
+                'display_name' => '[Bank] Update Bank',
+                'description' => 'Allowed To Update Bank Data' ],
+            [   'name' => 'delete-bank',
                 'display_name' => '[Bank] Delete Bank',
-                'description' => 'Delete Bank'
-            ],
-            [
-                'name' => 'truck-list',
-                'display_name' => '[Truck] Display Truck Listing',
-                'description' => 'See only Listing Of Truck'
-            ],
-            [
-                'name' => 'truck-create',
+                'description' => 'Allowed To Delete Bank Data' ],
+            [   'name' => 'menu-bank',
+                'display_name' => '[Bank] Show Menu Bank',
+                'description' => 'Allowed To See Menu Bank In Sidebar' ],
+            // Truck
+            [   'name' => 'create-truck',
                 'display_name' => '[Truck] Create Truck',
-                'description' => 'Create New Truck'
-            ],
-            [
-                'name' => 'truck-edit',
-                'display_name' => '[Truck] Edit Truck',
-                'description' => 'Edit Truck'
-            ],
-            [
-                'name' => 'truck-delete',
+                'description' => 'Allowed To Create Truck Data' ],
+            [   'name' => 'read-truck',
+                'display_name' => '[Truck] Read Truck',
+                'description' => 'Allowed To Read Truck Data' ],
+            [   'name' => 'update-truck',
+                'display_name' => '[Truck] Update Truck',
+                'description' => 'Allowed To Update Truck Data' ],
+            [   'name' => 'delete-truck',
                 'display_name' => '[Truck] Delete Truck',
-                'description' => 'Delete Truck'
-            ],
-            [
-                'name' => 'truck_vendor-list',
-                'display_name' => '[Vendor Trucking] Display Vendor Truck Listing',
-                'description' => 'See only Listing Of Vendor Truck'
-            ],
-            [
-                'name' => 'truck_vendor-create',
-                'display_name' => '[Vendor Trucking] Create Vendor Truck',
-                'description' => 'Create New Vendor Truck'
-            ],
-            [
-                'name' => 'truck_vendor-edit',
-                'display_name' => '[Vendor Trucking] Edit Vendor Truck',
-                'description' => 'Edit Vendor Truck'
-            ],
-            [
-                'name' => 'truck_vendor-delete',
-                'display_name' => '[Vendor Trucking] Delete Vendor Truck',
-                'description' => 'Delete Vendor Truck'
-            ],
-            [
-                'name' => 'expense_template-list',
-                'display_name' => '[Expense Template] Display Expense Template Listing',
-                'description' => 'See only Listing Of Expense Template'
-            ],
-            [
-                'name' => 'expense_template-create',
+                'description' => 'Allowed To Delete Truck Data' ],
+            [   'name' => 'menu-truck',
+                'display_name' => '[Truck] Show Menu Truck',
+                'description' => 'Allowed To See Menu Truck In Sidebar' ],
+            // Vendor -> Trucking
+            [   'name' => 'create-vendortrucking',
+                'display_name' => '[Vendor Trucking] Create Vendor Trucking',
+                'description' => 'Allowed To Create Vendor Trucking Data' ],
+            [   'name' => 'read-vendortrucking',
+                'display_name' => '[Vendor Trucking] Read Vendor Trucking',
+                'description' => 'Allowed To Read Vendor Trucking Data' ],
+            [   'name' => 'update-vendortrucking',
+                'display_name' => '[Vendor Trucking] Update Vendor Trucking',
+                'description' => 'Allowed To Update Vendor Trucking Data' ],
+            [   'name' => 'delete-vendortrucking',
+                'display_name' => '[Vendor Trucking] Delete Vendor Trucking',
+                'description' => 'Allowed To Delete Vendor Trucking Data' ],
+            [   'name' => 'menu-vendortrucking',
+                'display_name' => '[Vendor Trucking] Show Menu Vendor Trucking',
+                'description' => 'Allowed To See Menu Vendor Trucking In Sidebar' ],
+            // Expense Template
+            [   'name' => 'create-expensetemplate',
                 'display_name' => '[Expense Template] Create Expense Template',
-                'description' => 'Create New Expense Template'
-            ],
-            [
-                'name' => 'expense_template-edit',
-                'display_name' => '[Expense Template] Edit Expense Template',
-                'description' => 'Edit Expense Template'
-            ],
-            [
-                'name' => 'expense_template-delete',
+                'description' => 'Allowed To Create Expense Template Data' ],
+            [   'name' => 'read-expensetemplate',
+                'display_name' => '[Expense Template] Read Expense Template',
+                'description' => 'Allowed To Read Expense Template Data' ],
+            [   'name' => 'update-expensetemplate',
+                'display_name' => '[Expense Template] Update Expense Template',
+                'description' => 'Allowed To Update Expense Template Data' ],
+            [   'name' => 'delete-expensetemplate',
                 'display_name' => '[Expense Template] Delete Expense Template',
-                'description' => 'Delete Expense Template'
-            ],
-            [
-                'name' => 'po-create',
-                'display_name' => '[Purchase Order] Create PO',
-                'description' => 'Enable Create PO'
-            ],
-            [
-                'name' => 'po-revise',
-                'display_name' => '[Purchase Order] Revise PO',
-                'description' => 'Enable Revise PO'
-            ],
-            [
-                'name' => 'po-payment',
-                'display_name' => '[Purchase Order] Payment PO',
-                'description' => 'Enable Payment PO'
-            ],
-            [
-                'name' => 'po-copy',
-                'display_name' => '[Purchase Order] PO Copy',
-                'description' => 'Enable PO Copy'
-            ],
-            [
-                'name' => 'so-create',
-                'display_name' => '[Sales Order] Create SO',
-                'description' => 'Enable Create SO'
-            ],
-            [
-                'name' => 'so-revise',
-                'display_name' => '[Sales Order] Revise SO',
-                'description' => 'Enable Revise SO'
-            ],
-            [
-                'name' => 'so-payment',
-                'display_name' => '[Sales Order] Payment SO',
-                'description' => 'Enable Payment SO'
-            ],
-            [
-                'name' => 'so-copy',
-                'display_name' => '[Sales Order] SO Copy',
-                'description' => 'Enable SO Copy'
-            ],
-            [
-                'name' => 'today_price-list',
-                'display_name' => '[Today Price] Display Today Price Listing',
-                'description' => 'See only Listing Of Today Price'
-            ],
-            [
-                'name' => 'today_price-create',
-                'display_name' => '[Today Price] Create New Today Price',
-                'description' => 'Create New Today Price'
-            ],
-            [
-                'name' => 'price_level-list',
-                'display_name' => '[Price Level] Display Price Level Listing',
-                'description' => 'See only Listing Of Price Level'
-            ],
-            [
-                'name' => 'price_level-create',
+                'description' => 'Allowed To Delete Expense Template Data' ],
+            [   'name' => 'menu-expensetemplate',
+                'display_name' => '[Expense Template] Show Menu Expense Template',
+                'description' => 'Allowed To See Menu Expense Template In Sidebar' ],
+            // Purchase Order
+            [   'name' => 'create-purchaseorder',
+                'display_name' => '[Purchase Order] Create Purchase Order',
+                'description' => 'Allowed To Create Purchase Order Data' ],
+            [   'name' => 'read-purchaseorder',
+                'display_name' => '[Purchase Order] Read Purchase Order',
+                'description' => 'Allowed To Read Purchase Order Data' ],
+            [   'name' => 'update-purchaseorder',
+                'display_name' => '[Purchase Order] Update Purchase Order',
+                'description' => 'Allowed To Update Purchase Order Data' ],
+            [   'name' => 'menu-purchaseorder_create',
+                'display_name' => '[Purchase Order] Show Menu Purchase Order Create',
+                'description' => 'Allowed To See Menu Purchase Order Create In Sidebar' ],
+            [   'name' => 'menu-purchaseorder_update',
+                'display_name' => '[Purchase Order] Show Menu Purchase Order Update',
+                'description' => 'Allowed To See Menu Purchase Order Update In Sidebar' ],
+            // PO Payment
+            [   'name' => 'read-popayment',
+                'display_name' => '[PO Payment] Read Purchase Order Payment',
+                'description' => 'Allowed To Read Purchase Order Payment Data' ],
+            [   'name' => 'menu-popayment',
+                'display_name' => '[PO Payment] Show Menu Purchase Order Payment',
+                'description' => 'Allowed To See Menu Purchase Order Payment In Sidebar' ],
+            // PO Payment Cash
+            [   'name' => 'create-popaymentcash',
+                'display_name' => '[PO Payment Cash] Create Cash Payment For Purchase Order',
+                'description' => 'Allowed To Create Cash Payment For Purchase Order Data' ],
+            // PO Payment Transfer
+            [   'name' => 'create-popaymenttransfer',
+                'display_name' => '[PO Payment Transfer] Create Transfer Payment For Purchase Order',
+                'description' => 'Allowed To Create Transfer Payment For Purchase Order Data' ],
+            // PO Payment Giro
+            [   'name' => 'create-popaymentgiro',
+                'display_name' => '[PO Payment Giro] Create Giro Payment For Purchase Order',
+                'description' => 'Allowed To Create Giro Payment For Purchase Order Data' ],
+            // PO Copy
+            [   'name' => 'create-pocopy',
+                'display_name' => '[PO Copy] Create Purchase Order Copy',
+                'description' => 'Allowed To Create Purchase Order Copy Data' ],
+            [   'name' => 'read-pocopy',
+                'display_name' => '[PO Copy] Read Purchase Order Copy',
+                'description' => 'Allowed To Read Purchase Order Copy Data' ],
+            [   'name' => 'update-pocopy',
+                'display_name' => '[PO Copy] Update Purchase Order Copy',
+                'description' => 'Allowed To Update Purchase Order Copy Data' ],
+            [   'name' => 'delete-pocopy',
+                'display_name' => '[PO Copy] Delete Purchase Order Copy',
+                'description' => 'Allowed To Delete Purchase Order Copy Data' ],
+            [   'name' => 'menu-pocopy',
+                'display_name' => '[PO Copy] Show Menu Purchase Order Copy',
+                'description' => 'Allowed To See Menu Purchase Order Copy In Sidebar' ],
+            // Sales Order
+            [   'name' => 'create-salesorder',
+                'display_name' => '[Sales Order] Create Sales Order',
+                'description' => 'Allowed To Create Sales Order Data' ],
+            [   'name' => 'read-salesorder',
+                'display_name' => '[Sales Order] Read Sales Order',
+                'description' => 'Allowed To Read Sales Order Data' ],
+            [   'name' => 'update-salesorder',
+                'display_name' => '[Sales Order] Update Sales Order',
+                'description' => 'Allowed To Update Sales Order Data' ],
+            [   'name' => 'menu-salesorder_create',
+                'display_name' => '[Sales Order] Show Menu Sales Order Create',
+                'description' => 'Allowed To See Menu Sales Order Create In Sidebar' ],
+            [   'name' => 'menu-salesorder_update',
+                'display_name' => '[Sales Order] Show Menu Sales Order Update',
+                'description' => 'Allowed To See Menu Sales Order Update In Sidebar' ],
+            // SO Payment
+            [   'name' => 'read-sopayment',
+                'display_name' => '[SO Payment] Read Sales Order Payment',
+                'description' => 'Allowed To Read Sales Order Payment Data' ],
+            [   'name' => 'menu-sopayment',
+                'display_name' => '[SO Payment] Show Menu Sales Order Payment',
+                'description' => 'Allowed To See Menu Sales Order Payment In Sidebar' ],
+            // SO Payment Cash
+            [   'name' => 'create-sopaymentcash',
+                'display_name' => '[SO Payment Cash] Create Cash Payment For Sales Order',
+                'description' => 'Allowed To Create Cash Payment For Sales Order Data' ],
+            // SO Payment Transfer
+            [   'name' => 'create-sopaymenttransfer',
+                'display_name' => '[SO Payment Transfer] Create Transfer Payment For Sales Order',
+                'description' => 'Allowed To Create Transfer Payment For Sales Order Data' ],
+            // SO Payment Giro
+            [   'name' => 'create-sopaymentgiro',
+                'display_name' => '[SO Payment Giro] Create Giro Payment For Sales Order',
+                'description' => 'Allowed To Create Giro Payment For Sales Order Data' ],
+            // SO Copy
+            [   'name' => 'create-socopy',
+                'display_name' => '[SO Copy] Create Sales Order Copy',
+                'description' => 'Allowed To Create Sales Order Copy Data' ],
+            [   'name' => 'read-socopy',
+                'display_name' => '[SO Copy] Read Sales Order Copy',
+                'description' => 'Allowed To Read Sales Order Copy Data' ],
+            [   'name' => 'update-socopy',
+                'display_name' => '[SO Copy] Update Sales Order Copy',
+                'description' => 'Allowed To Update Sales Order Copy Data' ],
+            [   'name' => 'delete-socopy',
+                'display_name' => '[SO Copy] Delete Sales Order Copy',
+                'description' => 'Allowed To Delete Sales Order Copy Data' ],
+            [   'name' => 'menu-socopy',
+                'display_name' => '[SO Copy] Show Menu Sales Order Copy',
+                'description' => 'Allowed To See Menu Sales Order Copy In Sidebar' ],
+            // Today Price
+            [   'name' => 'create-todayprice',
+                'display_name' => '[Today Price] Create Today Price',
+                'description' => 'Allowed To Create Today Price Data' ],
+            [   'name' => 'read-todayprice',
+                'display_name' => '[Today Price] Read Today Price',
+                'description' => 'Allowed To Read Today Price Data' ],
+            [   'name' => 'menu-todayprice',
+                'display_name' => '[Today Price] Show Menu Today Price',
+                'description' => 'Allowed To See Menu Today Price In Sidebar' ],
+            // Price Level
+            [   'name' => 'create-pricelevel',
                 'display_name' => '[Price Level] Create Price Level',
-                'description' => 'Create New Price Level'
-            ],
-            [
-                'name' => 'price_level-edit',
-                'display_name' => '[Price Level] Edit Price Level',
-                'description' => 'Edit Price Level'
-            ],
-            [
-                'name' => 'price_level-delete',
+                'description' => 'Allowed To Create Price Level Data' ],
+            [   'name' => 'read-pricelevel',
+                'display_name' => '[Price Level] Read Price Level',
+                'description' => 'Allowed To Read Price Level Data' ],
+            [   'name' => 'update-pricelevel',
+                'display_name' => '[Price Level] Update Price Level',
+                'description' => 'Allowed To Update Price Level Data' ],
+            [   'name' => 'delete-pricelevel',
                 'display_name' => '[Price Level] Delete Price Level',
-                'description' => 'Delete Price Level'
-            ],
-            [
-                'name' => 'warehouse_input-inflow',
-                'display_name' => '[Warehouse Inflow] Input Warehouse Inflow',
-                'description' => 'Enable Input Warehouse Inflow'
-            ],
-            [
-                'name' => 'warehouse_input-outflow',
-                'display_name' => '[Warehouse Outflow] Input Warehouse Outflow',
-                'description' => 'Enable Input Warehouse Outflow'
-            ],
-            [
-                'name' => 'warehouse_input-stock_opname',
-                'display_name' => '[Warehouse Stock Opname] Input Stock Opname',
-                'description' => 'Enable Input Stock Opname'
-            ],
-            [
-                'name' => 'warehouse_input-transfer_stock',
-                'display_name' => '[Warehouse Transfer Stock] Input Transfer Stock',
-                'description' => 'Enable Input Transfer Stock'
-            ],
-            [
-                'name' => 'bank_data-upload',
-                'display_name' => '[Bank] Upload Bank Data',
-                'description' => 'Enable Upload Bank Data'
-            ],
-            [
-                'name' => 'bank_data-consolidate',
-                'display_name' => '[Bank] Consolidate Bank Data',
-                'description' => 'Enable Consolidate Bank Data'
-            ],
-            [
-                'name' => 'bank_giro-list',
-                'display_name' => '[Bank Giro] Display Giro Listing',
-                'description' => 'See only Listing Of Giro'
-            ],
-            [
-                'name' => 'bank_giro-create',
-                'display_name' => '[Bank Giro] Create Giro',
-                'description' => 'Create Giro'
-            ],
-            [
-                'name' => 'bank_giro-edit',
-                'display_name' => '[Bank Giro] Edit Giro',
-                'description' => 'Edit Giro'
-            ],
-            [
-                'name' => 'bank_giro-delete',
-                'display_name' => '[Bank Giro] Delete Giro',
-                'description' => 'Delete Giro'
-            ],
-            [
-                'name' => 'customer-confirmation',
-                'display_name' => '[Customer] Customer Confirmation',
-                'description' => 'Enable Customer Confirmation'
-            ],
-            [
-                'name' => 'customer-payment',
-                'display_name' => '[Customer] Customer Payment',
-                'description' => 'Enable Customer Payment'
-            ],
-            [
-                'name' => 'customer-approval',
-                'display_name' => '[Customer] Customer Approval',
-                'description' => 'Enable Customer Approval'
-            ],
-            [
-                'name' => 'truck_maintenance-list',
-                'display_name' => '[Truck Maintenance] Display Truck Maintenance Listing',
-                'description' => 'See only Listing Of Truck Maintenance'
-            ],
-            [
-                'name' => 'truck_maintenance-create',
+                'description' => 'Allowed To Delete Price Level Data' ],
+            [   'name' => 'menu-pricelevel',
+                'display_name' => '[Price Level] Show Menu Price Level',
+                'description' => 'Allowed To See Menu Price Level In Sidebar' ],
+            // Warehouse -> Inflow
+            [   'name' => 'create-warehouse_inflow',
+                'display_name' => '[Warehouse Inflow] Create Warehouse Inflow',
+                'description' => 'Allowed To Create Warehouse Inflow Data' ],
+            [   'name' => 'read-warehouse_inflow',
+                'display_name' => '[Warehouse Inflow] Read Warehouse Inflow',
+                'description' => 'Allowed To Read Warehouse Inflow Data' ],
+            [   'name' => 'menu-warehouse_inflow',
+                'display_name' => '[Warehouse Inflow] Show Menu Warehouse Inflow',
+                'description' => 'Allowed To See Menu Warehouse Inflow In Sidebar' ],
+            // Warehouse -> Outflow
+            [   'name' => 'create-warehouse_outflow',
+                'display_name' => '[Warehouse Outflow] Create Warehouse Outflow',
+                'description' => 'Allowed To Create Warehouse Outflow Data' ],
+            [   'name' => 'read-warehouse_outflow',
+                'display_name' => '[Warehouse Outflow] Read Warehouse Outflow',
+                'description' => 'Allowed To Read Warehouse Outflow Data' ],
+            [   'name' => 'menu-warehouse_outflow',
+                'display_name' => '[Warehouse Outflow] Show Menu Warehouse Outflow',
+                'description' => 'Allowed To See Menu Warehouse Outflow In Sidebar' ],
+            // Warehouse -> Stock Opname
+            [   'name' => 'create-warehouse_stockopname',
+                'display_name' => '[Warehouse Stock Opname] Create Warehouse Stock Opname',
+                'description' => 'Allowed To Create Warehouse Stock Opname Data' ],
+            [   'name' => 'read-warehouse_stockopname',
+                'display_name' => '[Warehouse Stock Opname] Read Warehouse Stock Opname',
+                'description' => 'Allowed To Read Warehouse Stock Opname Data' ],
+            [   'name' => 'menu-warehouse_stockopname',
+                'display_name' => '[Warehouse Stock Opname] Show Menu Warehouse Stock Opname',
+                'description' => 'Allowed To See Menu Warehouse Stock Opname In Sidebar' ],
+            // Warehouse -> Transfer Stock
+            [   'name' => 'create-warehouse_transferstock',
+                'display_name' => '[Warehouse Transfer Stock] Create Warehouse Transfer Stock',
+                'description' => 'Allowed To Create Warehouse Transfer Stock Data' ],
+            [   'name' => 'read-warehouse_transferstock',
+                'display_name' => '[Warehouse Transfer Stock] Read Warehouse Transfer Stock',
+                'description' => 'Allowed To Read Warehouse Transfer Stock Data' ],
+            [   'name' => 'menu-warehouse_transferstock',
+                'display_name' => '[Warehouse Transfer Stock] Show Menu Warehouse Transfer Stock',
+                'description' => 'Allowed To See Menu Warehouse Transfer Stock In Sidebar' ],
+            // Bank -> Upload
+            [   'name' => 'create-bank_upload',
+                'display_name' => '[Bank Upload] Create Bank Upload',
+                'description' => 'Allowed To Create Bank Upload Data' ],
+            [   'name' => 'read-bank_upload',
+                'display_name' => '[Bank Upload] Read Bank Upload',
+                'description' => 'Allowed To Read Bank Upload Data' ],
+            [   'name' => 'menu-bank_upload',
+                'display_name' => '[Bank Upload] Show Menu Bank Upload',
+                'description' => 'Allowed To See Menu Bank Upload In Sidebar' ],
+            // Bank -> Consolidate
+            [   'name' => 'menu-bank_consolidate',
+                'display_name' => '[Bank Consolidate] Show Menu Bank Consolidate',
+                'description' => 'Allowed To See Menu Bank Consolidate In Sidebar' ],
+            // Bank -> Giro
+            [   'name' => 'create-bank_giro',
+                'display_name' => '[Bank Giro] Create Bank Giro',
+                'description' => 'Allowed To Create Bank Giro Data' ],
+            [   'name' => 'read-bank_giro',
+                'display_name' => '[Bank Giro] Read Bank Giro',
+                'description' => 'Allowed To Read Bank Giro Data' ],
+            [   'name' => 'update-bank_giro',
+                'display_name' => '[Bank Giro] Update Bank Giro',
+                'description' => 'Allowed To Update Bank Giro Data' ],
+            [   'name' => 'delete-bank_giro',
+                'display_name' => '[Bank Giro] Delete Bank Giro',
+                'description' => 'Allowed To Delete Bank Giro Data' ],
+            [   'name' => 'menu-bank_giro',
+                'display_name' => '[Bank Giro] Show Menu Bank Giro',
+                'description' => 'Allowed To See Menu Bank Giro In Sidebar' ],
+            // Truck -> Maintenance
+            [   'name' => 'create-truck_maintenance',
                 'display_name' => '[Truck Maintenance] Create Truck Maintenance',
-                'description' => 'Create New Truck Maintenance'
-            ],
-            [
-                'name' => 'truck_maintenance-edit',
-                'display_name' => '[Truck Maintenance] Edit Truck Maintenance',
-                'description' => 'Edit Truck Maintenance'
-            ],
-            [
-                'name' => 'truck_maintenance-delete',
+                'description' => 'Allowed To Create Truck Maintenance Data' ],
+            [   'name' => 'read-truck_maintenance',
+                'display_name' => '[Truck Maintenance] Read Truck Maintenance',
+                'description' => 'Allowed To Read Truck Maintenance Data' ],
+            [   'name' => 'update-truck_maintenance',
+                'display_name' => '[Truck Maintenance] Update Truck Maintenance',
+                'description' => 'Allowed To Update Truck Maintenance Data' ],
+            [   'name' => 'delete-truck_maintenance',
                 'display_name' => '[Truck Maintenance] Delete Truck Maintenance',
-                'description' => 'Delete Truck Maintenance'
-            ],
-            [
-                'name' => 'report-user',
-                'display_name' => '[Report] Generate Report User',
-                'description' => 'Generate Report User'
-            ],
-            [
-                'name' => 'report-role',
-                'display_name' => '[Report] Generate Report Role',
-                'description' => 'Generate Report Role'
-            ],
-            [
-                'name' => 'report-store',
-                'display_name' => '[Report] Generate Report Store',
-                'description' => 'Generate Report Store'
-            ],
-            [
-                'name' => 'report-unit',
-                'display_name' => '[Report] Generate Report Unit',
-                'description' => 'Generate Report Unit'
-            ],
-            [
-                'name' => 'report-phone_provider',
-                'display_name' => '[Report] Generate Report Phone Provider',
-                'description' => 'Generate Report Phone Provider'
-            ],
-            [
-                'name' => 'report-settings',
-                'display_name' => '[Report] Generate Report Settings',
-                'description' => 'Generate Report Settings'
-            ],
-            [
-                'name' => 'report-supplier',
-                'display_name' => '[Report] Generate Report Supplier',
-                'description' => 'Generate Report Supplier'
-            ],
-            [
-                'name' => 'report-customer',
-                'display_name' => '[Report] Generate Report Customer',
-                'description' => 'Generate Report Customer'
-            ],
-            [
-                'name' => 'report-product',
-                'display_name' => '[Report] Generate Report Product',
-                'description' => 'Generate Report Product'
-            ],
-            [
-                'name' => 'report-product_type',
-                'display_name' => '[Report] Generate Report Product Type',
-                'description' => 'Generate Report Product Type'
-            ],
-            [
-                'name' => 'report-bank',
-                'display_name' => '[Report] Generate Report Bank',
-                'description' => 'Generate Report Bank'
-            ],
-            [
-                'name' => 'report-warehouse',
-                'display_name' => '[Report] Generate Report Warehouse',
-                'description' => 'Generate Report Warehouse'
-            ],
-            [
-                'name' => 'report-truck',
-                'display_name' => '[Report] Generate Report Truck',
-                'description' => 'Generate Report Truck'
-            ],
-            [
-                'name' => 'report-truck_maintenance',
-                'display_name' => '[Report] Generate Report Truck Maintenance',
-                'description' => 'Generate Report Truck Maintenance'
-            ],
-            [
-                'name' => 'report-vendor_trucking',
-                'display_name' => '[Report] Generate Report Vendor Trucking',
-                'description' => 'Generate Report Vendor Trucking'
-            ],
-            [
-                'name' => 'report-po',
-                'display_name' => '[Report] Generate Report PO',
-                'description' => 'Generate Report PO'
-            ],
-            [
-                'name' => 'report-so',
-                'display_name' => '[Report] Generate Report Sales',
-                'description' => 'Generate Report Sales'
-            ],
-            [
-                'name' => 'report-stock_history',
-                'display_name' => '[Report] Generate Report Stock History',
-                'description' => 'Generate Report Stock History'
-            ],
+                'description' => 'Allowed To Delete Truck Maintenance Data' ],
+            [   'name' => 'menu-truck_maintenance',
+                'display_name' => '[Truck Maintenance] Show Menu Truck Maintenance',
+                'description' => 'Allowed To See Menu Truck Maintenance In Sidebar' ],
+            // Report -> Transaction
+            [   'name' => 'menu-report_transaction',
+                'display_name' => '[Report Transaction] Show Menu Report Transaction',
+                'description' => 'Allowed To See Menu Report Transaction In Sidebar' ],
+            // Report -> Monitoring
+            [   'name' => 'menu-report_monitoring',
+                'display_name' => '[Report Monitoring] Show Menu Report Monitoring',
+                'description' => 'Allowed To See Menu Report Monitoring In Sidebar' ],
+            // Report -> Tax
+            [   'name' => 'menu-report_tax',
+                'display_name' => '[Report Tax] Show Menu Report Tax',
+                'description' => 'Allowed To See Menu Report Tax In Sidebar' ],
+            // Report -> Master
+            [   'name' => 'menu-report_master',
+                'display_name' => '[Report Master] Show Menu Report Master',
+                'description' => 'Allowed To See Menu Report Master In Sidebar' ],
+            // Report -> Admin
+            [   'name' => 'menu-report_admin',
+                'display_name' => '[Report Admin] Show Menu Report Admin',
+                'description' => 'Allowed To See Menu Report Admin In Sidebar' ],
+            // Customer -> Confirmation
+            [   'name' => 'menu-customer_confirmation',
+                'display_name' => '[Customer Confirmation] Show Menu Customer Confirmation',
+                'description' => 'Allowed To See Menu Customer Confirmation In Sidebar' ],
+            // Customer -> Payment
+            [   'name' => 'menu-customer_payment',
+                'display_name' => '[Customer Payment] Show Menu Customer Payment',
+                'description' => 'Allowed To See Menu Customer Payment In Sidebar' ],
+            // Customer -> Approval
+            [   'name' => 'menu-customer_approval',
+                'display_name' => '[Customer Approval] Show Menu Customer Approval',
+                'description' => 'Allowed To See Menu Customer Approval In Sidebar' ],
         ];
+
         foreach ($permission as $key => $value) {
             Permission::create($value);
         }

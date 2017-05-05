@@ -52,7 +52,7 @@
                                 <td>@lang('lookup.'.Auth::user()->userdetail->type)</td>
                             </tr>
                             <tr>
-                                <td>@lang('user.profile.field.allow_login')</td>
+                                <td style="vertical-align: middle;">@lang('user.profile.field.allow_login')</td>
                                 <td>
                                     <div class="checkbox icheck">
                                         <label>

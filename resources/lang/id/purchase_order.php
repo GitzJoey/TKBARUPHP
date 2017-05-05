@@ -127,6 +127,11 @@ return [
         ],
     ],
     'revise' => [
+        'tab' => [
+            'remarks' => 'Keterangan',
+            'internal' => 'Internal',
+            'private' => 'Privat',
+        ],
         'table' => [
             'item' => [
                 'header' => [
@@ -234,6 +239,11 @@ return [
             'warehouse' => 'Gudang',
             'vendor_trucking' => 'Layanan Angkutan',
             'po_status' => 'Status',
+        ],
+        'tab' => [
+            'remarks' => 'Keterangan',
+            'internal' => 'Internal',
+            'private' => 'Privat',
         ],
         'table' => [
             'item' => [

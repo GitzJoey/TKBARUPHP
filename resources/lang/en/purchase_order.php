@@ -29,6 +29,11 @@ return [
             'warehouse' => 'Warehouse',
             'vendor_trucking' => 'Vendor Trucking',
         ],
+        'tab' => [
+            'remarks' => 'Remarks',
+            'internal' => 'Internal',
+            'private' => 'Private',
+        ],
         'table' => [
             'item' => [
                 'header' => [
@@ -114,6 +119,11 @@ return [
             'shipping_date' => 'Shipping Date',
             'warehouse' => 'Warehouse',
             'vendor_trucking' => 'Vendor Trucking',
+        ],
+        'tab' => [
+            'remarks' => 'Remarks',
+            'internal' => 'Internal',
+            'private' => 'Private',
         ],
         'table' => [
             'item' => [

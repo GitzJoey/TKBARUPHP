@@ -22,28 +22,28 @@
     <div class="row">
 
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3>150</h3>
-                    <p>&nbsp;&nbsp;&nbsp;</p>
+            <div class="info-box bg-blue" id="last-opname">
+                <span class="info-box-icon"><i class="fa fa-list-alt"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Last opname</span>
+                    <span class="info-box-number">@{{ last_opname_humanize }}</span>
+                    <span class="info-box-number">@{{ last_opname }}</span>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-ios-disc"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <!-- /.info-box-content -->
             </div>
         </div>
 
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-green">
-                <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>&nbsp;&nbsp;&nbsp;</p>
+            <div class="info-box bg-red" id="last-bank-upload">
+                <span class="info-box-icon"><i class="fa fa-list-alt"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Last Bank Upload</span>
+                    <span class="info-box-number">@{{ last_bank_upload_humanize }}</span>
+                    <span class="info-box-number">@{{ last_bank_upload }}</span>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-ios-stats"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <!-- /.info-box-content -->
             </div>
         </div>
 
@@ -142,7 +142,7 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body" style="display: block;">
+                <div class="box-body">
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -164,7 +164,7 @@
                     <!-- /.table-responsive -->
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix" style="display: block;">
+                <div class="box-footer clearfix">
                     <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Purchase Orders</a>
                 </div>
                 <!-- /.box-footer -->
@@ -192,7 +192,7 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body" style="display: block;">
+                <div class="box-body">
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -214,13 +214,53 @@
                     <!-- /.table-responsive -->
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix" style="display: block;">
+                <div class="box-footer clearfix">
                     <a href="{{ route('db.so.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Sales Orders</a>
                 </div>
                 <!-- /.box-footer -->
             </div>
         </div>
 
+    </div>
+
+    <style>
+
+    </style>
+
+    <div class="row">
+        <div class="col-lg-6 col-xs-6" id="almost-due-giro">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Almost Due Giro</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item" v-for="dueGiro in dueGiros">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div style="font-weight: 600">@{{ dueGiro.bank.name }}</div>
+                                    <span style="font-size: smaller;font-weight: bold;color: black;display: block">@{{ dueGiro.printed_name }}</span>
+                                    <span style="font-size: smaller">Serial Number: @{{ dueGiro.serial_number }}</span>
+                                </div>
+                                <div class="col-md-4" style="font-size: large; padding: 15px">@{{ dueGiro.amount }}</div>
+                            </div>
+                        </li>
+                        <!-- /.item -->
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="{{ route('db.bank.giro') }}" class="uppercase">View All Giro</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
     </div>
 
     @for ($i = 0; $i < 100; $i++)
@@ -369,7 +409,7 @@
                 });
             }
 
-            var app = new Vue({
+            new Vue({
                 el: '#due-purchase-order',
                 data: {
                     duePurchaseOrders: [],
@@ -398,7 +438,7 @@
                             // get body data
                             this.duePurchaseOrders = response.data;
 
-                        }, response => {
+                    }, response => {
 
                             // error callback
 
@@ -410,7 +450,7 @@
                 }
             });
 
-            var app = new Vue({
+            new Vue({
                 el: '#due-sales-order',
                 data: {
                     dueSalesOrders: [],
@@ -439,7 +479,7 @@
                             // get body data
                             this.dueSalesOrders = response.data;
 
-                            }, response => {
+                    }, response => {
 
                             // error callback
 
@@ -450,6 +490,94 @@
                     }
                 }
             });
+
+            new Vue({
+                el: '#last-opname',
+                data: {
+                    last_opname_humanize: '',
+                    last_opname: '',
+                },
+                mounted() {
+                    return this.fetchLastOpname();
+                },
+                methods: {
+                    fetchLastOpname: function() {
+
+                        this.$http.get('{{ route('api.warehouse.stock_opname.last') }}').then(response => {
+
+                        // get body data
+                        this.last_opname = response.data;
+                        if(this.last_opname.length > 0) {
+                            this.last_opname_humanize = moment(this.last_opname[0].opname_date).fromNow();
+                            this.last_opname = moment(this.last_opname[0].opname_date).format('YYYY-MM-DD');
+                        }
+
+                    }, response => {
+
+                            // error callback
+
+                        });
+                    }
+                }
+            });
+
+            new Vue({
+                el: '#last-bank-upload',
+                data: {
+                    last_bank_upload_humanize: '',
+                    last_bank_upload: '',
+                },
+                mounted() {
+                    return this.fetchLastBankUpload();
+                },
+                methods: {
+                    fetchLastBankUpload: function() {
+
+                        this.$http.get('{{ route('api.bank.upload.last') }}').then(response => {
+
+                        // get body data
+                        this.last_bank_upload = response.data;
+
+                        if(this.last_bank_upload.length > 0) {
+                            this.last_bank_upload_humanize = moment(this.last_bank_upload[0].created_at).fromNow();
+                            this.last_bank_upload = moment(this.last_bank_upload[0].created_at).format('YYYY-MM-DD');
+                        }
+
+                    }, response => {
+
+                            // error callback
+
+                        });
+                    }
+                }
+            });
+
+
+            new Vue({
+                el: '#almost-due-giro',
+                data: {
+                    dueGiros: [],
+                },
+                mounted() {
+                    return this.fetchDueGiros();
+                },
+                methods: {
+                    fetchDueGiros: function() {
+
+                        this.$http.get('{{ route('api.giro.due_giro') }}').then(response => {
+
+                            // get body data
+                            this.dueGiros = response.data;
+
+                    }, response => {
+
+                            // error callback
+
+                        });
+                    }
+                }
+            });
+
 
         });
     </script>

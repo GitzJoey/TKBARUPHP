@@ -816,7 +816,7 @@
                                 }
                             },
                             processResults: function (data, params) {
-                                params.page = params.page || 1;dsdf
+                                params.page = params.page || 1;
                                 var output = [];
                                 _.map(data, function(d){
                                     output.push({id: d.id, text: d.name});
@@ -834,112 +834,312 @@
                         vm.$emit('input', this.value)
                     })
             },
-            watch: {
-                value: function(value){
-                    $(this.$el).val(value).trigger('change');
-                },
-                options: function(options) {
-                    $(this.$el).select2({ data: options })
-                }
-            },
             destroyed: function(){
                 $(this.$el).off().select2('destroy');
             }
         });
 
         var soApp = new Vue({
-        el: '#soVue',
-        data: {
-            vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
-            customerTypeDDL: JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}'),
-            expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
-            warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-            productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
-            stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
-            soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
-            SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
-            defaultTabLabel: '@lang('sales_order.create.tab.sales')'
-        },
-        methods: {
-            discountPercentToNominal: function(item, discount){
-                var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
-                if( disc_value % 1 !== 0 )
-                    disc_value = disc_value.toFixed(2);
-                discount.disc_value = disc_value;
+            el: '#soVue',
+            data: {
+                vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
+                customerTypeDDL: JSON.parse('{!! htmlspecialchars_decode($customerTypeDDL) !!}'),
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+                stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
+                soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
+                SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
+                defaultTabLabel: '@lang('sales_order.create.tab.sales')'
             },
-            discountNominalToPercent: function(item, discount){
-                var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
-                if( disc_percent % 1 !== 0 )
-                    disc_percent = disc_percent.toFixed(2);
-                discount.disc_percent = disc_percent;
-            },
-            discountItemSubTotal: function (discounts) {
-                var result = 0;
-                _.forEach(discounts, function (discount) {
-                    result += parseFloat(discount.disc_value);
-                });
-                if( result % 1 !== 0 )
-                    result = result.toFixed(2);
-                return result;
-            },
-            discountTotal: function (index) {
-                var vm = this;
-                var result = 0;
-                _.forEach(vm.SOs[index].items, function (item, key) {
-                    _.forEach(item.discounts, function (discount) {
+            methods: {
+                discountPercentToNominal: function(item, discount){
+                    var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
+                    if( disc_value % 1 !== 0 )
+                        disc_value = disc_value.toFixed(2);
+                    discount.disc_value = disc_value;
+                },
+                discountNominalToPercent: function(item, discount){
+                    var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
+                    if( disc_percent % 1 !== 0 )
+                        disc_percent = disc_percent.toFixed(2);
+                    discount.disc_percent = disc_percent;
+                },
+                discountItemSubTotal: function (discounts) {
+                    var result = 0;
+                    _.forEach(discounts, function (discount) {
                         result += parseFloat(discount.disc_value);
                     });
-                });
-                return result;
-            },
-            setSOCode: function(so){
-                this.$http.get('{{ route('api.so.code') }}').then(function(data){
-                    so.so_code = data.data;
-                });
-            },
-            insertTab: function(SOs){
-                var vm = this;
+                    if( result % 1 !== 0 )
+                        result = result.toFixed(2);
+                    return result;
+                },
+                discountTotal: function (index) {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.SOs[index].items, function (item, key) {
+                        _.forEach(item.discounts, function (discount) {
+                            result += parseFloat(discount.disc_value);
+                        });
+                    });
+                    return result;
+                },
+                setSOCode: function(so){
+                    this.$http.get('{{ route('api.so.code') }}').then(function(data){
+                        so.so_code = data.data;
+                    });
+                },
+                insertTab: function(SOs){
+                    var vm = this;
 
-                if(!$("#so-form").parsley().validate()){
-                    return;
-                }
+                    if(!$("#so-form").parsley().validate()){
+                        return;
+                    }
 
-                var so = {
-                    disc_percent : 0,
-                    disc_value : 0,
-                    so_code: '',
-                    customer_type: {
-                        code: ''
-                    },
-                    customer: {
-                        id: '',
-                        price_level: {
+                    var so = {
+                        disc_percent : 0,
+                        disc_value : 0,
+                        so_code: '',
+                        customer_type: {
+                            code: ''
+                        },
+                        customer: {
+                            id: '',
+                            price_level: {
+                                name: ''
+                            }
+                        },
+                        sales_type: {
+                            code: ''
+                        },
+                        warehouse: {
+                            id: 0
+                        },
+                        vendorTrucking: {
+                            id: 0,
                             name: ''
+                        },
+                        product: {
+                            id: ''
+                        },
+                        stock: {
+                            id: ''
+                        },
+                        items : [],
+                        expenses: []
+                    };
+
+                    vm.setSOCode(so);
+                    SOs.push(so);
+
+                    $(function () {
+                        $(".inputSoDate").datetimepicker({
+                            format: "DD-MM-YYYY hh:mm A",
+                            defaultDate: moment()
+                        });
+                        $(".inputShippingDate").datetimepicker({
+                            format: "DD-MM-YYYY hh:mm A",
+                            defaultDate: moment()
+                        });
+                    });
+                },
+                grandTotal: function (index) {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.SOs[index].items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                },
+                expenseTotal: function (index) {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.SOs[index].expenses, function (expense, key) {
+                        if(expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numeral().unformat(expense.amount));
+                        else
+                            result -= parseInt(numeral().unformat(expense.amount));
+                    });
+                    return result;
+                },
+                discountTotalPercentToNominal: function(index){
+                    var vm = this;
+
+                    var grandTotal = 0;
+                    _.forEach(vm.SOs[index].items, function (item, key) {
+                        grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+
+                    var discountTotal = 0;
+                    _.forEach(vm.SOs[index].items, function (item, key) {
+                        _.forEach(item.discounts, function (discount) {
+                            discountTotal += parseFloat(discount.disc_value);
+                        });
+                    });
+
+                    var expenseTotal = 0;
+                    _.forEach(vm.SOs[index].expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                        else
+                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                    });
+
+                    var disc_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.SOs[index].disc_percent / 100 );
+                    if( disc_value % 1 !== 0 )
+                        disc_value = disc_value.toFixed(2);
+                    vm.SOs[index].disc_value = disc_value;
+                },
+                discountTotalNominalToPercent: function(index){
+                    var vm = this;
+
+                    var grandTotal = 0;
+                    _.forEach(vm.SOs[index].items, function (item, key) {
+                        grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+
+                    var discountTotal = 0;
+                    _.forEach(vm.SOs[index].items, function (item, key) {
+                        _.forEach(item.discounts, function (discount) {
+                            discountTotal += parseFloat(discount.disc_value);
+                        });
+                    });
+
+                    var expenseTotal = 0;
+                    _.forEach(vm.SOs[index].expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                        else
+                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                    });
+
+                    var disc_percent = vm.SOs[index].disc_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
+                    if( disc_percent % 1 !== 0 )
+                        disc_percent = disc_percent.toFixed(2);
+                    vm.SOs[index].disc_percent = disc_percent;
+                },
+                insertProduct: function (index, product) {
+                    var vm = this;
+                    if(product.id != ''){
+                        var item_init_discount = [];
+                        item_init_discount.push({
+                            disc_percent : 0,
+                            disc_value : 0,
+                        });
+                        vm.SOs[index].items.push({
+                            stock_id: 0,
+                            product: _.cloneDeep(product),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(product.product_units, function(unit) {
+                                return unit.is_base == 1
+                            })),
+                            quantity: 0,
+                            price: 0,
+                            discounts: item_init_discount,
+                        });
+                    }
+                },
+                insertStock: function (index, stock) {
+                    var vm = this;
+                    if(stock.id != ''){
+                        var stock_price = _.find(stock.today_prices, function (price) {
+                            return price.price_level_id === vm.SOs[index].customer.price_level_id;
+                        });
+                        var item_init_discount = [];
+                        item_init_discount.push({
+                            disc_percent : 0,
+                            disc_value : 0,
+                        });
+
+                        vm.SOs[index].items.push({
+                            stock_id: stock.id,
+                            product: _.cloneDeep(stock.product),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(stock.product.product_units, function(unit) {
+                                return unit.is_base == 1
+                            })),
+                            quantity: 0,
+                            price: stock_price ? stock_price.price : 0,
+                            discounts: item_init_discount,
+                        });
+                    }
+                },
+                removeItem: function (SOIndex, index) {
+                    this.SOs[SOIndex].items.splice(index, 1);
+                },
+                insertDiscount: function (item) {
+                    item.discounts.push({
+                        disc_percent : 0,
+                        disc_value : 0,
+                    });
+                },
+                removeDiscount: function (SOIndex, index, discountIndex) {
+                    var vm = this;
+                    this.SOs[SOIndex].items[index].discounts.splice(discountIndex, 1);
+                },
+                insertDefaultExpense: function (SOIndex, customer) {
+                    var vm = this;
+                    if(customer.id != ''){
+                        vm.SOs[SOIndex].expenses = [];
+                        for(var i = 0; i < customer.expense_templates.length; i++){
+                            vm.SOs[SOIndex].expenses.push({
+                                name: customer.expense_templates[i].name,
+                                type: {
+                                    code: customer.expense_templates[i].type,
+                                    description: _.find(expenseTypes, function(expenseType){ return expenseType.code === customer.expense_templates[i].type})
+                                },
+                                is_internal_expense: customer.expense_templates[i].is_internal_expense == 1,
+                                amount: numeral(customer.expense_templates[i].amount).format('0,0'),
+                                remarks: customer.expense_templates[i].remarks
+                            });
                         }
-                    },
-                    sales_type: {
-                        code: ''
-                    },
-                    warehouse: {
-                        id: 0
-                    },
-                    vendorTrucking: {
-                        id: 0,
-                        name: ''
-                    },
-                    product: {
-                        id: ''
-                    },
-                    stock: {
-                        id: ''
-                    },
-                    items : [],
-                    expenses: []
-                };
 
-                vm.setSOCode(so);
-                SOs.push(so);
+                        $(function () {
+                            $('input[type="checkbox"], input[type="radio"]').iCheck({
+                                checkboxClass: 'icheckbox_square-blue',
+                                radioClass: 'iradio_square-blue'
+                            });
+                        });
+                    }
+                    else{
+                        vm.SOs[SOIndex].expenses = [];
+                    }
+                },
+                insertExpense: function (index) {
+                    var vm = this;
+                    this.SOs[index].expenses.push({
+                        name: '',
+                        type: {
+                            code: ''
+                        },
+                        is_internal_expense: false,
+                        amount: 0,
+                        remarks: ''
+                    });
 
+                    $(function () {
+                        $('input[type="checkbox"], input[type="radio"]').iCheck({
+                            checkboxClass: 'icheckbox_square-blue',
+                            radioClass: 'iradio_square-blue'
+                        });
+                    });
+                },
+                removeExpense: function (SOIndex, index) {
+                    this.SOs[SOIndex].expenses.splice(index, 1);
+                },
+            },
+            updated: function(){
+                var vm = this;
                 $(function () {
                     $(".inputSoDate").datetimepicker({
                         format: "DD-MM-YYYY hh:mm A",
@@ -950,290 +1150,35 @@
                         defaultDate: moment()
                     });
                 });
-            },
-            grandTotal: function (index) {
-                var vm = this;
-                var result = 0;
-                _.forEach(vm.SOs[index].items, function (item, key) {
-                    result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                return result;
-            },
-            expenseTotal: function (index) {
-                var vm = this;
-                var result = 0;
-                _.forEach(vm.SOs[index].expenses, function (expense, key) {
-                    if(expense.type.code === 'EXPENSETYPE.ADD')
-                        result += parseInt(numeral().unformat(expense.amount));
-                    else
-                        result -= parseInt(numeral().unformat(expense.amount));
-                });
-                return result;
-            },
-            discountTotalPercentToNominal: function(index){
-                var vm = this;
-                
-                var grandTotal = 0;
-                _.forEach(vm.SOs[index].items, function (item, key) {
-                    grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                
-                var discountTotal = 0;
-                _.forEach(vm.SOs[index].items, function (item, key) {
-                    _.forEach(item.discounts, function (discount) {
-                        discountTotal += parseFloat(discount.disc_value);
-                    });
-                });
-                
-                var expenseTotal = 0;
-                _.forEach(vm.SOs[index].expenses, function (expense, key) {
-                    if (expense.type.code === 'EXPENSETYPE.ADD')
-                        expenseTotal += parseInt(numeral().unformat(expense.amount));
-                    else
-                        expenseTotal -= parseInt(numeral().unformat(expense.amount));
-                });
-                
-                var disc_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.SOs[index].disc_percent / 100 );
-                if( disc_value % 1 !== 0 )
-                    disc_value = disc_value.toFixed(2);
-                vm.SOs[index].disc_value = disc_value;
-            },
-            discountTotalNominalToPercent: function(index){
-                var vm = this;
-                
-                var grandTotal = 0;
-                _.forEach(vm.SOs[index].items, function (item, key) {
-                    grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
-                });
-                
-                var discountTotal = 0;
-                _.forEach(vm.SOs[index].items, function (item, key) {
-                    _.forEach(item.discounts, function (discount) {
-                        discountTotal += parseFloat(discount.disc_value);
-                    });
-                });
-                
-                var expenseTotal = 0;
-                _.forEach(vm.SOs[index].expenses, function (expense, key) {
-                    if (expense.type.code === 'EXPENSETYPE.ADD')
-                        expenseTotal += parseInt(numeral().unformat(expense.amount));
-                    else
-                        expenseTotal -= parseInt(numeral().unformat(expense.amount));
-                });
-                
-                var disc_percent = vm.SOs[index].disc_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
-                if( disc_percent % 1 !== 0 )
-                    disc_percent = disc_percent.toFixed(2);
-                vm.SOs[index].disc_percent = disc_percent;
-            },
-            insertProduct: function (index, product) {
-                var vm = this;
-                if(product.id != ''){
-                    var item_init_discount = [];
-                    item_init_discount.push({
-                        disc_percent : 0,
-                        disc_value : 0,
-                    });
-                    vm.SOs[index].items.push({
-                        stock_id: 0,
-                        product: _.cloneDeep(product),
-                        selected_unit: {
-                            unit: {
-                                id: ''
-                            },
-                            conversion_value: 1
-                        },
-                        base_unit: _.cloneDeep(_.find(product.product_units, function(unit) {
-                            return unit.is_base == 1
-                        })),
-                        quantity: 0,
-                        price: 0,
-                        discounts: item_init_discount,
-                    });
-                }
-            },
-            insertStock: function (index, stock) {
-                var vm = this;
-                if(stock.id != ''){
-                    var stock_price = _.find(stock.today_prices, function (price) {
-                        return price.price_level_id === vm.SOs[index].customer.price_level_id;
-                    });
-                    var item_init_discount = [];
-                    item_init_discount.push({
-                        disc_percent : 0,
-                        disc_value : 0,
-                    });
-
-                    vm.SOs[index].items.push({
-                        stock_id: stock.id,
-                        product: _.cloneDeep(stock.product),
-                        selected_unit: {
-                            unit: {
-                                id: ''
-                            },
-                            conversion_value: 1
-                        },
-                        base_unit: _.cloneDeep(_.find(stock.product.product_units, function(unit) {
-                            return unit.is_base == 1
-                        })),
-                        quantity: 0,
-                        price: stock_price ? stock_price.price : 0,
-                        discounts: item_init_discount,
-                    });
-                }
-            },
-            removeItem: function (SOIndex, index) {
-                this.SOs[SOIndex].items.splice(index, 1);
-            },
-            insertDiscount: function (item) {
-                item.discounts.push({
-                    disc_percent : 0,
-                    disc_value : 0,
-                });
-            },
-            removeDiscount: function (SOIndex, index, discountIndex) {
-                var vm = this;
-                this.SOs[SOIndex].items[index].discounts.splice(discountIndex, 1);
-            },
-            insertDefaultExpense: function (SOIndex, customer) {
-                var vm = this;
-                if(customer.id != ''){
-                    vm.SOs[SOIndex].expenses = [];
-                    for(var i = 0; i < customer.expense_templates.length; i++){
-                        vm.SOs[SOIndex].expenses.push({
-                            name: customer.expense_templates[i].name,
-                            type: {
-                                code: customer.expense_templates[i].type,
-                                description: _.find(expenseTypes, function(expenseType){ return expenseType.code === customer.expense_templates[i].type})
-                            },
-                            is_internal_expense: customer.expense_templates[i].is_internal_expense == 1,
-                            amount: numeral(customer.expense_templates[i].amount).format('0,0'),
-                            remarks: customer.expense_templates[i].remarks
-                        });
-                    }
-
-                    $(function () {
-                        $('input[type="checkbox"], input[type="radio"]').iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue'
-                        });
-                    });
-                }
-                else{
-                    vm.SOs[SOIndex].expenses = [];
-                }
-            },
-            insertExpense: function (index) {
-                var vm = this;
-                this.SOs[index].expenses.push({
-                    name: '',
-                    type: {
-                        code: ''
-                    },
-                    is_internal_expense: false,
-                    amount: 0,
-                    remarks: ''
-                });
-
-                $(function () {
-                    $('input[type="checkbox"], input[type="radio"]').iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue'
-                    });
-                });
-            },
-            removeExpense: function (SOIndex, index) {
-                this.SOs[SOIndex].expenses.splice(index, 1);
-            },
-        },
-        updated: function(){
-            var vm = this;
-            $(function () {
-                $(".inputSoDate").datetimepicker({
-                    format: "DD-MM-YYYY hh:mm A",
-                    defaultDate: moment()
-                });
-                $(".inputShippingDate").datetimepicker({
-                    format: "DD-MM-YYYY hh:mm A",
-                    defaultDate: moment()
-                });
-            });    
-        }
-    });
-
-    if(soApp.SOs.length == 0){
-        soApp.insertTab(soApp.SOs);
-    }else{
-        for(var i = 0; i < soApp.SOs.length; i++){
-            if(soApp.SOs[i].warehouse.id == 0){
-                soApp.SOs[i].warehouse = {id: 0};
-            }else{
-                soApp.SOs[i].warehouse = _.find(soApp.warehouseDDL, function(warehouse){
-                    return warehouse.id == soApp.SOs[i].warehouse.id
-                });
             }
+        });
 
-            if(soApp.SOs[i].vendorTrucking.id == 0){
-                soApp.SOs[i].vendorTrucking = {id: 0, name: ''};
-            }else{
-                soApp.SOs[i].vendorTrucking = _.find(soApp.vendorTruckingDDL, function(vendorTrucking){
-                    return vendorTrucking.id == soApp.SOs[i].vendorTrucking.id
-                });
-            }
-
-            var index = i;
-            $("#customerSelect" + i).select2({
-                placeholder: {
-                    id: "",
-                    placeholder: "Choose customer..."
-                },
-                allowClear: true,
-                width: '100%',
-                data: [ soApp.SOs[index].customer ],
-                ajax: {
-                    url: function(params){
-                        return '{{ route('api.customer.search') }}?q=' + params.term;
-                    },
-                    delay: 250,
-                    dataType: 'json',
-                    processResults: function (data, params) {
-                        if(data.length > 0){
-                            return {
-                                results: data
-                            }
-                        } else {
-                            return {
-                                results: [{id: ''}]
-                            }
-                        }
-                    }
-                },
-                templateResult: function(customer){
-                    if (customer.placeholder) return customer.placeholder;
-                    return customer.name;
-                },
-                templateSelection: function(customer){
-                    if (customer.placeholder) {
-                        soApp.SOs[index].customer = {
-                        id: '',
-                        price_level: {
-                            name: ''
-                        }
-                    };
-                        return customer.placeholder;
-                    }
-                    soApp.SOs[index].customer = _.cloneDeep(customer);
-                    return customer.name;
+        if(soApp.SOs.length == 0) {
+            soApp.insertTab(soApp.SOs);
+        } else {
+            for(var i = 0; i < soApp.SOs.length; i++) {
+                if(soApp.SOs[i].warehouse.id == 0) {
+                    soApp.SOs[i].warehouse = {id: 0};
+                } else {
+                    soApp.SOs[i].warehouse = _.find(soApp.warehouseDDL, function(warehouse) {
+                        return warehouse.id == soApp.SOs[i].warehouse.id
+                    });
                 }
-            });
-            $("#customerSelect" + index).val(soApp.SOs[index].customer.id).trigger('change');
-        }
-    }
 
-    $('.cancelButton').on('click', function(e){
-        var form = $("#so-form");
-        form.parsley().destroy();
-        form.submit();
-    });
-</script>
+                if(soApp.SOs[i].vendorTrucking.id == 0) {
+                    soApp.SOs[i].vendorTrucking = {id: 0, name: ''};
+                } else {
+                    soApp.SOs[i].vendorTrucking = _.find(soApp.vendorTruckingDDL, function(vendorTrucking) {
+                        return vendorTrucking.id == soApp.SOs[i].vendorTrucking.id
+                    });
+                }
+            }
+        }
+
+        $('.cancelButton').on('click', function(e){
+            var form = $("#so-form");
+            form.parsley().destroy();
+            form.submit();
+        });
+    </script>
 @endsection

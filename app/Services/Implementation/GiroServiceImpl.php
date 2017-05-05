@@ -19,12 +19,12 @@ class GiroServiceImpl implements GiroService
      */
     public function getDueGiro($dayToDue = 1)
     {
-        $avaiableGiros = Giro::where('status', '<>', 'GIROSTATUS.R')->get();
+        $avaiableGiros = Giro::with('bank')->where('status', '<>', 'GIROSTATUS.R')->get();
 
         $targetDate = Carbon::today()->addDays($dayToDue);
 
         $almostDueGiros = $avaiableGiros->filter(function($giro, $key) use ($targetDate){
-            return $targetDate->gte($giro->effective_date);
+            return $targetDate->gte(Carbon::parse($giro->effective_date));
         });
 
         return $almostDueGiros;

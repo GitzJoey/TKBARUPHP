@@ -66,7 +66,6 @@
                                class="form-control"
                                placeholder="@lang('giro.field.amount')"
                                data-parsley-required="true"
-                               data-parsley-pattern="/^\d+(,\d+)*$/"
                                autonumeric data-a-sep="," data-a-dec=".">
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>

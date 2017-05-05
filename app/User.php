@@ -43,6 +43,8 @@ use Laratrust\Traits\LaratrustUserTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\EventCalendar[] $eventCalendars
  * @property string $api_token
  * @method static \Illuminate\Database\Query\Builder|\App\User whereApiToken($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Permission[] $permissions
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRoleIs($role = '')
  */
 class User extends Authenticatable
 {
