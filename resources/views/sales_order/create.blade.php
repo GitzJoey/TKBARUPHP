@@ -816,7 +816,7 @@
                                 }
                             },
                             processResults: function (data, params) {
-                                params.page = params.page || 1;dsdf
+                                params.page = params.page || 1;
                                 var output = [];
                                 _.map(data, function(d){
                                     output.push({id: d.id, text: d.name});
