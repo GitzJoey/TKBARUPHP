@@ -82,6 +82,12 @@ If something seem not right maybe try to dump-autoload and redo the process
 $ composer dump-autoload
 ```
 
+Setup for admin user 
+```
+$ php artisan app:install
+```
+
+
 # Features Suggestion
 Fell free to add any feature suggestion by creating new **Issues**, and we can start discussing it
 

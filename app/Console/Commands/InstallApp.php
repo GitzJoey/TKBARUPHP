@@ -42,6 +42,10 @@ class InstallApp extends Command
      */
     public function handle()
     {
+        $this->info('This setup will create the default store and admin user');
+
+        sleep(3);
+
         // setup default
         $storeName = 'Toko Baru';
         $userName = 'Admin';
