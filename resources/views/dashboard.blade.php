@@ -22,34 +22,37 @@
     <div class="row">
 
         <div class="col-lg-3 col-xs-6">
-            <div class="info-box bg-blue" id="last-opname">
-                <span class="info-box-icon"><i class="fa fa-list-alt"></i></span>
+            <!-- small box -->
+            <div class="small-box bg-aqua" id="last-opname" v-cloak style="height: 128px">
+                <div class="inner" style="height: 102px">
+                    <h3>@{{ last_opname_humanize }}</h3>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">Last opname</span>
-                    <span class="info-box-number">@{{ last_opname_humanize }}</span>
-                    <span class="info-box-number">@{{ last_opname }}</span>
+                    <p>@{{ last_opname }}</p>
                 </div>
-                <!-- /.info-box-content -->
+                <div class="icon">
+                    <i class="fa fa-check"></i>
+                </div>
+                <a href="{{ route('db.warehouse.stockopname.index') }}" class="small-box-footer">Last Opname</a>
             </div>
         </div>
 
         <div class="col-lg-3 col-xs-6">
-            <div class="info-box bg-red" id="last-bank-upload">
-                <span class="info-box-icon"><i class="fa fa-list-alt"></i></span>
+            <div class="small-box bg-red" id="last-bank-upload" v-cloak style="height: 128px">
+                <div class="inner" style="height: 102px">
+                    <h4>@{{ last_bank_upload_humanize }}</h4>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">Last Bank Upload</span>
-                    <span class="info-box-number">@{{ last_bank_upload_humanize }}</span>
-                    <span class="info-box-number">@{{ last_bank_upload }}</span>
+                    <p>@{{ last_bank_upload }}</p>
                 </div>
-                <!-- /.info-box-content -->
+                <div class="icon">
+                    <i class="fa fa-money"></i>
+                </div>
+                <a href="{{ route('db.bank.upload') }}" class="small-box-footer">Last Bank Upload</a>
             </div>
         </div>
 
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-yellow">
-                <div class="inner">
+            <div class="small-box bg-yellow" style="height: 128px">
+                <div class="inner" style="height: 102px">
                     <h3>44</h3>
                     <p>&nbsp;&nbsp;&nbsp;</p>
                 </div>
@@ -61,8 +64,8 @@
         </div>
 
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-red">
-                <div class="inner">
+            <div class="small-box bg-red" style="height: 128px">
+                <div class="inner" style="height: 102px">
                     <h3>65</h3>
                     <p>&nbsp;&nbsp;&nbsp;</p>
                 </div>
@@ -121,7 +124,7 @@
 
     <div class="row">
 
-        <div class="col-lg-6 col-xs-6" id="due-purchase-order">
+        <div class="col-lg-6 col-xs-6" id="due-purchase-order" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Due Purchase Orders - @{{ due_payment_day }}</h3>
@@ -142,7 +145,7 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body" style="display: block;">
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -164,14 +167,14 @@
                     <!-- /.table-responsive -->
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix">
+                <div class="box-footer clearfix" style="display: block;">
                     <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Purchase Orders</a>
                 </div>
                 <!-- /.box-footer -->
             </div>
         </div>
 
-        <div class="col-lg-6 col-xs-6" id="due-sales-order">
+        <div class="col-lg-6 col-xs-6" id="due-sales-order" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Due Sales Orders - @{{ due_payment_day }}</h3>
@@ -192,7 +195,7 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body" style="display: block;">
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -214,7 +217,7 @@
                     <!-- /.table-responsive -->
                 </div>
                 <!-- /.box-body -->
-                <div class="box-footer clearfix">
+                <div class="box-footer clearfix" style="display: block;">
                     <a href="{{ route('db.so.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Sales Orders</a>
                 </div>
                 <!-- /.box-footer -->
@@ -223,12 +226,9 @@
 
     </div>
 
-    <style>
-
-    </style>
-
     <div class="row">
-        <div class="col-lg-6 col-xs-6" id="almost-due-giro">
+
+        <div class="col-lg-4 col-xs-6" id="almost-due-giro" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Almost Due Giro</h3>
@@ -261,6 +261,39 @@
                 <!-- /.box-footer -->
             </div>
         </div>
+
+        <div class="col-lg-4 col-xs-6" id="upcoming-events" v-cloak>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Upcoming Events</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item" v-for="eventCalendar in eventCalendars">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div style="font-weight: 600">@{{ eventCalendar.event_title }}</div>
+                                    <span style="font-size: smaller">@{{ eventCalendar.start_date }} - @{{ eventCalendar.end_date }}</span>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- /.item -->
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+
     </div>
 
     @for ($i = 0; $i < 100; $i++)
@@ -409,6 +442,32 @@
                 });
             }
 
+            var app = new Vue({
+                el: '#upcoming-events',
+                data: {
+                    eventCalendars: []
+                },
+                mounted() {
+                    return this.fetchEventCalendars();
+                },
+                methods: {
+                    fetchEventCalendars: function() {
+
+                        this.$http.get('{{ route('api.user.get.calendar') }}?id={{ Auth::user()->id }}').then(response => {
+
+                            // get body data
+                            this.eventCalendars = response.data.userCalendar;
+
+                        }, response => {
+
+                            // error callback
+
+                        });
+
+                    }
+                }
+            });
+
             new Vue({
                 el: '#due-purchase-order',
                 data: {
@@ -479,7 +538,7 @@
                             // get body data
                             this.dueSalesOrders = response.data;
 
-                    }, response => {
+                        }, response => {
 
                             // error callback
 
@@ -543,6 +602,7 @@
                             this.last_bank_upload = moment(this.last_bank_upload[0].created_at).format('YYYY-MM-DD');
                         }
 
+
                     }, response => {
 
                             // error callback
@@ -551,7 +611,6 @@
                     }
                 }
             });
-
 
             new Vue({
                 el: '#almost-due-giro',
@@ -569,7 +628,7 @@
                             // get body data
                             this.dueGiros = response.data;
 
-                    }, response => {
+                        }, response => {
 
                             // error callback
 
@@ -577,7 +636,6 @@
                     }
                 }
             });
-
 
         });
     </script>
