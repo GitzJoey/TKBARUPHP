@@ -30,26 +30,6 @@ Clone repository
 $ git clone https://github.com/gitzjoey/tkbaruphp.git
 ```
 
-Do composer install/update
-
-```
-$ composer install
-
-or
-
-$ composer update
-```
-
-Do NPM Install
-```
-$ npm install
-```
-
-Do Mix
-```
-$ npm run dev
-```
-
 Rename the .env.example to .env and change setting accordingly.
 ```
 Windows -> $ copy .env.example .env
@@ -57,36 +37,15 @@ Windows -> $ copy .env.example .env
 Linux   -> $ cp .env.example .env
 ```
 
-Generate application key
+Run the installation process
 ```
-$ php artisan key:generate
-```
-
-Do Migration and Seeder
-```
-$ php artisan migrate 
-```
-
-Do Seeder
-```
-$ php artisan db:seed
-```
-
-Linking public/storage
-```
-$ php artisan storage:link
+$ php artisan app:install
 ```
 
 If something seem not right maybe try to dump-autoload and redo the process
 ```
 $ composer dump-autoload
 ```
-
-Setup for admin user 
-```
-$ php artisan app:install
-```
-
 
 # Features Suggestion
 Fell free to add any feature suggestion by creating new **Issues**, and we can start discussing it

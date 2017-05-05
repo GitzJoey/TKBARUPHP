@@ -6,8 +6,11 @@ use App\User;
 use App\Model\Store;
 use App\Model\Role;
 use App\Model\UserDetail;
-use Illuminate\Console\Command;
+
+Use App;
+Use File;
 use Validator;
+use Illuminate\Console\Command;
 
 class InstallApp extends Command
 {
@@ -42,6 +45,36 @@ class InstallApp extends Command
      */
     public function handle()
     {
+        $this->info('Starting App Installation...');
+        $this->info('Review this installation process in \App\Console\Commands\InstallApp.php');
+
+        sleep(3);
+
+        if (!File::exists('.env')) {
+            $this->error('File Not Found: .env');
+            $this->error('Aborted');
+            return false;
+        }
+
+        $this->info('Starting Composer Install');
+        exec('composer install');
+
+        $this->info('Starting NPM Install');
+        exec('npm install');
+
+        $this->info('Starting Mix');
+        if (App::environment('prod', 'production')) {
+            $this->info('Executing for production enviroment');
+            exec('npm run prod');
+        } else {
+            exec('npm run dev');
+        }
+
+        exec('php artisan key:generate');
+        exec('php artisan migrate');
+        exec('php artisan db:seed');
+        exec('php artisan storage:link');
+
         $this->info('This setup will create the default store and admin user');
 
         sleep(3);
@@ -59,7 +92,7 @@ class InstallApp extends Command
             $storeName = $this->ask('Enter Default Store Name:', $storeName);
             $userName = $this->ask('Enter User Name:', $userName);
             $userEmail = $this->ask('Enter User Email:', $userEmail);
-            $userPassword = $this->ask('Enter User Password:', $userPassword);
+            $userPassword = $this->secret('Enter User Password:', $userPassword);
 
             $validator = Validator::make([
                 'store' => $storeName,
@@ -86,7 +119,7 @@ class InstallApp extends Command
         $confirmed = $this->confirm("Everything's OK? Do you wish to continue?");
 
         if (!$confirmed) {
-            $this->info('Aborted');
+            $this->error('Aborted');
             return false;
         }
 
