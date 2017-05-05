@@ -82,7 +82,7 @@ class InstallApp extends Command
         // setup default
         $storeName = 'Toko Baru';
         $userName = 'Admin';
-        $userEmail = 'admin@app.com';
+        $userEmail = 'admin@tkbaru.com';
         $userPassword = 'thepassword';
 
         $valid = false;
