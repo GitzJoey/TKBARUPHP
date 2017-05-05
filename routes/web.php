@@ -216,23 +216,49 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
         });
 
+        Route::group(['prefix' => 'bank', 'middleware' => ['permission:create-bank_upload|read-bank_upload|menu-bank_upload']], function () {
+            Route::get('upload', 'BankController@upload')->name('db.bank.upload');
+            Route::post('upload', 'BankController@storeUpload');
+
+            Route::group(['prefix' => 'giro', 'middleware' => ['permission:create-bank_giro|read-bank_giro|update-bank_giro|delete-bank_giro|menu-bank_giro']], function () {
+                Route::get('', 'GiroController@index')->name('db.bank.giro');
+                Route::get('show/{id}', 'GiroController@show')->name('db.bank.giro.show');
+                Route::get('create', 'GiroController@create')->name('db.bank.giro.create');
+                Route::post('create', 'GiroController@store');
+                Route::get('edit/{id}', 'GiroController@edit')->name('db.bank.giro.edit');
+                Route::patch('edit/{id}', 'GiroController@update');
+                Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
+                route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
+            });
+
+            Route::group(['prefix' => 'consolidate'], function (){
+                Route::get('', 'BankConsolidateController@index')->name('db.bank.consolidate');
+            });
+        });
+
         Route::group(['prefix' => 'customer'], function () {
-            Route::get('confirmation', 'CustomerController@confirmationIndex')->name('db.customer.confirmation.index');
-            Route::get('confirmation/{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.customer');
-            Route::get('confirmation/confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
-            Route::post('confirmation/confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
+            Route::group(['prefix' => 'confirmation', 'middleware' => ['permission:menu-customer_confirmation']], function() {
+                Route::get('', 'CustomerController@confirmationIndex')->name('db.customer.confirmation.index');
+                Route::get('{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.customer');
+                Route::get('confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
+                Route::post('confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
+            });
 
-            Route::get('payment', 'CustomerController@paymentIndex')->name('db.customer.payment.index');
-            Route::get('payment/cash/{id}', 'CustomerController@paymentCashCustomer')->name('db.customer.payment.cash');
-            Route::post('payment/cash/{id}', 'CustomerController@storePaymentCashCustomer');
-            Route::get('payment/transfer/{id}', 'CustomerController@paymentTransferCustomer')->name('db.customer.payment.transfer');
-            Route::post('payment/transfer/{id}', 'CustomerController@storePaymentTransferCustomer');
-            Route::get('payment/giro/{id}', 'CustomerController@paymentGiroCustomer')->name('db.customer.payment.giro');
-            Route::post('payment/giro/{id}', 'CustomerController@storePaymentGiroCustomer');
+            Route::group(['prefix' => 'payment', 'middleware' => ['permission:menu-customer_payment']], function() {
+                Route::get('', 'CustomerController@paymentIndex')->name('db.customer.payment.index');
+                Route::get('cash/{id}', 'CustomerController@paymentCashCustomer')->name('db.customer.payment.cash');
+                Route::post('cash/{id}', 'CustomerController@storePaymentCashCustomer');
+                Route::get('transfer/{id}', 'CustomerController@paymentTransferCustomer')->name('db.customer.payment.transfer');
+                Route::post('transfer/{id}', 'CustomerController@storePaymentTransferCustomer');
+                Route::get('giro/{id}', 'CustomerController@paymentGiroCustomer')->name('db.customer.payment.giro');
+                Route::post('giro/{id}', 'CustomerController@storePaymentGiroCustomer');
+            });
 
-            Route::get('approval', 'CustomerController@approvalIndex')->name('db.customer.approval.index');
-            Route::get('approval/approve/{id}', 'CustomerController@approval')->name('db.customer.approval.approve');
-            Route::get('approval/reject/{id}', 'CustomerController@reject')->name('db.customer.approval.reject');
+            Route::group(['prefix' => 'approval', 'middleware' => ['permission:menu-customer_approval']], function() {
+                Route::get('', 'CustomerController@approvalIndex')->name('db.customer.approval.index');
+                Route::get('approve/{id}', 'CustomerController@approval')->name('db.customer.approval.approve');
+                Route::get('reject/{id}', 'CustomerController@reject')->name('db.customer.approval.reject');
+            });
         });
 
         Route::group(['prefix' => 'truck', 'middleware' => ['permission:create-truck_maintenance|read-truck_maintenance|update-truck_maintenance|delete-truck_maintenance|menu-truck_maintenance']], function () {
@@ -263,6 +289,48 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::patch('edit/{id}', 'EmployeeSalaryHistController@update');
                 Route::delete('edit/{id}', 'EmployeeSalaryHistController@delete')->name('db.employee.employee_salary.delete');
             });
+        });
+
+        Route::group(['prefix' => 'report'], function () {
+            Route::group(['prefix' => 'trx', 'middleware' => ['permission:menu-report_transaction']], function () {
+                Route::get('', 'ReportController@report_trx')->name('db.report.transaction');
+                Route::post('purchase_order', 'ReportTransactionController@generatePurchaseOrderReport')->name('db.report.trx.po');
+                Route::post('sales_order', 'ReportTransactionController@generateSalesOrderReport')->name('db.report.trx.so');
+            });
+
+            Route::group(['prefix' => 'mon', 'middleware' => ['permission:menu-report_monitoring']], function () {
+                Route::get('', 'ReportController@report_mon')->name('db.report.monitoring');
+            });
+
+            Route::group(['prefix' => 'tax', 'middleware' => ['permission:menu-report_tax']], function () {
+                Route::get('', 'ReportController@report_tax')->name('db.report.tax');
+            });
+
+            Route::group(['prefix' => 'master', 'middleware' => ['permission:menu-report_master']], function () {
+                Route::get('', 'ReportController@report_master')->name('db.report.master');
+                Route::post('customer', 'ReportMasterController@generateCustomerReport')->name('db.report.master.customer');
+                Route::post('supplier', 'ReportMasterController@generateSupplierReport')->name('db.report.master.supplier');
+                Route::post('product', 'ReportMasterController@generateProductReport')->name('db.report.master.product');
+                Route::post('product_type', 'ReportMasterController@generateProductTypeReport')->name('db.report.master.product_type');
+                Route::post('warehouse', 'ReportMasterController@generateWarehouseReport')->name('db.report.master.warehouse');
+                Route::post('bank', 'ReportMasterController@generateBankReport')->name('db.report.master.bank');
+                Route::post('truck', 'ReportMasterController@generateTruckReport')->name('db.report.master.truck');
+                Route::post('truck_maintenance', 'ReportMasterController@generateTruckMaintenanceReport')->name('db.report.master.truck_maintenance');
+                Route::post('vendor_trucking', 'ReportMasterController@generateVendorTruckingReport')->name('db.report.master.vendor_trucking');
+                Route::post('expensetemplates', 'ReportMasterController@generateExpenseTemplatesReport')->name('db.report.master.expense_templates');
+            });
+
+            Route::group(['prefix' => 'admin', 'middleware' => ['permission:menu-report_admin']], function () {
+                Route::get('', 'ReportController@report_admin')->name('db.report.admin');
+                Route::post('user', 'ReportAdminController@generateUserReport')->name('db.report.admin.user');
+                Route::post('role', 'ReportAdminController@generateRoleReport')->name('db.report.admin.role');
+                Route::post('store', 'ReportAdminController@generateStoreReport')->name('db.report.admin.store');
+                Route::post('unit', 'ReportADminController@generateUnitReport')->name('db.report.admin.unit');
+                Route::post('phone_provider', 'ReportAdminController@generatePhoneProviderReport')->name('db.report.admin.phone_provider');
+                Route::post('settings', 'ReportAdminController@generateSettingsReport')->name('db.report.admin.settings');
+            });
+
+            Route::get('view/{fileName}', 'ReportController@view')->name('db.report.view');
         });
 
         Route::group(['prefix' => 'master'], function () {
@@ -424,68 +492,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
         });
 
-        Route::group(['prefix' => 'bank'], function () {
-            Route::get('upload', 'BankController@upload')->name('db.bank.upload');
-            Route::post('upload', 'BankController@storeUpload');
-
-            Route::group(['prefix' => 'giro'], function () {
-                Route::get('', 'GiroController@index')->name('db.bank.giro');
-                Route::get('show/{id}', 'GiroController@show')->name('db.bank.giro.show');
-                Route::get('create', 'GiroController@create')->name('db.bank.giro.create');
-                Route::post('create', 'GiroController@store');
-                Route::get('edit/{id}', 'GiroController@edit')->name('db.bank.giro.edit');
-                Route::patch('edit/{id}', 'GiroController@update');
-                Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
-                route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
-            });
-
-            Route::group(['prefix' => 'consolidate'], function (){
-                Route::get('', 'BankConsolidateController@index')->name('db.bank.consolidate');
-            });
-        });
-
-        Route::group(['prefix' => 'report'], function () {
-            Route::group(['prefix' => 'trx'], function () {
-                Route::get('', 'ReportController@report_trx')->name('db.report.transaction');
-                Route::post('purchase_order', 'ReportTransactionController@generatePurchaseOrderReport')->name('db.report.trx.po');
-                Route::post('sales_order', 'ReportTransactionController@generateSalesOrderReport')->name('db.report.trx.so');
-            });
-
-            Route::group(['prefix' => 'mon'], function () {
-                Route::get('', 'ReportController@report_mon')->name('db.report.monitoring');
-            });
-
-            Route::group(['prefix' => 'tax'], function () {
-                Route::get('', 'ReportController@report_tax')->name('db.report.tax');
-            });
-
-            Route::group(['prefix' => 'master'], function () {
-                Route::get('', 'ReportController@report_master')->name('db.report.master');
-                Route::post('customer', 'ReportMasterController@generateCustomerReport')->name('db.report.master.customer');
-                Route::post('supplier', 'ReportMasterController@generateSupplierReport')->name('db.report.master.supplier');
-                Route::post('product', 'ReportMasterController@generateProductReport')->name('db.report.master.product');
-                Route::post('product_type', 'ReportMasterController@generateProductTypeReport')->name('db.report.master.product_type');
-                Route::post('warehouse', 'ReportMasterController@generateWarehouseReport')->name('db.report.master.warehouse');
-                Route::post('bank', 'ReportMasterController@generateBankReport')->name('db.report.master.bank');
-                Route::post('truck', 'ReportMasterController@generateTruckReport')->name('db.report.master.truck');
-                Route::post('truck_maintenance', 'ReportMasterController@generateTruckMaintenanceReport')->name('db.report.master.truck_maintenance');
-                Route::post('vendor_trucking', 'ReportMasterController@generateVendorTruckingReport')->name('db.report.master.vendor_trucking');
-                Route::post('expensetemplates', 'ReportMasterController@generateExpenseTemplatesReport')->name('db.report.master.expense_templates');
-            });
-
-            Route::group(['prefix' => 'admin'], function () {
-                Route::get('', 'ReportController@report_admin')->name('db.report.admin');
-                Route::post('user', 'ReportAdminController@generateUserReport')->name('db.report.admin.user');
-                Route::post('role', 'ReportAdminController@generateRoleReport')->name('db.report.admin.role');
-                Route::post('store', 'ReportAdminController@generateStoreReport')->name('db.report.admin.store');
-                Route::post('unit', 'ReportADminController@generateUnitReport')->name('db.report.admin.unit');
-                Route::post('phone_provider', 'ReportAdminController@generatePhoneProviderReport')->name('db.report.admin.phone_provider');
-                Route::post('settings', 'ReportAdminController@generateSettingsReport')->name('db.report.admin.settings');
-            });
-
-            Route::get('view/{fileName}', 'ReportController@view')->name('db.report.view');
-        });
-
         Route::group(['prefix' => 'user'], function () {
             Route::get('profile/{id}', 'UserController@profile')->name('db.user.profile.show');
 
@@ -498,7 +504,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('/', 'StockHistoryController@stockTypeIndex')->name('db.stockhistory.type.index');
         });
 
-        Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('db.logs');
+        Route::get('logs', ['middleware' => ['role:admin'], 'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index'])->name('db.logs');
 
         Route::get('search', 'SearchController@search')->name('db.search');
 
