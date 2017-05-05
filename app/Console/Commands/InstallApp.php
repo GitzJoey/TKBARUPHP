@@ -75,7 +75,7 @@ class InstallApp extends Command
         exec('php artisan db:seed');
         exec('php artisan storage:link');
 
-        $this->info('This setup will create the default store and admin user');
+        $this->info('Setup will create the default store and admin user');
 
         sleep(3);
 
