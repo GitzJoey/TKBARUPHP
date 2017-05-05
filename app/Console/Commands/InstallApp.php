@@ -26,7 +26,7 @@ class InstallApp extends Command
      *
      * @var string
      */
-    protected $description = 'Run TokoBaru Installation';
+    protected $description = 'Run Installation';
 
     /**
      * Create a new command instance.
