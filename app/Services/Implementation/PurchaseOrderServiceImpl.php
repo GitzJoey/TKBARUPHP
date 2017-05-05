@@ -52,6 +52,8 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 'walk_in_supplier' => $walk_in_supplier,
                 'walk_in_supplier_detail' => $walk_in_supplier_detail,
                 'remarks' => $request->input('remarks'),
+                'internal_remarks' => $request->input('internal_remarks'),
+                'private_remarks' => $request->input('private_remarks'),
                 'status' => Lookup::whereCode('POSTATUS.WA')->first()->code,
                 'supplier_id' => $supplier_id,
                 'vendor_trucking_id' => empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id'),
@@ -149,6 +151,8 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             $currentPo->warehouse_id = $request->input('warehouse_id');
             $currentPo->vendor_trucking_id = empty($request->input('vendor_trucking_id')) ? 0 : $request->input('vendor_trucking_id');
             $currentPo->remarks = $request->input('remarks');
+            $currentPo->internal_remarks = $request->input('internal_remarks');
+            $currentPo->private_remarks = $request->input('private_remarks');
             $currentPo->disc_percent = $request->input('disc_total_percent');
             $currentPo->disc_value = $request->input('disc_total_value');
 

@@ -557,7 +557,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
-                                                        <textarea id="inputRemarks" name="remarks" class="form-control" rows="5" v-model="po.remarks">{{ $currentPo->remarks }}</textarea>
+                                                        <textarea id="inputRemarks" name="remarks" class="form-control" rows="5">{{ $currentPo->remarks }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -568,7 +568,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
-                                                        <textarea id="inputInternalRemarks" name="internal_remarks" class="form-control" rows="5"></textarea>
+                                                        <textarea id="inputInternalRemarks" name="internal_remarks" class="form-control" rows="5">{{ $currentPo->internal_remarks }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -579,7 +579,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
-                                                        <textarea id="inputPrivateRemarks" name="private_remarks" class="form-control" rows="5"></textarea>
+                                                        <textarea id="inputPrivateRemarks" name="private_remarks" class="form-control" rows="5">{{ $currentPo->private_remarks }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
