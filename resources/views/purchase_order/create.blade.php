@@ -415,7 +415,7 @@
 													<select data-parsley-required="true"
 															class="form-control" v-model="expense.type">
 														<option v-bind:value="defaultExpenseType">@lang('labels.PLEASE_SELECT')</option>
-														<option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+														<option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.i18nDescription }}</option>
 													</select>
 												</td>
 												<td class="text-center">
@@ -793,12 +793,7 @@
                                 });
                             }
 
-                            $(function () {
-                                $('input[type="checkbox"], input[type="radio"]').iCheck({
-                                    checkboxClass: 'icheckbox_square-blue',
-                                    radioClass: 'iradio_square-blue'
-                                });
-                            });
+                            reInitICheck();
                         }
                         else {
                             vm.po.expenses.push({
@@ -818,12 +813,7 @@
                             remarks: ''
                         });
 
-                        $(function () {
-                            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                                checkboxClass: 'icheckbox_square-blue',
-                                radioClass: 'iradio_square-blue'
-                            });
-                        });
+                        reInitICheck();
                     },
                     removeExpense: function (index) {
                         var vm = this;
@@ -885,13 +875,13 @@
                     var warehouseId = parseInt('{{ old('warehouse_id') }}');
                     var vendorTruckingId = parseInt('{{ old('vendor_trucking_id') }}');
                     
-                    if(warehouseId){
+                    if(warehouseId) {
                         vm.po.warehouse = _.cloneDeep(_.find(vm.warehouseDDL, {id: warehouseId}));
                     } else {
                         vm.po.warehouse = {id: ''};
                     }
 
-                    if(vendorTruckingId){
+                    if(vendorTruckingId) {
                         vm.po.vendorTrucking = _.cloneDeep(_.find(vm.vendorTruckingDDL, {id: vendorTruckingId}));
                     } else {
                         vm.po.vendorTrucking = {id: ''};
@@ -929,14 +919,14 @@
                 @endforeach
             @endif
 
-            function isBase(unit) {
-                return unit.is_base == 1;
+            function reInitICheck() {
+                Vue.nextTick(function() {
+                    $('input[type="checkbox"], input[type="radio"]').iCheck({
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue'
+                    });
+                });
             }
-
-            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue'
-            });
 
             $("#inputPoDate").datetimepicker({
                 format: "DD-MM-YYYY hh:mm A",

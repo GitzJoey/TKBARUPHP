@@ -76,6 +76,7 @@ class PurchaseOrderController extends Controller
             'disc_total_percent'        => 'numeric',
             'disc_total_value'          => 'numeric',
         ]);
+
         $this->purchaseOrderService->createPO($request);
 
         if (!empty($request->input('submitcreate'))) {
@@ -83,7 +84,6 @@ class PurchaseOrderController extends Controller
         } else {
             return redirect(route('db'));
         }
-		
     }
 
     public function index()
