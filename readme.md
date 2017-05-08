@@ -15,6 +15,15 @@ based with the best practice that every people in the world is using. Only with 
 forced to always learn and learn and learn to adapt with the latest technology and make us keep up to date
 with the current technology.
 
+# Contributors
+Thank you for all your effort/contributions/support for this project, I'm hoping that this project can be one of your tool to elevate your knowledge and skill. Keep on coding and supporting open source community.  
+Here are the list of people that contributing more than 10 issues/tasks/features
+ * [DecoyDoll](http://github.com/DecoyDoll)
+ * For the list of all the contributors click [here](https://github.com/GitzJoey/TKBARUPHP/graphs/contributors)
+
+# Contributing
+Start contributing by joining the team
+
 # Requirements
 * [PHP](http://php.net)
 * [Laravel](http://www.laravel.com)
@@ -50,5 +59,4 @@ $ composer dump-autoload
 # Features Suggestion
 Fell free to add any feature suggestion by creating new **Issues**, and we can start discussing it
 
-# Contributing
-Start contributing by joining the team
+# Licences
