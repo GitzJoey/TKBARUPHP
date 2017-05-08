@@ -61,4 +61,4 @@ Fell free to add any feature suggestion by creating new **Issues**, and we can s
 
 # License
 **MIT License**  
-The MIT License is a permissive license that is short and to the point. It lets people do anything they want with your code as long as they provide attribution back to you and don’t hold you liable. 
+The MIT License is a permissive license. It lets you do anything with this code as long as you provide **attribution back to this website**. 
