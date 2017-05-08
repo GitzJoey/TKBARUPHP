@@ -46,9 +46,14 @@ Windows -> $ copy .env.example .env
 Linux   -> $ cp .env.example .env
 ```
 
-Run the installation process via Composer
+Run the Composer
 ```
 $ composer install
+```
+
+Run the installation process
+```
+$ php artisan app:install
 ```
 
 If something seem not right maybe try to dump-autoload and redo the process
