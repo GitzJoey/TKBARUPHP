@@ -9,6 +9,7 @@ use App\Model\UserDetail;
 
 Use App;
 Use File;
+use Artisan;
 use Validator;
 use Illuminate\Console\Command;
 
@@ -56,9 +57,6 @@ class InstallApp extends Command
             return false;
         }
 
-        $this->info('Starting Composer Install');
-        exec('composer install');
-
         $this->info('Starting NPM Install');
         exec('npm install');
 
@@ -70,10 +68,10 @@ class InstallApp extends Command
             exec('npm run dev');
         }
 
-        exec('php artisan key:generate');
-        exec('php artisan migrate');
-        exec('php artisan db:seed');
-        exec('php artisan storage:link');
+        Artisan::call('key:generate');
+        Artisan::call('migrate');
+        Artisan::call('db:seed');
+        Artisan::call('storage:link');
 
         $this->info('Setup will create the default store and admin user');
 
