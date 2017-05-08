@@ -23,36 +23,34 @@
 
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
-            <div class="small-box bg-aqua" id="last-opname" v-cloak style="height: 128px">
-                <div class="inner" style="height: 102px">
+            <div class="small-box bg-aqua" id="last-opname" v-cloak>
+                <div class="inner">
                     <h3>@{{ last_opname_humanize }}</h3>
-
                     <p>@{{ last_opname }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-check"></i>
+                    <i class="ion ion-ios-pricetags"></i>
                 </div>
                 <a href="{{ route('db.warehouse.stockopname.index') }}" class="small-box-footer">Last Opname</a>
             </div>
         </div>
 
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-red" id="last-bank-upload" v-cloak style="height: 128px">
-                <div class="inner" style="height: 102px">
-                    <h4>@{{ last_bank_upload_humanize }}</h4>
-
+            <div class="small-box bg-red" id="last-bank-upload" v-cloak>
+                <div class="inner">
+                    <h3>@{{ last_bank_upload_humanize }}</h3>
                     <p>@{{ last_bank_upload }}</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-money"></i>
+                    <i class="icon ion-ios-cash"></i>
                 </div>
                 <a href="{{ route('db.bank.upload') }}" class="small-box-footer">Last Bank Upload</a>
             </div>
         </div>
 
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-yellow" style="height: 128px">
-                <div class="inner" style="height: 102px">
+            <div class="small-box bg-yellow">
+                <div class="inner">
                     <h3>44</h3>
                     <p>&nbsp;&nbsp;&nbsp;</p>
                 </div>
@@ -64,8 +62,8 @@
         </div>
 
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-red" style="height: 128px">
-                <div class="inner" style="height: 102px">
+            <div class="small-box bg-red">
+                <div class="inner">
                     <h3>65</h3>
                     <p>&nbsp;&nbsp;&nbsp;</p>
                 </div>
@@ -218,7 +216,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix" style="display: block;">
-                    <a href="{{ route('db.so.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Sales Orders</a>
+                    <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Sales Orders</a>
                 </div>
                 <!-- /.box-footer -->
             </div>
@@ -289,6 +287,116 @@
                 <!-- /.box-body -->
                 <div class="box-footer text-center">
 
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xs-6" id="passive-customers" v-cloak>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Passive Customers More Than a Month</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                            <tr>
+                                <th>Customer</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="passiveCustomer in passiveCustomers">
+                                <td><a>@{{ passiveCustomer.name }}</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix" style="display: block;">
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-4 col-xs-6" id="unreceived-purchase-orders" v-cloak>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Unreceived Purchase Order</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item" v-for="unreceivedPurchaseOrder in unreceivedPurchaseOrders">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div style="font-weight: bold">@{{ unreceivedPurchaseOrder.supplier.name }}</div>
+                                    <span style="font-size: smaller;display: block">
+                                        <a v-bind:href="'{{ route('db.warehouse.inflow') }}/' + unreceivedPurchaseOrder.id">@{{ unreceivedPurchaseOrder.code }}</a> | @{{ unreceivedPurchaseOrder.shipping_date }}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <span style="font-weight: bold;display: block">@{{ unreceivedPurchaseOrder.totalAmount }}</span>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- /.item -->
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="{{ route('db.warehouse.inflow.index') }}" class="uppercase">View All Inflow</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xs-6" id="undelivered-sales-orders" v-cloak>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Undelivered Sales Order</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                        <li class="item" v-for="undeliveredSalesOrder in undeliveredSalesOrders">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div style="font-weight: bold">@{{ undeliveredSalesOrder.customer.name }}</div>
+                                    <span style="font-size: smaller;display: block">
+                                        <a v-bind:href="'{{ route('db.warehouse.outflow') }}/' + undeliveredSalesOrder.id">@{{ undeliveredSalesOrder.code }}</a> | @{{ undeliveredSalesOrder.shipping_date }}</span>
+                                </div>
+                                <div class="col-md-4">
+                                    <span style="font-weight: bold;display: block">@{{ undeliveredSalesOrder.totalAmount }}</span>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- /.item -->
+                    </ul>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="{{ route('db.warehouse.outflow.index') }}" class="uppercase">View All Outflow</a>
                 </div>
                 <!-- /.box-footer -->
             </div>
@@ -458,7 +566,7 @@
                             // get body data
                             this.eventCalendars = response.data.userCalendar;
 
-                        }, response => {
+                    }, response => {
 
                             // error callback
 
@@ -538,7 +646,7 @@
                             // get body data
                             this.dueSalesOrders = response.data;
 
-                        }, response => {
+                    }, response => {
 
                             // error callback
 
@@ -564,14 +672,18 @@
 
                         this.$http.get('{{ route('api.warehouse.stock_opname.last') }}').then(response => {
 
-                        // get body data
-                        this.last_opname = response.data;
-                        if(this.last_opname.length > 0) {
-                            this.last_opname_humanize = moment(this.last_opname[0].opname_date).fromNow();
-                            this.last_opname = moment(this.last_opname[0].opname_date).format('YYYY-MM-DD');
-                        }
+                            // get body data
+                            this.last_opname = response.data;
+                            if(this.last_opname.length > 0) {
+                                this.last_opname_humanize = moment(this.last_opname[0].opname_date).fromNow();
+                                this.last_opname = moment(this.last_opname[0].opname_date).format('YYYY-MM-DD');
+                            }
+                            else {
+                                this.last_opname_humanize = 'Never';
+                                this.last_opname = 'No data found';
+                            }
 
-                    }, response => {
+                        }, response => {
 
                             // error callback
 
@@ -594,12 +706,17 @@
 
                         this.$http.get('{{ route('api.bank.upload.last') }}').then(response => {
 
-                        // get body data
+                            // get body data
                         this.last_bank_upload = response.data;
 
                         if(this.last_bank_upload.length > 0) {
                             this.last_bank_upload_humanize = moment(this.last_bank_upload[0].created_at).fromNow();
                             this.last_bank_upload = moment(this.last_bank_upload[0].created_at).format('YYYY-MM-DD');
+                        }
+                        else
+                        {
+                            this.last_bank_upload_humanize = 'Never';
+                            this.last_bank_upload = 'No data found';
                         }
 
 
@@ -628,7 +745,83 @@
                             // get body data
                             this.dueGiros = response.data;
 
+                    }, response => {
+
+                            // error callback
+
+                        });
+                    }
+                }
+            });
+
+            var app = new Vue({
+                el: '#passive-customers',
+                data: {
+                    passiveCustomers: []
+                },
+                mounted() {
+                    return this.fetchPassiveCustomers();
+                },
+                methods: {
+                    fetchPassiveCustomers: function() {
+
+                        this.$http.get('{{ route('api.customer.passive_customer') }}').then(response => {
+
+                            // get body data
+                            this.passiveCustomers = response.data;
+
                         }, response => {
+
+                            // error callback
+
+                        });
+
+                    }
+                }
+            });
+
+            new Vue({
+                el: '#unreceived-purchase-orders',
+                data: {
+                    unreceivedPurchaseOrders: [],
+                },
+                mounted() {
+                    return this.fetchUnreceivedPurchaseOrder();
+                },
+                methods: {
+                    fetchUnreceivedPurchaseOrder: function() {
+
+                        this.$http.get('{{ route('api.purchase_order.unreceived_purchase_order') }}').then(response => {
+
+                            // get body data
+                            this.unreceivedPurchaseOrders = response.data;
+
+                    }, response => {
+
+                            // error callback
+
+                        });
+                    }
+                }
+            });
+
+            new Vue({
+                el: '#undelivered-sales-orders',
+                data: {
+                    undeliveredSalesOrders: [],
+                },
+                mounted() {
+                    return this.fetchUndeliveredSalesOrder();
+                },
+                methods: {
+                    fetchUndeliveredSalesOrder: function() {
+
+                        this.$http.get('{{ route('api.sales_order.undelivered_sales_order') }}').then(response => {
+
+                            // get body data
+                            this.undeliveredSalesOrders = response.data;
+
+                    }, response => {
 
                             // error callback
 

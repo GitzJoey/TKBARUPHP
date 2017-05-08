@@ -450,9 +450,17 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getUndeliveredSO($threshold = 3)
     {
-        return SalesOrder::where('status', '=', 'SOSTATUS.WD')
+        $salesOrders = SalesOrder::with('customer')
+        ->where('status', '=', 'SOSTATUS.WD')
         ->where('shipping_date', '<', Carbon::today()->addDays(-$threshold))
         ->doesntHave('delivers')->get();
+
+        foreach($salesOrders AS $salesOrder)
+        {
+            $salesOrder->totalAmount = $salesOrder->totalAmount();
+        }
+
+        return $salesOrders;
     }
 
     /**
