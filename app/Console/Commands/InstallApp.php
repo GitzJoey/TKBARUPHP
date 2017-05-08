@@ -68,9 +68,13 @@ class InstallApp extends Command
             exec('npm run dev');
         }
 
+        $this->info('Generating App Key...');
         Artisan::call('key:generate');
+        $this->info('Database Migrating...');
         Artisan::call('migrate');
+        $this->info('Seeding ...');
         Artisan::call('db:seed');
+        $this->info('Storage Linking ...');
         Artisan::call('storage:link');
 
         $this->info('Setup will create the default store and admin user');
@@ -160,6 +164,8 @@ class InstallApp extends Command
         $user->userDetail()->save($userDetail);
 
         $user->attachRole(Role::where('name', 'admin')->first());
+
+        sleep(3);
 
         $this->info('Done!');
     }
