@@ -322,8 +322,16 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      */
     public function getUnreceivedPO($threshold = 3)
     {
-        return PurchaseOrder::where('status', '=', 'POSTATUS.WA')
+        $purchaseOrders = PurchaseOrder::with('supplier')
+        ->where('status', '=', 'POSTATUS.WA')
         ->where('shipping_date', '<', Carbon::today()->addDays(-$threshold))
         ->doesntHave('receipts')->get();
+
+        foreach($purchaseOrders AS $purchaseOrder)
+        {
+            $purchaseOrder->totalAmount = $purchaseOrder->totalAmount();
+        }
+
+        return $purchaseOrders;
     }
 }

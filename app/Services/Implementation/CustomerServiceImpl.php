@@ -18,18 +18,18 @@ class CustomerServiceImpl implements CustomerService
     public function getUnfinishedCustomer()
     {
         return Customer::orWhereNull('sign_code')
-        ->orWhereNull('name')
-        ->orWhereNull('address')
-        ->orWhereNull('city')
-        ->orWhereNull('phone_number')
-        ->orWhereNull('fax_num')
-        ->orWhereNull('tax_id')
-        ->orWhereNull('payment_due_day')
-        ->get();
+            ->orWhereNull('name')
+            ->orWhereNull('address')
+            ->orWhereNull('city')
+            ->orWhereNull('phone_number')
+            ->orWhereNull('fax_num')
+            ->orWhereNull('tax_id')
+            ->orWhereNull('payment_due_day')
+            ->get();
     }
 
     /**
-     * Check whether there are some customers that have one 
+     * Check whether there are some customers that have one
      * or more empty manual-filled fields/properties (except remarks) or not.
      *
      * @return bool
@@ -84,9 +84,21 @@ class CustomerServiceImpl implements CustomerService
         $customers = Customer::all();
         $today = Carbon::today();
 
-        $passiveCustomers = $customers->filter(function($customer){
+        function getCustomerLastOrder($customerId)
+        {
+            $customer = Customer::with(['sales_orders' => function($query){
+                $query->latest()->first();
+            }], 'sales_orders.items')->findOrFail($customerId);
+
+            return $customer->sales_orders->first();
+        }
+
+        $passiveCustomers = $customers->filter(function($customer) use ($period, $today, $numberOfPeriod) {
+
             $customerLastSalesOrder = getCustomerLastOrder($customer->id);
+
             if(is_null($customerLastSalesOrder)){
+
                 // TODO : Change to switch case alike
                 if($period === "days"){
                     return $today->diffInDays($customer->created_at) >= $numberOfPeriod;
@@ -100,7 +112,9 @@ class CustomerServiceImpl implements CustomerService
                 else{
                     return $today->diffInYears($customer->created_at) >= $numberOfPeriod;
                 }
+
             } else {
+
                 // TODO : Change to switch case alike
                 if($period === "days"){
                     return $today->diffInDays($customerLastSalesOrder->so_created) >= $numberOfPeriod;
@@ -114,9 +128,12 @@ class CustomerServiceImpl implements CustomerService
                 else{
                     return $today->diffInYears($customerLastSalesOrder->so_created) >= $numberOfPeriod;
                 }
+
             }
         });
 
-        return $passiveCustomers;
+        $passiveCustomers->load('sales_orders');
+
+        return response()->json($passiveCustomers);
     }
 }

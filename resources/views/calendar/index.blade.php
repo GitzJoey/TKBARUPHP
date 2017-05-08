@@ -96,6 +96,7 @@
                 },
                 methods: {
                     loadEvents: function() {
+
                         $.ajax({
                             url: '{{ route('api.user.get.calendar') }}',
                             data: {
@@ -104,6 +105,7 @@
                             type: 'GET',
                             async: false,
                             success: function(response) {
+
                                 $('#calendar').fullCalendar({
                                     header: {
                                         left: 'prev, next today',
