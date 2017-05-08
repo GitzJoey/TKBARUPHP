@@ -20,9 +20,7 @@
     <div id="unfinishedSettingsNotice"></div>
 
     <div class="row">
-
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
             <div class="small-box bg-aqua" id="last-opname" v-cloak>
                 <div class="inner">
                     <h3>@{{ last_opname_humanize }}</h3>
@@ -34,7 +32,6 @@
                 <a href="{{ route('db.warehouse.stockopname.index') }}" class="small-box-footer">Last Opname</a>
             </div>
         </div>
-
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-red" id="last-bank-upload" v-cloak>
                 <div class="inner">
@@ -47,7 +44,6 @@
                 <a href="{{ route('db.bank.upload') }}" class="small-box-footer">Last Bank Upload</a>
             </div>
         </div>
-
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-yellow">
                 <div class="inner">
@@ -60,7 +56,6 @@
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-red">
                 <div class="inner">
@@ -73,11 +68,9 @@
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
     </div>
 
     <div class="row">
-
         <div class="col-lg-6 col-xs-6">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -97,7 +90,6 @@
                 <div class="box-footer clearfix"></div>
             </div>
         </div>
-
         <div class="col-lg-6 col-xs-6">
             <div class="box box-info">
                 <div class="box-header with-border">
@@ -117,16 +109,13 @@
                 <div class="box-footer clearfix"></div>
             </div>
         </div>
-
     </div>
 
     <div class="row">
-
         <div class="col-lg-6 col-xs-6" id="due-purchase-order" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Due Purchase Orders - @{{ due_payment_day }}</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <div class="btn-group">
@@ -142,7 +131,6 @@
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <div class="table-responsive">
                         <table class="table no-margin">
@@ -162,21 +150,16 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.table-responsive -->
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer clearfix" style="display: block;">
                     <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Purchase Orders</a>
                 </div>
-                <!-- /.box-footer -->
             </div>
         </div>
-
         <div class="col-lg-6 col-xs-6" id="due-sales-order" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Due Sales Orders - @{{ due_payment_day }}</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <div class="btn-group">
@@ -192,7 +175,6 @@
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <div class="table-responsive">
                         <table class="table no-margin">
@@ -212,31 +194,23 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.table-responsive -->
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer clearfix" style="display: block;">
                     <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Sales Orders</a>
                 </div>
-                <!-- /.box-footer -->
             </div>
         </div>
-
     </div>
-
     <div class="row">
-
         <div class="col-lg-4 col-xs-6" id="almost-due-giro" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Almost Due Giro</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body">
                     <ul class="products-list product-list-in-box">
                         <li class="item" v-for="dueGiro in dueGiros">
@@ -249,28 +223,22 @@
                                 <div class="col-md-4" style="font-size: large; padding: 15px">@{{ dueGiro.amount }}</div>
                             </div>
                         </li>
-                        <!-- /.item -->
                     </ul>
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer text-center">
                     <a href="{{ route('db.bank.giro') }}" class="uppercase">View All Giro</a>
                 </div>
-                <!-- /.box-footer -->
             </div>
         </div>
-
         <div class="col-lg-4 col-xs-6" id="upcoming-events" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Upcoming Events</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body">
                     <ul class="products-list product-list-in-box">
                         <li class="item" v-for="eventCalendar in eventCalendars">
@@ -281,28 +249,21 @@
                                 </div>
                             </div>
                         </li>
-                        <!-- /.item -->
                     </ul>
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer text-center">
-
                 </div>
-                <!-- /.box-footer -->
             </div>
         </div>
-
         <div class="col-lg-4 col-xs-6" id="passive-customers" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Passive Customers More Than a Month</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body" style="display: block;">
                     <div class="table-responsive">
                         <table class="table no-margin">
@@ -318,29 +279,22 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.table-responsive -->
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer clearfix" style="display: block;">
                 </div>
-                <!-- /.box-footer -->
             </div>
         </div>
     </div>
-
     <div class="row">
-
         <div class="col-lg-6 col-xs-6" id="unreceived-purchase-orders" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Unreceived Purchase Order</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body">
                     <ul class="products-list product-list-in-box">
                         <li class="item" v-for="unreceivedPurchaseOrder in unreceivedPurchaseOrders">
@@ -355,28 +309,22 @@
                                 </div>
                             </div>
                         </li>
-                        <!-- /.item -->
                     </ul>
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer text-center">
                     <a href="{{ route('db.warehouse.inflow.index') }}" class="uppercase">View All Inflow</a>
                 </div>
-                <!-- /.box-footer -->
             </div>
         </div>
-
         <div class="col-lg-6 col-xs-6" id="undelivered-sales-orders" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Undelivered Sales Order</h3>
-
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body">
                     <ul class="products-list product-list-in-box">
                         <li class="item" v-for="undeliveredSalesOrder in undeliveredSalesOrders">
@@ -391,21 +339,15 @@
                                 </div>
                             </div>
                         </li>
-                        <!-- /.item -->
                     </ul>
                 </div>
-                <!-- /.box-body -->
                 <div class="box-footer text-center">
                     <a href="{{ route('db.warehouse.outflow.index') }}" class="uppercase">View All Outflow</a>
                 </div>
-                <!-- /.box-footer -->
             </div>
         </div>
 
     </div>
-    @for ($i = 0; $i < 100; $i++)
-        <br/>
-    @endfor
 @endsection
 
 @section('custom_js')
@@ -559,18 +501,12 @@
                 },
                 methods: {
                     fetchEventCalendars: function() {
-
-                        this.$http.get('{{ route('api.user.get.calendar') }}?id={{ Auth::user()->id }}').then(response => {
-
+                        axios.get('{{ route('api.user.get.calendar') }}?id={{ Auth::user()->id }}').then(response => {
                             // get body data
                             this.eventCalendars = response.data.userCalendar;
-
                     }, response => {
-
                             // error callback
-
                         });
-
                     }
                 }
             });
@@ -586,7 +522,6 @@
                 },
                 methods: {
                     fetchDuePurchaseOrders: function(due_payment_day) {
-
                         var dod = '';
 
                         if(due_payment_day > 1)
@@ -599,15 +534,11 @@
                         if(due_payment_day != undefined)
                             dod = '?dod='+ due_payment_day;
 
-                        this.$http.get('{{ route('api.purchase_order.due_purchase_order') }}' + dod).then(response => {
-
+                        axios.get('{{ route('api.purchase_order.due_purchase_order') }}' + dod).then(response => {
                             // get body data
                             this.duePurchaseOrders = response.data;
-
                     }, response => {
-
                             // error callback
-
                         });
                     },
                     countDueDate: function(date, payment_due_day) {
@@ -627,7 +558,6 @@
                 },
                 methods: {
                     fetchDueSalesOrders: function(due_payment_day) {
-
                         var dod = '';
 
                         if(due_payment_day > 1)
@@ -640,15 +570,11 @@
                         if(due_payment_day != undefined)
                             dod = '?dod='+ due_payment_day;
 
-                        this.$http.get('{{ route('api.sales_order.due_sales_order') }}' + dod).then(response => {
-
+                        axios.get('{{ route('api.sales_order.due_sales_order') }}' + dod).then(response => {
                             // get body data
                             this.dueSalesOrders = response.data;
-
                     }, response => {
-
                             // error callback
-
                         });
                     },
                     countDueDate: function(date, payment_due_day) {
@@ -668,9 +594,7 @@
                 },
                 methods: {
                     fetchLastOpname: function() {
-
-                        this.$http.get('{{ route('api.warehouse.stock_opname.last') }}').then(response => {
-
+                        axios.get('{{ route('api.warehouse.stock_opname.last') }}').then(response => {
                             // get body data
                             this.last_opname = response.data;
                             if(this.last_opname.length > 0) {
@@ -681,11 +605,8 @@
                                 this.last_opname_humanize = 'Never';
                                 this.last_opname = 'No data found';
                             }
-
                         }, response => {
-
                             // error callback
-
                         });
                     }
                 }
@@ -702,27 +623,19 @@
                 },
                 methods: {
                     fetchLastBankUpload: function() {
-
-                        this.$http.get('{{ route('api.bank.upload.last') }}').then(response => {
-
-                            // get body data
+                        axios.get('{{ route('api.bank.upload.last') }}').then(response => {
+                        // get body data
                         this.last_bank_upload = response.data;
 
                         if(this.last_bank_upload.length > 0) {
                             this.last_bank_upload_humanize = moment(this.last_bank_upload[0].created_at).fromNow();
                             this.last_bank_upload = moment(this.last_bank_upload[0].created_at).format('YYYY-MM-DD');
-                        }
-                        else
-                        {
+                        } else {
                             this.last_bank_upload_humanize = 'Never';
                             this.last_bank_upload = 'No data found';
                         }
-
-
                     }, response => {
-
                             // error callback
-
                         });
                     }
                 }
@@ -738,16 +651,11 @@
                 },
                 methods: {
                     fetchDueGiros: function() {
-
-                        this.$http.get('{{ route('api.giro.due_giro') }}').then(response => {
-
+                        axios.get('{{ route('api.giro.due_giro') }}').then(response => {
                             // get body data
                             this.dueGiros = response.data;
-
                     }, response => {
-
                             // error callback
-
                         });
                     }
                 }
@@ -763,18 +671,12 @@
                 },
                 methods: {
                     fetchPassiveCustomers: function() {
-
-                        this.$http.get('{{ route('api.customer.passive_customer') }}').then(response => {
-
+                        axios.get('{{ route('api.customer.passive_customer') }}').then(response => {
                             // get body data
                             this.passiveCustomers = response.data;
-
                         }, response => {
-
                             // error callback
-
                         });
-
                     }
                 }
             });
@@ -789,16 +691,11 @@
                 },
                 methods: {
                     fetchUnreceivedPurchaseOrder: function() {
-
-                        this.$http.get('{{ route('api.purchase_order.unreceived_purchase_order') }}').then(response => {
-
+                        axios.get('{{ route('api.purchase_order.unreceived_purchase_order') }}').then(response => {
                             // get body data
                             this.unreceivedPurchaseOrders = response.data;
-
                     }, response => {
-
                             // error callback
-
                         });
                     }
                 }
@@ -814,16 +711,11 @@
                 },
                 methods: {
                     fetchUndeliveredSalesOrder: function() {
-
-                        this.$http.get('{{ route('api.sales_order.undelivered_sales_order') }}').then(response => {
-
+                        axios.get('{{ route('api.sales_order.undelivered_sales_order') }}').then(response => {
                             // get body data
                             this.undeliveredSalesOrders = response.data;
-
                     }, response => {
-
                             // error callback
-
                         });
                     }
                 }
