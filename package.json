@@ -16,8 +16,7 @@
     "jquery": "^3.1.0",
     "laravel-mix": "^0.10.0",
     "lodash": "^4.14.0",
-    "vue": "^2.1.8",
-    "vue-resource": "^0.9.3"
+    "vue": "^2.1.8"
   },
   "dependencies": {
     "admin-lte": "^2.3.6",
