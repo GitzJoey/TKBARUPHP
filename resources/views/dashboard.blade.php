@@ -330,7 +330,7 @@
 
     <div class="row">
 
-        <div class="col-lg-4 col-xs-6" id="unreceived-purchase-orders" v-cloak>
+        <div class="col-lg-6 col-xs-6" id="unreceived-purchase-orders" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Unreceived Purchase Order</h3>
@@ -366,7 +366,7 @@
             </div>
         </div>
 
-        <div class="col-lg-4 col-xs-6" id="undelivered-sales-orders" v-cloak>
+        <div class="col-lg-6 col-xs-6" id="undelivered-sales-orders" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">Undelivered Sales Order</h3>
@@ -403,7 +403,6 @@
         </div>
 
     </div>
-
     @for ($i = 0; $i < 100; $i++)
         <br/>
     @endfor
@@ -422,7 +421,7 @@
                         load: function () {
                             // set up the updating of the sales order chart
                             var salesOrderAmountSeries = this.series[0];
-                            setInterval(function () {
+//                            setInterval(function () {
                                 $.ajax({
                                     url: '{{ route('api.sales_order.total_sales_order_amount_per_day') }}',
                                     dataType: 'json',
@@ -436,7 +435,7 @@
                                         salesOrderAmountSeries.setData(data);
                                     }
                                 });
-                            }, 50000);
+//                            }, 50000);
                         }
                     }
                 },
@@ -479,7 +478,7 @@
                         load: function () {
                             // set up the updating of the sales order chart
                             var salesOrderNumberSeries = this.series[0];
-                            setInterval(function () {
+//                            setInterval(function () {
                                 $.ajax({
                                     url: '{{ route('api.sales_order.number_of_created_sales_order_per_day') }}',
                                     dataType: 'json',
@@ -493,7 +492,7 @@
                                         salesOrderNumberSeries.setData(data);
                                     }
                                 });
-                            }, 50000);
+//                            }, 50000);
                         }
                     }
                 },
