@@ -1,3 +1,5 @@
+@if (false)<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"> @endif
+
 @extends('layouts.adminlte.master')
 
 @section('title')
@@ -29,7 +31,7 @@
     @endif
 
     <div id="poVue">
-        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" data-parsley-validate="parsley">
+        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" v-on:submit.prevent="validateBeforeSubmit">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6">
@@ -38,17 +40,17 @@
                             <h3 class="box-title">@lang('purchase_order.create.box.supplier')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('supplier_type') }">
                                 <label for="inputSupplierType"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_type')</label>
                                 <div class="col-sm-8">
-                                    <input type="hidden" name="supplier_type" v-bind:value="po.supplier_type.code" >
-                                    <select id="inputSupplierType" data-parsley-required="true"
+                                    <select id="inputSupplierType" name="supplier_type" v-validate="'required'"
                                             class="form-control"
-                                            v-model="po.supplier_type">
-                                        <option v-bind:value="defaultSupplierType">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="st of supplierTypeDDL" v-bind:value="st">@{{ st.i18nDescription }}</option>
+                                            v-model="po.supplier_type.code">
+                                        <option v-bind:value="defaultSupplierType.code">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="st of supplierTypeDDL" v-bind:value="st.code">@{{ st.i18nDescription }}</option>
                                     </select>
+                                    <span v-show="errors.has('supplier_type')" class="help-block">@{{ errors.first('supplier_type') }}</span>
                                 </div>
                             </div>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
@@ -598,6 +600,7 @@
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
+            Vue.use(VeeValidate);
             var poApp = new Vue({
                 el: '#poVue',
                 data: {
@@ -634,6 +637,9 @@
                     }
                 },
                 methods: {
+                    validateBeforeSubmit: function() {
+                        this.$validator.validateAll();
+                    },
                     discountPercentToNominal: function(item, discount){
                         var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
                         if( disc_value % 1 !== 0 )
