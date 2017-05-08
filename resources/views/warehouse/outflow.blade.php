@@ -85,7 +85,7 @@
                 },
                 methods: {
                     getWarehouseSOs: function (selectedWarehouse) {
-                        this.$http.get('{{ route('api.warehouse.outflow.so') }}/' + this.selectedWarehouse).then(function (data) {
+                        axios.get('{{ route('api.warehouse.outflow.so') }}/' + this.selectedWarehouse).then(function (data) {
                             this.SOs = data.data;
                         });
                     },

@@ -261,13 +261,13 @@
                 methods: {
                     showSourceStocks: function(warehouseId) {
                         this.source_stocks = 0;
-                        this.$http.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.source_warehouse.id).then(function(data) {
+                        axios.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.source_warehouse.id).then(function(data) {
                             this.source_stocks = data.data;
                         });
                     },
                     showDestinationStocks: function(warehouseId, productId) {
                         this.destination_stocks = 0;
-                        this.$http.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.destination_warehouse.id).then(function(data) {
+                        axios.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.destination_warehouse.id).then(function(data) {
                             this.destination_stocks = data.data;
                         });
                     },

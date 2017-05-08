@@ -20,7 +20,6 @@ mix.styles([
     './node_modules/bootstrap/dist/js/bootstrap.min.js',
     './node_modules/vue/dist/vue.min.js',
     './node_modules/axios/dist/axios.js',
-    './node_modules/vue-resource/dist/vue-resource.js',
     './node_modules/vee-validate/dist/vee-validate.js',
     './node_modules/vee-validate/dist/locale/id.js',
     './node_modules/moment/min/moment.min.js',

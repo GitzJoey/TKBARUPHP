@@ -86,7 +86,7 @@
                 methods: {
                     getWarehousePOs: function (selectedWarehouse) {
                         this.POs = [];
-                        this.$http.get('{{ route('api.warehouse.inflow.po') }}/' + this.selectedWarehouse.id).then(function(data) {
+                        axios.get('{{ route('api.warehouse.inflow.po') }}/' + this.selectedWarehouse.id).then(function(data) {
                             this.POs = data.data;
                         });
                     },
