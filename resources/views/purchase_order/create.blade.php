@@ -61,7 +61,7 @@
                                         <select id="inputSupplierId"
                                                 class="form-control"
                                                 name="supplier_id"
-                                                v-validate="'required'"
+                                                v-validate="po.supplier_type.code == 'SUPPLIERTYPE.R' ? 'required':''"
                                                 v-model="po.supplier.id"
                                                 v-on:change="onChangeSupplier()">
                                             <option v-bind:value="defaultSupplier.id">@lang('labels.PLEASE_SELECT')</option>
@@ -82,7 +82,8 @@
                                     <label for="inputSupplierName"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-10">
-                                        <input type="text" id="inputSupplierName" name="walk_in_supplier" v-validate="'required'"
+                                        <input type="text" id="inputSupplierName" name="walk_in_supplier"
+                                               v-validate="po.supplier_type.code == 'SUPPLIERTYPE.WI' ? 'required':''"
                                                class="form-control" v-model="po.supplier_name">
                                         <span v-show="errors.has('walk_in_supplier')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier') }}</span>
                                     </div>
@@ -92,7 +93,8 @@
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-10">
                                         <textarea id="inputSupplierDetails" class="form-control" rows="5"
-                                                  name="walk_in_supplier_detail" v-validate="'required'"
+                                                  name="walk_in_supplier_detail"
+                                                  v-validate="po.supplier_type.code == 'SUPPLIERTYPE.WI' ? 'required':''"
                                                   v-model="po.supplier_details"></textarea>
                                         <span v-show="errors.has('walk_in_supplier_detail')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier_detail') }}</span>
                                     </div>
@@ -137,8 +139,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" id="inputPoDate" v-validate="'required'"
-                                               name="po_created" v-model="po.poCreated">
+                                        <vue-datetimepicker id="test" name="aaa" value=""></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -169,20 +170,21 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         <input type="text" class="form-control" id="inputShippingDate"
-                                               name="shipping_date" v-model="po.shippingDate" v-validate="'required'">
+                                               name="shipping_date">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('warehouse_id') }">
                                 <label for="inputWarehouse"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.warehouse')</label>
                                 <div class="col-sm-5">
-                                    <input type="hidden" name="warehouse_id" v-bind:value="po.warehouse.id" >
                                     <select id="inputWarehouse" data-parsley-required="true"
                                             class="form-control"
-                                            v-model="po.warehouse">
-                                        <option v-bind:value="defaultWarehouse">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
+                                            name="warehouse_id"
+                                            v-model="po.warehouse.id"
+                                            v-on:change="onChangeWarehouse()">
+                                        <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -191,12 +193,12 @@
                                 <label for="inputVendorTrucking"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
-                                    <input type="hidden" name="vendor_trucking_id" v-bind:value="po.vendorTrucking.id" >
                                     <select id="inputVendorTrucking"
                                             class="form-control"
-                                            v-model="po.vendorTrucking">
-                                        <option v-bind:value="defaultVendorTrucking">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
+                                            name="vendor_trucking_id"
+                                            v-model="po.vendorTrucking.id">
+                                        <option v-bind:value="defaultVendorTrucking.id">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking.id">@{{ vendorTrucking.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -236,57 +238,57 @@
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="25%">@lang('purchase_order.create.table.item.header.product_name')</th>
-                                            <th width="10%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.quantity')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="25%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                <th width="10%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.quantity')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(item, itemIndex) in po.items">
-                                            <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
-                                            <input type="hidden" name="base_unit_id[]"
-                                                   v-bind:value="item.base_unit.unit.id">
-                                            <td class="valign-middle">@{{ item.product.name }}</td>
-                                            <td>
-                                                <input type="text" class="form-control text-right"
-                                                       name="item_quantity[]"
-                                                       v-model="item.quantity" data-parsley-required="true"
-                                                       data-parsley-type="number">
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
-                                                <select data-parsley-required="true"
-                                                        class="form-control"
-                                                        v-model="item.selected_unit"
-                                                        data-parsley-required="true">
-                                                    <option v-bind:value="defaultProductUnit">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right"
-                                                       name="item_price[]"
-                                                       v-model="item.price" data-parsley-required="true"
-                                                       data-parsley-pattern="^\d+(,\d+)?$"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md"
-                                                        v-on:click="removeItem(itemIndex)"><span
-                                                            class="fa fa-minus"></span>
-                                                </button>
-                                            </td>
-                                            <td class="text-right valign-middle">
-                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                            </td>
-                                        </tr>
+                                            <tr v-for="(item, itemIndex) in po.items">
+                                                <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="base_unit_id[]"
+                                                       v-bind:value="item.base_unit.unit.id">
+                                                <td class="valign-middle">@{{ item.product.name }}</td>
+                                                <td>
+                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('quantity') }"
+                                                           name="item_quantity[]"
+                                                           data-vv-name="quantity"
+                                                           v-model="item.quantity" v-validate="'required|decimal'">
+                                                </td>
+                                                <td>
+                                                    <select v-bind:class="{ 'form-control':true, 'has-error':errors.has('unit') }"
+                                                            name="item_selected_unit_id[]"
+                                                            v-model="item.selected_unit.unit.id"
+                                                            data-vv-name="unit"
+                                                            v-validate="'required'"
+                                                            v-on:change="onChangeUnit(itemIndex)">
+                                                        <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="item_price[]"
+                                                           v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errros.has('price') }"
+                                                           v-model="item.price" v-validate="'required'" data-vv-name="price">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md"
+                                                            v-on:click="removeItem(itemIndex)"><span
+                                                                class="fa fa-minus"></span>
+                                                    </button>
+                                                </td>
+                                                <td class="text-right valign-middle">
+                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -606,6 +608,49 @@
     <script type="application/javascript">
         $(document).ready(function() {
             Vue.use(VeeValidate);
+
+            Vue.component('vue-datetimepicker', {
+                template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-on:change, keyup='emitValue()' >",
+                props: {
+                    id: {
+                        type: String,
+                        required: true
+                    },
+                    name: {
+                        type: String,
+                        required: true
+                    },
+                    value: {
+                        type: String
+                    }
+                },
+                methods: {
+                    emitValue(event) {
+                        console.log('emitValue');
+                        this.$emit('input', $(event.currentTarget).val());
+                    }
+                },
+                watch: {
+                    value: {
+                        handler: function(val, oldVal) {
+                            console.log('watch value');
+                            this.$emit('input', val);
+                        },
+                        deep: true
+                    }
+                },
+                mounted: function() {
+                    $(this.$el).datetimepicker({
+                        format: "DD-MM-YYYY hh:mm A",
+                        defaultDate: moment(),
+                        autoClose: true
+                    });
+                },
+                destroyed: {
+
+                }
+            });
+
             var poApp = new Vue({
                 el: '#poVue',
                 data: {
@@ -654,6 +699,22 @@
                             this.insertDefaultExpense(supp);
                             _.merge(this.po.supplier, supp);
                         }
+                    },
+                    onChangeWarehouse: function() {
+                        if(!this.po.warehouse.id) {
+                            this.po.warehouse = { id: '' };
+                        } else {
+                            var wh = _.find(this.warehouseDDL, { id: this.warehouse.id });
+                            _.merge(this.po.warehouse, wh);
+                        }
+                    },
+                    onChangeUnit: function(itemIndex) {
+                          if(!this.po.items[itemIndex].selected_unit.unit.id) {
+                              this.po.items[itemIndex].selected_unit = { };
+                          } else {
+                              var pu = _.find(this.po.items[itemIndex].product.product_units, { id: this.po.items[itemIndex].selected_unit.unit.id });
+                              _.merge(this.po.items[itemIndex].selected_unit, pu);
+                          }
                     },
                     discountPercentToNominal: function(item, discount){
                         var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
@@ -952,11 +1013,6 @@
                     });
                 });
             }
-
-            $("#inputPoDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
 
             $("#inputShippingDate").datetimepicker({
                 format: "DD-MM-YYYY hh:mm A",
