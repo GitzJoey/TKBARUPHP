@@ -50,22 +50,24 @@
                                         <option v-bind:value="defaultSupplierType.code">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="st of supplierTypeDDL" v-bind:value="st.code">@{{ st.i18nDescription }}</option>
                                     </select>
-                                    <span v-show="errors.has('supplier_type')" class="help-block">@{{ errors.first('supplier_type') }}</span>
+                                    <span v-show="errors.has('supplier_type')" class="help-block" v-cloak>@{{ errors.first('supplier_type') }}</span>
                                 </div>
                             </div>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('supplier_id') }">
                                     <label for="inputSupplierId"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-8">
-                                        <input type="hidden" name="supplier_id" v-bind:value="po.supplier.id" >
                                         <select id="inputSupplierId"
                                                 class="form-control"
-                                                v-model="po.supplier"
-                                                v-on:change="insertDefaultExpense(po.supplier)">
-                                            <option v-bind:value="defaultSupplier">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="supplier of supplierDDL" v-bind:value="supplier">@{{ supplier.name }}</option>
+                                                name="supplier_id"
+                                                v-validate="'required'"
+                                                v-model="po.supplier.id"
+                                                v-on:change="onChangeSupplier()">
+                                            <option v-bind:value="defaultSupplier.id">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="supplier of supplierDDL" v-bind:value="supplier.id">@{{ supplier.name }}</option>
                                         </select>
+                                        <span v-show="errors.has('supplier_id')" class="help-block" v-cloak>@{{ errors.first('supplier_id') }}</span>
                                     </div>
                                     <div class="col-sm-2">
                                         <button id="supplierDetailButton" type="button"
@@ -76,21 +78,23 @@
                                 </div>
                             </template>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_supplier') }">
                                     <label for="inputSupplierName"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-10">
-                                        <input type="text" id="inputSupplierName" name="walk_in_supplier"
+                                        <input type="text" id="inputSupplierName" name="walk_in_supplier" v-validate="'required'"
                                                class="form-control" v-model="po.supplier_name">
+                                        <span v-show="errors.has('walk_in_supplier')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier') }}</span>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_supplier_detail') }">
                                     <label for="inputSupplierDetails"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-10">
                                         <textarea id="inputSupplierDetails" class="form-control" rows="5"
-                                                  name="walk_in_supplier_detail"
+                                                  name="walk_in_supplier_detail" v-validate="'required'"
                                                   v-model="po.supplier_details"></textarea>
+                                        <span v-show="errors.has('walk_in_supplier_detail')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier_detail') }}</span>
                                     </div>
                                 </div>
                             </template>
@@ -111,20 +115,21 @@
                                            placeholder="PO Code" readonly value="{{ $poCode }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('po_type') }">
                                 <label for="inputPoType"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_type')</label>
                                 <div class="col-sm-9">
-                                    <input type="hidden" name="po_type" v-bind:value="po.poType.code" >
-                                    <select id="inputPoType" data-parsley-required="true"
+                                    <select id="inputPoType" data-parsley-required="true" v-validate="'required'"
                                             class="form-control"
-                                            v-model="po.poType">
-                                        <option v-bind:value="defaultPOType">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="poType of poTypeDDL" v-bind:value="poType">@{{ poType.i18nDescription }}</option>
+                                            name="po_type"
+                                            v-model="po.poType.code">
+                                        <option v-bind:value="defaultPOType.code">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="poType of poTypeDDL" v-bind:value="poType.code">@{{ poType.i18nDescription }}</option>
                                     </select>
+                                    <span v-show="errors.has('po_type')" class="help-block" v-cloak>@{{ errors.first('po_type') }}</span>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('po_created') }">
                                 <label for="inputPoDate"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_date')</label>
                                 <div class="col-sm-9">
@@ -132,8 +137,8 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" id="inputPoDate"
-                                               name="po_created" data-parsley-required="true">
+                                        <input type="text" class="form-control" id="inputPoDate" v-validate="'required'"
+                                               name="po_created" v-model="po.poCreated">
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +160,7 @@
                             <h3 class="box-title">@lang('purchase_order.create.box.shipping')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('shipping_date') }">
                                 <label for="inputShippingDate"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
                                 <div class="col-sm-5">
@@ -164,7 +169,7 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         <input type="text" class="form-control" id="inputShippingDate"
-                                               name="shipping_date" data-parsley-required="true">
+                                               name="shipping_date" v-model="po.shippingDate" v-validate="'required'">
                                     </div>
                                 </div>
                             </div>
@@ -640,6 +645,16 @@
                     validateBeforeSubmit: function() {
                         this.$validator.validateAll();
                     },
+                    onChangeSupplier: function() {
+                        if (!this.po.supplier.id) {
+                            this.removeAllExpense();
+                            this.po.supplier = { id: '' };
+                        } else {
+                            var supp = _.find(this.supplierDDL, {id: this.po.supplier.id});
+                            this.insertDefaultExpense(supp);
+                            _.merge(this.po.supplier, supp);
+                        }
+                    },
                     discountPercentToNominal: function(item, discount){
                         var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
                         if( disc_value % 1 !== 0 )
@@ -824,7 +839,11 @@
                     removeExpense: function (index) {
                         var vm = this;
                         vm.po.expenses.splice(index, 1);
-                    }					
+                    },
+                    removeAllExpense: function() {
+                        var vm = this;
+                        vm.po.expenses = [];
+                    }
                 },
                 computed: {
                     defaultSupplierType: function(){
