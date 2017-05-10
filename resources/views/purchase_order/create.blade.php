@@ -121,7 +121,7 @@
                                 <label for="inputPoType"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_type')</label>
                                 <div class="col-sm-9">
-                                    <select id="inputPoType" data-parsley-required="true" v-validate="'required'"
+                                    <select id="inputPoType" v-validate="'required'"
                                             class="form-control"
                                             name="po_type"
                                             v-model="po.poType.code">
@@ -139,8 +139,9 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="test" name="aaa" value=""></vue-datetimepicker>
+                                        <vue-datetimepicker id="test" name="aaa" value="" v-model="test"></vue-datetimepicker>
                                     </div>
+                                    test @{{ test }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -610,7 +611,7 @@
             Vue.use(VeeValidate);
 
             Vue.component('vue-datetimepicker', {
-                template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-on:change, keyup='emitValue()' >",
+                template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value'>",
                 props: {
                     id: {
                         type: String,
@@ -624,30 +625,18 @@
                         type: String
                     }
                 },
-                methods: {
-                    emitValue(event) {
-                        console.log('emitValue');
-                        this.$emit('input', $(event.currentTarget).val());
-                    }
-                },
-                watch: {
-                    value: {
-                        handler: function(val, oldVal) {
-                            console.log('watch value');
-                            this.$emit('input', val);
-                        },
-                        deep: true
-                    }
-                },
                 mounted: function() {
+                    var vm = this;
                     $(this.$el).datetimepicker({
                         format: "DD-MM-YYYY hh:mm A",
-                        defaultDate: moment(),
-                        autoClose: true
+                        defaultDate: moment()
+                    }).on("dp.change", function(e) {
+                        console.log(this.value);
+                        vm.$emit('input', this.value);
                     });
                 },
-                destroyed: {
-
+                destroyed: function() {
+                    $(this.$el).data("DateTimePicker").destroy();
                 }
             });
 
@@ -684,7 +673,8 @@
                         },
                         items: [],
                         expenses: [],
-                    }
+                    },
+                    test:''
                 },
                 methods: {
                     validateBeforeSubmit: function() {
@@ -955,6 +945,9 @@
 							return item.selected_unit.conversion_value * item.quantity * item.price; 
 						},0);
 					}
+                },
+                mounted: function() {
+                    this.test = '10-05-2017 09:14 AM';
                 },
                 created: function() {
                     var vm = this;
