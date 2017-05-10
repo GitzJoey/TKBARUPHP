@@ -275,7 +275,7 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" name="item_price[]"
-                                                           v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errros.has('price') }"
+                                                           v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('price') }"
                                                            v-model="item.price" v-validate="'required'" data-vv-name="price">
                                                 </td>
                                                 <td class="text-center">
@@ -427,7 +427,7 @@
 													</select>
 												</td>
 												<td class="text-center">
-													<input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
+                                                    <vue-iCheck name="is_internal_expense[]" v-model="expense.is_internal_expense"></vue-iCheck>
 												</td>
 												<td>
 													<input name="expense_remarks[]" type="text" class="form-control"
@@ -598,7 +598,6 @@
                     </div>
                 </div>
             </div>
-            <vue-iCheck id="test" name="aaa" v-model="p"></vue-iCheck>
         </form>
         @include('purchase_order.supplier_details_partial')
     </div>
@@ -610,21 +609,24 @@
             Vue.use(VeeValidate);
 
             Vue.component('vue-icheck', {
-               template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled'>",
+               template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='test'>",
                 props: {
                    id: {
-                       type: String,
-                       required: true
+                       type: String
                    },
                     name: {
-                        type: String,
-                        required: true
+                        type: String
                     },
                     disabled: {
                         type: Boolean
+                    },
+                    test: {
+                        type: String
                     }
                 },
                 mounted: function() {
+                   console.log('aaaa ' + this.test);
+
                     var vm = this;
                     console.log('value: ' + this.value);
                     $(this.$el).iCheck({
@@ -725,7 +727,7 @@
                         if(!this.po.warehouse.id) {
                             this.po.warehouse = { id: '' };
                         } else {
-                            var wh = _.find(this.warehouseDDL, { id: this.warehouse.id });
+                            var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
                             _.merge(this.po.warehouse, wh);
                         }
                     },
@@ -895,8 +897,6 @@
                                     remarks: supplier.expense_templates[i].remarks
                                 });
                             }
-
-                            reInitICheck();
                         }
                         else {
                             vm.po.expenses.push({
@@ -915,8 +915,6 @@
                             amount: 0,
                             remarks: ''
                         });
-
-                        reInitICheck();
                     },
                     removeExpense: function (index) {
                         var vm = this;
@@ -1028,15 +1026,6 @@
                     });
                 @endforeach
             @endif
-
-            function reInitICheck() {
-                Vue.nextTick(function() {
-                    $('input[type="checkbox"], input[type="radio"]').iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue'
-                    });
-                });
-            }
         });
     </script>
 @endsection
