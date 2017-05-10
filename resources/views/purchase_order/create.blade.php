@@ -139,9 +139,8 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="test" name="aaa" value="" v-model="test"></vue-datetimepicker>
+                                        <vue-datetimepicker id="test" name="aaa" value="" v-model="po.createdDate"></vue-datetimepicker>
                                     </div>
-                                    test @{{ test }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -653,6 +652,7 @@
                     po: {
 						disc_total_percent : {{ old('disc_total_percent')? old('disc_total_percent') : 0 }},
 						disc_total_value : {{ old('disc_total_value')? old('disc_total_value') : 0 }},
+                        createdDate: '',
                         supplier_type: {
                             code: ''
                         },
@@ -673,8 +673,7 @@
                         },
                         items: [],
                         expenses: [],
-                    },
-                    test:''
+                    }
                 },
                 methods: {
                     validateBeforeSubmit: function() {
@@ -947,7 +946,7 @@
 					}
                 },
                 mounted: function() {
-                    this.test = '10-05-2017 09:14 AM';
+
                 },
                 created: function() {
                     var vm = this;
