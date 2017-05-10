@@ -255,26 +255,25 @@
                                                        v-bind:value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
-                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('quantity') }"
+                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('quantity_' + itemIndex) }"
                                                            name="item_quantity[]"
-                                                           data-vv-name="quantity"
-                                                           v-model="item.quantity" v-validate="'required|decimal'">
+                                                           data-vv-name="'quantity_' itemIndex"
+                                                           v-model="item.quantity" v-validate="">
                                                 </td>
                                                 <td>
-                                                    <select v-bind:class="{ 'form-control':true, 'has-error':errors.has('unit') }"
+                                                    <select v-bind:class="{ 'form-control':true, 'has-error':errors.has('unit_' + itemIndex) }"
                                                             name="item_selected_unit_id[]"
                                                             v-model="item.selected_unit.unit.id"
-                                                            data-vv-name="unit"
-                                                            v-validate="'required'"
-                                                            v-on:change="onChangeUnit(itemIndex)">
-                                                        <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                            data-vv-name="'unit_' + itemIndex"
+                                                            v-validate="">
+                                                        <option v-bind:value="defaultProductUnit.unit.id">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <input type="text" name="item_price[]"
-                                                           v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('price') }"
-                                                           v-model="item.price" v-validate="'required'" data-vv-name="price">
+                                                           v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('price_' + itemIndex) }"
+                                                           v-model="item.price" v-validate="" data-vv-name="'price_' + itemIndex">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md"
@@ -711,14 +710,6 @@
                             _.merge(this.po.warehouse, wh);
                         }
                     },
-                    onChangeUnit: function(itemIndex) {
-                          if(!this.po.items[itemIndex].selected_unit.unit.id) {
-                              this.po.items[itemIndex].selected_unit = { };
-                          } else {
-                              var pu = _.find(this.po.items[itemIndex].product.product_units, { id: this.po.items[itemIndex].selected_unit.unit.id });
-                              _.merge(this.po.items[itemIndex].selected_unit, pu);
-                          }
-                    },
                     discountPercentToNominal: function(item, discount){
                         var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
                         if( disc_value % 1 !== 0 )
@@ -957,7 +948,7 @@
                 },
                 mounted: function() {
                     var prdId = parseInt('{{ old('item_product_id') }}');
-
+                    var s = '{{ old('item_product_id') }}';
                 },
                 created: function() {
                     var vm = this;
