@@ -1,5 +1,3 @@
-@if (false)<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"> @endif
-
 @extends('layouts.adminlte.master')
 
 @section('title')
