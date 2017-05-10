@@ -607,7 +607,7 @@
             Vue.use(VeeValidate);
 
             Vue.component('vue-icheck', {
-               template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='test'>",
+               template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
                 props: {
                    id: {
                        type: String
@@ -618,23 +618,22 @@
                     disabled: {
                         type: Boolean
                     },
-                    test: {
+                    value: {
                         type: String
                     }
                 },
                 mounted: function() {
-                   console.log('aaaa ' + this.test);
-
-                    var vm = this;
-                    console.log('value: ' + this.value);
                     $(this.$el).iCheck({
                         checkboxClass: 'icheckbox_square-blue',
                         radioClass: 'iradio_square-blue'
                     }).on('ifChecked', function(event) {
-                        console.log('ifChecked callback');
+                        this.value = true;
                     }).on('ifUnchecked', function(event) {
-                        console.log('ifUnchecked callback');
+                        this.value = false;
                     });
+
+                    if (this.value) { $(this.$el).iCheck('check'); }
+                    if (this.disabled) { $(this.$el).iCheck('disable'); }
                 },
                 destroyed: function() {
                     $(this.$el).iCheck('destroy');
