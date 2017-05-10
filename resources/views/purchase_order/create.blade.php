@@ -664,8 +664,8 @@
                     expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                     productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                     po: {
-						disc_total_percent : {{ old('disc_total_percent')? old('disc_total_percent') : 0 }},
-						disc_total_value : {{ old('disc_total_value')? old('disc_total_value') : 0 }},
+						disc_total_percent : parseInt('{{ old('disc_total_percent')? old('disc_total_percent') : 0 }}'),
+						disc_total_value : parseInt('{{ old('disc_total_value')? old('disc_total_value') : 0 }}'),
                         createdDate: '',
                         supplier_type: {
                             code: ''
