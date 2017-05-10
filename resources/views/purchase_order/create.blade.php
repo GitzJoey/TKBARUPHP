@@ -137,7 +137,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" v-validate="'required'"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -608,20 +608,7 @@
 
             Vue.component('vue-icheck', {
                template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
-                props: {
-                   id: {
-                       type: String
-                   },
-                    name: {
-                        type: String
-                    },
-                    disabled: {
-                        type: Boolean
-                    },
-                    value: {
-                        type: String
-                    }
-                },
+                props: ['id', 'name', 'disabled', 'value'],
                 mounted: function() {
                     $(this.$el).iCheck({
                         checkboxClass: 'icheckbox_square-blue',
@@ -633,7 +620,7 @@
                     });
 
                     if (this.value) { $(this.$el).iCheck('check'); }
-                    if (this.disabled) { $(this.$el).iCheck('disable'); }
+                    if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
                 },
                 destroyed: function() {
                     $(this.$el).iCheck('destroy');
@@ -641,28 +628,24 @@
             });
 
             Vue.component('vue-datetimepicker', {
-                template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value'>",
-                props: {
-                    id: {
-                        type: String,
-                        required: true
-                    },
-                    name: {
-                        type: String,
-                        required: true
-                    },
-                    value: {
-                        type: String
-                    }
-                },
+                template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
+                props: ['id', 'name', 'value', 'format'],
                 mounted: function() {
                     var vm = this;
+
+                    if (this.value == undefined) this.value = '';
+                    if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+
                     $(this.$el).datetimepicker({
-                        format: "DD-MM-YYYY hh:mm A",
-                        defaultDate: moment()
+                        format: this.format,
+                        defaultDate: this.value == '' ? moment():moment(this.value).format(this.format)
                     }).on("dp.change", function(e) {
                         vm.$emit('input', this.value);
                     });
+
+                    if (this.value == '') {
+                        $(this.$el).datetimepicker().data('DateTimePicker').date(moment());
+                    }
                 },
                 destroyed: function() {
                     $(this.$el).data("DateTimePicker").destroy();
@@ -973,6 +956,7 @@
 					}
                 },
                 mounted: function() {
+                    var prdId = parseInt('{{ old('item_product_id') }}');
 
                 },
                 created: function() {
