@@ -598,6 +598,7 @@
                     </div>
                 </div>
             </div>
+            <vue-iCheck id="test" name="aaa" v-model="p"></vue-iCheck>
         </form>
         @include('purchase_order.supplier_details_partial')
     </div>
@@ -607,6 +608,38 @@
     <script type="application/javascript">
         $(document).ready(function() {
             Vue.use(VeeValidate);
+
+            Vue.component('vue-icheck', {
+               template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled'>",
+                props: {
+                   id: {
+                       type: String,
+                       required: true
+                   },
+                    name: {
+                        type: String,
+                        required: true
+                    },
+                    disabled: {
+                        type: Boolean
+                    }
+                },
+                mounted: function() {
+                    var vm = this;
+                    console.log('value: ' + this.value);
+                    $(this.$el).iCheck({
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue'
+                    }).on('ifChecked', function(event) {
+                        console.log('ifChecked callback');
+                    }).on('ifUnchecked', function(event) {
+                        console.log('ifUnchecked callback');
+                    });
+                },
+                destroyed: function() {
+                    $(this.$el).iCheck('destroy');
+                }
+            });
 
             Vue.component('vue-datetimepicker', {
                 template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value'>",
@@ -640,6 +673,7 @@
             var poApp = new Vue({
                 el: '#poVue',
                 data: {
+                    p: true,
                     supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
                     warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
                     poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
