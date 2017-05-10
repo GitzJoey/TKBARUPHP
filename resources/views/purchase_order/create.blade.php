@@ -139,7 +139,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="test" name="aaa" value="" v-model="po.createdDate"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" v-validate="'required'"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -169,8 +169,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" id="inputShippingDate"
-                                               name="shipping_date">
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="po.shippingDate" v-validate="'required'"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -1005,11 +1004,6 @@
                     });
                 });
             }
-
-            $("#inputShippingDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
         });
     </script>
 @endsection
