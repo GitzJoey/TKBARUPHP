@@ -629,7 +629,6 @@
                         format: "DD-MM-YYYY hh:mm A",
                         defaultDate: moment()
                     }).on("dp.change", function(e) {
-                        console.log(this.value);
                         vm.$emit('input', this.value);
                     });
                 },
