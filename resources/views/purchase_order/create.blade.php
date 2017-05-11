@@ -29,7 +29,7 @@
     @endif
 
     <div id="poVue">
-        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" v-on:submit.prevent="validateBeforeSubmit">
+        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" v-on:submit="onSubmit()">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6">
@@ -52,20 +52,18 @@
                                 </div>
                             </div>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
-                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('supplier_id') }">
+                                <div v-bind:class="{ 'form-group':true }">
                                     <label for="inputSupplierId"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-8">
                                         <select id="inputSupplierId"
                                                 class="form-control"
                                                 name="supplier_id"
-                                                v-validate="po.supplier_type.code == 'SUPPLIERTYPE.R' ? 'required':''"
                                                 v-model="po.supplier.id"
                                                 v-on:change="onChangeSupplier()">
                                             <option v-bind:value="defaultSupplier.id">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="supplier of supplierDDL" v-bind:value="supplier.id">@{{ supplier.name }}</option>
                                         </select>
-                                        <span v-show="errors.has('supplier_id')" class="help-block" v-cloak>@{{ errors.first('supplier_id') }}</span>
                                     </div>
                                     <div class="col-sm-2">
                                         <button id="supplierDetailButton" type="button"
@@ -76,25 +74,21 @@
                                 </div>
                             </template>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
-                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_supplier') }">
+                                <div v-bind:class="{ 'form-group':true }">
                                     <label for="inputSupplierName"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-10">
                                         <input type="text" id="inputSupplierName" name="walk_in_supplier"
-                                               v-validate="po.supplier_type.code == 'SUPPLIERTYPE.WI' ? 'required':''"
                                                class="form-control" v-model="po.supplier_name">
-                                        <span v-show="errors.has('walk_in_supplier')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier') }}</span>
                                     </div>
                                 </div>
-                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_supplier_detail') }">
+                                <div v-bind:class="{ 'form-group':true }">
                                     <label for="inputSupplierDetails"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-10">
                                         <textarea id="inputSupplierDetails" class="form-control" rows="5"
                                                   name="walk_in_supplier_detail"
-                                                  v-validate="po.supplier_type.code == 'SUPPLIERTYPE.WI' ? 'required':''"
                                                   v-model="po.supplier_details"></textarea>
-                                        <span v-show="errors.has('walk_in_supplier_detail')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier_detail') }}</span>
                                     </div>
                                 </div>
                             </template>
@@ -115,21 +109,20 @@
                                            placeholder="PO Code" readonly value="{{ $poCode }}">
                                 </div>
                             </div>
-                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('po_type') }">
+                            <div v-bind:class="{ 'form-group':true }">
                                 <label for="inputPoType"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_type')</label>
                                 <div class="col-sm-9">
-                                    <select id="inputPoType" v-validate="'required'"
+                                    <select id="inputPoType"
                                             class="form-control"
                                             name="po_type"
                                             v-model="po.poType.code">
                                         <option v-bind:value="defaultPOType.code">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="poType of poTypeDDL" v-bind:value="poType.code">@{{ poType.i18nDescription }}</option>
                                     </select>
-                                    <span v-show="errors.has('po_type')" class="help-block" v-cloak>@{{ errors.first('po_type') }}</span>
                                 </div>
                             </div>
-                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('po_created') }">
+                            <div v-bind:class="{ 'form-group':true }">
                                 <label for="inputPoDate"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_date')</label>
                                 <div class="col-sm-9">
@@ -137,7 +130,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +152,7 @@
                             <h3 class="box-title">@lang('purchase_order.create.box.shipping')</h3>
                         </div>
                         <div class="box-body">
-                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('shipping_date') }">
+                            <div v-bind:class="{ 'form-group':true }">
                                 <label for="inputShippingDate"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
                                 <div class="col-sm-5">
@@ -167,11 +160,11 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="po.shippingDate" v-validate="'required'"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="po.shippingDate"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
-                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('warehouse_id') }">
+                            <div v-bind:class="{ 'form-group':true }">
                                 <label for="inputWarehouse"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.warehouse')</label>
                                 <div class="col-sm-5">
@@ -255,16 +248,14 @@
                                                        v-bind:value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
-                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('quantity_' + itemIndex) }"
+                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true }"
                                                            name="item_quantity[]"
-                                                           data-vv-name="'quantity_' itemIndex"
-                                                           v-model="item.quantity" v-validate="">
+                                                           v-model="item.quantity">
                                                 </td>
                                                 <td>
-                                                    <select v-bind:class="{ 'form-control':true, 'has-error':errors.has('unit_' + itemIndex) }"
+                                                    <select v-bind:class="{ 'form-control':true }"
                                                             name="item_selected_unit_id[]"
                                                             v-model="item.selected_unit.unit.id"
-                                                            data-vv-name="'unit_' + itemIndex"
                                                             v-validate="">
                                                         <option v-bind:value="defaultProductUnit.unit.id">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
@@ -272,13 +263,12 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" name="item_price[]"
-                                                           v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('price_' + itemIndex) }"
-                                                           v-model="item.price" v-validate="" data-vv-name="'price_' + itemIndex">
+                                                           v-bind:class="{ 'form-control':true, 'text-right':true }"
+                                                           v-model="item.price">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md"
-                                                            v-on:click="removeItem(itemIndex)"><span
-                                                                class="fa fa-minus"></span>
+                                                            v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"></span>
                                                     </button>
                                                 </td>
                                                 <td class="text-right valign-middle">
@@ -691,6 +681,12 @@
                 methods: {
                     validateBeforeSubmit: function() {
                         this.$validator.validateAll();
+                        return this.errors.any();
+                    },
+                    onSubmit: function () {
+                        if (this.validateBeforeSubmit()) {
+
+                        }
                     },
                     onChangeSupplier: function() {
                         if (!this.po.supplier.id) {
