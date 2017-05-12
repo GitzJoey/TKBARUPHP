@@ -17,6 +17,23 @@
 @endsection
 
 @section('content')
+
+    <style>
+        .pac-container {
+            background-color: #FFF;
+            z-index: 2000;
+            position: fixed;
+            display: inline-block;
+            float: left;
+        }
+        .modal{
+            z-index: 2000;
+        }
+        .modal-backdrop{
+            z-index: 1000;
+        }​
+    </style>
+
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
@@ -55,8 +72,37 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.address')</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-9">
                                         <textarea name="address" id="inputAddress" class="form-control" rows="4">{{ $customer->address }}</textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#myModal"><i class="fa fa-location-arrow"></i></button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputLat" class="col-sm-2 control-label">@lang('customer.field.lat')</label>
+                                    <div class="col-sm-10">
+                                        <input id="inputLat" type="text" name="lat" class="form-control" placeholder="@lang('customer.field.lat')" value="{{ $customer->lat }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputLng" class="col-sm-2 control-label">@lang('customer.field.lng')</label>
+                                    <div class="col-sm-10">
+                                        <input id="inputLng" type="text" name="lng" class="form-control" placeholder="@lang('customer.field.lng')" value="{{ $customer->lng }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDistance" class="col-sm-2 control-label">@lang('customer.field.distance')</label>
+                                    <div class="col-sm-10">
+                                        <input type="hidden" id="inputDistance" name="distance">
+                                        <input id="inputDistanceText" type="text" name="distance_text" class="form-control" placeholder="@lang('customer.field.distance')">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDuration" class="col-sm-2 control-label">@lang('customer.field.duration')</label>
+                                    <div class="col-sm-10">
+                                        <input type="hidden" id="inputDuration" name="duration">
+                                        <input id="inputDurationText" type="text" name="duration_text" class="form-control" placeholder="@lang('customer.field.duration')">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -94,14 +140,14 @@
                             <div class="tab-pane" id="tab_pic">
                                 <div class="row">
                                     <div class="col-md-1">
-                                        <button class="btn btn-xs btn-default" type="button" ng-click="addNewProfile()">@lang('buttons.create_new_button')</button>
+                                        <button class="btn btn-xs btn-default" type="button" v-on:click="addNewProfile()">@lang('buttons.create_new_button')</button>
                                     </div>
                                     <div class="col-md-11">
                                         <div v-for="(profile, profileIdx) in profiles">
                                             <div class="box box-widget">
                                                 <div class="box-header with-border">
                                                     <div class="user-block">
-                                                        <strong>@lang('customer.field.person_in_charge') @{{ profileIndex + 1 }}</strong><br/>
+                                                        <strong>@lang('customer.field.person_in_charge') @{{ profileIdx + 1 }}</strong><br/>
                                                         &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
                                                     </div>
                                                     <div class="box-tools">
@@ -220,7 +266,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-xs btn-default" type="button" ng-click="addNewBank()">@lang('buttons.create_new_button')</button>
+                                <button class="btn btn-xs btn-default" type="button" v-on:click="addNewBank()">@lang('buttons.create_new_button')</button>
                             </div>
                             <div class="tab-pane" id="tab_expenses">
                                 <div class="form-group">
@@ -277,8 +323,7 @@
                                 <div class="form-group">
                                     <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
                                     <div class="col-sm-10">
-                                        <select name="price_level" class="form-control" v-model="pricelevel"
-                                                data-parsley-required="true" data-parsley-group="tab_setting">
+                                        <select name="price_level" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="pp in pricelevelDDL" v-bind:value="pp.id">@{{ pp.name }} (@{{ pp.description }})
                                         </select>
@@ -305,11 +350,74 @@
             </div>
         {!! Form::close() !!}
     </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Choose Location</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputModalAddress3">Address:</label>
+                        <input type="text" class="form-control" id="inputModalAddress" name="inputModalAddress1">
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputModalLat">Latitude:</label>
+                                    <input type="text" class="form-control col-sm-6" id="inputModalLat" name="inputModalLat">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputModalLng">Longitude:</label>
+                                    <input type="text" class="form-control col-sm-6" id="inputModalLng" name="inputModalLng">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputModalDistance">Distance:</label>
+                                    <input type="hidden" id="inputModalDistance">
+                                    <input type="text" class="form-control col-sm-6" id="inputModalDistanceText">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputModalDuration">Duration:</label>
+                                    <input type="hidden" id="inputModalDuration">
+                                    <input type="text" class="form-control col-sm-6" id="inputModalDurationText">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="map" style="width: 870px; height: 300px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="location-ok-btn">OK</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('custom_js')
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ $mapsAPIKey }}"></script>
     <script type="application/javascript">
         $(document).ready(function() {
+
+            var location;
+            var map;
+            var markers = [];
+
             var app = new Vue({
                 el: '#customerVue',
                 data: {
@@ -431,6 +539,231 @@
                     $('#expensesTabError').removeClass('hidden');
                 }
             };
+
+            function init() {
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16
+                });
+
+                var input = document.getElementById('inputModalAddress');
+                var address = input.value;
+                var autocomplete = new google.maps.places.Autocomplete(input);
+                autocomplete.bindTo("bounds", map);
+
+                deleteMarkers();
+
+                var marker = new google.maps.Marker({map: map});
+
+                google.maps.event.addListener(autocomplete, "place_changed", function() {
+
+                    var place = autocomplete.getPlace();
+
+                    location = place;
+
+                    if(place.geometry != undefined) {
+
+                        if (place.geometry.viewport) {
+                            map.fitBounds(place.geometry.viewport);
+                        } else {
+                            map.setCenter(place.geometry.location);
+                            map.setZoom(16);
+                        }
+
+                        $('#inputModalAddress').val(place.formatted_address);
+                        $('#inputModalLat').val(place.geometry.location.lat());
+                        $('#inputModalLng').val(place.geometry.location.lng());
+
+                        marker.setPosition(place.geometry.location);
+                        markers.push(marker);
+
+                        getDistanceMatrix(place.geometry.location);
+                    }
+
+                });
+
+                if(address.length === 0) {
+
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        // Do stuff with the geo data...
+                        var lat = position.coords.latitude;
+                        var lng = position.coords.longitude;
+                        var latLong = new google.maps.LatLng(lat, lng);
+
+                        deleteMarkers();
+
+                        marker = new google.maps.Marker({
+                            position: latLong
+                        });
+                        marker.setMap(map);
+
+                        map.setZoom(16);
+                        map.setCenter(marker.getPosition());
+                        markers.push(marker);
+
+                        getDistanceMatrix(marker.getPosition());
+
+                        var geocoder = new google.maps.Geocoder();
+                        geocoder.geocode({ 'location': latLong }, function(results, status) {
+                            if(status === 'OK') {
+                                if(results[0]) {
+                                    location = results[0];
+
+                                    $('#inputModalAddress').val(location.formatted_address);
+                                    $('#inputModalLat').val(location.geometry.location.lat());
+                                    $('#inputModalLng').val(location.geometry.location.lng());
+
+                                }
+                            }
+                        });
+
+                    }, function(error) {
+                        alert(error.code + ": " + error.message);
+                    });
+                }
+                else {
+                    locateByAddress(address);
+                }
+            }
+
+            $('#myModal').on('shown.bs.modal', function() {
+
+                if($('#inputAddress').val() === '') {
+                    $('#inputModalLat').val($('#inputLat').val());
+                    $('#inputModalLng').val($('#inputLng').val());
+                }
+                else {
+                    $('#inputModalAddress').val($('#inputAddress').val());
+                }
+
+                init();
+            });
+
+            $('#location-ok-btn').click(function() {
+
+                if(location != undefined) {
+                    $('#inputLat').val(location.geometry.location.lat());
+                    $('#inputLng').val(location.geometry.location.lng());
+                    $('#inputDistanceText').val($('#inputModalDistanceText').val());
+                    $('#inputDistance').val($('#inputModalDistance').val());
+                    $('#inputDurationText').val($('#inputModalDurationText').val());
+                    $('#inputDuration').val($('#inputModalDuration').val());
+                }
+            });
+
+            function locateByAddress(address) {
+
+                var geocoder = new google.maps.Geocoder();
+
+                geocoder.geocode({
+                        'address': address
+                    },
+                    function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+
+                            location = results[0];
+
+                            $('#inputModalAddress').val(location.formatted_address);
+                            $('#inputModalLat').val(location.geometry.location.lat());
+                            $('#inputModalLng').val(location.geometry.location.lng());
+
+                            deleteMarkers();
+
+                            var marker = new google.maps.Marker({
+                                position: results[0].geometry.location,
+                                map: map
+                            });
+                            markers.push(marker);
+
+                            getDistanceMatrix(results[0].geometry.location);
+
+                            google.maps.event.trigger(map, 'resize');
+                            map.setCenter(results[0].geometry.location);
+                        }
+                    });
+
+            }
+
+            function locateByCoordinate(lat, lng) {
+
+                deleteMarkers();
+
+                var latLong = new google.maps.LatLng(lat, lng);
+
+                var marker = new google.maps.Marker({
+                    position: latLong,
+                    map: map
+                });
+                markers.push(marker);
+
+                getDistanceMatrix(marker.getPosition());
+
+                google.maps.event.trigger(map, 'resize');
+                map.setCenter(latLong);
+
+            }
+
+            $('#inputModalAddress').keypress(function(event) {
+                if(event.keyCode == 13) {
+                    locateByAddress($('#inputModalAddress').val());
+                }
+            });
+
+            $('#inputModalLat').keypress(function(event) {
+                if(event.keyCode == 13) {
+                    locateByCoordinate($('#inputModalLat').val(), $('#inputModalLng').val());
+                }
+            });
+
+            $('#inputModalLng').keypress(function(event) {
+                if(event.keyCode == 13) {
+                    locateByCoordinate($('#inputModalLat').val(), $('#inputModalLng').val());
+                }
+            });
+
+            // Deletes all markers in the array by removing references to them.
+            function deleteMarkers() {
+
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
+
+                markers = [];
+            }
+
+            function getDistanceMatrix(destination)
+            {
+                var service = new google.maps.DistanceMatrixService;
+
+                var origin = new google.maps.LatLng({{ $store->lat }}, {{ $store->lng }})
+
+                service.getDistanceMatrix({
+                    origins: [origin],
+                    destinations: [destination],
+                    travelMode: 'DRIVING',
+                    unitSystem: google.maps.UnitSystem.METRIC
+                }, function(response, status) {
+                    if(status !== 'OK') {
+                        alert('Error was: ' + status);
+                    } else {
+
+                        debugger;
+
+                        var originList = response.originAddresses;
+                        var destinationList = response.destinationAddresses;
+                        for(var i = 0; i < originList.length; i++) {
+                            var results = response.rows[i].elements;
+                            for(var j = 0; j < results.length; j++) {
+                                $('#inputModalDistanceText').val(results[j].distance.text);
+                                $('#inputModalDistance').val(results[j].distance.value);
+                                $('#inputModalDurationText').val(results[j].duration.text);
+                                $('#inputModalDuration').val(results[j].duration.value);
+                            }
+                        }
+                    }
+                })
+            }
+
         });
     </script>
 @endsection

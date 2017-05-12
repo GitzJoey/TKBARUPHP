@@ -1,5 +1,4 @@
-
-<?php
+<?php 
 
 return [
     'confirmation' => [
@@ -125,6 +124,11 @@ return [
         'price_level' => 'Price Level',
         'payment_due_day' => 'Payment Due Day',
         'person_in_charge' => 'Person In Charge',
+        'mileage' => 'Mileage',
+        'lat' => 'Latitude',
+        'lng' => 'Longitude',
+        'distance' => 'Distance',
+        'duration' => 'Duration',
     ],
     'edit' => [
         'title' => 'Customer',

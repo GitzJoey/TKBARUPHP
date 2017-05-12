@@ -59,11 +59,13 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@create] ');
 
+        $mapsAPIKey = env('MAPS_API_KEY');
+
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
         $currenciesDDL = Currencies::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
-        return view('store.create', compact('statusDDL', 'yesnoDDL', 'bankDDL', 'currenciesDDL'));
+        return view('store.create', compact('statusDDL', 'yesnoDDL', 'bankDDL', 'currenciesDDL', 'mapsAPIKey'));
     }
 
     public function store(Request $data)
@@ -73,6 +75,8 @@ class StoreController extends Controller
         $this->validate($data, [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
+            'lat' => 'required',
+            'lng' => 'required',
             'phone_num' => 'required|string|max:255',
             'tax_id' => 'required|string|max:255',
             'status' => 'required',
@@ -100,6 +104,8 @@ class StoreController extends Controller
             $store = Store::create([
                 'name' => $data['name'],
                 'address' => $data['address'],
+                'lat' => $data['lat'],
+                'lng' => $data['lng'],
                 'phone_num' => $data['phone_num'],
                 'fax_num' => $data['fax_num'],
                 'tax_id' => $data['tax_id'],
@@ -144,6 +150,8 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@edit] $id:' . $id);
 
+        $mapsAPIKey = env('MAPS_API_KEY');
+
         $store = Store::with('bankAccounts.bank')->where('id', '=' , $id)->first();
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
@@ -151,7 +159,7 @@ class StoreController extends Controller
         $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
         $currenciesDDL = Currencies::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
 
-        return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL', 'bankDDL','currenciesDDL'));
+        return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL', 'bankDDL','currenciesDDL', 'mapsAPIKey'));
     }
 
     public function update($id, Request $data)
@@ -203,6 +211,8 @@ class StoreController extends Controller
 
             $store->name = $data['name'];
             $store->address = $data['address'];
+            $store->lat = $data['lat'];
+            $store->lng = $data['lng'];
             $store->phone_num = $data['phone_num'];
             $store->fax_num = $data['fax_num'];
             $store->tax_id = $data['tax_id'];

@@ -49,6 +49,22 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="inputLat" class="col-sm-2 control-label">@lang('store.field.lat')</label>
+                                <div class="col-sm-10">
+                                    <label id="inputLat" class="control-label control-label-normal">
+                                        <span class="control-label-normal">{{ $store->lat }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputLng" class="col-sm-2 control-label">@lang('store.field.lng')</label>
+                                <div class="col-sm-10">
+                                    <label id="inputLng" class="control-label control-label-normal">
+                                        <span class="control-label-normal">{{ $store->lng }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="inputPhone" class="col-sm-2 control-label">@lang('store.field.phone')</label>
                                 <div class="col-sm-10">
                                     <label id="inputPhone" class="control-label control-label-normal">

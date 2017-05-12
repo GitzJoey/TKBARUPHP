@@ -124,6 +124,11 @@ return [
         'price_level' => 'Tingkatan Harga',
         'payment_due_day' => 'Tenggat Pembayaran',
         'person_in_charge' => 'Penanggungjawab',
+        'mileage' => 'Jarak Tempuh',
+        'lat' => 'Latitude',
+        'lng' => 'Longitude',
+        'distance' => 'Jarak Tempuh',
+        'duration' => 'Lama Tempuh',
     ],
     'edit' => [
         'title' => 'Pelanggan',
