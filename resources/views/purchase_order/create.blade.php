@@ -29,7 +29,7 @@
     @endif
 
     <div id="poVue">
-        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" v-on:submit="onSubmit()">
+        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" v-on:submit.prevent="validateBeforeSubmit">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6">
@@ -255,8 +255,7 @@
                                                 <td>
                                                     <select v-bind:class="{ 'form-control':true }"
                                                             name="item_selected_unit_id[]"
-                                                            v-model="item.selected_unit.unit.id"
-                                                            v-validate="">
+                                                            v-model="item.selected_unit.unit.id">
                                                         <option v-bind:value="defaultProductUnit.unit.id">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                     </select>
@@ -680,13 +679,7 @@
                 },
                 methods: {
                     validateBeforeSubmit: function() {
-                        this.$validator.validateAll();
-                        return this.errors.any();
-                    },
-                    onSubmit: function () {
-                        if (this.validateBeforeSubmit()) {
 
-                        }
                     },
                     onChangeSupplier: function() {
                         if (!this.po.supplier.id) {
