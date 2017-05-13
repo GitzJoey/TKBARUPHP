@@ -63,8 +63,8 @@ return [
         'purple-light' => 'Ungu Terang',
         'green-light' => 'Hijau Terang',
         'ribbon' => 'Pita',
-        'lat' => 'Garis Lintang',
-        'lng' => 'Garis Bujur',
+        'latitude' => 'Garis Lintang',
+        'longitude' => 'Garis Bujur',
     ],
     'edit' => [
         'title' => 'Toko',

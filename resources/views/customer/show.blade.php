@@ -62,38 +62,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputLat" class="col-sm-2 control-label">@lang('customer.field.lat')</label>
-                                <div class="col-sm-10">
-                                    <label id="inputLat" class="control-label">
-                                        <span class="control-label-normal">{{ $customer->lat }}</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputLng" class="col-sm-2 control-label">@lang('customer.field.lng')</label>
-                                <div class="col-sm-10">
-                                    <label id="inputLng" class="control-label">
-                                        <span class="control-label-normal">{{ $customer->lng }}</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.distance')</label>
-                                <div class="col-sm-10">
-                                    <label id="inputDistance" class="control-label">
-                                        <span class="control-label-normal">{{ $customer->distance_text }}</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputAddress" class="col-sm-2 control-label">@lang('customer.field.duration')</label>
-                                <div class="col-sm-10">
-                                    <label id="inputDuration" class="control-label">
-                                        <span class="control-label-normal">{{ $customer->duration_text }}</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="inputCity" class="col-sm-2 control-label">@lang('customer.field.city')</label>
                                 <div class="col-sm-10">
                                     <label id="inputCity" class="control-label">

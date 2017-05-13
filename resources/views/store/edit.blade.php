@@ -16,8 +16,7 @@
     {!! Breadcrumbs::render('admin_store_edit', $store->hId()) !!}
 @endsection
 
-@section('content')
-
+@section('custom_css')
     <style>
         .pac-container {
             background-color: #FFF;
@@ -33,7 +32,9 @@
             z-index: 1000;
         }​
     </style>
+@endsection
 
+@section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
@@ -87,18 +88,8 @@
                                     </div>
                                     <div class="col-sm-1">
                                         <button type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#myModal"><i class="fa fa-location-arrow"></i></button>
-                                    </div>
-                                </div>
-                                <div class="form-group {{ $errors->has('lat') ? 'has-error' : '' }}">
-                                    <label for="inputLat" class="col-sm-2 control-label">@lang('store.field.lat')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputLat" type="text" name="lat" class="form-control" placeholder="@lang('customer.field.lat')" value="{{ $store->lat }}">
-                                    </div>
-                                </div>
-                                <div class="form-group {{ $errors->has('lng') ? 'has-error' : '' }}">
-                                    <label for="inputLng" class="col-sm-2 control-label">@lang('store.field.lng')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputLng" type="text" name="lng" class="form-control" placeholder="@lang('customer.field.lng')" value="{{ $store->lng }}">
+                                        <input id="inputLatitude" type="hidden" name="latitude" value="{{ $store->latitude }}">
+                                        <input id="inputLongitude" type="hidden" name="longitude" value="{{ $store->longitude }}">
                                     </div>
                                 </div>
                                 <div class="form-group {{ $errors->has('phone_num') ? 'has-error' : '' }}">

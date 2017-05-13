@@ -101,8 +101,8 @@ class CustomerController extends Controller
                 $customer->store_id = Auth::user()->store->id;
                 $customer->name = $data['name'];
                 $customer->address = $data['address'];
-                $customer->lat = $data['lat'];
-                $customer->lng = $data['lng'];
+                $customer->latitude = $data['latitude'];
+                $customer->longitude = $data['longitude'];
                 $customer->distance = $data['distance'];
                 $customer->distance_text = $data['distance_text'];
                 $customer->duration = $data['duration'];
@@ -242,6 +242,8 @@ class CustomerController extends Controller
 
             $customer->name = $data['name'];
             $customer->address = $data['address'];
+            $customer->latitude = $data['latitude'];
+            $customer->longitude = $data['longitude'];
             $customer->distance = $data['distance'];
             $customer->distance_text = $data['distance_text'];
             $customer->duration = $data['duration'];

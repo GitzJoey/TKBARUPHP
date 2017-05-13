@@ -125,10 +125,10 @@ return [
         'payment_due_day' => 'Payment Due Day',
         'person_in_charge' => 'Person In Charge',
         'mileage' => 'Mileage',
-        'lat' => 'Latitude',
-        'lng' => 'Longitude',
         'distance' => 'Distance',
         'duration' => 'Duration',
+        'latitude' => 'Latitude',
+        'longitude' => 'Longitude',
     ],
     'edit' => [
         'title' => 'Customer',

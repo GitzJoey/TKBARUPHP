@@ -75,8 +75,8 @@ class StoreController extends Controller
         $this->validate($data, [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'lat' => 'required',
-            'lng' => 'required',
+            'latitude' => 'required',
+            'latitude' => 'required',
             'phone_num' => 'required|string|max:255',
             'tax_id' => 'required|string|max:255',
             'status' => 'required',
@@ -104,8 +104,8 @@ class StoreController extends Controller
             $store = Store::create([
                 'name' => $data['name'],
                 'address' => $data['address'],
-                'lat' => $data['lat'],
-                'lng' => $data['lng'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude'],
                 'phone_num' => $data['phone_num'],
                 'fax_num' => $data['fax_num'],
                 'tax_id' => $data['tax_id'],
@@ -211,8 +211,8 @@ class StoreController extends Controller
 
             $store->name = $data['name'];
             $store->address = $data['address'];
-            $store->lat = $data['lat'];
-            $store->lng = $data['lng'];
+            $store->latitude = $data['latitude'];
+            $store->longitude = $data['longitude'];
             $store->phone_num = $data['phone_num'];
             $store->fax_num = $data['fax_num'];
             $store->tax_id = $data['tax_id'];

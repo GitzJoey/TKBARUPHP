@@ -16,8 +16,7 @@
     {!! Breadcrumbs::render('master_customer_edit', $customer->hId()) !!}
 @endsection
 
-@section('content')
-
+@section('custom_css')
     <style>
         .pac-container {
             background-color: #FFF;
@@ -33,7 +32,9 @@
             z-index: 1000;
         }​
     </style>
+@endsection
 
+@section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
@@ -77,32 +78,12 @@
                                     </div>
                                     <div class="col-sm-1">
                                         <button type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#myModal"><i class="fa fa-location-arrow"></i></button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputLat" class="col-sm-2 control-label">@lang('customer.field.lat')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputLat" type="text" name="lat" class="form-control" placeholder="@lang('customer.field.lat')" value="{{ $customer->lat }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputLng" class="col-sm-2 control-label">@lang('customer.field.lng')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputLng" type="text" name="lng" class="form-control" placeholder="@lang('customer.field.lng')" value="{{ $customer->lng }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputDistance" class="col-sm-2 control-label">@lang('customer.field.distance')</label>
-                                    <div class="col-sm-10">
-                                        <input type="hidden" id="inputDistance" name="distance">
-                                        <input id="inputDistanceText" type="text" name="distance_text" class="form-control" placeholder="@lang('customer.field.distance')">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputDuration" class="col-sm-2 control-label">@lang('customer.field.duration')</label>
-                                    <div class="col-sm-10">
-                                        <input type="hidden" id="inputDuration" name="duration">
-                                        <input id="inputDurationText" type="text" name="duration_text" class="form-control" placeholder="@lang('customer.field.duration')">
+                                        <input id="inputLatitude" type="hidden" name="latitude" value="{{ $customer->latitude }}">
+                                        <input id="inputLongitude" type="hidden" name="longitude" value="{{ $customer->longitude }}">
+                                        <input id="inputDistance" type="hidden" name="distance" value="{{ $customer->distance }}">
+                                        <input id="inputDistanceText" type="hidden" name="distance_text" value="{{ $customer->distance_text }}">
+                                        <input id="inputDuration" type="hidden" name="duration" value="{{ $customer->duration }}">
+                                        <input id="inputDurationText" type="hidden" name="duration_text" value="{{ $customer->duration_text }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -735,7 +716,7 @@
             {
                 var service = new google.maps.DistanceMatrixService;
 
-                var origin = new google.maps.LatLng({{ $store->lat }}, {{ $store->lng }})
+                var origin = new google.maps.LatLng({{ $store->latitude }}, {{ $store->longitude }})
 
                 service.getDistanceMatrix({
                     origins: [origin],

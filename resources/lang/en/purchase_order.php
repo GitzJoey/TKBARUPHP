@@ -16,6 +16,7 @@ return [
             'remarks' => 'Remarks',
             'total_discount' => 'Discount',
             'discount_per_item' => 'Discount Per Item',
+            'po_copy_remarks' => '',
         ],
         'field' => [
             'supplier_type' => 'Type',
@@ -28,6 +29,7 @@ return [
             'shipping_date' => 'Shipping Date',
             'warehouse' => 'Warehouse',
             'vendor_trucking' => 'Vendor Trucking',
+            'po_copy_code' => '',
         ],
         'tab' => [
             'remarks' => 'Remarks',
@@ -366,6 +368,8 @@ return [
                 'transaction_summary' => 'Transaction Summary',
                 'remarks' => 'Remarks',
                 'po_copy_remarks' => 'PO Copy Remarks',
+                'discount_transaction' => '',
+                'discount_per_item' => '',
             ],
             'field' => [
                 'supplier_type' => 'Type',
@@ -388,11 +392,17 @@ return [
                         'unit' => 'Unit',
                         'price_unit' => 'Price',
                         'total_price' => 'Total Price',
+                        'discount_percent' => '',
+                        'discount_nominal' => '',
                     ],
                 ],
                 'total' => [
                     'body' => [
                         'total' => 'Total Amount',
+                        'sub_total_discount' => '',
+                        'total_discount' => '',
+                        'invoice_discount' => '',
+                        'total_transaction' => '',
                     ],
                 ],
             ],

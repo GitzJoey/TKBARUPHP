@@ -63,8 +63,8 @@ return [
         'purple-light' => 'Light Purple',
         'green-light' => 'Light Green',
         'ribbon' => 'Ribbon',
-        'lat' => 'Latitude',
-        'lng' => 'Longitude',
+        'latitude' => 'Latitude',
+        'longitude' => 'Longitude',
     ],
     'edit' => [
         'title' => 'Store',

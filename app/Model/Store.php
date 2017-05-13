@@ -81,8 +81,8 @@ class Store extends Model
     protected $fillable = [
         'name',
         'address',
-        'lat',
-        'lng',
+        'latitude',
+        'longitude',
         'phone_num',
         'fax_num',
         'tax_id',
