@@ -45,6 +45,7 @@
     "select2": "^4.0.3",
     "tooltipster": "^4.1.6",
     "urijs": "^1.18.7",
-    "vee-validate": "^2.0.0-rc.3"
+    "vee-validate": "^2.0.0-rc.3",
+    "vuetify": "^0.11.1"
   }
 }
