@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'search' => 'Search',
     'po.create' => 'Create Purchase Order',
     'po.list' => 'Revise Purchase Order',
     'po.revise' => 'Revise Purchase Order',
