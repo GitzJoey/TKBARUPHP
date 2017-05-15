@@ -226,6 +226,7 @@ return [
             'po_copy_remarks' => 'Keterangan Duplikat',
             'expenses' => 'Biaya',
             'discount_per_item' => 'Diskon Per Item',
+            'total_discount' => '',
         ],
         'field' => [
             'supplier_type' => 'Tipe',

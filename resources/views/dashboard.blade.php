@@ -29,7 +29,7 @@
                 <div class="icon">
                     <i class="ion ion-ios-pricetags"></i>
                 </div>
-                <a href="{{ route('db.warehouse.stockopname.index') }}" class="small-box-footer">Last Opname</a>
+                <a href="{{ route('db.warehouse.stockopname.index') }}" class="small-box-footer">@lang('dashboard.last_opname.title')</a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
@@ -41,7 +41,7 @@
                 <div class="icon">
                     <i class="icon ion-ios-cash"></i>
                 </div>
-                <a href="{{ route('db.bank.upload') }}" class="small-box-footer">Last Bank Upload</a>
+                <a href="{{ route('db.bank.upload') }}" class="small-box-footer">@lang('dashboard.last_bank_upload.title')</a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
@@ -74,7 +74,7 @@
         <div class="col-lg-6 col-xs-6">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Number of Created Sales Order</h3>
+                    <h3 class="box-title">@lang('dashboard.number_of_created_so.title')</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -93,7 +93,7 @@
         <div class="col-lg-6 col-xs-6">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Sales Order Total Amount</h3>
+                    <h3 class="box-title">@lang('dashboard.so_total_amount.title')</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -115,17 +115,17 @@
         <div class="col-lg-6 col-xs-6" id="due-purchase-order" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Due Purchase Orders - @{{ due_payment_day }}</h3>
+                    <h3 class="box-title">@lang('dashboard.due_purchase_orders.title') - @{{ due_payment_day }}</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-wrench"></i></button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders'>All</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(1)'>1 day</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(3)'>3 days</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(5)'>5 days</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders'>@lang('dashboard.due_purchase_orders.options.all')</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(1)'>@lang('dashboard.due_purchase_orders.options.1day')</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(3)'>@lang('dashboard.due_purchase_orders.options.3days')</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(5)'>@lang('dashboard.due_purchase_orders.options.5days')</a></li>
                             </ul>
                         </div>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -136,9 +136,9 @@
                         <table class="table no-margin">
                             <thead>
                             <tr>
-                                <th>PO Code</th>
-                                <th>Supplier Name</th>
-                                <th>Payment Due Date</th>
+                                <th>@lang('dashboard.due_purchase_orders.table.po_code')</th>
+                                <th>@lang('dashboard.due_purchase_orders.table.supplier_name')</th>
+                                <th>@lang('dashboard.due_purchase_orders.table.payment_due_date')</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -152,24 +152,24 @@
                     </div>
                 </div>
                 <div class="box-footer clearfix" style="display: block;">
-                    <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Purchase Orders</a>
+                    <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">@lang('dashboard.due_purchase_orders.button.view_all_purchase_orders')</a>
                 </div>
             </div>
         </div>
         <div class="col-lg-6 col-xs-6" id="due-sales-order" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Due Sales Orders - @{{ due_payment_day }}</h3>
+                    <h3 class="box-title">@lang('dashboard.due_sales_orders.title') - @{{ due_payment_day }}</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-wrench"></i></button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders'>All</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(1)'>1 day</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(3)'>3 days</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(5)'>5 days</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders'>@lang('dashboard.due_sales_orders.options.all')</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(1)'>@lang('dashboard.due_sales_orders.options.1day')</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(3)'>@lang('dashboard.due_sales_orders.options.3days')</a></li>
+                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(5)'>@lang('dashboard.due_sales_orders.options.5days')</a></li>
                             </ul>
                         </div>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -180,9 +180,9 @@
                         <table class="table no-margin">
                             <thead>
                             <tr>
-                                <th>PO Code</th>
-                                <th>Supplier Name</th>
-                                <th>Payment Due Date</th>
+                                <th>@lang('dashboard.due_sales_orders.table.so_code')</th>
+                                <th>@lang('dashboard.due_sales_orders.table.customer_name')</th>
+                                <th>@lang('dashboard.due_sales_orders.table.payment_due_date')</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -196,7 +196,7 @@
                     </div>
                 </div>
                 <div class="box-footer clearfix" style="display: block;">
-                    <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">View All Sales Orders</a>
+                    <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">@lang('dashboard.due_sales_orders.button.view_all_sales_orders')</a>
                 </div>
             </div>
         </div>
@@ -205,7 +205,7 @@
         <div class="col-lg-4 col-xs-6" id="almost-due-giro" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Almost Due Giro</h3>
+                    <h3 class="box-title">@lang('dashboard.almost_due_giro.title')</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -218,7 +218,7 @@
                                 <div class="col-md-8">
                                     <div style="font-weight: 600">@{{ dueGiro.bank.name }}</div>
                                     <span style="font-size: smaller;font-weight: bold;color: black;display: block">@{{ dueGiro.printed_name }}</span>
-                                    <span style="font-size: smaller">Serial Number: @{{ dueGiro.serial_number }}</span>
+                                    <span style="font-size: smaller">@lang('dashboard.almost_due_giro.label.serial_number'): @{{ dueGiro.serial_number }}</span>
                                 </div>
                                 <div class="col-md-4" style="font-size: large; padding: 15px">@{{ dueGiro.amount }}</div>
                             </div>
@@ -226,14 +226,14 @@
                     </ul>
                 </div>
                 <div class="box-footer text-center">
-                    <a href="{{ route('db.bank.giro') }}" class="uppercase">View All Giro</a>
+                    <a href="{{ route('db.bank.giro') }}" class="uppercase">@lang('dashboard.almost_due_giro.link.view_all_giro')</a>
                 </div>
             </div>
         </div>
         <div class="col-lg-4 col-xs-6" id="upcoming-events" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Upcoming Events</h3>
+                    <h3 class="box-title">@lang('dashboard.upcoming_events.title')</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -258,7 +258,7 @@
         <div class="col-lg-4 col-xs-6" id="passive-customers" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Passive Customers More Than a Month</h3>
+                    <h3 class="box-title">@lang('dashboard.passive_customers.title')</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -269,7 +269,7 @@
                         <table class="table no-margin">
                             <thead>
                             <tr>
-                                <th>Customer</th>
+                                <th>@lang('dashboard.passive_customers.table.header.customer')</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -289,7 +289,7 @@
         <div class="col-lg-6 col-xs-6" id="unreceived-purchase-orders" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Unreceived Purchase Order</h3>
+                    <h3 class="box-title">@lang('dashboard.unreceived_po.title')</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -312,14 +312,14 @@
                     </ul>
                 </div>
                 <div class="box-footer text-center">
-                    <a href="{{ route('db.warehouse.inflow.index') }}" class="uppercase">View All Inflow</a>
+                    <a href="{{ route('db.warehouse.inflow.index') }}" class="uppercase">@lang('dashboard.unreceived_po.link.view_all_inflow')</a>
                 </div>
             </div>
         </div>
         <div class="col-lg-6 col-xs-6" id="undelivered-sales-orders" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Undelivered Sales Order</h3>
+                    <h3 class="box-title">@lang('dashboard.undelivered_so.title')</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -342,7 +342,7 @@
                     </ul>
                 </div>
                 <div class="box-footer text-center">
-                    <a href="{{ route('db.warehouse.outflow.index') }}" class="uppercase">View All Outflow</a>
+                    <a href="{{ route('db.warehouse.outflow.index') }}" class="uppercase">@lang('dashboard.undelivered_so.link.view_all_outflow')</a>
                 </div>
             </div>
         </div>
@@ -382,7 +382,7 @@
                     }
                 },
                 title: {
-                    text: 'Sales Order Total Amount'
+                    text: '@lang('dashboard.so_total_amount.title')'
                 },
                 xAxis: {
                     type: 'datetime',
@@ -439,7 +439,7 @@
                     }
                 },
                 title: {
-                    text: 'Number of Created Sales Order'
+                    text: '@lang('dashboard.number_of_created_so.title')'
                 },
                 xAxis: {
                     type: 'datetime',
@@ -602,8 +602,8 @@
                                 this.last_opname = moment(this.last_opname[0].opname_date).format('YYYY-MM-DD');
                             }
                             else {
-                                this.last_opname_humanize = 'Never';
-                                this.last_opname = 'No data found';
+                                this.last_opname_humanize = '@lang('dashboard.last_opname.label.never')';
+                                this.last_opname = '@lang('dashboard.last_opname.label.no_data_found')';
                             }
                         }, response => {
                             // error callback
@@ -630,9 +630,11 @@
                         if(this.last_bank_upload.length > 0) {
                             this.last_bank_upload_humanize = moment(this.last_bank_upload[0].created_at).fromNow();
                             this.last_bank_upload = moment(this.last_bank_upload[0].created_at).format('YYYY-MM-DD');
-                        } else {
-                            this.last_bank_upload_humanize = 'Never';
-                            this.last_bank_upload = 'No data found';
+                        }
+                        else
+                        {
+                            this.last_bank_upload_humanize = '@lang('dashboard.last_bank_upload.label.never')';
+                            this.last_bank_upload = '@lang('dashboard.last_bank_upload.label.no_data_found')';
                         }
                     }, response => {
                             // error callback

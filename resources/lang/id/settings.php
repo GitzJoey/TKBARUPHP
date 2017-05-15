@@ -15,4 +15,12 @@ return [
         'fav_po_warehouse' => 'Gudang PO Pilihan',
         'fav_so_warehouse' => 'Gudang SO Pilihan',
     ],
+    'user' => [
+        'title' => '',
+        'page_title' => '',
+        'page_title_desc' => '',
+        'header' => [
+            'title' => '',
+        ],
+    ],
 ];

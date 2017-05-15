@@ -18,6 +18,8 @@ class CreateStoresTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('address')->nullable();
+            $table->decimal('latitude', 9, 6)->nullable();
+            $table->decimal('longitude', 9, 6)->nullable();
             $table->string('phone_num')->nullable();
             $table->string('fax_num')->nullable();
             $table->string('tax_id')->nullable();

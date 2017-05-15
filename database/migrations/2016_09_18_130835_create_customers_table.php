@@ -19,6 +19,12 @@ class CreateCustomersTable extends Migration
             $table->string('sign_code')->nullable();
             $table->string('name')->nullable();
             $table->string('address')->nullable();
+            $table->decimal('latitude', 9, 6)->nullable();
+            $table->decimal('longitude', 9, 6)->nullable();
+            $table->bigInteger('distance')->nullable();
+            $table->string('distance_text')->nullable();
+            $table->bigInteger('duration')->nullable();
+            $table->string('duration_text')->nullable();
             $table->string('city')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('fax_num')->nullable();

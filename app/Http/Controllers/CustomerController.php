@@ -74,13 +74,15 @@ class CustomerController extends Controller
 
     public function create()
     {
+        $mapsAPIKey = env('MAPS_API_KEY');
+        $store = Auth::user()->store;
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
         $expenseTemplates = ExpenseTemplate::all();
 
-        return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates'));
+        return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates', 'mapsAPIKey', 'store'));
     }
 
     public function store(Request $data)
@@ -94,10 +96,17 @@ class CustomerController extends Controller
             return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
         } else {
             DB::transaction(function() use ($data) {
+
                 $customer = new Customer();
                 $customer->store_id = Auth::user()->store->id;
                 $customer->name = $data['name'];
                 $customer->address = $data['address'];
+                $customer->latitude = $data['latitude'];
+                $customer->longitude = $data['longitude'];
+                $customer->distance = $data['distance'];
+                $customer->distance_text = $data['distance_text'];
+                $customer->duration = $data['duration'];
+                $customer->duration_text = $data['duration_text'];
                 $customer->city = $data['city'];
                 $customer->phone_number = $data['phone'];
                 $customer->tax_id = $data['tax_id'];
@@ -148,6 +157,8 @@ class CustomerController extends Controller
 
     public function edit($id)
     {
+        $mapsAPIKey = env('MAPS_API_KEY');
+        $store = Auth::user()->store;
         $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank', 'expenseTemplates')->find($id);
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
@@ -155,7 +166,7 @@ class CustomerController extends Controller
         $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
         $expenseTemplates = ExpenseTemplate::all();
 
-        return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates'));
+        return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates', 'mapsAPIKey', 'store'));
     }
 
     public function update($id, Request $data)
@@ -231,6 +242,12 @@ class CustomerController extends Controller
 
             $customer->name = $data['name'];
             $customer->address = $data['address'];
+            $customer->latitude = $data['latitude'];
+            $customer->longitude = $data['longitude'];
+            $customer->distance = $data['distance'];
+            $customer->distance_text = $data['distance_text'];
+            $customer->duration = $data['duration'];
+            $customer->duration_text = $data['duration_text'];
             $customer->city = $data['city'];
             $customer->phone_number = $data['phone'];
             $customer->tax_id = $data['tax_id'];
