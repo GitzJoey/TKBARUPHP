@@ -191,6 +191,8 @@ return [
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class,
+
     ],
 
     /*

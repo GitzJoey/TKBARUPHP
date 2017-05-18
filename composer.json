@@ -20,7 +20,8 @@
         "maatwebsite/excel": "~2.1.6",
         "barryvdh/laravel-dompdf": "^0.7.0",
         "barryvdh/laravel-debugbar": "^2.3",
-        "santigarcor/laratrust": "3.2.*"
+        "santigarcor/laratrust": "3.2.*",
+        "laravel/tinker": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
