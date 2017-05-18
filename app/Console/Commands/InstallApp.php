@@ -75,7 +75,7 @@ class InstallApp extends Command
         $this->info('Seeding ...');
         Artisan::call('db:seed');
         $this->info('Storage Linking ...');
-        if (File::exists(public_path().'/storage')) {
+        if (is_link(public_path().'/storage')) {
             $this->info('Found Storage Link, Skipping ...');
         } else {
             Artisan::call('storage:link');
