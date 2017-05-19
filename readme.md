@@ -65,5 +65,6 @@ $ composer dump-autoload
 Fell free to add any feature suggestion by creating new **Issues**, and we can start discussing it
 
 # License
-**MIT License**  
-The MIT License is a permissive license. It lets you do anything with this code as long as you provide **attribution back to this website**. 
+[MIT License](http://opensource.org/licenses/MIT)  
+The MIT License is a permissive license.  
+It lets you do anything with this code as long as you provide **attribution back to this website**. 

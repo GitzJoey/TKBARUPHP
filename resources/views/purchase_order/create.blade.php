@@ -1,5 +1,3 @@
-@if (false)<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"> @endif
-
 @extends('layouts.adminlte.master')
 
 @section('title')
@@ -50,21 +48,21 @@
                                         <option v-bind:value="defaultSupplierType.code">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="st of supplierTypeDDL" v-bind:value="st.code">@{{ st.i18nDescription }}</option>
                                     </select>
-                                    <span v-show="errors.has('supplier_type')" class="help-block">@{{ errors.first('supplier_type') }}</span>
+                                    <span v-show="errors.has('supplier_type')" class="help-block" v-cloak>@{{ errors.first('supplier_type') }}</span>
                                 </div>
                             </div>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true }">
                                     <label for="inputSupplierId"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-8">
-                                        <input type="hidden" name="supplier_id" v-bind:value="po.supplier.id" >
                                         <select id="inputSupplierId"
                                                 class="form-control"
-                                                v-model="po.supplier"
-                                                v-on:change="insertDefaultExpense(po.supplier)">
-                                            <option v-bind:value="defaultSupplier">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="supplier of supplierDDL" v-bind:value="supplier">@{{ supplier.name }}</option>
+                                                name="supplier_id"
+                                                v-model="po.supplier.id"
+                                                v-on:change="onChangeSupplier()">
+                                            <option v-bind:value="defaultSupplier.id">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="supplier of supplierDDL" v-bind:value="supplier.id">@{{ supplier.name }}</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
@@ -76,7 +74,7 @@
                                 </div>
                             </template>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true }">
                                     <label for="inputSupplierName"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-10">
@@ -84,7 +82,7 @@
                                                class="form-control" v-model="po.supplier_name">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true }">
                                     <label for="inputSupplierDetails"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-10">
@@ -111,20 +109,20 @@
                                            placeholder="PO Code" readonly value="{{ $poCode }}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true }">
                                 <label for="inputPoType"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_type')</label>
                                 <div class="col-sm-9">
-                                    <input type="hidden" name="po_type" v-bind:value="po.poType.code" >
-                                    <select id="inputPoType" data-parsley-required="true"
+                                    <select id="inputPoType"
                                             class="form-control"
-                                            v-model="po.poType">
-                                        <option v-bind:value="defaultPOType">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="poType of poTypeDDL" v-bind:value="poType">@{{ poType.i18nDescription }}</option>
+                                            name="po_type"
+                                            v-model="po.poType.code">
+                                        <option v-bind:value="defaultPOType.code">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="poType of poTypeDDL" v-bind:value="poType.code">@{{ poType.i18nDescription }}</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true }">
                                 <label for="inputPoDate"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_date')</label>
                                 <div class="col-sm-9">
@@ -132,8 +130,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" id="inputPoDate"
-                                               name="po_created" data-parsley-required="true">
+                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +152,7 @@
                             <h3 class="box-title">@lang('purchase_order.create.box.shipping')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true }">
                                 <label for="inputShippingDate"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
                                 <div class="col-sm-5">
@@ -163,21 +160,21 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" id="inputShippingDate"
-                                               name="shipping_date" data-parsley-required="true">
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="po.shippingDate"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true }">
                                 <label for="inputWarehouse"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.warehouse')</label>
                                 <div class="col-sm-5">
-                                    <input type="hidden" name="warehouse_id" v-bind:value="po.warehouse.id" >
                                     <select id="inputWarehouse" data-parsley-required="true"
                                             class="form-control"
-                                            v-model="po.warehouse">
-                                        <option v-bind:value="defaultWarehouse">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
+                                            name="warehouse_id"
+                                            v-model="po.warehouse.id"
+                                            v-on:change="onChangeWarehouse()">
+                                        <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -186,12 +183,12 @@
                                 <label for="inputVendorTrucking"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
-                                    <input type="hidden" name="vendor_trucking_id" v-bind:value="po.vendorTrucking.id" >
                                     <select id="inputVendorTrucking"
                                             class="form-control"
-                                            v-model="po.vendorTrucking">
-                                        <option v-bind:value="defaultVendorTrucking">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
+                                            name="vendor_trucking_id"
+                                            v-model="po.vendorTrucking.id">
+                                        <option v-bind:value="defaultVendorTrucking.id">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking.id">@{{ vendorTrucking.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -231,57 +228,52 @@
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="25%">@lang('purchase_order.create.table.item.header.product_name')</th>
-                                            <th width="10%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.quantity')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="25%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                <th width="10%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.quantity')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.unit')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.price_unit')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(item, itemIndex) in po.items">
-                                            <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
-                                            <input type="hidden" name="base_unit_id[]"
-                                                   v-bind:value="item.base_unit.unit.id">
-                                            <td class="valign-middle">@{{ item.product.name }}</td>
-                                            <td>
-                                                <input type="text" class="form-control text-right"
-                                                       name="item_quantity[]"
-                                                       v-model="item.quantity" data-parsley-required="true"
-                                                       data-parsley-type="number">
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
-                                                <select data-parsley-required="true"
-                                                        class="form-control"
-                                                        v-model="item.selected_unit"
-                                                        data-parsley-required="true">
-                                                    <option v-bind:value="defaultProductUnit">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right"
-                                                       name="item_price[]"
-                                                       v-model="item.price" data-parsley-required="true"
-                                                       data-parsley-pattern="^\d+(,\d+)?$"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md"
-                                                        v-on:click="removeItem(itemIndex)"><span
-                                                            class="fa fa-minus"></span>
-                                                </button>
-                                            </td>
-                                            <td class="text-right valign-middle">
-                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                            </td>
-                                        </tr>
+                                            <tr v-for="(item, itemIndex) in po.items">
+                                                <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="base_unit_id[]"
+                                                       v-bind:value="item.base_unit.unit.id">
+                                                <td class="valign-middle">@{{ item.product.name }}</td>
+                                                <td>
+                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true }"
+                                                           name="item_quantity[]"
+                                                           v-model="item.quantity">
+                                                </td>
+                                                <td>
+                                                    <select v-bind:class="{ 'form-control':true }"
+                                                            name="item_selected_unit_id[]"
+                                                            v-model="item.selected_unit.unit.id">
+                                                        <option v-bind:value="defaultProductUnit.unit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="item_price[]"
+                                                           v-bind:class="{ 'form-control':true, 'text-right':true }"
+                                                           v-model="item.price">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md"
+                                                            v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"></span>
+                                                    </button>
+                                                </td>
+                                                <td class="text-right valign-middle">
+                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -421,7 +413,7 @@
 													</select>
 												</td>
 												<td class="text-center">
-													<input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
+                                                    <vue-iCheck name="is_internal_expense[]" v-model="expense.is_internal_expense"></vue-iCheck>
 												</td>
 												<td>
 													<input name="expense_remarks[]" type="text" class="form-control"
@@ -601,9 +593,57 @@
     <script type="application/javascript">
         $(document).ready(function() {
             Vue.use(VeeValidate);
+
+            Vue.component('vue-icheck', {
+               template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+                props: ['id', 'name', 'disabled', 'value'],
+                mounted: function() {
+                    $(this.$el).iCheck({
+                        checkboxClass: 'icheckbox_square-blue',
+                        radioClass: 'iradio_square-blue'
+                    }).on('ifChecked', function(event) {
+                        this.value = true;
+                    }).on('ifUnchecked', function(event) {
+                        this.value = false;
+                    });
+
+                    if (this.value) { $(this.$el).iCheck('check'); }
+                    if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+                },
+                destroyed: function() {
+                    $(this.$el).iCheck('destroy');
+                }
+            });
+
+            Vue.component('vue-datetimepicker', {
+                template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
+                props: ['id', 'name', 'value', 'format'],
+                mounted: function() {
+                    var vm = this;
+
+                    if (this.value == undefined) this.value = '';
+                    if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+
+                    $(this.$el).datetimepicker({
+                        format: this.format,
+                        defaultDate: this.value == '' ? moment():moment(this.value).format(this.format)
+                    }).on("dp.change", function(e) {
+                        vm.$emit('input', this.value);
+                    });
+
+                    if (this.value == '') {
+                        $(this.$el).datetimepicker().data('DateTimePicker').date(moment());
+                    }
+                },
+                destroyed: function() {
+                    $(this.$el).data("DateTimePicker").destroy();
+                }
+            });
+
             var poApp = new Vue({
                 el: '#poVue',
                 data: {
+                    p: true,
                     supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
                     warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
                     poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
@@ -612,8 +652,9 @@
                     expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                     productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                     po: {
-						disc_total_percent : {{ old('disc_total_percent')? old('disc_total_percent') : 0 }},
-						disc_total_value : {{ old('disc_total_value')? old('disc_total_value') : 0 }},
+						disc_total_percent : parseInt('{{ old('disc_total_percent')? old('disc_total_percent') : 0 }}'),
+						disc_total_value : parseInt('{{ old('disc_total_value')? old('disc_total_value') : 0 }}'),
+                        createdDate: '',
                         supplier_type: {
                             code: ''
                         },
@@ -638,7 +679,25 @@
                 },
                 methods: {
                     validateBeforeSubmit: function() {
-                        this.$validator.validateAll();
+
+                    },
+                    onChangeSupplier: function() {
+                        if (!this.po.supplier.id) {
+                            this.removeAllExpense();
+                            this.po.supplier = { id: '' };
+                        } else {
+                            var supp = _.find(this.supplierDDL, {id: this.po.supplier.id});
+                            this.insertDefaultExpense(supp);
+                            _.merge(this.po.supplier, supp);
+                        }
+                    },
+                    onChangeWarehouse: function() {
+                        if(!this.po.warehouse.id) {
+                            this.po.warehouse = { id: '' };
+                        } else {
+                            var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
+                            _.merge(this.po.warehouse, wh);
+                        }
                     },
                     discountPercentToNominal: function(item, discount){
                         var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
@@ -798,8 +857,6 @@
                                     remarks: supplier.expense_templates[i].remarks
                                 });
                             }
-
-                            reInitICheck();
                         }
                         else {
                             vm.po.expenses.push({
@@ -818,13 +875,15 @@
                             amount: 0,
                             remarks: ''
                         });
-
-                        reInitICheck();
                     },
                     removeExpense: function (index) {
                         var vm = this;
                         vm.po.expenses.splice(index, 1);
-                    }					
+                    },
+                    removeAllExpense: function() {
+                        var vm = this;
+                        vm.po.expenses = [];
+                    }
                 },
                 computed: {
                     defaultSupplierType: function(){
@@ -876,6 +935,10 @@
 						},0);
 					}
                 },
+                mounted: function() {
+                    var prdId = parseInt('{{ old('item_product_id') }}');
+                    var s = '{{ old('item_product_id') }}';
+                },
                 created: function() {
                     var vm = this;
                     var warehouseId = parseInt('{{ old('warehouse_id') }}');
@@ -924,25 +987,6 @@
                     });
                 @endforeach
             @endif
-
-            function reInitICheck() {
-                Vue.nextTick(function() {
-                    $('input[type="checkbox"], input[type="radio"]').iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue'
-                    });
-                });
-            }
-
-            $("#inputPoDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
-
-            $("#inputShippingDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
         });
     </script>
 @endsection
