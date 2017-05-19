@@ -149,6 +149,7 @@ class InstallApp extends Command
             'name' => $userName,
             'email' => $userEmail,
             'password' => bcrypt($userPassword),
+            'api_token' => str_random(60)
         ]);
 
         if ($user) {
