@@ -17,18 +17,16 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="poVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
         <form id="poForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit('submit')">
             {{ csrf_field() }}
             <div class="row">
@@ -42,8 +40,8 @@
                                 <label for="inputSupplierType"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_type')</label>
                                 <div class="col-sm-8">
-                                    <select id="inputSupplierType" name="supplier_type" v-validate="'required'"
-                                            class="form-control"
+                                    <select id="inputSupplierType" name="supplier_type" class="form-control"
+                                            v-validate="'required'" data-vv-as="{{ trans('purchase_order.create.field.supplier_type') }}"
                                             v-model="po.supplier_type.code">
                                         <option v-bind:value="defaultSupplierType.code">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="st of supplierTypeDDL" v-bind:value="st.code">@{{ st.i18nDescription }}</option>
@@ -56,10 +54,9 @@
                                     <label for="inputSupplierId"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-8">
-                                        <select id="inputSupplierId"
-                                                class="form-control"
-                                                name="supplier_id"
+                                        <select id="inputSupplierId" name="supplier_id" class="form-control"
                                                 v-validate="po.supplier_type.code == 'SUPPLIERTYPE.R' ? 'required':''"
+                                                data-vv-as="{{ trans('purchase_order.create.field.supplier_name') }}"
                                                 v-model="po.supplier.id"
                                                 v-on:change="onChangeSupplier()">
                                             <option v-bind:value="defaultSupplier.id">@lang('labels.PLEASE_SELECT')</option>
@@ -82,6 +79,7 @@
                                     <div class="col-sm-10">
                                         <input type="text" id="inputSupplierName" name="walk_in_supplier"
                                                v-validate="po.supplier_type.code == 'SUPPLIERTYPE.WI' ? 'required':''"
+                                               data-vv-as="{{ trans('purchase_order.create.field.supplier_name') }}"
                                                class="form-control" v-model="po.supplier_name">
                                         <span v-show="errors.has('walk_in_supplier')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier') }}</span>
                                     </div>
@@ -90,9 +88,9 @@
                                     <label for="inputSupplierDetails"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-10">
-                                        <textarea id="inputSupplierDetails" class="form-control" rows="5"
-                                                  name="walk_in_supplier_detail"
+                                        <textarea id="inputSupplierDetails" name="walk_in_supplier_detail" class="form-control" rows="5"
                                                   v-validate="po.supplier_type.code == 'SUPPLIERTYPE.WI' ? 'required':''"
+                                                  data-vv-as="{{ trans('purchase_order.create.field.supplier_details') }}"
                                                   v-model="po.supplier_details"></textarea>
                                         <span v-show="errors.has('walk_in_supplier_detail')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier_detail') }}</span>
                                     </div>
@@ -119,9 +117,9 @@
                                 <label for="inputPoType"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_type')</label>
                                 <div class="col-sm-9">
-                                    <select id="inputPoType" v-validate="'required'"
-                                            class="form-control"
-                                            name="po_type"
+                                    <select id="inputPoType" name="po_type" class="form-control"
+                                            v-validate="'required'"
+                                            data-vv-as="{{ trans('purchase_order.create.field.po_type') }}"
                                             v-model="po.poType.code">
                                         <option v-bind:value="defaultPOType.code">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="poType of poTypeDDL" v-bind:value="poType.code">@{{ poType.i18nDescription }}</option>
@@ -175,14 +173,15 @@
                                 <label for="inputWarehouse"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.warehouse')</label>
                                 <div class="col-sm-5">
-                                    <select id="inputWarehouse" data-parsley-required="true"
-                                            class="form-control"
-                                            name="warehouse_id"
+                                    <select id="inputWarehouse" name="warehouse_id" class="form-control"
                                             v-model="po.warehouse.id"
+                                            v-validate="'required'"
+                                            data-vv-as="{{ trans('purchase_order.create.field.warehouse') }}"
                                             v-on:change="onChangeWarehouse()">
                                         <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                                     </select>
+                                    <span v-show="errors.has('warehouse_id')" class="help-block" v-cloak>@{{ errors.first('warehouse_id') }}</span>
                                 </div>
                             </div>
                             <hr>
@@ -190,9 +189,7 @@
                                 <label for="inputVendorTrucking"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
-                                    <select id="inputVendorTrucking"
-                                            class="form-control"
-                                            name="vendor_trucking_id"
+                                    <select id="inputVendorTrucking" name="vendor_trucking_id" class="form-control"
                                             v-model="po.vendorTrucking.id">
                                         <option v-bind:value="defaultVendorTrucking.id">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking.id">@{{ vendorTrucking.name }}</option>
@@ -212,9 +209,7 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-11">
-                                    <select id="inputProduct"
-                                            class="form-control"
-                                            v-model="po.product">
+                                    <select id="inputProduct" class="form-control" v-model="po.product">
                                         <option v-bind:value="defaultProduct">@lang('labels.PLEASE_SELECT')</option>
                                         <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
                                             <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
@@ -225,8 +220,8 @@
                                     </select>
                                 </div>
                                 <div class="col-md-1">
-                                    <button type="button" class="btn btn-primary btn-md"
-                                            v-on:click="insertItem(po.product)"><span class="fa fa-plus"/>
+                                    <button type="button" class="btn btn-primary btn-md" v-on:click="insertItem(po.product)">
+                                        <span class="fa fa-plus"/>
                                     </button>
                                 </div>
                             </div>
@@ -251,21 +246,22 @@
                                         <tbody>
                                             <tr v-for="(item, itemIndex) in po.items">
                                                 <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
-                                                <input type="hidden" name="base_unit_id[]"
-                                                       v-bind:value="item.base_unit.unit.id">
+                                                <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
                                                     <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('quantity_' + itemIndex) }"
                                                            name="item_quantity[]"
-                                                           data-vv-name="'quantity_' itemIndex"
-                                                           v-model="item.quantity" v-validate="">
+                                                           v-bind:data-vv-name="'quantity_' + itemIndex"
+                                                           v-bind:data-vv-as="'{{ trans('purchase_order.create.table.item.header.quantity') }} ' + (itemIndex + 1)"
+                                                           v-model="item.quantity" v-validate="'required'">
                                                 </td>
                                                 <td>
                                                     <select v-bind:class="{ 'form-control':true, 'has-error':errors.has('unit_' + itemIndex) }"
                                                             name="item_selected_unit_id[]"
                                                             v-model="item.selected_unit.unit.id"
-                                                            data-vv-name="'unit_' + itemIndex"
-                                                            v-validate="">
+                                                            v-bind:data-vv-name="'unit_' + itemIndex"
+                                                            v-bind:data-vv-as="'{{ trans('purchase_order.create.table.item.header.unit') }} ' + (itemIndex + 1)"
+                                                            v-validate="'required'">
                                                         <option v-bind:value="defaultProductUnit.unit.id">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                     </select>
@@ -273,7 +269,9 @@
                                                 <td>
                                                     <input type="text" name="item_price[]"
                                                            v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('price_' + itemIndex) }"
-                                                           v-model="item.price" v-validate="" data-vv-name="'price_' + itemIndex">
+                                                           v-model="item.price" v-validate="'required'"
+                                                           v-bind:data-vv-name="'price_' + itemIndex"
+                                                           v-bind:data-vv-as="'{{ trans('purchase_order.create.table.item.header.price_unit') }} ' + (itemIndex + 1)">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md"
@@ -282,7 +280,7 @@
                                                     </button>
                                                 </td>
                                                 <td class="text-right valign-middle">
-                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                    @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -297,7 +295,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                                    <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -601,7 +599,7 @@
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
-            Vue.use(VeeValidate);
+            Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
             Vue.component('vue-icheck', {
                template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
@@ -835,7 +833,7 @@
                                 product: _.cloneDeep(product),
                                 selected_unit: {
                                     unit: {
-                                        id: 0
+                                        id: ''
                                     },
                                     conversion_value: 1
                                 },
@@ -937,7 +935,7 @@
                     defaultProductUnit: function(){
                         return {
                             unit: {
-                                id: 0
+                                id: ''
                             },
                             conversion_value: 1
                         };

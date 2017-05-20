@@ -82,6 +82,8 @@
                 }
                 timeout();
 
+                numeral.defaultFormat('{{ Auth::user()->store->numeralFormat }}');
+
                 var my_skins = [
                     "skin-blue",
                     "skin-black",
