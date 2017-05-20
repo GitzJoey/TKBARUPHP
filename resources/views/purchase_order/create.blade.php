@@ -454,7 +454,7 @@
                                             <td width="80%"
                                                 class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ expenseTotal() }}</span>
+                                                <span class="control-label-normal">@{{ numeral(expenseTotal()).format() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -962,8 +962,7 @@
 					}
                 },
                 mounted: function() {
-                    var prdId = parseInt('{{ old('item_product_id') }}');
-                    var s = '{{ old('item_product_id') }}';
+
                 },
                 created: function() {
                     var vm = this;
@@ -983,36 +982,6 @@
                     }
                 }
             });
-
-            @if(old('item_product_id'))
-                @foreach(old('item_product_id') as $key => $productId)
-                    var product = _.cloneDeep(_.find(poApp.productDDL, {id: {{ old("item_product_id.$key") }}}));
-                    var productUnit = _.cloneDeep(_.find(product.product_units, function(pu){
-                        return pu.unit.id == {{ old("item_selected_unit_id.$key") }};
-                    }));
-
-					@if( count(old('item_disc_percent.'.$key)) )
-						var itemDiscounts = [];
-							@for ($ia = 0; $ia < count(old('item_disc_percent.'.$key)); $ia++)
-								itemDiscounts.push({
-									disc_percent : {{ old('item_disc_percent.'.$key.'.'.$ia) }},
-									disc_value : {{ old('item_disc_value.'.$key.'.'.$ia) }},
-								});
-							@endfor
-					@endif
-					
-                    poApp.po.items.push({
-                        product: product,
-                        selected_unit: productUnit,
-                        base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
-                        quantity: {{ old("item_quantity.$key") }},
-                        price: {{ old("item_price.$key") }},
-						@if( count(old('item_disc_percent.'.$key)) )
-							discounts : itemDiscounts
-						@endif
-                    });
-                @endforeach
-            @endif
         });
     </script>
 @endsection
