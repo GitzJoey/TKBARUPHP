@@ -7,8 +7,8 @@ use App\Model\Store;
 use App\Model\Role;
 use App\Model\UserDetail;
 
-Use App;
-Use File;
+use App;
+use File;
 use Artisan;
 use Validator;
 use Illuminate\Console\Command;
@@ -75,7 +75,11 @@ class InstallApp extends Command
         $this->info('Seeding ...');
         Artisan::call('db:seed');
         $this->info('Storage Linking ...');
-        Artisan::call('storage:link');
+        if (is_link(public_path().'/storage')) {
+            $this->info('Found Storage Link, Skipping ...');
+        } else {
+            Artisan::call('storage:link');
+        }
 
         $this->info('Setup will create the default store and admin user');
 
@@ -145,6 +149,7 @@ class InstallApp extends Command
             'name' => $userName,
             'email' => $userEmail,
             'password' => bcrypt($userPassword),
+            'api_token' => str_random(60)
         ]);
 
         if ($user) {

@@ -10,6 +10,11 @@ Breadcrumbs::register('dashboard', function ($breadcrumbs){
     $breadcrumbs->push(trans('breadcrumb.dashboard'), route('db'));
 });
 
+Breadcrumbs::register('search', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('search'), route('db.search'));
+});
+
 Breadcrumbs::register('create_purchase_order', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.po.create'), route('db.po.create'));

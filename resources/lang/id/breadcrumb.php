@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'search' => 'Pencarian',
     'po.create' => 'Pembelian',
     'po.list' => 'Revisi Pembelian',
     'po.revise' => 'Revisi Pembelian',
