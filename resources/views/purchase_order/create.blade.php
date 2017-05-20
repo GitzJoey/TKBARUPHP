@@ -690,7 +690,15 @@
                 },
                 methods: {
                     validateBeforeSubmit: function() {
-                        this.$validator.validateAll();
+                        this.$validator.validateAll().then(function(result) {
+                            $('#loader-container').fadeIn('fast');
+                            axios.post('{{ route('api.po.create') }}' + + '?api_token=' + $('#secapi').val(), this.po)
+                                .then(function(response) {
+                                   console.log(response);
+                                });
+                        }).catch(function() {
+
+                        });
                     },
                     onChangeSupplier: function() {
                         if (!this.po.supplier.id) {

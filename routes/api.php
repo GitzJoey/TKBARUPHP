@@ -19,6 +19,8 @@ Route::get('user', function (Request $request) {
 
 Route::group(['prefix' => 'secure/api', 'middleware' => 'auth:api'], function() {
     Route::post('user/set_settings', 'StoreController@applySettings')->name('api.user.apply_settings');
+
+    Route::post('api/po/create', 'PurchaseOrderController@apiStore')->name('api.po.create');
 });
 
 Route::get('po/code', function () {

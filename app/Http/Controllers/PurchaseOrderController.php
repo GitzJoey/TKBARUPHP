@@ -54,6 +54,15 @@ class PurchaseOrderController extends Controller
             'supplierTypeDDL', 'poTypeDDL', 'unitDDL', 'poStatusDraft', 'poCode', 'expenseTypes', 'productDDL'));
     }
 
+    public function apiStore(Request $request)
+    {
+        Log::info('[PurchaseOrderController@apiStore]');
+
+        return response()->json([
+            'return' => 'success'
+        ]);
+    }
+
     public function store(Request $request)
     {
         Log::info('[PurchaseOrderController@store]');
