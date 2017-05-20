@@ -612,259 +612,247 @@
 
 @section('custom_js')
     <script type="application/javascript">
-            var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
-            var poApp = new Vue({
-                el: '#poVue',
-                data: {
-                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                    vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
-                    expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
-                    productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
-                    po: {
-                        disc_total_percent : currentPo.disc_percent % 1 !== 0 ? currentPo.disc_percent : parseFloat(currentPo.disc_percent).toFixed(0),
-                        disc_total_value : currentPo.disc_value % 1 !== 0 ? currentPo.disc_value : parseFloat(currentPo.disc_value).toFixed(0),
-                        supplier: currentPo.supplier ? _.cloneDeep(currentPo.supplier) : {id: ''},
-                        warehouse: _.cloneDeep(currentPo.warehouse),
-                        vendorTrucking: currentPo.vendor_trucking ? _.cloneDeep(currentPo.vendor_trucking) : {id: ''},
+        var poApp = new Vue({
+            el: '#poVue',
+            data: {
+                currentPo: JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}'),
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+                po: {
+                    disc_total_percent : 0,
+                    disc_total_value : 0,
+                    supplier: '',
+                    warehouse: '',
+                    vendorTrucking: '',
+                    items: [],
+                    expenses: [],
+                    supplier_type: {
+                        code: ''
+                    },
+                    product: {
+                        id: ''
+                    }
+                }
+            },
+            methods: {
+                discountPercentToNominal: function(item, discount) {
+                    var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
+                    if( disc_value % 1 !== 0 ) disc_value = disc_value.toFixed(2);
+                    discount.disc_value = disc_value;
+                    },
+                discountNominalToPercent: function(item, discount) {
+                    var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
+                    if( disc_percent % 1 !== 0 ) disc_percent = disc_percent.toFixed(2);
+                    discount.disc_percent = disc_percent;
+                    },
+                discountItemSubTotal: function (discounts) {
+                    var result = 0;
+                    _.forEach(discounts, function (discount) {
+                        result += parseFloat(discount.disc_value);
+                    });
+                    if( result % 1 !== 0 )
+                        result = result.toFixed(2);
+                    return result;
+                    },
+                discountTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            result += parseFloat(discount.disc_value);
+                        });
+                    });
+                    return result;
+                    },
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                    },
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if(expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numeral().unformat(expense.amount));
+                        else
+                            result -= parseInt(numeral().unformat(expense.amount));
+                    });
+                    return result;
+                    },
+                discountTotalPercentToNominal: function(){
+                    var vm = this;
+
+                    var grandTotal = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+
+                    var discountTotal = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            discountTotal += parseFloat(discount.disc_value);
+                        });
+                    });
+
+                    var expenseTotal = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                        else
+                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                    });
+
+                    var disc_total_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.po.disc_total_percent / 100 );
+                    if( disc_total_value % 1 !== 0 ) disc_total_value = disc_total_value.toFixed(2);
+                    vm.po.disc_total_value = disc_total_value;
+                    },
+                discountTotalNominalToPercent: function() {
+                    var vm = this;
+
+                    var grandTotal = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+
+                    var discountTotal = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            discountTotal += parseFloat(discount.disc_value);
+                        });
+                    });
+
+                    var expenseTotal = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                        else
+                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                    });
+
+                    var disc_total_percent = vm.po.disc_total_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
+                    if( disc_total_percent % 1 !== 0 ) disc_total_percent = disc_total_percent.toFixed(2);
+                    vm.po.disc_total_percent = disc_total_percent;
+                    },
+                insertItem: function (product) {
+                    if(product.id != '') {
+                        var item_init_discount = [];
+                        item_init_discount.push({
+                            disc_percent : 0,
+                            disc_value : 0,
+                        });
+
+                        this.po.items.push({
+                            id: null,
+                            product: _.cloneDeep(product),
+                            base_unit: _.cloneDeep(_.find(product.product_units, function(unit) { return unit.is_base == 1; })),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            quantity: 0,
+                            price: 0,
+                            discounts: item_init_discount
+                        });
+                    }
+                    },
+                removeItem: function (index) {
+                    this.po.items.splice(index, 1);
+                },
+                insertDiscount: function (item) {
+                    item.discounts.push({
+                        disc_percent : 0,
+                        disc_value : 0,
+                    });
+                },
+                removeDiscount: function (index, discountIndex) {
+                    var vm = this;
+                    vm.po.items[index].discounts.splice(discountIndex, 1);
+                },
+                insertExpense: function () {
+                    this.po.expenses.push({
+                        name: '',
+                        type: {
+                            code: ''
+                        },
+                        amount: 0,
+                        remarks: ''
+                    });
+                    },
+                removeExpense: function (index) {
+                    this.po.expenses.splice(index, 1);
+                },
+                init: function() {
+                    this.po = {
+                        disc_total_percent : this.currentPo.disc_percent % 1 !== 0 ? this.currentPo.disc_percent : parseFloat(this.currentPo.disc_percent).toFixed(0),
+                        disc_total_value : this.currentPo.disc_value % 1 !== 0 ? this.currentPo.disc_value : parseFloat(this.currentPo.disc_value).toFixed(0),
+                        supplier: this.currentPo.supplier ? _.cloneDeep(this.currentPo.supplier) : {id: ''},
+                        warehouse: _.cloneDeep(this.currentPo.warehouse),
+                        vendorTrucking: this.currentPo.vendor_trucking ? _.cloneDeep(this.currentPo.vendor_trucking) : {id: ''},
                         items: [],
                         expenses: [],
                         supplier_type: {
-                            code: currentPo.supplier_type
+                            code: this.currentPo.supplier_type
                         },
                         product: {
                             id: ''
                         }
-                    }
-                },
-                methods: {
-                    discountPercentToNominal: function(item, discount){
-                        var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
-                        if( disc_value % 1 !== 0 )
-                            disc_value = disc_value.toFixed(2);
-                        discount.disc_value = disc_value;
-                    },
-                    discountNominalToPercent: function(item, discount){
-                        var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
-                        if( disc_percent % 1 !== 0 )
-                            disc_percent = disc_percent.toFixed(2);
-                        discount.disc_percent = disc_percent;
-                    },
-                    discountItemSubTotal: function (discounts) {
-                        var result = 0;
-                        _.forEach(discounts, function (discount) {
-                            result += parseFloat(discount.disc_value);
-                        });
-                        if( result % 1 !== 0 )
-                            result = result.toFixed(2);
-                        return result;
-                    },
-                    discountTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-                                result += parseFloat(discount.disc_value);
-                            });
-                        });
-                        return result;
-                    },
-                    grandTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-                        return result;
-                    },
-                    expenseTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if(expense.type.code === 'EXPENSETYPE.ADD')
-                                result += parseInt(numeral().unformat(expense.amount));
-                            else
-                                result -= parseInt(numeral().unformat(expense.amount));
-                        });
-                        return result;
-                    },
-                    discountTotalPercentToNominal: function(){
-                        var vm = this;
-                        
-                        var grandTotal = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-                        
-                        var discountTotal = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-                                discountTotal += parseFloat(discount.disc_value);
-                            });
-                        });
-                        
-                        var expenseTotal = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if (expense.type.code === 'EXPENSETYPE.ADD')
-                                expenseTotal += parseInt(numeral().unformat(expense.amount));
-                            else
-                                expenseTotal -= parseInt(numeral().unformat(expense.amount));
-                        });
-                        
-                        var disc_total_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.po.disc_total_percent / 100 );
-                        if( disc_total_value % 1 !== 0 )
-                            disc_total_value = disc_total_value.toFixed(2);
-                        vm.po.disc_total_value = disc_total_value;
-                    },
-                    discountTotalNominalToPercent: function(){
-                        var vm = this;
-                        
-                        var grandTotal = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-                        
-                        var discountTotal = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-                                discountTotal += parseFloat(discount.disc_value);
-                            });
-                        });
-                        
-                        var expenseTotal = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if (expense.type.code === 'EXPENSETYPE.ADD')
-                                expenseTotal += parseInt(numeral().unformat(expense.amount));
-                            else
-                                expenseTotal -= parseInt(numeral().unformat(expense.amount));
-                        });
-                        
-                        var disc_total_percent = vm.po.disc_total_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
-                        if( disc_total_percent % 1 !== 0 )
-                            disc_total_percent = disc_total_percent.toFixed(2);
-                        vm.po.disc_total_percent = disc_total_percent;
-                    },
-                    insertItem: function (product) {
-                        if(product.id != ''){
-                            var item_init_discount = [];
-                            item_init_discount.push({
+                    };
+
+                    for (var i = 0; i < this.currentPo.items.length; i++) {
+                        var itemDiscounts = [];
+                        if (this.currentPo.items[i].discounts.length) {
+                            for (var ix = 0; ix < this.currentPo.items[i].discounts.length; ix++) {
+                                itemDiscounts.push({
+                                    id : this.currentPo.items[i].discounts[ix].id,
+                                    disc_percent : this.currentPo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? this.currentPo.items[i].discounts[ix].item_disc_percent : parseFloat(this.currentPo.items[i].discounts[ix].item_disc_percent).toFixed(0),
+                                    disc_value : this.currentPo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? this.currentPo.items[i].discounts[ix].item_disc_value : parseFloat(this.currentPo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                                });
+                            }
+                        } else {
+                            itemDiscounts.push({
                                 disc_percent : 0,
                                 disc_value : 0,
                             });
-                            this.po.items.push({
-                                id: null,
-                                product: _.cloneDeep(product),
-                                base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                                selected_unit: {
-                                    unit: {
-                                        id: ''
-                                    }, 
-                                    conversion_value: 1
-                                },
-                                quantity: 0,
-                                price: 0,
-                                discounts: item_init_discount
-                            });
                         }
-                    },
-                    removeItem: function (index) {
-                        this.po.items.splice(index, 1);
-                    },
-                    insertDiscount: function (item) {
-                        item.discounts.push({
-                            disc_percent : 0,
-                            disc_value : 0,
+
+                        this.po.items.push({
+                            id: this.currentPo.items[i].id,
+                            product: _.cloneDeep(this.currentPo.items[i].product),
+                            base_unit: _.cloneDeep(_.find(this.currentPo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
+                            selected_unit: _.cloneDeep(_.find(this.currentPo.items[i].product.product_units, function(punit) { return punit.unit_id == this.currentPo.items[i].selected_unit_id; })),
+                            quantity: parseFloat(this.currentPo.items[i].quantity).toFixed(0),
+                            price: parseFloat(this.currentPo.items[i].price).toFixed(0),
+                            discounts : itemDiscounts
                         });
-                    },
-                    removeDiscount: function (index, discountIndex) {
-                        var vm = this;
-                        vm.po.items[index].discounts.splice(discountIndex, 1);
-                    },
-                    insertExpense: function () {
+                    }
+
+                    for (var i = 0; i < this.currentPo.expenses.length; i++) {
+                        var type = _.find(this.expenseTypes, function (type) {
+                            return type.code === this.currentPo.expenses[i].type;
+                        });
+
                         this.po.expenses.push({
-                            name: '',
-                            type: {
-                                code: ''
-                            },
-                            amount: 0,
-                            remarks: ''
-                        });
-
-                        $(function () {
-                            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                                checkboxClass: 'icheckbox_square-blue',
-                                radioClass: 'iradio_square-blue'
-                            });
-                        });    
-                    },
-                    removeExpense: function (index) {
-                        this.po.expenses.splice(index, 1);
-                    }
-                }
-            });
-
-            for (var i = 0; i < currentPo.items.length; i++) {
-                var itemDiscounts = [];
-                if( currentPo.items[i].discounts.length ){
-                    for (var ix = 0; ix < currentPo.items[i].discounts.length; ix++) {
-                        itemDiscounts.push({
-                            id : currentPo.items[i].discounts[ix].id,
-                            disc_percent : currentPo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? currentPo.items[i].discounts[ix].item_disc_percent : parseFloat(currentPo.items[i].discounts[ix].item_disc_percent).toFixed(0),
-                            disc_value : currentPo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? currentPo.items[i].discounts[ix].item_disc_value : parseFloat(currentPo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                            id: this.currentPo.expenses[i].id,
+                            name: this.currentPo.expenses[i].name,
+                            type: _.cloneDeep(type),
+                            is_internal_expense: this.currentPo.expenses[i].is_internal_expense == 1,
+                            amount: this.currentPo.expenses[i].amount,
+                            remarks: this.currentPo.expenses[i].remarks
                         });
                     }
                 }
-                else{
-                    itemDiscounts.push({
-                        disc_percent : 0,
-                        disc_value : 0,
-                    });
-                }
-                poApp.po.items.push({
-                    id: currentPo.items[i].id,
-                    product: _.cloneDeep(currentPo.items[i].product),
-                    base_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, isBase)),
-                    selected_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id))),
-                    quantity: parseFloat(currentPo.items[i].quantity).toFixed(0),
-                    price: parseFloat(currentPo.items[i].price).toFixed(0),
-                    discounts : itemDiscounts
-                });
+            },
+            mounted: function() {
+                this.init();
             }
-
-            for (var i = 0; i < currentPo.expenses.length; i++) {
-                var type = _.find(poApp.expenseTypes, function (type) {
-                    return type.code === currentPo.expenses[i].type;
-                });
-
-                poApp.po.expenses.push({
-                    id: currentPo.expenses[i].id,
-                    name: currentPo.expenses[i].name,
-                    type: _.cloneDeep(type),
-                    is_internal_expense: currentPo.expenses[i].is_internal_expense == 1,
-                    amount: currentPo.expenses[i].amount,
-                    remarks: currentPo.expenses[i].remarks
-                });
-            }
-
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
-                }
-            }
-
-            function isBase(unit) {
-                return unit.is_base == 1;
-            }
-
-        $(function () {
-            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue'
-            });
-
-            $("#inputShippingDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
         });
     </script>
 @endsection
