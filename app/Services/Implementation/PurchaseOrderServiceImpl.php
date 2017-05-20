@@ -32,7 +32,9 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      */
     public function createPO(Request $request)
     {
-        DB::transaction(function() use ($request) {
+        DB::beginTransaction();
+
+        try {
             if ($request->input('supplier_type') == 'SUPPLIERTYPE.R'){
                 $supplier_id = empty($request->input('supplier_id')) ? 0 : $request->input('supplier_id');
                 $walk_in_supplier = '';
@@ -80,15 +82,15 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $item_saved = $po->items()->save($item);
-				
-				for ($ia = 0; $ia < count($request->input('item_disc_percent.'.$i)); $ia++) {
+
+                for ($ia = 0; $ia < count($request->input('item_disc_percent.'.$i)); $ia++) {
                     if( $request->input('item_disc_percent.'.$i.'.'.$ia) > 0 ){
                         $itemDiscounts = new ItemDiscounts();
-    					$itemDiscounts->item_disc_percent = $request->input('item_disc_percent.'.$i.'.'.$ia);
-    					$itemDiscounts->item_disc_value = $request->input('item_disc_value.'.$i.'.'.$ia);
-    					$item_saved->discounts()->save($itemDiscounts);
+                        $itemDiscounts->item_disc_percent = $request->input('item_disc_percent.'.$i.'.'.$ia);
+                        $itemDiscounts->item_disc_value = $request->input('item_disc_value.'.$i.'.'.$ia);
+                        $item_saved->discounts()->save($itemDiscounts);
                     }
-				}
+                }
             }
 
             for($i = 0; $i < count($request->input('expense_name')); $i++){
@@ -101,8 +103,13 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $po->expenses()->save($expense);
             }
 
+            DB::commit();
+
             return $po;
-        });
+        } catch (Exception $e) {
+            DB::rollBack();
+            return null;
+        }
     }
 
     /**

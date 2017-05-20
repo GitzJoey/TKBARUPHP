@@ -109,7 +109,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         Route::group(['prefix' => 'po'], function () {
             Route::get('create', 'PurchaseOrderController@create')->name('db.po.create');
-            Route::post('create', 'PurchaseOrderController@store');
             Route::get('revise', 'PurchaseOrderController@index')->name('db.po.revise.index');
             Route::get('revise/{id}', 'PurchaseOrderController@revise')->name('db.po.revise');
             Route::patch('revise/{id}', 'PurchaseOrderController@saveRevision');

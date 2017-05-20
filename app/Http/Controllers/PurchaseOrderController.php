@@ -21,6 +21,7 @@ use App\Services\PurchaseOrderService;
 
 use App\Util\POCodeGenerator;
 
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -54,20 +55,11 @@ class PurchaseOrderController extends Controller
             'supplierTypeDDL', 'poTypeDDL', 'unitDDL', 'poStatusDraft', 'poCode', 'expenseTypes', 'productDDL'));
     }
 
-    public function apiStore(Request $request)
-    {
-        Log::info('[PurchaseOrderController@apiStore]');
-
-        return response()->json([
-            'return' => 'success'
-        ]);
-    }
-
     public function store(Request $request)
     {
         Log::info('[PurchaseOrderController@store]');
 
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'code'                      => 'required|string|max:255',
             'po_type'                   => 'required|string|max:255',
             'po_created'                => 'required|string|max:255',
@@ -86,13 +78,24 @@ class PurchaseOrderController extends Controller
             'disc_total_value'          => 'numeric',
         ]);
 
-        $this->purchaseOrderService->createPO($request);
-
-        if (!empty($request->input('submitcreate'))) {
-            return redirect()->action('PurchaseOrderController@create');
-        } else {
-            return redirect(route('db'));
+        if ($validator->fails()) {
+            return response()->json([
+                'result' => 'failed',
+                'message' => ''
+            ]);
         }
+
+        if (is_null($this->purchaseOrderService->createPO($request))) {
+            return response()->json([
+                'result' => 'failed',
+                'message' => ''
+            ]);
+        };
+
+        return response()->json([
+            'result' => 'success',
+            'message' => '',
+        ]);
     }
 
     public function index()

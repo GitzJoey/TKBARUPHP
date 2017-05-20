@@ -29,7 +29,7 @@
     @endif
 
     <div id="poVue">
-        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" v-on:submit.prevent="validateBeforeSubmit">
+        <form id="poForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit('submit')">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6">
@@ -582,12 +582,10 @@
             <div class="row">
                 <div class="col-md-8 col-offset-md-4">
                     <div class="btn-toolbar">
-                        <button id="submitAndCreateButton" type="submit"
-                                class="btn btn-primary pull-right" name="submitcreate"
-                                value="create_new">@lang('buttons.submit_button')
-                            &nbsp;&amp;&nbsp;@lang('buttons.create_new_button')</button>
-                        <button id="submitButton" type="submit" name="submit"
-                                class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
+                        <button id="submitAndCreateButton" type="button" class="btn btn-primary pull-right"
+                                v-on:click="validateBeforeSubmit('submitcreate')">@lang('buttons.submit_button')&nbsp;&amp;&nbsp;@lang('buttons.create_new_button')</button>
+                        <button id="submitButton" type="button" class="btn btn-primary pull-right"
+                                v-on:click="validateBeforeSubmit('submit')">@lang('buttons.submit_button')</button>
                         <a id="printButton" href="#" target="_blank"
                            class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
                         <a id="cancelButton" class="btn btn-primary pull-right"
@@ -689,13 +687,14 @@
                     }
                 },
                 methods: {
-                    validateBeforeSubmit: function() {
+                    validateBeforeSubmit: function(type) {
                         this.$validator.validateAll().then(function(result) {
                             $('#loader-container').fadeIn('fast');
-                            axios.post('{{ route('api.po.create') }}' + '?api_token=' + $('#secapi').val(), this.po)
+                            axios.post('{{ route('api.post.db.po.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poForm')[0]))
                                 .then(function(response) {
-                                   console.log(response);
-                                });
+                                    if (type == 'submitcreate') { window.location.href = '{{ route('db.po.create') }}'; }
+                                    else { window.location.href = '{{ route('db') }}'; }
+                            });
                         }).catch(function() {
 
                         });
