@@ -258,11 +258,12 @@
                                                 <td>
                                                     <select v-bind:class="{ 'form-control':true, 'has-error':errors.has('unit_' + itemIndex) }"
                                                             name="item_selected_unit_id[]"
-                                                            v-model="item.selected_unit.unit.id"
+                                                            v-model="item.selected_unit.id"
                                                             v-bind:data-vv-name="'unit_' + itemIndex"
                                                             v-bind:data-vv-as="'{{ trans('purchase_order.create.table.item.header.unit') }} ' + (itemIndex + 1)"
-                                                            v-validate="'required'">
-                                                        <option v-bind:value="defaultProductUnit.unit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                            v-validate="'required'"
+                                                            v-on:change="onChangeUnit(itemIndex)">
+                                                        <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                     </select>
                                                 </td>
@@ -327,7 +328,7 @@
                                             <template v-for="(item, itemIndex) in po.items">
                                                 <tr>
         											<td width="30%">@{{ item.product.name }}</td>
-        											<td width="30%">@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
+        											<td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                     <td colspan="3" width="40%">
                                                         <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
                                                             <span class="fa fa-plus"/>
@@ -355,7 +356,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                                    <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
+                                                    <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
                                                 </tr>
                                             </template>
                                         </tbody>
@@ -370,7 +371,7 @@
                                             <td width="65%"
                                                 class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
                                             <td width="35%" class="text-right">
-                                                <span class="control-label-normal">@{{ discountTotal() }}</span>
+                                                <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -483,7 +484,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-    											<td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() }}</td>
+    											<td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
     											<td>
 													<div class="row">
 														<div class="col-md-3">
@@ -494,7 +495,7 @@
 														</div>
 													</div>
 												</td>
-												<td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value }}</td>
+												<td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -650,7 +651,6 @@
             var poApp = new Vue({
                 el: '#poVue',
                 data: {
-                    p: true,
                     supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
                     warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
                     poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
@@ -713,6 +713,14 @@
                         } else {
                             var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
                             _.merge(this.po.warehouse, wh);
+                        }
+                    },
+                    onChangeUnit: function(itemIndex) {
+                        if (!this.po.items[itemIndex].selected_unit.id) {
+                            this.po.items[itemIndex].selected_unit = this.defaultProductUnit;
+                        } else {
+                            var pUnit = _.find(this.po.items[itemIndex].product.product_units, { id: this.po.items[itemIndex].selected_unit.id });
+                            _.merge(this.po.items[itemIndex].selected_unit, pUnit);
                         }
                     },
                     discountPercentToNominal: function(item, discount){
@@ -832,6 +840,7 @@
                             vm.po.items.push({
                                 product: _.cloneDeep(product),
                                 selected_unit: {
+                                    id: '',
                                     unit: {
                                         id: ''
                                     },
@@ -934,6 +943,7 @@
                     },
                     defaultProductUnit: function(){
                         return {
+                            id: '',
                             unit: {
                                 id: ''
                             },
