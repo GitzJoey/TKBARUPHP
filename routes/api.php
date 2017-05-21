@@ -25,6 +25,12 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::post('create', 'PurchaseOrderController@store')->name('api.post.db.po.create');
             Route::post('revise/{id}', 'PurchaseOrderController@saveRevision')->name('api.post.db.po.revise');
         });
+
+        Route::group(['prefix' => 'warehouse'], function () {
+            Route::group(['prefix' => 'inflow'], function () {
+                Route::post('receipt/{id?}', 'WarehouseInflowController@saveReceipt')->name('api.post.db.warehouse.inflow.receipt');
+            });
+        });
     });
 });
 

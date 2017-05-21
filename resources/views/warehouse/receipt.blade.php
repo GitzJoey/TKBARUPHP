@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <form class="form-horizontal" action="{{ route('db.warehouse.inflow', $po->hId())}}" method="post" data-parsley-validate="parsley">
+        <form id="receiptForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
                 <div class="row">
                     <div class="col-md-12">
@@ -126,25 +126,13 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input v-bind:id="'brutto_' + receipt.item.id" type="text" class="form-control text-right" name="brutto[]" v-model="receipt.brutto"
-                                                               data-parsley-required="true"
-                                                               data-parsley-type="number"
-                                                               v-bind:data-parsley-checkequal="receipt.item.id"
-                                                               data-parsley-trigger="change">
+                                                        <input v-bind:id="'brutto_' + receipt.item.id" type="text" class="form-control text-right" name="brutto[]" v-model="receipt.brutto">
                                                     </td>
                                                     <td>
-                                                        <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]" v-model="receipt.netto"
-                                                               data-parsley-required="true"
-                                                               data-parsley-type="number"
-                                                               v-bind:data-parsley-checkequal="receipt.item.id"
-                                                               data-parsley-trigger="change">
+                                                        <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]" v-model="receipt.netto">
                                                     </td>
                                                     <td>
-                                                        <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]" v-model="receipt.tare"
-                                                               data-parsley-required="true"
-                                                               data-parsley-type="number"
-                                                               v-bind:data-parsley-checkequal="receipt.item.id"
-                                                               data-parsley-trigger="change">
+                                                        <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]" v-model="receipt.tare">
                                                     </td>
                                                     <td class="text-center">
                                                         <button type="button" class="btn btn-danger btn-md" v-on:click="removeReceipt(receiptIdx)" disabled><span class="fa fa-minus"/></button>
@@ -210,6 +198,15 @@
                 receipt_date: ''
             },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.warehouse.inflow.receipt', $po->hId()) }}', new FormData($('#receiptForm')[0]))
+                            .then(function(response) {
+                                
+                            });
+                    })
+                },
                 createReceipt: function() {
                     for(var i = 0; i < this.PO.items.length; i++){
                         this.inflow.receipts.push({
@@ -226,6 +223,16 @@
                 }
             },
             mounted: function() {
+                this.$validator.extend('checkequal', {
+                    messages: {
+                        en: function(field, args) { return 'Netto and Tare value not equal with Bruto' },
+                        id: function(field, args) { return 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor' }
+                    },
+                    validate: function(value, args) {
+                        console.log(value);
+                        console.log(args);
+                    }
+                });
                 this.createReceipt();
             }
         });
@@ -243,7 +250,7 @@
                 }
             }, 32)
                 .addMessage('en', 'checkequal', 'Netto and Tare value not equal with Bruto')
-                .addMessage('id', 'checkequal', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
+                .addMessage('id', 'checkequal', '');
         });
     </script>
 @endsection

@@ -190,7 +190,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::group(['prefix' => 'inflow', 'middleware' => ['permission:create-warehouse_inflow|read-warehouse_inflow|menu-warehouse_inflow']], function() {
                 Route::get('', 'WarehouseInflowController@inflow')->name('db.warehouse.inflow.index');
                 Route::get('receipt/{id?}', 'WarehouseInflowController@receipt')->name('db.warehouse.inflow');
-                Route::post('receipt/{id?}', 'WarehouseInflowController@saveReceipt');
             });
 
             Route::group(['prefix' => 'outflow', 'middleware' => ['permission:create-warehouse_outflow|read-warehouse_outflow|menu-warehouse_outflow']], function() {
