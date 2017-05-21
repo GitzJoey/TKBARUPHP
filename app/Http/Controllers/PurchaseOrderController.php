@@ -125,7 +125,10 @@ class PurchaseOrderController extends Controller
     {
         $this->purchaseOrderService->revisePO($request, $id);
 
-        return redirect(route('db.po.revise.index'));
+        return response()->json([
+            'result' => 'success',
+            'message' => ''
+        ]);
     }
 
     public function delete(Request $request, $id)

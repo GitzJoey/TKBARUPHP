@@ -111,7 +111,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('create', 'PurchaseOrderController@create')->name('db.po.create');
             Route::get('revise', 'PurchaseOrderController@index')->name('db.po.revise.index');
             Route::get('revise/{id}', 'PurchaseOrderController@revise')->name('db.po.revise');
-            Route::patch('revise/{id}', 'PurchaseOrderController@saveRevision');
             Route::delete('reject/{id}', 'PurchaseOrderController@delete')->name('db.po.reject');
 
             Route::group(['prefix' => 'payment'], function () {
@@ -119,8 +118,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('{id}', 'PurchaseOrderPaymentController@paymentHistory')->name('db.po.payment.history');
                 Route::get('{id}/cash', 'PurchaseOrderPaymentController@createCashPayment')->name('db.po.payment.cash');
                 Route::post('{id}/cash', 'PurchaseOrderPaymentController@saveCashPayment');
-                Route::get('{id}/transfer', 'PurchaseOrderPaymentController@createTransferPayment')
-                    ->name('db.po.payment.transfer');
+                Route::get('{id}/transfer', 'PurchaseOrderPaymentController@createTransferPayment')->name('db.po.payment.transfer');
                 Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment');
                 Route::get('{id}/giro', 'PurchaseOrderPaymentController@createGiroPayment')->name('db.po.payment.giro');
                 Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment');

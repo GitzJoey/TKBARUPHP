@@ -23,6 +23,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'dashboard'], function () {
         Route::group(['prefix' => 'po'], function () {
             Route::post('create', 'PurchaseOrderController@store')->name('api.post.db.po.create');
+            Route::post('revise/{id}', 'PurchaseOrderController@saveRevision')->name('api.post.db.po.revise');
         });
     });
 });

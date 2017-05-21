@@ -16,8 +16,8 @@ use App\Model\PurchaseOrder;
 use App\Model\ItemDiscounts;
 use App\Services\PurchaseOrderService;
 
-use Carbon\Carbon;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Doctrine\Common\Collections\Collection;
@@ -166,10 +166,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $item->store_id = Auth::user()->store_id;
                 $item->selected_unit_id = $request->input("item_selected_unit_id.$i");
                 $item->base_unit_id = $request->input("base_unit_id.$i");
-                $item->conversion_value = ProductUnit::where([
-                    'product_id' => $item->product_id,
-                    'unit_id' => $item->selected_unit_id
-                ])->first()->conversion_value;
+                $item->conversion_value = ProductUnit::whereId($item->selected_unit_id)->first()->conversion_value;
                 $item->quantity = $request->input("item_quantity.$i");
                 $item->price = floatval(str_replace(',', '', $request->input("item_price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;

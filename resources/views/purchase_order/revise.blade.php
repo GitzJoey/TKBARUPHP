@@ -17,19 +17,17 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="poVue">
-        {!! Form::model($currentPo, ['method' => 'PATCH', 'route' => ['db.po.revise', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="poForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6">
@@ -141,14 +139,9 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         @if($currentPo->status == 'POSTATUS.WA')
-                                            <input type="text" class="form-control" id="inputShippingDate"
-                                                   name="shipping_date"
-                                                   value="{{ $currentPo->shipping_date->format('d-m-Y') }}"
-                                                   data-parsley-required="true">
+                                            <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="{{ $currentPo->shipping_date->format('d-m-Y') }}" v-model="po.shipping_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                         @else
-                                            <input type="text" class="form-control" name="shipping_date" readonly
-                                                   value="{{ $currentPo->shipping_date->format('d-m-Y') }}"
-                                                   data-parsley-required="true">
+                                            <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="{{ $currentPo->shipping_date->format('d-m-Y') }}" v-model="po.shipping_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A" readonly="readonly"></vue-datetimepicker>
                                         @endif
                                     </div>
                                 </div>
@@ -158,16 +151,17 @@
                                        class="col-sm-2 control-label">@lang('purchase_order.revise.field.warehouse')</label>
                                 <div class="col-sm-5">
                                     @if($currentPo->status == 'POSTATUS.WA')
-                                        <input type="hidden" name="warehouse_id" v-bind:value="po.warehouse.id" >
-                                        <select id="inputWarehouse" data-parsley-required="true"
-                                                class="form-control"
-                                                v-model="po.warehouse">
-                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
+                                        <select id="inputWarehouse" name="warehouse_id" class="form-control"
+                                                v-model="po.warehouse.id"
+                                                v-validate="'required'"
+                                                data-vv-as="{{ trans('purchase_order.revise.field.warehouse') }}"
+                                                v-on:change="onChangeWarehouse()">
+                                            <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                                         </select>
+                                        <span v-show="errors.has('warehouse_id')" class="help-block" v-cloak>@{{ errors.first('warehouse_id') }}</span>
                                     @else
-                                        <input type="text" class="form-control" readonly
-                                               value="{{ $currentPo->warehouse->name }}">
+                                        <input type="text" class="form-control" readonly value="{{ $currentPo->warehouse->name }}">
                                         <input type="hidden" name="warehouse_id" value="{{ $currentPo->warehouse->id }}">
                                     @endif
                                 </div>
@@ -251,17 +245,16 @@
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
                                                     <input type="text" class="form-control text-right"
-                                                           data-parsley-required="true" data-parsley-type="number"
                                                            name="item_quantity[]"
+                                                           v-validate="'required|decimal:2'"
                                                            v-model="item.quantity" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}>
                                                 </td>
                                                 <td>
                                                     @if($currentPo->status == 'POSTATUS.WA')
                                                         <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
-                                                        <select data-parsley-required="true"
-                                                                class="form-control"
+                                                        <select class="form-control"
                                                                 v-model="item.selected_unit"
-                                                                data-parsley-required="true">
+                                                                v-validate="'required'">
                                                             <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
                                                             <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                         </select>
@@ -274,7 +267,7 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="item_price[]"
-                                                           v-model="item.price" data-parsley-required="true">
+                                                           v-model="item.price" v-validate="'required'">
                                                 </td>
                                                 <td class="text-center">
                                                     @if($currentPo->status == 'POSTATUS.WA')
@@ -284,7 +277,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-right valign-middle">
-                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                    @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -299,7 +292,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('purchase_order.revise.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                                    <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -343,25 +336,23 @@
                                                 <td>
                                                     <input type="hidden" name="expense_id[]" v-bind:value="expense.id" />
                                                     <input name="expense_name[]" type="text" class="form-control" v-model="expense.name"
-                                                           data-parsley-required="true" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }} />
+                                                           v-validate="'required'" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }} />
                                                 </td>
                                                 <td>
                                                     @if($currentPo->status == 'POSTATUS.WA')
                                                         <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
-                                                        <select data-parsley-required="true"
+                                                        <select v-validate="'required'"
                                                                 class="form-control" v-model="expense.type">
                                                             <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                            <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                            <option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.i18nDescription }}</option>
                                                         </select>
                                                     @else
-                                                        <input type="text" class="form-control" readonly
-                                                               v-bind:value="expense.type.description">
-                                                        <input type="hidden" name="expense_type[]"
-                                                               v-bind:value="expense.type.code"/>
+                                                        <input type="text" class="form-control" readonly v-bind:value="expense.type.description">
+                                                        <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code"/>
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-                                                    <input name="is_internal_expense[]" v-model="expense.is_internal_expense" type="checkbox">
+                                                    <vue-iCheck name="is_internal_expense[]" v-model="expense.is_internal_expense"></vue-iCheck>
                                                 </td>
                                                 <td>
                                                     <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks" {{ $currentPo->status == 'POSTATUS.WA' ? '' : 'readonly' }}/>
@@ -375,7 +366,7 @@
                                                 </td>
                                                 <td>
                                                     <input name="expense_amount[]" type="text" class="form-control text-right"
-                                                           v-model="expense.amount" data-parsley-required="true"/>
+                                                           v-model="expense.amount" v-validate="'required|decimal:2'"/>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -390,7 +381,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('purchase_order.revise.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ expenseTotal() }}</span>
+                                                    <span class="control-label-normal">@{{ numeral(expenseTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -422,7 +413,7 @@
                                             <template v-for="(item, itemIndex) in po.items">
                                                 <tr>
                                                     <td width="30%">@{{ item.product.name }}</td>
-                                                    <td width="30%">@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
+                                                    <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                     <td colspan="3" width="40%">
                                                         <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
                                                             <span class="fa fa-plus"/>
@@ -452,7 +443,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                                    <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
+                                                    <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
                                                 </tr>
                                             </template>
                                         </tbody>
@@ -467,7 +458,7 @@
                                             <td width="65%"
                                                 class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
                                             <td width="35%" class="text-right">
-                                                <span class="control-label-normal">@{{ discountTotal() }}</span>
+                                                <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -497,7 +488,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() }}</td>
+                                                <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-md-3">
@@ -508,7 +499,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value }}</td>
+                                                <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -594,17 +585,13 @@
             <div class="row">
                 <div class="col-md-7 col-offset-md-5">
                     <div class="btn-toolbar">
-                        <button id="submitButton" type="submit"
-                                class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
-                        &nbsp;&nbsp;&nbsp;
-                        <a id="printButton" href="#" target="_blank"
-                           class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>
-                        <a id="cancelButton" href="{{ route('db.po.revise.index') }}" class="btn btn-primary pull-right"
-                           role="button">@lang('buttons.cancel_button')</a>
+                        <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
+                        <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>
+                        <a id="cancelButton" href="{{ route('db.po.revise.index') }}" class="btn btn-primary pull-right" role="button">@lang('buttons.cancel_button')</a>
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        </form>
 
         @include('purchase_order.supplier_details_partial')
     </div>
@@ -612,6 +599,55 @@
 
 @section('custom_js')
     <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-icheck', {
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            props: ['id', 'name', 'disabled', 'value'],
+            mounted: function() {
+                $(this.$el).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                }).on('ifChecked', function(event) {
+                    this.value = true;
+                }).on('ifUnchecked', function(event) {
+                    this.value = false;
+                });
+
+                if (this.value) { $(this.$el).iCheck('check'); }
+                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+            },
+            destroyed: function() {
+                $(this.$el).iCheck('destroy');
+            }
+        });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value).format(this.format)
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') {
+                    $(this.$el).datetimepicker().data('DateTimePicker').date(moment());
+                }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
         var poApp = new Vue({
             el: '#poVue',
             data: {
@@ -624,7 +660,9 @@
                     disc_total_percent : 0,
                     disc_total_value : 0,
                     supplier: '',
-                    warehouse: '',
+                    warehouse: {
+                        id: ''
+                    },
                     vendorTrucking: '',
                     items: [],
                     expenses: [],
@@ -637,6 +675,25 @@
                 }
             },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.po.revise', $currentPo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db') }}';
+                            });
+                    }).catch(function() {
+
+                    });
+                },
+                onChangeWarehouse: function() {
+                    if(!this.po.warehouse.id) {
+                        this.po.warehouse = { id: '' };
+                    } else {
+                        var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
+                        _.merge(this.po.warehouse, wh);
+                    }
+                },
                 discountPercentToNominal: function(item, discount) {
                     var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
                     if( disc_value % 1 !== 0 ) disc_value = disc_value.toFixed(2);
@@ -796,6 +853,7 @@
                         supplier: this.currentPo.supplier ? _.cloneDeep(this.currentPo.supplier) : {id: ''},
                         warehouse: _.cloneDeep(this.currentPo.warehouse),
                         vendorTrucking: this.currentPo.vendor_trucking ? _.cloneDeep(this.currentPo.vendor_trucking) : {id: ''},
+                        shipping_date: this.currentPo.shipping_date,
                         items: [],
                         expenses: [],
                         supplier_type: {
@@ -805,6 +863,8 @@
                             id: ''
                         }
                     };
+
+                    var vm = this;
 
                     for (var i = 0; i < this.currentPo.items.length; i++) {
                         var itemDiscounts = [];
@@ -827,7 +887,7 @@
                             id: this.currentPo.items[i].id,
                             product: _.cloneDeep(this.currentPo.items[i].product),
                             base_unit: _.cloneDeep(_.find(this.currentPo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
-                            selected_unit: _.cloneDeep(_.find(this.currentPo.items[i].product.product_units, function(punit) { return punit.unit_id == this.currentPo.items[i].selected_unit_id; })),
+                            selected_unit: _.cloneDeep(_.find(this.currentPo.items[i].product.product_units, function(punit) { return punit.id == vm.currentPo.items[i].selected_unit_id; })),
                             quantity: parseFloat(this.currentPo.items[i].quantity).toFixed(0),
                             price: parseFloat(this.currentPo.items[i].price).toFixed(0),
                             discounts : itemDiscounts
@@ -835,8 +895,9 @@
                     }
 
                     for (var i = 0; i < this.currentPo.expenses.length; i++) {
+                        var vm = this;
                         var type = _.find(this.expenseTypes, function (type) {
-                            return type.code === this.currentPo.expenses[i].type;
+                            return type.code === vm.currentPo.expenses[i].type;
                         });
 
                         this.po.expenses.push({
@@ -852,6 +913,13 @@
             },
             mounted: function() {
                 this.init();
+            },
+            computed: {
+                defaultWarehouse: function(){
+                    return {
+                        id: ''
+                    };
+                },
             }
         });
     </script>
