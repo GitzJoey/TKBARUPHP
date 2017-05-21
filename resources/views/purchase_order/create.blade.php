@@ -165,7 +165,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="po.shippingDate" v-validate="'required'"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="po.shippingDate" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -599,389 +599,387 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function() {
-            Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
-            Vue.component('vue-icheck', {
-               template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
-                props: ['id', 'name', 'disabled', 'value'],
-                mounted: function() {
-                    $(this.$el).iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue'
-                    }).on('ifChecked', function(event) {
-                        this.value = true;
-                    }).on('ifUnchecked', function(event) {
-                        this.value = false;
-                    });
+        Vue.component('vue-icheck', {
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            props: ['id', 'name', 'disabled', 'value'],
+            mounted: function() {
+                $(this.$el).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                }).on('ifChecked', function(event) {
+                    this.value = true;
+                }).on('ifUnchecked', function(event) {
+                    this.value = false;
+                });
 
-                    if (this.value) { $(this.$el).iCheck('check'); }
-                    if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
-                },
-                destroyed: function() {
-                    $(this.$el).iCheck('destroy');
+                if (this.value) { $(this.$el).iCheck('check'); }
+                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+            },
+            destroyed: function() {
+                $(this.$el).iCheck('destroy');
+            }
+        });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
+            props: ['id', 'name', 'value', 'format'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
+        var poApp = new Vue({
+            el: '#poVue',
+            data: {
+                supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
+                supplierTypeDDL: JSON.parse('{!! htmlspecialchars_decode($supplierTypeDDL) !!}'),
+                vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+                po: {
+                    disc_total_percent : parseInt('{{ old('disc_total_percent')? old('disc_total_percent') : 0 }}'),
+                    disc_total_value : parseInt('{{ old('disc_total_value')? old('disc_total_value') : 0 }}'),
+                    createdDate: '',
+                    shippingDate: '',
+                    supplier_type: {
+                        code: ''
+                    },
+                    supplier: {
+                        id: ''
+                    },
+                    warehouse: {
+                        id: ''
+                    },
+                    vendorTrucking: {
+                        id: ''
+                    },
+                    poType: {
+                        code: ''
+                    },
+                    product: {
+                        id: ''
+                    },
+                    items: [],
+                    expenses: [],
                 }
-            });
-
-            Vue.component('vue-datetimepicker', {
-                template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
-                props: ['id', 'name', 'value', 'format'],
-                mounted: function() {
-                    var vm = this;
-
-                    if (this.value == undefined) this.value = '';
-                    if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
-
-                    $(this.$el).datetimepicker({
-                        format: this.format,
-                        defaultDate: this.value == '' ? moment():moment(this.value).format(this.format)
-                    }).on("dp.change", function(e) {
-                        vm.$emit('input', this.value);
-                    });
-
-                    if (this.value == '') {
-                        $(this.$el).datetimepicker().data('DateTimePicker').date(moment());
-                    }
-                },
-                destroyed: function() {
-                    $(this.$el).data("DateTimePicker").destroy();
-                }
-            });
-
-            var poApp = new Vue({
-                el: '#poVue',
-                data: {
-                    supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
-                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                    poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
-                    supplierTypeDDL: JSON.parse('{!! htmlspecialchars_decode($supplierTypeDDL) !!}'),
-                    vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
-                    expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
-                    productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
-                    po: {
-						disc_total_percent : parseInt('{{ old('disc_total_percent')? old('disc_total_percent') : 0 }}'),
-						disc_total_value : parseInt('{{ old('disc_total_value')? old('disc_total_value') : 0 }}'),
-                        createdDate: '',
-                        supplier_type: {
-                            code: ''
-                        },
-                        supplier: {
-                            id: ''
-                        },
-                        warehouse: {
-                            id: ''
-                        },
-                        vendorTrucking: {
-                            id: ''
-                        },
-                        poType: {
-                            code: ''
-                        },
-                        product: {
-                            id: ''
-                        },
-                        items: [],
-                        expenses: [],
-                    }
-                },
-                methods: {
-                    validateBeforeSubmit: function(type) {
-                        this.$validator.validateAll().then(function(result) {
-                            $('#loader-container').fadeIn('fast');
-                            axios.post('{{ route('api.post.db.po.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poForm')[0]))
-                                .then(function(response) {
-                                    if (type == 'submitcreate') { window.location.href = '{{ route('db.po.create') }}'; }
-                                    else { window.location.href = '{{ route('db') }}'; }
+            },
+            methods: {
+                validateBeforeSubmit: function(type) {
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.po.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poForm')[0]))
+                            .then(function(response) {
+                                if (type == 'submitcreate') { window.location.href = '{{ route('db.po.create') }}'; }
+                                else { window.location.href = '{{ route('db') }}'; }
                             });
-                        }).catch(function() {
+                    }).catch(function() {
 
-                        });
-                    },
-                    onChangeSupplier: function() {
-                        if (!this.po.supplier.id) {
-                            this.removeAllExpense();
-                            this.po.supplier = { id: '' };
-                        } else {
-                            var supp = _.find(this.supplierDDL, {id: this.po.supplier.id});
-                            this.insertDefaultExpense(supp);
-                            _.merge(this.po.supplier, supp);
-                        }
-                    },
-                    onChangeWarehouse: function() {
-                        if(!this.po.warehouse.id) {
-                            this.po.warehouse = { id: '' };
-                        } else {
-                            var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
-                            _.merge(this.po.warehouse, wh);
-                        }
-                    },
-                    onChangeUnit: function(itemIndex) {
-                        if (!this.po.items[itemIndex].selected_unit.id) {
-                            this.po.items[itemIndex].selected_unit = this.defaultProductUnit;
-                        } else {
-                            var pUnit = _.find(this.po.items[itemIndex].product.product_units, { id: this.po.items[itemIndex].selected_unit.id });
-                            _.merge(this.po.items[itemIndex].selected_unit, pUnit);
-                        }
-                    },
-                    discountPercentToNominal: function(item, discount){
-                        var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
-                        if( disc_value % 1 !== 0 )
-                            disc_value = disc_value.toFixed(2);
-                        discount.disc_value = disc_value;
-                    },
-                    discountNominalToPercent: function(item, discount){
-                        var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
-                        if( disc_percent % 1 !== 0 )
-                            disc_percent = disc_percent.toFixed(2);
-                        discount.disc_percent = disc_percent;
-                    },
-                    discountItemSubTotal: function (discounts) {
-                        var result = 0;
-                        _.forEach(discounts, function (discount) {
+                    });
+                },
+                onChangeSupplier: function() {
+                    if (!this.po.supplier.id) {
+                        this.removeAllExpense();
+                        this.po.supplier = { id: '' };
+                    } else {
+                        var supp = _.find(this.supplierDDL, {id: this.po.supplier.id});
+                        this.insertDefaultExpense(supp);
+                        _.merge(this.po.supplier, supp);
+                    }
+                },
+                onChangeWarehouse: function() {
+                    if(!this.po.warehouse.id) {
+                        this.po.warehouse = { id: '' };
+                    } else {
+                        var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
+                        _.merge(this.po.warehouse, wh);
+                    }
+                },
+                onChangeUnit: function(itemIndex) {
+                    if (!this.po.items[itemIndex].selected_unit.id) {
+                        this.po.items[itemIndex].selected_unit = this.defaultProductUnit;
+                    } else {
+                        var pUnit = _.find(this.po.items[itemIndex].product.product_units, { id: this.po.items[itemIndex].selected_unit.id });
+                        _.merge(this.po.items[itemIndex].selected_unit, pUnit);
+                    }
+                },
+                discountPercentToNominal: function(item, discount){
+                    var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
+                    if( disc_value % 1 !== 0 )
+                        disc_value = disc_value.toFixed(2);
+                    discount.disc_value = disc_value;
+                },
+                discountNominalToPercent: function(item, discount){
+                    var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
+                    if( disc_percent % 1 !== 0 )
+                        disc_percent = disc_percent.toFixed(2);
+                    discount.disc_percent = disc_percent;
+                },
+                discountItemSubTotal: function (discounts) {
+                    var result = 0;
+                    _.forEach(discounts, function (discount) {
+                        result += parseFloat(discount.disc_value);
+                    });
+                    if( result % 1 !== 0 )
+                        result = result.toFixed(2);
+                    return result;
+                },
+                discountTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
                             result += parseFloat(discount.disc_value);
                         });
-                        if( result % 1 !== 0 )
-                            result = result.toFixed(2);
-                        return result;
-                    },
-                    discountTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-								result += parseFloat(discount.disc_value);
-							});
-                        });
-                        return result;
-                    },
-                    grandTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-                        return result;
-                    },
-                    expenseTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if (expense.type.code === 'EXPENSETYPE.ADD')
-                                result += parseInt(numeral().unformat(expense.amount));
-                            else
-                                result -= parseInt(numeral().unformat(expense.amount));
-                        });
-                        return result;
-                    },
-                    discountTotalPercentToNominal: function(){
-                        var vm = this;
-						
-                        var grandTotal = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-						
-                        var discountTotal = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-								discountTotal += parseFloat(discount.disc_value);
-							});
-                        });
-						
-						var expenseTotal = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if (expense.type.code === 'EXPENSETYPE.ADD')
-                                expenseTotal += parseInt(numeral().unformat(expense.amount));
-                            else
-                                expenseTotal -= parseInt(numeral().unformat(expense.amount));
-                        });
-						
-                        var disc_total_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.po.disc_total_percent / 100 );
-                        if( disc_total_value % 1 !== 0 )
-                            disc_total_value = disc_total_value.toFixed(2);
-                        vm.po.disc_total_value = disc_total_value;
-                    },
-                    discountTotalNominalToPercent: function(){
-                        var vm = this;
-						
-                        var grandTotal = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-						
-                        var discountTotal = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-								discountTotal += parseFloat(discount.disc_value);
-							});
-                        });
-						
-						var expenseTotal = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if (expense.type.code === 'EXPENSETYPE.ADD')
-                                expenseTotal += parseInt(numeral().unformat(expense.amount));
-                            else
-                                expenseTotal -= parseInt(numeral().unformat(expense.amount));
-                        });
-						
-						var disc_total_percent = vm.po.disc_total_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
-                        if( disc_total_percent % 1 !== 0 )
-                            disc_total_percent = disc_total_percent.toFixed(2);
-                        vm.po.disc_total_percent = disc_total_percent;
-                    },
-                    insertItem: function (product) {
-                        if(product.id != ''){
-                            var vm = this;
-                            var item_init_discount = [];
-                            item_init_discount.push({
-                                disc_percent : 0,
-                                disc_value : 0,
-                            });
-                            vm.po.items.push({
-                                product: _.cloneDeep(product),
-                                selected_unit: {
-                                    id: '',
-                                    unit: {
-                                        id: ''
-                                    },
-                                    conversion_value: 1
-                                },
-                                base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
-                                quantity: 0,
-                                price: 0,
-								discounts: item_init_discount
-                            });
-                        }
-                    },
-                    removeItem: function (index) {
-                        var vm = this;
-                        vm.po.items.splice(index, 1);
-                    },
-					insertDiscount: function (item) {
-						item.discounts.push({
-							disc_percent : 0,
-							disc_value : 0,
-						});
-                    },
-					removeDiscount: function (index, discountIndex) {
-                        var vm = this;
-                        vm.po.items[index].discounts.splice(discountIndex, 1);
-                    },
-                    insertDefaultExpense: function (supplier) {
-                        var vm = this;
-                        if (supplier.id != '') {
-                            vm.po.expenses = [];
-                            for (var i = 0; i < supplier.expense_templates.length; i++) {
-                                vm.po.expenses.push({
-                                    name: supplier.expense_templates[i].name,
-                                    type: {
-                                        code: supplier.expense_templates[i].type
-                                    },
-                                    is_internal_expense: supplier.expense_templates[i].is_internal_expense === 1,
-                                    amount: numeral(supplier.expense_templates[i].amount).format('0,0'),
-                                    remarks: supplier.expense_templates[i].remarks
-                                });
-                            }
-                        }
-                        else {
-                            vm.po.expenses.push({
-                                type: ''
-                            });
-                        }
-                    },
-                    insertExpense: function () {
-                        var vm = this;
-                        vm.po.expenses.push({
-                            name: '',
-                            type: {
-                                code: ''
-                            },
-                            is_internal_expense: false,
-                            amount: 0,
-                            remarks: ''
-                        });
-                    },
-                    removeExpense: function (index) {
-                        var vm = this;
-                        vm.po.expenses.splice(index, 1);
-                    },
-                    removeAllExpense: function() {
-                        var vm = this;
-                        vm.po.expenses = [];
-                    }
+                    });
+                    return result;
                 },
-                computed: {
-                    defaultSupplierType: function(){
-                        return {
-                            code: ''
-                        };
-                    },
-                    defaultSupplier: function(){
-                        return {
-                            id: ''
-                        };
-                    },
-                    defaultWarehouse: function(){
-                        return {
-                            id: ''
-                        };
-                    },
-                    defaultVendorTrucking: function(){
-                        return {
-                            id: ''
-                        };
-                    },
-                    defaultPOType: function(){
-                        return {
-                            code: ''
-                        };
-                    },
-                    defaultProduct: function(){
-                        return {
-                            id: ''
-                        };
-                    },
-                    defaultProductUnit: function(){
-                        return {
-                            id: '',
-                            unit: {
-                                id: ''
-                            },
-                            conversion_value: 1
-                        };
-                    },
-                    defaultExpenseType: function(){
-                        return {
-                            code: ''
-                        }
-                    },
-					item_total: function(){
-						return this.po.items.reduce(function(prev, item){
-							return item.selected_unit.conversion_value * item.quantity * item.price; 
-						},0);
-					}
-                },
-                mounted: function() {
-
-                },
-                created: function() {
+                grandTotal: function () {
                     var vm = this;
-                    var warehouseId = parseInt('{{ old('warehouse_id') }}');
-                    var vendorTruckingId = parseInt('{{ old('vendor_trucking_id') }}');
-                    
-                    if(warehouseId) {
-                        vm.po.warehouse = _.cloneDeep(_.find(vm.warehouseDDL, {id: warehouseId}));
-                    } else {
-                        vm.po.warehouse = {id: ''};
-                    }
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                },
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numeral().unformat(expense.amount));
+                        else
+                            result -= parseInt(numeral().unformat(expense.amount));
+                    });
+                    return result;
+                },
+                discountTotalPercentToNominal: function(){
+                    var vm = this;
 
-                    if(vendorTruckingId) {
-                        vm.po.vendorTrucking = _.cloneDeep(_.find(vm.vendorTruckingDDL, {id: vendorTruckingId}));
-                    } else {
-                        vm.po.vendorTrucking = {id: ''};
+                    var grandTotal = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+
+                    var discountTotal = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            discountTotal += parseFloat(discount.disc_value);
+                        });
+                    });
+
+                    var expenseTotal = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                        else
+                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                    });
+
+                    var disc_total_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.po.disc_total_percent / 100 );
+                    if( disc_total_value % 1 !== 0 )
+                        disc_total_value = disc_total_value.toFixed(2);
+                    vm.po.disc_total_value = disc_total_value;
+                },
+                discountTotalNominalToPercent: function(){
+                    var vm = this;
+
+                    var grandTotal = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+
+                    var discountTotal = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            discountTotal += parseFloat(discount.disc_value);
+                        });
+                    });
+
+                    var expenseTotal = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                        else
+                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                    });
+
+                    var disc_total_percent = vm.po.disc_total_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
+                    if( disc_total_percent % 1 !== 0 )
+                        disc_total_percent = disc_total_percent.toFixed(2);
+                    vm.po.disc_total_percent = disc_total_percent;
+                },
+                insertItem: function (product) {
+                    if(product.id != ''){
+                        var vm = this;
+                        var item_init_discount = [];
+                        item_init_discount.push({
+                            disc_percent : 0,
+                            disc_value : 0,
+                        });
+                        vm.po.items.push({
+                            product: _.cloneDeep(product),
+                            selected_unit: {
+                                id: '',
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
+                            quantity: 0,
+                            price: 0,
+                            discounts: item_init_discount
+                        });
                     }
+                },
+                removeItem: function (index) {
+                    var vm = this;
+                    vm.po.items.splice(index, 1);
+                },
+                insertDiscount: function (item) {
+                    item.discounts.push({
+                        disc_percent : 0,
+                        disc_value : 0,
+                    });
+                },
+                removeDiscount: function (index, discountIndex) {
+                    var vm = this;
+                    vm.po.items[index].discounts.splice(discountIndex, 1);
+                },
+                insertDefaultExpense: function (supplier) {
+                    var vm = this;
+                    if (supplier.id != '') {
+                        vm.po.expenses = [];
+                        for (var i = 0; i < supplier.expense_templates.length; i++) {
+                            vm.po.expenses.push({
+                                name: supplier.expense_templates[i].name,
+                                type: {
+                                    code: supplier.expense_templates[i].type
+                                },
+                                is_internal_expense: supplier.expense_templates[i].is_internal_expense === 1,
+                                amount: numeral(supplier.expense_templates[i].amount).format('0,0'),
+                                remarks: supplier.expense_templates[i].remarks
+                            });
+                        }
+                    }
+                    else {
+                        vm.po.expenses.push({
+                            type: ''
+                        });
+                    }
+                },
+                insertExpense: function () {
+                    var vm = this;
+                    vm.po.expenses.push({
+                        name: '',
+                        type: {
+                            code: ''
+                        },
+                        is_internal_expense: false,
+                        amount: 0,
+                        remarks: ''
+                    });
+                },
+                removeExpense: function (index) {
+                    var vm = this;
+                    vm.po.expenses.splice(index, 1);
+                },
+                removeAllExpense: function() {
+                    var vm = this;
+                    vm.po.expenses = [];
                 }
-            });
+            },
+            computed: {
+                defaultSupplierType: function(){
+                    return {
+                        code: ''
+                    };
+                },
+                defaultSupplier: function(){
+                    return {
+                        id: ''
+                    };
+                },
+                defaultWarehouse: function(){
+                    return {
+                        id: ''
+                    };
+                },
+                defaultVendorTrucking: function(){
+                    return {
+                        id: ''
+                    };
+                },
+                defaultPOType: function(){
+                    return {
+                        code: ''
+                    };
+                },
+                defaultProduct: function(){
+                    return {
+                        id: ''
+                    };
+                },
+                defaultProductUnit: function(){
+                    return {
+                        id: '',
+                        unit: {
+                            id: ''
+                        },
+                        conversion_value: 1
+                    };
+                },
+                defaultExpenseType: function(){
+                    return {
+                        code: ''
+                    }
+                },
+                item_total: function(){
+                    return this.po.items.reduce(function(prev, item){
+                        return item.selected_unit.conversion_value * item.quantity * item.price;
+                    },0);
+                }
+            },
+            mounted: function() {
+
+            },
+            created: function() {
+                var vm = this;
+                var warehouseId = parseInt('{{ old('warehouse_id') }}');
+                var vendorTruckingId = parseInt('{{ old('vendor_trucking_id') }}');
+
+                if(warehouseId) {
+                    vm.po.warehouse = _.cloneDeep(_.find(vm.warehouseDDL, {id: warehouseId}));
+                } else {
+                    vm.po.warehouse = {id: ''};
+                }
+
+                if(vendorTruckingId) {
+                    vm.po.vendorTrucking = _.cloneDeep(_.find(vm.vendorTruckingDDL, {id: vendorTruckingId}));
+                } else {
+                    vm.po.vendorTrucking = {id: ''};
+                }
+            }
         });
     </script>
 @endsection

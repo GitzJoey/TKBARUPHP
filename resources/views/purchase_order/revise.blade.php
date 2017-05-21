@@ -634,14 +634,12 @@
 
                 $(this.$el).datetimepicker({
                     format: this.format,
-                    defaultDate: this.value == '' ? moment():moment(this.value).format(this.format)
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
                 }).on("dp.change", function(e) {
                     vm.$emit('input', this.value);
                 });
-
-                if (this.value == '') {
-                    $(this.$el).datetimepicker().data('DateTimePicker').date(moment());
-                }
             },
             destroyed: function() {
                 $(this.$el).data("DateTimePicker").destroy();
