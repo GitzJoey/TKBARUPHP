@@ -251,12 +251,12 @@
                                                 </td>
                                                 <td>
                                                     @if($currentPo->status == 'POSTATUS.WA')
-                                                        <input type="hidden" name="item_selected_unit_id[]" v-bind:value="item.selected_unit.unit.id" >
-                                                        <select class="form-control"
-                                                                v-model="item.selected_unit"
+                                                        <select name="item_selected_unit_id[]"
+                                                                class="form-control"
+                                                                v-model="item.selected_unit.id"
                                                                 v-validate="'required'">
-                                                            <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                            <option v-for="pu in item.product.product_units" v-bind:value="pu">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
+                                                            <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                            <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                         </select>
                                                     @else
                                                         <input type="text" class="form-control" readonly
@@ -918,6 +918,15 @@
                 defaultWarehouse: function(){
                     return {
                         id: ''
+                    };
+                },
+                defaultProductUnit: function(){
+                    return {
+                        id: '',
+                        unit: {
+                            id: ''
+                        },
+                        conversion_value: 1
                     };
                 },
             }
