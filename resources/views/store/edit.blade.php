@@ -87,7 +87,7 @@
                                         <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                                     </div>
                                     <div class="col-sm-1">
-                                        <button type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#myModal"><i class="fa fa-location-arrow"></i></button>
+                                        <button id="btnChooseLocation" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#myModal"><i class="fa fa-location-arrow"></i></button>
                                         <input id="inputLatitude" type="hidden" name="latitude" value="{{ $store->latitude }}">
                                         <input id="inputLongitude" type="hidden" name="longitude" value="{{ $store->longitude }}">
                                     </div>
@@ -390,8 +390,14 @@
 @endsection
 
 @section('custom_js')
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ $mapsAPIKey }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=mapsCallback&libraries=places&key={{ $mapsAPIKey }}"></script>
     <script type="application/javascript">
+
+        function mapsCallback()
+        {
+            $('#btnChooseLocation').show();
+        }
+
         $(document).ready(function() {
 
             var location;
@@ -564,8 +570,8 @@
             $('#myModal').on('shown.bs.modal', function() {
 
                 if($('#inputAddress').val() === '') {
-                    $('#inputModalLat').val($('#inputLat').val());
-                    $('#inputModalLng').val($('#inputLng').val());
+                    $('#inputModalLat').val($('#inputLatitude').val());
+                    $('#inputModalLng').val($('#inputLongitude').val());
                 }
                 else {
                     $('#inputModalAddress').val($('#inputAddress').val());
@@ -577,8 +583,8 @@
             $('#location-ok-btn').click(function() {
 
                 if(location != undefined) {
-                    $('#inputLat').val(location.geometry.location.lat());
-                    $('#inputLng').val(location.geometry.location.lng());
+                    $('#inputLatitude').val(location.geometry.location.lat());
+                    $('#inputLongitude').val(location.geometry.location.lng());
                 }
             });
 

@@ -77,7 +77,7 @@
                                         <textarea name="address" id="inputAddress" class="form-control" rows="4">{{ $customer->address }}</textarea>
                                     </div>
                                     <div class="col-sm-1">
-                                        <button type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#myModal"><i class="fa fa-location-arrow"></i></button>
+                                        <button id="btnChooseLocation" type="button" class="btn btn-default btn-mini" data-toggle="modal" data-target="#myModal"><i class="fa fa-location-arrow"></i></button>
                                         <input id="inputLatitude" type="hidden" name="latitude" value="{{ $customer->latitude }}">
                                         <input id="inputLongitude" type="hidden" name="longitude" value="{{ $customer->longitude }}">
                                         <input id="inputDistance" type="hidden" name="distance" value="{{ $customer->distance }}">
@@ -391,8 +391,14 @@
 @endsection
 
 @section('custom_js')
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={{ $mapsAPIKey }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=mapsCallback&libraries=places&key={{ $mapsAPIKey }}"></script>
     <script type="application/javascript">
+
+        function mapsCallback()
+        {
+            $('#btnChooseLocation').show();
+        }
+
         $(document).ready(function() {
 
             var location;
