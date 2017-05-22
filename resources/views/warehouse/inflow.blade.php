@@ -80,16 +80,17 @@
                 getWarehousePOs: function (selectedWarehouse) {
                     var vm = this;
                     vm.POs = [];
-                    if (vm.selectedWarehouse.length != '') {
-                        axios.get('{{ route('api.warehouse.inflow.po') }}/' + vm.selectedWarehouse).then(function(response) {
+                    if (selectedWarehouse != '') {
+                        axios.get('{{ route('api.warehouse.inflow.po') }}/' + selectedWarehouse).then(function(response) {
                             vm.POs = response.data;
                         });
                     }
                 },
                 loadWarehouse: function(w) {
                     if (w == undefined || w == null) return;
-                    this.selectedWarehouse = _.find(this.warehouseDDL, function(wh) { return wh.id == w; });
-                    this.getWarehousePOs(this.selectedWarehouse);
+                    var wh = _.find(this.warehouseDDL, function(wh) { return wh.id == w; });
+                    this.selectedWarehouse = wh.id;
+                    this.getWarehousePOs(wh.id);
                 }
             },
             mounted: function() {
