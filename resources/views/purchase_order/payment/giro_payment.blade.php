@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <div id="po-payment-vue">
+    <div id="poPaymentVue">
         {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.giro', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
             {{ csrf_field() }}
 
@@ -172,20 +172,19 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}');
-
         var poPaymentApp = new Vue({
-            el: '#po-payment-vue',
+            el: '#poPaymentVue',
             data: {
+                currentPo: JSON.parse('{!! htmlspecialchars_decode($currentPo->toJson()) !!}'),
                 giro: {id: '', bank: {name: ''}},
                 availableGiros: JSON.parse('{!! htmlspecialchars_decode($availableGiros) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 po: {
-                    supplier: _.cloneDeep(currentPo.supplier),
+                    supplier: '',
                     items: [],
                     expenses: [],
-                    disc_total_percent : currentPo.disc_percent % 1 !== 0 ? currentPo.disc_percent : parseFloat(currentPo.disc_percent).toFixed(0),
-                    disc_total_value : currentPo.disc_value % 1 !== 0 ? currentPo.disc_value : parseFloat(currentPo.disc_value).toFixed(0),
+                    disc_total_percent : 0,
+                    disc_total_value : 0,
                 }
             },
             methods: {
@@ -224,83 +223,76 @@
                     });
                     return result;
                 },
-            }
-        });
+            },
+            methods: {
+                init: function() {
+                    var vm = this;
 
-        _.forEach(poPaymentApp.availableGiros, function (giro) {
-            giro.effective_date = moment(giro.effective_date).format('DD-MM-YYYY');
-        });
+                    this.po.supplier = _.cloneDeep(vm.currentPo.supplier);
+                    this.po.disc_total_percent = this.currentPo.disc_percent % 1 !== 0 ? this.currentPo.disc_percent : parseFloat(this.currentPo.disc_percent).toFixed(0);
+                    this.po.disc_total_value = this.currentPo.disc_value % 1 !== 0 ? this.currentPo.disc_value : parseFloat(this.currentPo.disc_value).toFixed(0);
 
-        for (var i = 0; i < currentPo.items.length; i++) {
-            var itemDiscounts = [];
-            if( currentPo.items[i].discounts.length ){
-                for (var ix = 0; ix < currentPo.items[i].discounts.length; ix++) {
-                    itemDiscounts.push({
-                        id : currentPo.items[i].discounts[ix].id,
-                        disc_percent : currentPo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? currentPo.items[i].discounts[ix].item_disc_percent : parseFloat(currentPo.items[i].discounts[ix].item_disc_percent).toFixed(0),
-                        disc_value : currentPo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? currentPo.items[i].discounts[ix].item_disc_value : parseFloat(currentPo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                    for (var i = 0; i < this.currentPo.items.length; i++) {
+                        var itemDiscounts = [];
+                        if (this.currentPo.items[i].discounts.length) {
+                            for (var ix = 0; ix < this.currentPo.items[i].discounts.length; ix++) {
+                                itemDiscounts.push({
+                                    id : this.currentPo.items[i].discounts[ix].id,
+                                    disc_percent : this.currentPo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? this.currentPo.items[i].discounts[ix].item_disc_percent : parseFloat(this.currentPo.items[i].discounts[ix].item_disc_percent).toFixed(0),
+                                    disc_value : this.currentPo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? this.currentPo.items[i].discounts[ix].item_disc_value : parseFloat(this.currentPo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                                });
+                            }
+                        }
+                        vm.po.items.push({
+                            id: this.currentPo.items[i].id,
+                            product: this.currentPo.items[i].product,
+                            base_unit: _.find(this.currentPo.items[i].product.product_units, function(unit) { return unit.is_base == 1; }),
+                            selected_unit: _.find(this.currentPo.items[i].product.product_units, function(punit) { return punit.id == vm.currentPo.items[i].selected_unit_id; }),
+                            quantity: this.currentPo.items[i].quantity % 1 != 0 ? parseFloat(this.currentPo.items[i].quantity).toFixed(2):parseFloat(this.currentPo.items[i].quantity).toFixed(0),
+                            price: this.currentPo.items[i].price % 1 != 0 ? parseFloat(this.currentPo.items[i].price).toFixed(2):parseFloat(this.currentPo.items[i].price).toFixed(0),
+                            discounts : itemDiscounts
+                        });
+                    }
+
+                    for (var i = 0; i < this.currentPo.expenses.length; i++) {
+                        var type = _.find(vm.expenseTypes, function (type) {
+                            return type.code === this.currentPo.expenses[i].type;
+                        });
+
+                        vm.po.expenses.push({
+                            id: this.currentPo.expenses[i].id,
+                            name: this.currentPo.expenses[i].name,
+                            type: {
+                                code: this.currentPo.expenses[i].type,
+                                description: type ? type.description : ''
+                            },
+                            is_internal_expense: this.currentPo.expenses[i].is_internal_expense == 1,
+                            amount: parseFloat(this.currentPo.expenses[i].amount).toFixed(0),
+                            remarks: this.currentPo.expenses[i].remarks
+                        });
+                    }
+
+                    _.forEach(vm.availableGiros, function (giro) {
+                        giro.effective_date = moment(giro.effective_date).format('DD-MM-YYYY');
                     });
                 }
+            },
+            mounted: function() {
+                this.init();
             }
-            poPaymentApp.po.items.push({
-                id: currentPo.items[i].id,
-                product: currentPo.items[i].product,
-                base_unit: _.find(currentPo.items[i].product.product_units, isBase),
-                selected_unit: _.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id)),
-                quantity: currentPo.items[i].quantity % 1 != 0 ? parseFloat(currentPo.items[i].quantity).toFixed(2):parseFloat(currentPo.items[i].quantity).toFixed(0),
-                price: currentPo.items[i].price % 1 != 0 ? parseFloat(currentPo.items[i].price).toFixed(2):parseFloat(currentPo.items[i].price).toFixed(0),
-                discounts : itemDiscounts
-            });
-        }
+        });
 
-        for (var i = 0; i < currentPo.expenses.length; i++) {
-            var type = _.find(poPaymentApp.expenseTypes, function (type) {
-                return type.code === currentPo.expenses[i].type;
-            });
-
-            poPaymentApp.po.expenses.push({
-                id: currentPo.expenses[i].id,
-                name: currentPo.expenses[i].name,
-                type: {
-                    code: currentPo.expenses[i].type,
-                    description: type ? type.description : ''
-                },
-                is_internal_expense: currentPo.expenses[i].is_internal_expense == 1,
-                amount: parseFloat(currentPo.expenses[i].amount).toFixed(0),
-                remarks: currentPo.expenses[i].remarks
-            });
-        }
-
-        function getSelectedUnit(selectedUnitId) {
-            return function (element) {
-                return element.unit_id == selectedUnitId;
-            }
-        }
-
-        function isBase(unit) {
-            return unit.is_base == 1;
-        }
-
-        $(function () {
+        $(document).ready(function () {
             $('input[type="checkbox"], input[type="radio"]').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue'
             });
 
-            $("#inputPaymentDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
-            });
-
-            $("#inputEffectiveDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
+            $("#inputPaymentDate, #inputEffectiveDat").datetimepicker({
+                format: 'DD-MM-YYYY hh:mm A',
+                defaultDate: this.value == '' ? moment():moment(this.value),
+                showTodayButton: true,
+                showClose: true
             });
         });
     </script>
