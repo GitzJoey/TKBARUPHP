@@ -225,19 +225,17 @@
                                                        v-model="item.quantity">
                                             </td>
                                             <td>
-                                                <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
                                                 <select name="selected_unit_id[]"
                                                         class="form-control"
-                                                        data-parsley-required="true"
-                                                        v-model="item.selected_unit">
-                                                    <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                        v-validate="'required'"
+                                                        v-model="item.selected_unit.id">
+                                                    <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control text-right" name="price[]"
-                                                       v-model="item.price" data-parsley-required="true"
-                                                       data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$">
+                                                       v-model="item.price" v-validate="'required|decimal:2'">
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md"
@@ -245,7 +243,7 @@
                                                 </button>
                                             </td>
                                             <td class="text-right valign-middle">
-                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -260,7 +258,7 @@
                                             <td width="80%"
                                                 class="text-right">@lang('purchase_order.copy.edit.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                                <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -410,6 +408,17 @@
                 }
             },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.po.copy.edit', [$poCode, $currentPOCopy->hId()]) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poCopyForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.po.copy.index', $poCode) }}'; }
+                            });
+                    }).catch(function() {
+
+                    });
+                },
                 grandTotal: function () {
                     var vm = this;
                     var result = 0;
@@ -426,6 +435,7 @@
                             product: _.cloneDeep(product),
                             base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
                             selected_unit: {
+                                id:'',
                                 unit: {
                                     id: ''
                                 },
@@ -439,6 +449,25 @@
                 removeItem: function (index) {
                     var vm = this;
                     vm.po.items.splice(index, 1);
+                },
+                onChangeUnit: function(itemIndex) {
+                    if (!this.po.items[itemIndex].selected_unit.id) {
+                        this.po.items[itemIndex].selected_unit = this.defaultProductUnit;
+                    } else {
+                        var pUnit = _.find(this.po.items[itemIndex].product.product_units, { id: this.po.items[itemIndex].selected_unit.id });
+                        _.merge(this.po.items[itemIndex].selected_unit, pUnit);
+                    }
+                }
+            },
+            computed: {
+                defaultProductUnit: function() {
+                    return {
+                        id: '',
+                        unit: {
+                            id: ''
+                        },
+                        conversion_value: 1
+                    };
                 }
             }
         });

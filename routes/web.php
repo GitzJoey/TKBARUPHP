@@ -369,9 +369,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'WarehouseController@index')->name('db.master.warehouse');
                 Route::get('show/{id}', 'WarehouseController@show')->name('db.master.warehouse.show');
                 Route::get('create', 'WarehouseController@create')->name('db.master.warehouse.create');
-                Route::post('create', 'WarehouseController@store');
                 Route::get('edit/{id}', 'WarehouseController@edit')->name('db.master.warehouse.edit');
-                Route::patch('edit/{id}', 'WarehouseController@update');
                 Route::delete('edit/{id}', 'WarehouseController@delete')->name('db.master.warehouse.delete');
             });
 
