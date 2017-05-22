@@ -81,7 +81,9 @@ class PurchaseOrderPaymentController extends Controller
 
         $this->paymentService->createCashPayment($currentPo, $paymentDate, $paymentAmount);
 
-        return redirect(route('db.po.payment.index'));
+        return response()->json([
+           'result' => 'success'
+        ]);
     }
 
     public function createTransferPayment($id)
@@ -112,7 +114,9 @@ class PurchaseOrderPaymentController extends Controller
 
         $currentPo->payments()->save($payment);
 
-        return redirect(route('db.po.payment.index'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function createGiroPayment($id)
@@ -147,6 +151,8 @@ class PurchaseOrderPaymentController extends Controller
 
         $currentPo->payments()->save($payment);
 
-        return redirect(route('db.po.payment.index'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 }

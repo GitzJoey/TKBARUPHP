@@ -17,19 +17,17 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="poPaymentVue">
-        {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.giro', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="poPaymentForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
 
             @include('purchase_order.payment.payment_summary_partial')
@@ -62,7 +60,7 @@
                                             <input type="hidden" name="giro_id" v-bind:value="giro.id">
                                             <select id="inputGiro"
                                                     class="form-control"
-                                                    v-model="giro" data-parsley-required="true">
+                                                    v-model="giro" v-validate="'required'">
                                                 <option v-bind:value="{id: '', bank: {name: ''}}">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="giro in availableGiros" v-bind:value="giro">@{{ giro.bank.short_name + ' ' + giro.serial_number + ' ' + giro.printed_name }}</option>
                                             </select>
@@ -98,8 +96,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control" id="inputPaymentDate"
-                                                       name="payment_date" data-parsley-required="true">
+                                                <vue-datetimepicker id="inputPaymentDate" name="payment_date" value="" v-model="payment_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                             </div>
                                         </div>
                                         <label for="inputEffectiveDate"
@@ -109,9 +106,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control" id="inputEffectiveDate"
-                                                       v-bind:value="giro.effective_date"
-                                                       name="effective_date" disabled>
+                                                <vue-datetimepicker id="inputEffectiveDate" name="effective_date" value="" v-model="giro.effective_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A" readonly="true"></vue-datetimepicker>
                                             </div>
                                         </div>
                                     </div>
@@ -164,7 +159,7 @@
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        </form>
 
         @include('purchase_order.supplier_details_partial')
     </div>
@@ -172,6 +167,34 @@
 
 @section('custom_js')
     <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
+            props: ['id', 'name', 'value', 'format'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
         var poPaymentApp = new Vue({
             el: '#poPaymentVue',
             data: {
@@ -184,10 +207,20 @@
                     items: [],
                     expenses: [],
                     disc_total_percent : 0,
-                    disc_total_value : 0,
-                }
+                    disc_total_value : 0
+                },
+                payment_date: ''
             },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.po.payment.giro', $currentPo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poPaymentForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.po.payment.index') }}'; }
+                            });
+                    });
+                },
                 grandTotal: function () {
                     var vm = this;
                     var result = 0;
@@ -223,8 +256,6 @@
                     });
                     return result;
                 },
-            },
-            methods: {
                 init: function() {
                     var vm = this;
 
@@ -280,20 +311,6 @@
             mounted: function() {
                 this.init();
             }
-        });
-
-        $(document).ready(function () {
-            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue'
-            });
-
-            $("#inputPaymentDate, #inputEffectiveDat").datetimepicker({
-                format: 'DD-MM-YYYY hh:mm A',
-                defaultDate: this.value == '' ? moment():moment(this.value),
-                showTodayButton: true,
-                showClose: true
-            });
         });
     </script>
 @endsection

@@ -640,6 +640,8 @@
                 }).on("dp.change", function(e) {
                     vm.$emit('input', this.value);
                 });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
             },
             destroyed: function() {
                 $(this.$el).data("DateTimePicker").destroy();

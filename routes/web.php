@@ -117,11 +117,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'PurchaseOrderPaymentController@paymentIndex')->name('db.po.payment.index');
                 Route::get('{id}', 'PurchaseOrderPaymentController@paymentHistory')->name('db.po.payment.history');
                 Route::get('{id}/cash', 'PurchaseOrderPaymentController@createCashPayment')->name('db.po.payment.cash');
-                Route::post('{id}/cash', 'PurchaseOrderPaymentController@saveCashPayment');
                 Route::get('{id}/transfer', 'PurchaseOrderPaymentController@createTransferPayment')->name('db.po.payment.transfer');
-                Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment');
                 Route::get('{id}/giro', 'PurchaseOrderPaymentController@createGiroPayment')->name('db.po.payment.giro');
-                Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment');
             });
 
             Route::group(['prefix' => 'copy'], function () {

@@ -24,6 +24,12 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'po'], function () {
             Route::post('create', 'PurchaseOrderController@store')->name('api.post.db.po.create');
             Route::post('revise/{id}', 'PurchaseOrderController@saveRevision')->name('api.post.db.po.revise');
+
+            Route::group(['prefix' => 'payment'], function () {
+                Route::post('{id}/cash', 'PurchaseOrderPaymentController@saveCashPayment')->name('api.post.db.po.payment.cash');
+                Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment')->name('api.post.db.po.payment.transfer');;
+                Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment')->name('api.post.db.po.payment.giro');;
+            });
         });
 
         Route::group(['prefix' => 'warehouse'], function () {
