@@ -46,7 +46,9 @@ class WarehouseInflowController extends Controller
     {
         $this->inflowService->createPOReceipt($request, $id);
 
-        return redirect(route('db.warehouse.inflow.index', array('w' => $request->input('warehouse_id'))));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function getWarehousePOs($id)

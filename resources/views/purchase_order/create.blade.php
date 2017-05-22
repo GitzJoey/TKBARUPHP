@@ -17,19 +17,17 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="poVue">
-        <form class="form-horizontal" action="{{ route('db.po.create') }}" method="post" v-on:submit.prevent="validateBeforeSubmit">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="poForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit('submit')">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6">
@@ -42,8 +40,8 @@
                                 <label for="inputSupplierType"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_type')</label>
                                 <div class="col-sm-8">
-                                    <select id="inputSupplierType" name="supplier_type" v-validate="'required'"
-                                            class="form-control"
+                                    <select id="inputSupplierType" name="supplier_type" class="form-control"
+                                            v-validate="'required'" data-vv-as="{{ trans('purchase_order.create.field.supplier_type') }}"
                                             v-model="po.supplier_type.code">
                                         <option v-bind:value="defaultSupplierType.code">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="st of supplierTypeDDL" v-bind:value="st.code">@{{ st.i18nDescription }}</option>
@@ -52,18 +50,19 @@
                                 </div>
                             </div>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
-                                <div v-bind:class="{ 'form-group':true }">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('supplier_id') }">
                                     <label for="inputSupplierId"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-8">
-                                        <select id="inputSupplierId"
-                                                class="form-control"
-                                                name="supplier_id"
+                                        <select id="inputSupplierId" name="supplier_id" class="form-control"
+                                                v-validate="po.supplier_type.code == 'SUPPLIERTYPE.R' ? 'required':''"
+                                                data-vv-as="{{ trans('purchase_order.create.field.supplier_name') }}"
                                                 v-model="po.supplier.id"
                                                 v-on:change="onChangeSupplier()">
                                             <option v-bind:value="defaultSupplier.id">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="supplier of supplierDDL" v-bind:value="supplier.id">@{{ supplier.name }}</option>
                                         </select>
+                                        <span v-show="errors.has('supplier_id')" class="help-block" v-cloak>@{{ errors.first('supplier_id') }}</span>
                                     </div>
                                     <div class="col-sm-2">
                                         <button id="supplierDetailButton" type="button"
@@ -74,21 +73,26 @@
                                 </div>
                             </template>
                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
-                                <div v-bind:class="{ 'form-group':true }">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_supplier') }">
                                     <label for="inputSupplierName"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_name')</label>
                                     <div class="col-sm-10">
                                         <input type="text" id="inputSupplierName" name="walk_in_supplier"
+                                               v-validate="po.supplier_type.code == 'SUPPLIERTYPE.WI' ? 'required':''"
+                                               data-vv-as="{{ trans('purchase_order.create.field.supplier_name') }}"
                                                class="form-control" v-model="po.supplier_name">
+                                        <span v-show="errors.has('walk_in_supplier')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier') }}</span>
                                     </div>
                                 </div>
-                                <div v-bind:class="{ 'form-group':true }">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_supplier_detail') }">
                                     <label for="inputSupplierDetails"
                                            class="col-sm-2 control-label">@lang('purchase_order.create.field.supplier_details')</label>
                                     <div class="col-sm-10">
-                                        <textarea id="inputSupplierDetails" class="form-control" rows="5"
-                                                  name="walk_in_supplier_detail"
+                                        <textarea id="inputSupplierDetails" name="walk_in_supplier_detail" class="form-control" rows="5"
+                                                  v-validate="po.supplier_type.code == 'SUPPLIERTYPE.WI' ? 'required':''"
+                                                  data-vv-as="{{ trans('purchase_order.create.field.supplier_details') }}"
                                                   v-model="po.supplier_details"></textarea>
+                                        <span v-show="errors.has('walk_in_supplier_detail')" class="help-block" v-cloak>@{{ errors.first('walk_in_supplier_detail') }}</span>
                                     </div>
                                 </div>
                             </template>
@@ -109,20 +113,21 @@
                                            placeholder="PO Code" readonly value="{{ $poCode }}">
                                 </div>
                             </div>
-                            <div v-bind:class="{ 'form-group':true }">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('po_type') }">
                                 <label for="inputPoType"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_type')</label>
                                 <div class="col-sm-9">
-                                    <select id="inputPoType"
-                                            class="form-control"
-                                            name="po_type"
+                                    <select id="inputPoType" name="po_type" class="form-control"
+                                            v-validate="'required'"
+                                            data-vv-as="{{ trans('purchase_order.create.field.po_type') }}"
                                             v-model="po.poType.code">
                                         <option v-bind:value="defaultPOType.code">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="poType of poTypeDDL" v-bind:value="poType.code">@{{ poType.i18nDescription }}</option>
                                     </select>
+                                    <span v-show="errors.has('po_type')" class="help-block" v-cloak>@{{ errors.first('po_type') }}</span>
                                 </div>
                             </div>
-                            <div v-bind:class="{ 'form-group':true }">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('po_created') }">
                                 <label for="inputPoDate"
                                        class="col-sm-3 control-label">@lang('purchase_order.create.field.po_date')</label>
                                 <div class="col-sm-9">
@@ -130,7 +135,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +157,7 @@
                             <h3 class="box-title">@lang('purchase_order.create.box.shipping')</h3>
                         </div>
                         <div class="box-body">
-                            <div v-bind:class="{ 'form-group':true }">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('shipping_date') }">
                                 <label for="inputShippingDate"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.shipping_date')</label>
                                 <div class="col-sm-5">
@@ -160,22 +165,23 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="po.shippingDate"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="po.shippingDate" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
-                            <div v-bind:class="{ 'form-group':true }">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('warehouse_id') }">
                                 <label for="inputWarehouse"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.warehouse')</label>
                                 <div class="col-sm-5">
-                                    <select id="inputWarehouse" data-parsley-required="true"
-                                            class="form-control"
-                                            name="warehouse_id"
+                                    <select id="inputWarehouse" name="warehouse_id" class="form-control"
                                             v-model="po.warehouse.id"
+                                            v-validate="'required'"
+                                            data-vv-as="{{ trans('purchase_order.create.field.warehouse') }}"
                                             v-on:change="onChangeWarehouse()">
                                         <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="warehouse of warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                                     </select>
+                                    <span v-show="errors.has('warehouse_id')" class="help-block" v-cloak>@{{ errors.first('warehouse_id') }}</span>
                                 </div>
                             </div>
                             <hr>
@@ -183,9 +189,7 @@
                                 <label for="inputVendorTrucking"
                                        class="col-sm-2 control-label">@lang('purchase_order.create.field.vendor_trucking')</label>
                                 <div class="col-sm-8">
-                                    <select id="inputVendorTrucking"
-                                            class="form-control"
-                                            name="vendor_trucking_id"
+                                    <select id="inputVendorTrucking" name="vendor_trucking_id" class="form-control"
                                             v-model="po.vendorTrucking.id">
                                         <option v-bind:value="defaultVendorTrucking.id">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="vendorTrucking of vendorTruckingDDL" v-bind:value="vendorTrucking.id">@{{ vendorTrucking.name }}</option>
@@ -205,9 +209,7 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-11">
-                                    <select id="inputProduct"
-                                            class="form-control"
-                                            v-model="po.product">
+                                    <select id="inputProduct" class="form-control" v-model="po.product">
                                         <option v-bind:value="defaultProduct">@lang('labels.PLEASE_SELECT')</option>
                                         <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
                                             <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
@@ -218,8 +220,8 @@
                                     </select>
                                 </div>
                                 <div class="col-md-1">
-                                    <button type="button" class="btn btn-primary btn-md"
-                                            v-on:click="insertItem(po.product)"><span class="fa fa-plus"/>
+                                    <button type="button" class="btn btn-primary btn-md" v-on:click="insertItem(po.product)">
+                                        <span class="fa fa-plus"/>
                                     </button>
                                 </div>
                             </div>
@@ -244,34 +246,42 @@
                                         <tbody>
                                             <tr v-for="(item, itemIndex) in po.items">
                                                 <input type="hidden" name="item_product_id[]" v-bind:value="item.product.id">
-                                                <input type="hidden" name="base_unit_id[]"
-                                                       v-bind:value="item.base_unit.unit.id">
+                                                <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
-                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true }"
+                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('quantity_' + itemIndex) }"
                                                            name="item_quantity[]"
-                                                           v-model="item.quantity">
+                                                           v-bind:data-vv-name="'quantity_' + itemIndex"
+                                                           v-bind:data-vv-as="'{{ trans('purchase_order.create.table.item.header.quantity') }} ' + (itemIndex + 1)"
+                                                           v-model="item.quantity" v-validate="'required'">
                                                 </td>
                                                 <td>
-                                                    <select v-bind:class="{ 'form-control':true }"
+                                                    <select v-bind:class="{ 'form-control':true, 'has-error':errors.has('unit_' + itemIndex) }"
                                                             name="item_selected_unit_id[]"
-                                                            v-model="item.selected_unit.unit.id">
-                                                        <option v-bind:value="defaultProductUnit.unit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                            v-model="item.selected_unit.id"
+                                                            v-bind:data-vv-name="'unit_' + itemIndex"
+                                                            v-bind:data-vv-as="'{{ trans('purchase_order.create.table.item.header.unit') }} ' + (itemIndex + 1)"
+                                                            v-validate="'required'"
+                                                            v-on:change="onChangeUnit(itemIndex)">
+                                                        <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="pu in item.product.product_units" v-bind:value="pu.id">@{{ pu.unit.name }} (@{{ pu.unit.symbol }})</option>
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <input type="text" name="item_price[]"
-                                                           v-bind:class="{ 'form-control':true, 'text-right':true }"
-                                                           v-model="item.price">
+                                                           v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('price_' + itemIndex) }"
+                                                           v-model="item.price" v-validate="'required'"
+                                                           v-bind:data-vv-name="'price_' + itemIndex"
+                                                           v-bind:data-vv-as="'{{ trans('purchase_order.create.table.item.header.price_unit') }} ' + (itemIndex + 1)">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md"
-                                                            v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"></span>
+                                                            v-on:click="removeItem(itemIndex)"><span
+                                                                class="fa fa-minus"></span>
                                                     </button>
                                                 </td>
                                                 <td class="text-right valign-middle">
-                                                    @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                                    @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -286,7 +296,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                                    <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -318,7 +328,7 @@
                                             <template v-for="(item, itemIndex) in po.items">
                                                 <tr>
         											<td width="30%">@{{ item.product.name }}</td>
-        											<td width="30%">@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
+        											<td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                     <td colspan="3" width="40%">
                                                         <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
                                                             <span class="fa fa-plus"/>
@@ -346,7 +356,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                                    <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
+                                                    <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
                                                 </tr>
                                             </template>
                                         </tbody>
@@ -361,7 +371,7 @@
                                             <td width="65%"
                                                 class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
                                             <td width="35%" class="text-right">
-                                                <span class="control-label-normal">@{{ discountTotal() }}</span>
+                                                <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -444,7 +454,7 @@
                                             <td width="80%"
                                                 class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ expenseTotal() }}</span>
+                                                <span class="control-label-normal">@{{ numeral(expenseTotal()).format() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -474,7 +484,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-    											<td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() }}</td>
+    											<td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
     											<td>
 													<div class="row">
 														<div class="col-md-3">
@@ -485,7 +495,7 @@
 														</div>
 													</div>
 												</td>
-												<td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value }}</td>
+												<td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -571,12 +581,10 @@
             <div class="row">
                 <div class="col-md-8 col-offset-md-4">
                     <div class="btn-toolbar">
-                        <button id="submitAndCreateButton" type="submit"
-                                class="btn btn-primary pull-right" name="submitcreate"
-                                value="create_new">@lang('buttons.submit_button')
-                            &nbsp;&amp;&nbsp;@lang('buttons.create_new_button')</button>
-                        <button id="submitButton" type="submit" name="submit"
-                                class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
+                        <button id="submitAndCreateButton" type="button" class="btn btn-primary pull-right"
+                                v-on:click="validateBeforeSubmit('submitcreate')">@lang('buttons.submit_button')&nbsp;&amp;&nbsp;@lang('buttons.create_new_button')</button>
+                        <button id="submitButton" type="button" class="btn btn-primary pull-right"
+                                v-on:click="validateBeforeSubmit('submit')">@lang('buttons.submit_button')</button>
                         <a id="printButton" href="#" target="_blank"
                            class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
                         <a id="cancelButton" class="btn btn-primary pull-right"
@@ -591,402 +599,387 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function() {
-            Vue.use(VeeValidate);
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
-            Vue.component('vue-icheck', {
-               template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
-                props: ['id', 'name', 'disabled', 'value'],
-                mounted: function() {
-                    $(this.$el).iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue'
-                    }).on('ifChecked', function(event) {
-                        this.value = true;
-                    }).on('ifUnchecked', function(event) {
-                        this.value = false;
-                    });
+        Vue.component('vue-icheck', {
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            props: ['id', 'name', 'disabled', 'value'],
+            mounted: function() {
+                $(this.$el).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                }).on('ifChecked', function(event) {
+                    this.value = true;
+                }).on('ifUnchecked', function(event) {
+                    this.value = false;
+                });
 
-                    if (this.value) { $(this.$el).iCheck('check'); }
-                    if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
-                },
-                destroyed: function() {
-                    $(this.$el).iCheck('destroy');
+                if (this.value) { $(this.$el).iCheck('check'); }
+                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+            },
+            destroyed: function() {
+                $(this.$el).iCheck('destroy');
+            }
+        });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
+            props: ['id', 'name', 'value', 'format'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
+        var poApp = new Vue({
+            el: '#poVue',
+            data: {
+                supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
+                supplierTypeDDL: JSON.parse('{!! htmlspecialchars_decode($supplierTypeDDL) !!}'),
+                vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
+                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+                po: {
+                    disc_total_percent : parseInt('{{ old('disc_total_percent')? old('disc_total_percent') : 0 }}'),
+                    disc_total_value : parseInt('{{ old('disc_total_value')? old('disc_total_value') : 0 }}'),
+                    createdDate: '',
+                    shippingDate: '',
+                    supplier_type: {
+                        code: ''
+                    },
+                    supplier: {
+                        id: ''
+                    },
+                    warehouse: {
+                        id: ''
+                    },
+                    vendorTrucking: {
+                        id: ''
+                    },
+                    poType: {
+                        code: ''
+                    },
+                    product: {
+                        id: ''
+                    },
+                    items: [],
+                    expenses: [],
                 }
-            });
+            },
+            methods: {
+                validateBeforeSubmit: function(type) {
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.po.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poForm')[0]))
+                            .then(function(response) {
+                                if (type == 'submitcreate') { window.location.href = '{{ route('db.po.create') }}'; }
+                                else { window.location.href = '{{ route('db') }}'; }
+                            });
+                    }).catch(function() {
 
-            Vue.component('vue-datetimepicker', {
-                template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
-                props: ['id', 'name', 'value', 'format'],
-                mounted: function() {
+                    });
+                },
+                onChangeSupplier: function() {
+                    if (!this.po.supplier.id) {
+                        this.removeAllExpense();
+                        this.po.supplier = { id: '' };
+                    } else {
+                        var supp = _.find(this.supplierDDL, {id: this.po.supplier.id});
+                        this.insertDefaultExpense(supp);
+                        _.merge(this.po.supplier, supp);
+                    }
+                },
+                onChangeWarehouse: function() {
+                    if(!this.po.warehouse.id) {
+                        this.po.warehouse = { id: '' };
+                    } else {
+                        var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
+                        _.merge(this.po.warehouse, wh);
+                    }
+                },
+                onChangeUnit: function(itemIndex) {
+                    if (!this.po.items[itemIndex].selected_unit.id) {
+                        this.po.items[itemIndex].selected_unit = this.defaultProductUnit;
+                    } else {
+                        var pUnit = _.find(this.po.items[itemIndex].product.product_units, { id: this.po.items[itemIndex].selected_unit.id });
+                        _.merge(this.po.items[itemIndex].selected_unit, pUnit);
+                    }
+                },
+                discountPercentToNominal: function(item, discount){
+                    var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
+                    if( disc_value % 1 !== 0 )
+                        disc_value = disc_value.toFixed(2);
+                    discount.disc_value = disc_value;
+                },
+                discountNominalToPercent: function(item, discount){
+                    var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
+                    if( disc_percent % 1 !== 0 )
+                        disc_percent = disc_percent.toFixed(2);
+                    discount.disc_percent = disc_percent;
+                },
+                discountItemSubTotal: function (discounts) {
+                    var result = 0;
+                    _.forEach(discounts, function (discount) {
+                        result += parseFloat(discount.disc_value);
+                    });
+                    if( result % 1 !== 0 )
+                        result = result.toFixed(2);
+                    return result;
+                },
+                discountTotal: function () {
                     var vm = this;
-
-                    if (this.value == undefined) this.value = '';
-                    if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
-
-                    $(this.$el).datetimepicker({
-                        format: this.format,
-                        defaultDate: this.value == '' ? moment():moment(this.value).format(this.format)
-                    }).on("dp.change", function(e) {
-                        vm.$emit('input', this.value);
-                    });
-
-                    if (this.value == '') {
-                        $(this.$el).datetimepicker().data('DateTimePicker').date(moment());
-                    }
-                },
-                destroyed: function() {
-                    $(this.$el).data("DateTimePicker").destroy();
-                }
-            });
-
-            var poApp = new Vue({
-                el: '#poVue',
-                data: {
-                    p: true,
-                    supplierDDL: JSON.parse('{!! htmlspecialchars_decode($supplierDDL) !!}'),
-                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                    poTypeDDL: JSON.parse('{!! htmlspecialchars_decode($poTypeDDL) !!}'),
-                    supplierTypeDDL: JSON.parse('{!! htmlspecialchars_decode($supplierTypeDDL) !!}'),
-                    vendorTruckingDDL: JSON.parse('{!! htmlspecialchars_decode($vendorTruckingDDL) !!}'),
-                    expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
-                    productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
-                    po: {
-						disc_total_percent : parseInt('{{ old('disc_total_percent')? old('disc_total_percent') : 0 }}'),
-						disc_total_value : parseInt('{{ old('disc_total_value')? old('disc_total_value') : 0 }}'),
-                        createdDate: '',
-                        supplier_type: {
-                            code: ''
-                        },
-                        supplier: {
-                            id: ''
-                        },
-                        warehouse: {
-                            id: ''
-                        },
-                        vendorTrucking: {
-                            id: ''
-                        },
-                        poType: {
-                            code: ''
-                        },
-                        product: {
-                            id: ''
-                        },
-                        items: [],
-                        expenses: [],
-                    }
-                },
-                methods: {
-                    validateBeforeSubmit: function() {
-
-                    },
-                    onChangeSupplier: function() {
-                        if (!this.po.supplier.id) {
-                            this.removeAllExpense();
-                            this.po.supplier = { id: '' };
-                        } else {
-                            var supp = _.find(this.supplierDDL, {id: this.po.supplier.id});
-                            this.insertDefaultExpense(supp);
-                            _.merge(this.po.supplier, supp);
-                        }
-                    },
-                    onChangeWarehouse: function() {
-                        if(!this.po.warehouse.id) {
-                            this.po.warehouse = { id: '' };
-                        } else {
-                            var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
-                            _.merge(this.po.warehouse, wh);
-                        }
-                    },
-                    discountPercentToNominal: function(item, discount){
-                        var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
-                        if( disc_value % 1 !== 0 )
-                            disc_value = disc_value.toFixed(2);
-                        discount.disc_value = disc_value;
-                    },
-                    discountNominalToPercent: function(item, discount){
-                        var disc_percent = discount.disc_value / ( item.selected_unit.conversion_value * item.quantity * item.price ) * 100 ;
-                        if( disc_percent % 1 !== 0 )
-                            disc_percent = disc_percent.toFixed(2);
-                        discount.disc_percent = disc_percent;
-                    },
-                    discountItemSubTotal: function (discounts) {
-                        var result = 0;
-                        _.forEach(discounts, function (discount) {
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
                             result += parseFloat(discount.disc_value);
                         });
-                        if( result % 1 !== 0 )
-                            result = result.toFixed(2);
-                        return result;
-                    },
-                    discountTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-								result += parseFloat(discount.disc_value);
-							});
-                        });
-                        return result;
-                    },
-                    grandTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-                        return result;
-                    },
-                    expenseTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if (expense.type.code === 'EXPENSETYPE.ADD')
-                                result += parseInt(numeral().unformat(expense.amount));
-                            else
-                                result -= parseInt(numeral().unformat(expense.amount));
-                        });
-                        return result;
-                    },
-                    discountTotalPercentToNominal: function(){
-                        var vm = this;
-						
-                        var grandTotal = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-						
-                        var discountTotal = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-								discountTotal += parseFloat(discount.disc_value);
-							});
-                        });
-						
-						var expenseTotal = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if (expense.type.code === 'EXPENSETYPE.ADD')
-                                expenseTotal += parseInt(numeral().unformat(expense.amount));
-                            else
-                                expenseTotal -= parseInt(numeral().unformat(expense.amount));
-                        });
-						
-                        var disc_total_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.po.disc_total_percent / 100 );
-                        if( disc_total_value % 1 !== 0 )
-                            disc_total_value = disc_total_value.toFixed(2);
-                        vm.po.disc_total_value = disc_total_value;
-                    },
-                    discountTotalNominalToPercent: function(){
-                        var vm = this;
-						
-                        var grandTotal = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-						
-                        var discountTotal = 0;
-                        _.forEach(vm.po.items, function (item) {
-                            _.forEach(item.discounts, function (discount) {
-								discountTotal += parseFloat(discount.disc_value);
-							});
-                        });
-						
-						var expenseTotal = 0;
-                        _.forEach(vm.po.expenses, function (expense, key) {
-                            if (expense.type.code === 'EXPENSETYPE.ADD')
-                                expenseTotal += parseInt(numeral().unformat(expense.amount));
-                            else
-                                expenseTotal -= parseInt(numeral().unformat(expense.amount));
-                        });
-						
-						var disc_total_percent = vm.po.disc_total_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
-                        if( disc_total_percent % 1 !== 0 )
-                            disc_total_percent = disc_total_percent.toFixed(2);
-                        vm.po.disc_total_percent = disc_total_percent;
-                    },
-                    insertItem: function (product) {
-                        if(product.id != ''){
-                            var vm = this;
-                            var item_init_discount = [];
-                            item_init_discount.push({
-                                disc_percent : 0,
-                                disc_value : 0,
-                            });
-                            vm.po.items.push({
-                                product: _.cloneDeep(product),
-                                selected_unit: {
-                                    unit: {
-                                        id: 0
-                                    },
-                                    conversion_value: 1
-                                },
-                                base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
-                                quantity: 0,
-                                price: 0,
-								discounts: item_init_discount
-                            });
-                        }
-                    },
-                    removeItem: function (index) {
-                        var vm = this;
-                        vm.po.items.splice(index, 1);
-                    },
-					insertDiscount: function (item) {
-						item.discounts.push({
-							disc_percent : 0,
-							disc_value : 0,
-						});
-                    },
-					removeDiscount: function (index, discountIndex) {
-                        var vm = this;
-                        vm.po.items[index].discounts.splice(discountIndex, 1);
-                    },
-                    insertDefaultExpense: function (supplier) {
-                        var vm = this;
-                        if (supplier.id != '') {
-                            vm.po.expenses = [];
-                            for (var i = 0; i < supplier.expense_templates.length; i++) {
-                                vm.po.expenses.push({
-                                    name: supplier.expense_templates[i].name,
-                                    type: {
-                                        code: supplier.expense_templates[i].type
-                                    },
-                                    is_internal_expense: supplier.expense_templates[i].is_internal_expense === 1,
-                                    amount: numeral(supplier.expense_templates[i].amount).format('0,0'),
-                                    remarks: supplier.expense_templates[i].remarks
-                                });
-                            }
-                        }
-                        else {
-                            vm.po.expenses.push({
-                                type: ''
-                            });
-                        }
-                    },
-                    insertExpense: function () {
-                        var vm = this;
-                        vm.po.expenses.push({
-                            name: '',
-                            type: {
-                                code: ''
-                            },
-                            is_internal_expense: false,
-                            amount: 0,
-                            remarks: ''
-                        });
-                    },
-                    removeExpense: function (index) {
-                        var vm = this;
-                        vm.po.expenses.splice(index, 1);
-                    },
-                    removeAllExpense: function() {
-                        var vm = this;
-                        vm.po.expenses = [];
-                    }
-                },
-                computed: {
-                    defaultSupplierType: function(){
-                        return {
-                            code: ''
-                        };
-                    },
-                    defaultSupplier: function(){
-                        return {
-                            id: ''
-                        };
-                    },
-                    defaultWarehouse: function(){
-                        return {
-                            id: ''
-                        };
-                    },
-                    defaultVendorTrucking: function(){
-                        return {
-                            id: ''
-                        };
-                    },
-                    defaultPOType: function(){
-                        return {
-                            code: ''
-                        };
-                    },
-                    defaultProduct: function(){
-                        return {
-                            id: ''
-                        };
-                    },
-                    defaultProductUnit: function(){
-                        return {
-                            unit: {
-                                id: 0
-                            },
-                            conversion_value: 1
-                        };
-                    },
-                    defaultExpenseType: function(){
-                        return {
-                            code: ''
-                        }
-                    },
-					item_total: function(){
-						return this.po.items.reduce(function(prev, item){
-							return item.selected_unit.conversion_value * item.quantity * item.price; 
-						},0);
-					}
-                },
-                mounted: function() {
-                    var prdId = parseInt('{{ old('item_product_id') }}');
-                    var s = '{{ old('item_product_id') }}';
-                },
-                created: function() {
-                    var vm = this;
-                    var warehouseId = parseInt('{{ old('warehouse_id') }}');
-                    var vendorTruckingId = parseInt('{{ old('vendor_trucking_id') }}');
-                    
-                    if(warehouseId) {
-                        vm.po.warehouse = _.cloneDeep(_.find(vm.warehouseDDL, {id: warehouseId}));
-                    } else {
-                        vm.po.warehouse = {id: ''};
-                    }
-
-                    if(vendorTruckingId) {
-                        vm.po.vendorTrucking = _.cloneDeep(_.find(vm.vendorTruckingDDL, {id: vendorTruckingId}));
-                    } else {
-                        vm.po.vendorTrucking = {id: ''};
-                    }
-                }
-            });
-
-            @if(old('item_product_id'))
-                @foreach(old('item_product_id') as $key => $productId)
-                    var product = _.cloneDeep(_.find(poApp.productDDL, {id: {{ old("item_product_id.$key") }}}));
-                    var productUnit = _.cloneDeep(_.find(product.product_units, function(pu){
-                        return pu.unit.id == {{ old("item_selected_unit_id.$key") }};
-                    }));
-
-					@if( count(old('item_disc_percent.'.$key)) )
-						var itemDiscounts = [];
-							@for ($ia = 0; $ia < count(old('item_disc_percent.'.$key)); $ia++)
-								itemDiscounts.push({
-									disc_percent : {{ old('item_disc_percent.'.$key.'.'.$ia) }},
-									disc_value : {{ old('item_disc_value.'.$key.'.'.$ia) }},
-								});
-							@endfor
-					@endif
-					
-                    poApp.po.items.push({
-                        product: product,
-                        selected_unit: productUnit,
-                        base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
-                        quantity: {{ old("item_quantity.$key") }},
-                        price: {{ old("item_price.$key") }},
-						@if( count(old('item_disc_percent.'.$key)) )
-							discounts : itemDiscounts
-						@endif
                     });
-                @endforeach
-            @endif
+                    return result;
+                },
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                },
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numeral().unformat(expense.amount));
+                        else
+                            result -= parseInt(numeral().unformat(expense.amount));
+                    });
+                    return result;
+                },
+                discountTotalPercentToNominal: function(){
+                    var vm = this;
+
+                    var grandTotal = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+
+                    var discountTotal = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            discountTotal += parseFloat(discount.disc_value);
+                        });
+                    });
+
+                    var expenseTotal = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                        else
+                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                    });
+
+                    var disc_total_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.po.disc_total_percent / 100 );
+                    if( disc_total_value % 1 !== 0 )
+                        disc_total_value = disc_total_value.toFixed(2);
+                    vm.po.disc_total_value = disc_total_value;
+                },
+                discountTotalNominalToPercent: function(){
+                    var vm = this;
+
+                    var grandTotal = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+
+                    var discountTotal = 0;
+                    _.forEach(vm.po.items, function (item) {
+                        _.forEach(item.discounts, function (discount) {
+                            discountTotal += parseFloat(discount.disc_value);
+                        });
+                    });
+
+                    var expenseTotal = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                        else
+                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                    });
+
+                    var disc_total_percent = vm.po.disc_total_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
+                    if( disc_total_percent % 1 !== 0 )
+                        disc_total_percent = disc_total_percent.toFixed(2);
+                    vm.po.disc_total_percent = disc_total_percent;
+                },
+                insertItem: function (product) {
+                    if(product.id != ''){
+                        var vm = this;
+                        var item_init_discount = [];
+                        item_init_discount.push({
+                            disc_percent : 0,
+                            disc_value : 0,
+                        });
+                        vm.po.items.push({
+                            product: _.cloneDeep(product),
+                            selected_unit: {
+                                id: '',
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            base_unit: _.cloneDeep(_.find(product.product_units, {is_base: 1})),
+                            quantity: 0,
+                            price: 0,
+                            discounts: item_init_discount
+                        });
+                    }
+                },
+                removeItem: function (index) {
+                    var vm = this;
+                    vm.po.items.splice(index, 1);
+                },
+                insertDiscount: function (item) {
+                    item.discounts.push({
+                        disc_percent : 0,
+                        disc_value : 0,
+                    });
+                },
+                removeDiscount: function (index, discountIndex) {
+                    var vm = this;
+                    vm.po.items[index].discounts.splice(discountIndex, 1);
+                },
+                insertDefaultExpense: function (supplier) {
+                    var vm = this;
+                    if (supplier.id != '') {
+                        vm.po.expenses = [];
+                        for (var i = 0; i < supplier.expense_templates.length; i++) {
+                            vm.po.expenses.push({
+                                name: supplier.expense_templates[i].name,
+                                type: {
+                                    code: supplier.expense_templates[i].type
+                                },
+                                is_internal_expense: supplier.expense_templates[i].is_internal_expense === 1,
+                                amount: numeral(supplier.expense_templates[i].amount).format('0,0'),
+                                remarks: supplier.expense_templates[i].remarks
+                            });
+                        }
+                    }
+                    else {
+                        vm.po.expenses.push({
+                            type: ''
+                        });
+                    }
+                },
+                insertExpense: function () {
+                    var vm = this;
+                    vm.po.expenses.push({
+                        name: '',
+                        type: {
+                            code: ''
+                        },
+                        is_internal_expense: false,
+                        amount: 0,
+                        remarks: ''
+                    });
+                },
+                removeExpense: function (index) {
+                    var vm = this;
+                    vm.po.expenses.splice(index, 1);
+                },
+                removeAllExpense: function() {
+                    var vm = this;
+                    vm.po.expenses = [];
+                }
+            },
+            computed: {
+                defaultSupplierType: function(){
+                    return {
+                        code: ''
+                    };
+                },
+                defaultSupplier: function(){
+                    return {
+                        id: ''
+                    };
+                },
+                defaultWarehouse: function(){
+                    return {
+                        id: ''
+                    };
+                },
+                defaultVendorTrucking: function(){
+                    return {
+                        id: ''
+                    };
+                },
+                defaultPOType: function(){
+                    return {
+                        code: ''
+                    };
+                },
+                defaultProduct: function(){
+                    return {
+                        id: ''
+                    };
+                },
+                defaultProductUnit: function(){
+                    return {
+                        id: '',
+                        unit: {
+                            id: ''
+                        },
+                        conversion_value: 1
+                    };
+                },
+                defaultExpenseType: function(){
+                    return {
+                        code: ''
+                    }
+                },
+                item_total: function(){
+                    return this.po.items.reduce(function(prev, item){
+                        return item.selected_unit.conversion_value * item.quantity * item.price;
+                    },0);
+                }
+            },
+            mounted: function() {
+
+            },
+            created: function() {
+                var vm = this;
+                var warehouseId = parseInt('{{ old('warehouse_id') }}');
+                var vendorTruckingId = parseInt('{{ old('vendor_trucking_id') }}');
+
+                if(warehouseId) {
+                    vm.po.warehouse = _.cloneDeep(_.find(vm.warehouseDDL, {id: warehouseId}));
+                } else {
+                    vm.po.warehouse = {id: ''};
+                }
+
+                if(vendorTruckingId) {
+                    vm.po.vendorTrucking = _.cloneDeep(_.find(vm.vendorTruckingDDL, {id: vendorTruckingId}));
+                } else {
+                    vm.po.vendorTrucking = {id: ''};
+                }
+            }
         });
     </script>
 @endsection

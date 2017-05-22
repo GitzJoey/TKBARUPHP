@@ -48,6 +48,7 @@ class ItemDiscounts extends Model
     ];
 
     protected $hidden = [
+        'discountable_type',
         'created_by',
         'created_at',
         'updated_by',

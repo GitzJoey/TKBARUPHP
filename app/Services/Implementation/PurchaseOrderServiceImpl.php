@@ -16,8 +16,8 @@ use App\Model\PurchaseOrder;
 use App\Model\ItemDiscounts;
 use App\Services\PurchaseOrderService;
 
-use Carbon\Carbon;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Doctrine\Common\Collections\Collection;
@@ -32,7 +32,9 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      */
     public function createPO(Request $request)
     {
-        DB::transaction(function() use ($request) {
+        DB::beginTransaction();
+
+        try {
             if ($request->input('supplier_type') == 'SUPPLIERTYPE.R'){
                 $supplier_id = empty($request->input('supplier_id')) ? 0 : $request->input('supplier_id');
                 $walk_in_supplier = '';
@@ -71,24 +73,21 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $item->store_id = Auth::user()->store_id;
                 $item->selected_unit_id = $request->input("item_selected_unit_id.$i");
                 $item->base_unit_id = $request->input("base_unit_id.$i");
-                $item->conversion_value = ProductUnit::where([
-                    'product_id' => $item->product_id,
-                    'unit_id' => $item->selected_unit_id
-                ])->first()->conversion_value;
+                $item->conversion_value = ProductUnit::whereId($item->selected_unit_id)->first()->conversion_value;
                 $item->quantity = $request->input("item_quantity.$i");
                 $item->price = floatval(str_replace(',', '', $request->input("item_price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $item_saved = $po->items()->save($item);
-				
-				for ($ia = 0; $ia < count($request->input('item_disc_percent.'.$i)); $ia++) {
+
+                for ($ia = 0; $ia < count($request->input('item_disc_percent.'.$i)); $ia++) {
                     if( $request->input('item_disc_percent.'.$i.'.'.$ia) > 0 ){
                         $itemDiscounts = new ItemDiscounts();
-    					$itemDiscounts->item_disc_percent = $request->input('item_disc_percent.'.$i.'.'.$ia);
-    					$itemDiscounts->item_disc_value = $request->input('item_disc_value.'.$i.'.'.$ia);
-    					$item_saved->discounts()->save($itemDiscounts);
+                        $itemDiscounts->item_disc_percent = $request->input('item_disc_percent.'.$i.'.'.$ia);
+                        $itemDiscounts->item_disc_value = $request->input('item_disc_value.'.$i.'.'.$ia);
+                        $item_saved->discounts()->save($itemDiscounts);
                     }
-				}
+                }
             }
 
             for($i = 0; $i < count($request->input('expense_name')); $i++){
@@ -101,8 +100,13 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $po->expenses()->save($expense);
             }
 
+            DB::commit();
+
             return $po;
-        });
+        } catch (Exception $e) {
+            DB::rollBack();
+            return null;
+        }
     }
 
     /**
@@ -162,10 +166,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $item->store_id = Auth::user()->store_id;
                 $item->selected_unit_id = $request->input("item_selected_unit_id.$i");
                 $item->base_unit_id = $request->input("base_unit_id.$i");
-                $item->conversion_value = ProductUnit::where([
-                    'product_id' => $item->product_id,
-                    'unit_id' => $item->selected_unit_id
-                ])->first()->conversion_value;
+                $item->conversion_value = ProductUnit::whereId($item->selected_unit_id)->first()->conversion_value;
                 $item->quantity = $request->input("item_quantity.$i");
                 $item->price = floatval(str_replace(',', '', $request->input("item_price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;

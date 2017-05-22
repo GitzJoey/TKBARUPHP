@@ -17,12 +17,6 @@
 @endsection
 
 @section('content')
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
     <div id="warehouseInflowVue">
         <div class="box box-info">
             <div class="box-header with-border">
@@ -34,7 +28,7 @@
                         v-model="selectedWarehouse"
                         v-on:change="getWarehousePOs(selectedWarehouse)">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
-                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
+                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                 </select>
             </div>
         </div>
@@ -75,31 +69,33 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function() {
-            var app = new Vue({
-                el: '#warehouseInflowVue',
-                data:{
-                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                    selectedWarehouse: '',
-                    POs: []
-                },
-                methods: {
-                    getWarehousePOs: function (selectedWarehouse) {
-                        this.POs = [];
-                        axios.get('{{ route('api.warehouse.inflow.po') }}/' + this.selectedWarehouse.id).then(function(data) {
-                            this.POs = data.data;
+        var app = new Vue({
+            el: '#warehouseInflowVue',
+            data:{
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                selectedWarehouse: '',
+                POs: []
+            },
+            methods: {
+                getWarehousePOs: function (selectedWarehouse) {
+                    var vm = this;
+                    vm.POs = [];
+                    if (selectedWarehouse != '') {
+                        axios.get('{{ route('api.warehouse.inflow.po') }}/' + selectedWarehouse).then(function(response) {
+                            vm.POs = response.data;
                         });
-                    },
-                    loadWarehouse: function(w) {
-                        if (w == undefined || w == null) return;
-                        this.selectedWarehouse = _.find(this.warehouseDDL, function(wh) { return wh.id == w; });
-                        this.getWarehousePOs(this.selectedWarehouse);
                     }
                 },
-                mounted: function() {
-                    this.loadWarehouse(new URI().query(true)['w']);
+                loadWarehouse: function(w) {
+                    if (w == undefined || w == null) return;
+                    var wh = _.find(this.warehouseDDL, function(wh) { return wh.id == w; });
+                    this.selectedWarehouse = wh.id;
+                    this.getWarehousePOs(wh.id);
                 }
-            });
+            },
+            mounted: function() {
+                this.loadWarehouse(new URI().query(true)['w']);
+            }
         });
     </script>
 @endsection

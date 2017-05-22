@@ -17,20 +17,18 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="receiptVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <form class="form-horizontal" action="{{ route('db.warehouse.inflow', $po->hId())}}" method="post" data-parsley-validate="parsley">
-        {{ csrf_field() }}
-        <div id="receiptVue">
+        <form id="receiptForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -58,19 +56,20 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" readonly value="{{ $po->shipping_date->format('d-m-Y') }}">
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" v-model="PO.po_created" format="YYYY-MM-DD hh:mm A" readonly="true"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('receipt_date') }">
                                 <label for="inputReceiptDate" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.receipt_date')</label>
                                 <div class="col-sm-8">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="inputReceiptDate" name="receipt_date" class="form-control" data-parsley-required="true">
+                                        <vue-datetimepicker id="inputReceiptDate" name="receipt_date" v-model="receipt_date" v-validate="'required'" format="YYYY-MM-DD hh:mm A"></vue-datetimepicker>
                                     </div>
+                                    <span v-show="errors.has('receipt_date')" class="help-block" v-cloak>@{{ errors.first('receipt_date') }}</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -83,10 +82,11 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('license_plate') }">
                                 <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.license_plate')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" data-parsley-required="true">
+                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" v-validate="'required'" data-vv-as="{{ trans('warehouse.inflow.receipt.field.license_plate') }}">
+                                    <span v-show="errors.has('license_plate')" class="help-block" v-cloak>@{{ errors.first('license_plate') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -119,34 +119,31 @@
                                                 <input type="hidden" name="product_id[]" v-bind:value="receipt.item.product_id">
                                                 <input type="hidden" name="base_unit_id[]" v-bind:value="receipt.item.base_unit_id">
                                                 <td class="valign-middle">@{{ receipt.item.product.name }}</td>
-                                                <td>
+                                                <td v-bind:class="{ 'has-error':errors.has('unit_' + receiptIdx) }">
                                                     <select name="selected_unit_id[]" data-parsley-required="true"
                                                             class="form-control"
-                                                            v-model="receipt.selected_unit">
+                                                            v-model="receipt.selected_unit"
+                                                            v-validate="'required'"
+                                                            v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.unit') }} ' + (receiptIdx + 1)"
+                                                            v-bind:data-vv-name="'unit_' + receiptIdx">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="product_unit in receipt.item.product.product_units" v-bind:value="product_unit.unit.id">@{{ product_unit.unit.name }} (@{{ product_unit.unit.symbol }})</option>
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <input v-bind:id="'brutto_' + receipt.item.id" type="text" class="form-control text-right" name="brutto[]" v-model="receipt.brutto"
-                                                           data-parsley-required="true"
-                                                           data-parsley-type="number"
-                                                           v-bind:data-parsley-checkequal="receipt.item.id"
-                                                           data-parsley-trigger="change">
+                                                <td v-bind:class="{ 'has-error':errors.has('brutto_' + receiptIdx) }">
+                                                    <input v-bind:id="'brutto_' + receipt.item.id" type="text" class="form-control text-right" name="brutto[]"
+                                                           v-model="receipt.brutto" v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.brutto') }} ' + (receiptIdx + 1)"
+                                                           v-bind:data-vv-name="'brutto_' + receiptIdx">
                                                 </td>
-                                                <td>
-                                                    <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]" v-model="receipt.netto"
-                                                           data-parsley-required="true"
-                                                           data-parsley-type="number"
-                                                           v-bind:data-parsley-checkequal="receipt.item.id"
-                                                           data-parsley-trigger="change">
+                                                <td v-bind:class="{ 'has-error':errors.has('netto_' + receiptIdx) }">
+                                                    <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]"
+                                                           v-model="receipt.netto" v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.netto') }} ' + (receiptIdx + 1)"
+                                                           v-bind:data-vv-name="'netto_' + receiptIdx">
                                                 </td>
-                                                <td>
-                                                    <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]" v-model="receipt.tare"
-                                                           data-parsley-required="true"
-                                                           data-parsley-type="number"
-                                                           v-bind:data-parsley-checkequal="receipt.item.id"
-                                                           data-parsley-trigger="change">
+                                                <td v-bind:class="{ 'has-error':errors.has('tare_' + receiptIdx) }">
+                                                    <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]"
+                                                           v-model="receipt.tare" v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.tare') }} ' + (receiptIdx + 1)"
+                                                           v-bind:data-vv-name="'tare_' + receiptIdx">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md" v-on:click="removeReceipt(receiptIdx)" disabled><span class="fa fa-minus"/></button>
@@ -160,73 +157,101 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7 col-offset-md-5">
-                <div class="btn-toolbar">
-                    <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
-                    <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.inflow.index', array('w' => $po->warehouse->id)) }}" >@lang('buttons.cancel_button')</a>
+            <div class="row">
+                <div class="col-md-7 col-offset-md-5">
+                    <div class="btn-toolbar">
+                        <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
+                        <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
+                        <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.inflow.index', array('w' => $po->warehouse->id)) }}" >@lang('buttons.cancel_button')</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
-    </form>
+        </form>
+    </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function () {
-            var app = new Vue({
-                el: '#receiptVue',
-                data: {
-                    PO: JSON.parse('{!! htmlspecialchars_decode($po) !!}'),
-                    inflow: {
-                        receipts : []
-                    }
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
+            props: ['id', 'name', 'value', 'format'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
+        var app = new Vue({
+            el: '#receiptVue',
+            data: {
+                PO: JSON.parse('{!! htmlspecialchars_decode($po) !!}'),
+                inflow: {
+                    receipts : []
                 },
-                methods: {
-                    createReceipt: function() {
-                        for(var i = 0; i < this.PO.items.length; i++){
-                            this.inflow.receipts.push({
-                                item: this.PO.items[i],
-                                selected_unit: '',
-                                brutto: '',
-                                netto: '',
-                                tare: ''
+                receipt_date: ''
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.warehouse.inflow.receipt', $po->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#receiptForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.warehouse.inflow.index', array('w' => $po->warehouse->id)) }}' };
                             });
-                        }
-                    },
-                    removeReceipt: function (index) {
-                        this.inflow.receipts.splice(index, 1);
+                    }).catch(function (e) {
+
+                    });
+                },
+                createReceipt: function() {
+                    for(var i = 0; i < this.PO.items.length; i++){
+                        this.inflow.receipts.push({
+                            item: this.PO.items[i],
+                            selected_unit: '',
+                            brutto: '',
+                            netto: '',
+                            tare: ''
+                        });
                     }
                 },
-                mounted: function() {
-                    this.createReceipt();
+                removeReceipt: function (index) {
+                    this.inflow.receipts.splice(index, 1);
                 }
-            });
-
-            $("#inputReceiptDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
-            });
-
-            window.Parsley.addValidator('checkequal', function (value, itemId) {
-                var brutto = '#brutto_' + itemId;
-                var netto = '#netto_' + itemId;
-                var tare = '#tare_' + itemId;
-
-                if (Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }, 32)
-                .addMessage('en', 'checkequal', 'Netto and Tare value not equal with Bruto')
-                .addMessage('id', 'checkequal', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
+            },
+            mounted: function() {
+                /*
+                this.$validator.extend('checkequal', {
+                    messages: {
+                        en: function(field, args) { return 'Netto and Tare value not equal with Bruto' },
+                        id: function(field, args) { return 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor' }
+                    },
+                    validate: function(value, args) {
+                        console.log(value);
+                        console.log(args);
+                        //Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))
+                    }
+                });
+                */
+                this.createReceipt();
+            }
         });
     </script>
 @endsection

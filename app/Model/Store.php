@@ -109,6 +109,27 @@ class Store extends Model
         'deleted_at',
     ];
 
+    protected $appends = [
+        'numeralFormat'
+    ];
+
+    public function getNumeralFormatAttribute()
+    {
+        $thousandSeparator = is_null($this->attributes['thousand_separator']) ? ',':$this->attributes['thousand_separator'];
+        $decimalSeparator = is_null($this->attributes['decimal_separator']) ? '.':$this->attributes['decimal_separator'];
+        $decimalDigit = '';
+
+        if ($this->attributes['decimal_digit'] == 0) {
+            $decimalDigit = '00';
+        } else {
+            for ($i = 0; $i < $this->attributes['decimal_digit']; $i++) {
+                $decimalDigit += '0';
+            }
+        }
+
+        return '0'.$thousandSeparator.'0'.'['.$decimalSeparator.']'.$decimalDigit;
+    }
+
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
@@ -133,10 +154,12 @@ class Store extends Model
     {
         return $this->morphMany('App\Model\BankAccount', 'owner');
     }
+
     public function currenciesConversions()
     {
         return $this->hasMany('App\Model\CurrenciesConversion');
     }
+
     public function giros()
     {
         return $this->hasMany('App\Model\Giro');

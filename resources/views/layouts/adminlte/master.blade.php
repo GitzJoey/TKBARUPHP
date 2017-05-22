@@ -82,6 +82,10 @@
                 }
                 timeout();
 
+                numeral.defaultFormat('{{ Auth::user()->store->numeralFormat }}');
+
+                window.axios.defaults.headers.common = { 'X-Requested-With': 'XMLHttpRequest', };
+
                 var my_skins = [
                     "skin-blue",
                     "skin-black",
