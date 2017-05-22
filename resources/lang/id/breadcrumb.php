@@ -7,6 +7,8 @@ return [
     'po.list' => 'Revisi Pembelian',
     'po.revise' => 'Revisi Pembelian',
     'po.copy' => 'Duplikat Pembelian',
+    'po.copy.create' => 'Tambah Duplikat',
+    'po.copy.edit' => 'Ubah Duplikat',
     'po.payment.list' => 'Pembayaran',
     'po.payment.cash' => 'Pembayaran Tunai',
     'po.payment.transfer' => 'Pembayaran Transfer',

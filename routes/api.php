@@ -30,6 +30,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment')->name('api.post.db.po.payment.transfer');;
                 Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment')->name('api.post.db.po.payment.giro');;
             });
+
+            Route::group(['prefix' => 'copy'], function () {
+                Route::post('{code}/create', 'PurchaseOrderCopyController@store')->name('api.post.db.po.copy.create');
+                Route::post('{code}/edit/{id}', 'PurchaseOrderCopyController@update')->name('api.post.db.po.copy.edit');
+            });
         });
 
         Route::group(['prefix' => 'warehouse'], function () {

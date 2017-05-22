@@ -7,6 +7,8 @@ return [
     'po.list' => 'Revise Purchase Order',
     'po.revise' => 'Revise Purchase Order',
     'po.copy' => 'Purchase Order Copy',
+    'po.copy.create' => 'Create Copy',
+    'po.copy.edit' => 'Edit Copy',
     'po.payment.list' => 'PO Payment',
     'po.payment.cash' => 'Cash Payment',
     'po.payment.transfer' => 'Transfer Payment',

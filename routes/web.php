@@ -125,9 +125,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'PurchaseOrderCopyController@search')->name('db.po.copy');
                 Route::get('{code?}', 'PurchaseOrderCopyController@index')->name('db.po.copy.index');
                 Route::get('{code}/create', 'PurchaseOrderCopyController@create')->name('db.po.copy.create');
-                Route::post('{code}/create', 'PurchaseOrderCopyController@store');
                 Route::get('{code}/edit/{id}', 'PurchaseOrderCopyController@edit')->name('db.po.copy.edit');
-                Route::patch('{code}/edit/{id}', 'PurchaseOrderCopyController@update');
                 Route::delete('{code}/delete/{id}', 'PurchaseOrderCopyController@delete')->name('db.po.copy.delete');
             });
         });

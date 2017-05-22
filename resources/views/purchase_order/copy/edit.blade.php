@@ -13,22 +13,21 @@
 @endsection
 
 @section('breadcrumbs')
+    {!! Breadcrumbs::render('purchase_order_copy_edit', $poCode, $currentPOCopy->hId()) !!}
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="poCopyVue">
-        {!! Form::model($currentPOCopy, ['method' => 'PATCH', 'route' => ['db.po.copy.edit', $poCode, $currentPOCopy->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="poCopyForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6">
@@ -64,16 +63,14 @@
                                     <label for="inputSupplierName"
                                            class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_name')</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" readonly
-                                               value="{{ $currentPOCopy->walk_in_supplier }}">
+                                        <input type="text" class="form-control" readonly value="{{ $currentPOCopy->walk_in_supplier }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputSupplierDetails"
                                            class="col-sm-2 control-label">@lang('purchase_order.copy.edit.field.supplier_details')</label>
                                     <div class="col-sm-10">
-                                                <textarea class="form-control" rows="5" readonly>{{ $currentPOCopy->walk_in_supplier_details }}
-                                                </textarea>
+                                        <textarea class="form-control" rows="5" readonly>{{ $currentPOCopy->walk_in_supplier_details }}</textarea>
                                     </div>
                                 </div>
                             @endif
@@ -343,7 +340,7 @@
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        </form>
 
         @include('purchase_order.supplier_details_partial')
     </div>
@@ -351,89 +348,98 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var currentPo = JSON.parse('{!! htmlspecialchars_decode($currentPOCopy->toJson()) !!}');
-        
-        $(document).ready(function () {
-            var poApp = new Vue({
-                el: '#poCopyVue',
-                data: {
-                    productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
-                    po: {
-                        supplier: currentPo.supplier ? _.cloneDeep(currentPo.supplier) : {id: ''},
-                        supplier_type: {
-                            code: currentPo.supplier_type 
-                        },
-                        items: [],
-                        product: {
-                            id: ''
-                        }
-                    }
-                },
-                mounted: function() {
-                    var vm = this;
-                    for (var i = 0; i < currentPo.items.length; i++) {
-                        vm.po.items.push({
-                            id: currentPo.items[i].id,
-                            product: _.cloneDeep(currentPo.items[i].product),
-                            base_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, isBase)),
-                            selected_unit: _.cloneDeep(_.find(currentPo.items[i].product.product_units, getSelectedUnit(currentPo.items[i].selected_unit_id))),
-                            quantity: parseFloat(currentPo.items[i].quantity).toFixed(0),
-                            price: parseFloat(currentPo.items[i].price).toFixed(0)
-                        });
-                    }
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
-                    $('input[type="checkbox"], input[type="radio"]').iCheck({
-                        checkboxClass: 'icheckbox_square-blue',
-                        radioClass: 'iradio_square-blue'
-                    });
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
 
-                    $("#inputShippingDate").datetimepicker({
-                        format: "DD-MM-YYYY hh:mm A",
-                        defaultDate: moment()
-                    });
-                },
-                methods: {
-                    grandTotal: function () {
-                        var vm = this;
-                        var result = 0;
-                        _.forEach(vm.po.items, function (item, key) {
-                            result += (item.selected_unit.conversion_value * item.quantity * item.price);
-                        });
-                        return result;
-                    },
-                    insertItem: function (product) {
-                        if(product.id != ''){
-                            var vm = this;
-                            vm.po.items.push({
-                                id: null,
-                                product: _.cloneDeep(product),
-                                base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
-                                selected_unit: {
-                                    unit: {
-                                        id: ''
-                                    },
-                                    conversion_value: 1
-                                },
-                                quantity: 0,
-                                price: 0
-                            });
-                        }
-                    },
-                    removeItem: function (index) {
-                        var vm = this;
-                        vm.po.items.splice(index, 1);
-                    }
-                }
-            });
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
 
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
-                }
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
             }
+        });
 
-            function isBase(unit) {
-                return unit.is_base == 1;
+        var poApp = new Vue({
+            el: '#poCopyVue',
+            data: {
+                currentPo: JSON.parse('{!! htmlspecialchars_decode($currentPOCopy->toJson()) !!}'),
+                productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
+                po: {
+                    supplier: '',
+                    supplier_type: {
+                        code: ''
+                    },
+                    items: [],
+                    product: {
+                        id: ''
+                    }
+                }
+            },
+            mounted: function() {
+                var vm = this;
+
+                this.po.supplier = _.cloneDeep(this.currentPo.supplier);
+                this.po.supplier_type.code = this.currentPo.supplier_type.code;
+
+                for (var i = 0; i < this.currentPo.items.length; i++) {
+                    vm.po.items.push({
+                        id: this.currentPo.items[i].id,
+                        product: _.cloneDeep(this.currentPo.items[i].product),
+                        base_unit: _.cloneDeep(_.find(this.currentPo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
+                        selected_unit: _.cloneDeep(_.find(this.currentPo.items[i].product.product_units, function(punit) { return punit.id == vm.currentPo.items[i].selected_unit_id; })),
+                        quantity: parseFloat(this.currentPo.items[i].quantity).toFixed(0),
+                        price: parseFloat(this.currentPo.items[i].price).toFixed(0)
+                    });
+                }
+            },
+            methods: {
+                grandTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.items, function (item, key) {
+                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+                    });
+                    return result;
+                },
+                insertItem: function (product) {
+                    if(product.id != ''){
+                        var vm = this;
+                        vm.po.items.push({
+                            id: null,
+                            product: _.cloneDeep(product),
+                            base_unit: _.cloneDeep(_.find(product.product_units, isBase)),
+                            selected_unit: {
+                                unit: {
+                                    id: ''
+                                },
+                                conversion_value: 1
+                            },
+                            quantity: 0,
+                            price: 0
+                        });
+                    }
+                },
+                removeItem: function (index) {
+                    var vm = this;
+                    vm.po.items.splice(index, 1);
+                }
             }
         });
     </script>
