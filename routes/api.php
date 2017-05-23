@@ -80,6 +80,7 @@ Route::group(['prefix' => 'get'], function () {
     });
 
     Route::group(['prefix' => 'customer'], function () {
+        Route::get('', 'CustomerController@getCustomer')->name('api.get.customer');
         Route::get('search_customer', 'CustomerController@searchCustomers')->name('api.customer.search');
         Route::get('passive_customer', 'CustomerController@getPassiveCustomer')->name('api.customer.passive_customer');
     });

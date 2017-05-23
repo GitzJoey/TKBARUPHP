@@ -78,14 +78,16 @@
                                                     <h3 class="box-title">@lang('sales_order.create.box.customer')</h3>
                                                 </div>
                                                 <div class="box-body">
-                                                    <div class="form-group">
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('customer_type_' + (soIndex + 1)) }">
                                                         <label v-bind:for="'inputCustomerType_' + ( soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_type')</label>
                                                         <div class="col-sm-8">
                                                             <select class="form-control"
                                                                     v-bind:id="'inputCustomerType_' + (soIndex + 1)"
                                                                     v-validate="'required'"
                                                                     v-model="so.customer_type.code"
-                                                                    v-on:change="onChangeCustomerType(soIndex)">
+                                                                    v-on:change="onChangeCustomerType(soIndex)"
+                                                                    v-bind:data-vv-as="'{{ trans('sales_order.create.field.customer_type') }} ' + (soIndex + 1)"
+                                                                    v-bind:data-vv-name="'customer_type_' + (soIndex + 1)">
                                                                 <option v-bind:value="defaultCustomerType.code">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="customerType in customerTypeDDL" v-bind:value="customerType.code">@{{ customerType.i18nDescription }}</option>
                                                             </select>
@@ -95,11 +97,11 @@
                                                         <div class="form-group">
                                                             <label v-bind:for="'inputCustomerId_' + (soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-8">
-                                                                <select2_customer class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex"></select2_customer>
+                                                                <select2_customer class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex" v-model="so.customer.id" v-on:select="onSelectCustomer(soIndex)"></select2_customer>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <button v-bind:id="'customerDetailButton_' + soIndex" type="button" class="btn btn-primary btn-sm"
-                                                                        data-toggle="modal" v-bind:data-target="'#customerDetailModal_' + soIndex">
+                                                                <button v-bind:id="'customerDetailButton_' + (soIndex + 1)" type="button" class="btn btn-primary btn-sm"
+                                                                        data-toggle="modal" data-target="#customerDetailModal" v-on:click="showCustomerPopup(soIndex)">
                                                                     <span class="fa fa-info-circle fa-lg"></span>
                                                                 </button>
                                                             </div>
@@ -141,11 +143,11 @@
                                                     <div class="form-group">
                                                         <label v-bind:for="'inputSoType_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
                                                         <div class="col-sm-9">
-                                                            <select v-bind:id="'inputSoType_' + (soIndex + 1)" data-parsley-required="true"
+                                                            <select v-bind:id="'inputSoType_' + (soIndex + 1)" v-validate="'required'"
                                                                     class="form-control"
-                                                                    v-model="so.sales_type">
-                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                <option v-for="salesType in soTypeDDL" v-bind:value="salesType">@{{ salesType.i18nDescription }}</option>
+                                                                    v-model="so.sales_type.code">
+                                                                <option v-bind:value="defaultSalesType.code">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="salesType in soTypeDDL" v-bind:value="salesType.code">@{{ salesType.i18nDescription }}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -156,8 +158,7 @@
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <input type="text" class="form-control inputSoDate" v-bind:id="'inputSoDate_' + (soIndex + 1)"
-                                                                       name="so_created[]" data-parsley-required="true">
+                                                                <vue-datetimepicker v-bind:id="'inputSoDate_' + (soIndex + 1)" name="so_created[]" value="" v-model="so.so_created" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -180,40 +181,35 @@
                                                 <div class="box-body">
                                                     <div class="form-group">
                                                         <label v-bind:for="'inputShippingDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-4">
                                                             <div class="input-group date">
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <input type="text" class="form-control inputShippingDate" v-bind:id="'inputShippingDate_' + (soIndex + 1)"
-                                                                       name="shipping_date[]" data-parsley-required="true">
+                                                                <vue-datetimepicker v-bind:id="'inputShippingDate_' + (soIndex + 1)" name="shipping_date[]" value="" v-model="so.shipping_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label v-bind:for="'inputWarehouse_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
                                                         <div class="col-sm-9">
-                                                            <input type="hidden" name="warehouse_hid[]" v-bind:value="so.warehouse.hid">
-                                                            <input type="hidden" name="warehouse_id[]" v-bind:value="so.warehouse.id">
-                                                            <input type="hidden" name="warehouse_name[]" v-bind:value="so.warehouse.name">
-                                                            <select v-bind:id="'inputWarehouse_' + (soIndex + 1)" data-parsley-required="true"
+                                                            <select v-bind:id="'inputWarehouse_' + (soIndex + 1)" v-validate="'required'"
                                                                     class="form-control"
-                                                                    v-model="so.warehouse">
-                                                                <option v-bind:value="{id: 0}">@lang('labels.PLEASE_SELECT')</option>
-                                                                <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{warehouse.name}}</option>
+                                                                    v-model="so.warehouse.id"
+                                                                    data-vv-as="{{ trans('sales_order.create.field.warehouse') }}">
+                                                                <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{warehouse.name}}</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label v-bind:for="'inputVendorTrucking_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
                                                         <div class="col-sm-9">
-                                                            <input type="hidden" name="vendor_trucking_id[]" v-bind:value="so.vendorTrucking.id">
-                                                            <input type="hidden" name="vendor_trucking_name[]" v-bind:value="so.vendorTrucking.name">
                                                             <select v-bind:id="'inputVendorTrucking_' + (soIndex + 1)"
                                                                     class="form-control"
-                                                                    v-model="so.vendorTrucking">
-                                                                <option v-bind:value="{id: 0, name: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
+                                                                    v-model="so.vendorTrucking.id">
+                                                                <option v-bind:value="defaultVendorTrucking.id">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking.id">@{{ vendorTrucking.name }}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -263,49 +259,47 @@
                                                         <div class="col-md-12">
                                                             <table v-bind:id="'itemsListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
                                                                 <thead>
-                                                                <tr>
-                                                                    <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
-                                                                    <th width="15%">@lang('sales_order.create.table.item.header.quantity')</th>
-                                                                    <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.unit')</th>
-                                                                    <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.price_unit')</th>
-                                                                    <th width="5%">&nbsp;</th>
-                                                                    <th width="20%" class="text-right">@lang('sales_order.create.table.item.header.total_price')</th>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
+                                                                        <th width="15%">@lang('sales_order.create.table.item.header.quantity')</th>
+                                                                        <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.unit')</th>
+                                                                        <th width="15%" class="text-right">@lang('sales_order.create.table.item.header.price_unit')</th>
+                                                                        <th width="5%">&nbsp;</th>
+                                                                        <th width="20%" class="text-right">@lang('sales_order.create.table.item.header.total_price')</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr v-for="(item, itemIndex) in so.items">
-                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_product_id[]'" v-bind:value="item.product.id">
-                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_stock_id[]'" v-bind:value="item.stock_id">
-                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_base_unit_id[]'" v-bind:value="item.base_unit.unit.id">
-                                                                    <td class="valign-middle">@{{ item.product.name }}</td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_quantity[]'"
-                                                                               v-model="item.quantity" data-parsley-required="true"
-                                                                               data-parsley-type="number">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_selected_unit_id[]'" v-bind:value="item.selected_unit.unit.id">
-                                                                        <select data-parsley-required="true" class="form-control"
-                                                                                v-model="item.selected_unit"
-                                                                                data-parsley-required="true">
-                                                                            <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                                            <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_price[]'"
-                                                                               v-model="item.price" data-parsley-required="true"
-                                                                               data-parsley-pattern="^\d+(,\d+)*$">
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-danger btn-md"
-                                                                                v-on:click="removeItem(soIndex, itemIndex)"><span class="fa fa-minus"/>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td class="text-right valign-middle">
-                                                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr v-for="(item, itemIndex) in so.items">
+                                                                        <input type="hidden" v-bind:name="'so_' + (soIndex + 1) + '_product_id[]'" v-bind:value="item.product.id">
+                                                                        <input type="hidden" v-bind:name="'so_' + (soIndex + 1) + '_stock_id[]'" v-bind:value="item.stock_id">
+                                                                        <input type="hidden" v-bind:name="'so_' + (soIndex + 1) + '_base_unit_id[]'" v-bind:value="item.base_unit.unit.id">
+                                                                        <td class="valign-middle">@{{ item.product.name }}</td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control text-right" v-bind:name="'so_' + (soIndex + 1) + '_quantity[]'"
+                                                                                   v-model="item.quantity" v-validate="'required|decimal:2'">
+                                                                        </td>
+                                                                        <td>
+                                                                            <select name="selected_unit_id[]"
+                                                                                    class="form-control"
+                                                                                    v-model="item.selected_unit.id"
+                                                                                    v-validate="'required'">
+                                                                                <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                                                <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_price[]'"
+                                                                                   v-model="item.price" v-validate="'required|decimal:2'">
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <button type="button" class="btn btn-danger btn-md"
+                                                                                    v-on:click="removeItem(soIndex, itemIndex)"><span class="fa fa-minus"/>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td class="text-right valign-middle">
+                                                                            @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -318,7 +312,7 @@
                                                                     <td width="80%"
                                                                         class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                     <td width="20%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ grandTotal(soIndex) }}</span>
+                                                                        <span class="control-label-normal">@{{ numeral(grandTotal(soIndex)).format() }}</span>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -350,7 +344,7 @@
                                                                     <template v-for="(item, itemIndex) in so.items">
                                                                         <tr>
                                                                             <td width="30%">@{{ item.product.name }}</td>
-                                                                            <td width="30%">@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
+                                                                            <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                                             <td colspan="3" width="40%">
                                                                                 <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
                                                                                     <span class="fa fa-plus"/>
@@ -378,7 +372,7 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                                                            <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
+                                                                            <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
                                                                         </tr>
                                                                     </template>
                                                                 </tbody>
@@ -389,13 +383,13 @@
                                                         <div class="col-md-12">
                                                             <table class="table table-bordered">
                                                                 <tbody>
-                                                                <tr>
-                                                                    <td width="65%"
-                                                                        class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
-                                                                    <td width="35%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ discountTotal(soIndex) }}</span>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <td width="65%"
+                                                                            class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                                                        <td width="35%" class="text-right">
+                                                                            <span class="control-label-normal">@{{ numeral(discountTotal(soIndex)).format() }}</span>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -417,52 +411,51 @@
                                                         <div class="col-md-12">
                                                             <table v-bind:id="'expensesListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
                                                                 <thead>
-                                                                <tr>
-                                                                    <th width="20%">@lang('sales_order.create.table.expense.header.name')</th>
-                                                                    <th width="20%"
-                                                                        class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
-                                                                    <th width="10%"
-                                                                        class="text-center">@lang('sales_order.create.table.expense.header.internal_expense')</th>
-                                                                    <th width="25%"
-                                                                        class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
-                                                                    <th width="5%">&nbsp;</th>
-                                                                    <th width="20%"
-                                                                        class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <th width="20%">@lang('sales_order.create.table.expense.header.name')</th>
+                                                                        <th width="20%"
+                                                                            class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
+                                                                        <th width="10%"
+                                                                            class="text-center">@lang('sales_order.create.table.expense.header.internal_expense')</th>
+                                                                        <th width="25%"
+                                                                            class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
+                                                                        <th width="5%">&nbsp;</th>
+                                                                        <th width="20%"
+                                                                            class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr v-for="(expense, expenseIndex) in so.expenses">
-                                                                    <td>
-                                                                        <input v-bind:name="'so_' + soIndex + '_expense_name[]'" type="text" class="form-control"
-                                                                               v-model="expense.name" data-parsley-required="true">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type[]'" v-bind:value="expense.type.code">
-                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_description[]'" v-bind:value="expense.type.description">
-                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_i18nDescription[]'" v-bind:value="expense.type.i18nDescription">
-                                                                        <select class="form-control" v-model="expense.type">
-                                                                            <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                            <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <input v-bind:name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense" type="checkbox">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control"
-                                                                               v-model="expense.remarks"/>
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-danger btn-md"
-                                                                                v-on:click="removeExpense(soIndex, expenseIndex)"><span class="fa fa-minus"/>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
-                                                                               v-model="expense.amount" data-parsley-required="true"
-                                                                               data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"/>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr v-for="(expense, expenseIndex) in so.expenses">
+                                                                        <td>
+                                                                            <input v-bind:name="'so_' + soIndex + '_expense_name[]'" type="text" class="form-control"
+                                                                                   v-model="expense.name" v-validate="'required'">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type[]'" v-bind:value="expense.type.code">
+                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_description[]'" v-bind:value="expense.type.description">
+                                                                            <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_i18nDescription[]'" v-bind:value="expense.type.i18nDescription">
+                                                                            <select class="form-control" v-model="expense.type">
+                                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                                <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input v-bind:name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense" type="checkbox">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control"
+                                                                                   v-model="expense.remarks"/>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <button type="button" class="btn btn-danger btn-md"
+                                                                                    v-on:click="removeExpense(soIndex, expenseIndex)"><span class="fa fa-minus"/>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
+                                                                                   v-model="expense.amount" v-validate="'required|deciaml:2'"/>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -475,7 +468,7 @@
                                                                     <td width="80%"
                                                                         class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                     <td width="20%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ expenseTotal(soIndex)}}</span>
+                                                                        <span class="control-label-normal">@{{ numeral(expenseTotal(soIndex)).format() }}</span>
                                                                     </td>
                                                                 </tr>
                                                                 </tbody>
@@ -511,15 +504,15 @@
                                                         <div class="col-md-12">
                                                             <table id="discountsListTable" class="table table-bordered table-hover">
                                                                 <thead>
-                                                                <tr>
-                                                                    <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
-                                                                    <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
-                                                                    <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
+                                                                        <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
+                                                                        <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td class="text-right valign-middle">@{{ ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) }}</td>
+                                                                        <td class="text-right valign-middle">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) ).format() }}</td>
                                                                         <td>
                                                                             <div class="row">
                                                                                 <div class="col-md-4">
@@ -530,7 +523,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </td>
-                                                                        <td class="text-right valign-middle">@{{ ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value }}</td>
+                                                                        <td class="text-right valign-middle">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -551,8 +544,7 @@
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    <textarea v-bind:id="'inputRemarks_' + (soIndex + 1)" class="form-control" rows="5" name="remarks[]"
-                                                                              v-model="so.remarks"></textarea>
+                                                                    <textarea v-bind:id="'inputRemarks_' + (soIndex + 1)" class="form-control" rows="5" name="remarks[]" v-model="so.remarks"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -571,231 +563,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="modal fade" v-bind:id="'customerDetailModal_' + soIndex" tabindex="-1" role="dialog"
-                                         v-bind:aria-labelledby="'customerDetailModalLabel_' + soIndex">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                                                aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" v-bind:id="'customerDetailModalLabel_' + soIndex">Customer Detail</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="nav-tabs-custom">
-                                                        <ul class="nav nav-tabs">
-                                                            <li class="active"><a v-bind:href="'#tab_customer_' + soIndex" data-toggle="tab">@lang('customer.show.tab.customer')</a></li>
-                                                            <li><a v-bind:href="'#tab_pic_' + soIndex" data-toggle="tab">@lang('customer.show.tab.pic')</a></li>
-                                                            <li><a v-bind:href="'#tab_bank_account_' + soIndex" data-toggle="tab">@lang('customer.show.tab.bank_account')</a></li>
-                                                            <li><a v-bind:href="'#tab_expenses_' + soIndex" data-toggle="tab">@lang('customer.show.tab.expenses')</a></li>
-                                                            <li><a v-bind:href="'#tab_settings_' + soIndex" data-toggle="tab">@lang('customer.show.tab.settings')</a></li>
-                                                        </ul>
-                                                        <div class="tab-content">
-                                                            <div class="tab-pane active" v-bind:id="'tab_customer_' + soIndex">
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputName_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.name')</label>
-                                                                    <div class="col-sm-10">
-                                                                        <label v-bind:id="'inputName_' + soIndex" class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.name }}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputAddress_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.address')</label>
-                                                                    <div class="col-sm-10">
-                                                                        <label v-bind:id="'inputAddress_' + soIndex" class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.address }}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputCity_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.city')</label>
-                                                                    <div class="col-sm-10">
-                                                                        <label v-bind:id="'inputCity_' + soIndex" class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.city }}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputPhone_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.phone')</label>
-                                                                    <div class="col-sm-10">
-                                                                        <label v-bind:id="'inputPhone_' + soIndex" class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.phone }}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputTaxId_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
-                                                                    <div class="col-sm-10">
-                                                                        <label v-bind:id="'inputTaxId_' + soIndex" class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.tax_id }}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputRemarks_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
-                                                                    <div class="col-sm-10">
-                                                                        <label v-bind:id="'inputRemarks_' + soIndex" class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.remarks }}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane" v-bind:id="'tab_pic_' + soIndex">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <div v-for="(profile, profileIndex) in so.customer.profiles">
-                                                                            <div class="box box-widget">
-                                                                                <div class="box-header with-border">
-                                                                                    <div class="user-block">
-                                                                                        <strong>@lang('customer.field.person_in_charge') @{{ profileIndex + 1 }}</strong><br/>
-                                                                                        &nbsp;&nbsp;&nbsp;@{{ profile.first_name }}&nbsp;@{{ profile.last_name }}
-                                                                                    </div>
-                                                                                    <div class="box-tools">
-                                                                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="box-body">
-                                                                                    <div class="form-group">
-                                                                                        <label v-bind:for="'inputFirstName_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
-                                                                                        <div class="col-sm-10">
-                                                                                            <label v-bind:id="'inputFirstName_' + soIndex + '_' + profileIndex" class="control-label">
-                                                                                                <span class="control-label-normal">@{{ profile.first_name }}</span>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <label v-bind:for="'inputLastName_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
-                                                                                        <div class="col-sm-10">
-                                                                                            <label v-bind:id="'inputLastName_' + soIndex + '_' + profileIndex" class="control-label">
-                                                                                                <span class="control-label-normal">@{{ profile.last_name }}</span>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <label v-bind:for="'inputAddress_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.address')</label>
-                                                                                        <div class="col-sm-10">
-                                                                                            <label v-bind:id="'inputAddress_' + soIndex + '_' + profileIndex" class="control-label">
-                                                                                                <span class="control-label-normal">@{{ profile.address }}</span>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <label v-bind:for="'inputICNum_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
-                                                                                        <div class="col-sm-10">
-                                                                                            <label v-bind:id="'inputICNum_' + soIndex + '_' + profileIndex" class="control-label">
-                                                                                                <span class="control-label-normal">@{{ profile.ic_num }}</span>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="form-group">
-                                                                                        <label v-bind:for="'inputPhoneNumber_' + soIndex + '_' + profileIndex" class="col-sm-2 control-label">@lang('customer.field.phone_number')</label>
-                                                                                        <div class="col-sm-10">
-                                                                                            <table class="table table-bordered">
-                                                                                                <thead>
-                                                                                                    <tr>
-                                                                                                        <th>@lang('customer.show.table_phone.header.provider')</th>
-                                                                                                        <th>@lang('customer.show.table_phone.header.number')</th>
-                                                                                                        <th>@lang('customer.show.table_phone.header.remarks')</th>
-                                                                                                    </tr>
-                                                                                                </thead>
-                                                                                                <tbody>
-                                                                                                    <tr v-for="phone in profile.phone_numbers">
-                                                                                                        <td>@{{ phone.provider.name }}</td>
-                                                                                                        <td>@{{ phone.number }}</td>
-                                                                                                        <td>@{{ phone.remarks }}</td>
-                                                                                                    </tr>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane" v-bind:id="'tab_bank_account_' + soIndex">
-                                                                <table class="table table-bordered">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th class="text-center">@lang('customer.show.table_bank.header.bank')</th>
-                                                                            <th class="text-center">@lang('customer.show.table_bank.header.account_number')</th>
-                                                                            <th class="text-center">@lang('customer.show.table_bank.header.remarks')</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="ba in so.customer.bank_accounts">
-                                                                            <td>@{{ ba.bank.name }}&nbsp;(@{{ ba.bank.name }})</td>
-                                                                            <td>@{{ ba.account_number }}</td>
-                                                                            <td>@{{ ba.remarks }}</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="tab-pane" v-bind:id="'tab_expenses_' + soIndex">
-                                                                <table class="table table-bordered">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th class="text-center">@lang('customer.show.table_expense.header.name')</th>
-                                                                            <th class="text-center">@lang('customer.show.table_expense.header.type')</th>
-                                                                            <th class="text-center">@lang('customer.show.table_expense.header.amount')</th>
-                                                                            <th class="text-center">@lang('customer.show.table_expense.header.internal_expense')</th>
-                                                                            <th class="text-center">@lang('customer.show.table_expense.header.remarks')</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr v-for="et in so.customer.expense_templates">
-                                                                            <td class="text-center valign-middle">
-                                                                                @{{ et.name }}
-                                                                            </td>
-                                                                            <td class="text-center valign-middle">
-                                                                                @{{ et.type }}
-                                                                            </td>
-                                                                            <td class="text-center valign-middle">
-                                                                                @{{ et.amount }}
-                                                                            </td>
-                                                                            <td class="text-center valign-middle">
-                                                                                <div v-if="et.is_internal_expense">
-                                                                                    @lang('lookup.YESNOSELECT.YES')
-                                                                                </div>
-                                                                                <div v-if="!et.is_internal_expense">
-                                                                                    @lang('lookup.YESNOSELECT.NO')
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="valign-middle">
-                                                                                @{{ et.remarks }}
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="tab-pane" v-bind:id="'tab_settings_' + soIndex">
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputPriceLevel_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
-                                                                    <div class="col-sm-10">
-                                                                        <label class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.price_level ? so.customer.price_level.name : '' }}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label v-bind:for="'inputPaymentDueDay_' + soIndex" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
-                                                                    <div class="col-sm-10">
-                                                                        <label v-bind:id="'inputPaymentDueDay_' + soIndex" class="control-label">
-                                                                            <span class="control-label-normal">@{{ so.customer.payment_due_day }}</span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('buttons.close_button')</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @include('sales_order.customer_details_partial')
                                 </div>
                             </div>
                         </div>
@@ -811,38 +579,39 @@
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
         Vue.component('select2_customer', {
-            template: '<select><option></option></select>',
+            template: '<select v-model="value"><option></option></select>',
+            props: ['value'],
+            model: {
+                event: 'select'
+            },
             mounted: function(){
                 var vm = this;
-                $(this.$el)
-                    .select2({
-                        ajax: {
-                            url: "{{ route('api.customer.search') }}?q=",
-                            dataType: 'json',
-                            data: function(params){
-                                return {
-                                    q: params.term,
-                                    page: params.page
-                                }
-                            },
-                            processResults: function (data, params) {
-                                params.page = params.page || 1;
-                                var output = [];
-                                _.map(data, function(d){
-                                    output.push({id: d.id, text: d.name});
-                                });
-                                return {
-                                    results: output
-                                }
+                $(this.$el).select2({
+                    ajax: {
+                        url: "{{ route('api.customer.search') }}?q=",
+                        dataType: 'json',
+                        data: function(params){
+                            return {
+                                q: params.term,
+                                page: params.page
                             }
                         },
-                        minimumInputLength: 1
-                    })
-                    .val(this.value)
-                    .trigger('change')
-                    .on('change', function(){
-                        vm.$emit('input', this.value)
-                    })
+                        processResults: function (data, params) {
+                            params.page = params.page || 1;
+                            var output = [];
+                            _.map(data, function(d){
+                                output.push({id: d.id, text: d.name});
+                            });
+                            return {
+                                results: output
+                            }
+                        }
+                    },
+                    minimumInputLength: 1
+                }).val(this.value).trigger('change').on('change', function() {
+                    vm.$emit('input', this.value);
+                    vm.$emit('select', this.value);
+                });
             },
             destroyed: function(){
                 $(this.$el).off().select2('destroy');
@@ -908,7 +677,8 @@
                 soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
                 SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
                 defaultTabLabel: '',
-                defaultCustomerType: { code: '' }
+                defaultCustomerType: { code: '' },
+                customerPopupData: { customer: { } }
             },
             mounted: function() {
                 var vm = this;
@@ -961,6 +731,24 @@
                         var ct = _.find(this.customerTypeDDL, { code: vm.SOs[soIndex].customer_type.code });
                         _.merge(vm.SOs[soIndex].customer_type, ct);
                     }
+                },
+                onSelectCustomer: function(soIndex) {
+                    var vm = this;
+
+                    if(!this.SOs[soIndex].customer.id) {
+                        vm.SOs[soIndex].customer = { id: '' };
+                    } else {
+                        axios.get('{{ route('api.get.customer') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } })
+                            .then(function(response) {
+                                _.merge(vm.SOs[soIndex].customer, response.data);
+                            });
+                    }
+                },
+                showCustomerPopup: function(soIndex) {
+                    var vm = this;
+
+                    this.customerPopupData.customer = { };
+                    this.customerPopupData.customer = _.cloneDeep(vm.SOs[soIndex].customer);
                 },
                 discountPercentToNominal: function(item, discount){
                     var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
