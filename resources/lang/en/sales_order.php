@@ -322,6 +322,9 @@ return [
         ],
         'tab' => [
             'sales' => 'Sales',
+            'remarks' => 'Remarks',
+            'internal' => 'Internal',
+            'private' => 'Private',
         ],
     ],
     'edit' => [

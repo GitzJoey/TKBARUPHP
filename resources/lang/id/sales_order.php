@@ -321,6 +321,9 @@ return [
         ],
         'tab' => [
             'sales' => 'Penjualan',
+            'remarks' => 'Keterangan',
+            'internal' => 'Internal',
+            'private' => 'Private',
         ],
         'so_copy_code' => '',
     ],

@@ -300,7 +300,8 @@
                                                                             <select name="selected_unit_id[]"
                                                                                     class="form-control"
                                                                                     v-model="item.selected_unit.id"
-                                                                                    v-validate="'required'">
+                                                                                    v-validate="'required'"
+                                                                                    v-on:change="onChangeUnit(soIndex, itemIndex)">
                                                                                 <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
                                                                                 <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
                                                                             </select>
@@ -458,7 +459,7 @@
                                                                             </select>
                                                                         </td>
                                                                         <td class="text-center">
-                                                                            <input v-bind:name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense" type="checkbox">
+                                                                            <vue-iCheck name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense"></vue-iCheck>
                                                                         </td>
                                                                         <td>
                                                                             <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control"
@@ -558,11 +559,50 @@
                                                     <h3 class="box-title">@lang('sales_order.create.box.remarks')</h3>
                                                 </div>
                                                 <div class="box-body">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <div class="col-sm-12">
-                                                                    <textarea v-bind:id="'inputRemarks_' + (soIndex + 1)" class="form-control" rows="5" name="remarks[]" v-model="so.remarks"></textarea>
+                                                    <div>
+                                                        <ul class="nav nav-tabs" role="tablist">
+                                                            <li role="presentation" class="active">
+                                                                <a v-bind:href="'#tab_remarks_' + (soIndex + 1)" aria-controls="tab_remarks" role="tab" data-toggle="tab">@lang('sales_order.create.tab.remarks')</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a v-bind:href="'#tab_internal_' + (soIndex + 1)" aria-controls="tab_internal" role="tab" data-toggle="tab">@lang('sales_order.create.tab.internal')</a>
+                                                            </li>
+                                                            <li role="presentation">
+                                                                <a v-bind:href="'#tab_private_' + (soIndex + 1)" aria-controls="tab_private" role="tab" data-toggle="tab">@lang('sales_order.create.tab.private')</a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="tab-content">
+                                                            <div role="tabpanel" class="tab-pane active" v-bind:id="'tab_remarks_' + (soIndex + 1)">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-12">
+                                                                                <textarea v-bind:id="'inputRemarks_' + (soIndex + 1)" name="remarks" class="form-control" rows="5" v-model="so.remarks"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div role="tabpanel" class="tab-pane" v-bind:id="'tab_internal_' + (soIndex + 1)">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-12">
+                                                                                <textarea v-bind:id="'inputInternalRemarks_' + (soIndex + 1)" name="internal_remarks" class="form-control" rows="5"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div role="tabpanel" class="tab-pane" v-bind:id="'tab_private_' + (soIndex + 1)">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-12">
+                                                                                <textarea id="inputPrivateRemarks" name="private_remarks" class="form-control" rows="5"></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -762,6 +802,14 @@
                             });
                     }
                 },
+                onChangeUnit: function(soIndex, itemIndex) {
+                    if (!this.SOs[soIndex].items[itemIndex].selected_unit.id) {
+                        this.SOs[soIndex].items[itemIndex].selected_unit = this.defaultProductUnit;
+                    } else {
+                        var pUnit = _.find(this.SOs[soIndex].items[itemIndex].product.product_units, { id: this.SOs[soIndex].items[itemIndex].selected_unit.id });
+                        _.merge(this.SOs[soIndex].items[itemIndex].selected_unit, pUnit);
+                    }
+                },
                 showCustomerPopup: function(soIndex) {
                     var vm = this;
 
@@ -952,6 +1000,7 @@
                             stock_id: stock.id,
                             product: _.cloneDeep(stock.product),
                             selected_unit: {
+                                id:'',
                                 unit: {
                                     id: ''
                                 },
