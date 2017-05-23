@@ -37,6 +37,10 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             });
         });
 
+        Route::group(['prefix' => 'so'], function () {
+            Route::post('create', 'SalesOrderController@store')->name('api.post.db.so.create');
+        });
+
         Route::group(['prefix' => 'warehouse'], function () {
             Route::group(['prefix' => 'inflow'], function () {
                 Route::post('receipt/{id?}', 'WarehouseInflowController@saveReceipt')->name('api.post.db.warehouse.inflow.receipt');
@@ -90,7 +94,7 @@ Route::group(['prefix' => 'get'], function () {
 
         Route::get('code', function () {
             return \App\Util\POCodeGenerator::generateCode();
-        })->name('api.po.code');
+        })->name('api.get.po.code');
     });
 
     Route::group(['prefix' => 'so'], function() {
@@ -105,7 +109,7 @@ Route::group(['prefix' => 'get'], function () {
 
         Route::get('code', function () {
             return \App\Util\SOCodeGenerator::generateCode();
-        })->name('api.so.code');
+        })->name('api.get.so.code');
     });
 
     Route::group(['prefix' => 'stock'], function() {

@@ -28,7 +28,16 @@
         </div>
     @endif
     <div id="soVue">
-        <form class="form-horizontal" id="so-form" action="{{ route('db.so.create') }}" method="post" data-parsley-validate="parsley">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form class="form-horizontal" id="soForm" v-on:submit.prevent="validateBeforeSubmit()">
         {{ csrf_field() }}
             <div class="box-body">
                 <div class="row">
@@ -54,7 +63,10 @@
                                         <div class="col-md-12">
                                             <div class="box box-info">
                                                 <div class="box-body">
-                                                    <button id="draftButton" type="submit" name="draft" value="draft" class="btn btn-xs btn-primary pull-right"><span class="fa fa-save fa-fw"></span>Save as Draft</button>
+                                                    <button id="draftButton" type="button" name="draft" value="@{{ soIndex }}" class="btn btn-xs btn-primary pull-right"
+                                                        v-on:click="saveDraft(soIndex)">
+                                                        <span class="fa fa-save fa-fw"></span>Save as Draft
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -69,14 +81,13 @@
                                                     <div class="form-group">
                                                         <label v-bind:for="'inputCustomerType_' + ( soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_type')</label>
                                                         <div class="col-sm-8">
-                                                            <input type="hidden" name="customer_type[]" v-bind:value="so.customer_type.code">
-                                                            <input type="hidden" name="customer_type_description[]" v-bind:value="so.customer_type.description">
-                                                            <input type="hidden" name="customer_type_i18nDescription[]" v-bind:value="so.customer_type.i18nDescription">
-                                                            <select v-bind:id="'inputCustomerType_' + (soIndex + 1)" data-parsley-required="true"
-                                                                    class="form-control"
-                                                                    v-model="so.customer_type">
-                                                                <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                <option v-for="customerType in customerTypeDDL" v-bind:value="customerType">@{{ customerType.i18nDescription }}</option>
+                                                            <select class="form-control"
+                                                                    v-bind:id="'inputCustomerType_' + (soIndex + 1)"
+                                                                    v-validate="'required'"
+                                                                    v-model="so.customer_type.code"
+                                                                    v-on:change="onChangeCustomerType(soIndex)">
+                                                                <option v-bind:value="defaultCustomerType.code">@lang('labels.PLEASE_SELECT')</option>
+                                                                <option v-for="customerType in customerTypeDDL" v-bind:value="customerType.code">@{{ customerType.i18nDescription }}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -130,9 +141,6 @@
                                                     <div class="form-group">
                                                         <label v-bind:for="'inputSoType_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
                                                         <div class="col-sm-9">
-                                                            <input type="hidden" name="sales_type[]" v-bind:value="so.sales_type.code">
-                                                            <input type="hidden" name="sales_type_description[]" v-bind:value="so.sales_type.description">
-                                                            <input type="hidden" name="sales_type_i18nDescription[]" v-bind:value="so.sales_type.i18nDescription">
                                                             <select v-bind:id="'inputSoType_' + (soIndex + 1)" data-parsley-required="true"
                                                                     class="form-control"
                                                                     v-model="so.sales_type">
@@ -800,6 +808,8 @@
 
 @section('custom_js')
     <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
         Vue.component('select2_customer', {
             template: '<select><option></option></select>',
             mounted: function(){
@@ -839,6 +849,53 @@
             }
         });
 
+        Vue.component('vue-icheck', {
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            props: ['id', 'name', 'disabled', 'value'],
+            mounted: function() {
+                $(this.$el).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                }).on('ifChecked', function(event) {
+                    this.value = true;
+                }).on('ifUnchecked', function(event) {
+                    this.value = false;
+                });
+
+                if (this.value) { $(this.$el).iCheck('check'); }
+                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+            },
+            destroyed: function() {
+                $(this.$el).iCheck('destroy');
+            }
+        });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
         var soApp = new Vue({
             el: '#soVue',
             data: {
@@ -850,9 +907,61 @@
                 stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
                 SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
-                defaultTabLabel: '@lang('sales_order.create.tab.sales')'
+                defaultTabLabel: '',
+                defaultCustomerType: { code: '' }
+            },
+            mounted: function() {
+                var vm = this;
+
+                this.defaultTabLabel = '{{ trans('sales_order.create.tab.sales') }}';
+
+                if(this.SOs.length == 0) {
+                    this.insertTab(this.SOs);
+                } else {
+                    for(var i = 0; i < this.SOs.length; i++) {
+                        if(this.SOs[i].warehouse.id == 0) {
+                            this.SOs[i].warehouse = { id: 0 };
+                        } else {
+                            this.SOs[i].warehouse = _.find(this.warehouseDDL, function(warehouse) {
+                                return warehouse.id == vm.SOs[i].warehouse.id
+                            });
+                        }
+
+                        if(this.SOs[i].vendorTrucking.id == 0) {
+                            this.SOs[i].vendorTrucking = { id: 0, name: '' };
+                        } else {
+                            this.SOs[i].vendorTrucking = _.find(this.vendorTruckingDDL, function(vendorTrucking) {
+                                return vendorTrucking.id == vm.SOs[i].vendorTrucking.id
+                            });
+                        }
+                    }
+                }
             },
             methods: {
+                validateBeforeSubmit: function(type) {
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.so.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soForm')[0]))
+                            .then(function(response) {
+
+                            });
+                    }).catch(function() {
+
+                    });
+                },
+                saveDraft: function(soIndex) {
+
+                },
+                onChangeCustomerType: function(soIndex) {
+                    var vm = this;
+
+                    if(!this.SOs[soIndex].customer_type.code) {
+                        vm.SOs[soIndex].customer_type = this.defaultCustomerType;
+                    } else {
+                        var ct = _.find(this.customerTypeDDL, { code: vm.SOs[soIndex].customer_type.code });
+                        _.merge(vm.SOs[soIndex].customer_type, ct);
+                    }
+                },
                 discountPercentToNominal: function(item, discount){
                     var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
                     if( disc_value % 1 !== 0 )
@@ -885,63 +994,39 @@
                     return result;
                 },
                 setSOCode: function(so){
-                    axios.get('{{ route('api.so.code') }}').then(function(data){
+                    axios.get('{{ route('api.get.so.code') }}').then(function(data){
                         so.so_code = data.data;
                     });
                 },
                 insertTab: function(SOs){
                     var vm = this;
 
-                    if(!$("#so-form").parsley().validate()){
-                        return;
-                    }
-
                     var so = {
                         disc_percent : 0,
                         disc_value : 0,
                         so_code: '',
-                        customer_type: {
-                            code: ''
-                        },
+                        customer_type: { code: '' },
                         customer: {
                             id: '',
-                            price_level: {
-                                name: ''
-                            }
+                            price_level: { name: '' }
                         },
                         sales_type: {
                             code: ''
                         },
                         warehouse: {
-                            id: 0
+                            id: ''
                         },
                         vendorTrucking: {
-                            id: 0,
-                            name: ''
+                            id: '', name: ''
                         },
-                        product: {
-                            id: ''
-                        },
-                        stock: {
-                            id: ''
-                        },
+                        product: { id: '' },
+                        stock: { id: '' },
                         items : [],
                         expenses: []
                     };
 
                     vm.setSOCode(so);
-                    SOs.push(so);
-
-                    $(function () {
-                        $(".inputSoDate").datetimepicker({
-                            format: "DD-MM-YYYY hh:mm A",
-                            defaultDate: moment()
-                        });
-                        $(".inputShippingDate").datetimepicker({
-                            format: "DD-MM-YYYY hh:mm A",
-                            defaultDate: moment()
-                        });
-                    });
+                    this.SOs.push(so);
                 },
                 grandTotal: function (index) {
                     var vm = this;
@@ -1030,6 +1115,7 @@
                             stock_id: 0,
                             product: _.cloneDeep(product),
                             selected_unit: {
+                                id: '',
                                 unit: {
                                     id: ''
                                 },
@@ -1065,9 +1151,7 @@
                                 },
                                 conversion_value: 1
                             },
-                            base_unit: _.cloneDeep(_.find(stock.product.product_units, function(unit) {
-                                return unit.is_base == 1
-                            })),
+                            base_unit: _.cloneDeep(_.find(stock.product.product_units, function(unit) { return unit.is_base == 1 })),
                             quantity: 0,
                             price: stock_price ? stock_price.price : 0,
                             discounts: item_init_discount,
@@ -1103,13 +1187,6 @@
                                 remarks: customer.expense_templates[i].remarks
                             });
                         }
-
-                        $(function () {
-                            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                                checkboxClass: 'icheckbox_square-blue',
-                                radioClass: 'iradio_square-blue'
-                            });
-                        });
                     }
                     else{
                         vm.SOs[SOIndex].expenses = [];
@@ -1126,59 +1203,33 @@
                         amount: 0,
                         remarks: ''
                     });
-
-                    $(function () {
-                        $('input[type="checkbox"], input[type="radio"]').iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue'
-                        });
-                    });
                 },
                 removeExpense: function (SOIndex, index) {
                     this.SOs[SOIndex].expenses.splice(index, 1);
                 },
             },
-            updated: function(){
-                var vm = this;
-                $(function () {
-                    $(".inputSoDate").datetimepicker({
-                        format: "DD-MM-YYYY hh:mm A",
-                        defaultDate: moment()
-                    });
-                    $(".inputShippingDate").datetimepicker({
-                        format: "DD-MM-YYYY hh:mm A",
-                        defaultDate: moment()
-                    });
-                });
-            }
-        });
-
-        if(soApp.SOs.length == 0) {
-            soApp.insertTab(soApp.SOs);
-        } else {
-            for(var i = 0; i < soApp.SOs.length; i++) {
-                if(soApp.SOs[i].warehouse.id == 0) {
-                    soApp.SOs[i].warehouse = {id: 0};
-                } else {
-                    soApp.SOs[i].warehouse = _.find(soApp.warehouseDDL, function(warehouse) {
-                        return warehouse.id == soApp.SOs[i].warehouse.id
-                    });
-                }
-
-                if(soApp.SOs[i].vendorTrucking.id == 0) {
-                    soApp.SOs[i].vendorTrucking = {id: 0, name: ''};
-                } else {
-                    soApp.SOs[i].vendorTrucking = _.find(soApp.vendorTruckingDDL, function(vendorTrucking) {
-                        return vendorTrucking.id == soApp.SOs[i].vendorTrucking.id
-                    });
+            computed: {
+                defaultCustomerType: function() {
+                    return {
+                        code: ''
+                    };
+                },
+                defaultSalesType: function() {
+                    return {
+                        code: ''
+                    };
+                },
+                defaultVendorTrucking: function() {
+                    return {
+                        id: '', name: ''
+                    };
+                },
+                defaultWarehouse: function() {
+                    return {
+                        id: ''
+                    };
                 }
             }
-        }
-
-        $('.cancelButton').on('click', function(e){
-            var form = $("#so-form");
-            form.parsley().destroy();
-            form.submit();
         });
     </script>
 @endsection
