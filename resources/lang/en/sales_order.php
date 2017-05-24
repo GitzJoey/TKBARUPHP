@@ -133,21 +133,21 @@ return [
             ],
         ],
         'broughtforward' => [
-            'title'             => 'Forward Invoice',
-            'page_title'        => 'Forward Invoice',
-            'page_title_desc'   => 'Close & forward invoice balance to new invoice',
-            'header'            => [
-                'title'             => 'Forward Invoice'
+            'title' => 'Forward Invoice',
+            'page_title' => 'Forward Invoice',
+            'page_title_desc' => 'Close & forward invoice balance to new invoice',
+            'header' => [
+                'title' => 'Forward Invoice',
             ],
-            'invoice'           => [
-                'current'           => 'Current Invoice',
-                'next'              => 'New Invoice',
-                'so_code'           => 'Sales Code',
-                'customer'          => 'Customer',
-                'created'           => 'Created Date',
-                'total_amount'      => 'Total Amount'
+            'invoice' => [
+                'current' => 'Current Invoice',
+                'next' => 'New Invoice',
+                'so_code' => 'Sales Code',
+                'customer' => 'Customer',
+                'created' => 'Created Date',
+                'total_amount' => 'Total Amount',
             ],
-        ]
+        ],
     ],
     'copy' => [
         'create' => [
@@ -402,6 +402,45 @@ return [
                     'percentage' => 'Percentage',
                     'value' => 'Value',
                     'total_discount' => 'Discount',
+                ],
+            ],
+        ],
+    ],
+    'partial' => [
+        'customer' => [
+            'title' => '',
+            'tab' => [
+                'customer' => 'Customer Data',
+                'pic' => 'Person In Charge',
+                'bank_account' => 'Bank Account',
+                'settings' => 'Settings',
+            ],
+            'field' => [
+                'name' => 'Name',
+                'address' => 'Address',
+                'city' => 'City',
+                'phone' => 'Phone',
+                'tax_id' => 'Tax ID',
+                'remarks' => 'Remarks',
+                'first_name' => 'First Name',
+                'last_name' => 'Last Name',
+                'ic_num' => 'IC Number',
+                'phone_number' => 'Phone Number',
+                'price_level' => 'Price Level',
+                'payment_due_day' => 'Payment Due Day',
+            ],
+            'table_phone' => [
+                'header' => [
+                    'provider' => 'Provider',
+                    'number' => 'Number',
+                    'remarks' => 'Remarks',
+                ],
+            ],
+            'table_bank' => [
+                'header' => [
+                    'bank' => 'Bank',
+                    'account_number' => 'Account',
+                    'remarks' => 'Remarks',
                 ],
             ],
         ],

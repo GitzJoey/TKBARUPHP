@@ -133,21 +133,21 @@ return [
             ],
         ],
         'broughtforward' => [
-            'title'             => 'Forward Invoice',
-            'page_title'        => 'Forward Invoice',
-            'page_title_desc'   => 'Close & forward invoice balance to new invoice',
-            'header'            => [
-                'title'             => 'Forward Invoice'
+            'title' => 'Forward Invoice',
+            'page_title' => 'Forward Invoice',
+            'page_title_desc' => 'Close & forward invoice balance to new invoice',
+            'header' => [
+                'title' => 'Forward Invoice',
             ],
-            'invoice'           => [
-                'current'           => 'Current Invoice',
-                'next'              => 'New Invoice',
-                'so_code'           => 'Sales Code',
-                'customer'          => 'Customer',
-                'created'           => 'Created Date',
-                'total_amount'      => 'Total Amount'
+            'invoice' => [
+                'current' => 'Current Invoice',
+                'next' => 'New Invoice',
+                'so_code' => 'Sales Code',
+                'customer' => 'Customer',
+                'created' => 'Created Date',
+                'total_amount' => 'Total Amount',
             ],
-        ]
+        ],
     ],
     'copy' => [
         'create' => [
@@ -402,6 +402,45 @@ return [
                     'percentage' => 'Persentase',
                     'value' => 'Nilai',
                     'total_discount' => 'Diskon',
+                ],
+            ],
+        ],
+    ],
+    'partial' => [
+        'customer' => [
+            'title' => '',
+            'tab' => [
+                'customer' => 'Data Pelanggan',
+                'pic' => 'Penanggungjawab',
+                'bank_account' => 'Akun Bank',
+                'settings' => 'Setting',
+            ],
+            'field' => [
+                'name' => 'Nama',
+                'address' => 'Alamat',
+                'city' => 'Kota',
+                'phone' => 'Telepon',
+                'tax_id' => 'NPWP No',
+                'remarks' => 'Keterangan',
+                'first_name' => 'Nama Depan',
+                'last_name' => 'Nama Belakang',
+                'ic_num' => 'KTP No.',
+                'phone_number' => 'No Telepon',
+                'price_level' => 'Tingkat Harga',
+                'payment_due_day' => 'Tenggat Pembayaran',
+            ],
+            'table_phone' => [
+                'header' => [
+                    'provider' => 'Provider',
+                    'number' => 'Nomor',
+                    'remarks' => 'Keterangan',
+                ],
+            ],
+            'table_bank' => [
+                'header' => [
+                    'bank' => 'Bank',
+                    'account_number' => 'Nomor Akun',
+                    'remarks' => 'Keterangan',
                 ],
             ],
         ],

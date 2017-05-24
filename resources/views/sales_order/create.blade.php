@@ -34,11 +34,16 @@
                     <div class="col-md-12">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                                <li v-for="(so, soIndex) in SOs" v-bind:class="{active: soIndex === SOs.length - 1}">
-                                    <a v-bind:href="'#tab_so_' + (soIndex + 1)" data-toggle="tab"><div v-cloak>
-                                        @{{ so.customer_type.code == 'CUSTOMERTYPE.R' ? so.customer.name || (defaultTabLabel + " " + (soIndex + 1))
-                                        : so.customer_type.code == 'CUSTOMERTYPE.WI' ? so.walk_in_cust || (defaultTabLabel + " " + (soIndex + 1))
-                                        : (defaultTabLabel + " " + (soIndex + 1)) }}</div></a>
+                                <li v-for="(so, soIndex) in SOs" v-bind:class="{ 'active': soIndex === SOs.length - 1 }">
+                                    <a v-bind:href="'#tab_so_' + (soIndex + 1)" data-toggle="tab">
+                                        <div v-cloak>
+                                            @{{ so.customer_type.code == 'CUSTOMERTYPE.R' ? so.customer.name || (defaultTabLabel + " " + (soIndex + 1))
+                                            : so.customer_type.code == 'CUSTOMERTYPE.WI' ? so.walk_in_cust || (defaultTabLabel + " " + (soIndex + 1))
+                                            : (defaultTabLabel + " " + (soIndex + 1)) }}
+                                            <span v-show="errors.any('tab_' + soIndex)" class="parsley-asterisk">*</span>
+                                        </div>
+                                    </a>
+
                                 </li>
                                 <li>
                                     <button type="button" class="btn btn-xs btn-default pull-right" v-on:click="insertTab(SOs)">
@@ -48,7 +53,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div v-for="(so, soIndex) in SOs" v-bind:class="{active: soIndex === SOs.length - 1}"
-                                     class="tab-pane" v-bind:id="'tab_so_' + (soIndex + 1)">
+                                     class="tab-pane" v-bind:id="'tab_so_' + soIndex">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="box box-info">
@@ -68,61 +73,63 @@
                                                     <h3 class="box-title">@lang('sales_order.create.box.customer')</h3>
                                                 </div>
                                                 <div class="box-body">
-                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('customer_type_' + (soIndex + 1)) }">
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tab_' + soIndex + '.' + 'customer_type_' + soIndex) }">
                                                         <label v-bind:for="'inputCustomerType_' + ( soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_type')</label>
                                                         <div class="col-sm-8">
                                                             <select class="form-control"
                                                                     name="customer_type[]"
-                                                                    v-bind:id="'inputCustomerType_' + (soIndex + 1)"
+                                                                    v-bind:id="'inputCustomerType_' + soIndex"
                                                                     v-validate="'required'"
                                                                     v-model="so.customer_type.code"
                                                                     v-on:change="onChangeCustomerType(soIndex)"
                                                                     v-bind:data-vv-as="'{{ trans('sales_order.create.field.customer_type') }} ' + (soIndex + 1)"
-                                                                    v-bind:data-vv-name="'customer_type_' + (soIndex + 1)">
+                                                                    v-bind:data-vv-name="'customer_type_' + soIndex"
+                                                                    v-bind:data-vv-scope="'tab_' + soIndex">
                                                                 <option v-bind:value="defaultCustomerType.code">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="customerType in customerTypeDDL" v-bind:value="customerType.code">@{{ customerType.i18nDescription }}</option>
                                                             </select>
-                                                            <span v-show="errors.has('customer_type_' + (soIndex + 1))" class="help-block" v-cloak>@{{ errors.first('customer_type_' + (soIndex + 1)) }}</span>
+                                                            <span v-show="errors.has('tab_' + soIndex + '.' + 'customer_type_' + soIndex)" class="help-block" v-cloak>@{{ errors.first('tab_' + soIndex + '.' + 'customer_type_' + soIndex) }}</span>
                                                         </div>
                                                     </div>
                                                     <template v-if="so.customer_type.code == 'CUSTOMERTYPE.R'">
-                                                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('customer_id_' + (soIndex + 1)) }">
-                                                            <label v-bind:for="'inputCustomerId_' + (soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('customer_id_' + soIndex) }">
+                                                            <label v-bind:for="'inputCustomerId_' + soIndex" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-8">
                                                                 <select2_customer class="form-control" name="customer_id[]" v-bind:id="'customerSelect' + soIndex"
                                                                                   v-validate="so.customer_type.code == 'CUSTOMERTYPE.R' ? 'required':''"
                                                                                   v-model="so.customer.id" v-on:select="onSelectCustomer(soIndex)"
-                                                                                  v-bind:data-vv-as="'{{ trans('sales_order.create.field.customer_name') }} ' + (soIndex + 1)"
-                                                                                  v-bind:data-vv-name="'customer_id_' + (soIndex + 1)"></select2_customer>
-                                                                <span v-show="errors.has('customer_id_' + (soIndex + 1))" class="help-block" v-cloak>@{{ errors.first('customer_id_' + (soIndex + 1)) }}</span>
+                                                                                  v-bind:data-vv-as="'{{ trans('sales_order.create.field.customer_name') }} ' + soIndex"
+                                                                                  v-bind:data-vv-name="'customer_id_' + soIndex"
+                                                                                  v-bind:data-vv-scope="'tab_' + soIndex"></select2_customer>
+                                                                <span v-show="errors.has('customer_id_' + soIndex)" class="help-block" v-cloak>@{{ errors.first('customer_id_' + soIndex) }}</span>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <button v-bind:id="'customerDetailButton_' + (soIndex + 1)" type="button" class="btn btn-primary btn-sm"
-                                                                        data-toggle="modal" v-bind:data-target="'#customerDetailModal_' + (soIndex + 1)">
+                                                                <button v-bind:id="'customerDetailButton_' + soIndex" type="button" class="btn btn-primary btn-sm"
+                                                                        data-toggle="modal" v-bind:data-target="'#customerDetailModal_' + soIndex">
                                                                     <span class="fa fa-info-circle fa-lg"></span>
                                                                 </button>
                                                             </div>
                                                         </div>
                                                     </template>
                                                     <template v-if="so.customer_type.code == 'CUSTOMERTYPE.WI'">
-                                                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_customer_' + (soIndex + 1)) }">
-                                                            <label v-bind:for="'inputCustomerName_' + (soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_name')</label>
+                                                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_customer_' + soIndex) }">
+                                                            <label v-bind:for="'inputCustomerName_' + soIndex" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_name')</label>
                                                             <div class="col-sm-10">
-                                                                <input type="text" class="form-control" v-bind:id="'inputCustomerName_' + (soIndex + 1)"
+                                                                <input type="text" class="form-control" v-bind:id="'inputCustomerName_' + soIndex"
                                                                        name="walk_in_customer[]" placeholder="Customer Name" v-validate="so.customer_type.code == 'CUSTOMERTYPE.WI' ? 'required':''"
                                                                        v-model="so.walk_in_cust" v-bind:data-vv-as="'{{ trans('sales_order.create.field.customer_name') }} ' + (soIndex + 1)"
-                                                                       v-bind:data-vv-name="'walk_in_customer_' + (soIndex + 1)">
-                                                                <span v-show="errors.has('walk_in_customer_' + (soIndex + 1))" class="help-block" v-cloak>@{{ errors.first('walk_in_customer_' + (soIndex + 1)) }}</span>
+                                                                       v-bind:data-vv-name="'walk_in_customer_' + soIndex" v-bind:data-vv-scope="'tab_' + soIndex">
+                                                                <span v-show="errors.has('walk_in_customer_' + soIndex)" class="help-block" v-cloak>@{{ errors.first('walk_in_customer_' + soIndex) }}</span>
                                                             </div>
                                                         </div>
-                                                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_customer_details_' + (soIndex + 1)) }">
-                                                            <label v-bind:for="'inputCustomerDetails_' + (soIndex + 1)" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_details')</label>
+                                                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('walk_in_customer_details_' + soIndex) }">
+                                                            <label v-bind:for="'inputCustomerDetails_' + soIndex" class="col-sm-2 control-label">@lang('sales_order.create.field.customer_details')</label>
                                                             <div class="col-sm-10">
-                                                                <textarea v-bind:id="'inputCustomerDetails_' + (soIndex + 1)" class="form-control" rows="5" name="walk_in_customer_details[]"
+                                                                <textarea v-bind:id="'inputCustomerDetails_' + soIndex" class="form-control" rows="5" name="walk_in_customer_details[]"
                                                                           v-validate="so.customer_type.code == 'CUSTOMERTYPE.WI' ? 'required':''"
                                                                           v-model="so.walk_in_cust_details" v-bind:data-vv-as="'{{ trans('sales_order.create.field.customer_details') }} ' + (soIndex + 1)"
-                                                                          v-bind:data-vv-name="'walk_in_customer_details_' + (soIndex + 1)"></textarea>
-                                                                <span v-show="errors.has('walk_in_customer_details_' + (soIndex + 1))" class="help-block" v-cloak>@{{ errors.first('walk_in_customer_details_' + (soIndex + 1)) }}</span>
+                                                                          v-bind:data-vv-name="'walk_in_customer_details_' + soIndex" v-bind:data-vv-scope="'tab_' + soIndex"></textarea>
+                                                                <span v-show="errors.has('walk_in_customer_details_' + soIndex)" class="help-block" v-cloak>@{{ errors.first('walk_in_customer_details_' + soIndex) }}</span>
                                                             </div>
                                                         </div>
                                                     </template>
@@ -136,38 +143,38 @@
                                                 </div>
                                                 <div class="box-body">
                                                     <div class="form-group">
-                                                        <label v-bind:for="'inputSoCode_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_code')</label>
+                                                        <label v-bind:for="'inputSoCode_' + soIndex" class="col-sm-3 control-label">@lang('sales_order.create.so_code')</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control" v-bind:id="'inputSoCode_' + (soIndex + 1)"
+                                                            <input type="text" class="form-control" v-bind:id="'inputSoCode_' + soIndex"
                                                                    name="so_code[]" placeholder="SO Code" readonly v-model="so.so_code">
                                                         </div>
                                                     </div>
-                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('sales_type_' + (soIndex + 1)) }">
-                                                        <label v-bind:for="'inputSoType_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('sales_type_' + soIndex) }">
+                                                        <label v-bind:for="'inputSoType_' + soIndex" class="col-sm-3 control-label">@lang('sales_order.create.so_type')</label>
                                                         <div class="col-sm-9">
-                                                            <select v-bind:id="'inputSoType_' + (soIndex + 1)" class="form-control" name="sales_type[]"
+                                                            <select v-bind:id="'inputSoType_' + soIndex" class="form-control" name="sales_type[]"
                                                                     v-validate="'required'" v-model="so.sales_type.code"
                                                                     v-bind:data-vv-as="'{{ trans('sales_order.create.so_type') }} ' + (soIndex + 1)"
-                                                                    v-bind:data-vv-name="'sales_type_' + (soIndex + 1)">
+                                                                    v-bind:data-vv-name="'sales_type_' + soIndex">
                                                                 <option v-bind:value="defaultSalesType.code">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="salesType in soTypeDDL" v-bind:value="salesType.code">@{{ salesType.i18nDescription }}</option>
                                                             </select>
-                                                            <span v-show="errors.has('sales_type_' + (soIndex + 1))" class="help-block" v-cloak>@{{ errors.first('sales_type_' + (soIndex + 1)) }}</span>
+                                                            <span v-show="errors.has('sales_type_' + soIndex)" class="help-block" v-cloak>@{{ errors.first('sales_type_' + soIndex) }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label v-bind:for="'inputSoDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_date')</label>
+                                                        <label v-bind:for="'inputSoDate_' + soIndex" class="col-sm-3 control-label">@lang('sales_order.create.so_date')</label>
                                                         <div class="col-sm-9">
                                                             <div class="input-group date">
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <vue-datetimepicker v-bind:id="'inputSoDate_' + (soIndex + 1)" name="so_created[]" value="" v-model="so.so_created" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
+                                                                <vue-datetimepicker v-bind:id="'inputSoDate_' + soIndex" name="so_created[]" value="" v-model="so.so_created" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label v-bind:for="'inputSoStatus_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.so_status')</label>
+                                                        <label v-bind:for="'inputSoStatus_' + soIndex" class="col-sm-3 control-label">@lang('sales_order.create.so_status')</label>
                                                         <div class="col-sm-9">
                                                             <label class="control-label control-label-normal">@lang('lookup.'.$soStatusDraft->first()->code)</label>
                                                         </div>
@@ -184,34 +191,35 @@
                                                 </div>
                                                 <div class="box-body">
                                                     <div class="form-group">
-                                                        <label v-bind:for="'inputShippingDate_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
+                                                        <label v-bind:for="'inputShippingDate_' + soIndex" class="col-sm-3 control-label">@lang('sales_order.create.field.shipping_date')</label>
                                                         <div class="col-sm-4">
                                                             <div class="input-group date">
                                                                 <div class="input-group-addon">
                                                                     <i class="fa fa-calendar"></i>
                                                                 </div>
-                                                                <vue-datetimepicker v-bind:id="'inputShippingDate_' + (soIndex + 1)" name="shipping_date[]" value="" v-model="so.shipping_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
+                                                                <vue-datetimepicker v-bind:id="'inputShippingDate_' + soIndex" name="shipping_date[]" value="" v-model="so.shipping_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('warehouse_id_' + (soIndex + 1)) }">
-                                                        <label v-bind:for="'inputWarehouse_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('warehouse_id_' + soIndex) }">
+                                                        <label v-bind:for="'inputWarehouse_' + soIndex" class="col-sm-3 control-label">@lang('sales_order.create.field.warehouse')</label>
                                                         <div class="col-sm-9">
-                                                            <select v-bind:id="'inputWarehouse_' + (soIndex + 1)" class="form-control" name="warehouse_id[]"
+                                                            <select v-bind:id="'inputWarehouse_' + soIndex" class="form-control" name="warehouse_id[]"
                                                                     v-validate="'required'"
                                                                     v-model="so.warehouse.id"
                                                                     v-bind:data-vv-as="'{{ trans('sales_order.create.field.warehouse') }} ' + (soIndex + 1)"
-                                                                    v-bind:data-vv-name="'warehouse_id_' + (soIndex + 1)">
+                                                                    v-bind:data-vv-name="'warehouse_id_' + soIndex"
+                                                                    v-bind:data-vv-scope="'tab_' + soIndex">
                                                                 <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{warehouse.name}}</option>
                                                             </select>
-                                                            <span v-show="errors.has('warehouse_id_' + (soIndex + 1))" class="help-block" v-cloak>@{{ errors.first('warehouse_id_' + (soIndex + 1)) }}</span>
+                                                            <span v-show="errors.has('warehouse_id_' + soIndex)" class="help-block" v-cloak>@{{ errors.first('warehouse_id_' + soIndex) }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label v-bind:for="'inputVendorTrucking_' + (soIndex + 1)" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
+                                                        <label v-bind:for="'inputVendorTrucking_' + soIndex" class="col-sm-3 control-label">@lang('sales_order.create.field.vendor_trucking')</label>
                                                         <div class="col-sm-9">
-                                                            <select v-bind:id="'inputVendorTrucking_' + (soIndex + 1)"
+                                                            <select v-bind:id="'inputVendorTrucking_' + soIndex"
                                                                     class="form-control"
                                                                     v-model="so.vendorTrucking.id">
                                                                 <option v-bind:value="defaultVendorTrucking.id">@lang('labels.PLEASE_SELECT')</option>
@@ -233,7 +241,7 @@
                                                     <div class="row">
                                                         <div v-show="so.sales_type.code === 'SOTYPE.SVC'">
                                                             <div class="col-md-11">
-                                                                <select v-bind:id="'inputProduct_' + (soIndex + 1)"
+                                                                <select v-bind:id="'inputProduct_' + soIndex"
                                                                         class="form-control"
                                                                         v-model="so.product">
                                                                     <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
@@ -247,7 +255,7 @@
                                                         </div>
                                                         <div v-show="so.sales_type.code === 'SOTYPE.S' || so.sales_type.code === 'SOTYPE.AC'">
                                                             <div class="col-md-11">
-                                                                <select v-bind:id="'inputStock_' + (soIndex + 1)"
+                                                                <select v-bind:id="'inputStock_' + soIndex"
                                                                         class="form-control"
                                                                         v-model="so.stock">
                                                                     <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
@@ -263,7 +271,7 @@
                                                     <hr>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <table v-bind:id="'itemsListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
+                                                            <table v-bind:id="'itemsListTable_' + soIndex" class="table table-bordered table-hover">
                                                                 <thead>
                                                                     <tr>
                                                                         <th width="30%">@lang('sales_order.create.table.item.header.product_name')</th>
@@ -284,13 +292,19 @@
                                                                         </td>
                                                                         <td>
                                                                             <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_quantity[]'"
-                                                                                   v-model="item.quantity" v-validate="'required|decimal:2'">
+                                                                                   v-model="item.quantity" v-validate="'required|decimal:2'"
+                                                                                   v-bind:data-vv-as="'{{ trans('sales_order.create.table.item.header.quantity') }} ' + (soIndex + 1)"
+                                                                                   v-bind:data-vv-name="'so_' + soIndex + '_quantity_' + soIndex"
+                                                                                   v-bind:data-vv-scope="'tab_' + soIndex">
                                                                         </td>
                                                                         <td>
                                                                             <select name="selected_unit_id[]"
                                                                                     class="form-control"
                                                                                     v-model="item.selected_unit.id"
                                                                                     v-validate="'required'"
+                                                                                    v-bind:data-vv-as="'{{ trans('sales_order.create.table.item.header.unit') }} ' + (soIndex + 1)"
+                                                                                    v-bind:data-vv-name="'so_' + soIndex + '_unit_' + soIndex"
+                                                                                    v-bind:data-vv-scope="'tab_' + soIndex">
                                                                                     v-on:change="onChangeUnit(soIndex, itemIndex)">
                                                                                 <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
                                                                                 <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
@@ -298,7 +312,10 @@
                                                                         </td>
                                                                         <td>
                                                                             <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_price[]'"
-                                                                                   v-model="item.price" v-validate="'required|decimal:2'">
+                                                                                   v-model="item.price" v-validate="'required|decimal:2'"
+                                                                                   v-bind:data-vv-as="'{{ trans('sales_order.create.table.item.header.price_unit') }} ' + (soIndex + 1)"
+                                                                                   v-bind:data-vv-name="'so_' + soIndex + '_price_' + soIndex"
+                                                                                   v-bind:data-vv-scope="'tab_' + soIndex">
                                                                         </td>
                                                                         <td class="text-center">
                                                                             <button type="button" class="btn btn-danger btn-md"
@@ -315,11 +332,10 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <table v-bind:id="'itemsTotalListTable_' + (soIndex + 1)" class="table table-bordered">
+                                                            <table v-bind:id="'itemsTotalListTable_' + soIndex" class="table table-bordered">
                                                                 <tbody>
                                                                 <tr>
-                                                                    <td width="80%"
-                                                                        class="text-right">@lang('sales_order.create.table.total.body.total')</td>
+                                                                    <td width="80%" class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                     <td width="20%" class="text-right">
                                                                         <span class="control-label-normal">@{{ numeral(grandTotal(soIndex)).format() }}</span>
                                                                     </td>
@@ -341,7 +357,7 @@
                                                 <div class="box-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <table v-bind:id="'discountsListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
+                                                            <table v-bind:id="'discountsListTable_' + soIndex" class="table table-bordered table-hover">
                                                                 <thead>
                                                                     <tr>
                                                                         <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
@@ -373,10 +389,14 @@
                                                                                 </button>
                                                                             </td>
                                                                             <td width="10%">
-                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_percent['+itemIndex+'][]'" v-model="discount.disc_percent" placeholder="%" v-on:keyup="discountPercentToNominal(item, discount)" />
+                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_percent['+itemIndex+'][]'"
+                                                                                       v-model="discount.disc_percent" placeholder="%"
+                                                                                       v-on:keyup="discountPercentToNominal(item, discount)"/>
                                                                             </td>
                                                                             <td width="25%">
-                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_value['+itemIndex+'][]'" v-model="discount.disc_value" placeholder="Nominal" v-on:keyup="discountNominalToPercent(item, discount)" />
+                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_value['+itemIndex+'][]'"
+                                                                                       v-model="discount.disc_value" placeholder="Nominal"
+                                                                                       v-on:keyup="discountNominalToPercent(item, discount)"/>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -418,7 +438,7 @@
                                                 <div class="box-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <table v-bind:id="'expensesListTable_' + (soIndex + 1)" class="table table-bordered table-hover">
+                                                            <table v-bind:id="'expensesListTable_' + soIndex" class="table table-bordered table-hover">
                                                                 <thead>
                                                                     <tr>
                                                                         <th width="20%">@lang('sales_order.create.table.expense.header.name')</th>
@@ -471,7 +491,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <table v-bind:id="'expensesTotalListTable_' + (soIndex + 1)" class="table table-bordered">
+                                                            <table v-bind:id="'expensesTotalListTable_' + soIndex" class="table table-bordered">
                                                                 <tbody>
                                                                 <tr>
                                                                     <td width="80%"
@@ -552,39 +572,39 @@
                                                     <div>
                                                         <ul class="nav nav-tabs" role="tablist">
                                                             <li role="presentation" class="active">
-                                                                <a v-bind:href="'#tab_remarks_' + (soIndex + 1)" aria-controls="tab_remarks" role="tab" data-toggle="tab">@lang('sales_order.create.tab.remarks')</a>
+                                                                <a v-bind:href="'#tab_remarks_' + soIndex" aria-controls="tab_remarks" role="tab" data-toggle="tab">@lang('sales_order.create.tab.remarks')</a>
                                                             </li>
                                                             <li role="presentation">
-                                                                <a v-bind:href="'#tab_internal_' + (soIndex + 1)" aria-controls="tab_internal" role="tab" data-toggle="tab">@lang('sales_order.create.tab.internal')</a>
+                                                                <a v-bind:href="'#tab_internal_' + soIndex" aria-controls="tab_internal" role="tab" data-toggle="tab">@lang('sales_order.create.tab.internal')</a>
                                                             </li>
                                                             <li role="presentation">
-                                                                <a v-bind:href="'#tab_private_' + (soIndex + 1)" aria-controls="tab_private" role="tab" data-toggle="tab">@lang('sales_order.create.tab.private')</a>
+                                                                <a v-bind:href="'#tab_private_' + soIndex" aria-controls="tab_private" role="tab" data-toggle="tab">@lang('sales_order.create.tab.private')</a>
                                                             </li>
                                                         </ul>
                                                         <div class="tab-content">
-                                                            <div role="tabpanel" class="tab-pane active" v-bind:id="'tab_remarks_' + (soIndex + 1)">
+                                                            <div role="tabpanel" class="tab-pane active" v-bind:id="'tab_remarks_' + soIndex">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <div class="col-sm-12">
-                                                                                <textarea v-bind:id="'inputRemarks_' + (soIndex + 1)" name="remarks" class="form-control" rows="5" v-model="so.remarks"></textarea>
+                                                                                <textarea v-bind:id="'inputRemarks_' + soIndex" name="remarks" class="form-control" rows="5" v-model="so.remarks"></textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div role="tabpanel" class="tab-pane" v-bind:id="'tab_internal_' + (soIndex + 1)">
+                                                            <div role="tabpanel" class="tab-pane" v-bind:id="'tab_internal_' + soIndex">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
                                                                             <div class="col-sm-12">
-                                                                                <textarea v-bind:id="'inputInternalRemarks_' + (soIndex + 1)" name="internal_remarks" class="form-control" rows="5"></textarea>
+                                                                                <textarea v-bind:id="'inputInternalRemarks_' + soIndex" name="internal_remarks" class="form-control" rows="5"></textarea>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div role="tabpanel" class="tab-pane" v-bind:id="'tab_private_' + (soIndex + 1)">
+                                                            <div role="tabpanel" class="tab-pane" v-bind:id="'tab_private_' + soIndex">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <div class="form-group">
@@ -607,7 +627,7 @@
                                                 <button v-bind:id="'submitButton_' + soIndex" type="submit" name="submit" v-bind:value="soIndex" class="submitButton btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                                                 <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
                                                 <button type="button" name="cancel" class="cancelButton btn btn-primary pull-right"
-                                                        v-bind:id="'cancelButton_' + (soIndex + 1)" v-bind:value="soIndex" v-on:click="cancelSales(soIndex)">@lang('buttons.cancel_button')</button>
+                                                        v-bind:id="'cancelButton_' + soIndex" v-bind:value="soIndex" v-on:click="cancelSales(soIndex)">@lang('buttons.cancel_button')</button>
                                             </div>
                                         </div>
                                     </div>
@@ -767,7 +787,11 @@
                     });
                 },
                 saveDraft: function(soIndex) {
-                    this.$validator.validateAll();
+                    this.$validator.validateAll('tab_' + soIndex).then(function(isValid) {
+                        console.log(isValid);
+                    }).catch(function() {
+                        console.log('a');
+                    });
                 },
                 cancelSales: function(soIndex) {
                     if (soIndex == 0) {
