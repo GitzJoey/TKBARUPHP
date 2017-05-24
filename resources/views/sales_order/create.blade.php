@@ -34,7 +34,7 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li v-for="(so, soIndex) in SOs" v-bind:class="{ 'active': soIndex === SOs.length - 1 }">
-                                <a v-bind:href="'#tab_so_' + (soIndex + 1)" data-toggle="tab">
+                                <a v-bind:href="'#tab_so_' + soIndex" data-toggle="tab">
                                     <div v-cloak>
                                         @{{ so.customer_type.code == 'CUSTOMERTYPE.R' ? so.customer.name || (defaultTabLabel + " " + (soIndex + 1))
                                         : so.customer_type.code == 'CUSTOMERTYPE.WI' ? so.walk_in_cust || (defaultTabLabel + " " + (soIndex + 1))
