@@ -39,6 +39,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
 
         Route::group(['prefix' => 'so'], function () {
             Route::post('create', 'SalesOrderController@store')->name('api.post.db.so.create');
+            Route::post('save/draft', 'SalesOrderController@store')->name('api.post.db.so.create.savedraft');
         });
 
         Route::group(['prefix' => 'warehouse'], function () {

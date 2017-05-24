@@ -1,9 +1,9 @@
-<div class="modal fade" id="customerDetailModal" tabindex="-1" role="dialog" aria-labelledby="customerDetailModalLabel">
+<div class="modal fade" v-bind:id="'customerDetailModal_' + (soIndex + 1)" tabindex="-1" role="dialog" v-bind:aria-labelledby="'customerDetailModalLabel_' + (soIndex + 1)">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="customerDetailModalLabel">Customer Details</h4>
+                <h4 class="modal-title" v-bind:id="'customerDetailModalLabel_' + (soIndex + 1)">Customer Details</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
@@ -29,21 +29,21 @@
                                                 <label for="inputName"
                                                        class="col-sm-2 control-label">@lang('customer.field.name')</label>
                                                 <div class="col-sm-8">
-                                                    <input id="inputName" type="text" class="form-control" readonly v-model="customerPopupData.customer.name">
+                                                    <input id="inputName" type="text" class="form-control" readonly v-model="so.customer.name">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputAddress"
                                                        class="col-sm-2 control-label">@lang('customer.field.address')</label>
                                                 <div class="col-sm-8">
-                                                    <textarea id="inputAddress" class="form-control" readonly rows="4">@{{ customerPopupData.customer.address }}</textarea>
+                                                    <textarea id="inputAddress" class="form-control" readonly rows="4">@{{ so.customer.address }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputCity"
                                                        class="col-sm-2 control-label">@lang('customer.field.city')</label>
                                                 <div class="col-sm-8">
-                                                    <input id="inputCity" type="text" class="form-control" readonly v-model="customerPopupData.customer.city">
+                                                    <input id="inputCity" type="text" class="form-control" readonly v-model="so.customer.city">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -51,7 +51,7 @@
                                                        class="col-sm-2 control-label">@lang('customer.field.phone')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputPhone" type="tel" class="form-control" readonly
-                                                           v-model="customerPopupData.customer.phone_number">
+                                                           v-model="so.customer.phone_number">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -59,7 +59,7 @@
                                                        class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputTaxId" type="text" class="form-control" readonly
-                                                           v-model="customerPopupData.customer.tax_id">
+                                                           v-model="so.customer.tax_id">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -67,7 +67,7 @@
                                                        class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputRemarks" type="text" class="form-control" readonly
-                                                           v-model="customerPopupData.customer.remarks">
+                                                           v-model="so.customer.remarks">
                                                 </div>
                                             </div>
                                         </div>
@@ -75,7 +75,7 @@
                                     <div class="tab-pane" id="tab_pic">
                                         <div class="row">
                                             <div class="col-md-11">
-                                                <div v-for="(profile, profileIndex) in customerPopupData.customer.profiles">
+                                                <div v-for="(profile, profileIndex) in so.customer.profiles">
                                                     <div class="box box-widget">
                                                         <div class="box-header with-border">
                                                             <div class="user-block">
@@ -168,7 +168,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(bankAccount, bankAccountIndex) in customerPopupData.customer.bank_accounts">
+                                                <tr v-for="(bankAccount, bankAccountIndex) in so.customer.bank_accounts">
                                                     <td>@{{ bankAccount.bank.name }}</td>
                                                     <td>@{{ bankAccount.account_number }}</td>
                                                     <td>@{{ bankAccount.remarks }}</td>
@@ -180,13 +180,13 @@
                                         <div class="form-group">
                                             <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputPriceLevel" name="price_level" type="text" class="form-control" readonly="readonly" v-model="customerPopupData.customer.price_level">
+                                                <input id="inputPriceLevel" name="price_level" type="text" class="form-control" readonly="readonly" v-model="so.customer.price_level">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" readonly="readonly" v-model="customerPopupData.customer.payment_due_day">
+                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" readonly="readonly" v-model="so.customer.payment_due_day">
                                             </div>
                                         </div>
                                     </div>

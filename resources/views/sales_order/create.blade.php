@@ -17,16 +17,6 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div id="soVue">
         <div v-show="errors.count() > 0" v-cloak>
             <div class="alert alert-danger">
@@ -65,7 +55,7 @@
                                                 <div class="box-body">
                                                     <button id="draftButton" type="button" name="draft" value="@{{ soIndex }}" class="btn btn-xs btn-primary pull-right"
                                                         v-on:click="saveDraft(soIndex)">
-                                                        <span class="fa fa-save fa-fw"></span>Save as Draft
+                                                        <span class="fa fa-save fa-fw"></span>&nbsp;Save as Draft
                                                     </button>
                                                 </div>
                                             </div>
@@ -108,7 +98,7 @@
                                                             </div>
                                                             <div class="col-sm-2">
                                                                 <button v-bind:id="'customerDetailButton_' + (soIndex + 1)" type="button" class="btn btn-primary btn-sm"
-                                                                        data-toggle="modal" data-target="#customerDetailModal" v-on:click="showCustomerPopup(soIndex)">
+                                                                        data-toggle="modal" v-bind:data-target="'#customerDetailModal_' + (soIndex + 1)">
                                                                     <span class="fa fa-info-circle fa-lg"></span>
                                                                 </button>
                                                             </div>
@@ -616,7 +606,8 @@
                                             <div class="btn-toolbar">
                                                 <button v-bind:id="'submitButton_' + soIndex" type="submit" name="submit" v-bind:value="soIndex" class="submitButton btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                                                 <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                                                <button v-bind:id="'cancelButton_' + soIndex" type="submit" name="cancel" v-bind:value="soIndex" class="cancelButton btn btn-primary pull-right">@lang('buttons.cancel_button')</button>
+                                                <button type="button" name="cancel" class="cancelButton btn btn-primary pull-right"
+                                                        v-bind:id="'cancelButton_' + (soIndex + 1)" v-bind:value="soIndex" v-on:click="cancelSales(soIndex)">@lang('buttons.cancel_button')</button>
                                             </div>
                                         </div>
                                     </div>
@@ -734,9 +725,7 @@
                 stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
                 SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
-                defaultTabLabel: '',
-                defaultCustomerType: { code: '' },
-                customerPopupData: { customer: { } }
+                defaultTabLabel: ''
             },
             mounted: function() {
                 var vm = this;
@@ -780,6 +769,13 @@
                 saveDraft: function(soIndex) {
                     this.$validator.validateAll();
                 },
+                cancelSales: function(soIndex) {
+                    if (soIndex == 0) {
+                        window.location.href = '{{ route('db') }}';
+                    } else {
+                        this.SOs.splice(soIndex, 1);
+                    }
+                },
                 onChangeCustomerType: function(soIndex) {
                     var vm = this;
 
@@ -809,12 +805,6 @@
                         var pUnit = _.find(this.SOs[soIndex].items[itemIndex].product.product_units, { id: this.SOs[soIndex].items[itemIndex].selected_unit.id });
                         _.merge(this.SOs[soIndex].items[itemIndex].selected_unit, pUnit);
                     }
-                },
-                showCustomerPopup: function(soIndex) {
-                    var vm = this;
-
-                    this.customerPopupData.customer = { };
-                    this.customerPopupData.customer = _.cloneDeep(vm.SOs[soIndex].customer);
                 },
                 discountPercentToNominal: function(item, discount){
                     var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
