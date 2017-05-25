@@ -104,6 +104,8 @@ class SalesOrder extends Model
         'so_type',
         'status',
         'remarks',
+        'internal_remarks',
+        'private_remarks',
         'disc_percent',
         'disc_value',
     ];

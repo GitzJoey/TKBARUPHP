@@ -24,6 +24,7 @@ use App\Model\ProductUnit;
 use App\Services\PaymentService;
 
 use DB;
+use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -46,44 +47,45 @@ class SalesOrderServiceImpl implements SalesOrderService
      * Multiple sales orders can be created at once and all of them will be saved to user session as an array by default.
      * This method will only save the sales order at sales order array in user session with given index and will remove it from that array.
      *
-     * @param Request $request request which contains values from create form to create the sales order.
-     * @param int $index index of sales order in sales order array in user session to be saved.
+     * @param Array $soData object which contains values from create form to create the sales order.
      * @return SalesOrder
      */
-    public function createSO(Request $request, $index)
+    public function createSO(Array $soData)
     {
-        DB::transaction(function() use ($request, $index) {
-            if ($request->input("customer_type.$index") == 'CUSTOMERTYPE.R') {
-                $customer_id = empty($request->input("customer_id.$index")) ? 0 : $request->input("customer_id.$index");
+        DB::beginTransaction();
+        try {
+            if ($soData['customer_type']['code'] == 'CUSTOMERTYPE.R') {
+                $customer_id = empty($soData['customer']['id']) ? 0 : $soData['customer']['id'];
                 $walk_in_cust = '';
                 $walk_in_cust_detail = '';
             } else {
                 $customer_id = 0;
-                $walk_in_cust = $request->input("walk_in_customer.$index");
-                $walk_in_cust_detail = $request->input("walk_in_customer_details.$index");
+                $walk_in_cust = $soData->walk_in_customer;
+                $walk_in_cust_detail = $soData->walk_in_customer_details;
             }
 
-            $params = [
-                'customer_type' => $request->input("customer_type.$index"),
+            $so = [
+                'customer_type' => $soData['customer_type']['code'],
                 'customer_id' => $customer_id,
                 'walk_in_cust' => $walk_in_cust,
                 'walk_in_cust_detail' => $walk_in_cust_detail,
-                'code' => $request->input("so_code.$index"),
-                'so_type' => $request->input("sales_type.$index"),
-                'so_created' => date('Y-m-d H:i:s', strtotime($request->input("so_created.$index"))),
-                'shipping_date' => date('Y-m-d H:i:s', strtotime($request->input("shipping_date.$index"))),
+                'code' => $soData['so_code'],
+                'so_type' => $soData['sales_type']['code'],
+                'so_created' => date('Y-m-d H:i:s', strtotime($soData['so_created'])),
+                'shipping_date' => date('Y-m-d H:i:s', strtotime($soData['shipping_date'])),
                 'status' => Lookup::whereCode('SOSTATUS.WD')->first()->code,
-                'vendor_trucking_id' => empty($request->input("vendor_trucking_id.$index")) ? 0 : $request->input("vendor_trucking_id.$index"),
-                'warehouse_id' => $request->input("warehouse_id.$index"),
-                'remarks' => $request->input("remarks.$index"),
+                'vendor_trucking_id' => empty($soData['vendorTrucking']['id']) ? 0 : $soData['vendorTrucking']['id'],
+                'warehouse_id' => $soData['warehouse']['id'],
+                'remarks' => $soData['remarks'],
                 'store_id' => Auth::user()->store_id
             ];
 
-            $so = SalesOrder::create($params);
+            //$so = SalesOrder::create($so);
 
-            for ($j = 0; $j < count($request->input("so_$index" . "_product_id")); $j++) {
+            foreach ($soData->items as $i) {
                 $item = new Item();
-                $item->product_id = $request->input("so_$index" . "_product_id.$j");
+                $item->product_id = $i['product']['id'];
+                /*
                 $item->stock_id = empty($request->input("so_$index" . "_stock_id.$j")) ? 0 : $request->input("so_$index" . "_stock_id.$j");
                 $item->store_id = Auth::user()->store_id;
                 $item->selected_unit_id = $request->input("so_$index" . "_selected_unit_id.$j");
@@ -97,7 +99,19 @@ class SalesOrderServiceImpl implements SalesOrderService
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
 
                 $so->items()->save($item);
+                */
             }
+
+            DB::rollBack();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return null;
+        }
+
+        /*
+        DB::transaction(function() use ($request, $index) {
+
+
 
             for ($j = 0; $j < count($request->input("so_$index" . "_expense_name")); $j++) {
                 $expense = new Expense();
@@ -166,6 +180,7 @@ class SalesOrderServiceImpl implements SalesOrderService
 
             return $so;
         });
+        */
     }
 
     /**

@@ -25,11 +25,10 @@ interface SalesOrderService
      * Multiple sales orders can be created at once and all of them will be saved to user session as a collection by default.
      * This method will only save the sales order at sales order collection in user session with given index and will remove it from that array.
      *
-     * @param Request $request request which contains values from create form to create the sales order.
-     * @param int $index index of sales order in sales order collection in user session to be saved.
+     * @param Array $soData object which contains values from create form to create the sales order.
      * @return SalesOrder
      */
-    public function createSO(Request $request, $index);
+    public function createSO(Array $soData);
 
     /**
      * Cancel a single sales order.

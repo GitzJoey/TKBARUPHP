@@ -797,6 +797,7 @@
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.so.create') }}' + '?api_token=' + $('#secapi').val(), vm.SOs[soIndex])
                             .then(function(response) {
+                                /*
                                 if (vm.SOs.length == 1) {
                                     window.location.href = '{{ route('db') }}';
                                 } else {
@@ -810,6 +811,7 @@
                                         progressBar: true
                                     });
                                 }
+                                */
                             });
                     }).catch(function() {
 

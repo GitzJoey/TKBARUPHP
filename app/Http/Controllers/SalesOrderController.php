@@ -73,11 +73,10 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@store');
 
-        $data = $request->so_code;
+        $this->salesOrderService->createSO($request->json()->all());
 
         return response()->json([
-            'result' => 'success',
-            'test' => $data
+            'result' => 'success'
         ]);
     }
 
