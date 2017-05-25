@@ -774,9 +774,9 @@
             },
             methods: {
                 saveDraft: function(soIndex) {
-                    this.$validator.validateAll('tab_' + soIndex).then(function(isValid) {
+                    this.$validator.validateAll().then(function(isValid) {
                         $('#loader-container').fadeIn('fast');
-                        axios.post('{{ route('api.post.db.so.create') }}' + '?api_token=' + $('#secapi').val(), { params: vm.SOs })
+                        axios.post('{{ route('api.post.db.so.create.savedraft') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soForm')[0]))
                             .then(function(response) {
                                 $('#loader-container').fadeOut('slow');
                                 noty({
@@ -797,7 +797,6 @@
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.so.create') }}' + '?api_token=' + $('#secapi').val(), vm.SOs[soIndex])
                             .then(function(response) {
-                                /*
                                 if (vm.SOs.length == 1) {
                                     window.location.href = '{{ route('db') }}';
                                 } else {
@@ -811,7 +810,6 @@
                                         progressBar: true
                                     });
                                 }
-                                */
                             });
                     }).catch(function() {
 
@@ -916,7 +914,10 @@
                         product: { id: '' },
                         stock: { id: '' },
                         items : [],
-                        expenses: []
+                        expenses: [],
+                        remarks: '',
+                        internal_remarks: '',
+                        private_remarks: ''
                     };
 
                     vm.setSOCode(so);

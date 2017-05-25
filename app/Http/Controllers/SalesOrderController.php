@@ -10,10 +10,10 @@ namespace App\Http\Controllers;
 
 use App\Model\Lookup;
 use App\Model\Product;
-use App\Model\SalesOrder;
-use App\Model\Warehouse;
-use App\Model\VendorTrucking;
 use App\Model\Customer;
+use App\Model\Warehouse;
+use App\Model\SalesOrder;
+use App\Model\VendorTrucking;
 
 use App\Services\StockService;
 use App\Services\SalesOrderService;
@@ -23,6 +23,7 @@ use App\Util\SOCodeGenerator;
 use App\Repos\LookupRepo;
 
 use App;
+use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -63,7 +64,8 @@ class SalesOrderController extends Controller
         $soStatusDraft = Lookup::where('code', '=', 'SOSTATUS.D')->get(['description', 'code']);
         $soCode = SOCodeGenerator::generateCode();
 
-        $userSOs = session('userSOs', collect([]));
+        $userSOs = Session::get('userSOs', collect([]));
+        $test = Session::get('a');
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL', 'productDDL',
             'stocksDDL', 'vendorTruckingDDL', 'soCode', 'soStatusDraft', 'userSOs', 'expenseTypes','customerDDL'));
@@ -84,7 +86,7 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@saveDraft');
 
-        $data = $request;
+        $this->salesOrderService->storeToSession($request);
 
         return response()->json([
             'result' => 'success'

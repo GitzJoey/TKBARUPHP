@@ -26,7 +26,7 @@ interface SalesOrderService
      * This method will only save the sales order at sales order collection in user session with given index and will remove it from that array.
      *
      * @param Array $soData object which contains values from create form to create the sales order.
-     * @return SalesOrder
+     * @return void
      */
     public function createSO(Array $soData);
 
