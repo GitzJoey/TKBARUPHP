@@ -10,10 +10,10 @@ namespace App\Http\Controllers;
 
 use App\Model\Lookup;
 use App\Model\Product;
-use App\Model\SalesOrder;
-use App\Model\Warehouse;
-use App\Model\VendorTrucking;
 use App\Model\Customer;
+use App\Model\Warehouse;
+use App\Model\SalesOrder;
+use App\Model\VendorTrucking;
 
 use App\Services\StockService;
 use App\Services\SalesOrderService;
@@ -23,6 +23,7 @@ use App\Util\SOCodeGenerator;
 use App\Repos\LookupRepo;
 
 use App;
+use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -49,14 +50,6 @@ class SalesOrderController extends Controller
         ]);
     }
 
-    public function test() {
-
-        Log::info('SalesOrderController@test');
-
-        $customerTypeDDL = LookupRepo::findByCategory('CUSTOMERTYPE');
-        return view('sales_order.test', compact('customerTypeDDL'));
-    }
-
     public function create()
     {
         Log::info('SalesOrderController@create');
@@ -71,7 +64,8 @@ class SalesOrderController extends Controller
         $soStatusDraft = Lookup::where('code', '=', 'SOSTATUS.D')->get(['description', 'code']);
         $soCode = SOCodeGenerator::generateCode();
 
-        $userSOs = session('userSOs', collect([]));
+        $userSOs = Session::get('userSOs', collect([]));
+        $test = Session::get('a');
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL', 'productDDL',
             'stocksDDL', 'vendorTruckingDDL', 'soCode', 'soStatusDraft', 'userSOs', 'expenseTypes','customerDDL'));
@@ -81,60 +75,22 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@store');
 
-        $submitIndex = $request->input('submit');
-        $cancelIndex = $request->input('cancel');
+        $this->salesOrderService->createSO($request->json()->all());
+
+        return response()->json([
+            'result' => 'success'
+        ]);
+    }
+
+    public function saveDraft(Request $request)
+    {
+        Log::info('SalesOrderController@saveDraft');
 
         $this->salesOrderService->storeToSession($request);
 
-        if (isset($submitIndex)) {
-
-            $validationRules = [
-                'so_code.' . $submitIndex => 'required|string|max:255',
-                'sales_type.' . $submitIndex => 'required|string|max:255',
-                'so_created.' . $submitIndex => 'required|string|max:255',
-                'shipping_date.' . $submitIndex => 'required|string|max:255',
-                'customer_type.' . $submitIndex => 'required|string|max:255',
-                'so_.' . $submitIndex .'item_disc_percent.*.*'    => 'numeric',
-                'so_.' . $submitIndex .'_item_disc_value.*.*'    => 'numeric',
-                'so_' . $submitIndex .'_disc_total_percent'        => 'numeric',
-                'so_' . $submitIndex .'_disc_total_value'          => 'numeric',
-            ];
-
-            $validationMessages = [];
-
-            if (App::getLocale() == 'id') {
-                $validationMessages = [
-                    'customer_id.' . $submitIndex . '.required' => 'Pelanggan di tab ' . ($submitIndex + 1) . ' wajib diisi.',
-                    'walk_in_customer.' . $submitIndex . '.required' => 'Pelanggan di tab ' . ($submitIndex + 1) . ' wajib diisi.',
-                    'walk_in_customer_details.' . $submitIndex . '.required' => 'Data pelanggan di tab ' . ($submitIndex + 1) . ' wajib diisi.'
-                ];
-            } else {
-                $validationMessages = [
-                    'customer_id.' . $submitIndex . '.required' => 'Customer on tab ' . ($submitIndex + 1) . ' is required.',
-                    'walk_in_customer.' . $submitIndex . '.required' => 'Customer on tab ' . ($submitIndex + 1) . ' is required.',
-                    'walk_in_customer_details.' . $submitIndex . '.required' => 'Customer Details on tab ' . ($submitIndex + 1) . ' is required.'
-                ];
-            }
-
-            if ($request->input("customer_type.$submitIndex") == 'CUSTOMERTYPE.R') {
-                $validationRules['customer_id.' . $submitIndex] = 'required';
-            } else {
-                $validationRules['walk_in_customer.' . $submitIndex] = 'required|string|max:255';
-                $validationRules['walk_in_customer_details.' . $submitIndex] = 'required|string|max:255';
-            }
-
-            Validator::make($request->all(), $validationRules, $validationMessages)->validate();
-
-            $this->salesOrderService->createSO($request, $submitIndex);
-        } elseif (isset($cancelIndex)) {
-            $this->salesOrderService->cancelSO($cancelIndex);
-        }
-        
-        if (count($request->input('so_code')) > 1) {
-            return redirect(route('db.so.create'));
-        } else {
-            return redirect(route('db'));
-        }
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function index()
@@ -167,7 +123,9 @@ class SalesOrderController extends Controller
     {
         $this->salesOrderService->reviseSO($request, $id);
 
-        return redirect(route('db.so.revise.index'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function delete(Request $request, $id)

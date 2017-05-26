@@ -89,7 +89,9 @@ class SalesOrderPaymentController extends Controller
 
         $this->paymentService->createCashPayment($currentSo, $paymentDate, $paymentAmount);
         
-        return redirect(route('db.so.payment.index'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function createTransferPayment($id)
@@ -121,7 +123,9 @@ class SalesOrderPaymentController extends Controller
 
         $currentSo->payments()->save($payment);
 
-        return redirect(route('db.so.payment.index'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function createGiroPayment($id)
@@ -165,7 +169,9 @@ class SalesOrderPaymentController extends Controller
 
         $currentSo->payments()->save($payment);
 
-        return redirect(route('db.so.payment.index'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function createBroughtForwardPayment(Request $request, $id)

@@ -137,12 +137,12 @@
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('netto_' + receiptIdx) }">
                                                     <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]"
-                                                           v-model="receipt.netto" v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.netto') }} ' + (receiptIdx + 1)"
+                                                           v-model="receipt.netto" v-validate="'required|numeric|checkequal:' + receiptIdx" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.netto') }} ' + (receiptIdx + 1)"
                                                            v-bind:data-vv-name="'netto_' + receiptIdx">
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('tare_' + receiptIdx) }">
                                                     <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]"
-                                                           v-model="receipt.tare" v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.tare') }} ' + (receiptIdx + 1)"
+                                                           v-model="receipt.tare" v-validate="'required|numeric|checkequal:' + receiptIdx" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.tare') }} ' + (receiptIdx + 1)"
                                                            v-bind:data-vv-name="'tare_' + receiptIdx">
                                                 </td>
                                                 <td class="text-center">
@@ -175,8 +175,8 @@
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
         Vue.component('vue-datetimepicker', {
-            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
-            props: ['id', 'name', 'value', 'format'],
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
             mounted: function() {
                 var vm = this;
 
@@ -237,19 +237,23 @@
                 }
             },
             mounted: function() {
-                /*
                 this.$validator.extend('checkequal', {
                     messages: {
                         en: function(field, args) { return 'Netto and Tare value not equal with Bruto' },
                         id: function(field, args) { return 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor' }
                     },
                     validate: function(value, args) {
-                        console.log(value);
-                        console.log(args);
-                        //Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))
+                        var result = false;
+                        var itemIdx = args[0];
+
+                        if (Number(app.inflow.receipts[itemIdx].brutto) ==
+                            Number(app.inflow.receipts[itemIdx].netto) + Number(app.inflow.receipts[itemIdx].tare)) {
+                            result = true;
+                        }
+
+                        return result;
                     }
                 });
-                */
                 this.createReceipt();
             }
         });

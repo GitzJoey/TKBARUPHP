@@ -43,10 +43,7 @@ class WarehouseOutflowController extends Controller
     public function saveDeliver(Request $request, $id)
     {
         for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
-            $conversionValue = ProductUnit::where([
-                'product_id' => $request->input("product_id.$i"),
-                'unit_id' => $request->input("selected_unit_id.$i")
-            ])->first()->conversion_value;
+            $conversionValue = ProductUnit::whereId($request->input("selected_unit_id.$i"))->first()->conversion_value;
 
             $deliverParams = [
                 'deliver_date' => date('Y-m-d', strtotime($request->input('deliver_date'))),
@@ -89,7 +86,9 @@ class WarehouseOutflowController extends Controller
         $so->status = 'SOSTATUS.WCC';
         $so->save();
 
-        return redirect(route('db.warehouse.outflow.index', array('w' => $request->input('warehouse_id'))));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function getWarehouseSOs(Request $request, $id)

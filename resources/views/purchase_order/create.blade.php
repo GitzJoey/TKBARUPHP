@@ -623,8 +623,8 @@
         });
 
         Vue.component('vue-datetimepicker', {
-            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format'>",
-            props: ['id', 'name', 'value', 'format'],
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
             mounted: function() {
                 var vm = this;
 
@@ -640,6 +640,8 @@
                 }).on("dp.change", function(e) {
                     vm.$emit('input', this.value);
                 });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
             },
             destroyed: function() {
                 $(this.$el).data("DateTimePicker").destroy();

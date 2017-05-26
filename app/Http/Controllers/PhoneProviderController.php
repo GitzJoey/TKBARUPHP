@@ -26,7 +26,7 @@ class PhoneProviderController extends Controller
     public function index()
     {
         $p = PhonePrefix::get()->where('prefix', '=', '0812');
-        dd($p);
+
         $phoneProvider = PhoneProvider::paginate(10);
         return view('phone_provider.index')->with('phoneProviderList', $phoneProvider);
     }

@@ -117,42 +117,31 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'PurchaseOrderPaymentController@paymentIndex')->name('db.po.payment.index');
                 Route::get('{id}', 'PurchaseOrderPaymentController@paymentHistory')->name('db.po.payment.history');
                 Route::get('{id}/cash', 'PurchaseOrderPaymentController@createCashPayment')->name('db.po.payment.cash');
-                Route::post('{id}/cash', 'PurchaseOrderPaymentController@saveCashPayment');
                 Route::get('{id}/transfer', 'PurchaseOrderPaymentController@createTransferPayment')->name('db.po.payment.transfer');
-                Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment');
                 Route::get('{id}/giro', 'PurchaseOrderPaymentController@createGiroPayment')->name('db.po.payment.giro');
-                Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment');
             });
 
             Route::group(['prefix' => 'copy'], function () {
                 Route::get('', 'PurchaseOrderCopyController@search')->name('db.po.copy');
                 Route::get('{code?}', 'PurchaseOrderCopyController@index')->name('db.po.copy.index');
                 Route::get('{code}/create', 'PurchaseOrderCopyController@create')->name('db.po.copy.create');
-                Route::post('{code}/create', 'PurchaseOrderCopyController@store');
                 Route::get('{code}/edit/{id}', 'PurchaseOrderCopyController@edit')->name('db.po.copy.edit');
-                Route::patch('{code}/edit/{id}', 'PurchaseOrderCopyController@update');
                 Route::delete('{code}/delete/{id}', 'PurchaseOrderCopyController@delete')->name('db.po.copy.delete');
             });
         });
 
         Route::group(['prefix' => 'so'], function () {
             Route::get('create', 'SalesOrderController@create')->name('db.so.create');
-            Route::post('create', 'SalesOrderController@store');
-            Route::get('select2/test', 'SalesOrderController@test');
             Route::get('revise', 'SalesOrderController@index')->name('db.so.revise.index');
             Route::get('revise/{id}', 'SalesOrderController@revise')->name('db.so.revise');
-            Route::patch('revise/{id}', 'SalesOrderController@saveRevision');
             Route::delete('reject/{id}', 'SalesOrderController@delete')->name('db.so.reject');
 
             Route::group(['prefix' => 'payment'], function () {
                 Route::get('', 'SalesOrderPaymentController@paymentIndex')->name('db.so.payment.index');
                 Route::get('{id}', 'SalesOrderPaymentController@paymentHistory')->name('db.so.payment.history');
                 Route::get('{id}/cash', 'SalesOrderPaymentController@createCashPayment')->name('db.so.payment.cash');
-                Route::post('{id}/cash', 'SalesOrderPaymentController@saveCashPayment');
                 Route::get('{id}/transfer', 'SalesOrderPaymentController@createTransferPayment')->name('db.so.payment.transfer');
-                Route::post('{id}/transfer', 'SalesOrderPaymentController@saveTransferPayment');
                 Route::get('{id}/giro', 'SalesOrderPaymentController@createGiroPayment')->name('db.so.payment.giro');
-                Route::post('{id}/giro', 'SalesOrderPaymentController@saveGiroPayment');
                 Route::get('{id}/bf', 'SalesOrderPaymentController@createBroughtForwardPayment')->name('db.so.payment.bf');
                 Route::post('{id}/bf', 'SalesOrderPaymentController@saveBroughtForwardPayment');
             });
@@ -195,7 +184,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::group(['prefix' => 'outflow', 'middleware' => ['permission:create-warehouse_outflow|read-warehouse_outflow|menu-warehouse_outflow']], function() {
                 Route::get('', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow.index');
                 Route::get('deliver/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
-                Route::post('deliver/{id?}', 'WarehouseOutflowController@saveDeliver');
             });
 
             Route::group(['prefix' => 'stockopname', 'middleware' => ['permission:create-warehouse_stockopname|read-warehouse_stockopname|menu-warehouse_stockopname']], function () {
@@ -397,9 +385,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'WarehouseController@index')->name('db.master.warehouse');
                 Route::get('show/{id}', 'WarehouseController@show')->name('db.master.warehouse.show');
                 Route::get('create', 'WarehouseController@create')->name('db.master.warehouse.create');
-                Route::post('create', 'WarehouseController@store');
                 Route::get('edit/{id}', 'WarehouseController@edit')->name('db.master.warehouse.edit');
-                Route::patch('edit/{id}', 'WarehouseController@update');
                 Route::delete('edit/{id}', 'WarehouseController@delete')->name('db.master.warehouse.delete');
             });
 

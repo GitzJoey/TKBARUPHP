@@ -58,8 +58,6 @@ class WarehouseController extends Controller
     {
         $this->validate($data, [
             'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'phone_num' => 'required|string|max:255',
             'status' => 'required',
         ]);
 
@@ -86,7 +84,9 @@ class WarehouseController extends Controller
             $warehouse->sections()->save($ws);
         }
 
-        return redirect(route('db.master.warehouse'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function edit($id)
@@ -127,7 +127,9 @@ class WarehouseController extends Controller
 
         $warehouse->save();
 
-        return redirect(route('db.master.warehouse'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function delete($id)

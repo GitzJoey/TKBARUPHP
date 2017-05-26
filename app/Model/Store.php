@@ -69,6 +69,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $ribbon
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereRibbon($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\CurrenciesConversion[] $currenciesConversions
+ * @property float $latitude
+ * @property float $longitude
+ * @property-read mixed $numeral_format
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereLatitude($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereLongitude($value)
  */
 class Store extends Model
 {

@@ -17,19 +17,17 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="soPaymentVue">
-        {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.transfer', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="soPaymentForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
 
             @include('sales_order.payment.payment_summary_partial')
@@ -49,8 +47,7 @@
                                                 <label for="inputPaymentType"
                                                        class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.payment_type')</label>
                                                 <div class="col-sm-4">
-                                                    <input id="inputPaymentType" type="text" class="form-control" readonly
-                                                           value="@lang('lookup.'.$paymentType)">
+                                                    <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.$paymentType)">
                                                 </div>
                                             </div>
                                         </div>
@@ -60,23 +57,22 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.bank_from')</label>
                                                 <div class="col-sm-4">
-                                                    <input type="hidden" name="bank_account_from" v-bind:value="bankAccountFrom.id">
                                                     <select id="inputBankAccountFrom"
+                                                            name="bank_account_from"
                                                             class="form-control"
-                                                            v-model="bankAccountFrom">
-                                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="bankAccountFrom in customerBankAccounts" v-bind:value="bankAccountFrom">@{{ bankAccountFrom.account_number + ' ' + bankAccountFrom.bank.short_name }}</option>
+                                                            v-model="bankAccountFrom.id">
+                                                        <option v-bind:value="defaultBank.id">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="bankAccountFrom in customerBankAccounts" v-bind:value="bankAccountFrom.id">@{{ bankAccountFrom.account_number + ' ' + bankAccountFrom.bank.short_name }}</option>
                                                     </select>
                                                 </div>
                                                 <label class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.bank_to')</label>
                                                 <div class="col-sm-4">
-                                                    <input type="hidden" name="bank_account_to" v-bind:value="bankAccountTo.id">
                                                     <select id="inputBankAccountTo"
                                                             name="bank_account_to"
                                                             class="form-control"
-                                                            v-model="bankAccountTo">
-                                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="bankAccountTo in storeBankAccounts" v-bind:value="bankAccountTo">@{{ bankAccountTo.account_number + ' ' + bankAccountFrom.bank.short_name }}</option>
+                                                            v-model="bankAccountTo.id">
+                                                        <option v-bind:value="defaultBank.id">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="bankAccountTo in storeBankAccounts" v-bind:value="bankAccountTo.id">@{{ bankAccountTo.account_number + ' ' + bankAccountFrom.bank.short_name }}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -92,8 +88,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                        <input type="text" class="form-control" id="inputPaymentDate"
-                                                               name="payment_date" data-parsley-required="true">
+                                                        <vue-datetimepicker id="inputPaymentDate" name="payment_date" value="" v-model="payment_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                                     </div>
                                                 </div>
                                                 <label for="inputEffectiveDate"
@@ -103,8 +98,7 @@
                                                         <div class="input-group-addon">
                                                             <i class="fa fa-calendar"></i>
                                                         </div>
-                                                        <input type="text" class="form-control" id="inputEffectiveDate"
-                                                               name="effective_date" data-parsley-required="true">
+                                                        <vue-datetimepicker id="inputEffectiveDate" name="effective_date" value="" v-model="effective_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                                     </div>
                                                 </div>
                                             </div>
@@ -112,7 +106,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group">
+                                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('total_amount') }">
                                                 <label for="inputPaymentAmount"
                                                        class="col-sm-2 control-label">@lang('sales_order.payment.transfer.field.payment_amount')</label>
                                                 <div class="col-sm-4">
@@ -120,9 +114,9 @@
                                                         <div class="input-group-addon">
                                                             Rp
                                                         </div>
-                                                        <input type="text" class="form-control" id="inputPaymentAmount"
-                                                               name="total_amount" data-parsley-required="true">
+                                                        <input type="text" class="form-control" id="inputPaymentAmount" name="total_amount" v-validate="'required|decimal:2'" data-vv-as="{{ trans('sales_order.payment.transfer.field.payment_amount') }}">
                                                     </div>
+                                                    <span v-show="errors.has('total_amount')" class="help-block" v-cloak>@{{ errors.first('total_amount') }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,31 +139,119 @@
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        </form>
+
         @include('sales_order.customer_details_partial')
+
     </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
         var soPaymentApp = new Vue({
             el: '#soPaymentVue',
             data: {
-                bankAccountFrom: {id: ''},
-                bankAccountTo: {id: ''},
+                currentSo: JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}'),
+                bankAccountFrom: { id: '' },
+                bankAccountTo: { id: '' },
                 storeBankAccounts: JSON.parse('{!! htmlspecialchars_decode($storeBankAccounts) !!}'),
                 customerBankAccounts: JSON.parse('{!! htmlspecialchars_decode($customerBankAccounts) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 so: {
-                    customer: _.cloneDeep(currentSo.customer),
+                    customer: { },
                     items: [],
                     expenses: [],
-                    disc_percent : currentSo.disc_percent % 1 !== 0 ? currentSo.disc_percent : parseFloat(currentSo.disc_percent).toFixed(0),
-                    disc_value : currentSo.disc_value % 1 !== 0 ? currentSo.disc_value : parseFloat(currentSo.disc_value).toFixed(0),
+                    disc_percent : 0,
+                    disc_value : 0
+                },
+                payment_date: '',
+                effective_date: '',
+                soIndex: 0
+            },
+            mounted: function() {
+                var vm = this;
+
+                vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                vm.so.disc_percent = vm.currentSo.disc_percent % 1 !== 0 ? vm.currentSo.disc_percent : parseFloat(vm.currentSo.disc_percent).toFixed(0);
+                vm.so.disc_value = vm.currentSo.disc_value % 1 !== 0 ? vm.currentSo.disc_value : parseFloat(vm.currentSo.disc_value).toFixed(0);
+
+                for (var i = 0; i < vm.currentSo.items.length; i++) {
+                    var itemDiscounts = [];
+                    if( vm.currentSo.items[i].discounts.length ){
+                        for (var ix = 0; ix < vm.currentSo.items[i].discounts.length; ix++) {
+                            itemDiscounts.push({
+                                id : vm.currentSo.items[i].discounts[ix].id,
+                                disc_percent : vm.currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
+                                disc_value : vm.currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_value : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                            });
+                        }
+                    }
+                    vm.so.items.push({
+                        id: vm.currentSo.items[i].id,
+                        product: _.cloneDeep(vm.currentSo.items[i].product),
+                        base_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
+                        selected_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(punit) { return punit.id == vm.currentSo.items[i].selected_unit_id; })),
+                        quantity: parseFloat(vm.currentSo.items[i].quantity).toFixed(0),
+                        price: parseFloat(vm.currentSo.items[i].price).toFixed(0),
+                        discounts : itemDiscounts
+                    });
+                }
+
+                for (var i = 0; i < vm.currentSo.expenses.length; i++) {
+                    var type = _.find(vm.expenseTypes, function (type) {
+                        return type.code === vm.currentSo.expenses[i].type;
+                    });
+
+                    vm.so.expenses.push({
+                        id: vm.currentSo.expenses[i].id,
+                        name: vm.currentSo.expenses[i].name,
+                        type: {
+                            code: vm.currentSo.expenses[i].type,
+                            description: type ? type.description : ''
+                        },
+                        amount: vm.currentSo.expenses[i].amount,
+                        remarks: vm.currentSo.expenses[i].remarks
+                    });
                 }
             },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.so.payment.transfer', $currentSo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soPaymentForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.so.payment.index') }}'; }
+                            });
+                    });
+                },
                 grandTotal: function () {
                     var vm = this;
                     var result = 0;
@@ -204,80 +286,15 @@
                         });
                     });
                     return result;
-                },
-            }
-        });
-
-        for (var i = 0; i < currentSo.items.length; i++) {
-            var itemDiscounts = [];
-            if( currentSo.items[i].discounts.length ){
-                for (var ix = 0; ix < currentSo.items[i].discounts.length; ix++) {
-                    itemDiscounts.push({
-                        id : currentSo.items[i].discounts[ix].id,
-                        disc_percent : currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
-                        disc_value : currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? currentSo.items[i].discounts[ix].item_disc_value : parseFloat(currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
-                    });
+                }
+            },
+            computed: {
+                defaultBank: function() {
+                    return {
+                        id: ''
+                    };
                 }
             }
-            soPaymentApp.so.items.push({
-                id: currentSo.items[i].id,
-                product: _.cloneDeep(currentSo.items[i].product),
-                base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
-                selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
-                quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
-                price: parseFloat(currentSo.items[i].price).toFixed(0),
-                discounts : itemDiscounts
-            });
-        }
-
-        for (var i = 0; i < currentSo.expenses.length; i++) {
-            var type = _.find(soPaymentApp.expenseTypes, function (type) {
-                return type.code === currentSo.expenses[i].type;
-            });
-
-            soPaymentApp.so.expenses.push({
-                id: currentSo.expenses[i].id,
-                name: currentSo.expenses[i].name,
-                type: {
-                    code: currentSo.expenses[i].type,
-                    description: type ? type.description : ''
-                },
-                amount: currentSo.expenses[i].amount,
-                remarks: currentSo.expenses[i].remarks
-            });
-        }
-
-        function getSelectedUnit(selectedUnitId) {
-            return function (element) {
-                return element.unit_id == selectedUnitId;
-            }
-        }
-
-        function isBase(unit) {
-            return unit.is_base == 1;
-        }
-
-        $(function () {
-            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue'
-            });
-
-            $("#inputPaymentDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
-            });
-
-            $("#inputEffectiveDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
-            });
         });
     </script>
 @endsection
