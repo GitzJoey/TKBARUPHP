@@ -91,4 +91,8 @@ return [
     'user.settings' => 'User Settings',
     'user.calendar' => 'User Calendar',
     'customer.confirmation' => 'Confirmation',
+    'tax.invoice.output' => 'e-Invoice Output',
+    'tax.invoice.output.create' => 'Create e-Invoice Output',
+    'tax.invoice.output.show' => 'Show e-Invoice Output',
+    'tax.invoice.output.edit' => 'Edit e-Invoice Output',
 ];

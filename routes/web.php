@@ -287,6 +287,29 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
         });
 
+        Route::group(['prefix' => 'tax'], function () {
+            Route::group(['prefix' => 'invoice'], function () {
+                Route::group(['prefix' => 'output', 'middleware' => ['permission:create-tax-output|read-tax-output|update-tax-output|delete-tax-output|menu-tax-output']], function () {
+                    Route::get('', 'TaxInvoiceOutputController@index')->name('db.tax.invoice.output.index');
+                    Route::get('show/{id}', 'TaxInvoiceOutputController@show')->name('db.tax.invoice.output.show');
+                    Route::get('create', 'TaxInvoiceOutputController@create')->name('db.tax.invoice.output.create');
+                    Route::post('create/', 'TaxInvoiceOutputController@store');
+                    Route::get('edit/{id}', 'TaxInvoiceOutputController@edit')->name('db.tax.invoice.output.edit');
+                    Route::patch('edit/{id}', 'TaxInvoiceOutputController@update');
+                    Route::delete('edit/{id}', 'TaxInvoiceOutputController@delete')->name('db.tax.invoice.output.delete');
+                });
+                Route::group(['prefix' => 'input', 'middleware' => ['permission:create-tax-input|read-tax-input|update-tax-input|delete-tax-input|menu-tax-input']], function () {
+                    Route::get('', 'TaxController@index')->name('db.tax.invoice.input.index');
+                    Route::get('show/{id}', 'TaxController@show')->name('db.tax.invoice.input.show');
+                    Route::get('create', 'TaxController@create')->name('db.tax.invoice.input.create');
+                    Route::post('create/', 'TaxController@store');
+                    Route::get('edit/{id}', 'TaxController@edit')->name('db.tax.invoice.input.edit');
+                    Route::patch('edit/{id}', 'TaxController@update');
+                    Route::delete('edit/{id}', 'TaxController@delete')->name('db.tax.invoice.input.delete');
+                });
+            });
+        });
+
         Route::group(['prefix' => 'report'], function () {
             Route::group(['prefix' => 'trx', 'middleware' => ['permission:menu-report_transaction']], function () {
                 Route::get('', 'ReportController@report_trx')->name('db.report.transaction');
@@ -509,4 +532,3 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
     Route::get('/home', 'HomeController@index');
 });
-

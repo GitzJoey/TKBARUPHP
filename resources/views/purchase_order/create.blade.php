@@ -135,7 +135,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" v-model="po.createdDate" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputPoDate" name="po_created" value="" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -412,7 +412,7 @@
 											<tr v-for="(expense, expenseIndex) in po.expenses">
 												<td>
 													<input name="expense_name[]" type="text" class="form-control"
-														   v-model="expense.name" data-parsley-required="true">
+														   v-model="expense.name" data-parsley  -required="true">
 												</td>
 												<td>
 													<input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
