@@ -123,7 +123,9 @@ class SalesOrderController extends Controller
     {
         $this->salesOrderService->reviseSO($request, $id);
 
-        return redirect(route('db.so.revise.index'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function delete(Request $request, $id)

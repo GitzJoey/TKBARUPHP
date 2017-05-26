@@ -54,7 +54,7 @@
                                     <div class="col-sm-2">
                                         <button id="customerDetailButton" type="button"
                                                 class="btn btn-primary btn-sm"
-                                                data-toggle="modal" data-target="#customerDetailModal">
+                                                data-toggle="modal" data-target="#customerDetailModal_0">
                                             <span class="fa fa-info-circle fa-lg"></span>
                                         </button>
                                     </div>
@@ -150,7 +150,7 @@
                                        class="col-sm-3 control-label">@lang('sales_order.revise.field.warehouse')</label>
                                 <div class="col-sm-9">
                                     @if($currentSo->status == 'SOSTATUS.WD')
-                                        <select id="inputWarehouse" data-parsley-required="true"
+                                        <select id="inputWarehouse" name="warehouse_id"
                                                 class="form-control"
                                                 v-model="so.warehouse.id">
                                             <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
@@ -601,6 +601,7 @@
                 </div>
             </div>
         </form>
+        @include('sales_order.customer_details_partial')
     </div>
 @endsection
 
@@ -721,7 +722,8 @@
                     vendorTrucking: { },
                     items: [],
                     expenses: []
-                }
+                },
+                soIndex: 0
             },
             mounted: function() {
                 var vm = this;
@@ -737,22 +739,20 @@
                 for (var i = 0; i < vm.currentSo.items.length; i++) {
                     var itemDiscounts = [];
 
-                    if (vm.currentSo.items[i].discounts != undefined) {
-                        if (vm.currentSo.items[i].discounts.length) {
-                            for (var ix = 0; ix < vm.currentSo.items[i].discounts.length; ix++) {
-                                itemDiscounts.push({
-                                    id: vm.currentSo.items[i].discounts[ix].id,
-                                    disc_percent: vm.currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
-                                    disc_value: vm.currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_value : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
-                                });
-                            }
-                        }
-                        else{
+                    if (vm.currentSo.items[i].discounts != undefined && vm.currentSo.items[i].discounts.length) {
+                        for (var ix = 0; ix < vm.currentSo.items[i].discounts.length; ix++) {
                             itemDiscounts.push({
-                                disc_percent : 0,
-                                disc_value : 0,
+                                id: vm.currentSo.items[i].discounts[ix].id,
+                                disc_percent: vm.currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
+                                disc_value: vm.currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_value : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
                             });
                         }
+                    }
+                    else{
+                        itemDiscounts.push({
+                            disc_percent : 0,
+                            disc_value : 0,
+                        });
                     }
 
                     vm.so.items.push({
@@ -786,7 +786,15 @@
             },
             methods: {
                 validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.so.revise', $currentSo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db') }}'; }
+                            });
+                    }).catch(function() {
 
+                    });
                 },
                 discountPercentToNominal: function(item, discount){
                     var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );

@@ -134,7 +134,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('create', 'SalesOrderController@create')->name('db.so.create');
             Route::get('revise', 'SalesOrderController@index')->name('db.so.revise.index');
             Route::get('revise/{id}', 'SalesOrderController@revise')->name('db.so.revise');
-            Route::patch('revise/{id}', 'SalesOrderController@saveRevision');
             Route::delete('reject/{id}', 'SalesOrderController@delete')->name('db.so.reject');
 
             Route::group(['prefix' => 'payment'], function () {
