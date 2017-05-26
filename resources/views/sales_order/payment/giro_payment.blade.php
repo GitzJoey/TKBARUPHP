@@ -140,8 +140,7 @@
             <div class="row">
                 <div class="col-md-7 col-offset-md-5">
                     <div class="btn-toolbar">
-                        <button id="submitButton" type="submit"
-                                class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
+                        <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>
                         &nbsp;&nbsp;&nbsp;
                         <a id="cancelButton" href="{{ route('db.so.payment.index') }}" class="btn btn-primary pull-right"
                            role="button">@lang('buttons.cancel_button')</a>
@@ -172,7 +171,63 @@
                     disc_value : currentSo.disc_value % 1 !== 0 ? currentSo.disc_value : parseFloat(currentSo.disc_value).toFixed(0),
                 }
             },
+            mounted: function() {
+                var vm = this;
+
+                vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                vm.so.disc_percent = vm.currentSo.disc_percent % 1 !== 0 ? vm.currentSo.disc_percent : parseFloat(vm.currentSo.disc_percent).toFixed(0);
+                vm.so.disc_value = vm.currentSo.disc_value % 1 !== 0 ? vm.currentSo.disc_value : parseFloat(vm.currentSo.disc_value).toFixed(0);
+
+                for (var i = 0; i < vm.currentSo.items.length; i++) {
+                    var itemDiscounts = [];
+
+                    if (vm.currentSo.items[i].discounts.length) {
+                        for (var ix = 0; ix < vm.currentSo.items[i].discounts.length; ix++) {
+                            itemDiscounts.push({
+                                id : vm.currentSo.items[i].discounts[ix].id,
+                                disc_percent : vm.currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
+                                disc_value : vm.currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_value : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                            });
+                        }
+                    }
+                    vm.so.items.push({
+                        id: vm.currentSo.items[i].id,
+                        product: _.cloneDeep(vm.currentSo.items[i].product),
+                        base_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
+                        selected_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(punit) { return punit.id == vm.currentSo.items[i].selected_unit_id; })),
+                        quantity: parseFloat(vm.currentSo.items[i].quantity).toFixed(0),
+                        price: parseFloat(vm.currentSo.items[i].price).toFixed(0),
+                        discounts : itemDiscounts
+                    });
+                }
+
+                for (var i = 0; i < vm.currentSo.expenses.length; i++) {
+                    var type = _.find(vm.expenseTypes, function (type) {
+                        return type.code === vm.currentSo.expenses[i].type;
+                    });
+
+                    vm.so.expenses.push({
+                        id: vm.currentSo.expenses[i].id,
+                        name: vm.currentSo.expenses[i].name,
+                        type: {
+                            code: vm.currentSo.expenses[i].type,
+                            description: type ? type.description : ''
+                        },
+                        amount: vm.currentSo.expenses[i].amount,
+                        remarks: vm.currentSo.expenses[i].remarks
+                    });
+                }
+            },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.so.payment.giro', $currentSo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soPaymentForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.so.payment.index') }}'; }
+                            });
+                    });
+                },
                 grandTotal: function () {
                     var vm = this;
                     var result = 0;
@@ -209,78 +264,6 @@
                     return result;
                 },
             }
-        });
-        
-        for (var i = 0; i < currentSo.items.length; i++) {
-            var itemDiscounts = [];
-            if( currentSo.items[i].discounts.length ){
-                for (var ix = 0; ix < currentSo.items[i].discounts.length; ix++) {
-                    itemDiscounts.push({
-                        id : currentSo.items[i].discounts[ix].id,
-                        disc_percent : currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
-                        disc_value : currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? currentSo.items[i].discounts[ix].item_disc_value : parseFloat(currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
-                    });
-                }
-            }
-            soPaymentApp.so.items.push({
-                id: currentSo.items[i].id,
-                product: _.cloneDeep(currentSo.items[i].product),
-                base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
-                selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
-                quantity: parseFloat(currentSo.items[i].quantity).toFixed(0),
-                price: parseFloat(currentSo.items[i].price).toFixed(0),
-                discounts : itemDiscounts
-            });
-        }
-
-        for (var i = 0; i < currentSo.expenses.length; i++) {
-            var type = _.find(soPaymentApp.expenseTypes, function (type) {
-                return type.code === currentSo.expenses[i].type;
-            });
-
-            soPaymentApp.so.expenses.push({
-                id: currentSo.expenses[i].id,
-                name: currentSo.expenses[i].name,
-                type: {
-                    code: currentSo.expenses[i].type,
-                    description: type ? type.description : ''
-                },
-                amount: currentSo.expenses[i].amount,
-                remarks: currentSo.expenses[i].remarks
-            });
-        }
-
-        function getSelectedUnit(selectedUnitId) {
-            return function (element) {
-                return element.unit_id == selectedUnitId;
-            }
-        }
-
-        function isBase(unit) {
-            return unit.is_base == 1;
-        }
-
-        $(function () {
-            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue'
-            });
-
-            $("#inputPaymentDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
-            });
-
-            $("#inputEffectiveDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
-            });
         });
     </script>
 @endsection
