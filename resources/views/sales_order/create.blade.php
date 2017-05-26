@@ -332,12 +332,12 @@
                                                     <div class="col-md-12">
                                                         <table v-bind:id="'itemsTotalListTable_' + soIndex" class="table table-bordered">
                                                             <tbody>
-                                                            <tr>
-                                                                <td width="80%" class="text-right">@lang('sales_order.create.table.total.body.total')</td>
-                                                                <td width="20%" class="text-right">
-                                                                    <span class="control-label-normal">@{{ numeral(grandTotal(soIndex)).format() }}</span>
-                                                                </td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td width="80%" class="text-right">@lang('sales_order.create.table.total.body.total')</td>
+                                                                    <td width="20%" class="text-right">
+                                                                        <span class="control-label-normal">@{{ numeral(grandTotal(soIndex)).format() }}</span>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -357,51 +357,51 @@
                                                     <div class="col-md-12">
                                                         <table v-bind:id="'discountsListTable_' + soIndex" class="table table-bordered table-hover">
                                                             <thead>
-                                                            <tr>
-                                                                <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
-                                                                <th width="30%">@lang('purchase_order.create.table.item.header.total_price')</th>
-                                                                <th width="40%" class="text-left" colspan="3">@lang('purchase_order.create.table.item.header.total_price')</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                                    <th width="30%">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                                                    <th width="40%" class="text-left" colspan="3">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                                                </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <template v-for="(item, itemIndex) in so.items">
-                                                                <tr>
-                                                                    <td width="30%">@{{ item.product.name }}</td>
-                                                                    <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
-                                                                    <td colspan="3" width="40%">
-                                                                        <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
-                                                                            <span class="fa fa-plus"/>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="3" width="65%" ></td>
-                                                                    <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
-                                                                    <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
-                                                                </tr>
-                                                                <tr v-for="(discount, discountIndex) in item.discounts">
-                                                                    <td colspan="2" width="60%"></td>
-                                                                    <td class="text-center valign-middle" width="5%">
-                                                                        <button type="button" class="btn btn-danger btn-md" v-on:click="removeDiscount(soIndex, itemIndex, discountIndex)">
-                                                                            <span class="fa fa-minus"></span>
-                                                                        </button>
-                                                                    </td>
-                                                                    <td width="10%">
-                                                                        <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_percent['+itemIndex+'][]'"
-                                                                               v-model="discount.disc_percent" placeholder="%"
-                                                                               v-on:keyup="discountPercentToNominal(item, discount)"/>
-                                                                    </td>
-                                                                    <td width="25%">
-                                                                        <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_value['+itemIndex+'][]'"
-                                                                               v-model="discount.disc_value" placeholder="Nominal"
-                                                                               v-on:keyup="discountNominalToPercent(item, discount)"/>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                                                    <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
-                                                                </tr>
-                                                            </template>
+                                                                <template v-for="(item, itemIndex) in so.items">
+                                                                    <tr>
+                                                                        <td width="30%">@{{ item.product.name }}</td>
+                                                                        <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                                        <td colspan="3" width="40%">
+                                                                            <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
+                                                                                <span class="fa fa-plus"/>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="3" width="65%" ></td>
+                                                                        <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
+                                                                        <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
+                                                                    </tr>
+                                                                    <tr v-for="(discount, discountIndex) in item.discounts">
+                                                                        <td colspan="2" width="60%"></td>
+                                                                        <td class="text-center valign-middle" width="5%">
+                                                                            <button type="button" class="btn btn-danger btn-md" v-on:click="removeDiscount(soIndex, itemIndex, discountIndex)">
+                                                                                <span class="fa fa-minus"></span>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td width="10%">
+                                                                            <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_percent['+itemIndex+'][]'"
+                                                                                   v-model="discount.disc_percent" placeholder="%"
+                                                                                   v-on:keyup="discountPercentToNominal(item, discount)"/>
+                                                                        </td>
+                                                                        <td width="25%">
+                                                                            <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_item_disc_value['+itemIndex+'][]'"
+                                                                                   v-model="discount.disc_value" placeholder="Nominal"
+                                                                                   v-on:keyup="discountNominalToPercent(item, discount)"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
+                                                                        <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
+                                                                    </tr>
+                                                                </template>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -410,13 +410,13 @@
                                                     <div class="col-md-12">
                                                         <table class="table table-bordered">
                                                             <tbody>
-                                                            <tr>
-                                                                <td width="65%"
-                                                                    class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
-                                                                <td width="35%" class="text-right">
-                                                                    <span class="control-label-normal">@{{ numeral(discountTotal(soIndex)).format() }}</span>
-                                                                </td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td width="65%"
+                                                                        class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                                                    <td width="35%" class="text-right">
+                                                                        <span class="control-label-normal">@{{ numeral(discountTotal(soIndex)).format() }}</span>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -438,51 +438,51 @@
                                                     <div class="col-md-12">
                                                         <table v-bind:id="'expensesListTable_' + soIndex" class="table table-bordered table-hover">
                                                             <thead>
-                                                            <tr>
-                                                                <th width="20%">@lang('sales_order.create.table.expense.header.name')</th>
-                                                                <th width="20%"
-                                                                    class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
-                                                                <th width="10%"
-                                                                    class="text-center">@lang('sales_order.create.table.expense.header.internal_expense')</th>
-                                                                <th width="25%"
-                                                                    class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
-                                                                <th width="5%">&nbsp;</th>
-                                                                <th width="20%"
-                                                                    class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th width="20%">@lang('sales_order.create.table.expense.header.name')</th>
+                                                                    <th width="20%"
+                                                                        class="text-center">@lang('sales_order.create.table.expense.header.type')</th>
+                                                                    <th width="10%"
+                                                                        class="text-center">@lang('sales_order.create.table.expense.header.internal_expense')</th>
+                                                                    <th width="25%"
+                                                                        class="text-center">@lang('sales_order.create.table.expense.header.remarks')</th>
+                                                                    <th width="5%">&nbsp;</th>
+                                                                    <th width="20%"
+                                                                        class="text-center">@lang('sales_order.create.table.expense.header.amount')</th>
+                                                                </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr v-for="(expense, expenseIndex) in so.expenses">
-                                                                <td>
-                                                                    <input v-bind:name="'so_' + soIndex + '_expense_name[]'" type="text" class="form-control"
-                                                                           v-model="expense.name" v-validate="'required'">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type[]'" v-bind:value="expense.type.code">
-                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_description[]'" v-bind:value="expense.type.description">
-                                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_i18nDescription[]'" v-bind:value="expense.type.i18nDescription">
-                                                                    <select class="form-control" v-model="expense.type">
-                                                                        <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                        <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <vue-iCheck name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense"></vue-iCheck>
-                                                                </td>
-                                                                <td>
-                                                                    <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control"
-                                                                           v-model="expense.remarks"/>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <button type="button" class="btn btn-danger btn-md"
-                                                                            v-on:click="removeExpense(soIndex, expenseIndex)"><span class="fa fa-minus"/>
-                                                                    </button>
-                                                                </td>
-                                                                <td>
-                                                                    <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
-                                                                           v-model="expense.amount" v-validate="'required|deciaml:2'"/>
-                                                                </td>
-                                                            </tr>
+                                                                <tr v-for="(expense, expenseIndex) in so.expenses">
+                                                                    <td>
+                                                                        <input v-bind:name="'so_' + soIndex + '_expense_name[]'" type="text" class="form-control"
+                                                                               v-model="expense.name" v-validate="'required'">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type[]'" v-bind:value="expense.type.code">
+                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_description[]'" v-bind:value="expense.type.description">
+                                                                        <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_i18nDescription[]'" v-bind:value="expense.type.i18nDescription">
+                                                                        <select class="form-control" v-model="expense.type">
+                                                                            <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                                            <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <vue-iCheck name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense"></vue-iCheck>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control"
+                                                                               v-model="expense.remarks"/>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                                v-on:click="removeExpense(soIndex, expenseIndex)"><span class="fa fa-minus"/>
+                                                                        </button>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
+                                                                               v-model="expense.amount" v-validate="'required|deciaml:2'"/>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -491,13 +491,13 @@
                                                     <div class="col-md-12">
                                                         <table v-bind:id="'expensesTotalListTable_' + soIndex" class="table table-bordered">
                                                             <tbody>
-                                                            <tr>
-                                                                <td width="80%"
-                                                                    class="text-right">@lang('sales_order.create.table.total.body.total')</td>
-                                                                <td width="20%" class="text-right">
-                                                                    <span class="control-label-normal">@{{ numeral(expenseTotal(soIndex)).format() }}</span>
-                                                                </td>
-                                                            </tr>
+                                                                <tr>
+                                                                    <td width="80%"
+                                                                        class="text-right">@lang('sales_order.create.table.total.body.total')</td>
+                                                                    <td width="20%" class="text-right">
+                                                                        <span class="control-label-normal">@{{ numeral(expenseTotal(soIndex)).format() }}</span>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -517,27 +517,27 @@
                                                     <div class="col-md-12">
                                                         <table id="discountsListTable" class="table table-bordered table-hover">
                                                             <thead>
-                                                            <tr>
-                                                                <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
-                                                                <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
-                                                                <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
-                                                            </tr>
+                                                                <tr>
+                                                                    <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
+                                                                    <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
+                                                                    <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
+                                                                </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <tr>
-                                                                <td class="text-right valign-middle">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) ).format() }}</td>
-                                                                <td>
-                                                                    <div class="row">
-                                                                        <div class="col-md-4">
-                                                                            <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + 'disc_percent'" v-model="so.disc_percent" placeholder="%" v-on:keyup="discountTotalPercentToNominal(soIndex)" />
+                                                                <tr>
+                                                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) ).format() }}</td>
+                                                                    <td>
+                                                                        <div class="row">
+                                                                            <div class="col-md-4">
+                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + 'disc_percent'" v-model="so.disc_percent" placeholder="%" v-on:keyup="discountTotalPercentToNominal(soIndex)" />
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + 'disc_value'" v-model="so.disc_value" placeholder="Nominal" v-on:keyup="discountTotalNominalToPercent(soIndex)" />
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-md-8">
-                                                                            <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + 'disc_value'" v-model="so.disc_value" placeholder="Nominal" v-on:keyup="discountTotalNominalToPercent(soIndex)" />
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-right valign-middle">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
-                                                            </tr>
+                                                                    </td>
+                                                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>

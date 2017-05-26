@@ -24,7 +24,6 @@ use App\Model\ProductUnit;
 use App\Services\PaymentService;
 
 use DB;
-use Session;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -362,8 +361,7 @@ class SalesOrderServiceImpl implements SalesOrderService
             ];
         }
 
-        Session::put('userSOs', collect($SOs));
-        Session::put('a', 'aaaa');
+        //Session::put('userSOs', collect($SOs));
     }
 
     /**
