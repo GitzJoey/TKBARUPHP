@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-sm-2">
                             <button id="customerDetailButton" type="button" class="btn btn-primary btn-sm"
-                                    data-toggle="modal" data-target="#customerDetailModal"><span
+                                    data-toggle="modal" data-target="#customerDetailModal_0"><span
                                         class="fa fa-info-circle fa-lg"></span></button>
                         </div>
                     </div>
@@ -108,8 +108,7 @@
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input type="text" class="form-control" name="shipping_date" readonly
-                                   value="{{ $currentSo->shipping_date->format('d-m-Y') }}"
-                                   data-parsley-required="true">
+                                   value="{{ $currentSo->shipping_date->format('d-m-Y') }}">
                         </div>
                     </div>
                 </div>
@@ -174,7 +173,7 @@
                                     <td class="text-center">
                                     </td>
                                     <td class="text-right valign-middle">
-                                        @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
+                                        @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -189,7 +188,7 @@
                                     <td width="80%"
                                         class="text-right">@lang('sales_order.payment.summary.table.total.body.total')</td>
                                     <td width="20%" class="text-right">
-                                        <span class="control-label-normal">@{{ grandTotal() }}</span>
+                                        <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -221,13 +220,13 @@
                                 <template v-for="(item, itemIndex) in so.items">
                                     <tr>
                                         <td width="30%">@{{ item.product.name }}</td>
-                                        <td width="30%">@{{ item.selected_unit.conversion_value * item.quantity * item.price }}</td>
+                                        <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                         <td colspan="3" width="40%"></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3" width="65%" ></td>
-                                                    <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
-                                                    <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
+                                        <td colspan="3" width="65%"></td>
+                                            <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
+                                            <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
                                     </tr>
                                     <tr v-for="(discount, discountIndex) in item.discounts">
                                         <td colspan="2" width="60%"></td>
@@ -242,7 +241,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                        <td class="text-right" colspan="2"> @{{ discountItemSubTotal(item.discounts) }}</td>
+                                        <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
                                     </tr>
                                 </template>
                             </tbody>
@@ -257,7 +256,7 @@
                                 <td width="65%"
                                     class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
                                 <td width="35%" class="text-right">
-                                    <span class="control-label-normal">@{{ discountTotal() }}</span>
+                                    <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
                                 </td>
                             </tr>
                             </tbody>
@@ -279,15 +278,15 @@
                     <div class="col-md-12">
                         <table id="discountsListTable" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
-                                <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
-                                <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
-                            </tr>
+                                <tr>
+                                    <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
+                                    <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
+                                    <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() }}</td>
+                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
                                     <td>
                                         <div class="row">
                                             <div class="col-md-3">
@@ -298,7 +297,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-right valign-middle">@{{ ( grandTotal() - discountTotal() ) + expenseTotal() - so.disc_value }}</td>
+                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - so.disc_value ).format()}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -429,7 +428,7 @@
                                         <tr>
                                             <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
                                             <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                            <td class="text-right">{{ number_format($payment->total_amount, 0) }}</td>
+                                            <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -471,7 +470,7 @@
                                                                                : $payment->payment_detail->bankAccountTo->bank->short_name
                                                                                . ' - ' . $payment->payment_detail->bankAccountTo->account_number }}</td>
                                             <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                            <td class="text-right">{{ number_format($payment->total_amount, 0) }}</td>
+                                            <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -516,7 +515,7 @@
                                             <td class="text-center">{{ $payment->payment_detail->giro->serial_number }}</td>
                                             <td class="text-center">{{ $payment->payment_detail->giro->printed_name }}</td>
                                             <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                            <td class="text-right">{{ number_format($payment->total_amount, 0) }}</td>
+                                            <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -533,14 +532,14 @@
                                 <tr>
                                     <td class="text-right">@lang('sales_order.payment.summary.table.total.body.paid_amount')</td>
                                     <td width="25%" class="text-right">
-                                        <span class="control-label-normal">{{ number_format($currentSo->totalAmountPaid(), 0) }}</span>
+                                        <span class="control-label-normal">{{ number_format($currentSo->totalAmountPaid(), Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-right">@lang('sales_order.payment.summary.table.total.body.to_be_paid_amount')</td>
                                     <td width="25%" class="text-right">
                                         <span class="control-label-normal">
-                                            {{ number_format($currentSo->totalAmount() - $currentSo->totalAmountPaid(), 0) }}
+                                            {{ number_format($currentSo->totalAmount() - $currentSo->totalAmountPaid(), Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}
                                         </span>
                                     </td>
                                 </tr>

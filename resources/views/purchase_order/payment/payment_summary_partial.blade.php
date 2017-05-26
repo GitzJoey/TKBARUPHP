@@ -109,8 +109,7 @@
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input type="text" class="form-control" name="shipping_date" readonly
-                                   value="{{ $currentPo->shipping_date->format('d-m-Y') }}"
-                                   data-parsley-required="true">
+                                   value="{{ $currentPo->shipping_date->format('d-m-Y') }}">
                         </div>
                     </div>
                 </div>
@@ -162,19 +161,13 @@
                                 <tr v-for="(item, itemIndex) in po.items">
                                     <td class="valign-middle">@{{ item.product.name }}</td>
                                     <td>
-                                        <input type="text" class="form-control text-right"
-                                               data-parsley-required="true" data-parsley-type="number"
-                                               name="quantity[]"
-                                               v-model="item.quantity" readonly>
+                                        <input type="text" class="form-control text-right" name="quantity[]" v-model="item.quantity" readonly>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" readonly
-                                               v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
+                                        <input type="text" class="form-control" readonly v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control text-right" name="price[]"
-                                               v-model="item.price" data-parsley-required="true"
-                                               readonly>
+                                        <input type="text" class="form-control text-right" name="price[]" v-model="item.price" readonly>
                                     </td>
                                     <td class="text-right valign-middle">
                                         @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
@@ -467,27 +460,27 @@
                         <div class="col-md-12">
                             <table id="cashPaymentHistoryTable" class="table table-bordered table-hover">
                                 <thead>
-                                <tr>
-                                    <th colspan="3"
-                                        class="text-center">@lang('purchase_order.payment.summary.table.payments.header.cash')</th>
-                                </tr>
-                                <tr>
-                                    <th width="25%"
-                                        class="text-center">@lang('purchase_order.payment.summary.table.payments.header.payment_date')</th>
-                                    <th width="25%"
-                                        class="text-center">@lang('purchase_order.payment.summary.table.payments.header.payment_status')</th>
-                                    <th width="25%"
-                                        class="text-center">@lang('purchase_order.payment.summary.table.payments.header.payment_amount')</th>
-                                </tr>
+                                    <tr>
+                                        <th colspan="3"
+                                            class="text-center">@lang('purchase_order.payment.summary.table.payments.header.cash')</th>
+                                    </tr>
+                                    <tr>
+                                        <th width="25%"
+                                            class="text-center">@lang('purchase_order.payment.summary.table.payments.header.payment_date')</th>
+                                        <th width="25%"
+                                            class="text-center">@lang('purchase_order.payment.summary.table.payments.header.payment_status')</th>
+                                        <th width="25%"
+                                            class="text-center">@lang('purchase_order.payment.summary.table.payments.header.payment_amount')</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($currentPo->cashPayments() as $key => $payment)
-                                    <tr>
-                                        <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
-                                        <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                        <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
-                                    </tr>
-                                @endforeach
+                                    @foreach ($currentPo->cashPayments() as $key => $payment)
+                                        <tr>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
+                                            <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
+                                            <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

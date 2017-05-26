@@ -41,6 +41,12 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::post('create', 'SalesOrderController@store')->name('api.post.db.so.create');
             Route::post('save/draft', 'SalesOrderController@saveDraft')->name('api.post.db.so.create.savedraft');
             Route::post('revise/{id}', 'SalesOrderController@saveRevision')->name('api.post.db.so.revise');
+
+            Route::group(['prefix' => 'payment'], function () {
+                Route::post('{id}/cash', 'SalesOrderPaymentController@saveCashPayment')->name('api.post.db.so.payment.cash');
+                Route::post('{id}/transfer', 'SalesOrderPaymentController@saveTransferPayment')->name('api.post.db.so.payment.transfer');;
+                Route::post('{id}/giro', 'SalesOrderPaymentController@saveGiroPayment')->name('api.post.db.so.payment.giro');;
+            });
         });
 
         Route::group(['prefix' => 'warehouse'], function () {

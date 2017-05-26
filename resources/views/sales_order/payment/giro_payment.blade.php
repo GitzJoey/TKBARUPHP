@@ -17,19 +17,17 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="soPaymentVue">
-        {!! Form::model($currentSo, ['method' => 'POST', 'route' => ['db.so.payment.giro', $currentSo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="soPaymentForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
 
             @include('sales_order.payment.payment_summary_partial')
@@ -47,8 +45,7 @@
                                         <label for="inputPaymentType"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_type')</label>
                                         <div class="col-sm-4">
-                                            <input id="inputPaymentType" type="text" class="form-control" readonly
-                                                   value="@lang('lookup.'.$paymentType)">
+                                            <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.$paymentType)">
                                         </div>
                                     </div>
                                 </div>
@@ -59,12 +56,12 @@
                                         <label for="inputGiroBank"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.bank')</label>
                                         <div class="col-sm-4">
-                                            <input type="hidden" name="bank_id" v-bind:value="giro.bank.id">
-                                            <select id="inputGiro"
+                                            <select id="inputGiro" name="bank_id"
                                                     class="form-control"
-                                                    v-model="giro.bank" data-parsley-required="true">
-                                                <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                <option v-for="bank in bankDDL" v-bind:value="bank">@{{ bank.name }}</option>
+                                                    v-model="giro.bank.id"
+                                                    v-validate="'required'">
+                                                <option v-bind:value="defaultBank.id">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-for="bank in bankDDL" v-bind:value="bank.id">@{{ bank.name }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -77,7 +74,7 @@
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
                                         <div class="col-sm-4">
                                             <input id="inputGiroSerialNumber" name="serial_number" type="text"
-                                                   class="form-control" data-parsley-required="true">
+                                                   class="form-control" v-validate="'required'">
                                         </div>
                                     </div>
                                 </div>
@@ -92,8 +89,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control" id="inputPaymentDate"
-                                                       name="payment_date" data-parsley-required="true">
+                                                <vue-datetimepicker id="inputPaymentDate" name="payment_date" value="" v-model="payment_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                             </div>
                                         </div>
                                         <label for="inputEffectiveDate"
@@ -103,9 +99,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control" id="inputEffectiveDate"
-                                                       v-bind:value="giro.effective_date"
-                                                       name="effective_date" data-parsley-required="true">
+                                                <vue-datetimepicker id="inputEffectiveDate" name="effective_date" value="" v-model="giro.effective_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                             </div>
                                         </div>
                                     </div>
@@ -117,15 +111,13 @@
                                         <label for="inputAmount"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_amount')</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputAmount"
-                                                   name="amount" v-model="giro.amount" data-parsley-required="true">
+                                            <input type="text" class="form-control" id="inputAmount" name="amount" v-model="giro.amount" v-validate="'required|decimal:2'">
                                         </div>
                                         <label for="inputPrintedName"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.printed_name')</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputPrintedName"
-                                                   v-bind:value="giro.printed_name"
-                                                   name="printed_name" data-parsley-required="true">
+                                            <input type="text" class="form-control" id="inputPrintedName" name="printed_name"
+                                                   v-bind:value="giro.printed_name" v-validate="'required'">
                                         </div>
                                     </div>
                                 </div>
@@ -136,9 +128,7 @@
                                         <label for="inputGiroRemarks"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.remarks')</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputGiroRemarks"
-                                                   v-bind:value="giro.remarks"
-                                                   name="remarks" data-parsley-required="true">
+                                            <input type="text" class="form-control" id="inputGiroRemarks" v-bind:value="giro.remarks" name="remarks">
                                         </div>
                                     </div>
                                 </div>
@@ -158,19 +148,20 @@
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        </form>
+
         @include('sales_order.customer_details_partial')
+
     </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}');
-
         var soPaymentApp = new Vue({
             el: '#soPaymentVue',
             data: {
-                giro: {id: '', bank: {id: ''}},
+                currentSo: JSON.parse('{!! htmlspecialchars_decode($currentSo->toJson()) !!}'),
+                giro: { id: '', bank: {id: ''}},
                 bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 so: {

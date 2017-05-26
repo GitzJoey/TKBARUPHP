@@ -140,11 +140,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'SalesOrderPaymentController@paymentIndex')->name('db.so.payment.index');
                 Route::get('{id}', 'SalesOrderPaymentController@paymentHistory')->name('db.so.payment.history');
                 Route::get('{id}/cash', 'SalesOrderPaymentController@createCashPayment')->name('db.so.payment.cash');
-                Route::post('{id}/cash', 'SalesOrderPaymentController@saveCashPayment');
                 Route::get('{id}/transfer', 'SalesOrderPaymentController@createTransferPayment')->name('db.so.payment.transfer');
-                Route::post('{id}/transfer', 'SalesOrderPaymentController@saveTransferPayment');
                 Route::get('{id}/giro', 'SalesOrderPaymentController@createGiroPayment')->name('db.so.payment.giro');
-                Route::post('{id}/giro', 'SalesOrderPaymentController@saveGiroPayment');
                 Route::get('{id}/bf', 'SalesOrderPaymentController@createBroughtForwardPayment')->name('db.so.payment.bf');
                 Route::post('{id}/bf', 'SalesOrderPaymentController@saveBroughtForwardPayment');
             });
