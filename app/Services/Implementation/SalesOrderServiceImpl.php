@@ -361,7 +361,7 @@ class SalesOrderServiceImpl implements SalesOrderService
             ];
         }
 
-        //Session::put('userSOs', collect($SOs));
+        session(['userSOs' => collect($SOs)]);
     }
 
     /**

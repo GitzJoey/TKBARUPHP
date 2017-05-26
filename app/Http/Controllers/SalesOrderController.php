@@ -63,7 +63,7 @@ class SalesOrderController extends Controller
         $soStatusDraft = Lookup::where('code', '=', 'SOSTATUS.D')->get(['description', 'code']);
         $soCode = SOCodeGenerator::generateCode();
 
-        //$userSOs = Session::get('userSOs', collect([]));
+        $userSOs = session('userSOs', collect([]));
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL', 'productDDL',
             'stocksDDL', 'vendorTruckingDDL', 'soCode', 'soStatusDraft', 'userSOs', 'expenseTypes','customerDDL'));
