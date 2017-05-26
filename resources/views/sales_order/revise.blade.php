@@ -259,7 +259,7 @@
                                                         <select name="selected_unit_id[]"
                                                                 class="form-control"
                                                                 v-model="item.selected_unit.id"
-                                                                data-parsley-required="true">
+                                                                v-validate="'required'">
                                                             <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
                                                             <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
                                                         </select>
@@ -415,21 +415,18 @@
                                                     <input type="hidden" name="expense_id[]" v-bind:value="expense.id"/>
                                                     <input name="expense_name[]" type="text" class="form-control"
                                                            v-model="expense.name"
-                                                           data-parsley-required="true" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
+                                                           v-validate="'required'" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
                                                 </td>
                                                 <td>
                                                     @if($currentSo->status == 'SOSTATUS.WD')
-                                                        <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code">
-                                                        <select data-parsley-required="true"
-                                                                class="form-control" v-model="expense.type">
-                                                            <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                            <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                        <select name="expense_type[]"
+                                                                class="form-control" v-model="expense.type.code">
+                                                            <option v-bind:value="defaultExpenseType.code">@lang('labels.PLEASE_SELECT')</option>
+                                                            <option v-for="expenseType in expenseTypes" v-bind:value="expenseType.code">@{{ expenseType.description }}</option>
                                                         </select>
                                                     @else
-                                                        <input type="text" class="form-control" readonly
-                                                               v-bind:value="expense.type.description">
-                                                        <input type="hidden" name="expense_type[]"
-                                                               v-bind:value="expense.type.code"/>
+                                                        <input type="text" class="form-control" readonly v-bind:value="expense.type.description">
+                                                        <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code"/>
                                                     @endif
                                                 </td>
                                                 <td class="text-center" width="10%">
@@ -639,53 +636,6 @@
                 if (this.value == undefined || this.value == NaN) this.value = '';
                 if (this.format == undefined || this.format == NaN) this.format = 'DD-MM-YYYY hh:mm A';
                 if (this.readonly == undefined || this.readonly == NaN) this.readonly = 'false';
-
-                $(this.$el).datetimepicker({
-                    format: this.format,
-                    defaultDate: this.value == '' ? moment():moment(this.value),
-                    showTodayButton: true,
-                    showClose: true
-                }).on("dp.change", function(e) {
-                    vm.$emit('input', this.value);
-                });
-
-                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
-            },
-            destroyed: function() {
-                $(this.$el).data("DateTimePicker").destroy();
-            }
-        });
-
-        Vue.component('vue-icheck', {
-            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
-            props: ['id', 'name', 'disabled', 'value'],
-            mounted: function() {
-                $(this.$el).iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue'
-                }).on('ifChecked', function(event) {
-                    this.value = true;
-                }).on('ifUnchecked', function(event) {
-                    this.value = false;
-                });
-
-                if (this.value) { $(this.$el).iCheck('check'); }
-                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
-            },
-            destroyed: function() {
-                $(this.$el).iCheck('destroy');
-            }
-        });
-
-        Vue.component('vue-datetimepicker', {
-            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
-            props: ['id', 'name', 'value', 'format', 'readonly'],
-            mounted: function() {
-                var vm = this;
-
-                if (this.value == undefined) this.value = '';
-                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
-                if (this.readonly == undefined) this.readonly = 'false';
 
                 $(this.$el).datetimepicker({
                     format: this.format,
@@ -1016,6 +966,11 @@
                         conversion_value: 1
                     };
                 },
+                defaultExpenseType: function() {
+                    return {
+                        code: ''
+                    };
+                }
             }
 
         });

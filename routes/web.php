@@ -187,7 +187,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::group(['prefix' => 'outflow', 'middleware' => ['permission:create-warehouse_outflow|read-warehouse_outflow|menu-warehouse_outflow']], function() {
                 Route::get('', 'WarehouseOutflowController@outflow')->name('db.warehouse.outflow.index');
                 Route::get('deliver/{id?}', 'WarehouseOutflowController@deliver')->name('db.warehouse.outflow');
-                Route::post('deliver/{id?}', 'WarehouseOutflowController@saveDeliver');
             });
 
             Route::group(['prefix' => 'stockopname', 'middleware' => ['permission:create-warehouse_stockopname|read-warehouse_stockopname|menu-warehouse_stockopname']], function () {
