@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <form id="poForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+        <form id="soForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6">
@@ -107,8 +107,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" readonly
-                                               value="{{ $currentSo->so_created->format('d-m-Y') }}">
+                                        <vue-datetimepicker id="inputSoDate" value="{{ $currentSo->so_created->format('d-m-Y') }}" v-model="so.so_created" format="DD-MM-YYYY hh:mm A" readonly="true"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -133,21 +132,16 @@
                             <div class="form-group">
                                 <label for="inputShippingDate"
                                        class="col-sm-3 control-label">@lang('sales_order.revise.field.shipping_date')</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-4">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         @if($currentSo->status == 'SOSTATUS.WD')
-                                            <input type="text" class="form-control" id="inputShippingDate"
-                                                   name="shipping_date"
-                                                   value="{{ $currentSo->shipping_date->format('d-m-Y') }}"
-                                                   data-parsley-required="true">
+                                            <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="{{ $currentSo->shipping_date->format('d-m-Y') }}" v-model="so.shipping_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                         @else
-                                            <input type="text" class="form-control" readonly name="shipping_date"
-                                                   value="{{ $currentSo->shipping_date->format('d-m-Y') }}"
-                                                   data-parsley-required="true">
-                                        @endif
+                                            <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="{{ $currentSo->shipping_date->format('d-m-Y') }}" v-model="so.shipping_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A" readonly="true"></vue-datetimepicker>
+                                       @endif
                                     </div>
                                 </div>
                             </div>
@@ -156,19 +150,15 @@
                                        class="col-sm-3 control-label">@lang('sales_order.revise.field.warehouse')</label>
                                 <div class="col-sm-9">
                                     @if($currentSo->status == 'SOSTATUS.WD')
-                                        <input type="hidden" name="warehouse_id" v-bind:value="so.warehouse.id">
-                                        <input type="hidden" name="warehouse_name" v-bind:value="so.warehouse.name">
                                         <select id="inputWarehouse" data-parsley-required="true"
                                                 class="form-control"
-                                                v-model="so.warehouse">
-                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse">@{{ warehouse.name }}</option>
+                                                v-model="so.warehouse.id">
+                                            <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                                         </select>
                                     @else
-                                        <input type="text" class="form-control" readonly
-                                               value="{{ $currentSo->warehouse->name }}">
-                                        <input type="hidden" name="warehouse_id"
-                                               value="{{ $currentSo->warehouse->id }}">
+                                        <input type="text" class="form-control" readonly value="{{ $currentSo->warehouse->name }}">
+                                        <input type="hidden" name="warehouse_id" value="{{ $currentSo->warehouse->id }}">
                                     @endif
                                 </div>
                             </div>
@@ -181,15 +171,13 @@
                                         <input type="hidden" name="vendor_trucking_name" v-bind:value="so.vendorTrucking.name">
                                         <select id="inputVendorTrucking"
                                                 class="form-control"
-                                                v-model="so.vendorTrucking">
-                                            <option v-bind:value="{id: 0, name: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking">@{{ vendorTrucking.name }}</option>
+                                                v-model="so.vendorTrucking.id">
+                                            <option v-bind:value="defaultVendorTrucking.id">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="vendorTrucking in vendorTruckingDDL" v-bind:value="vendorTrucking.id">@{{ vendorTrucking.name }}</option>
                                         </select>
                                     @else
-                                        <input type="text" class="form-control" readonly
-                                               value="{{ empty($currentSo->vendorTrucking->name) ? '':$currentSo->vendorTrucking->name }}">
-                                        <input type="hidden" name="vendor_trucking_id"
-                                               value="{{ empty($currentSo->vendorTrucking->id) ? '':$currentSo->vendorTrucking->id }}">
+                                        <input type="text" class="form-control" readonly value="{{ empty($currentSo->vendorTrucking->name) ? '':$currentSo->vendorTrucking->name }}">
+                                        <input type="hidden" name="vendor_trucking_id" value="{{ empty($currentSo->vendorTrucking->id) ? '':$currentSo->vendorTrucking->id }}">
                                     @endif
                                 </div>
                             </div>
@@ -263,8 +251,8 @@
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="quantity[]"
-                                                           v-model="item.quantity" v-validate="'required|decimal:2'|min_value:1"
-                                                           {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}>
+                                                           v-model="item.quantity" v-validate="'required|decimal:2|min_value:1'"
+                                                            {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}>
                                                 </td>
                                                 <td>
                                                     @if($currentSo->status == 'SOSTATUS.WD')
@@ -304,13 +292,13 @@
                                 <div class="col-md-12">
                                     <table id="itemsTotalListTable" class="table table-bordered">
                                         <tbody>
-                                        <tr>
-                                            <td width="80%"
-                                                class="text-right">@lang('sales_order.revise.table.total.body.total')</td>
-                                            <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td width="80%"
+                                                    class="text-right">@lang('sales_order.revise.table.total.body.total')</td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -356,7 +344,7 @@
                                                     <td colspan="2" width="60%"></td>
                                                     <td class="text-center valign-middle" width="5%">
                                                         <button type="button" class="btn btn-danger btn-md" v-on:click="removeDiscount(itemIndex, discountIndex)">
-                                                                <span class="fa fa-minus"></span>
+                                                            <span class="fa fa-minus"></span>
                                                         </button>
                                                     </td>
                                                     <td width="10%">
@@ -379,12 +367,12 @@
                                 <div class="col-md-12">
                                     <table class="table table-bordered">
                                         <tbody>
-                                        <tr>
-                                            <td width="65%" class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
-                                            <td width="35%" class="text-right">
-                                                <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td width="65%" class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                                <td width="35%" class="text-right">
+                                                    <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -408,62 +396,62 @@
                                 <div class="col-md-12">
                                     <table id="expensesListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="20%">@lang('sales_order.revise.table.expense.header.name')</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('sales_order.revise.table.expense.header.type')</th>
-                                            <th width="10%"
-                                                class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>
-                                            <th width="25%"
-                                                class="text-center">@lang('sales_order.revise.table.expense.header.remarks')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('sales_order.revise.table.expense.header.amount')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="20%">@lang('sales_order.revise.table.expense.header.name')</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('sales_order.revise.table.expense.header.type')</th>
+                                                <th width="10%"
+                                                    class="text-center">@lang('purchase_order.revise.table.expense.header.internal_expense')</th>
+                                                <th width="25%"
+                                                    class="text-center">@lang('sales_order.revise.table.expense.header.remarks')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('sales_order.revise.table.expense.header.amount')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(expense, expenseIndex) in so.expenses">
-                                            <td>
-                                                <input type="hidden" name="expense_id[]" v-bind:value="expense.id"/>
-                                                <input name="expense_name[]" type="text" class="form-control"
-                                                       v-model="expense.name"
-                                                       data-parsley-required="true" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
-                                            </td>
-                                            <td>
-                                                @if($currentSo->status == 'SOSTATUS.WD')
-                                                    <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code">
-                                                    <select data-parsley-required="true"
-                                                            class="form-control" v-model="expense.type">
-                                                        <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
-                                                    </select>
-                                                @else
-                                                    <input type="text" class="form-control" readonly
-                                                           v-bind:value="expense.type.description">
-                                                    <input type="hidden" name="expense_type[]"
-                                                           v-bind:value="expense.type.code"/>
-                                                @endif
-                                            </td>
-                                            <td class="text-center" width="10%">
-                                                <vue-iCheck name="is_internal_expense[]" v-model="expense.is_internal_expense"></vue-iCheck>
-                                            </td>
-                                            <td>
-                                                <input name="expense_remarks[]" type="text" class="form-control"
-                                                       v-model="expense.remarks" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}/>
-                                            </td>
-                                            <td class="text-center">
-                                                @if($currentSo->status == 'SOSTATUS.WD')
-                                                    <button type="button" class="btn btn-danger btn-md"
-                                                            v-on:click="removeExpense(expenseIndex)"><span class="fa fa-minus"></span>
-                                                    </button>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <input name="expense_amount[]" type="text"
-                                                       class="form-control text-right"
-                                                       v-model="expense.amount" v-validate="'required|decimal:2|min_value:1'">
-                                            </td>
-                                        </tr>
+                                            <tr v-for="(expense, expenseIndex) in so.expenses">
+                                                <td>
+                                                    <input type="hidden" name="expense_id[]" v-bind:value="expense.id"/>
+                                                    <input name="expense_name[]" type="text" class="form-control"
+                                                           v-model="expense.name"
+                                                           data-parsley-required="true" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }} />
+                                                </td>
+                                                <td>
+                                                    @if($currentSo->status == 'SOSTATUS.WD')
+                                                        <input type="hidden" name="expense_type[]" v-bind:value="expense.type.code">
+                                                        <select data-parsley-required="true"
+                                                                class="form-control" v-model="expense.type">
+                                                            <option v-bind:value="{code: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                                            <option v-for="expenseType in expenseTypes" v-bind:value="expenseType">@{{ expenseType.description }}</option>
+                                                        </select>
+                                                    @else
+                                                        <input type="text" class="form-control" readonly
+                                                               v-bind:value="expense.type.description">
+                                                        <input type="hidden" name="expense_type[]"
+                                                               v-bind:value="expense.type.code"/>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center" width="10%">
+                                                    <vue-iCheck name="is_internal_expense[]" v-model="expense.is_internal_expense"></vue-iCheck>
+                                                </td>
+                                                <td>
+                                                    <input name="expense_remarks[]" type="text" class="form-control"
+                                                           v-model="expense.remarks" {{ $currentSo->status == 'SOSTATUS.WD' ? '' : 'readonly' }}/>
+                                                </td>
+                                                <td class="text-center">
+                                                    @if($currentSo->status == 'SOSTATUS.WD')
+                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                v-on:click="removeExpense(expenseIndex)"><span class="fa fa-minus"></span>
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <input name="expense_amount[]" type="text"
+                                                           class="form-control text-right"
+                                                           v-model="expense.amount" v-validate="'required|decimal:2|min_value:1'">
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -604,8 +592,7 @@
                 <div class="col-md-7 col-offset-md-5">
                     <div class="btn-toolbar">
                         <button id="submitButton" type="submit" class="btn btn-primary pull-right">
-                            @lang('buttons.submit_button')</button>
-                        &nbsp;&nbsp;&nbsp;
+                            @lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                         <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">
                             @lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
                         <a id="cancelButton" href="{{ route('db.so.revise.index') }}"
@@ -614,14 +601,59 @@
                 </div>
             </div>
         </form>
-
-        @include('sales_order.customer_details_partial')
     </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-icheck', {
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            props: ['id', 'name', 'disabled', 'value'],
+            mounted: function() {
+                $(this.$el).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                }).on('ifChecked', function(event) {
+                    this.value = true;
+                }).on('ifUnchecked', function(event) {
+                    this.value = false;
+                });
+
+                if (this.value) { $(this.$el).iCheck('check'); }
+                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+            },
+            destroyed: function() {
+                $(this.$el).iCheck('destroy');
+            }
+        });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined || this.value == NaN) this.value = '';
+                if (this.format == undefined || this.format == NaN) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined || this.readonly == NaN) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
 
         Vue.component('vue-icheck', {
             template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
@@ -694,39 +726,43 @@
             mounted: function() {
                 var vm = this;
 
-                vm.so.disc_percent = vm.currentSo.disc_percent % 1 !== 0 ? vm.currentSo.disc_percent : parseFloat(vm.currentSo.disc_percent).toFixed(0),
-                vm.so.disc_value = vm.currentSo.disc_value % 1 !== 0 ? vm.currentSo.disc_value : parseFloat(vm.currentSo.disc_value).toFixed(0),
-                vm.so.stock = this.defaultStock,
-                vm.so.product = this.defaultProduct,
-                vm.so.customer = _.cloneDeep(vm.currentSo.customer),
-                vm.so.warehouse = _.cloneDeep(vm.currentSo.warehouse),
-                vm.so.vendorTrucking = vm.currentSo.vendor_trucking ?  _.cloneDeep(vm.currentSo.vendor_trucking) : vm.defaultVendorTrucking,
+                vm.so.disc_percent = vm.currentSo.disc_percent % 1 !== 0 ? vm.currentSo.disc_percent : parseFloat(vm.currentSo.disc_percent).toFixed(0);
+                vm.so.disc_value = vm.currentSo.disc_value % 1 !== 0 ? vm.currentSo.disc_value : parseFloat(vm.currentSo.disc_value).toFixed(0);
+                vm.so.stock = this.defaultStock;
+                vm.so.product = this.defaultProduct;
+                vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                vm.so.warehouse = _.cloneDeep(vm.currentSo.warehouse);
+                vm.so.vendorTrucking = vm.currentSo.vendor_trucking ?  _.cloneDeep(vm.currentSo.vendor_trucking) : vm.defaultVendorTrucking;
 
                 for (var i = 0; i < vm.currentSo.items.length; i++) {
                     var itemDiscounts = [];
-                    if( currentSo.items[i].discounts.length ){
-                        for (var ix = 0; ix < vm.currentSo.items[i].discounts.length; ix++) {
+
+                    if (vm.currentSo.items[i].discounts != undefined) {
+                        if (vm.currentSo.items[i].discounts.length) {
+                            for (var ix = 0; ix < vm.currentSo.items[i].discounts.length; ix++) {
+                                itemDiscounts.push({
+                                    id: vm.currentSo.items[i].discounts[ix].id,
+                                    disc_percent: vm.currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
+                                    disc_value: vm.currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_value : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                                });
+                            }
+                        }
+                        else{
                             itemDiscounts.push({
-                                id: vm.currentSo.items[i].discounts[ix].id,
-                                disc_percent: vm.currentSo.items[i].discounts[ix].item_disc_percent % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_percent : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_percent).toFixed(0),
-                                disc_value: vm.currentSo.items[i].discounts[ix].item_disc_value % 1 !== 0 ? vm.currentSo.items[i].discounts[ix].item_disc_value : parseFloat(vm.currentSo.items[i].discounts[ix].item_disc_value).toFixed(0),
+                                disc_percent : 0,
+                                disc_value : 0,
                             });
                         }
                     }
-                    else{
-                        itemDiscounts.push({
-                            disc_percent : 0,
-                            disc_value : 0,
-                        });
-                    }
-                    soAppVue.so.items.push({
+
+                    vm.so.items.push({
                         id: vm.currentSo.items[i].id,
                         stock: {
                             id: vm.currentSo.items[i].stock_id
                         },
                         product: _.cloneDeep(vm.currentSo.items[i].product),
                         base_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
-                        selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, function(punit) { return punit.id == vm.currentSo.items[i].selected_unit_id; })),
+                        selected_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(punit) { return punit.id == vm.currentSo.items[i].selected_unit_id; })),
                         quantity: vm.currentSo.items[i].quantity % 1 != 0 ? parseFloat(vm.currentSo.items[i].quantity).toFixed(1) : parseFloat(vm.currentSo.items[i].quantity).toFixed(0),
                         price: parseFloat(vm.currentSo.items[i].price).toFixed(0),
                         discounts : itemDiscounts
@@ -734,11 +770,11 @@
                 }
 
                 for (var i = 0; i < vm.currentSo.expenses.length; i++) {
-                    var type = _.find(vm..expenseTypes, function (type) {
+                    var type = _.find(vm.expenseTypes, function (type) {
                         return type.code === vm.currentSo.expenses[i].type;
                     });
-
-                    vm..so.expenses.push({
+                    console.log('d');
+                    vm.so.expenses.push({
                         id: vm.currentSo.expenses[i].id,
                         name: vm.currentSo.expenses[i].name,
                         type: _.cloneDeep(type),
@@ -749,6 +785,9 @@
                 }
             },
             methods: {
+                validateBeforeSubmit: function() {
+
+                },
                 discountPercentToNominal: function(item, discount){
                     var disc_value = ( item.selected_unit.conversion_value * item.quantity * item.price ) * ( discount.disc_percent / 100 );
                     if( disc_value % 1 !== 0 )
@@ -951,6 +990,11 @@
                     };
                 },
                 defaultVendorTrucking: function() {
+                    return {
+                        id: ''
+                    };
+                },
+                defaultWarehouse: function() {
                     return {
                         id: ''
                     };
