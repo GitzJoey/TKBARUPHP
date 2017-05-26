@@ -22,6 +22,7 @@ use App\Services\CustomerService;
 
 use DB;
 use Auth;
+use phpDocumentor\Reflection\Types\Integer;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;

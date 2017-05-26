@@ -444,6 +444,7 @@ Breadcrumbs::register('employee_salary.employee_show', function($breadcrumbs, $i
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.employee.employee.show'), route('db.employee.employee.show', $id));
 });
+
 Breadcrumbs::register('employee.employee', function($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.employee.employee'), route('db.employee.employee'));
@@ -492,5 +493,45 @@ Breadcrumbs::register('user_settings', function($breadcrumbs, $id){
 Breadcrumbs::register('user_calendar', function($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.user.calendar'), route('db.user.calendar.show'));
+});
+
+Breadcrumbs::register('tax_invoice_output', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.output'), route('db.tax.invoice.output.index'));
+});
+
+Breadcrumbs::register('create_tax_invoice_output', function($breadcrumbs){
+    $breadcrumbs->parent('tax_invoice_output');
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.output.create'), route('db.tax.invoice.output.create'));
+});
+
+Breadcrumbs::register('show_tax_invoice_output', function($breadcrumbs, $id){
+    $breadcrumbs->parent('tax_invoice_output');
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.output.show'), route('db.tax.invoice.output.show', $id));
+});
+
+Breadcrumbs::register('edit_tax_invoice_output', function($breadcrumbs, $id){
+    $breadcrumbs->parent('tax_invoice_output');
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.output.edit'), route('db.tax.invoice.output.edit', $id));
+});
+
+Breadcrumbs::register('tax_invoice_input', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.input'), route('db.tax.invoice.input'));
+});
+
+Breadcrumbs::register('create_tax_invoice_input', function($breadcrumbs){
+    $breadcrumbs->parent('tax_invoice_input');
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.input.create'), route('db.tax.invoice.input.create'));
+});
+
+Breadcrumbs::register('show_tax_invoice_input', function($breadcrumbs, $id){
+    $breadcrumbs->parent('tax_invoice_input');
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.input.show'), route('db.tax.invoice.input.show', $id));
+});
+
+Breadcrumbs::register('edit_tax_invoice_input', function($breadcrumbs, $id){
+    $breadcrumbs->parent('tax_invoice_input');
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.input.edit'), route('db.tax.invoice.input.edit', $id));
 });
 

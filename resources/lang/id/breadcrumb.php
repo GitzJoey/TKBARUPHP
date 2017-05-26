@@ -93,4 +93,8 @@ return [
     'user.settings' => 'Pengaturan Pengguna',
     'user.calendar' => 'Kalender Pengguna',
     'customer.confirmation' => 'Konfirmasi',
+    'tax.invoice.output' => 'e-Faktur Keluaran',
+    'tax.invoice.output.create' => 'Tambah e-Faktur Keluaran',
+    'tax.invoice.output.show' => 'Tampilkan e-Faktur Keluaran',
+    'tax.invoice.output.edit' => 'Ubah e-Faktur Keluaran',
 ];

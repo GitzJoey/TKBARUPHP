@@ -69,4 +69,9 @@ return [
     'item.employee' => 'Pegawai',
     'item.employee.salary' => 'Gaji Pegawai',
     'item.employee.employee_list' => 'Daftar Pegawai',
+    'item.tax' => 'Pajak',
+    'item.tax.invoice' => 'e-Faktur',
+    'item.tax.invoice.output' => 'Keluaran',
+    'item.tax.invoice.input' => 'Masukan',
+    'item.tax.generate' => 'Generate',
 ];
