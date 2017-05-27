@@ -95,7 +95,7 @@
                             <div class="form-group">
                                 <label for="inputOpponentAddress" class="col-sm-2 control-label">Address</label>
                                 <div class="col-sm-10">
-                                    <textarea id="inputOpponentAddress" name="opponent_address" class="form-control" rows="5"></textarea>
+                                    <textarea id="inputOpponentAddress" name="opponent_address" class="form-control" rows="6"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,9 @@
                                         <tr>
                                             <th>Nama Barang Kena Pajak / Jasa Kena Pajak</th>
                                             <th class="text-center">Harga Satuan</th>
+                                            <th class="text-center">Potongan Harga</th>
                                             <th class="text-center">Jumlah Barang</th>
+                                            <th class="text-center">PPnBM</th>
                                             <th class="text-center">Harga Total</th>
                                             <th >&nbsp</th>
                                         </tr>
@@ -132,10 +134,16 @@
                                                 <input name="tran_price[]" type="text" class="form-control text-right" v-model="tran.price"/>
                                             </td>
                                             <td>
+                                                <input name="tran_discount[]" type="text" class="form-control text-right" v-model="tran.discount"/>
+                                            </td>
+                                            <td>
                                                 <input name="tran_qty[]" type="text" class="form-control text-right" v-model="tran.qty"/>
                                             </td>
                                             <td>
-                                                @{{ numeral(tran.price) }}
+                                                <input name="tran_luxury_tax[]" type="text" class="form-control text-right" v-model="tran.luxuryTax"/>
+                                            </td>
+                                            <td class="text-right valign-middle">
+                                                @{{ calcSubtotalPrice(tranIndex, tran.price, tran.discount, tran.qty) }}
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-md"><span class="fa fa-minus" v-on:click="removeTransaction(tranIndex)"></span>
@@ -146,16 +154,48 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="box-footer">
                             <div class="row">
                                 <div class="col-md-12">
                                     <table id="transactionsTotalListTable" class="table table-bordered">
                                         <tbody>
-                                        <tr>
-                                            <td class="text-right">Total</td>
-                                            <td class="text-right">
-                                                <span class="control-label-normal"></span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td class="text-left">Harga Jual / Penggantian</td>
+                                                <td class="text-right">
+                                                    <span class="control-label-normal">@{{ taxOutput.totalSellingPrice }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Dikurangi Potongan Harga</td>
+                                                <td class="text-right">
+                                                    <span class="control-label-normal">@{{ taxOutput.totalDiscount }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Dikurangi Uang Muka</td>
+                                                <td class="text-right">
+                                                    <span class="control-label-normal">@{{ taxOutput.totalDownPayment }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Dasar Pengenaan Pajak</td>
+                                                <td class="text-right">
+                                                    <span class="control-label-normal">@{{ taxOutput.totalTaxBase }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">PPN = 10% x Dasar Pengenaan Pajak</td>
+                                                <td class="text-right">
+                                                    <span class="control-label-normal">@{{ taxOutput.totalVAT }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">Total PPnBM (Pajak Penjualan Barang Mewah)</td>
+                                                <td class="text-right">
+                                                    <span class="control-label-normal">@{{ taxOutput.totalLuxuryTax }}</span>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -209,7 +249,13 @@
                 tranDetailDDL: JSON.parse('{!! htmlspecialchars_decode($tranDetailDDL) !!}'),
                 taxPeriod: moment().format('MM/YYYY'),
                 taxOutput: {
-                    transactions: []
+                    transactions: [],
+                    totalSellingPrice: 0,
+                    totalDiscount: 0,
+                    totalDownPayment: 0,
+                    totalTaxBase: 0,
+                    totalVAT: 0,
+                    totalLuxuryTax: 0,
                 }
             },
             methods: {
@@ -220,15 +266,45 @@
                     var vm = this;
                     vm.taxOutput.transactions.push({
                         name: '',
-                        amount: 0,
+                        price: 0,
+                        discount: 0,
+                        vat: 0,
+                        luxuryTax: 0,
                         qty: 0,
-                        total: 0,
+                        subTotal: 0,
                     });
                 },
                 removeTransaction: function (index) {
                     var vm = this;
                     vm.taxOutput.transactions.splice(index, 1);
+                    this.calcTax();
                 },
+                calcSubtotalPrice: function(index, price, discount, qty) {
+                    subtotal = (price - discount) * qty;
+                    this.taxOutput.transactions[index].subTotal = subtotal;
+                    this.calcTax();
+                    return numeral(subtotal).format();
+                },
+                calcTax: function() {
+                    var totalSellingPrice = 0;
+                    var totalDiscount = 0;
+                    var totalTaxBase = 0;
+                    var totalDownPayment = this.taxOutput.totalDownPayment = 0;
+                    var totalVAT = 0;
+                    var totalLuxuryTax = 0;
+                    this.taxOutput.transactions.forEach(function(tran) {
+                        totalSellingPrice += tran.price * tran.qty;
+                        totalDiscount += tran.discount;
+                        totalLuxuryTax += tran.luxuryTax * tran.qty;
+                    });
+                    totalTaxBase = totalSellingPrice - totalDownPayment - totalDiscount;
+                    totalVAT = 10 / 100 * totalTaxBase;
+                    this.taxOutput.totalSellingPrice = numeral(totalSellingPrice).format();
+                    this.taxOutput.totalDiscount = numeral(totalDiscount).format();
+                    this.taxOutput.totalTaxBase = numeral(totalTaxBase).format();
+                    this.taxOutput.totalVAT = numeral(totalVAT).format();
+                    this.taxOutput.totalLuxuryTax = numeral(totalLuxuryTax).format();
+                }
             },
             computed: {
                 defaultVATTranType: function(){
@@ -245,7 +321,7 @@
                     return {
                         code: ''
                     };
-                }
+                },
             }
         });
 
