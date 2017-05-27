@@ -57,17 +57,6 @@ class InstallApp extends Command
             return false;
         }
 
-        $this->info('Starting NPM Install');
-        exec('npm install');
-
-        $this->info('Starting Mix');
-        if (App::environment('prod', 'production')) {
-            $this->info('Executing for production enviroment');
-            exec('npm run prod');
-        } else {
-            exec('npm run dev');
-        }
-
         $this->info('Generating App Key...');
         Artisan::call('key:generate');
         $this->info('Database Migrating...');
@@ -127,6 +116,17 @@ class InstallApp extends Command
         if (!$confirmed) {
             $this->error('Aborted');
             return false;
+        }
+
+        $this->info('Starting NPM Install');
+        exec('npm install');
+
+        $this->info('Starting Mix');
+        if (App::environment('prod', 'production')) {
+            $this->info('Executing for production enviroment');
+            exec('npm run prod');
+        } else {
+            exec('npm run dev');
         }
 
         // create entity

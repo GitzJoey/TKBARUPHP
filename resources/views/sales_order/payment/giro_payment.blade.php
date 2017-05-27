@@ -69,12 +69,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('serial_number') }">
                                         <label for="inputGiroSerialNumber"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
                                         <div class="col-sm-4">
-                                            <input id="inputGiroSerialNumber" name="serial_number" type="text"
-                                                   class="form-control" v-validate="'required'">
+                                            <input id="inputGiroSerialNumber" name="serial_number" type="text" class="form-control" v-validate="'required'">
+                                            <span v-show="errors.has('serial_number')" class="help-block" v-cloak>@{{ errors.first('serial_number') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('serial_number') }">
                                         <label for="inputGiroRemarks"
                                                class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.remarks')</label>
                                         <div class="col-sm-10">
@@ -156,6 +156,34 @@
 
 @section('custom_js')
     <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
         var soPaymentApp = new Vue({
             el: '#soPaymentVue',
             data: {
@@ -164,12 +192,14 @@
                 bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 so: {
-                    customer: _.cloneDeep(currentSo.customer),
+                    customer: { },
                     items: [],
                     expenses: [],
-                    disc_percent : currentSo.disc_percent % 1 !== 0 ? currentSo.disc_percent : parseFloat(currentSo.disc_percent).toFixed(0),
-                    disc_value : currentSo.disc_value % 1 !== 0 ? currentSo.disc_value : parseFloat(currentSo.disc_value).toFixed(0),
-                }
+                    disc_percent : 0,
+                    disc_value : 0
+                },
+                payment_date: '',
+                soIndex: 0
             },
             mounted: function() {
                 var vm = this;
@@ -263,6 +293,13 @@
                     });
                     return result;
                 },
+            },
+            computed: {
+                defaultBank: function() {
+                    return {
+                        id: ''
+                    };
+                }
             }
         });
     </script>

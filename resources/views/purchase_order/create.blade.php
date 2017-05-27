@@ -209,7 +209,7 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-11">
-                                    <select id="inputProduct" class="form-control" v-model="po.product">
+                                    <select id="inputProduct" class="form-control" v-model="po.product" v-on:change="insertItem(po.product)">
                                         <option v-bind:value="defaultProduct">@lang('labels.PLEASE_SELECT')</option>
                                         <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
                                             <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>

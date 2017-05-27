@@ -203,7 +203,8 @@
                                     <div class="col-md-11">
                                         <select id="inputProduct"
                                                 class="form-control"
-                                                v-model="po.product">
+                                                v-model="po.product"
+                                                v-on:change="insertItem(po.product)">
                                             <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                             <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
                                                 <option v-for="product of po.supplier.products" v-bind:value="product">@{{ product.name }}</option>
