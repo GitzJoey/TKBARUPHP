@@ -75,30 +75,31 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function() {
-            var app = new Vue({
-                el: '#warehouseOutflowVue',
-                data: {
-                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                    selectedWarehouse: '',
-                    SOs: []
+        var app = new Vue({
+            el: '#warehouseOutflowVue',
+            data: {
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                selectedWarehouse: '',
+                SOs: []
+            },
+            methods: {
+                getWarehouseSOs: function (selectedWarehouse) {
+                    var vm = this;
+                    vm.SOs = [];
+                    this.selectedWarehouse = selectedWarehouse;
+                    axios.get('{{ route('api.warehouse.outflow.so') }}/' + selectedWarehouse).then(function (data) {
+                        vm.SOs = data.data;
+                    });
                 },
-                methods: {
-                    getWarehouseSOs: function (selectedWarehouse) {
-                        axios.get('{{ route('api.warehouse.outflow.so') }}/' + this.selectedWarehouse).then(function (data) {
-                            this.SOs = data.data;
-                        });
-                    },
-                    loadWarehouse: function(w) {
-                        if (w == undefined || w == null) return;
-                        this.selectedWarehouse = _.find(this.warehouseDDL, function(wh) { return wh.id == w; }).id;
-                        this.getWarehouseSOs(this.selectedWarehouse);
-                    }
-                },
-                mounted: function() {
-                    this.loadWarehouse(new URI().query(true)['w']);
+                loadWarehouse: function(w) {
+                    if (w == undefined || w == null) return;
+                    this.selectedWarehouse = _.find(this.warehouseDDL, function(wh) { return wh.id == w; }).id;
+                    this.getWarehouseSOs(this.selectedWarehouse);
                 }
-            });
+            },
+            mounted: function() {
+                this.loadWarehouse(new URI().query(true)['w']);
+            }
         });
     </script>
 @endsection

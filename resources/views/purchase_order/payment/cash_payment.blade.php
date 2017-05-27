@@ -17,19 +17,17 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="poPaymentVue">
-        {!! Form::model($currentPo, ['method' => 'POST', 'route' => ['db.po.payment.cash', $currentPo->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="poPaymentForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
 
             @include('purchase_order.payment.payment_summary_partial')
@@ -63,8 +61,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
-                                                <input type="text" class="form-control" id="inputPaymentDate"
-                                                       name="payment_date" data-parsley-required="true">
+                                                <vue-datetimepicker id="inputPaymentDate" name="payment_date" value="" v-model="payment_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +69,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('total_amount') }">
                                         <label for="inputPaymentAmount"
                                                class="col-sm-2 control-label">@lang('purchase_order.payment.cash.field.payment_amount')</label>
                                         <div class="col-sm-4">
@@ -80,9 +77,9 @@
                                                 <div class="input-group-addon">
                                                     Rp
                                                 </div>
-                                                <input type="text" class="form-control" id="inputPaymentAmount"
-                                                       name="total_amount" data-parsley-required="true">
+                                                <input type="text" class="form-control" id="inputPaymentAmount" name="total_amount" v-validate="'required|decimal:2'" data-vv-as="{{ trans('purchase_order.payment.cash.field.payment_amount') }}">
                                             </div>
+                                            <span v-show="errors.has('total_amount')" class="help-block" v-cloak>@{{ errors.first('total_amount') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +97,7 @@
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        </form>
 
         @include('purchase_order.supplier_details_partial')
     </div>
@@ -108,6 +105,34 @@
 
 @section('custom_js')
     <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
         var poPaymentApp = new Vue({
             el: '#poPaymentVue',
             data: {
@@ -119,9 +144,19 @@
                     expenses: [],
                     disc_total_percent : 0,
                     disc_total_value : 0
-                }
+                },
+                payment_date: ''
             },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.po.payment.cash', $currentPo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poPaymentForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.po.payment.index') }}'; }
+                            });
+                    });
+                },
                 grandTotal: function () {
                     var vm = this;
                     var result = 0;
@@ -203,19 +238,11 @@
                             remarks: this.currentPo.expenses[i].remarks
                         });
                     }
-
                 }
             },
             mounted: function() {
                 this.init();
             }
-        });
-
-        $("#inputPaymentDate").datetimepicker({
-            format: 'DD-MM-YYYY hh:mm A',
-            defaultDate: this.value == '' ? moment():moment(this.value),
-            showTodayButton: true,
-            showClose: true
         });
     </script>
 @endsection

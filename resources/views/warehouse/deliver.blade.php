@@ -7,28 +7,28 @@
 @section('page_title')
     <span class="fa fa-mail-reply fa-rotate-90 fa-fw"></span>&nbsp;@lang('warehouse.outflow.deliver.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('warehouse.outflow.deliver.page_title_desc')
 @endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('deliver', $so->hId()) !!}
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="deliverVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <form class="form-horizontal" action="{{ route('db.warehouse.outflow', $so->hId())}}" method="post" data-parsley-validate="parsley">
-        {{ csrf_field() }}
-        <div id="deliverVue">
+        <form id="deliverForm" class="form-horizontal" @submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -56,7 +56,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" readonly value="{{ $so->shipping_date->format('d-m-Y') }}">
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" v-model="SO.so_created" format="YYYY-MM-DD hh:mm A" readonly="true"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="inputDeliverDate" name="deliver_date" class="form-control" data-parsley-required="true">
+                                        <vue-datetimepicker id="inputDeliverDate" name="deliver_date" v-model="deliver_date" v-validate="'required'" format="YYYY-MM-DD hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                             <div class="form-group">
                                 <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('warehouse.outflow.deliver.field.license_plate')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" data-parsley-required="true">
+                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" v-validate="'required'">
                                 </div>
                             </div>
                         </div>
@@ -117,17 +117,16 @@
                                                 <input type="hidden" name="base_unit_id[]" v-bind:value="deliver.item.base_unit_id">
                                                 <td class="valign-middle">@{{ deliver.item.product.name }}</td>
                                                 <td>
-                                                    <select name="selected_unit_id[]" data-parsley-required="true"
+                                                    <select name="selected_unit_id[]" v-validate="'required'"
                                                             class="form-control"
-                                                            v-model="deliver.selected_unit.unit_id">
-                                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="product_unit in deliver.item.product.product_units" v-bind:value="product_unit.unit.id">@{{ product_unit.unit.name }}(@{{ product_unit.unit.symbol }})</option>
+                                                            v-model="deliver.selected_unit.id">
+                                                        <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="product_unit in deliver.item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name }}(@{{ product_unit.unit.symbol }})</option>
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control text-right" name="brutto[]" v-model="deliver.brutto"
-                                                           data-parsley-required="true"
-                                                           data-parsley-type="number">
+                                                           v-validate="'required|decimal:2|min_value:1'">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver(deliverIdx)" disabled><span class="fa fa-minus"/></button>
@@ -141,65 +140,119 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7 col-offset-md-5">
-                <div class="btn-toolbar">
-                    <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
-                    <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.outflow.index', array('w' => $so->warehouse->id)) }}" >@lang('buttons.cancel_button')</a>
+            <div class="row">
+                <div class="col-md-7 col-offset-md-5">
+                    <div class="btn-toolbar">
+                        <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
+                        <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
+                        <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.outflow.index', array('w' => $so->warehouse->id)) }}" >@lang('buttons.cancel_button')</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
-    </form>
+        </form>
+    </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function () {
-            var app = new Vue({
-                el: '#deliverVue',
-                data: {
-                    SO: JSON.parse('{!! htmlspecialchars_decode($so) !!}'),
-                    outflow: {
-                        delivers : []
-                    }
-                },
-                methods: {
-                    createDeliver: function() {
-                        for(var i = 0; i < this.SO.items.length; i++){
-                            this.outflow.delivers.push({
-                                item: this.SO.items[i],
-                                selected_unit: _.find(this.SO.items[i].product.product_units, getSelectedUnit(this.SO.items[i].selected_unit_id)),
-                                brutto: this.SO.items[i].quantity % 1 != 0 ? parseFloat(this.SO.items[i].quantity).toFixed(1) : parseFloat(this.SO.items[i].quantity).toFixed(0)
-                            });
-                        }
-                    },
-                    removeDeliver: function (index) {
-                        this.outflow.delivers.splice(index, 1);
-                    }
-                },
-                mounted: function() {
-                    this.createDeliver();
-                }
-            });
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
+        Vue.component('vue-icheck', {
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            props: ['id', 'name', 'disabled', 'value'],
+            mounted: function() {
+                $(this.$el).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                }).on('ifChecked', function(event) {
+                    this.value = true;
+                }).on('ifUnchecked', function(event) {
+                    this.value = false;
+                });
+
+                if (this.value) { $(this.$el).iCheck('check'); }
+                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+            },
+            destroyed: function() {
+                $(this.$el).iCheck('destroy');
+            }
+        });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined || this.value == NaN) this.value = '';
+                if (this.format == undefined || this.format == NaN) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined || this.readonly == NaN) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
+        var app = new Vue({
+            el: '#deliverVue',
+            data: {
+                SO: JSON.parse('{!! htmlspecialchars_decode($so) !!}'),
+                outflow: {
+                    delivers : []
+                },
+                deliver_date: ''
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.warehouse.outflow.deliver', $so->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#deliverForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.warehouse.outflow.index', array('w' => $so->warehouse->id)) }}' };
+                            });
+                    }).catch(function (e) {
+
+                    });
+                },
+                createDeliver: function() {
+                    var vm = this;
+                    for(var i = 0; i < vm.SO.items.length; i++){
+                        vm.outflow.delivers.push({
+                            item: vm.SO.items[i],
+                            selected_unit: _.find(vm.SO.items[i].product.product_units, function (punit) { return punit.id == vm.SO.items[i].selected_unit_id; }),
+                            brutto: vm.SO.items[i].quantity % 1 != 0 ? parseFloat(vm.SO.items[i].quantity).toFixed(1) : parseFloat(vm.SO.items[i].quantity).toFixed(0)
+                        });
+                    }
+                },
+                removeDeliver: function (index) {
+                    this.outflow.delivers.splice(index, 1);
+                }
+            },
+            mounted: function() {
+                this.createDeliver();
+            },
+            computed: {
+                defaultProductUnit: function(){
+                    return {
+                        id: '',
+                        unit: {
+                            id: ''
+                        },
+                        conversion_value: 1
+                    };
                 }
             }
-
-            $("#inputDeliverDate").daterangepicker(
-                {
-                    locale: {
-                        format: 'DD-MM-YYYY'
-                    },
-                    singleDatePicker: true,
-                    showDropdowns: true
-                }
-            );
         });
     </script>
 @endsection

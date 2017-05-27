@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.21 on 2017-05-05.
+ * Generated for Laravel 5.4.23 on 2017-05-24.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -3880,7 +3880,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|\Closure $listener
          * @param bool $wildcard
-         * @return mixed 
+         * @return \Closure 
          * @static 
          */
         public static function makeListener($listener, $wildcard = false)
@@ -4550,6 +4550,17 @@ namespace Illuminate\Support\Facades {
         public static function forUser($user)
         {
             return \Illuminate\Auth\Access\Gate::forUser($user);
+        }
+        
+        /**
+         * Get all of the defined abilities.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function abilities()
+        {
+            return \Illuminate\Auth\Access\Gate::abilities();
         }
         
     }         
@@ -9752,7 +9763,7 @@ namespace Illuminate\Support\Facades {
          * Store the uploaded file on the disk.
          *
          * @param string $path
-         * @param \Illuminate\Http\UploadedFile $file
+         * @param \Illuminate\Http\File|\Illuminate\Http\UploadedFile $file
          * @param array $options
          * @return string|false 
          * @static 
@@ -12365,6 +12376,20 @@ namespace Collective\Html {
         }
         
         /**
+         * Create a search input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return \Illuminate\Support\HtmlString 
+         * @static 
+         */
+        public static function search($name, $value = null, $options = array())
+        {
+            return \Collective\Html\FormBuilder::search($name, $value, $options);
+        }
+        
+        /**
          * Create an e-mail input field.
          *
          * @param string $name
@@ -12509,13 +12534,14 @@ namespace Collective\Html {
          * @param string $name
          * @param array $list
          * @param string $selected
-         * @param array $options
+         * @param array $selectAttributes
+         * @param array $optionsAttributes
          * @return \Illuminate\Support\HtmlString 
          * @static 
          */
-        public static function select($name, $list = array(), $selected = null, $options = array())
+        public static function select($name, $list = array(), $selected = null, $selectAttributes = array(), $optionsAttributes = array())
         {
-            return \Collective\Html\FormBuilder::select($name, $list, $selected, $options);
+            return \Collective\Html\FormBuilder::select($name, $list, $selected, $selectAttributes, $optionsAttributes);
         }
         
         /**
@@ -12571,12 +12597,13 @@ namespace Collective\Html {
          * @param string $display
          * @param string $value
          * @param string $selected
+         * @param array $attributes
          * @return \Illuminate\Support\HtmlString 
          * @static 
          */
-        public static function getSelectOption($display, $value, $selected)
+        public static function getSelectOption($display, $value, $selected, $attributes = array())
         {
-            return \Collective\Html\FormBuilder::getSelectOption($display, $value, $selected);
+            return \Collective\Html\FormBuilder::getSelectOption($display, $value, $selected, $attributes);
         }
         
         /**
@@ -12841,18 +12868,6 @@ namespace Collective\Html {
         public static function entities($value)
         {
             return \Collective\Html\HtmlBuilder::entities($value);
-        }
-        
-        /**
-         * Convert all applicable characters to HTML entities.
-         *
-         * @param string $value
-         * @return string 
-         * @static 
-         */
-        public static function escapeAll($value)
-        {
-            return \Collective\Html\HtmlBuilder::escapeAll($value);
         }
         
         /**
@@ -14038,6 +14053,18 @@ namespace {
     
     class Eloquent extends \Illuminate\Database\Eloquent\Model {    
         /**
+         * Create and return and un-saved model instance.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function make($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::make($attributes);
+        }
+        
+        /**
          * Register a new global scope.
          *
          * @param string $identifier
@@ -14100,7 +14127,7 @@ namespace {
         /**
          * Add a basic where clause to the query.
          *
-         * @param string|\Closure $column
+         * @param string|array|\Closure $column
          * @param string $operator
          * @param mixed $value
          * @param string $boolean

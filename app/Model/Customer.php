@@ -57,6 +57,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDeletedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\SalesOrder[] $sales_orders
+ * @property float $latitude
+ * @property float $longitude
+ * @property int $distance
+ * @property string $distance_text
+ * @property int $duration
+ * @property string $duration_text
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDistance($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDistanceText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDuration($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDurationText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereLatitude($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereLongitude($value)
  */
 class Customer extends Model
 {

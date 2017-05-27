@@ -60,6 +60,16 @@ Breadcrumbs::register('purchase_order_copy', function ($breadcrumbs){
     $breadcrumbs->push(trans('breadcrumb.po.copy'), route('db.po.copy'));
 });
 
+Breadcrumbs::register('purchase_order_copy_create', function ($breadcrumbs, $poId){
+    $breadcrumbs->parent('purchase_order_copy');
+    $breadcrumbs->push(trans('breadcrumb.po.copy.create'), route('db.po.copy.create', $poId));
+});
+
+Breadcrumbs::register('purchase_order_copy_edit', function ($breadcrumbs, $poCode, $poCopyId){
+    $breadcrumbs->parent('purchase_order_copy');
+    $breadcrumbs->push(trans('breadcrumb.po.copy.edit'), route('db.po.copy.edit', [$poCode, $poCopyId]));
+});
+
 Breadcrumbs::register('inflow', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.warehouse.inflow.index'), route('db.warehouse.inflow.index'));

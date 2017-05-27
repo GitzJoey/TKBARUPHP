@@ -1,11 +1,9 @@
-<div class="modal fade" id="customerDetailModal" tabindex="-1" role="dialog"
-     aria-labelledby="customerDetailModalLabel">
+<div class="modal fade" v-bind:id="'customerDetailModal_' + soIndex" tabindex="-1" role="dialog" v-bind:aria-labelledby="'customerDetailModalLabel_' + soIndex">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="customerDetailModalLabel">Customer Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" v-bind:id="'customerDetailModalLabel_' + soIndex">@lang('sales_order.partial.customer.title')Customer Details</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
@@ -14,14 +12,14 @@
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li class="active">
-                                        <a href="#tab_customer" data-toggle="tab">@lang('customer.create.tab.customer')</a>
+                                        <a href="#tab_customer" data-toggle="tab">@lang('sales_order.partial.customer.tab.customer')</a>
                                     </li>
-                                    <li><a href="#tab_pic" data-toggle="tab">@lang('customer.create.tab.pic')</a></li>
+                                    <li><a href="#tab_pic" data-toggle="tab">@lang('sales_order.partial.customer.tab.pic')</a></li>
                                     <li>
-                                        <a href="#tab_bank_account" data-toggle="tab">@lang('customer.create.tab.bank_account')</a>
+                                        <a href="#tab_bank_account" data-toggle="tab">@lang('sales_order.partial.customer.tab.bank_account')</a>
                                     </li>
                                     <li>
-                                        <a href="#tab_settings" data-toggle="tab">@lang('customer.create.tab.settings')</a>
+                                        <a href="#tab_settings" data-toggle="tab">@lang('sales_order.partial.customer.tab.settings')</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -29,28 +27,28 @@
                                         <div class="row">
                                             <div class="form-group">
                                                 <label for="inputName"
-                                                       class="col-sm-2 control-label">@lang('customer.field.name')</label>
+                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.name')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputName" type="text" class="form-control" readonly v-model="so.customer.name">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputAddress"
-                                                       class="col-sm-2 control-label">@lang('customer.field.address')</label>
+                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.address')</label>
                                                 <div class="col-sm-8">
                                                     <textarea id="inputAddress" class="form-control" readonly rows="4">@{{ so.customer.address }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputCity"
-                                                       class="col-sm-2 control-label">@lang('customer.field.city')</label>
+                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.city')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputCity" type="text" class="form-control" readonly v-model="so.customer.city">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputPhone"
-                                                       class="col-sm-2 control-label">@lang('customer.field.phone')</label>
+                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.phone')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputPhone" type="tel" class="form-control" readonly
                                                            v-model="so.customer.phone_number">
@@ -58,7 +56,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputTaxId"
-                                                       class="col-sm-2 control-label">@lang('customer.field.tax_id')</label>
+                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.tax_id')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputTaxId" type="text" class="form-control" readonly
                                                            v-model="so.customer.tax_id">
@@ -66,7 +64,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputRemarks"
-                                                       class="col-sm-2 control-label">@lang('customer.field.remarks')</label>
+                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.remarks')</label>
                                                 <div class="col-sm-8">
                                                     <input id="inputRemarks" type="text" class="form-control" readonly
                                                            v-model="so.customer.remarks">
@@ -94,7 +92,7 @@
                                                         <div class="box-body">
                                                             <div class="form-group">
                                                                 <label for="inputFirstName"
-                                                                       class="col-sm-2 control-label">@lang('customer.field.first_name')</label>
+                                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.first_name')</label>
                                                                 <div class="col-sm-10">
                                                                     <input id="inputFirstName" type="text"
                                                                            class="form-control"
@@ -104,7 +102,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="inputLastName"
-                                                                       class="col-sm-2 control-label">@lang('customer.field.last_name')</label>
+                                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.last_name')</label>
                                                                 <div class="col-sm-10">
                                                                     <input id="inputLastName" type="text"
                                                                            class="form-control"
@@ -114,7 +112,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="inputAddress"
-                                                                       class="col-sm-2 control-label">@lang('customer.field.address')</label>
+                                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.address')</label>
                                                                 <div class="col-sm-10">
                                                                     <input id="inputAddress" type="text"
                                                                            class="form-control"
@@ -124,7 +122,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="inputICNum"
-                                                                       class="col-sm-2 control-label">@lang('customer.field.ic_num')</label>
+                                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.ic_num')</label>
                                                                 <div class="col-sm-10">
                                                                     <input id="inputICNum" type="text"
                                                                            class="form-control"
@@ -134,14 +132,14 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="inputPhoneNumber"
-                                                                       class="col-sm-2 control-label">@lang('customer.field.phone_number')</label>
+                                                                       class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.phone_number')</label>
                                                                 <div class="col-sm-10">
                                                                     <table class="table table-bordered">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>@lang('customer.create.table_phone.header.provider')</th>
-                                                                                <th>@lang('customer.create.table_phone.header.number')</th>
-                                                                                <th>@lang('customer.create.table_phone.header.remarks')</th>
+                                                                                <th>@lang('sales_order.partial.customer.table_phone.header.provider')</th>
+                                                                                <th>@lang('sales_order.partial.customer.table_phone.header.number')</th>
+                                                                                <th>@lang('sales_order.partial.customer.table_phone.header.remarks')</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -164,9 +162,9 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
-                                                    <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
-                                                    <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
+                                                    <th class="text-center">@lang('sales_order.partial.customer.table_bank.header.bank')</th>
+                                                    <th class="text-center">@lang('sales_order.partial.customer.table_bank.header.account_number')</th>
+                                                    <th class="text-center">@lang('sales_order.partial.customer.table_bank.header.remarks')</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -180,14 +178,15 @@
                                     </div>
                                     <div class="tab-pane" id="tab_settings">
                                         <div class="form-group">
-                                            <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
+                                            <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.price_level')</label>
                                             <div class="col-sm-10">
+                                                <input id="inputPriceLevel" name="price_level" type="text" class="form-control" readonly="readonly" v-model="so.customer.price_level">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('customer.field.payment_due_day')</label>
+                                            <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('sales_order.partial.customer.field.payment_due_day')</label>
                                             <div class="col-sm-10">
-                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" readonly="readonly">
+                                                <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" readonly="readonly" v-model="so.customer.payment_due_day">
                                             </div>
                                         </div>
                                     </div>

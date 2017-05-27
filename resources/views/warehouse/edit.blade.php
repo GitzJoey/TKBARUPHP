@@ -17,28 +17,29 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="warehouseVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('warehouse.edit.header.title')</h3>
-        </div>
-        {!! Form::model($warehouse, ['method' => 'PATCH', 'route' => ['db.master.warehouse.edit', $warehouse->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
-            <div id="warehouseVue">
+        <form id="warehouseForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('warehouse.edit.header.title')</h3>
+                </div>
                 <div class="box-body">
-                    <div class="form-group">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
                         <label for="inputName" class="col-sm-2 control-label">@lang('warehouse.field.name')</label>
                         <div class="col-sm-10">
-                            <input id="inputName" name="name" type="text" class="form-control" value="{{ $warehouse->name }}" placeholder="Name" data-parsley-required="true">
+                            <input id="inputName" name="name" type="text" class="form-control" v-model="warehouse.name" placeholder="Name"
+                                   v-validate="'required'" data-vv-as="{{ trans('warehouse.field.name') }}">
+                            <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -68,11 +69,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="c in sections">
-                                        <td><input type="text" class="form-control" v-model="c.name" name="section_name[]" data-parsley-required="true"/></td>
-                                        <td><input type="text" class="form-control" v-model="c.position" name="section_position[]" data-parsley-required="true"/></td>
-                                        <td><input type="text" class="form-control" v-model="c.capacity" name="section_capacity[]" data-parsley-required="true" data-parsley-type="number"/></td>
-                                        <td>
+                                    <tr v-for="(c, cI) in warehouse.sections">
+                                        <td v-bind:class="{ 'has-error':errors.has('secname_' + cI) }">
+                                            <input type="text" class="form-control" v-model="c.name" name="section_name[]"
+                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('warehouse.create.table.header.name') }} ' + (cI + 1)" v-bind:data-vv-name="'secname_' + cI"/></td>
+                                        <td v-bind:class="{ 'has-error':errors.has('secpos_' + cI) }">
+                                            <input type="text" class="form-control" v-model="c.position" name="section_position[]"
+                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('warehouse.create.table.header.position') }} ' + (cI + 1)" v-bind:data-vv-name="'secpos_' + cI"/></td>
+                                        <td v-bind:class="{ 'has-error':errors.has('seccap_' + cI) }">
+                                            <input type="text" class="form-control" v-model="c.capacity" name="section_capacity[]"
+                                                   v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('warehouse.create.table.header.capacity') }} ' + (cI + 1)" v-bind:data-vv-name="'seccap_' + cI"/></td>
+                                        <td v-bind:class="{ 'has-error':errors.has('seccapunit_' + cI) }">
                                             <select class="form-control"
                                                     name="section_capacity_unit[]"
                                                     v-model="c.capacity_unit_id"
@@ -83,7 +90,7 @@
                                         </td>
                                         <td><input type="text" class="form-control" v-model="c.remarks" name="section_remarks[]"/></td>
                                         <td class="text-center valign-middle">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" v-on:click="removeSelected($index)">
+                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ cI }}" v-on:click="removeSelected(cI)">
                                                 <span class="fa fa-close fa-fw"></span>
                                             </button>
                                         </td>
@@ -99,11 +106,18 @@
                             </table>
                         </div>
                     </div>
-                    <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                        <label for="inputStatus" class="col-sm-2 control-label">@lang('bank.field.status')</label>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('warehouse.field.status')</label>
                         <div class="col-sm-10">
-                            {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                            <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
+                            <select class="form-control"
+                                    name="status"
+                                    v-model="warehouse.status"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('warehouse.field.status') }}">
+                                <option v-bind:value="defaultStatus">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in statusDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -122,29 +136,51 @@
                 </div>
                 <div class="box-footer"></div>
             </div>
-        {!! Form::close() !!}
+        </form>
     </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
         var app = new Vue({
             el: '#warehouseVue',
             data: {
-                sections: JSON.parse('{!! htmlspecialchars_decode($warehouse->sections) !!}'),
-                unitDDL: JSON.parse('{!! htmlspecialchars_decode($unitDDL) !!}')
+                warehouse: {
+                    name: '{{ $warehouse->name }}',
+                    sections: JSON.parse('{!! htmlspecialchars_decode($warehouse->sections) !!}'),
+                    status: '{{ $warehouse->status }}'
+                },
+                unitDDL: JSON.parse('{!! htmlspecialchars_decode($unitDDL) !!}'),
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}')
             },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.master.warehouse.edit', $warehouse->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#warehouseForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.master.warehouse') }}'; }
+                            });
+                    });
+                },
                 addNew: function () {
-                    this.sections.push({
+                    this.warehouse.sections.push({
                         'name': '',
                         'position': '',
                         'capacity': 0,
+                        'capacity_unit_id': '',
                         'remarks': ''
                     });
                 },
                 removeSelected: function (idx) {
-                    this.sections.splice(idx, 1);
+                    this.warehouse.sections.splice(idx, 1);
+                }
+            },
+            computed: {
+                defaultStatus: function() {
+                    return '';
                 }
             }
         });

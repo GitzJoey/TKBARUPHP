@@ -28,6 +28,8 @@ class CreateSalesOrdersTable extends Migration
             $table->string('walk_in_cust_detail')->nullable();
             $table->string('article_code')->nullable();
             $table->string('remarks')->nullable();
+            $table->string('internal_remarks')->nullable();
+            $table->string('private_remarks')->nullable();
             $table->string('status')->nullable();
             $table->decimal('disc_percent', 5,2)->unsigned()->nullable();
             $table->decimal('disc_value', 19,2)->unsigned()->nullable();

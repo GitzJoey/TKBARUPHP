@@ -39,7 +39,8 @@ class CustomerController extends Controller
         $this->middleware('auth', [ 
             'except' => [ 
                 'searchCustomers',
-                'getPassiveCustomer'
+                'getPassiveCustomer',
+                'getCustomer'
             ] 
         ]);
     }
@@ -502,4 +503,11 @@ class CustomerController extends Controller
         return $this->customerService->getPassiveCustomer();
     }
 
+    public function getCustomer(Request $request)
+    {
+        $id = $request->id;
+        $customer = Customer::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'expenseTemplates', 'priceLevel')->find($id);
+
+        return response()->json($customer);
+    }
 }
