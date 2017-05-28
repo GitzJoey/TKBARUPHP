@@ -18,57 +18,112 @@
 
 @section('content')
     <div id="taxVue">
-        <form id="taxForm" class="form-horizontal">
+
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="taxForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit('submit')">
             {{ csrf_field() }}
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">Informasi Transaksi PPN</h3>
                         </div>
                         <div class="box-body">
-                            <div class="form-group">
-                                <label for="inputVATTranType" class="col-sm-4 control-label">Jenis Transaksi PPN</label>
-                                <div class="col-sm-8">
-                                    <select id="inputVATTranType" name="vat_transaction_type" class="form-control">
-                                        <option v-bind:value="defaultVATTranType.code">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="vtt of vatTranTypeDDL" v-bind:value="vtt.code">@{{ vtt.description }}</option>
-                                    </select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inputGSTTranType" class="col-sm-4 control-label">Jenis Transaksi PPN</label>
+                                    <div class="col-sm-8">
+                                        <select id="inputGSTTranType" name="gst_transaction_type" class="form-control">
+                                            <option v-bind:value="defaultGSTTranType.code">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="vtt of gstTranTypeDDL" v-bind:value="vtt.code">@{{ vtt.description }}</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputTransDoc" class="col-sm-4 control-label">Dokumen Transaksi</label>
-                                <div class="col-sm-8">
-                                    <select id="inputTransDoc" name="transaction_doc" class="form-control">
-                                        <option v-bind:value="defaultTranDoc.code">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="td of tranDocDDL" v-bind:value="td.code">@{{ td.description }}</option>
-                                    </select>
+                                <div class="form-group">
+                                    <label for="inputTransDoc" class="col-sm-4 control-label">Dokumen Transaksi</label>
+                                    <div class="col-sm-8">
+                                        <select id="inputTransDoc" name="transaction_doc" class="form-control">
+                                            <option v-bind:value="defaultTranDoc.code">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="td of tranDocDDL" v-bind:value="td.code">@{{ td.description }}</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputDateOfTaxDoc" class="col-sm-4 control-label">Tanggal Dokumen Pajak</label>
-                                <div class="col-sm-8">
-                                    <div class="input-group date">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <vue-datetimepicker id="inputDateOfTaxDoc" name="tax_doc_date" format="DD-MM-YYYY hh:mm A" @change="changeTaxPeriod"></vue-datetimepicker>
+                                <div class="form-group">
+                                    <label for="inputTranDet" class="col-sm-4 control-label">Detail Transaksi PPN</label>
+                                    <div class="col-sm-8">
+                                        <select id="inputTranDet" name="transaction_detail" class="form-control">
+                                            <option v-bind:value="defaultTranDetail.code">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="td of tranDetailDDL" v-bind:value="td.code">@{{ td.description }}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inputDateOfTaxDoc" class="col-sm-4 control-label">Tanggal Dokumen Pajak</label>
+                                    <div class="col-sm-8">
+                                        <div class="input-group date">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <vue-datetimepicker id="inputDateOfTaxDoc" name="tax_doc_date" format="DD-MM-YYYY" @change="changeTaxPeriod"></vue-datetimepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputTaxPeriod" class="col-sm-4 control-label">Masa Pajak</label>
+                                    <div class="col-sm-8">
+                                        <input id="inputTaxPeriod" name="tax_period" type="text" class="form-control" v-bind:value="taxPeriod" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputInvoiceNo" class="col-sm-4 control-label">Nomor Seri Faktur Pajak</label>
+                                    <div class="col-sm-8">
+                                        <input id="inputInvoiceNo" name="invoice_no" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputReference" class="col-sm-4 control-label">Referensi</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="inputReference" name="reference" class="form-control" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Pengusahan Kena Pajak</h3>
+                        </div>
+                        <div class="box-body">
                             <div class="form-group">
-                                <label for="inputTaxPeriod" class="col-sm-4 control-label">Masa Pajak</label>
-                                <div class="col-sm-8">
-                                    <input id="inputTaxPeriod" name="tax_period" type="text" class="form-control" v-bind:value="taxPeriod" readonly>
+                                <label for="inputTaxIDNo" class="col-sm-2 control-label">NPWP</label>
+                                <div class="col-sm-10">
+                                    <input id="inputTaxIDNo" name="tax_id_no" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputTranDet" class="col-sm-4 control-label">Detail Transaksi PPN</label>
-                                <div class="col-sm-8">
-                                    <select id="inputTranDet" name="transaction_detail" class="form-control">
-                                        <option v-bind:value="defaultTranDetail.code">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="td of tranDetailDDL" v-bind:value="td.code">@{{ td.description }}</option>
-                                    </select>
+                                <label for="inputName" class="col-sm-2 control-label">Nama</label>
+                                <div class="col-sm-10">
+                                    <input id="inputName" name="name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress" class="col-sm-2 control-label">Address</label>
+                                <div class="col-sm-10">
+                                    <textarea id="inputAddress" name="address" class="form-control" rows="6"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +136,7 @@
                         </div>
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="inputTaxIDNo" class="col-sm-2 control-label">NPWP</label>
+                                <label for="inputOpponentTaxIDNo" class="col-sm-2 control-label">NPWP</label>
                                 <div class="col-sm-10">
                                     <input id="inputOpponentTaxIDNo" name="opponent_tax_id_no" type="text" class="form-control">
                                 </div>
@@ -143,6 +198,7 @@
                                                 <input name="tran_luxury_tax[]" type="text" class="form-control text-right" v-model="tran.luxuryTax"/>
                                             </td>
                                             <td class="text-right valign-middle">
+                                                <input name="tran_gst[]" type="hidden" v-model="tran.gst">
                                                 @{{ calcSubtotalPrice(tranIndex, tran.price, tran.discount, tran.qty) }}
                                             </td>
                                             <td class="text-center">
@@ -163,37 +219,36 @@
                                             <tr>
                                                 <td class="text-left">Harga Jual / Penggantian</td>
                                                 <td class="text-right">
-                                                    <span class="control-label-normal">@{{ taxOutput.totalSellingPrice }}</span>
+                                                    <input name="selling_price" type="hidden" v-bind:value="taxOutput.totalSellingPrice"/>
+                                                    <span class="control-label-normal">@{{ taxOutput.totalSellingPriceText }}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">Dikurangi Potongan Harga</td>
                                                 <td class="text-right">
-                                                    <span class="control-label-normal">@{{ taxOutput.totalDiscount }}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-left">Dikurangi Uang Muka</td>
-                                                <td class="text-right">
-                                                    <span class="control-label-normal">@{{ taxOutput.totalDownPayment }}</span>
+                                                    <input name="discount" type="hidden" v-bind:value="taxOutput.totalDiscount"/>
+                                                    <span class="control-label-normal">@{{ taxOutput.totalDiscountText }}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">Dasar Pengenaan Pajak</td>
                                                 <td class="text-right">
-                                                    <span class="control-label-normal">@{{ taxOutput.totalTaxBase }}</span>
+                                                    <input name="tax_base" type="hidden" v-bind:value="taxOutput.totalTaxBase"/>
+                                                    <span class="control-label-normal">@{{ taxOutput.totalTaxBaseText }}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">PPN = 10% x Dasar Pengenaan Pajak</td>
                                                 <td class="text-right">
-                                                    <span class="control-label-normal">@{{ taxOutput.totalVAT }}</span>
+                                                    <input name="gst" type="hidden" v-bind:value="taxOutput.totalGST"/>
+                                                    <span class="control-label-normal">@{{ taxOutput.totalGSTText }}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">Total PPnBM (Pajak Penjualan Barang Mewah)</td>
                                                 <td class="text-right">
-                                                    <span class="control-label-normal">@{{ taxOutput.totalLuxuryTax }}</span>
+                                                    <input name="luxury_tax" type="hidden" v-bind:value="taxOutput.totalLuxuryTax"/>
+                                                    <span class="control-label-normal">@{{ taxOutput.totalLuxuryTaxText }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -205,12 +260,23 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-7 col-offset-md-5">
+                    <div class="btn-toolbar">
+                        <button id="submitButton" type="button" class="btn btn-primary pull-right" v-on:click="validateBeforeSubmit('submit')">@lang('buttons.submit_button')</button>
+                        <button id="cancelButton" type="button" class="cancelButton btn btn-primary pull-right" href="{{ route('db.tax.invoice.output.index') }}">@lang('buttons.cancel_button')</button>
+                    </div>
+                </div>
+            </div>
+
         </form>
     </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
+
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
         Vue.component('vue-datetimepicker', {
             template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:format='format' v-model='value'>",
@@ -223,7 +289,7 @@
             mounted: function() {
                 var vm = this;
 
-                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY';
                 if (this.readonly == undefined) this.readonly = 'false';
 
                 $(this.$el).datetimepicker({
@@ -235,6 +301,7 @@
                 .on('dp.change', function(e) {
                     vm.$emit('change', e.date);
                 });
+
             },
             destroyed: function() {
                 $(this.$el).data("DateTimePicker").destroy();
@@ -244,21 +311,36 @@
         var poApp = new Vue({
             el: '#taxVue',
             data: {
-                vatTranTypeDDL: JSON.parse('{!! htmlspecialchars_decode($vatTranTypeDDL) !!}'),
+                gstTranTypeDDL: JSON.parse('{!! htmlspecialchars_decode($gstTranTypeDDL) !!}'),
                 tranDocDDL: JSON.parse('{!! htmlspecialchars_decode($tranDocDDL) !!}'),
                 tranDetailDDL: JSON.parse('{!! htmlspecialchars_decode($tranDetailDDL) !!}'),
                 taxPeriod: moment().format('MM/YYYY'),
                 taxOutput: {
                     transactions: [],
                     totalSellingPrice: 0,
+                    totalSellingPriceText: '',
                     totalDiscount: 0,
-                    totalDownPayment: 0,
+                    totalDiscountText: '',
                     totalTaxBase: 0,
-                    totalVAT: 0,
+                    totalTaxBaseText: '',
+                    totalGST: 0,
+                    totalGSTText: '',
                     totalLuxuryTax: 0,
+                    totalLuxuryTaxText: '',
                 }
             },
             methods: {
+                validateBeforeSubmit: function(type) {
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.tax.invoice.output.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#taxForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db.tax.invoice.output.index') }}';
+                            });
+                    }).catch(function() {
+
+                    });
+                },
                 changeTaxPeriod: function(e) {
                     this.taxPeriod = moment(e).format('MM/YYYY');
                 },
@@ -268,7 +350,7 @@
                         name: '',
                         price: 0,
                         discount: 0,
-                        vat: 0,
+                        gst: 0,
                         luxuryTax: 0,
                         qty: 0,
                         subTotal: 0,
@@ -289,25 +371,30 @@
                     var totalSellingPrice = 0;
                     var totalDiscount = 0;
                     var totalTaxBase = 0;
-                    var totalDownPayment = this.taxOutput.totalDownPayment = 0;
-                    var totalVAT = 0;
+                    var totalGST = 0;
                     var totalLuxuryTax = 0;
                     this.taxOutput.transactions.forEach(function(tran) {
+                        tran.gst = 10 / 100 * tran.price;
                         totalSellingPrice += tran.price * tran.qty;
-                        totalDiscount += tran.discount;
+                        totalDiscount += tran.discount * tran.qty;
                         totalLuxuryTax += tran.luxuryTax * tran.qty;
                     });
-                    totalTaxBase = totalSellingPrice - totalDownPayment - totalDiscount;
-                    totalVAT = 10 / 100 * totalTaxBase;
-                    this.taxOutput.totalSellingPrice = numeral(totalSellingPrice).format();
-                    this.taxOutput.totalDiscount = numeral(totalDiscount).format();
-                    this.taxOutput.totalTaxBase = numeral(totalTaxBase).format();
-                    this.taxOutput.totalVAT = numeral(totalVAT).format();
-                    this.taxOutput.totalLuxuryTax = numeral(totalLuxuryTax).format();
+                    totalTaxBase = totalSellingPrice - totalDiscount;
+                    totalGST = 10 / 100 * totalTaxBase;
+                    this.taxOutput.totalSellingPrice = totalSellingPrice;
+                    this.taxOutput.totalSellingPriceText = numeral(totalSellingPrice).format();
+                    this.taxOutput.totalDiscount = totalDiscount;
+                    this.taxOutput.totalDiscountText = numeral(totalDiscount).format();
+                    this.taxOutput.totalTaxBase = totalTaxBase;
+                    this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
+                    this.taxOutput.totalGST = totalGST;
+                    this.taxOutput.totalGSTText = numeral(totalGST).format();
+                    this.taxOutput.totalLuxuryTax = totalLuxuryTax;
+                    this.taxOutput.totalLuxuryTaxText = numeral(totalLuxuryTax).format();
                 }
             },
             computed: {
-                defaultVATTranType: function(){
+                defaultGSTTranType: function(){
                     return {
                         code: ''
                     };

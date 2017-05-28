@@ -16,6 +16,7 @@ use App\Services\Implementation\SettingServiceImpl;
 use App\Services\Implementation\StockServiceImpl;
 use App\Services\Implementation\StoreServiceImpl;
 use App\Services\Implementation\SupplierServiceImpl;
+use App\Services\Implementation\TaxInvoiceOutputServiceImpl;
 use App\Services\Implementation\VendorTruckingServiceImpl;
 use App\Services\Implementation\WarehouseServiceImpl;
 use App\Services\Implementation\DatabaseServiceImpl;
@@ -36,6 +37,7 @@ use App\Services\SettingService;
 use App\Services\StockService;
 use App\Services\StoreService;
 use App\Services\SupplierService;
+use App\Services\TaxInvoiceOutputService;
 use App\Services\VendorTruckingService;
 use App\Services\WarehouseService;
 use App\Services\DatabaseService;
@@ -140,6 +142,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(StockTransferService::class, function (){
             return new StockTransferServiceImpl();
         });
+
+        $this->app->singleton(TaxInvoiceOutputService::class, function (){
+            return new TaxInvoiceOutputServiceImpl();
+        });
     }
 
     /**
@@ -169,6 +175,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Services\DatabaseService',
             'App\Services\AccountingService',
             'App\Services\StockTransferService',
+            'App\Services\TaxInvoiceOutputService',
         ];
     }
 }
