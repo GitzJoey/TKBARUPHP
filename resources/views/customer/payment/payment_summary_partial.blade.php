@@ -142,40 +142,40 @@
                     <div class="col-md-12">
                         <table id="itemsListTable" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th width="30%">@lang('sales_order.payment.summary.table.item.header.product_name')</th>
-                                <th width="15%"
-                                    class="text-center">@lang('sales_order.payment.summary.table.item.header.quantity')</th>
-                                <th width="15%"
-                                    class="text-center">@lang('sales_order.payment.summary.table.item.header.unit')</th>
-                                <th width="15%"
-                                    class="text-center">@lang('sales_order.payment.summary.table.item.header.price_unit')</th>
-                                <th width="5%">&nbsp;</th>
-                                <th width="20%"
-                                    class="text-center">@lang('sales_order.payment.summary.table.item.header.total_price')</th>
-                            </tr>
+                                <tr>
+                                    <th width="30%">@lang('sales_order.payment.summary.table.item.header.product_name')</th>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.summary.table.item.header.quantity')</th>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.summary.table.item.header.unit')</th>
+                                    <th width="15%"
+                                        class="text-center">@lang('sales_order.payment.summary.table.item.header.price_unit')</th>
+                                    <th width="5%">&nbsp;</th>
+                                    <th width="20%"
+                                        class="text-center">@lang('sales_order.payment.summary.table.item.header.total_price')</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(item, itemIndex) in so.items">
-                                <td class="valign-middle">@{{ item.product.name }}</td>
-                                <td>
-                                    <input type="text" class="form-control text-right" name="quantity[]"
-                                           v-model="item.quantity"  readonly>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" readonly
-                                           v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control text-right" name="price[]"
-                                           v-model="item.price" readonly >
-                                </td>
-                                <td class="text-center">
-                                </td>
-                                <td class="text-right valign-middle">
-                                    @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
-                                </td>
-                            </tr>
+                                <tr v-for="(item, itemIndex) in so.items">
+                                    <td class="valign-middle">@{{ item.product.name }}</td>
+                                    <td>
+                                        <input type="text" class="form-control text-right" name="quantity[]"
+                                               v-model="item.quantity"  readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" readonly
+                                               v-bind:value="item.selected_unit.unit.name + ' (' + item.selected_unit.unit.symbol + ')'">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control text-right" name="price[]"
+                                               v-model="item.price" readonly >
+                                    </td>
+                                    <td class="text-center">
+                                    </td>
+                                    <td class="text-right valign-middle">
+                                        @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -184,13 +184,13 @@
                     <div class="col-md-12">
                         <table id="itemsTotalListTable" class="table table-bordered">
                             <tbody>
-                            <tr>
-                                <td width="80%"
-                                    class="text-right">@lang('sales_order.payment.summary.table.total.body.total')</td>
-                                <td width="20%" class="text-right">
-                                    <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td width="80%"
+                                        class="text-right">@lang('sales_order.payment.summary.table.total.body.total')</td>
+                                    <td width="20%" class="text-right">
+                                        <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -210,40 +210,40 @@
                     <div class="col-md-12">
                         <table id="discountsListTable" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
-                                <th width="30%">@lang('purchase_order.create.table.item.header.total_price')</th>
-                                <th width="40%" class="text-left" colspan="3">@lang('purchase_order.create.table.item.header.total_price')</th>
-                            </tr>
+                                <tr>
+                                    <th width="30%">@lang('purchase_order.create.table.item.header.product_name')</th>
+                                    <th width="30%">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                    <th width="40%" class="text-left" colspan="3">@lang('purchase_order.create.table.item.header.total_price')</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <template v-for="(item, itemIndex) in so.items">
-                                <tr>
-                                    <td width="30%">@{{ item.product.name }}</td>
-                                    <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
-                                    <td colspan="3" width="40%"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" width="65%"></td>
-                                    <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
-                                    <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
-                                </tr>
-                                <tr v-for="(discount, discountIndex) in item.discounts">
-                                    <td colspan="2" width="60%"></td>
-                                    <td class="text-center valign-middle" width="5%">
-                                    </td>
-                                    <td width="10%">
-                                        <input type="text" class="form-control text-right" v-bind:name="'item_disc_percent['+itemIndex+'][]'" v-model="discount.disc_percent" placeholder="%" v-on:keyup="discountPercentToNominal(item, discount)" readonly/>
-                                    </td>
-                                    <td width="25%">
-                                        <input type="text" class="form-control text-right" v-bind:name="'item_disc_value['+itemIndex+'][]'" v-model="discount.disc_value" placeholder="Nominal" v-on:keyup="discountNominalToPercent(item, discount)" readonly />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                    <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
-                                </tr>
-                            </template>
+                                <template v-for="(item, itemIndex) in so.items">
+                                    <tr>
+                                        <td width="30%">@{{ item.product.name }}</td>
+                                        <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                        <td colspan="3" width="40%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" width="65%"></td>
+                                        <th width="10%" class="small-header">@lang('purchase_order.create.table.item.header.discount_percent')</th>
+                                        <th width="25%" class="small-header">@lang('purchase_order.create.table.item.header.discount_nominal')</th>
+                                    </tr>
+                                    <tr v-for="(discount, discountIndex) in item.discounts">
+                                        <td colspan="2" width="60%"></td>
+                                        <td class="text-center valign-middle" width="5%">
+                                        </td>
+                                        <td width="10%">
+                                            <input type="text" class="form-control text-right" v-bind:name="'item_disc_percent['+itemIndex+'][]'" v-model="discount.disc_percent" placeholder="%" v-on:keyup="discountPercentToNominal(item, discount)" readonly/>
+                                        </td>
+                                        <td width="25%">
+                                            <input type="text" class="form-control text-right" v-bind:name="'item_disc_value['+itemIndex+'][]'" v-model="discount.disc_value" placeholder="Nominal" v-on:keyup="discountNominalToPercent(item, discount)" readonly />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
+                                        <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
+                                    </tr>
+                                </template>
                             </tbody>
                         </table>
                     </div>
@@ -252,13 +252,13 @@
                     <div class="col-md-12">
                         <table class="table table-bordered">
                             <tbody>
-                            <tr>
-                                <td width="65%"
-                                    class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
-                                <td width="35%" class="text-right">
-                                    <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td width="65%"
+                                        class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                    <td width="35%" class="text-right">
+                                        <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -278,27 +278,27 @@
                     <div class="col-md-12">
                         <table id="discountsListTable" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
-                                <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
-                                <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
-                            </tr>
+                                <tr>
+                                    <th width="30%" class="text-right">@lang('purchase_order.create.table.total.body.total')</th>
+                                    <th width="30%" class="text-left">@lang('purchase_order.create.table.total.body.invoice_discount')</th>
+                                    <th width="40%" class="text-right">@lang('purchase_order.create.table.total.body.total_transaction')</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control text-right" name="disc_percent" v-model="so.disc_percent" readonly />
+                                <tr>
+                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control text-right" name="disc_percent" v-model="so.disc_percent" readonly />
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control text-right" name="disc_value" v-model="so.disc_value" readonly />
+                                            </div>
                                         </div>
-                                        <div class="col-md-9">
-                                            <input type="text" class="form-control text-right" name="disc_value" v-model="so.disc_value" readonly />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - so.disc_value ).format()}}</td>
-                            </tr>
+                                    </td>
+                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - so.disc_value ).format()}}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -318,31 +318,31 @@
                     <div class="col-md-12">
                         <table id="expensesListTable" class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th width="22%">@lang('purchase_order.payment.summary.table.expense.header.name')</th>
-                                <th width="22%"
-                                    class="text-center">@lang('purchase_order.payment.summary.table.expense.header.type')</th>
-                                <th width="22%"
-                                    class="text-center">@lang('purchase_order.payment.summary.table.expense.header.amount')</th>
-                                <th width="22%"
-                                    class="text-center">@lang('purchase_order.payment.summary.table.expense.header.remarks')</th>
-                            </tr>
+                                <tr>
+                                    <th width="22%">@lang('purchase_order.payment.summary.table.expense.header.name')</th>
+                                    <th width="22%"
+                                        class="text-center">@lang('purchase_order.payment.summary.table.expense.header.type')</th>
+                                    <th width="22%"
+                                        class="text-center">@lang('purchase_order.payment.summary.table.expense.header.amount')</th>
+                                    <th width="22%"
+                                        class="text-center">@lang('purchase_order.payment.summary.table.expense.header.remarks')</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(expense, expenseIndex) in so.expenses">
-                                <td>
-                                    <input name="expense_name[]" type="text" class="form-control" v-model="expense.name" readonly />
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" v-bind:value="expense.type.description" readonly />
-                                </td>
-                                <td>
-                                    <input name="expense_amount[]" type="text" class="form-control text-right" v-model="expense.amount" readonly/>
-                                </td>
-                                <td>
-                                    <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks" readonly />
-                                </td>
-                            </tr>
+                                <tr v-for="(expense, expenseIndex) in so.expenses">
+                                    <td>
+                                        <input name="expense_name[]" type="text" class="form-control" v-model="expense.name" readonly />
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" v-bind:value="expense.type.description" readonly />
+                                    </td>
+                                    <td>
+                                        <input name="expense_amount[]" type="text" class="form-control text-right" v-model="expense.amount" readonly/>
+                                    </td>
+                                    <td>
+                                        <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks" readonly />
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -351,13 +351,13 @@
                     <div class="col-md-12">
                         <table id="expensesTotalListTable" class="table table-bordered">
                             <tbody>
-                            <tr>
-                                <td width="80%"
-                                    class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
-                                <td width="20%" class="text-right">
-                                    <span class="control-label-normal">@{{ expenseTotal() }}</span>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td width="80%"
+                                        class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
+                                    <td width="20%" class="text-right">
+                                        <span class="control-label-normal">@{{ expenseTotal() }}</span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -386,11 +386,50 @@
                 <h3 class="box-title">@lang('sales_order.payment.summary.box.remarks')</h3>
             </div>
             <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <textarea id="inputRemarks" name="remarks" class="form-control" rows="5" readonly>{{ $currentSo->remarks }}</textarea>
+                <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#tab_remarks" aria-controls="tab_remarks" role="tab" data-toggle="tab">@lang('sales_order.revise.tab.remarks')</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#tab_internal" aria-controls="tab_internal" role="tab" data-toggle="tab">@lang('sales_order.revise.tab.internal')</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#tab_private" aria-controls="tab_private" role="tab" data-toggle="tab">@lang('sales_order.revise.tab.private')</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="tab_remarks">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <textarea id="inputRemarks" name="remarks" class="form-control" rows="5" readonly>{{ $currentSo->remarks }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab_internal">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <textarea id="inputInternalRemarks" name="internal_remarks" class="form-control" rows="5" readonly>{{ $currentSo->internal_remarks }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab_private">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <textarea id="inputPrivateRemarks" name="private_remarks" class="form-control" rows="5" readonly>{{ $currentSo->private_remarks }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -411,26 +450,26 @@
                         <div class="col-md-12">
                             <table id="cashPaymentHistoryTable" class="table table-bordered table-hover">
                                 <thead>
-                                <tr>
-                                    <th colspan="3" class="text-center">@lang('sales_order.payment.summary.table.payments.header.cash')</th>
-                                </tr>
-                                <tr>
-                                    <th width="25%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_date')</th>
-                                    <th width="25%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_status')</th>
-                                    <th width="25%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_amount')</th>
-                                </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-center">@lang('sales_order.payment.summary.table.payments.header.cash')</th>
+                                    </tr>
+                                    <tr>
+                                        <th width="25%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_date')</th>
+                                        <th width="25%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_status')</th>
+                                        <th width="25%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_amount')</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($currentSo->cashPayments() as $key => $payment)
-                                    <tr>
-                                        <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
-                                        <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                        <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
-                                    </tr>
-                                @endforeach
+                                    @foreach ($currentSo->cashPayments() as $key => $payment)
+                                        <tr>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
+                                            <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
+                                            <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -443,36 +482,36 @@
                         <div class="col-md-12">
                             <table id="transferPaymentHistoryTable" class="table table-bordered table-hover">
                                 <thead>
-                                <tr>
-                                    <th colspan="6" class="text-center">@lang('sales_order.payment.summary.table.payments.header.transfer')</th>
-                                </tr>
-                                <tr>
-                                    <th width="10%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_date')</th>
-                                    <th width="10%" class="text-center">@lang('sales_order.payment.summary.table.payments.header.effective_date')</th>
-                                    <th width="20%" class="text-center">@lang('sales_order.payment.summary.table.payments.header.account_from')</th>
-                                    <th width="20%" class="text-center">@lang('sales_order.payment.summary.table.payments.header.account_to')</th>
-                                    <th width="20%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_status')</th>
-                                    <th width="20%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_amount')</th>
-                                </tr>
+                                    <tr>
+                                        <th colspan="6" class="text-center">@lang('sales_order.payment.summary.table.payments.header.transfer')</th>
+                                    </tr>
+                                    <tr>
+                                        <th width="10%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_date')</th>
+                                        <th width="10%" class="text-center">@lang('sales_order.payment.summary.table.payments.header.effective_date')</th>
+                                        <th width="20%" class="text-center">@lang('sales_order.payment.summary.table.payments.header.account_from')</th>
+                                        <th width="20%" class="text-center">@lang('sales_order.payment.summary.table.payments.header.account_to')</th>
+                                        <th width="20%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_status')</th>
+                                        <th width="20%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_amount')</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($currentSo->transferPayments() as $key => $payment)
-                                    <tr>
-                                        <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
-                                        <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_detail->effective_date)) }}</td>
-                                        <td class="text-center">{{ empty($payment->payment_detail->bankAccountFrom) ? '-'
-                                                                               : $payment->payment_detail->bankAccountFrom->bank->short_name
-                                                                               . ' - ' . $payment->payment_detail->bankAccountFrom->account_number }}</td>
-                                        <td class="text-center">{{ empty($payment->payment_detail->bankAccountTo) ? '-'
-                                                                               : $payment->payment_detail->bankAccountTo->bank->short_name
-                                                                               . ' - ' . $payment->payment_detail->bankAccountTo->account_number }}</td>
-                                        <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                        <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
-                                    </tr>
-                                @endforeach
+                                    @foreach ($currentSo->transferPayments() as $key => $payment)
+                                        <tr>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_detail->effective_date)) }}</td>
+                                            <td class="text-center">{{ empty($payment->payment_detail->bankAccountFrom) ? '-'
+                                                                                   : $payment->payment_detail->bankAccountFrom->bank->short_name
+                                                                                   . ' - ' . $payment->payment_detail->bankAccountFrom->account_number }}</td>
+                                            <td class="text-center">{{ empty($payment->payment_detail->bankAccountTo) ? '-'
+                                                                                   : $payment->payment_detail->bankAccountTo->bank->short_name
+                                                                                   . ' - ' . $payment->payment_detail->bankAccountTo->account_number }}</td>
+                                            <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
+                                            <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -485,39 +524,39 @@
                         <div class="col-md-12">
                             <table id="giroPaymentHistoryTable" class="table table-bordered table-hover">
                                 <thead>
-                                <tr>
-                                    <th colspan="7"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.giro')</th>
-                                </tr>
-                                <tr>
-                                    <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_date')</th>
-                                    <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.effective_date')</th>
-                                    <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.bank')</th>
-                                    <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.serial_number')</th>
-                                    <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.printed_name')</th>
-                                    <th width="10%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_status')</th>
-                                    <th width="15%"
-                                        class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_amount')</th>
-                                </tr>
+                                    <tr>
+                                        <th colspan="7"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.giro')</th>
+                                    </tr>
+                                    <tr>
+                                        <th width="15%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_date')</th>
+                                        <th width="15%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.effective_date')</th>
+                                        <th width="15%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.bank')</th>
+                                        <th width="15%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.serial_number')</th>
+                                        <th width="15%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.printed_name')</th>
+                                        <th width="10%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_status')</th>
+                                        <th width="15%"
+                                            class="text-center">@lang('sales_order.payment.summary.table.payments.header.payment_amount')</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($currentSo->giroPayments() as $key => $payment)
-                                    <tr>
-                                        <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
-                                        <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_detail->giro->effective_date)) }}</td>
-                                        <td class="text-center">{{ $payment->payment_detail->giro->bank->name }}</td>
-                                        <td class="text-center">{{ $payment->payment_detail->giro->serial_number }}</td>
-                                        <td class="text-center">{{ $payment->payment_detail->giro->printed_name }}</td>
-                                        <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
-                                        <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
-                                    </tr>
-                                @endforeach
+                                    @foreach ($currentSo->giroPayments() as $key => $payment)
+                                        <tr>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_date)) }}</td>
+                                            <td class="text-center">{{ date('d-m-Y', strtotime($payment->payment_detail->giro->effective_date)) }}</td>
+                                            <td class="text-center">{{ $payment->payment_detail->giro->bank->name }}</td>
+                                            <td class="text-center">{{ $payment->payment_detail->giro->serial_number }}</td>
+                                            <td class="text-center">{{ $payment->payment_detail->giro->printed_name }}</td>
+                                            <td class="text-center">{{ $paymentStatusDDL[$payment->status] }}</td>
+                                            <td class="text-right">{{ number_format($payment->total_amount, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -529,20 +568,20 @@
                     <div class="col-md-12">
                         <table id="paymentSummaryTable" class="table table-bordered">
                             <tbody>
-                            <tr>
-                                <td class="text-right">@lang('sales_order.payment.summary.table.total.body.paid_amount')</td>
-                                <td width="25%" class="text-right">
-                                    <span class="control-label-normal">{{ number_format($currentSo->totalAmountPaid(), Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-right">@lang('sales_order.payment.summary.table.total.body.to_be_paid_amount')</td>
-                                <td width="25%" class="text-right">
-                                        <span class="control-label-normal">
-                                            {{ number_format($currentSo->totalAmount() - $currentSo->totalAmountPaid(), Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}
-                                        </span>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="text-right">@lang('sales_order.payment.summary.table.total.body.paid_amount')</td>
+                                    <td width="25%" class="text-right">
+                                        <span class="control-label-normal">{{ number_format($currentSo->totalAmountPaid(), Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">@lang('sales_order.payment.summary.table.total.body.to_be_paid_amount')</td>
+                                    <td width="25%" class="text-right">
+                                            <span class="control-label-normal">
+                                                {{ number_format($currentSo->totalAmount() - $currentSo->totalAmountPaid(), Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}
+                                            </span>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

@@ -59,8 +59,7 @@
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control" id="inputPaymentDate"
-                                                           name="payment_date" data-parsley-required="true">
+                                                    <input type="text" class="form-control" id="inputPaymentDate" name="payment_date">
                                                 </div>
                                             </div>
                                         </div>
@@ -75,7 +74,7 @@
                                                         Rp
                                                     </div>
                                                     <input type="text" class="form-control" id="inputPaymentAmount"
-                                                           name="total_amount" data-parsley-required="true" fcsa-number>
+                                                           name="total_amount">
                                                 </div>
                                             </div>
                                         </div>
