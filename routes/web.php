@@ -225,7 +225,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'CustomerController@confirmationIndex')->name('db.customer.confirmation.index');
                 Route::get('{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.customer');
                 Route::get('confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
-                Route::post('confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
+
             });
 
             Route::group(['prefix' => 'payment', 'middleware' => ['permission:menu-customer_payment']], function() {

@@ -961,26 +961,6 @@
                         return item.selected_unit.conversion_value * item.quantity * item.price;
                     },0);
                 }
-            },
-            mounted: function() {
-
-            },
-            created: function() {
-                var vm = this;
-                var warehouseId = parseInt('{{ old('warehouse_id') }}');
-                var vendorTruckingId = parseInt('{{ old('vendor_trucking_id') }}');
-
-                if(warehouseId) {
-                    vm.po.warehouse = _.cloneDeep(_.find(vm.warehouseDDL, {id: warehouseId}));
-                } else {
-                    vm.po.warehouse = {id: ''};
-                }
-
-                if(vendorTruckingId) {
-                    vm.po.vendorTrucking = _.cloneDeep(_.find(vm.vendorTruckingDDL, {id: vendorTruckingId}));
-                } else {
-                    vm.po.vendorTrucking = {id: ''};
-                }
             }
         });
     </script>

@@ -17,20 +17,18 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="custConfirmVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <form class="form-horizontal" action="{{ route('db.customer.confirmation.confirm', $so->hId())}}" method="post" data-parsley-validate="parsley">
-        {{ csrf_field() }}
-        <div id="custConfirmVue">
+        <form id="custConfirmForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -56,20 +54,20 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('customer.confirmation.confirm.field.license_plate')</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="inputLicensePlate" name="license_plate" value="{{ $so->items()->first()->delivers()->first()->license_plate }}" class="form-control" data-parsley-required="true" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="inputConfirmReceiveDate" class="col-sm-2 control-label">@lang('customer.confirmation.confirm.field.confirm_receive_date')</label>
                                 <div class="col-sm-8">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" id="inputConfirmReceiveDate" name="confirm_receive_date" class="form-control" data-parsley-required="true">
+                                        <vue-datetimepicker id="inputConfirmReceiveDate" name="confirm_receive_date[]" v-model="confirm_receive_date" format="YYYY-MM-DD hh:mm A"></vue-datetimepicker>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('customer.confirmation.confirm.field.license_plate')</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="inputLicensePlate" name="license_plate" value="{{ $so->items()->first()->delivers()->first()->license_plate }}" class="form-control" readonly>
                                 </div>
                             </div>
                         </div>
@@ -98,48 +96,43 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="deliver in outflow.delivers">
+                                            <tr v-for="(item, itemIdx) in SO.items">
                                                 <td class="valign-middle">
-                                                    <input type="hidden" name="deliver_id[]" value="0">
-                                                    <input type="hidden" name="item_id[]" value="@{{ deliver.item.id }}">
-                                                    <input type="hidden" name="product_id[]" value="@{{ deliver.item.product_id }}">
-                                                    <input type="hidden" name="base_unit_id[]" value="@{{ deliver.item.base_unit_id }}">
-                                                    @{{ deliver.item.product.name }}
+                                                    <input type="hidden" name="deliver_id[]" v-bind:value="item.delivers[0].id">
+                                                    <input type="hidden" name="item_id[]" v-bind:value="item.id">
+                                                    <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                    <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit_id">
+                                                    @{{ item.product.name }}
                                                 </td>
-                                                <td>
-                                                    <select name="selected_unit_id[]" data-parsley-required="true"
+                                                <td v-bind:class="{ 'has-error':errors.has('unit_' + itemIdx) }">
+                                                    <select name="selected_unit_id[]"
                                                             class="form-control"
-                                                            v-model="deliver.selected_unit.unit_id">
+                                                            v-model="item.delivers[0].selected_unit_id"
+                                                            v-validate="'required'"
+                                                            v-bind:data-vv-as="'{{ trans('customer.confirmation.confirm.table.item.header.unit') }} ' + (itemIdx + 1)"
+                                                            v-bind:data-vv-name="'unit_' + itemIdx">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="product_unit in deliver.item.product.product_units" v-bind:value="product_unit.unit.id">@{{ product_unit.unit.name }} (@{{ product_unit.unit.symbol }})</option>
+                                                        <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name }} (@{{ product_unit.unit.symbol }})</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input id="brutto_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="brutto[]" v-model="deliver.brutto"
-                                                           data-parsley-required="true"
-                                                           data-parsley-type="number"
-                                                           data-parsley-trigger="change"
-                                                           readonly>
+                                                    <input v-bind:id="'brutto_' + itemIdx" type="text" class="form-control text-right" name="brutto[]" v-model="item.delivers[0].brutto" readonly>
+                                                </td>
+                                                <td v-bind:class="{ 'has-error':errors.has('netto_' + itemIdx) }">
+                                                    <input v-bind:id="'netto_' + itemIdx" type="text" class="form-control text-right" name="netto[]" v-model="item.delivers[0].netto"
+                                                           v-validate="'required|decimal:2|min_value:1|checkequal:' + itemIdx"
+                                                           v-bind:data-vv-name="'netto_' + itemIdx" v-bind:data-vv-as="'{{ trans('customer.confirmation.confirm.table.item.header.netto') }} ' + (itemIdx + 1)">
+                                                </td>
+                                                <td v-bind:class="{ 'has-error':errors.has('tare_' + itemIdx) }">
+                                                    <input v-bind:id="'tare_' + itemIdx" type="text" class="form-control text-right" name="tare[]" v-model="item.delivers[0].tare"
+                                                           v-validate="'required|decimal:2|min_value:1|checkequal:' + itemIdx"
+                                                           v-bind:data-vv-name="'tare_' + itemIdx" v-bind:data-vv-as="'{{ trans('customer.confirmation.confirm.table.item.header.tare') }} ' + (itemIdx + 1)">
                                                 </td>
                                                 <td>
-                                                    <input id="netto_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="netto[]" v-model="deliver.netto"
-                                                           data-parsley-required="true"
-                                                           data-parsley-type="number"
-                                                           data-parsley-checkequal="@{{ deliver.item.id }}"
-                                                           data-parsley-trigger="change">
-                                                </td>
-                                                <td>
-                                                    <input id="tare_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="tare[]" v-model="deliver.tare"
-                                                           data-parsley-required="true"
-                                                           data-parsley-type="number"
-                                                           data-parsley-checkequal="@{{ deliver.item.id }}"
-                                                           data-parsley-trigger="change">
-                                                </td>
-                                                <td>
-                                                    <input id="remarks_@{{ deliver.item.id }}" type="text" class="form-control text-right" name="remarks[]" v-model="deliver.remarks">
+                                                    <input v-bind:id="'remarks_' + itemIdx" type="text" class="form-control text-right" name="remarks[]" v-model="item.delivers[0].remarks">
                                                 </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver($index)"><span class="fa fa-minus"/></button>
+                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver(itemIdx)" disabled="true"><span class="fa fa-minus" /></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -150,81 +143,91 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-7 col-offset-md-5">
-                <div class="btn-toolbar">
-                    <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
-                    <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                    <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.customer.confirmation.customer', $so->customer->hId()) }}" >@lang('buttons.cancel_button')</a>
+            <div class="row">
+                <div class="col-md-7 col-offset-md-5">
+                    <div class="btn-toolbar">
+                        <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
+                        <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
+                        <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.customer.confirmation.customer', $so->customer->hId()) }}" >@lang('buttons.cancel_button')</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
-    </form>
+        </form>
+    </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function () {
-            var app = new Vue({
-                el: '#custConfirmVue',
-                data: {
-                    SO: JSON.parse('{!! htmlspecialchars_decode($so) !!}'),
-                    outflow: {
-                        delivers: []
-                    }
-                },
-                methods: {
-                    removeDeliver: function (index) {
-                        this.outflow.delivers.splice(index, 1);
-                    },
-                    createDeliver: function() {
-                        for(var i = 0; i < this.SO.items.length; i++) {
-                            this.outflow.delivers.push({
-                                item: this.SO.items[i],
-                                selected_unit: _.find(this.SO.items[i].product.product_units, getSelectedUnit(this.SO.items[i].selected_unit_id)),
-                                brutto: this.SO.items[i].quantity,
-                                netto: 0,
-                                tare: 0,
-                                remarks: ''
-                            });
-                        }
-                    }
-                },
-                mounted: function() {
-                    this.createDeliver();
-                    console.log(this.outflow.delivers);
-                }
-            });
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
-            function getSelectedUnit(selectedUnitId) {
-                return function (element) {
-                    return element.unit_id == selectedUnitId;
-                }
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
             }
+        });
 
-            $("#inputConfirmReceiveDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
+        var app = new Vue({
+            el: '#custConfirmVue',
+            data: {
+                SO: JSON.parse('{!! htmlspecialchars_decode($so) !!}'),
+                confirm_receive_date: ''
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    console.log(this.$validator.validateAll());
+                    this.$validator.validateAll().then(function(isValid) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.customer.confirmation.confirm', $so->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#custConfirmForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.customer.confirmation.customer', $so->hId()) }}' };
+                            });
+                    }).catch(function (e) {
+
+                    });
                 },
-                singleDatePicker: true,
-                showDropdowns: true
-            });
+                removeDeliver: function (index) {
 
-            window.Parsley.addValidator('checkequal', function (value, itemId) {
-                var brutto = '#brutto_' + itemId;
-                var netto = '#netto_' + itemId;
-                var tare = '#tare_' + itemId;
-
-                if (Number($(brutto).val()) == (Number($(netto).val()) + Number($(tare).val()))) {
-                    return false;
-                } else {
-                    return false;
                 }
-            }, 32)
-                .addMessage('en', 'checkequal', 'Netto and Tare value not equal with Bruto')
-                .addMessage('id', 'checkequal', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
+            },
+            mounted: function() {
+                this.$validator.extend('checkequal', {
+                    messages: {
+                        en: function(field, args) { return 'Netto and Tare value are higher than the Bruto value' },
+                        id: function(field, args) { return 'Nilai bersih dan Tara lebih tinggi dari Nilai Kotor' }
+                    },
+                    validate: function(value, args) {
+                        var result = false;
+                        var itemIdx = args[0];
+
+                        if (Number(app.SO.items[itemIdx].delivers[0].brutto) <=
+                            Number(app.SO.items[itemIdx].delivers[0].netto) + Number(app.SO.items[itemIdx].delivers[0].tare)) {
+                            result = true;
+                        }
+
+                        return result;
+                    }
+                });
+            }
         });
     </script>
 @endsection

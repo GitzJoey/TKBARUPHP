@@ -49,6 +49,12 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             });
         });
 
+        Route::group(['prefix' => 'customer'], function () {
+            Route::group(['prefix' => 'confirmation'], function() {
+                Route::post('confirm/{id}', 'CustomerController@storeConfirmationSalesOrder')->name('api.post.db.customer.confirmation.confirm');
+            });
+        });
+
         Route::group(['prefix' => 'warehouse'], function () {
             Route::group(['prefix' => 'inflow'], function () {
                 Route::post('receipt/{id?}', 'WarehouseInflowController@saveReceipt')->name('api.post.db.warehouse.inflow.receipt');
