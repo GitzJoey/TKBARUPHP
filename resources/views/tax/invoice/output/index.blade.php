@@ -17,6 +17,12 @@
 @endsection
 
 @section('content')
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+
     <div id="taxVue">
         <div class="box box-info">
             <div class="box-header with-border">
@@ -26,43 +32,23 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.tin')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.name')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.invoice_no')</th>
                             <th class="text-center">@lang('tax.invoice.output.index.table.header.invoice_date')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.code_type')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.month')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.year')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.invoice_status')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.tax_base')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.vat')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.luxury_tax')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.approval_status')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.approval_date')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.description')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.signature')</th>
-                            <th class="text-center">@lang('tax.invoice.output.index.table.header.reference')</th>
+                            <th class="text-center">@lang('tax.invoice.output.index.table.header.invoice_no')</th>
+                            <th class="text-center">Vendor</th>
+                            <th class="text-center">Gross</th>
+                            <th class="text-center">VAT</th>
+                            <th class="text-center">Grand Total</th>
                             <th class="text-center">@lang('labels.ACTION')</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="tax in taxes" v-cloak>
-                            <td class="text-center">@{{ $tax.tin }}</td>
-                            <td class="text-center">@{{ $tax.name }}</td>
-                            <td class="text-center">@{{ $tax.invoice_no }}</td>
-                            <td class="text-center">@{{ $tax.invoice_date }}</td>
-                            <td class="text-center">@{{ $tax.code_type }}</td>
-                            <td class="text-center">@{{ $tax.month }}</td>
-                            <td class="text-center">@{{ $tax.year }}</td>
-                            <td class="text-center">@{{ $tax.invoice_status }}</td>
-                            <td class="text-center">@{{ $tax.tax_base }}</td>
-                            <td class="text-center">@{{ $tax.vat }}</td>
-                            <td class="text-center">@{{ $tax.luxury_tax }}</td>
-                            <td class="text-center">@{{ $tax.approval_status }}</td>
-                            <td class="text-center">@{{ $tax.approval_date }}</td>
-                            <td class="text-center">@{{ $tax.description }}</td>
-                            <td class="text-center">@{{ $tax.signature }}</td>
-                            <td class="text-center">@{{ $tax.reference }}</td>
+                        <tr v-for="tax in formattedTaxes" v-cloak>
+                            <td class="text-center">@{{ tax.invoice_date }}</td>
+                            <td class="text-center">@{{ tax.invoice_no }}</td>
+                            <td class="text-left">@{{ tax.opponent_name }}</td>
+                            <td class="text-right">@{{ tax.tax_base }}</td>
+                            <td class="text-right">@{{ tax.gst }}</td>
+                            <td class="text-right">@{{ tax.grandTotal }}</td>
                             <td class="text-center" width="10%">
                             </td>
                         </tr>
@@ -81,11 +67,20 @@
         var app = new Vue({
             el: '#taxVue',
             data:{
-                taxes: []
+                taxes: JSON.parse('{!! htmlspecialchars_decode($taxes) !!}')
             },
             methods: {
             },
-            mounted: function() {
+            computed: {
+                formattedTaxes: function(val) {
+                    this.taxes.forEach(function(tax) {
+                        tax.grandTotal = numeral(tax.tax_base + tax.gst).format();
+                        tax.tax_base = numeral(tax.tax_base).format();
+                        tax.gst = numeral(tax.gst).format();
+
+                    });
+                    return this.taxes;
+                }
             }
         });
     </script>

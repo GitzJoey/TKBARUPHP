@@ -6,33 +6,22 @@ use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Tax extends Model
+class TaxItem extends Model
 {
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
-    protected $table = 'taxes';
+    protected $table = 'tax_items';
 
     protected $fillable = [
-        'invoice_no',
-        'invoice_date',
-        'gst_transaction_type',
-        'transaction_doc',
-        'transaction_detail',
-        'month',
-        'year',
-        'tax_id_no',
+        'tax_id',
         'name',
-        'address',
-        'opponent_tax_id_no',
-        'opponent_name',
-        'opponent_address',
-        'gst_type',
-        'tax_base',
+        'price',
+        'discount',
+        'qty',
         'gst',
         'luxury_tax',
-        'reference',
     ];
 
     protected $hidden = [
@@ -72,8 +61,9 @@ class Tax extends Model
         });
     }
 
-    public function items()
+    public function itemable()
     {
-        return $this->morphMany(TaxItem::class, 'itemable');
+        // Tax
+        return $this->morphTo();
     }
 }

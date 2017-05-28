@@ -71,6 +71,14 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('edit/{id}', 'WarehouseController@update')->name('api.post.db.master.warehouse.edit');
             });
         });
+
+        Route::group(['prefix' => 'tax'], function() {
+            Route::group(['prefix' => 'invoice'], function () {
+                Route::group(['prefix' => 'output'], function () {
+                    Route::post('create', 'TaxInvoiceOutputController@store')->name('api.post.db.tax.invoice.output.create');
+                });
+            });
+        });
     });
 });
 
