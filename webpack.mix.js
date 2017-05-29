@@ -44,7 +44,7 @@ mix.js('resources/assets/js/app.js', 'public/adminlte/js')
         './node_modules/noty/js/noty/packaged/jquery.noty.packaged.js',
         './node_modules/urijs/src/URI.js',
         './resources/assets/js/adminlte.custom.js'
-    ], 'public/adminlte/js/app.js')
+    ], 'public/adminlte/js/adminlte.js')
     .copy('node_modules/admin-lte/dist/img/boxed-bg.jpg', 'public/adminlte/img')
     .copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
     .copy('node_modules/fullcalendar/dist/fullcalendar.min.js', 'public/adminlte/js')
