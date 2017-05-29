@@ -56,7 +56,7 @@
                                     <div class="col-sm-1">
                                         <button id="customerDetailButton" type="button"
                                                 class="btn btn-primary btn-sm"
-                                                data-toggle="modal" data-target="#customerDetailModal"><span
+                                                data-toggle="modal" data-target="#customerDetailModal_0"><span
                                                     class="fa fa-info-circle fa-lg"></span></button>
                                     </div>
                                 </div>
@@ -73,8 +73,7 @@
                                     <label for="inputCustomerDetails"
                                            class="col-sm-2 control-label">@lang('sales_order.copy.create.field.customer_details')</label>
                                     <div class="col-sm-8">
-                                                    <textarea class="form-control" rows="5" readonly>{{ $soToBeCopied->walk_in_cust_detail }}
-                                                    </textarea>
+                                        <textarea class="form-control" rows="5" readonly>{{ $soToBeCopied->walk_in_cust_detail }}</textarea>
                                     </div>
                                 </div>
                             @endif
@@ -118,8 +117,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" readonly
-                                               value="{{ $soToBeCopied->so_created->format('d-m-Y') }}">
+                                        <vue-datetimepicker id="inputSoDate" name="so_created" value="" v-model="so.so_created" format="DD-MM-YYYY hh:mm A" readonly="true"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -176,88 +174,72 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                                @if($soToBeCopied->so_type == 'SOTYPE.SVC')
-                                    <div class="col-md-11">
-                                        <select id="inputProduct"
-                                                class="form-control"
-                                                v-model="so.product">
-                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="button" class="btn btn-primary btn-md"
-                                                v-on:click="insertProduct(so.product)"><span class="fa fa-plus"/>
-                                        </button>
-                                    </div>
-                                @else
-                                    <div class="col-md-11">
-                                        <select id="inputStock"
-                                                class="form-control"
-                                                v-model="so.stock">
-                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="stock in stocksDDL" v-bind:value="stock">@{{ stock.product.name }}</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="button" class="btn btn-primary btn-md"
-                                                v-on:click="insertStock(so.stock)"><span class="fa fa-plus"/>
-                                        </button>
-                                    </div>
-                                @endif
+                                <div class="col-md-11">
+                                    <select id="inputProduct"
+                                            class="form-control"
+                                            v-model="so.product">
+                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-primary btn-md"
+                                            v-on:click="insertProduct(so.product)"><span class="fa fa-plus"/>
+                                    </button>
+                                </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="30%">@lang('sales_order.copy.create.table.item.header.product_name')</th>
-                                            <th width="15%">@lang('sales_order.copy.create.table.item.header.quantity')</th>
-                                            <th width="15%"
-                                                class="text-right">@lang('sales_order.copy.create.table.item.header.unit')</th>
-                                            <th width="15%"
-                                                class="text-right">@lang('sales_order.copy.create.table.item.header.price_unit')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-right">@lang('sales_order.copy.create.table.item.header.total_price')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="30%">@lang('sales_order.copy.create.table.item.header.product_name')</th>
+                                                <th width="15%">@lang('sales_order.copy.create.table.item.header.quantity')</th>
+                                                <th width="15%"
+                                                    class="text-right">@lang('sales_order.copy.create.table.item.header.unit')</th>
+                                                <th width="15%"
+                                                    class="text-right">@lang('sales_order.copy.create.table.item.header.price_unit')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-right">@lang('sales_order.copy.create.table.item.header.total_price')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(item, itemIndex) in so.items">
-                                            <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
-                                            <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
-                                            <input type="hidden" name="base_unit_id[]"
-                                                   v-bind:value="item.base_unit.unit.id">
-                                            <td class="valign-middle">@{{ item.product.name }}</td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="quantity[]"
-                                                       v-model="item.quantity" data-parsley-required="true"
-                                                       data-parsley-type="number">
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
-                                                <select data-parsley-required="true"
-                                                        class="form-control"
-                                                        v-model="item.selected_unit">
-                                                    <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="price[]"
-                                                       v-model="item.price" data-parsley-required="true">
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md"
-                                                        v-on:click="removeItem(itemIndex)"><span
-                                                            class="fa fa-minus"></span>
-                                                </button>
-                                            </td>
-                                            <td class="text-right valign-middle">
-                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                            </td>
-                                        </tr>
+                                            <tr v-for="(item, itemIndex) in so.items">
+                                                <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
+                                                <input type="hidden" name="base_unit_id[]"
+                                                       v-bind:value="item.base_unit.unit.id">
+                                                <td class="valign-middle">@{{ item.product.name }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="quantity[]"
+                                                           v-model="item.quantity" data-parsley-required="true"
+                                                           data-parsley-type="number">
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
+                                                    <select data-parsley-required="true"
+                                                            class="form-control"
+                                                            v-model="item.selected_unit">
+                                                        <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="price[]"
+                                                           v-model="item.price" data-parsley-required="true">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md"
+                                                            v-on:click="removeItem(itemIndex)">
+                                                        <span class="fa fa-minus"></span>
+                                                    </button>
+                                                </td>
+                                                <td class="text-right valign-middle">
+                                                    @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -306,8 +288,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <textarea id="inputRemarks" class="form-control" rows="5"
-                                                      readonly>{{ $soToBeCopied->remarks }}</textarea>
+                                            <textarea id="inputRemarks" class="form-control" rows="5" readonly>{{ $soToBeCopied->remarks }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -358,18 +339,63 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var currentSo = JSON.parse('{!! htmlspecialchars_decode($soToBeCopied->toJson()) !!}');
-        
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
         var soCopyApp = new Vue({
             el: '#soCopyVue',
             data: {
+                currentSo: JSON.parse('{!! htmlspecialchars_decode($soToBeCopied->toJson()) !!}'),
                 productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
-                stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 so: {
                     stock: {id: ''},
                     product: {id: ''},
-                    customer: currentSo.customer ? _.cloneDeep(currentSo.customer) : {id: ''},
+                    customer: { },
                     items: [],
+                },
+                soIndex: 0
+            },
+            mounted: function() {
+                var vm = this;
+
+                vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                vm.so.so_created = vm.currentSo.so_created;
+
+                for (var i = 0; i < vm.currentSo.items.length; i++) {
+                    vm.so.items.push({
+                        stock: {
+                            id: vm.currentSo.items[i].stock_id
+                        },
+                        id: vm.currentSo.items[i].id,
+                        product: _.cloneDeep(vm.currentSo.items[i].product),
+                        base_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
+                        selected_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(punit) { return punit.id == vm.currentSo.items[i].selected_unit_id; })),
+                        quantity: vm.currentSo.items[i].quantity % 1 != 0 ? parseFloat(vm.currentSo.items[i].quantity).toFixed(1) : parseFloat(vm.currentSo.items[i].quantity).toFixed(0),
+                        price: parseFloat(vm.currentSo.items[i].price).toFixed(0)
+                    });
                 }
             },
             methods : {
@@ -399,67 +425,10 @@
                         });
                     }
                 },
-                insertStock: function (stock) {
-                    if(stock.id != ''){
-                        var vm = this;
-                        var stock_price = _.find(stock.today_prices, function (price) {
-                            return price.price_level_id === vm.so.customer.price_level_id;
-                        });
-
-                        vm.so.items.push({
-                            stock_id: stock.id,
-                            product: _.cloneDeep(stock.product),
-                            selected_unit: {
-                                unit: {
-                                    id: ''
-                                },
-                                conversion_value: 1
-                            },
-                            base_unit: _.cloneDeep(_.find(stock.product.product_units, isBase)),
-                            quantity: 0,
-                            price: stock_price ? stock_price : 0
-                        });
-                    }
-                },
                 removeItem: function (index) {
                     this.so.items.splice(index, 1);
                 }
             }
-        });
-
-        for (var i = 0; i < currentSo.items.length; i++) {
-            soCopyApp.so.items.push({
-                stock: {
-                    id: currentSo.items[i].stock_id
-                },
-                id: currentSo.items[i].id,
-                product: _.cloneDeep(currentSo.items[i].product),
-                base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
-                selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
-                quantity: currentSo.items[i].quantity % 1 != 0 ? parseFloat(currentSo.items[i].quantity).toFixed(1) : parseFloat(currentSo.items[i].quantity).toFixed(0),
-                price: parseFloat(currentSo.items[i].price).toFixed(0)
-            });
-        }
-
-        function getSelectedUnit(selectedUnitId) {
-            return function (element) {
-                return element.unit_id == selectedUnitId;
-            }
-        }
-
-        function isBase(unit) {
-            return unit.is_base == 1;
-        }
-
-        $(function () {
-            $("#inputSoDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
-            $("#inputShippingDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
         });
     </script>
 @endsection
