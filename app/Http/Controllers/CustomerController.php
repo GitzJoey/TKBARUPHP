@@ -421,7 +421,9 @@ class CustomerController extends Controller
     public function storePaymentCashCustomer($id, Request $request)
     {
 
-        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function paymentTransferCustomer($id)
@@ -445,7 +447,9 @@ class CustomerController extends Controller
     public function storePaymentTransferCustomer($id, Request $request)
     {
 
-        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function paymentGiroCustomer($id)
@@ -466,10 +470,10 @@ class CustomerController extends Controller
     public function storePaymentGiroCustomer($id, Request $request)
     {
 
-        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
-
-    // ===================== REST API HANDLER METHODS ====================== //
 
     public function searchCustomers(Request $request)
     {
@@ -487,8 +491,6 @@ class CustomerController extends Controller
                       ->orWhere('last_name', 'like', "%$param%");
         })->get();
 
-        // Assign additional attribute, unpaid sales order amount
-        // and its last sales order.
         $customers = collect($customers->map(function ($customer){
             return array_merge([
                 'last_order' => $this->customerService->getCustomerLastOrder($customer->id),

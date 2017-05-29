@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group">
+                                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('total_amount') }">
                                                 <label for="inputPaymentAmount"
                                                        class="col-sm-2 control-label">@lang('customer.payment.transfer.field.payment_amount')</label>
                                                 <div class="col-sm-4">
@@ -116,8 +116,9 @@
                                                             Rp
                                                         </div>
                                                         <input type="text" class="form-control" id="inputPaymentAmount"
-                                                               name="total_amount" v-model="total_amount">
+                                                               name="total_amount" v-model="total_amount" v-validate="'required|decimal:2|min_value:1'">
                                                     </div>
+                                                    <span v-show="errors.has('total_amount')" class="help-block" v-cloak>@{{ errors.first('total_amount') }}</span>
                                                 </div>
                                             </div>
                                         </div>

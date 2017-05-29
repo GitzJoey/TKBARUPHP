@@ -125,7 +125,7 @@
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('tare_' + itemIdx) }">
                                                     <input v-bind:id="'tare_' + itemIdx" type="text" class="form-control text-right" name="tare[]" v-model="item.delivers[0].tare"
-                                                           v-validate="'required|decimal:2|min_value:1|checkequal:' + itemIdx"
+                                                           v-validate="'required|decimal:2|min_value:0|checkequal:' + itemIdx"
                                                            v-bind:data-vv-name="'tare_' + itemIdx" v-bind:data-vv-as="'{{ trans('customer.confirmation.confirm.table.item.header.tare') }} ' + (itemIdx + 1)">
                                                 </td>
                                                 <td>

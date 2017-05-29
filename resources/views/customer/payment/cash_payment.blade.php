@@ -59,13 +59,13 @@
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar"></i>
                                                     </div>
-                                                    <input type="text" class="form-control" id="inputPaymentDate" name="payment_date">
+                                                    <vue-datetimepicker id="inputPaymentDate" name="payment_date" value="" v-model="payment_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group">
+                                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('total_amount') }">
                                             <label for="inputPaymentAmount"
                                                    class="col-sm-2 control-label">@lang('customer.payment.cash.field.payment_amount')</label>
                                             <div class="col-sm-4">
@@ -73,9 +73,9 @@
                                                     <div class="input-group-addon">
                                                         Rp
                                                     </div>
-                                                    <input type="text" class="form-control" id="inputPaymentAmount"
-                                                           name="total_amount">
+                                                    <input type="text" class="form-control" id="inputPaymentAmount" name="total_amount" v-model="total_amount" v-validate="'required|decimal:2|min_value:1'">
                                                 </div>
+                                                <span v-show="errors.has('total_amount')" class="help-block" v-cloak>@{{ errors.first('total_amount') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -144,6 +144,8 @@
                     disc_percent : { },
                     disc_value : { }
                 },
+                payment_date: '',
+                total_amount: 0,
                 soIndex: 0
             },
             methods: {
@@ -196,6 +198,10 @@
                 validateBeforeSubmit: function() {
                     this.$validator.validateAll().then(function(isValid) {
                         $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.customer.payment.cash', $currentSo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#custCashPaymentForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.customer.payment.index') }}'; }
+                            });
                     });
                 },
                 grandTotal: function () {

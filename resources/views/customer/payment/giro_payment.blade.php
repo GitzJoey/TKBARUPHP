@@ -40,45 +40,51 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputPaymentType"
-                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_type')</label>
-                                        <div class="col-sm-4">
+                                               class="col-sm-4 control-label">@lang('sales_order.payment.giro.field.payment_type')</label>
+                                        <div class="col-sm-8">
                                             <input id="inputPaymentType" type="text" class="form-control" readonly value="@lang('lookup.'.$paymentType)">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
+                                <div class="col-md-6">
+                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('bank_id') }">
                                         <label for="inputGiroBank"
-                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.bank')</label>
-                                        <div class="col-sm-4">
+                                               class="col-sm-4 control-label">@lang('sales_order.payment.giro.field.bank')</label>
+                                        <div class="col-sm-8">
                                             <select id="inputGiro" name="bank_id"
                                                     class="form-control"
                                                     v-model="giro.bank.id"
-                                                    v-validate="'required'">
+                                                    v-validate="'required'"
+                                                    data-vv-as="{{ trans('sales_order.payment.giro.field.bank') }}">
                                                 <option v-bind:value="defaultBank.id">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="bank in bankDDL" v-bind:value="bank.id">@{{ bank.name }}</option>
                                             </select>
+                                            <span v-show="errors.has('bank_id')" class="help-block" v-cloak>@{{ errors.first('bank_id') }}</span>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('serial_number') }">
                                         <label for="inputGiroSerialNumber"
-                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
-                                        <div class="col-sm-4">
-                                            <input id="inputGiroSerialNumber" name="serial_number" type="text"
-                                                   class="form-control">
+                                               class="col-sm-4 control-label">@lang('sales_order.payment.giro.field.serial_number')</label>
+                                        <div class="col-sm-8">
+                                            <input id="inputGiroSerialNumber" name="serial_number" type="text" class="form-control" v-validate="'required'" data-vv-as="{{ trans('sales_order.payment.giro.field.serial_number') }}">
+                                            <span v-show="errors.has('serial_number')" class="help-block" v-cloak>@{{ errors.first('serial_number') }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputPaymentDate"
-                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_date')</label>
-                                        <div class="col-sm-4">
+                                               class="col-sm-4 control-label">@lang('sales_order.payment.giro.field.payment_date')</label>
+                                        <div class="col-sm-8">
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -86,9 +92,13 @@
                                                 <vue-datetimepicker id="inputPaymentDate" name="payment_date" value="" v-model="payment_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="inputEffectiveDate"
-                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.effective_date')</label>
-                                        <div class="col-sm-4">
+                                               class="col-sm-4 control-label">@lang('sales_order.payment.giro.field.effective_date')</label>
+                                        <div class="col-sm-8">
                                             <div class="input-group date">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
@@ -100,28 +110,34 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
+                                <div class="col-md-6">
+                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('amount') }">
                                         <label for="inputAmount"
-                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.payment_amount')</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" class="form-control" id="inputAmount" v-model="giro.amount" name="amount">
+                                               class="col-sm-4 control-label">@lang('sales_order.payment.giro.field.payment_amount')</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputAmount" v-model="giro.amount" name="amount" v-validate="'required'" data-vv-as="{{ trans('sales_order.payment.giro.field.payment_amount') }}">
+                                            <span v-show="errors.has('amount')" class="help-block" v-cloak>@{{ errors.first('amount') }}</span>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('printed_name') }">
                                         <label for="inputPrintedName"
-                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.printed_name')</label>
-                                        <div class="col-sm-4">
+                                               class="col-sm-4 control-label">@lang('sales_order.payment.giro.field.printed_name')</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" id="inputPrintedName"
-                                                   v-model="giro.printed_name" name="printed_name" >
+                                                   v-model="giro.printed_name" name="printed_name" v-validate="'required'" data-vv-as="{{ trans('sales_order.payment.giro.field.printed_name') }}">
+                                            <span v-show="errors.has('printed_name')" class="help-block" v-cloak>@{{ errors.first('printed_name') }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="inputGiroRemarks"
-                                               class="col-sm-2 control-label">@lang('sales_order.payment.giro.field.remarks')</label>
-                                        <div class="col-sm-10">
+                                               class="col-sm-4 control-label">@lang('sales_order.payment.giro.field.remarks')</label>
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" id="inputGiroRemarks"
                                                    v-model="giro.remarks" name="remarks">
                                         </div>

@@ -77,7 +77,7 @@
                                                 <div class="input-group-addon">
                                                     Rp
                                                 </div>
-                                                <input type="text" class="form-control" id="inputPaymentAmount" name="total_amount" v-validate="'required|decimal:2'" data-vv-as="{{ trans('purchase_order.payment.cash.field.payment_amount') }}">
+                                                <input type="text" class="form-control" id="inputPaymentAmount" name="total_amount" v-model="total_amount" v-validate="'required|decimal:2'" data-vv-as="{{ trans('purchase_order.payment.cash.field.payment_amount') }}">
                                             </div>
                                             <span v-show="errors.has('total_amount')" class="help-block" v-cloak>@{{ errors.first('total_amount') }}</span>
                                         </div>
@@ -145,7 +145,8 @@
                     disc_total_percent : 0,
                     disc_total_value : 0
                 },
-                payment_date: ''
+                payment_date: '',
+                total_amount: 0
             },
             methods: {
                 validateBeforeSubmit: function() {
