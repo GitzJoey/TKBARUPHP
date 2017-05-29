@@ -140,9 +140,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" readonly name="shipping_date"
-                                               value="{{ $soToBeCopied->shipping_date->format('d-m-Y') }}"
-                                               data-parsley-required="true">
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="so.shipping_date" format="DD-MM-YYYY hh:mm A" readonly="true"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -248,13 +246,13 @@
                                 <div class="col-md-12">
                                     <table id="itemsTotalListTable" class="table table-bordered">
                                         <tbody>
-                                        <tr>
-                                            <td width="80%"
-                                                class="text-right">@lang('sales_order.copy.create.table.total.body.total')</td>
-                                            <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ grandTotal() }}</span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td width="80%"
+                                                    class="text-right">@lang('sales_order.copy.create.table.total.body.total')</td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -359,6 +357,9 @@
                 });
 
                 if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            updated: function() {
+                $(this.$el).datetimepicker().data("DateTimePicker").date(this.value);
             },
             destroyed: function() {
                 $(this.$el).data("DateTimePicker").destroy();
