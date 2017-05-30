@@ -41,7 +41,7 @@
                                 <div class="form-group">
                                     <label for="inputGSTTranType" class="col-sm-4 control-label">Jenis Transaksi PPN</label>
                                     <div class="col-sm-8">
-                                        <select id="inputGSTTranType" name="gst_transaction_type" class="form-control">
+                                        <select id="inputGSTTranType" name="gst_transaction_type" class="form-control" disabled="true" v-model="taxOutput.GSTTransactionType">
                                             <option v-bind:value="defaultGSTTranType.code">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="vtt of gstTranTypeDDL" v-bind:value="vtt.code">@{{ vtt.description }}</option>
                                         </select>
@@ -111,19 +111,19 @@
                             <div class="form-group">
                                 <label for="inputTaxIDNo" class="col-sm-2 control-label">NPWP</label>
                                 <div class="col-sm-10">
-                                    <input id="inputTaxIDNo" name="tax_id_no" type="text" class="form-control">
+                                    <input id="inputTaxIDNo" name="tax_id_no" type="text" class="form-control" v-bind:value="currentStore.tax_id" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-2 control-label">Nama</label>
                                 <div class="col-sm-10">
-                                    <input id="inputName" name="name" type="text" class="form-control">
+                                    <input id="inputName" name="name" type="text" class="form-control" v-bind:value="currentStore.name" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputAddress" class="col-sm-2 control-label">Address</label>
                                 <div class="col-sm-10">
-                                    <textarea id="inputAddress" name="address" class="form-control" rows="6"></textarea>
+                                    <textarea id="inputAddress" name="address" class="form-control" rows="6" v-bind:value="currentStore.address" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -163,47 +163,48 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">Detail Transaksi</h3>
-                            <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertTransaction()"><span class="fa fa-plus fa-fw"/></button>
+                            <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertTran()"><span class="fa fa-plus fa-fw"/></button>
                         </div>
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table id="detailTransactionListTable" class="table table-bordered table-hover">
+                                    <table id="detailTransactionListTable" class="table table-bordered table-hover" border="1">
                                         <thead>
                                         <tr>
-                                            <th>Nama Barang Kena Pajak / Jasa Kena Pajak</th>
-                                            <th class="text-center">Harga Satuan</th>
-                                            <th class="text-center">Potongan Harga</th>
-                                            <th class="text-center">Jumlah Barang</th>
-                                            <th class="text-center">PPnBM</th>
-                                            <th class="text-center">Harga Total</th>
+                                            <th class="text-center" width="18%">Nama</th>
+                                            <th class="text-center" width="18%">Jumlah Barang</th>
+                                            <th class="text-center" width="18%">DPP</th>
+                                            <th class="text-center" width="18%">PPN</th>
+                                            <th class="text-center" width="18%">PPnBM</th>
                                             <th >&nbsp</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr v-for="(tran, tranIndex) in taxOutput.transactions">
-                                            <td>
-                                                <input name="tran_name[]" type="text" class="form-control" v-model="tran.name">
+                                            <td class="valign-middle">
+                                                <input v-if="tran.editmode" name="tran_name[]" type="text" class="form-control" v-model="tran.name">
+                                                <span v-else class="control-label-normal">@{{ tran.name }}</span>
                                             </td>
-                                            <td>
-                                                <input name="tran_price[]" type="text" class="form-control text-right" v-model="tran.price"/>
+                                            <td class="valign-middle text-right">
+                                                <input v-if="tran.editmode" name="tran_qty[]" type="text" class="form-control text-right" v-model="tran.qty"/>
+                                                <span v-else class="control-label-normal">@{{ tran.formattedQty }}</span>
                                             </td>
-                                            <td>
-                                                <input name="tran_discount[]" type="text" class="form-control text-right" v-model="tran.discount"/>
+                                            <td class="valign-middle text-right">
+                                                <input v-if="tran.editmode" name="tran_price[]" type="text" class="form-control text-right" v-model="tran.price" v-on:blur="calcGST(tran)" />
+                                                <span v-else class="control-label-normal">@{{ tran.formattedPrice }}</span>
                                             </td>
-                                            <td>
-                                                <input name="tran_qty[]" type="text" class="form-control text-right" v-model="tran.qty"/>
+                                            <td class="valign-middle text-right">
+                                                <input v-if="tran.editmode" name="tran_gst[]" type="text" class="form-control text-right" v-model="tran.gst" readonly/>
+                                                <span v-else class="control-label-normal">@{{ tran.formattedGST }}</span>
                                             </td>
-                                            <td>
-                                                <input name="tran_luxury_tax[]" type="text" class="form-control text-right" v-model="tran.luxuryTax"/>
-                                            </td>
-                                            <td class="text-right valign-middle">
-                                                <input name="tran_gst[]" type="hidden" v-model="tran.gst">
-                                                @{{ calcSubtotalPrice(tranIndex, tran.price, tran.discount, tran.qty) }}
+                                            <td class="valign-middle text-right">
+                                                <input v-if="tran.editmode" name="tran_luxury_tax[]" type="text" class="form-control text-right" v-model="tran.luxuryTax"/>
+                                                <span v-else class="control-label-normal">@{{ tran.formattedLuxuryTax }}</span>
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md"><span class="fa fa-minus" v-on:click="removeTransaction(tranIndex)"></span>
-                                                </button>
+                                                <span v-if="!tran.editmode"><button type="button" class="btn btn-primary btn-md" v-on:click="editTran(tran)"><span class="fa fa-pencil"></span></button></span>
+                                                <span v-else><button type="button" class="btn btn-primary btn-md" v-on:click="saveTran(tran)"><span class="fa fa-floppy-o"></span></button></span>
+                                                <span><button type="button" class="btn btn-danger btn-md" v-on:click="removeTran(tran)"><span class="fa fa-minus"></span></button></span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -311,11 +312,14 @@
         var poApp = new Vue({
             el: '#taxVue',
             data: {
+                isEditMode: false,
+                currentStore: JSON.parse('{!! htmlspecialchars_decode($currentStore->toJson()) !!}'),
                 gstTranTypeDDL: JSON.parse('{!! htmlspecialchars_decode($gstTranTypeDDL) !!}'),
                 tranDocDDL: JSON.parse('{!! htmlspecialchars_decode($tranDocDDL) !!}'),
                 tranDetailDDL: JSON.parse('{!! htmlspecialchars_decode($tranDetailDDL) !!}'),
                 taxPeriod: moment().format('MM/YYYY'),
                 taxOutput: {
+                    GSTTransactionType: 'GSTTRANSACTIONTYPEOUTPUT.5',
                     transactions: [],
                     totalSellingPrice: 0,
                     totalSellingPriceText: '',
@@ -343,55 +347,71 @@
                 },
                 changeTaxPeriod: function(e) {
                     this.taxPeriod = moment(e).format('MM/YYYY');
+
                 },
-                insertTransaction: function() {
-                    var vm = this;
-                    vm.taxOutput.transactions.push({
+                insertTran: function() {
+                    var newObj = {
                         name: '',
+                        qty: 0,
                         price: 0,
-                        discount: 0,
                         gst: 0,
                         luxuryTax: 0,
-                        qty: 0,
-                        subTotal: 0,
-                    });
+                        formattedQty: '',
+                        formattedPrice: '',
+                        formattedGST: '',
+                        formattedLuxuryTax: '',
+                    };
+                    newObj.editmode = true;
+                    this.taxOutput.transactions.push(newObj);
                 },
-                removeTransaction: function (index) {
+                editTran: function(obj) {
+                    this.$set(obj, 'editmode', true);
+                },
+                saveTran: function(obj) {
+                    this.$set(obj, 'editmode', false);
+                    obj.formattedQty = numeral(obj.qty).format();
+                    obj.formattedPrice = numeral(obj.price).format();
+                    obj.formattedGST = numeral(obj.gst).format();
+                    obj.formattedLuxuryTax = numeral(obj.luxuryTax).format();
+                },
+                removeTran: function (index) {
                     var vm = this;
                     vm.taxOutput.transactions.splice(index, 1);
-                    this.calcTax();
                 },
-                calcSubtotalPrice: function(index, price, discount, qty) {
-                    subtotal = (price - discount) * qty;
-                    this.taxOutput.transactions[index].subTotal = subtotal;
-                    this.calcTax();
-                    return numeral(subtotal).format();
+                calcGST: function(tran) {
+                    tran.gst = 10 / 100 * tran.price;
                 },
-                calcTax: function() {
-                    var totalSellingPrice = 0;
-                    var totalDiscount = 0;
-                    var totalTaxBase = 0;
-                    var totalGST = 0;
-                    var totalLuxuryTax = 0;
-                    this.taxOutput.transactions.forEach(function(tran) {
-                        tran.gst = 10 / 100 * tran.price;
-                        totalSellingPrice += tran.price * tran.qty;
-                        totalDiscount += tran.discount * tran.qty;
-                        totalLuxuryTax += tran.luxuryTax * tran.qty;
-                    });
-                    totalTaxBase = totalSellingPrice - totalDiscount;
-                    totalGST = 10 / 100 * totalTaxBase;
-                    this.taxOutput.totalSellingPrice = totalSellingPrice;
-                    this.taxOutput.totalSellingPriceText = numeral(totalSellingPrice).format();
-                    this.taxOutput.totalDiscount = totalDiscount;
-                    this.taxOutput.totalDiscountText = numeral(totalDiscount).format();
-                    this.taxOutput.totalTaxBase = totalTaxBase;
-                    this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
-                    this.taxOutput.totalGST = totalGST;
-                    this.taxOutput.totalGSTText = numeral(totalGST).format();
-                    this.taxOutput.totalLuxuryTax = totalLuxuryTax;
-                    this.taxOutput.totalLuxuryTaxText = numeral(totalLuxuryTax).format();
-                }
+//                calcSubtotalPrice: function(index, price, discount, qty) {
+//                    subtotal = (price - discount) * qty;
+//                    this.taxOutput.transactions[index].subTotal = subtotal;
+//                    this.calcTax();
+//                    return numeral(subtotal).format();
+//                },
+//                calcTax: function() {
+//                    var totalSellingPrice = 0;
+//                    var totalDiscount = 0;
+//                    var totalTaxBase = 0;
+//                    var totalGST = 0;
+//                    var totalLuxuryTax = 0;
+//                    this.taxOutput.transactions.forEach(function(tran) {
+//                        tran.gst = 10 / 100 * tran.price;
+//                        totalSellingPrice += tran.price * tran.qty;
+//                        totalDiscount += tran.discount * tran.qty;
+//                        totalLuxuryTax += tran.luxuryTax * tran.qty;
+//                    });
+//                    totalTaxBase = totalSellingPrice - totalDiscount;
+//                    totalGST = 10 / 100 * totalTaxBase;
+//                    this.taxOutput.totalSellingPrice = totalSellingPrice;
+//                    this.taxOutput.totalSellingPriceText = numeral(totalSellingPrice).format();
+//                    this.taxOutput.totalDiscount = totalDiscount;
+//                    this.taxOutput.totalDiscountText = numeral(totalDiscount).format();
+//                    this.taxOutput.totalTaxBase = totalTaxBase;
+//                    this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
+//                    this.taxOutput.totalGST = totalGST;
+//                    this.taxOutput.totalGSTText = numeral(totalGST).format();
+//                    this.taxOutput.totalLuxuryTax = totalLuxuryTax;
+//                    this.taxOutput.totalLuxuryTaxText = numeral(totalLuxuryTax).format();
+//                }
             },
             computed: {
                 defaultGSTTranType: function(){

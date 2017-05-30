@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Model\Store;
 use App\Model\Tax;
 use App\Services\TaxInvoiceOutputService;
 use Illuminate\Http\Request;
 use App\Repos\LookupRepo;
 use Illuminate\Support\Facades\Log;
-
 
 class TaxInvoiceOutputController extends Controller
 {
@@ -29,11 +30,12 @@ class TaxInvoiceOutputController extends Controller
 
     public function create() {
         Log::info('[TaxInvoiceOutputController@create] ');
-
+        $currentStore = new Store();
+        $currentStore = $currentStore->find(Auth::user()->store_id);
         $gstTranTypeDDL = LookupRepo::findByCategory('GSTTRANSACTIONTYPEOUTPUT');
         $tranDocDDL = LookupRepo::findByCategory('TRANSACTIONDOCOUTPUT');
         $tranDetailDDL = LookupRepo::findByCategory('TRANSACTIONDETAILOUTPUT');
-        return view('tax.invoice.output.create', compact('gstTranTypeDDL', 'tranDocDDL', 'tranDetailDDL'));
+        return view('tax.invoice.output.create', compact('gstTranTypeDDL', 'tranDocDDL', 'tranDetailDDL', 'currentStore'));
     }
 
     public function store(Request $request){
@@ -51,4 +53,23 @@ class TaxInvoiceOutputController extends Controller
             'message' => '',
         ]);
     }
+
+    public function show($id)
+    {
+        Log::info('[TaxInvoiceOutputController@show] $id: ' . $id);
+
+        $store = Tax::find($id);
+
+        return view('tax.invoice.output.show')->with('store', $store);
+    }
+
+    public function revise($id)
+    {
+        Log::info('[TaxInvoiceOutputController@revise]');
+
+        $tax = $this->taxInvoiceOutputService->editTax($id);
+
+        return view('tax.invoice.output.revise', compact('tax'));
+    }
+
 }

@@ -42,16 +42,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="tax in formattedTaxes" v-cloak>
-                            <td class="text-center">@{{ tax.invoice_date }}</td>
-                            <td class="text-center">@{{ tax.invoice_no }}</td>
-                            <td class="text-left">@{{ tax.opponent_name }}</td>
-                            <td class="text-right">@{{ tax.tax_base }}</td>
-                            <td class="text-right">@{{ tax.gst }}</td>
-                            <td class="text-right">@{{ tax.grandTotal }}</td>
-                            <td class="text-center" width="10%">
+                        @foreach ($taxes as $key => $tax)
+                            <tr>
+                            <td class="text-center">{{ $tax->invoice_date }}</td>
+                            <td class="text-center">{{ $tax->invoice_no }}</td>
+                            <td class="text-left">{{ $tax->opponent_name }}</td>
+                            <td class="text-right">{{ $tax->tax_base }}</td>
+                            <td class="text-right">{{ $tax->gst }}</td>
+                            <td class="text-right">{{ $tax->tax_base + $tax->gst }}</td>
+                            <td class="text-center">
+                                <a class="btn btn-xs btn-info" href="{{ route('db.tax.invoice.output.show', $tax->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.tax.invoice.output.edit', $tax->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.tax.invoice.output.delete', $tax->hId()], 'style'=>'display:inline'])  !!}
+                                <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                {!! Form::close() !!}
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -64,6 +71,7 @@
 
 @section('custom_js')
     <script type="application/javascript">
+
         var app = new Vue({
             el: '#taxVue',
             data:{

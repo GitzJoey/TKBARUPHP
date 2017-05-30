@@ -420,21 +420,6 @@ class LookupTableSeeder extends Seeder
                 'category' => 'TRANSACTIONDETAILOUTPUT',
             ],
             [
-                'code' => 'TRANSACTIONDETAILOUTPUT.10',
-                'description' => '10 - Ekspor Barang Kena Pajak (BKP) Berwujud',
-                'category' => 'TRANSACTIONDETAILOUTPUT',
-            ],
-            [
-                'code' => 'TRANSACTIONDETAILOUTPUT.11',
-                'description' => '11 - Ekspor Barang Kena Pajak (BKP) Tidak Berwujud',
-                'category' => 'TRANSACTIONDETAILOUTPUT',
-            ],
-            [
-                'code' => 'TRANSACTIONDETAILOUTPUT.12',
-                'description' => '12 - Ekspor Jenis Kena Pajak (JKP)',
-                'category' => 'TRANSACTIONDETAILOUTPUT',
-            ],
-            [
                 'code' => 'TRANSACTIONDETAILINPUT.01',
                 'description' => '1 - Kepada Pihak yang Bukan Pemungut PPN',
                 'category' => 'TRANSACTIONDETAILINPUT',
@@ -501,22 +486,7 @@ class LookupTableSeeder extends Seeder
             ],
             [
                 'code' => 'TRANSACTIONDOCOUTPUT.2',
-                'description' => '2 - Nota Retur / Nota Pembatalan',
-                'category' => 'TRANSACTIONDOCOUTPUT',
-            ],
-            [
-                'code' => 'TRANSACTIONDOCOUTPUT.3',
-                'description' => '3 - Dokumen yang Dipersamakan dengan Faktur Pajak',
-                'category' => 'TRANSACTIONDOCOUTPUT',
-            ],
-            [
-                'code' => 'TRANSACTIONDOCOUTPUT.4',
-                'description' => '4 - Faktur Pajak Batal',
-                'category' => 'TRANSACTIONDOCOUTPUT',
-            ],
-            [
-                'code' => 'TRANSACTIONDOCOUTPUT.5',
-                'description' => '5 - Faktur Pajak Pengganti',
+                'description' => '2 - Faktur Pajak Pengganti',
                 'category' => 'TRANSACTIONDOCOUTPUT',
             ],
             [
