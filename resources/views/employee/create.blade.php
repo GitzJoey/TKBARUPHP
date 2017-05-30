@@ -134,7 +134,7 @@
 
             $("#inputStartDate").datetimepicker({
                 format: "DD-MM-YYYY",
-                defaultDate: moment()
+                defaultDate: moment().toDate()
             });
 
             $('#inputImagePath').fileinput({
