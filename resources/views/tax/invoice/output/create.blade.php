@@ -218,20 +218,6 @@
                                     <table id="transactionsTotalListTable" class="table table-bordered">
                                         <tbody>
                                             <tr>
-                                                <td class="text-left">Harga Jual / Penggantian</td>
-                                                <td class="text-right">
-                                                    <input name="selling_price" type="hidden" v-bind:value="taxOutput.totalSellingPrice"/>
-                                                    <span class="control-label-normal">@{{ taxOutput.totalSellingPriceText }}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-left">Dikurangi Potongan Harga</td>
-                                                <td class="text-right">
-                                                    <input name="discount" type="hidden" v-bind:value="taxOutput.totalDiscount"/>
-                                                    <span class="control-label-normal">@{{ taxOutput.totalDiscountText }}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
                                                 <td class="text-left">Dasar Pengenaan Pajak</td>
                                                 <td class="text-right">
                                                     <input name="tax_base" type="hidden" v-bind:value="taxOutput.totalTaxBase"/>
@@ -333,6 +319,9 @@
                     totalLuxuryTaxText: '',
                 }
             },
+            mounted: function() {
+                this.calcTax();
+            },
             methods: {
                 validateBeforeSubmit: function(type) {
                     this.$validator.validateAll().then(function(result) {
@@ -373,45 +362,33 @@
                     obj.formattedPrice = numeral(obj.price).format();
                     obj.formattedGST = numeral(obj.gst).format();
                     obj.formattedLuxuryTax = numeral(obj.luxuryTax).format();
+                    this.calcTax();
                 },
                 removeTran: function (index) {
                     var vm = this;
                     vm.taxOutput.transactions.splice(index, 1);
+                    this.calcTax();
                 },
                 calcGST: function(tran) {
                     tran.gst = 10 / 100 * tran.price;
                 },
-//                calcSubtotalPrice: function(index, price, discount, qty) {
-//                    subtotal = (price - discount) * qty;
-//                    this.taxOutput.transactions[index].subTotal = subtotal;
-//                    this.calcTax();
-//                    return numeral(subtotal).format();
-//                },
-//                calcTax: function() {
-//                    var totalSellingPrice = 0;
-//                    var totalDiscount = 0;
-//                    var totalTaxBase = 0;
-//                    var totalGST = 0;
-//                    var totalLuxuryTax = 0;
-//                    this.taxOutput.transactions.forEach(function(tran) {
-//                        tran.gst = 10 / 100 * tran.price;
-//                        totalSellingPrice += tran.price * tran.qty;
-//                        totalDiscount += tran.discount * tran.qty;
-//                        totalLuxuryTax += tran.luxuryTax * tran.qty;
-//                    });
-//                    totalTaxBase = totalSellingPrice - totalDiscount;
-//                    totalGST = 10 / 100 * totalTaxBase;
-//                    this.taxOutput.totalSellingPrice = totalSellingPrice;
-//                    this.taxOutput.totalSellingPriceText = numeral(totalSellingPrice).format();
-//                    this.taxOutput.totalDiscount = totalDiscount;
-//                    this.taxOutput.totalDiscountText = numeral(totalDiscount).format();
-//                    this.taxOutput.totalTaxBase = totalTaxBase;
-//                    this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
-//                    this.taxOutput.totalGST = totalGST;
-//                    this.taxOutput.totalGSTText = numeral(totalGST).format();
-//                    this.taxOutput.totalLuxuryTax = totalLuxuryTax;
-//                    this.taxOutput.totalLuxuryTaxText = numeral(totalLuxuryTax).format();
-//                }
+                calcTax: function() {
+                    var totalSellingPrice = 0;
+                    var totalTaxBase = 0;
+                    var totalGST = 0;
+                    var totalLuxuryTax = 0;
+                    this.taxOutput.transactions.forEach(function(tran) {
+                        totalGST += tran.gst * tran.qty;
+                        totalTaxBase += tran.price * tran.qty;
+                        totalLuxuryTax += tran.luxuryTax * tran.qty;
+                    });
+                    this.taxOutput.totalTaxBase = totalTaxBase;
+                    this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
+                    this.taxOutput.totalGST = totalGST;
+                    this.taxOutput.totalGSTText = numeral(totalGST).format();
+                    this.taxOutput.totalLuxuryTax = totalLuxuryTax;
+                    this.taxOutput.totalLuxuryTaxText = numeral(totalLuxuryTax).format();
+                }
             },
             computed: {
                 defaultGSTTranType: function(){

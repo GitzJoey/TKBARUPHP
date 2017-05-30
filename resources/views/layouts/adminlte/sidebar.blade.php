@@ -310,8 +310,8 @@
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
-                                <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.output.*')) }}"><a href="{{ route('db.tax.invoice.output.index') }}"><i class="fa fa-sign-out"></i>&nbsp;@lang('menu.item.tax.invoice.output')</a></li>
-                                <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.input.*')) }}"><a href="{{ route('db.tax.invoice.input.index') }}"><i class="fa fa-sign-in"></i>&nbsp;@lang('menu.item.tax.invoice.input')</a></li>
+                                <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.output.*')) }}"><a href="{{ route('db.tax.invoice.output.index') }}"><i class="fa fa-arrow-right"></i>&nbsp;@lang('menu.item.tax.invoice.output')</a></li>
+                                <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.input.*')) }}"><a href="{{ route('db.tax.invoice.input.index') }}"><i class="fa fa-arrow-left"></i>&nbsp;@lang('menu.item.tax.invoice.input')</a></li>
                             </ul>
                         </li>
                     </ul>
