@@ -49,7 +49,7 @@
                                     <label for="inputName" class="col-sm-2 control-label">@lang('supplier.field.name')</label>
                                     <div class="col-sm-10">
                                         <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('supplier.field.name')"
-                                        v-validate="'required'" data-vv-as="{{ trans('supplier.field.name') }}">
+                                                v-validate="'required'" data-vv-as="{{ trans('supplier.field.name') }}">
                                         <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@
                                                 v-validate="'required'"
                                                 data-vv-as="{{ trans('supplier.field.status') }}">
                                             <option v-bind:value="defaultStatus.code">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="s in statusDDL" v-bind:value="s.code">@{{ s.i18nDescription }}</option>
+                                            <option v-for="(value, key) in statusDDL" v-bind:value="key">@{{ value }}</option>
                                         </select>
                                         <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
                                     </div>
@@ -210,20 +210,27 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(bank, bankIdx) in banks">
-                                            <td>
+                                            <td v-bind:class="{ 'has-error':errors.has('bank_' + bankIdx) }">
                                                 <select class="form-control"
                                                         name="bank[]"
                                                         v-model="bank.bank_id"
-                                                        data-parsley-required="true" data-parsley-group="tab_bank">
+                                                        v-validate="'required'"
+                                                        v-bind:data-vv-as="'{{ trans('supplier.create.table_bank.header.bank') }} ' + (bankIdx + 1)"
+                                                        v-bind:data-vv-name="'bank_' + bankIdx">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
                                                 </select>
                                             </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            <td v-bind:class="{ 'has-error':errors.has('account_name_' + bankIdx) }">
+                                                <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name"
+                                                       v-validate="'required'"
+                                                       v-bind:data-vv-as="'{{ trans('supplier.create.table_bank.header.account_name') }} ' + (bankIdx + 1)"
+                                                       v-bind:data-vv-name="'account_name_' + bankIdx">
                                             </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            <td v-bind:class="{ 'has-error':errors.has('account_number_' + bankIdx) }">
+                                                <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number"
+                                                       v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('supplier.create.table_bank.header.account_number') }} ' + (bankIdx + 1)"
+                                                       v-bind:data-vv-name="'account_number_' + bankIdx">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
@@ -312,10 +319,11 @@
                                 </table>
                             </div>
                             <div class="tab-pane" id="tab_settings">
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('payment_due_day') }">
                                     <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
                                     <div class="col-sm-10">
-                                        <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
+                                        <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" v-validate="'required|numeric|max_value:100'" data-vv-as="{{ trans('supplier.field.payment_due_day') }}">
+                                        <span v-show="errors.has('payment_due_day')" class="help-block" v-cloak>@{{ errors.first('payment_due_day') }}</span>
                                     </div>
                                 </div>
                             </div>

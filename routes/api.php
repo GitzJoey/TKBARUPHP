@@ -78,7 +78,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
 
             Route::group(['prefix' => 'supplier'], function () {
                 Route::post('create', 'SupplierController@store')->name('api.post.db.master.supplier.create');
-                Route::patch('edit/{id}', 'SupplierController@update')->name('api.post.db.master.supplier.edit');
+                Route::post('edit/{id}', 'SupplierController@update')->name('api.post.db.master.supplier.edit');
             });
         });
 
