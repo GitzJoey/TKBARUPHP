@@ -5,6 +5,7 @@ namespace App\Model;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Tax extends Model
 {
@@ -70,6 +71,11 @@ class Tax extends Model
                 $model->save();
             }
         });
+    }
+
+    public function hId()
+    {
+        return HashIds::encode($this->attributes['id']);
     }
 
     public function items()
