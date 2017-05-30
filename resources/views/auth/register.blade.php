@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
 
     <script>
         $(document).ready(function () {
