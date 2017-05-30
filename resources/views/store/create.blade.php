@@ -222,8 +222,7 @@
                                                 </select>
                                             </td>
                                             <td class="text-center">
-                                                <vue-iCheck name="base_currencies[]" v-model="item.is_base" v-on:click="selectedBaseCurrencies(idx)"></vue-iCheck>
-                                                @{{ item.is_base }}
+                                                <vue-icheck v-bind:id="'check_' + idx" name="base_currencies[]" v-model="item.is_base" v-on:click="selectedBaseCurrencies(idx)"></vue-icheck>
                                             </td>
                                             <td v-bind:class="{ 'has-error':errors.has('currencies_conv_val_' + idx) }">
                                                 <input type="text" class="form-control" name="currencies_conversion_value[]" v-model="item.conversion_value" v-bind:readonly="(item.is_base != 0)"
@@ -425,20 +424,39 @@
                     checkboxClass: 'icheckbox_square-blue',
                     radioClass: 'iradio_square-blue'
                 }).on('ifChecked', function(event) {
-                    this.value = true;
-                    vm.$emit('click', this.value);
+                    vm.onChecked();
                 }).on('ifUnchecked', function(event) {
-                    this.value = false;
-                    vm.$emit('click', this.value);
+                    vm.onUnchecked();
                 });
 
                 if (this.value) { $(this.$el).iCheck('check'); }
                 if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
             },
+            methods: {
+                onChecked: function() {
+                    var vm = this;
+                    if (!isNaN(parseFloat(this.value)) && isFinite(this.value)) {
+                        this.value = 1;
+                    } else {
+                        this.value = true;
+                    }
+                    vm.$emit('click', this.value);
+                },
+                onUnchecked: function() {
+                    var vm = this;
+                    if (!isNaN(parseFloat(this.value)) && isFinite(this.value)) {
+                        this.value = 0;
+                    } else {
+                        this.value = false;
+                    }
+                    vm.$emit('click', this.value);
+                }
+            },
             watch: {
                 value: function(newVal, oldVal) {
-                    console.log(oldVal);
-                    console.log(newVal);
+                    var vm = this;
+                    if (this.value) { $(this.$el).prop('checked', true).iCheck('update'); }
+                    else { $(this.$el).prop('checked', false).iCheck('update'); }
                 }
             },
             destroyed: function() {
@@ -512,13 +530,16 @@
                         'remarks': ''
                     });
                 },
-                selectedBaseCurrencies: function(idx){
-                    for (var i = 0; i < this.currencies.length; i++) {
+                selectedBaseCurrencies: function(idx) {
+                    var vm = this;
+
+                    for (var i = 0; i < vm.currencies.length; i++) {
                         if (idx == i) {
-                            this.currencies[i].conversion_value = 1;
-                            this.currencies[i].is_base = 1;
+                            if (vm.currencies[i].is_base) {
+                                vm.currencies[i].conversion_value = 1;
+                            }
                         } else {
-                            this.currencies[i].is_base = 0;
+                            vm.currencies[i].is_base = 0;
                         }
                     }
                 },
