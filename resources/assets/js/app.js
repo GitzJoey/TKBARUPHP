@@ -17,6 +17,8 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 
+Vue.component('vue-numeric', require('./components/vue-numeric.vue'));
+
 const app = new Vue({
     el: '#app'
 });
