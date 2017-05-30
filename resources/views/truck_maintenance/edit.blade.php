@@ -107,7 +107,9 @@
         $(document).ready(function() {
             $('#inputMaintenanceDate').datetimepicker({
                 format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
+                defaultDate: moment().toDate(),
+                showTodayButton: true,
+                showClose: true
             });
         });
     </script>

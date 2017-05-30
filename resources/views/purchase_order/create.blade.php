@@ -410,36 +410,36 @@
                                         </thead>
                                         <tbody>
 											<tr v-for="(expense, expenseIndex) in po.expenses">
-												<td>
+												<td v-bind:class="{ 'has-error':errors.has('expense_name_' + expenseIndex) }">
 													<input name="expense_name[]" type="text" class="form-control"
-														   v-model="expense.name" data-parsley  -required="true">
+														   v-model="expense.name" v-validate="'required'" v-bind:data-vv-as="'{{ trans('purchase_order.create.table.expense.header.name') }} ' + (expenseIndex + 1)"
+                                                           v-bind:data-vv-name="'expense_name_' + expenseIndex">
 												</td>
-												<td>
-													<input type="hidden" name="expense_type[]" v-bind:value="expense.type.code" >
-													<select data-parsley-required="true"
-															class="form-control" v-model="expense.type">
-														<option v-bind:value="defaultExpenseType">@lang('labels.PLEASE_SELECT')</option>
-														<option v-for="expenseType of expenseTypes" v-bind:value="expenseType">@{{ expenseType.i18nDescription }}</option>
+												<td v-bind:class="{ 'has-error':errors.has('expense_type_' + expenseIndex) }">
+													<select class="form-control" v-model="expense.type.code" name="expense_type[]"
+                                                            v-validate="'required'" v-bind:data-vv-as="'{{ trans('purchase_order.create.table.expense.header.type') }} ' + (expenseIndex + 1)"
+                                                            v-bind:data-vv-name="'expense_type_' + expenseIndex">
+														<option v-bind:value="defaultExpenseType.code">@lang('labels.PLEASE_SELECT')</option>
+														<option v-for="expenseType of expenseTypes" v-bind:value="expenseType.code">@{{ expenseType.i18nDescription }}</option>
 													</select>
 												</td>
 												<td class="text-center">
                                                     <vue-iCheck name="is_internal_expense[]" v-model="expense.is_internal_expense"></vue-iCheck>
 												</td>
 												<td>
-													<input name="expense_remarks[]" type="text" class="form-control"
-														   v-model="expense.remarks"/>
+													<input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks"/>
 												</td>
 												<td class="text-center">
-													<button type="button" class="btn btn-danger btn-md"
-															v-on:click="removeExpense(expenseIndex)"><span
-																class="fa fa-minus"></span>
+													<button type="button" class="btn btn-danger btn-md" v-on:click="removeExpense(expenseIndex)">
+                                                        <span class="fa fa-minus"></span>
 													</button>
 												</td>
-												<td>
+												<td v-bind:class="{ 'has-error':errors.has('expense_amount_' + expenseIndex) }">
 													<input name="expense_amount[]" type="text"
 														   class="form-control text-right"
-														   v-model="expense.amount" data-parsley-required="true"
-														   data-parsley-pattern="^(?!0\.00)\d{1,3}(,\d{3})*(\.\d\d)?$"/>
+														   v-model="expense.amount" v-validate="'required|numeric:2|min_value:0'"
+														   v-bind:data-vv-as="'{{ trans('purchase_order.create.table.expense.header.amount') }} ' + (expenseIndex + 1)"
+                                                           v-bind:data-vv-name="'expense_amount_' + expenseIndex"/>
 												</td>
 											</tr>
                                         </tbody>

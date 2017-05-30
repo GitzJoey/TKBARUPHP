@@ -138,8 +138,7 @@
                                             <i class="fa fa-calendar"></i>
                                         </div>
                                         <input type="text" class="form-control" name="shipping_date" readonly
-                                               value="{{ $currentPOCopy->shipping_date->format('d-m-Y') }}"
-                                               data-parsley-required="true">
+                                               value="{{ $currentPOCopy->shipping_date->format('d-m-Y') }}">
                                     </div>
                                 </div>
                             </div>
@@ -219,10 +218,7 @@
                                             <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
                                             <td class="valign-middle">@{{ item.product.name }}</td>
                                             <td>
-                                                <input type="text" class="form-control text-right"
-                                                       data-parsley-required="true" data-parsley-type="number"
-                                                       name="quantity[]"
-                                                       v-model="item.quantity">
+                                                <input type="text" class="form-control text-right" name="quantity[]" v-model="item.quantity">
                                             </td>
                                             <td>
                                                 <select name="selected_unit_id[]"
