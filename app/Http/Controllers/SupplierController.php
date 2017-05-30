@@ -126,7 +126,9 @@ class SupplierController extends Controller
             }
         });
 
-        return redirect(route('db.master.supplier'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function edit($id)

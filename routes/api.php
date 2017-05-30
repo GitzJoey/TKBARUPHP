@@ -75,6 +75,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('create', 'WarehouseController@store')->name('api.post.db.master.warehouse.create');
                 Route::post('edit/{id}', 'WarehouseController@update')->name('api.post.db.master.warehouse.edit');
             });
+
+            Route::group(['prefix' => 'supplier'], function () {
+                Route::post('create', 'SupplierController@store')->name('api.post.db.master.supplier.create');
+                Route::patch('edit/{id}', 'SupplierController@update')->name('api.post.db.master.supplier.edit');
+            });
         });
 
         Route::group(['prefix' => 'tax'], function() {

@@ -352,9 +352,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'SupplierController@index')->name('db.master.supplier');
                 Route::get('show/{id}', 'SupplierController@show')->name('db.master.supplier.show');
                 Route::get('create', 'SupplierController@create')->name('db.master.supplier.create');
-                Route::post('create', 'SupplierController@store');
                 Route::get('edit/{id}', 'SupplierController@edit')->name('db.master.supplier.edit');
-                Route::patch('edit/{id}', 'SupplierController@update');
                 Route::delete('edit/{id}', 'SupplierController@delete')->name('db.master.supplier.delete');
             });
 

@@ -77,17 +77,18 @@
                                         <input id="inputTaxId" name="tax_id" type="text" class="form-control" placeholder="@lang('supplier.field.tax_id')">
                                     </div>
                                 </div>
-                                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
                                     <label for="inputStatus" class="col-sm-2 control-label">@lang('supplier.field.status')</label>
                                     <div class="col-sm-10">
                                         <select id="inputStatus"
                                                 class="form-control"
                                                 name="status"
+                                                v-validate="'required'"
                                                 data-vv-as="{{ trans('supplier.field.status') }}">
                                             <option v-bind:value="defaultStatus.code">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="s in statusDDL" v-bind:value="s.code">@{{ s.i18nDescription }}</option>
                                         </select>
-                                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
+                                        <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -115,16 +116,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="box-body">
-                                                    <div class="form-group">
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('first_name_' + profileIdx) }">
                                                         <label for="inputFirstName" class="col-sm-2 control-label">@lang('supplier.field.first_name')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputFirstName" type="text" name="first_name[]" class="form-control" v-model="profile.first_name" placeholder="@lang('supplier.field.first_name')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputFirstName" type="text" name="first_name[]" class="form-control" v-model="profile.first_name" placeholder="@lang('supplier.field.first_name')"
+                                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.field.first_name') }} ' + (profileIdx + 1)" v-bind:data-vv-name="'first_name_' + profileIdx">
+                                                            <span v-show="errors.has('first_name_' + profileIdx)" class="help-block" v-cloak>@{{ errors.first('first_name_' + profileIdx) }}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('last_name_' + profileIdx) }">
                                                         <label for="inputLastName" class="col-sm-2 control-label">@lang('supplier.field.last_name')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputLastName" type="text" name="last_name[]" class="form-control" v-model="profile.last_name" placeholder="@lang('supplier.field.last_name')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputLastName" type="text" name="last_name[]" class="form-control" v-model="profile.last_name" placeholder="@lang('supplier.field.last_name')"
+                                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.field.last_name') }} ' + (profileIdx + 1)" v-bind:data-vv-name="'last_name_' + profileIdx">
+                                                            <span v-show="errors.has('last_name_' + profileIdx)" class="help-block" v-cloak>@{{ errors.first('last_name_' + profileIdx) }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -133,10 +138,12 @@
                                                             <input id="inputAddress" type="text" name="profile_address[]" class="form-control" v-model="profile.address" placeholder="@lang('supplier.field.address')">
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('ic_num_' + profileIdx) }">
                                                         <label for="inputICNum" class="col-sm-2 control-label">@lang('supplier.field.ic_num')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputICNum" type="text" name="ic_num[]" class="form-control" v-model="profile.ic_num" placeholder="@lang('supplier.field.ic_num')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputICNum" type="text" name="ic_num[]" class="form-control" v-model="profile.ic_num" placeholder="@lang('supplier.field.ic_num')"
+                                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.field.ic_num') }} ' + (profileIdx + 1)" v-bind:data-vv-name="'ic_num_' + profileIdx">
+                                                            <span v-show="errors.has('ic_num_' + profileIdx)" class="help-block" v-cloak>@{{ errors.first('ic_num_' + profileIdx) }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -144,37 +151,42 @@
                                                         <div class="col-sm-10">
                                                             <table class="table table-bordered">
                                                                 <thead>
-                                                                <tr>
-                                                                    <th>@lang('supplier.create.table_phone.header.provider')</th>
-                                                                    <th>@lang('supplier.create.table_phone.header.number')</th>
-                                                                    <th>@lang('supplier.create.table_phone.header.remarks')</th>
-                                                                    <th class="text-center">@lang('labels.ACTION')</th>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <th>@lang('supplier.create.table_phone.header.provider')</th>
+                                                                        <th>@lang('supplier.create.table_phone.header.number')</th>
+                                                                        <th>@lang('supplier.create.table_phone.header.remarks')</th>
+                                                                        <th class="text-center">@lang('labels.ACTION')</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr v-for="(ph, phIdx) in profile.phone_numbers">
-                                                                    <td>
-                                                                        <select v-bind:name="'profile_' + profileIdx +'_phone_provider[]'" class="form-control" v-model="ph.phone_provider_id"
-                                                                                data-parsley-required="true" data-parsley-group="tab_pic">
-                                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                            <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }})</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input type="text" v-bind:name="'profile_' + profileIdx + '_phone_number[]'" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
-                                                                    <td><input type="text" class="form-control" v-bind:name="'profile_' + profileIdx +'_remarks[]'" v-model="ph.remarks"></td>
-                                                                    <td class="text-center">
-                                                                        <button type="button" class="btn btn-xs btn-danger" v-bind:data="phIdx" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
-                                                                            <span class="fa fa-close fa-fw"></span>
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr v-for="(ph, phIdx) in profile.phone_numbers">
+                                                                        <td v-bind:class="{ 'has-error':errors.has('phoneprovider_' + phIdx) }">
+                                                                            <select v-bind:name="'profile_' + profileIdx +'_phone_provider[]'" class="form-control" v-model="ph.phone_provider_id"
+                                                                                    v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.create.table_phone.header.provider') }} ' + (phIdx + 1)"
+                                                                                    v-bind:data-vv-name="'phoneprovider_' + phIdx">
+                                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                                <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }})</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td v-bind:class="{ 'has-error':errors.has('number_' + phIdx) }">
+                                                                            <input type="text" v-bind:name="'profile_' + profileIdx + '_phone_number[]'" class="form-control" v-model="ph.number"
+                                                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.create.table_phone.header.number') }} ' + (phIdx + 1)"
+                                                                                   v-bind:data-vv-name="'number_' + phIdx">
+                                                                        </td>
+                                                                        <td><input type="text" class="form-control" v-bind:name="'profile_' + profileIdx +'_remarks[]'" v-model="ph.remarks"></td>
+                                                                        <td class="text-center">
+                                                                            <button type="button" class="btn btn-xs btn-danger" v-bind:data="phIdx" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
+                                                                                <span class="fa fa-close fa-fw"></span>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tbody>
                                                                 <tfoot>
-                                                                <tr>
-                                                                    <td colspan="4">
-                                                                        <button type="button" class="btn btn-xs btn-default" v-on:click="addNewPhone(profileIdx)">@lang('buttons.create_new_button')</button>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <td colspan="4">
+                                                                            <button type="button" class="btn btn-xs btn-default" v-on:click="addNewPhone(profileIdx)">@lang('buttons.create_new_button')</button>
+                                                                        </td>
+                                                                    </tr>
                                                                 </tfoot>
                                                             </table>
                                                         </div>
@@ -188,38 +200,38 @@
                             <div class="tab-pane" id="tab_bank_account">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
-                                        <th class="text-center">@lang('supplier.create.table_bank.header.account_name')</th>
-                                        <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
-                                        <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
-                                        <th class="text-center">@lang('labels.ACTION')</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('supplier.create.table_bank.header.bank')</th>
+                                            <th class="text-center">@lang('supplier.create.table_bank.header.account_name')</th>
+                                            <th class="text-center">@lang('supplier.create.table_bank.header.account_number')</th>
+                                            <th class="text-center">@lang('supplier.create.table_bank.header.remarks')</th>
+                                            <th class="text-center">@lang('labels.ACTION')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="(bank, bankIdx) in banks">
-                                        <td>
-                                            <select class="form-control"
-                                                    name="bank[]"
-                                                    v-model="bank.bank_id"
-                                                    data-parsley-required="true" data-parsley-group="tab_bank">
-                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ bankIdx }}" v-on:click="removeSelectedBank(bankIdx)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr v-for="(bank, bankIdx) in banks">
+                                            <td>
+                                                <select class="form-control"
+                                                        name="bank[]"
+                                                        v-model="bank.bank_id"
+                                                        data-parsley-required="true" data-parsley-group="tab_bank">
+                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                    <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ bankIdx }}" v-on:click="removeSelectedBank(bankIdx)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <button class="btn btn-xs btn-default" type="button" v-on:click="addNewBank()">@lang('buttons.create_new_button')</button>
@@ -227,24 +239,24 @@
                             <div class="tab-pane" id="tab_product">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.type')</th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.name')</th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.short_code')</th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.description')</th>
-                                        <th class="text-center">@lang('supplier.create.table_prod.header.remarks')</th>
-                                    </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.type')</th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.name')</th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.short_code')</th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.description')</th>
+                                            <th class="text-center">@lang('supplier.create.table_prod.header.remarks')</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="p in productList">
-                                        <td class="text-center"><input type="checkbox" name="productSelected[]" v-bind:value="p.id"></td>
-                                        <td>@{{ p.type.name }}</td>
-                                        <td>@{{ p.name }}</td>
-                                        <td>@{{ p.short_code }}</td>
-                                        <td>@{{ p.description }}</td>
-                                        <td>@{{ p.remarks }}</td>
-                                    </tr>
+                                        <tr v-for="p in productList">
+                                            <td class="text-center"><input type="checkbox" name="productSelected[]" v-bind:value="p.id"></td>
+                                            <td>@{{ p.type.name }}</td>
+                                            <td>@{{ p.name }}</td>
+                                            <td>@{{ p.short_code }}</td>
+                                            <td>@{{ p.description }}</td>
+                                            <td>@{{ p.remarks }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -265,37 +277,37 @@
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.name')</th>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.type')</th>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.amount')</th>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.internal_expense')</th>
-                                        <th class="text-center">@lang('supplier.create.table_expense.header.remarks')</th>
-                                        <th class="text-center">&nbsp;</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.name')</th>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.type')</th>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.amount')</th>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.internal_expense')</th>
+                                            <th class="text-center">@lang('supplier.create.table_expense.header.remarks')</th>
+                                            <th class="text-center">&nbsp;</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="(expense, expenseIdx) in expenses">
-                                        <input type="hidden" name="expense_template_id[]" v-bind:value="expense.id">
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.name }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.type }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.amount }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            @{{ expense.is_internal_expense }}
-                                        </td>
-                                        <td class="valign-middle">
-                                            @{{ expense.remarks }}
-                                        </td>
-                                        <td class="text-center valign-middle">
-                                            <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense(expenseIdx)"><span class="fa fa-close fa-fw"></span></button>
-                                        </td>
-                                    </tr>
+                                        <tr v-for="(expense, expenseIdx) in expenses">
+                                            <input type="hidden" name="expense_template_id[]" v-bind:value="expense.id">
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.name }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.type }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.amount }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                @{{ expense.is_internal_expense }}
+                                            </td>
+                                            <td class="valign-middle">
+                                                @{{ expense.remarks }}
+                                            </td>
+                                            <td class="text-center valign-middle">
+                                                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense(expenseIdx)"><span class="fa fa-close fa-fw"></span></button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -343,9 +355,9 @@
             methods: {
                 validateBeforeSubmit: function() {
                     this.$validator.validateAll().then(function(isValid) {
-                        axios.post('{{ route('') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#supplierForm')[0]))
+                        axios.post('{{ route('api.post.db.master.supplier.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#supplierForm')[0]))
                             .then(function(response) {
-                                if (response.data.result == 'success') { window.location.href = '{{ route('') }}'; }
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.master.supplier') }}'; }
                             });
                     })
                 },
@@ -410,6 +422,13 @@
                         expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
                     }
                 });
+            },
+            computed: {
+                defaultStatus: function() {
+                    return {
+                        code: ''
+                    };
+                }
             }
         });
     </script>
