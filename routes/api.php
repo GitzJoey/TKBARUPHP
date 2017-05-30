@@ -82,6 +82,13 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             });
         });
 
+        Route::group(['prefix' => 'admin'], function () {
+            Route::group(['prefix' => 'store'], function () {
+                Route::post('create', 'StoreController@store')->name('api.post.db.admin.store.create');
+                Route::post('edit/{id}', 'StoreController@update')->name('api.post.db.admin.store.edit');
+            });
+        });
+
         Route::group(['prefix' => 'tax'], function() {
             Route::group(['prefix' => 'invoice'], function () {
                 Route::group(['prefix' => 'output'], function () {

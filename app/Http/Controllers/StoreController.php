@@ -62,8 +62,8 @@ class StoreController extends Controller
         $mapsAPIKey = env('MAPS_API_KEY');
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
-        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
+        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('i18nDescription', 'code');
         $currenciesDDL = Currencies::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
         return view('store.create', compact('statusDDL', 'yesnoDDL', 'bankDDL', 'currenciesDDL', 'mapsAPIKey'));
     }
@@ -143,7 +143,9 @@ class StoreController extends Controller
             }
         });
 
-        return redirect(route('db.admin.store'));
+        return response()->json([
+           'result' => 'success'
+        ]);
     }
 
     public function edit($id)
@@ -155,8 +157,8 @@ class StoreController extends Controller
         $store = Store::with('bankAccounts.bank')->where('id', '=' , $id)->first();
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
-        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
+        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('i18nDescription', 'code');
         $currenciesDDL = Currencies::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
 
         return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL', 'bankDDL','currenciesDDL', 'mapsAPIKey'));
@@ -232,7 +234,9 @@ class StoreController extends Controller
             $store->save();
         });
 
-        return redirect(route('db.admin.store'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function delete($id)
