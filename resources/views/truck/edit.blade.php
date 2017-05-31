@@ -55,7 +55,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control" id="inspection_date" name="inspection_date" data-parsley-required="true" value="{{ date('d-m-Y', strtotime($truck->inspection_date)) }}">
+                            <input type="text" class="form-control" id="inputInspectionDate" name="inspection_date" data-parsley-required="true" value="{{ date('d-m-Y', strtotime($truck->inspection_date)) }}">
                         </div>
                         <span class="help-block">{{ $errors->has('inspection_date') ? $errors->first('inspection_date') : '' }}</span>&nbsp;
                     </div>
@@ -96,9 +96,9 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $('#inspection_date').datetimepicker({
-            format: this.format,
-            defaultDate: this.value == '' ? moment():moment(this.value),
+        $('#inputInspectionDate').datetimepicker({
+            format: 'DD-MM-YYYY',
+            defaultDate: moment().toDate(),
             showTodayButton: true,
             showClose: true
         });

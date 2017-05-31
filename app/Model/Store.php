@@ -98,7 +98,6 @@ class Store extends Model
         'remarks',
         'date_format',
         'time_format',
-        '1224hour',
         'thousand_separator',
         'decimal_separator',
         'decimal_digit',
@@ -115,7 +114,10 @@ class Store extends Model
     ];
 
     protected $appends = [
-        'numeralFormat'
+        'numeralFormat',
+        'dateFormat',
+        'timeFormat',
+        'dateTimeformat'
     ];
 
     public function getNumeralFormatAttribute()
@@ -133,6 +135,29 @@ class Store extends Model
         }
 
         return '0'.$thousandSeparator.'0'.'['.$decimalSeparator.']'.$decimalDigit;
+    }
+
+    public function getDateFormatAttribute()
+    {
+        if (is_null($this->attributes['date_format']) || empty($this->attributes['date_format'])) {
+            return 'DD-MM-YYYY';
+        } else {
+            return $this->attributes['date_format'];
+        }
+    }
+
+    public function getTimeFormatAttribute()
+    {
+        if (is_null($this->attributes['time_format']) || empty($this->attributes['time_format'])) {
+            return 'hh:mm A';
+        } else {
+            return $this->attributes['date_format'];
+        }
+    }
+
+    public function getDateTimeFormatAttribute()
+    {
+        return $this->getDateFormatAttribute() . ' ' . $this->getTimeFormatAttribute();
     }
 
     public function hId()

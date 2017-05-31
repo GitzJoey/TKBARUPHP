@@ -108,8 +108,8 @@
     <script type="application/javascript">
         $(document).ready(function() {
             $('#inputEffectiveDate').datetimepicker({
-                format: this.format,
-                defaultDate: this.value == '' ? moment():moment(this.value),
+                format: 'DD-MM-YYYY',
+                defaultDate: moment().toDate(),
                 showTodayButton: true,
                 showClose: true
             });

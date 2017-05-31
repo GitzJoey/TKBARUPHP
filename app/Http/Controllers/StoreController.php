@@ -62,8 +62,8 @@ class StoreController extends Controller
         $mapsAPIKey = env('MAPS_API_KEY');
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
-        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
+        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('i18nDescription', 'code');
         $currenciesDDL = Currencies::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
         return view('store.create', compact('statusDDL', 'yesnoDDL', 'bankDDL', 'currenciesDDL', 'mapsAPIKey'));
     }
@@ -74,15 +74,12 @@ class StoreController extends Controller
 
         $this->validate($data, [
             'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'latitude' => 'required',
-            'latitude' => 'required',
-            'phone_num' => 'required|string|max:255',
             'tax_id' => 'required|string|max:255',
             'status' => 'required',
             'is_default' => 'required',
             'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
         DB::transaction(function() use($data) {
             $imageName = '';
 
@@ -104,8 +101,8 @@ class StoreController extends Controller
             $store = Store::create([
                 'name' => $data['name'],
                 'address' => $data['address'],
-                'latitude' => $data['latitude'],
-                'longitude' => $data['longitude'],
+                'latitude' => empty($data['latitude']) ? 0:$data['latitude'],
+                'longitude' => empty($data['longitude']) ? 0:$data['longitude'],
                 'phone_num' => $data['phone_num'],
                 'fax_num' => $data['fax_num'],
                 'tax_id' => $data['tax_id'],
@@ -135,7 +132,7 @@ class StoreController extends Controller
             for ($i = 0; $i < count($data['currencies']); $i++) {
                 $curConv = new CurrenciesConversion();
                 $curConv->currencies_id = $data["currencies"][$i];
-                $curConv->is_base = $data["base_currencies"][$i] == '1'?true:false;
+                $curConv->is_base = $data["base_currencies"][$i] == '1' ? true:false;
                 $curConv->conversion_value = $data["currencies_conversion_value"][$i];
                 $curConv->remarks = $data["currencies_remarks"][$i];
 
@@ -143,7 +140,9 @@ class StoreController extends Controller
             }
         });
 
-        return redirect(route('db.admin.store'));
+        return response()->json([
+           'result' => 'success'
+        ]);
     }
 
     public function edit($id)
@@ -155,8 +154,8 @@ class StoreController extends Controller
         $store = Store::with('bankAccounts.bank')->where('id', '=' , $id)->first();
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
-        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
+        $yesnoDDL = LookupRepo::findByCategory('YESNOSELECT')->pluck('i18nDescription', 'code');
         $currenciesDDL = Currencies::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
 
         return view('store.edit', compact('store', 'statusDDL', 'yesnoDDL', 'bankDDL','currenciesDDL', 'mapsAPIKey'));
@@ -171,11 +170,24 @@ class StoreController extends Controller
 
             $imageName = '';
 
-            if (!empty($data->image_path)) {
-                $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
-                $path = public_path('images') . '/' . $imageName;
+            if (!empty($store->image_filename)) {
+                if (!empty($data->image_path)) {
+                    $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
+                    $path = public_path('images') . '/' . $imageName;
 
-                Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
+                    Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
+                } else {
+                    $imageName = $store->image_filename;
+                }
+            } else {
+                if (!empty($data->image_path)) {
+                    $imageName = time() . '.' . $data->image_path->getClientOriginalExtension();
+                    $path = public_path('images') . '/' . $imageName;
+
+                    Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
+                } else {
+                    $imageName = '';
+                }
             }
 
             if ($store->is_default == 'YESNOSELECT.NO' && $data['is_default'] == 'YESNOSELECT.YES') {
@@ -211,8 +223,8 @@ class StoreController extends Controller
 
             $store->name = $data['name'];
             $store->address = $data['address'];
-            $store->latitude = $data['latitude'];
-            $store->longitude = $data['longitude'];
+            $store->latitude = empty($data['latitude']) ? 0:$data['latitude'];
+            $store->longitude = empty($data['longitude']) ? 0:$data['longitude'];
             $store->phone_num = $data['phone_num'];
             $store->fax_num = $data['fax_num'];
             $store->tax_id = $data['tax_id'];
@@ -232,7 +244,9 @@ class StoreController extends Controller
             $store->save();
         });
 
-        return redirect(route('db.admin.store'));
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function delete($id)

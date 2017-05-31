@@ -97,9 +97,9 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $('#inspection_date').datetimepicker({
-            format: this.format,
-            defaultDate: this.value == '' ? moment():moment(this.value),
+        $('#inputInspectionDate').datetimepicker({
+            format: 'DD-MM-YYYY',
+            defaultDate: moment().toDate(),
             showTodayButton: true,
             showClose: true
         });

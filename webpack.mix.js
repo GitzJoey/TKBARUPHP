@@ -1,8 +1,8 @@
 const { mix } = require('laravel-mix');
 
+mix.disableNotifications();
 
-mix.js('resources/assets/js/app.js', 'public/adminlte/js')
-    .styles([
+mix.styles([
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
         './node_modules/font-awesome/css/font-awesome.min.css',
         './node_modules/ionicons/dist/css/ionicons.css',
@@ -44,7 +44,7 @@ mix.js('resources/assets/js/app.js', 'public/adminlte/js')
         './node_modules/noty/js/noty/packaged/jquery.noty.packaged.js',
         './node_modules/urijs/src/URI.js',
         './resources/assets/js/adminlte.custom.js'
-    ], 'public/adminlte/js/app.js')
+    ], 'public/adminlte/js/adminlte.js')
     .copy('node_modules/admin-lte/dist/img/boxed-bg.jpg', 'public/adminlte/img')
     .copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
     .copy('node_modules/fullcalendar/dist/fullcalendar.min.js', 'public/adminlte/js')
@@ -64,5 +64,7 @@ mix.js('resources/assets/js/app.js', 'public/adminlte/js')
     .copy('node_modules/bootstrap-fileinput/js/fileinput.js', 'public/adminlte/fileinput')
     .copy('node_modules/bootstrap-fileinput/js/locales/id.js', 'public/adminlte/fileinput')
     .copy('node_modules/bootstrap-fileinput/css/fileinput.css', 'public/adminlte/fileinput')
-    .copy('node_modules/vue-numeric/src/vue-numeric.vue', 'resources/assets/js/components')
     .copy('resources/assets/css/frontweb.css', 'public/frontweb/css');
+
+mix.copy('node_modules/vue-numeric/src/vue-numeric.vue', 'resources/assets/js/components')
+    .js('resources/assets/js/app.js', 'public/adminlte/js')

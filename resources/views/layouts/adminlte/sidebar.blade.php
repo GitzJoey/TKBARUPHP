@@ -13,7 +13,11 @@
 
         <form action="{{ route('db.search') }}" method="get" class="sidebar-form">
             <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
+                @if (Active::checkRoutePattern('db.search'))
+                    <input type="text" name="q" class="form-control" placeholder="Search..." value="{{ Request::query('q') }}">
+                @else
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                @endif
                 <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>

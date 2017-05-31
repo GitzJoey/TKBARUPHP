@@ -52,7 +52,7 @@
         <div class="pull-right"><a href="/forgot">@lang('login.forgot_pass')</a></div>
     </div>
 
-    <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {

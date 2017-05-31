@@ -352,9 +352,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'SupplierController@index')->name('db.master.supplier');
                 Route::get('show/{id}', 'SupplierController@show')->name('db.master.supplier.show');
                 Route::get('create', 'SupplierController@create')->name('db.master.supplier.create');
-                Route::post('create', 'SupplierController@store');
                 Route::get('edit/{id}', 'SupplierController@edit')->name('db.master.supplier.edit');
-                Route::patch('edit/{id}', 'SupplierController@update');
                 Route::delete('edit/{id}', 'SupplierController@delete')->name('db.master.supplier.delete');
             });
 
@@ -452,9 +450,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'StoreController@index')->name('db.admin.store');
                 Route::get('show/{id}', 'StoreController@show')->name('db.admin.store.show');
                 Route::get('create', 'StoreController@create')->name('db.admin.store.create');
-                Route::post('create', 'StoreController@store');
                 Route::get('edit/{id}', 'StoreController@edit')->name('db.admin.store.edit');
-                Route::patch('edit/{id}', 'StoreController@update');
                 Route::delete('edit/{id}', 'StoreController@delete')->name('db.admin.store.delete');
             });
 

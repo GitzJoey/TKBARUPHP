@@ -17,24 +17,22 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="supplierVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('supplier.create.header.title')</h3>
-        </div>
-        <form id="supplierForm" class="form-horizontal" action="{{ route('db.master.supplier.create') }}" method="post" data-parsley-validate="parsley">
+        <form id="supplierForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
-            <div id="supplierVue">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('supplier.create.header.title')</h3>
+                </div>
                 <div class="box-body">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
@@ -47,11 +45,12 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_supplier">
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
                                     <label for="inputName" class="col-sm-2 control-label">@lang('supplier.field.name')</label>
                                     <div class="col-sm-10">
-                                        <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('supplier.field.name')" data-parsley-required="true" data-parsley-group="tab_supp">
-                                        <span class="help-block"></span>
+                                        <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('supplier.field.name')"
+                                                v-validate="'required'" data-vv-as="{{ trans('supplier.field.name') }}">
+                                        <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -78,11 +77,18 @@
                                         <input id="inputTaxId" name="tax_id" type="text" class="form-control" placeholder="@lang('supplier.field.tax_id')">
                                     </div>
                                 </div>
-                                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
                                     <label for="inputStatus" class="col-sm-2 control-label">@lang('supplier.field.status')</label>
                                     <div class="col-sm-10">
-                                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'data-parsley-group' => 'tab_supp')) }}
-                                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
+                                        <select id="inputStatus"
+                                                class="form-control"
+                                                name="status"
+                                                v-validate="'required'"
+                                                data-vv-as="{{ trans('supplier.field.status') }}">
+                                            <option v-bind:value="defaultStatus.code">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-for="(value, key) in statusDDL" v-bind:value="key">@{{ value }}</option>
+                                        </select>
+                                        <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -110,16 +116,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="box-body">
-                                                    <div class="form-group">
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('first_name_' + profileIdx) }">
                                                         <label for="inputFirstName" class="col-sm-2 control-label">@lang('supplier.field.first_name')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputFirstName" type="text" name="first_name[]" class="form-control" v-model="profile.first_name" placeholder="@lang('supplier.field.first_name')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputFirstName" type="text" name="first_name[]" class="form-control" v-model="profile.first_name" placeholder="@lang('supplier.field.first_name')"
+                                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.field.first_name') }} ' + (profileIdx + 1)" v-bind:data-vv-name="'first_name_' + profileIdx">
+                                                            <span v-show="errors.has('first_name_' + profileIdx)" class="help-block" v-cloak>@{{ errors.first('first_name_' + profileIdx) }}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('last_name_' + profileIdx) }">
                                                         <label for="inputLastName" class="col-sm-2 control-label">@lang('supplier.field.last_name')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputLastName" type="text" name="last_name[]" class="form-control" v-model="profile.last_name" placeholder="@lang('supplier.field.last_name')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputLastName" type="text" name="last_name[]" class="form-control" v-model="profile.last_name" placeholder="@lang('supplier.field.last_name')"
+                                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.field.last_name') }} ' + (profileIdx + 1)" v-bind:data-vv-name="'last_name_' + profileIdx">
+                                                            <span v-show="errors.has('last_name_' + profileIdx)" class="help-block" v-cloak>@{{ errors.first('last_name_' + profileIdx) }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -128,10 +138,12 @@
                                                             <input id="inputAddress" type="text" name="profile_address[]" class="form-control" v-model="profile.address" placeholder="@lang('supplier.field.address')">
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('ic_num_' + profileIdx) }">
                                                         <label for="inputICNum" class="col-sm-2 control-label">@lang('supplier.field.ic_num')</label>
                                                         <div class="col-sm-10">
-                                                            <input id="inputICNum" type="text" name="ic_num[]" class="form-control" v-model="profile.ic_num" placeholder="@lang('supplier.field.ic_num')" data-parsley-required="true" data-parsley-group="tab_pic">
+                                                            <input id="inputICNum" type="text" name="ic_num[]" class="form-control" v-model="profile.ic_num" placeholder="@lang('supplier.field.ic_num')"
+                                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.field.ic_num') }} ' + (profileIdx + 1)" v-bind:data-vv-name="'ic_num_' + profileIdx">
+                                                            <span v-show="errors.has('ic_num_' + profileIdx)" class="help-block" v-cloak>@{{ errors.first('ic_num_' + profileIdx) }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -148,14 +160,19 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr v-for="(ph, phIdx) in profile.phone_numbers">
-                                                                        <td>
+                                                                        <td v-bind:class="{ 'has-error':errors.has('phoneprovider_' + phIdx) }">
                                                                             <select v-bind:name="'profile_' + profileIdx +'_phone_provider[]'" class="form-control" v-model="ph.phone_provider_id"
-                                                                                    data-parsley-required="true" data-parsley-group="tab_pic">
+                                                                                    v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.create.table_phone.header.provider') }} ' + (phIdx + 1)"
+                                                                                    v-bind:data-vv-name="'phoneprovider_' + phIdx">
                                                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                                                 <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }})</option>
                                                                             </select>
                                                                         </td>
-                                                                        <td><input type="text" v-bind:name="'profile_' + profileIdx + '_phone_number[]'" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
+                                                                        <td v-bind:class="{ 'has-error':errors.has('number_' + phIdx) }">
+                                                                            <input type="text" v-bind:name="'profile_' + profileIdx + '_phone_number[]'" class="form-control" v-model="ph.number"
+                                                                                   v-validate="'required'" v-bind:data-vv-as="'{{ trans('supplier.create.table_phone.header.number') }} ' + (phIdx + 1)"
+                                                                                   v-bind:data-vv-name="'number_' + phIdx">
+                                                                        </td>
                                                                         <td><input type="text" class="form-control" v-bind:name="'profile_' + profileIdx +'_remarks[]'" v-model="ph.remarks"></td>
                                                                         <td class="text-center">
                                                                             <button type="button" class="btn btn-xs btn-danger" v-bind:data="phIdx" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
@@ -193,20 +210,27 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(bank, bankIdx) in banks">
-                                            <td>
+                                            <td v-bind:class="{ 'has-error':errors.has('bank_' + bankIdx) }">
                                                 <select class="form-control"
                                                         name="bank[]"
                                                         v-model="bank.bank_id"
-                                                        data-parsley-required="true" data-parsley-group="tab_bank">
+                                                        v-validate="'required'"
+                                                        v-bind:data-vv-as="'{{ trans('supplier.create.table_bank.header.bank') }} ' + (bankIdx + 1)"
+                                                        v-bind:data-vv-name="'bank_' + bankIdx">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
                                                 </select>
                                             </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            <td v-bind:class="{ 'has-error':errors.has('account_name_' + bankIdx) }">
+                                                <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name"
+                                                       v-validate="'required'"
+                                                       v-bind:data-vv-as="'{{ trans('supplier.create.table_bank.header.account_name') }} ' + (bankIdx + 1)"
+                                                       v-bind:data-vv-name="'account_name_' + bankIdx">
                                             </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                            <td v-bind:class="{ 'has-error':errors.has('account_number_' + bankIdx) }">
+                                                <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number"
+                                                       v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('supplier.create.table_bank.header.account_number') }} ' + (bankIdx + 1)"
+                                                       v-bind:data-vv-name="'account_number_' + bankIdx">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
@@ -295,10 +319,11 @@
                                 </table>
                             </div>
                             <div class="tab-pane" id="tab_settings">
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('payment_due_day') }">
                                     <label for="inputPaymentDueDay" class="col-sm-2 control-label">@lang('supplier.field.payment_due_day')</label>
                                     <div class="col-sm-10">
-                                        <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" data-parsley-required="true" data-parsley-group="tab_setting">
+                                        <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control" v-validate="'required|numeric|max_value:100'" data-vv-as="{{ trans('supplier.field.payment_due_day') }}">
+                                        <span v-show="errors.has('payment_due_day')" class="help-block" v-cloak>@{{ errors.first('payment_due_day') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -320,119 +345,99 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function() {
-            var app = new Vue({
-                el: '#supplierVue',
-                data: {
-                    banks: [],
-                    profiles: [],
-                    expenses: [],
-                    bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
-                    providerDDL: JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}'),
-                    productList: JSON.parse('{!! htmlspecialchars_decode($productList) !!}'),
-                    expenseTemplates: JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}'),
-                    selectedExpense: ''
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        var app = new Vue({
+            el: '#supplierVue',
+            data: {
+                banks: [],
+                profiles: [],
+                expenses: [],
+                bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
+                providerDDL: JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}'),
+                productList: JSON.parse('{!! htmlspecialchars_decode($productList) !!}'),
+                expenseTemplates: JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}'),
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}'),
+                selectedExpense: ''
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        axios.post('{{ route('api.post.db.master.supplier.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#supplierForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.master.supplier') }}'; }
+                            });
+                    })
                 },
-                methods: {
-                    addNewBank: function() {
-                        this.banks.push({
-                            'bank_id': '',
-                            'account_name': '',
-                            'account_number': '',
-                            'remarks': ''
-                        });
-                    },
-                    removeSelectedBank: function(idx) {
-                        this.banks.splice(idx, 1);
-                    },
-                    addNewProfile: function() {
-                        this.profiles.push({
-                            'first_name': '',
-                            'last_name': '',
-                            'address': '',
-                            'ic_num': '',
-                            'image_filename': '',
-                            'phone_numbers':[{
-                                'phone_provider_id': '',
-                                'number': '',
-                                'remarks': ''
-                            }]
-                        });
-                    },
-                    removeSelectedProfile: function(idx) {
-                        this.profiles.splice(idx, 1);
-                    },
-                    addNewPhone: function(parentIndex) {
-                        this.profiles[parentIndex].phone_numbers.push({
+                addNewBank: function() {
+                    this.banks.push({
+                        'bank_id': '',
+                        'account_name': '',
+                        'account_number': '',
+                        'remarks': ''
+                    });
+                },
+                removeSelectedBank: function(idx) {
+                    this.banks.splice(idx, 1);
+                },
+                addNewProfile: function() {
+                    this.profiles.push({
+                        'first_name': '',
+                        'last_name': '',
+                        'address': '',
+                        'ic_num': '',
+                        'image_filename': '',
+                        'phone_numbers':[{
                             'phone_provider_id': '',
                             'number': '',
                             'remarks': ''
-                        });
-                    },
-                    removeSelectedPhone: function(parentIndex, idx) {
-                        this.profiles[parentIndex].phone_numbers.splice(idx, 1);
-                    },
-                    addExpense: function(selectedExpense) {
-                        this.expenses.push({
-                            id: selectedExpense.id,
-                            name: selectedExpense.name,
-                            type: selectedExpense.type,
-                            amount: numeral(selectedExpense.amount).format('0,0'),
-                            is_internal_expense: selectedExpense.is_internal_expense,
-                            remarks: selectedExpense.remarks
-                        });
-                    },
-                    removeSelectedExpense: function(idx) {
-                        this.expenses.splice(idx, 1);
-                    },
-                },
-                mounted: function() {
-                    _.forEach(this.expenseTemplates, function (expenseTemplate, index) {
-                        if(expenseTemplate.is_internal_expense){
-                            expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
-                        }
-                        else{
-                            expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
-                        }
+                        }]
                     });
+                },
+                removeSelectedProfile: function(idx) {
+                    this.profiles.splice(idx, 1);
+                },
+                addNewPhone: function(parentIndex) {
+                    this.profiles[parentIndex].phone_numbers.push({
+                        'phone_provider_id': '',
+                        'number': '',
+                        'remarks': ''
+                    });
+                },
+                removeSelectedPhone: function(parentIndex, idx) {
+                    this.profiles[parentIndex].phone_numbers.splice(idx, 1);
+                },
+                addExpense: function(selectedExpense) {
+                    this.expenses.push({
+                        id: selectedExpense.id,
+                        name: selectedExpense.name,
+                        type: selectedExpense.type,
+                        amount: numeral(selectedExpense.amount).format('0,0'),
+                        is_internal_expense: selectedExpense.is_internal_expense,
+                        remarks: selectedExpense.remarks
+                    });
+                },
+                removeSelectedExpense: function(idx) {
+                    this.expenses.splice(idx, 1);
+                },
+            },
+            mounted: function() {
+                _.forEach(this.expenseTemplates, function (expenseTemplate, index) {
+                    if(expenseTemplate.is_internal_expense){
+                        expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
+                    }
+                    else{
+                        expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
+                    }
+                });
+            },
+            computed: {
+                defaultStatus: function() {
+                    return {
+                        code: ''
+                    };
                 }
-            });
-
-            $('#supplierForm').parsley().on('field:validate', function() {
-                validateFront();
-            });
-
-            var validateFront = function () {
-                if (true === $('#supplierForm').parsley().isValid("tab_supp", false)) {
-                    $('#suppDataTabError').addClass('hidden');
-                } else {
-                    $('#suppDataTabError').removeClass('hidden');
-                }
-
-                if (true === $('#supplierForm').parsley().isValid("tab_pic", false)) {
-                    $('#picTabError').addClass('hidden');
-                } else {
-                    $('#picTabError').removeClass('hidden');
-                }
-
-                if (true === $('#supplierForm').parsley().isValid("tab_bank", false)) {
-                    $('#bankAccountTabError').addClass('hidden');
-                } else {
-                    $('#bankAccountTabError').removeClass('hidden');
-                }
-
-                if (true === $('#supplierForm').parsley().isValid("tab_setting", false)) {
-                    $('#settingsTabError').addClass('hidden');
-                } else {
-                    $('#settingsTabError').removeClass('hidden');
-                }
-
-                if (true === $('#supplierForm').parsley().isValid("tab_expense", false)) {
-                    $('#expensesTabError').addClass('hidden');
-                } else {
-                    $('#expensesTabError').removeClass('hidden');
-                }
-            };
+            }
         });
     </script>
 @endsection

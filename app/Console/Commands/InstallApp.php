@@ -60,9 +60,17 @@ class InstallApp extends Command
         $this->info('Generating App Key...');
         Artisan::call('key:generate');
         $this->info('Database Migrating...');
-        Artisan::call('migrate');
+        if (App::environment('prod', 'production')) {
+            Artisan::call('migrate', ['--force' => true,]);
+        } else {
+            Artisan::call('migrate');
+        }
         $this->info('Seeding ...');
-        Artisan::call('db:seed');
+        if (App::environment('prod', 'production')) {
+            Artisan::call('db:seed', ['--force' => true,]);
+        } else {
+            Artisan::call('db:seed');
+        }
         $this->info('Storage Linking ...');
         if (is_link(public_path().'/storage')) {
             $this->info('Found Storage Link, Skipping ...');

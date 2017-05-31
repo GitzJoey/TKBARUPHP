@@ -196,54 +196,52 @@
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="30%">@lang('purchase_order.copy.create.table.item.header.product_name')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.copy.create.table.item.header.quantity')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.copy.create.table.item.header.unit')</th>
-                                            <th width="15%"
-                                                class="text-center">@lang('purchase_order.copy.create.table.item.header.price_unit')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-center">@lang('purchase_order.revise.table.item.header.total_price')</th>
-                                        </tr>
+                                            <tr>
+                                                <th width="30%">@lang('purchase_order.copy.create.table.item.header.product_name')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.copy.create.table.item.header.quantity')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.copy.create.table.item.header.unit')</th>
+                                                <th width="15%"
+                                                    class="text-center">@lang('purchase_order.copy.create.table.item.header.price_unit')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('purchase_order.revise.table.item.header.total_price')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <template v-for="(item, itemIndex) in po.items">
-                                            <tr>
-                                                <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
-                                                <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
-                                                <td class="valign-middle">@{{ item.product.name }}</td>
-                                                <td>
-                                                    <input type="text" class="form-control text-right"
-                                                           data-parsley-required="true" data-parsley-type="number"
-                                                           name="quantity[]" v-model="item.quantity">
-                                                </td>
-                                                <td>
-                                                    <select class="form-control"
-                                                            name="selected_unit_id[]"
-                                                            v-validate="'required'"
-                                                            data-vv-as="{{ trans('purchase_order.copy.create.table.item.header.unit') }}"
-                                                            v-model="item.selected_unit.id">
-                                                        <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control text-right" name="price[]"
-                                                           v-model="item.price" v-validate="'required|decimal:2'">
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button" class="btn btn-danger btn-md"
-                                                            v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
-                                                    </button>
-                                                </td>
-                                                <td class="text-right valign-middle">
-                                                    @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
-                                                </td>
-                                            </tr>
-                                        </template>
+                                            <template v-for="(item, itemIndex) in po.items">
+                                                <tr>
+                                                    <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                    <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
+                                                    <td class="valign-middle">@{{ item.product.name }}</td>
+                                                    <td>
+                                                        <input type="text" class="form-control text-right" name="quantity[]" v-model="item.quantity">
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control"
+                                                                name="selected_unit_id[]"
+                                                                v-validate="'required'"
+                                                                data-vv-as="{{ trans('purchase_order.copy.create.table.item.header.unit') }}"
+                                                                v-model="item.selected_unit.id">
+                                                            <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                            <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control text-right" name="price[]"
+                                                               v-model="item.price" v-validate="'required|decimal:2'">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-danger btn-md"
+                                                                v-on:click="removeItem(itemIndex)"><span class="fa fa-minus"/>
+                                                        </button>
+                                                    </td>
+                                                    <td class="text-right valign-middle">
+                                                        @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
+                                                    </td>
+                                                </tr>
+                                            </template>
                                         </tbody>
                                     </table>
                                 </div>
