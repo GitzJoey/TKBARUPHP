@@ -559,7 +559,10 @@
 
                 deleteMarkers();
 
-                var marker = new google.maps.Marker({map: map});
+                var marker = new google.maps.Marker({
+                    draggable: true,
+                    map: map
+                });
 
                 google.maps.event.addListener(autocomplete, "place_changed", function() {
 
@@ -582,7 +585,7 @@
 
                         marker.setPosition(place.geometry.location);
                         markers.push(marker);
-
+                        setDraggableMarker(markers);
                         getDistanceMatrix(place.geometry.location);
                     }
 
@@ -599,6 +602,7 @@
                         deleteMarkers();
 
                         marker = new google.maps.Marker({
+                            draggable: true,
                             position: latLong
                         });
                         marker.setMap(map);
@@ -606,7 +610,7 @@
                         map.setZoom(16);
                         map.setCenter(marker.getPosition());
                         markers.push(marker);
-
+                        setDraggableMarker(markers);
                         getDistanceMatrix(marker.getPosition());
 
                         var geocoder = new google.maps.Geocoder();
@@ -630,13 +634,20 @@
                 else {
                     locateByAddress(address);
                 }
+
+                google.maps.event.addListener(map, 'click', function(event) {
+                    $('#inputModalLat').val(event.latLng.lat());
+                    $('#inputModalLng').val(event.latLng.lng());
+                    marker.setPosition(event.latLng);
+                });
+
             }
 
             $('#myModal').on('shown.bs.modal', function() {
 
                 if($('#inputAddr').val() === '') {
-                    $('#inputModalLat').val($('#inputLat').val());
-                    $('#inputModalLng').val($('#inputLng').val());
+                    $('#inputModalLat').val($('#inputLatitude').val());
+                    $('#inputModalLng').val($('#inputLongitude').val());
                 }
                 else {
                     $('#inputModalAddress').val($('#inputAddr').val());
@@ -647,8 +658,8 @@
 
             $('#location-ok-btn').click(function() {
                 if(location != undefined) {
-                    $('#inputLat').val(location.geometry.location.lat());
-                    $('#inputLng').val(location.geometry.location.lng());
+                    $('#inputLatitude').val(location.geometry.location.lat());
+                    $('#inputLongitude').val(location.geometry.location.lng());
                     $('#inputDistanceText').val($('#inputModalDistanceText').val());
                     $('#inputDistance').val($('#inputModalDistance').val());
                     $('#inputDurationText').val($('#inputModalDurationText').val());
@@ -675,11 +686,12 @@
                             deleteMarkers();
 
                             var marker = new google.maps.Marker({
+                                draggable: true,
                                 position: results[0].geometry.location,
                                 map: map
                             });
                             markers.push(marker);
-
+                            setDraggableMarker(markers);
                             getDistanceMatrix(results[0].geometry.location);
 
                             google.maps.event.trigger(map, 'resize');
@@ -696,16 +708,30 @@
                 var latLong = new google.maps.LatLng(lat, lng);
 
                 var marker = new google.maps.Marker({
+                    draggable: true,
                     position: latLong,
                     map: map
                 });
                 markers.push(marker);
-
+                setDraggableMarker(markers);
                 getDistanceMatrix(marker.getPosition());
 
                 google.maps.event.trigger(map, 'resize');
                 map.setCenter(latLong);
 
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ 'location': latLong }, function(results, status) {
+                    if(status === 'OK') {
+                        if(results[0]) {
+                            location = results[0];
+
+                            $('#inputModalAddress').val(location.formatted_address);
+                            $('#inputModalLat').val(location.geometry.location.lat());
+                            $('#inputModalLng').val(location.geometry.location.lng());
+
+                        }
+                    }
+                });
             }
 
             $('#inputModalAddress').keypress(function(event) {
@@ -765,6 +791,17 @@
                     }
                 })
             }
+
+            function setDraggableMarker(markers){
+                markers.forEach(function(marker) {
+                    google.maps.event.addListener(marker, 'dragend', function(event) {
+                        $('#inputModalLat').val(event.latLng.lat());
+                        $('#inputModalLng').val(event.latLng.lng());
+                        locateByCoordinate($('#inputModalLat').val(), $('#inputModalLng').val());
+                    });
+                });
+            }
+
         });
     </script>
 @endsection
