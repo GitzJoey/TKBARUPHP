@@ -37,7 +37,7 @@
                 <br>
 
             </div>
-            
+
             @include('layouts.adminlte.footer')
 
             @include('layouts.adminlte.control-sidebar')

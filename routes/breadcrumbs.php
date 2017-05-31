@@ -12,7 +12,7 @@ Breadcrumbs::register('dashboard', function ($breadcrumbs){
 
 Breadcrumbs::register('search', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push(trans('search'), route('db.search'));
+    $breadcrumbs->push(trans('breadcrumb.search'), route('db.search'));
 });
 
 Breadcrumbs::register('create_purchase_order', function ($breadcrumbs){
