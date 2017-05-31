@@ -31,8 +31,13 @@
                 <section class="content">
                     @yield('content')
                 </section>
-            </div>
 
+                <br>
+                <br>
+                <br>
+
+            </div>
+            
             @include('layouts.adminlte.footer')
 
             @include('layouts.adminlte.control-sidebar')
