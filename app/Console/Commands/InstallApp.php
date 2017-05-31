@@ -61,7 +61,7 @@ class InstallApp extends Command
         Artisan::call('key:generate');
         $this->info('Database Migrating...');
         if (App::environment('prod', 'production')) {
-            Artisan::call('migrate', ['--force' => '']);
+            Artisan::call('migrate', ['--force']);
         } else {
             Artisan::call('migrate');
         }
