@@ -17,6 +17,8 @@
 @endsection
 
 @section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/fileinput/fileinput.css') }}">
+
     <style>
         .pac-container {
             background-color: #FFF;
@@ -72,7 +74,7 @@
                                 <div class="form-group">
                                     <label for="inputStoreImage" class="col-sm-2 control-label">&nbsp;</label>
                                     <div class="col-sm-10">
-                                        <input id="inputStoreImage" name="image_path" type="file" class="form-control">
+                                        <input id="inputStoreImage" name="image_path" type="file" class="file form-control" data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -180,12 +182,12 @@
                                             <td v-bind:class="{ 'has-error':errors.has('account_name_' + bankIdx) }">
                                                 <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name"
                                                        v-validate="'required'" v-bind:data-vv-as="'{{ trans('store.create.table_bank.header.account_name') }} ' + (bankIdx + 1)"
-                                                       v-bind:data-vv-name="'account_name_' + bankIdx" >
+                                                       v-bind:data-vv-name="'account_name_' + bankIdx">
                                             </td>
                                             <td v-bind:class="{ 'has-error':errors.has('account_number_' + bankIdx) }">
                                                 <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number"
                                                        v-validate="'required'" v-bind:data-vv-as="'{{ trans('store.create.table_bank.header.account_number') }} ' + (bankIdx + 1)"
-                                                       v-bind:data-vv-name="'account_number_' + bankIdx" >
+                                                       v-bind:data-vv-name="'account_number_' + bankIdx">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
@@ -284,10 +286,12 @@
                                         <span class="help-block">{{ $errors->has('decimal_separator') ? $errors->first('decimal_separator') : '' }}</span>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('decimal_digit') }">
                                     <label for="inputDecimalDigit" class="col-sm-2 control-label">@lang('store.field.decimal_digit')</label>
                                     <div class="col-sm-10">
-                                        <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="2" placeholder="Decimal Digit" data-parsley-required="true" data-parsley-type="number" data-parsley-max="4" data-parsley-group="tab_settings">
+                                        <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="2" placeholder="Decimal Digit"
+                                               v-validate="'required|max_value:4|min_value:0|numeric'" data-vv-as="{{ trans('store.field.decimal_digit') }}">
+                                        <span v-show="errors.has('decimal_digit')" class="help-block" v-cloak>@{{ errors.first('decimal_digit') }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -408,6 +412,10 @@
 
 @section('custom_js')
     <script async defer src="https://maps.googleapis.com/maps/api/js?callback=mapsCallback&libraries=places&key={{ $mapsAPIKey }}"></script>
+
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/fileinput.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
+
     <script type="application/javascript">
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
@@ -498,6 +506,8 @@
                         return result;
                     }
                 });
+
+
             },
             methods: {
                 validateBeforeSubmit: function() {
