@@ -145,33 +145,32 @@
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.date_format')</label>
                     <select id="settingDateFormat" class="form-control">
-                        <option value="d/m/Y" {{ Auth::user()->store->date_format == 'd/m/Y' ? 'selected':'' }}>dd/MM/yyyy - {{ date('d/m/Y') }} (default)</option>
-                        <option value="d m Y" {{ Auth::user()->store->date_format == 'd m Y' ? 'selected':'' }}>dd MM yyyy - {{ date('d m Y') }}</option>
-                        <option value="d M Y" {{ Auth::user()->store->date_format == 'd M Y' ? 'selected':'' }}>dd MMM yyyy - {{ date('d M Y') }}</option>
-                        <option value="m/d/Y" {{ Auth::user()->store->date_format == 'm/d/Y' ? 'selected':'' }}>MM/dd/yyyy - {{ date('m/d/Y') }}</option>
+                        <option value="DD-MM-YYYY" {{ Auth::user()->store->date_format == 'DD-MM-YYYY' ? 'selected':'' }}>{{ date('d-m-Y') }} (default)</option>
+                        <option value="DD MMM YYYY" {{ Auth::user()->store->date_format == 'DD MMM YYYY' ? 'selected':'' }}>{{ date('d M Y') }}</option>
+                        <option value="DD/MM/YYYY" {{ Auth::user()->store->date_format == 'DD/MM/YYYY' ? 'selected':'' }}>{{ date('d/m/Y') }}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.time_format')</label>
                     <select id="settingTimeFormat" class="form-control">
-                        <option value="H:i:s" {{ Auth::user()->store->time_format == 'H:i:s' ? 'selected':'' }}>{{ date('H:i:s') }}</option>
-                        <option value="h:i A" {{ Auth::user()->store->time_format == 'h:i A' ? 'selected':'' }}>{{ date('h:i A') }}</option>
+                        <option value="hh:mm A" {{ Auth::user()->store->time_format == 'hh:mm A' ? 'selected':'' }}>{{ date('h:m a') }} (default)</option>
+                        <option value="hh:mm:ss" {{ Auth::user()->store->time_format == 'hh:mm:ss' ? 'selected':'' }}>{{ date('h:m:s') }}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.thousand_separator')</label>
                     <select id="settingThousandSeparator" class="form-control">
-                        <option value="," {{ Auth::user()->store->thousand_separator == ',' ? 'selected':'' }}>@lang('control_sidebar.settings.field.comma')&nbsp;-&nbsp;1,000,000</option>
-                        <option value="." {{ Auth::user()->store->thousand_separator == '.' ? 'selected':'' }}>@lang('control_sidebar.settings.field.dot')&nbsp;-&nbsp;1.000.000</option>
-                        <option value=" " {{ Auth::user()->store->thousand_separator == ' ' ? 'selected':'' }}>@lang('control_sidebar.settings.field.space')&nbsp;-&nbsp;1 000 000</option>
+                        <option value="," {{ Auth::user()->store->thousand_separator == ',' ? 'selected':'' }}>@lang('store.field.comma')&nbsp;-&nbsp;1,000,000 (Default)</option>
+                        <option value="." {{ Auth::user()->store->thousand_separator == '.' ? 'selected':'' }}>@lang('store.field.dot')&nbsp;-&nbsp;1.000.000</option>
+                        <option value=" " {{ Auth::user()->store->thousand_separator == ' ' ? 'selected':'' }}>@lang('store.field.space')&nbsp;-&nbsp;1 000 000</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.decimal_separator')</label>
                     <select id="settingDecimalSeparator" class="form-control">
-                        <option value="," {{ Auth::user()->store->decimal_separator == ',' ? 'selected':'' }}>@lang('control_sidebar.settings.field.comma')&nbsp;-&nbsp;0,00</option>
-                        <option value="." {{ Auth::user()->store->decimal_separator == '.' ? 'selected':'' }}>@lang('control_sidebar.settings.field.dot')&nbsp;-&nbsp;0.00</option>
-                        <option value=" " {{ Auth::user()->store->decimal_separator == ' ' ? 'selected':'' }}>@lang('control_sidebar.settings.field.space')&nbsp;-&nbsp;0 00</option>
+                        <option value="," {{ Auth::user()->store->decimal_separator == ',' ? 'selected':'' }}>@lang('store.field.comma')&nbsp;-&nbsp;0,00 (Default)</option>
+                        <option value="." {{ Auth::user()->store->decimal_separator == '.' ? 'selected':'' }}>@lang('store.field.dot')&nbsp;-&nbsp;0.00</option>
+                        <option value=" " {{ Auth::user()->store->decimal_separator == ' ' ? 'selected':'' }}>@lang('store.field.space')&nbsp;-&nbsp;0 00</option>
                     </select>
                 </div>
                 <div class="form-group">
