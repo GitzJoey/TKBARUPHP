@@ -66,7 +66,11 @@ class InstallApp extends Command
             Artisan::call('migrate');
         }
         $this->info('Seeding ...');
-        Artisan::call('db:seed');
+        if (App::environment('prod', 'production')) {
+            Artisan::call('db:seed', ['--force' => true,]);
+        } else {
+            Artisan::call('db:seed');
+        }
         $this->info('Storage Linking ...');
         if (is_link(public_path().'/storage')) {
             $this->info('Found Storage Link, Skipping ...');
