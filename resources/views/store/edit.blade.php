@@ -75,10 +75,15 @@
                                     <label for="inputStoreImage" class="col-sm-2 control-label">&nbsp;</label>
                                     <div class="col-sm-10">
                                         @if(!empty($store->image_filename))
-                                            <img src="{{ asset('images/'.$store->image_filename) }}" class="img-responsive img-circle" style="max-width: 150px; max-height: 150px;"/>
+                                            <input id="inputStoreImage" name="image_path" type="file" class="file form-control" value="{{ old('image_path') }}"
+                                                   data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'
+                                                   data-initial-preview='["<img src="{{ asset('images/'.$store->image_filename) }}" />"]'>
+                                            <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
+                                        @else
+                                            <input id="inputStoreImage" name="image_path" type="file" class="file form-control" value="{{ old('image_path') }}"
+                                                   data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'>
+                                            <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
                                         @endif
-                                        <input id="inputStoreImage" name="image_path" type="file" class="form-control" value="{{ old('image_path') }}">
-                                        <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -131,7 +136,7 @@
                                         <select class="form-control"
                                                 name="is_default"
                                                 v-model="is_default"
-                                                v-validate="'required'"
+                                                v-validate="'{{ $store->is_default == 'YESNOSELECT.YES' ? 'required|isdefault_switch_no':'required' }}'"
                                                 data-vv-as="{{ trans('store.field.default') }}">
                                             <option v-bind:value="defaultYesNo">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="(value, key) in yesnoDDL" v-bind:value="key">@{{ value }}</option>
@@ -144,7 +149,8 @@
                                     <div class="col-sm-10">
                                         <select class="form-control"
                                                 name="frontweb"
-                                                v-validate="'required'"
+                                                v-model="frontweb"
+                                                v-validate="'{{ $store->frontweb == 'YESNOSELECT.YES' ? 'required|frontweb_switch_no':'required' }}'"
                                                 data-vv-as="{{ trans('store.field.frontweb') }}">
                                             <option v-bind:value="defaultYesNo">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="(value, key) in yesnoDDL" v-bind:value="key">@{{ value }}</option>
@@ -228,7 +234,8 @@
                                                 </select>
                                             </td>
                                             <td class="text-center">
-                                                <vue-icheck v-bind:id="'check_' + idx" name="base_currencies[]" v-model="item.is_base" v-on:click="selectedBaseCurrencies(idx)"></vue-icheck>
+                                                <vue-icheck v-model="item.is_base" v-on:click="selectedBaseCurrencies(idx)"></vue-icheck>
+                                                <input type="hidden" name="base_currencies[]" v-model="item.is_base">
                                             </td>
                                             <td v-bind:class="{ 'has-error':errors.has('currencies_conv_val_' + idx) }">
                                                 <input type="text" class="form-control" name="currencies_conversion_value[]" v-model="item.conversion_value" v-bind:readonly="(item.is_base != 0)"
@@ -416,6 +423,10 @@
 
 @section('custom_js')
     <script async defer src="https://maps.googleapis.com/maps/api/js?callback=mapsCallback&libraries=places&key={{ $mapsAPIKey }}"></script>
+
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/fileinput.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
+
     <script type="application/javascript">
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
@@ -472,13 +483,18 @@
             }
         });
 
-        var app = new Vue({
+        var storeApp = new Vue({
             el: '#storeVue',
             data: {
                 banks: JSON.parse('{!! empty(htmlspecialchars_decode($store->bankAccounts)) ? '[]':htmlspecialchars_decode($store->bankAccounts) !!}'),
                 currencies: JSON.parse('{!! empty(htmlspecialchars_decode($store->currenciesConversions)) ? '[]':htmlspecialchars_decode($store->currenciesConversions) !!}'),
                 bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
-                currenciesDDL: JSON.parse('{!! htmlspecialchars_decode($currenciesDDL) !!}')
+                currenciesDDL: JSON.parse('{!! htmlspecialchars_decode($currenciesDDL) !!}'),
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}'),
+                yesnoDDL: JSON.parse('{!! htmlspecialchars_decode($yesnoDDL) !!}'),
+                is_default: '{{ $store->is_default }}',
+                status: '{{ $store->status }}',
+                frontweb: '{{ $store->frontweb }}'
             },
             methods: {
                 validateBeforeSubmit: function() {
@@ -490,6 +506,8 @@
                             .then(function(response) {
                                 if (response.data.result == 'success') { window.location.href = '{{ route('db.admin.store') }}'; }
                             });
+                    }).catch(function(e) {
+
                     });
                 },
                 addNewBank: function() {
@@ -557,10 +575,8 @@
                         id: function(field, args) { return 'Toko utama tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu' }
                     },
                     validate: function(value, args) {
-                        var result = false;
-
-
-                        return result;
+                        if (value == 'YESNOSELECT.NO') { return false; }
+                        else { return true; }
                     }
                 });
 
@@ -570,13 +586,10 @@
                         id: function(field, args) { return 'Website tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu' }
                     },
                     validate: function(value, args) {
-                        var result = false;
-
-
-                        return result;
+                        if (value == 'YESNOSELECT.NO') { return false; }
+                        else { return true; }
                     }
                 });
-
             },
             computed: {
                 defaultStatus: function() {

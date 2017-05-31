@@ -32,6 +32,13 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_store">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <img src="{{  asset('images/' . $store->image_filename) }}" class="img-rounded" width="150px" height="150px">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-2 control-label">@lang('store.field.name')</label>
                                 <div class="col-sm-10">

@@ -224,7 +224,8 @@
                                                 </select>
                                             </td>
                                             <td class="text-center">
-                                                <vue-icheck v-bind:id="'check_' + idx" name="base_currencies[]" v-model="item.is_base" v-on:click="selectedBaseCurrencies(idx)"></vue-icheck>
+                                                <vue-icheck v-model="item.is_base" v-on:click="selectedBaseCurrencies(idx)"></vue-icheck>
+                                                <input type="hidden" name="base_currencies[]" v-model="item.is_base">
                                             </td>
                                             <td v-bind:class="{ 'has-error':errors.has('currencies_conv_val_' + idx) }">
                                                 <input type="text" class="form-control" name="currencies_conversion_value[]" v-model="item.conversion_value" v-bind:readonly="(item.is_base != 0)"
@@ -420,7 +421,7 @@
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
         Vue.component('vue-icheck', {
-            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value' v-bind:value='value'>",
             props: ['id', 'name', 'disabled', 'value'],
             model: {
                 event: 'click'
@@ -439,6 +440,8 @@
 
                 if (this.value) { $(this.$el).iCheck('check'); }
                 if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+
+                if (this.value == undefined) { this.value = false; }
             },
             methods: {
                 onChecked: function() {
