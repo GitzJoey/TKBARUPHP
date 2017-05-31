@@ -326,7 +326,7 @@ class CustomerController extends Controller
 
     public function confirmSalesOrder($id)
     {
-        $so = SalesOrder::with('customer', 'items.product.productUnits.unit')->where('id', '=', $id)->first();
+        $so = SalesOrder::with('customer', 'items.product.productUnits.unit', 'items.delivers')->where('id', '=', $id)->first();
 
         return view('customer.confirmation.confirm', compact('so'));
     }
@@ -334,26 +334,27 @@ class CustomerController extends Controller
     public function storeConfirmationSalesOrder($id, Request $request)
     {
         for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
-            $conversionValue = ProductUnit::where([
-                'product_id' => $request->input("product_id.$i"),
-                'unit_id' => $request->input("selected_unit_id.$i")
-            ])->first()->conversion_value;
+            $conversionValue = ProductUnit::whereId($request->input("selected_unit_id.$i"))->first()->conversion_value;
 
-            $deliver = Deliver::whereId($request->input('deliver_id'))->first();
-            $deliver->netto = $request->input('netto');
-            $deliver->base_netto = $conversionValue * $request->input('netto');
-            $deliver->tare = $request->input('tare');
-            $deliver->base_tare = $conversionValue * $request->input('tare');
-            $deliver->remarks = $request->input('remarks');
+            $deliver = Deliver::whereId($request->input("deliver_id.$i"))->first();
+
+            $deliver->confirm_receive_date = date('Y-m-d H:i:s', strtotime($request->input("confirm_receive_date.0")));
+            $deliver->netto = $request->input("netto.$i");
+            $deliver->base_netto = $conversionValue * $request->input("netto.$i");
+            $deliver->tare = $request->input("tare.$i");
+            $deliver->base_tare = $conversionValue * $request->input("tare.$i");
+            $deliver->remarks = $request->input("remarks.$i");
 
             $deliver->save();
         }
 
         $so = SalesOrder::whereId($id)->first();
-        $so->status = 'POSTATUS.WAPPV';
+        $so->status = 'SOSTATUS.WAPPV';
         $so->save();
 
-        return redirect()->action('CustomerController@confirmSalesOrder', [$id]);
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function approvalIndex()
@@ -420,15 +421,17 @@ class CustomerController extends Controller
     public function storePaymentCashCustomer($id, Request $request)
     {
 
-        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function paymentTransferCustomer($id)
     {
         $currentStore = Store::with('bankAccounts.bank')->find(Auth::user()->store_id);
-        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit',
+        $currentSo = SalesOrder::with('payments', 'items.product.productUnits.unit', 'items.discounts',
             'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank', 'vendorTrucking',
-            'warehouse')->find($id);
+            'warehouse', 'expenses')->find($id);
         $paymentTypeDDL = LookupRepo::findByCategory('PAYMENTTYPE')->pluck('description', 'code');
         $storeBankAccounts = $currentStore->bankAccounts;
         $customerBankAccounts = empty($currentSo->customer) ? collect([]) : $currentSo->customer->bankAccounts;
@@ -444,7 +447,9 @@ class CustomerController extends Controller
     public function storePaymentTransferCustomer($id, Request $request)
     {
 
-        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function paymentGiroCustomer($id)
@@ -465,10 +470,10 @@ class CustomerController extends Controller
     public function storePaymentGiroCustomer($id, Request $request)
     {
 
-        return redirect()->action('App\Http\Controllers\CustomerController@paymentIndex');
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
-
-    // ===================== REST API HANDLER METHODS ====================== //
 
     public function searchCustomers(Request $request)
     {
@@ -486,8 +491,6 @@ class CustomerController extends Controller
                       ->orWhere('last_name', 'like', "%$param%");
         })->get();
 
-        // Assign additional attribute, unpaid sales order amount
-        // and its last sales order.
         $customers = collect($customers->map(function ($customer){
             return array_merge([
                 'last_order' => $this->customerService->getCustomerLastOrder($customer->id),

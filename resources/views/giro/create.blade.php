@@ -107,12 +107,11 @@
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
-            $("#inputEffectiveDate").daterangepicker({
-                locale: {
-                    format: 'DD-MM-YYYY'
-                },
-                singleDatePicker: true,
-                showDropdowns: true
+            $('#inputEffectiveDate').datetimepicker({
+                format: this.format,
+                defaultDate: this.value == '' ? moment():moment(this.value),
+                showTodayButton: true,
+                showClose: true
             });
         });
     </script>

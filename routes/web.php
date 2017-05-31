@@ -225,17 +225,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'CustomerController@confirmationIndex')->name('db.customer.confirmation.index');
                 Route::get('{id}', 'CustomerController@confirmationCustomer')->name('db.customer.confirmation.customer');
                 Route::get('confirm/{id}', 'CustomerController@confirmSalesOrder')->name('db.customer.confirmation.confirm');
-                Route::post('confirm/{id}', 'CustomerController@storeConfirmationSalesOrder');
+
             });
 
             Route::group(['prefix' => 'payment', 'middleware' => ['permission:menu-customer_payment']], function() {
                 Route::get('', 'CustomerController@paymentIndex')->name('db.customer.payment.index');
                 Route::get('cash/{id}', 'CustomerController@paymentCashCustomer')->name('db.customer.payment.cash');
-                Route::post('cash/{id}', 'CustomerController@storePaymentCashCustomer');
                 Route::get('transfer/{id}', 'CustomerController@paymentTransferCustomer')->name('db.customer.payment.transfer');
-                Route::post('transfer/{id}', 'CustomerController@storePaymentTransferCustomer');
                 Route::get('giro/{id}', 'CustomerController@paymentGiroCustomer')->name('db.customer.payment.giro');
-                Route::post('giro/{id}', 'CustomerController@storePaymentGiroCustomer');
             });
 
             Route::group(['prefix' => 'approval', 'middleware' => ['permission:menu-customer_approval']], function() {

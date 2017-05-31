@@ -405,6 +405,11 @@ return [
                 ],
             ],
         ],
+        'tab' => [
+            'remarks' => 'Keterangan',
+            'internal' => 'Internal',
+            'private' => 'Privat',
+        ],
     ],
     'partial' => [
         'customer' => [

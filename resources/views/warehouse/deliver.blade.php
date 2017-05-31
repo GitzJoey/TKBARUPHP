@@ -81,10 +81,11 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('license_plate') }">
                                 <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('warehouse.outflow.deliver.field.license_plate')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" v-validate="'required'">
+                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" v-validate="'required'" data-vv-as="{{ trans('warehouse.outflow.deliver.field.license_plate') }}">
+                                    <span v-show="errors.has('license_plate')" class="help-block" v-cloak>@{{ errors.first('license_plate') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -116,17 +117,20 @@
                                                 <input type="hidden" name="stock_id[]" v-bind:value="deliver.item.stock_id">
                                                 <input type="hidden" name="base_unit_id[]" v-bind:value="deliver.item.base_unit_id">
                                                 <td class="valign-middle">@{{ deliver.item.product.name }}</td>
-                                                <td>
+                                                <td v-bind:class="{ 'has-error':errors.has('unit_' + deliverIdx) }">
                                                     <select name="selected_unit_id[]" v-validate="'required'"
                                                             class="form-control"
-                                                            v-model="deliver.selected_unit.id">
+                                                            v-model="deliver.selected_unit.id"
+                                                            v-bind:data-vv-name="'unit_' + deliverIdx"
+                                                            v-bind:data-vv-as="'{{ trans('warehouse.outflow.deliver.table.item.header.unit') }} ' + (deliverIdx + 1)">
                                                         <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
                                                         <option v-for="product_unit in deliver.item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name }}(@{{ product_unit.unit.symbol }})</option>
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <input type="text" class="form-control text-right" name="brutto[]" v-model="deliver.brutto"
-                                                           v-validate="'required|decimal:2|min_value:1'">
+                                                <td v-bind:class="{ 'has-error':errors.has('brutto_' + deliverIdx) }">
+                                                    <input type="text" class="form-control text-right" name="brutto[]"
+                                                           v-model="deliver.brutto" v-validate="'required|decimal:2|min_value:1'"
+                                                           v-bind:data-vv-name="'brutto_' + deliverIdx" v-bind:data-vv-as="'{{ trans('warehouse.outflow.deliver.table.item.header.brutto') }}' + (deliverIdx + 1)">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver(deliverIdx)" disabled><span class="fa fa-minus"/></button>

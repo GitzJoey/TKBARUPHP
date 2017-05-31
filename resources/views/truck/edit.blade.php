@@ -96,12 +96,11 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $("#inspection_date").daterangepicker({
-            locale: {
-                format: 'DD-MM-YYYY'
-            },
-            singleDatePicker: true,
-            showDropdowns: true
+        $('#inspection_date').datetimepicker({
+            format: this.format,
+            defaultDate: this.value == '' ? moment():moment(this.value),
+            showTodayButton: true,
+            showClose: true
         });
     </script>
 @endsection

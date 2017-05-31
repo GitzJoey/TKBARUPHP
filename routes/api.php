@@ -49,6 +49,17 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             });
         });
 
+        Route::group(['prefix' => 'customer'], function () {
+            Route::group(['prefix' => 'confirmation'], function() {
+                Route::post('confirm/{id}', 'CustomerController@storeConfirmationSalesOrder')->name('api.post.db.customer.confirmation.confirm');
+            });
+            Route::group(['prefix' => 'payment'], function() {
+                Route::post('cash/{id}', 'CustomerController@storePaymentCashCustomer')->name('api.post.db.customer.payment.cash');
+                Route::post('transfer/{id}', 'CustomerController@storePaymentTransferCustomer')->name('api.post.db.customer.payment.transfer');
+                Route::post('giro/{id}', 'CustomerController@storePaymentGiroCustomer')->name('api.post.db.customer.payment.giro');
+            });
+        });
+
         Route::group(['prefix' => 'warehouse'], function () {
             Route::group(['prefix' => 'inflow'], function () {
                 Route::post('receipt/{id?}', 'WarehouseInflowController@saveReceipt')->name('api.post.db.warehouse.inflow.receipt');

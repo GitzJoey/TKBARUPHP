@@ -386,11 +386,50 @@
                 <h3 class="box-title">@lang('sales_order.payment.summary.box.remarks')</h3>
             </div>
             <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <textarea id="inputRemarks" name="remarks" class="form-control" rows="5" readonly>{{ $currentSo->remarks }}</textarea>
+                <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#tab_remarks" aria-controls="tab_remarks" role="tab" data-toggle="tab">@lang('sales_order.revise.tab.remarks')</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#tab_internal" aria-controls="tab_internal" role="tab" data-toggle="tab">@lang('sales_order.revise.tab.internal')</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#tab_private" aria-controls="tab_private" role="tab" data-toggle="tab">@lang('sales_order.revise.tab.private')</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="tab_remarks">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <textarea id="inputRemarks" name="remarks" class="form-control" rows="5" readonly>{{ $currentSo->remarks }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab_internal">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <textarea id="inputInternalRemarks" name="internal_remarks" class="form-control" rows="5" readonly>{{ $currentSo->internal_remarks }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tab_private">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <textarea id="inputPrivateRemarks" name="private_remarks" class="form-control" rows="5" readonly>{{ $currentSo->private_remarks }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
