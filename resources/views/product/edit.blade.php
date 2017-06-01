@@ -12,6 +12,10 @@
     @lang('product.edit.page_title_desc')
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/fileinput/fileinput.css') }}">
+@endsection
+
 @section('breadcrumbs')
     {!! Breadcrumbs::render('master_product_edit', $product->hId()) !!}
 @endsection
@@ -88,6 +92,21 @@
                             <input id="inputName" name="name" type="text" class="form-control" value="{{ $product->name }}" placeholder="Name"
                                    v-validate="'required'" data-vv-as="{{ trans('product.field.name') }}">
                             <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('image_path') ? 'has-error' : '' }}">
+                        <label for="inputProductImage" class="col-sm-2 control-label">&nbsp;</label>
+                        <div class="col-sm-10">
+                            @if(!empty($product->image_path))
+                                <input id="inputProductImage" name="image_path" type="file" class="file form-control" value="{{ old('image_path') }}"
+                                       data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'
+                                       data-initial-preview='["<img src="{{ asset('images/'.$product->image_path) }}" />"]'>
+                                <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
+                            @else
+                                <input id="inputProductImage" name="image_path" type="file" class="file form-control" value="{{ old('image_path') }}"
+                                       data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'>
+                                <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('short_code') ? 'has-error' : '' }}">
@@ -212,6 +231,9 @@
 @endsection
 
 @section('custom_js')
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/fileinput.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
+
     <script type="application/javascript">
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 

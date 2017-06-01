@@ -9,6 +9,7 @@ use Validator;
 use App\Http\Requests;
 use LaravelLocalization;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 use App\Model\Unit;
 use App\Model\Product;
@@ -60,52 +61,69 @@ class ProductController extends Controller
             return response()->json([
                 'result' => 'failed'
             ]);
-        } else {
-            if (count($data['unit_id']) == 0) {
-                $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
-                return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
-            }
+        }
 
-            DB::transaction(function() use ($data) {
-                $product = new Product;
-                $product->store_id = Auth::user()->store->id;
-                $product->product_type_id = $data['type'];
-                $product->name = $data['name'];
-                $product->short_code = $data['short_code'];
-                $product->barcode = $data['barcode'];
-                $product->minimal_in_stock = $data['minimal_in_stock'];
-                $product->description = $data['description'];
-                $product->status = $data['status'];
-                $product->remarks = $data['remarks'];
-
-                $product->save();
-
-                for ($i = 0; $i < count($data['unit_id']); $i++) {
-                    $punit = new ProductUnit();
-                    $punit->unit_id = $data['unit_id'][$i];
-                    $punit->is_base = $data['is_base'][$i] === 'true' ? true:false;
-                    $punit->conversion_value = $data['conversion_value'][$i];
-                    $punit->remarks = empty($data['unit_remarks'][$i]) ? '' : $data['unit_remarks'][$i];
-
-                    $product->productUnits()->save($punit);
-                }
-
-                for ($j = 0; $j < count($data['cat_level']); $j++) {
-                    $pcat = new ProductCategory();
-                    $pcat->store_id = Auth::user()->store->id;
-                    $pcat->code = $data['cat_code'][$j];
-                    $pcat->name = $data['cat_name'][$j];
-                    $pcat->description = $data['cat_description'][$j];
-                    $pcat->level = $data['cat_level'][$j];
-
-                    $product->productCategories()->save($pcat);
-                }
-            });
-
+        if (count($data['unit_id']) == 0) {
+            $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
             return response()->json([
-                'result' => 'success'
+                'result' => 'failed'
             ]);
         }
+
+        $imageName = '';
+
+        if (!empty($data['image_path'])) {
+            $imageName = time() . '.' . $data['image_path']->getClientOriginalExtension();
+            $path = public_path('images') . '/' . $imageName;
+
+            Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
+        }
+
+        DB::beginTransaction();
+        try {
+            $product = new Product;
+            $product->store_id = Auth::user()->store->id;
+            $product->product_type_id = $data['type'];
+            $product->name = $data['name'];
+            $product->image_path = $imageName;
+            $product->short_code = $data['short_code'];
+            $product->barcode = $data['barcode'];
+            $product->minimal_in_stock = $data['minimal_in_stock'];
+            $product->description = $data['description'];
+            $product->status = $data['status'];
+            $product->remarks = $data['remarks'];
+
+            $product->save();
+
+            for ($i = 0; $i < count($data['unit_id']); $i++) {
+                $punit = new ProductUnit();
+                $punit->unit_id = $data['unit_id'][$i];
+                $punit->is_base = $data['is_base'][$i] === 'true' ? true : false;
+                $punit->conversion_value = $data['conversion_value'][$i];
+                $punit->remarks = empty($data['unit_remarks'][$i]) ? '' : $data['unit_remarks'][$i];
+
+                $product->productUnits()->save($punit);
+            }
+
+            for ($j = 0; $j < count($data['cat_level']); $j++) {
+                $pcat = new ProductCategory();
+                $pcat->store_id = Auth::user()->store->id;
+                $pcat->code = $data['cat_code'][$j];
+                $pcat->name = $data['cat_name'][$j];
+                $pcat->description = $data['cat_description'][$j];
+                $pcat->level = $data['cat_level'][$j];
+
+                $product->productCategories()->save($pcat);
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function edit($id)
@@ -126,8 +144,6 @@ class ProductController extends Controller
         $validator = Validator::make($data->all(), [
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:255',
-            'short_code' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
 
@@ -144,6 +160,26 @@ class ProductController extends Controller
 
         try {
             $product = Product::find($id);
+
+            if (!empty($product->image_path)) {
+                if (!empty($data['image_path'])) {
+                    $imageName = time() . '.' . $data['image_path']->getClientOriginalExtension();
+                    $path = public_path('images') . '/' . $imageName;
+
+                    Image::make($data['image_path']->getRealPath())->resize(160, 160)->save($path);
+                } else {
+                    $imageName = $product['image_path'];
+                }
+            } else {
+                if (!empty($data['image_path'])) {
+                    $imageName = time() . '.' . $data['image_path']->getClientOriginalExtension();
+                    $path = public_path('images') . '/' . $imageName;
+
+                    Image::make($data['image_path']->getRealPath())->resize(160, 160)->save($path);
+                } else {
+                    $imageName = '';
+                }
+            }
 
             $product->productUnits->each(function($pu) { $pu->delete(); });
 
@@ -181,6 +217,7 @@ class ProductController extends Controller
                 'name' => $data['name'],
                 'short_code' => $data['short_code'],
                 'description' => $data['description'],
+                'image_path' => $imageName,
                 'status' => $data['status'],
                 'remarks' => $data['remarks'],
                 'barcode' => $data['barcode'],
