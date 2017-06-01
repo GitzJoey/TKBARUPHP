@@ -36,12 +36,12 @@
                 <div class="box-body">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab_supplier" class="active" data-toggle="tab">@lang('supplier.edit.tab.supplier')&nbsp;<span id="suppDataTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_supplier')?false:true }">*</span></a></li>
-                            <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.edit.tab.pic')&nbsp;<span id="picTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_pic')?false:true }">*</span></a></li>
-                            <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_bank')?false:true }">*</span></a></li>
+                            <li class="active"><a href="#tab_supplier" class="active" data-toggle="tab">@lang('supplier.edit.tab.supplier')&nbsp;<span id="suppDataTabError" v-bind:class="{ 'red-asterisk':true, 'hidden':errors.any('tab_supplier')?false:true }">*</span></a></li>
+                            <li><a href="#tab_pic" data-toggle="tab">@lang('supplier.edit.tab.pic')&nbsp;<span id="picTabError" v-bind:class="{ 'red-asterisk':true, 'hidden':errors.any('tab_pic')?false:true }">*</span></a></li>
+                            <li><a href="#tab_bank_account" data-toggle="tab">@lang('supplier.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" v-bind:class="{ 'red-asterisk':true, 'hidden':errors.any('tab_bank')?false:true }">*</span></a></li>
                             <li><a href="#tab_product" data-toggle="tab">@lang('supplier.edit.tab.product')</a></li>
                             <li><a href="#tab_expenses" data-toggle="tab">@lang('supplier.edit.tab.expenses')</a></li>
-                            <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.edit.tab.settings')&nbsp;<span id="settingsTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_settings')?false:true }">*</span></a></li>
+                            <li><a href="#tab_settings" data-toggle="tab">@lang('supplier.edit.tab.settings')&nbsp;<span id="settingsTabError" v-bind:class="{ 'red-asterisk':true, 'hidden':errors.any('tab_settings')?false:true }">*</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_supplier">
