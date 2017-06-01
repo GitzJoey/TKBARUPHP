@@ -57,7 +57,7 @@
                             <li class="active"><a href="#tab_customer" data-toggle="tab">@lang('customer.create.tab.customer')&nbsp;<span id="custDataTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_customer')?false:true }">*</span></a></li>
                             <li><a href="#tab_pic" data-toggle="tab">@lang('customer.create.tab.pic')&nbsp;<span id="picTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_pic')?false:true }">*</span></a></li>
                             <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.create.tab.bank_account')&nbsp;<span id="bankAccountTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_bank')?false:true }">*</span></a></li>
-                            <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.create.tab.expenses')&nbsp;<span id="expensesTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.create.tab.expenses')</a></li>
                             <li><a href="#tab_settings" data-toggle="tab">@lang('customer.create.tab.settings')&nbsp;<span id="settingsTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_settings')?false:true }">*</span></a></li>
                         </ul>
                         <div class="tab-content">
@@ -336,6 +336,7 @@
                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="pp in pricelevelDDL" v-bind:value="pp.id">@{{ pp.name }} (@{{ pp.description }})</option>
                                         </select>
+                                        <span v-show="errors.has('tab_settings.price_level')" class="help-block" v-cloak>@{{ errors.first('tab_settings.price_level') }}</span>
                                     </div>
                                 </div>
                                 <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tab_settings.payment_due_day') }">
@@ -343,6 +344,7 @@
                                     <div class="col-sm-10">
                                         <input id="inputPaymentDueDay" name="payment_due_day" type="text" class="form-control"
                                                v-validate="'required|numeric|max_value:100'" data-vv-as="{{ trans('customer.field.payment_due_day') }}" data-vv-scope="tab_settings">
+                                        <span v-show="errors.has('tab_settings.payment_due_day')" class="help-block" v-cloak>@{{ errors.first('tab_settings.payment_due_day') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -752,7 +754,10 @@
             function getDistanceMatrix(destination) {
                 var service = new google.maps.DistanceMatrixService;
 
-                var origin = new google.maps.LatLng({{ $store->latitude }}, {{ $store->longitude }})
+                var lat = '{{ empty($store->latitude) ? 0:$store->latitude }}';
+                var lng = '{{ empty($store->longitude) ? 0:$store->longitude }}';
+
+                var origin = new google.maps.LatLng(lat, lng);
 
                 service.getDistanceMatrix({
                     origins: [origin],

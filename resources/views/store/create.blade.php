@@ -515,8 +515,6 @@
                         return result;
                     }
                 });
-
-
             },
             methods: {
                 validateBeforeSubmit: function() {
@@ -672,7 +670,6 @@
                     $('#inputModalLng').val(event.latLng.lng());
                     marker.setPosition(event.latLng);
                 });
-
             }
 
             $('#myModal').on('shown.bs.modal', function() {
@@ -756,7 +753,6 @@
                         }
                     }
                 });
-
             }
 
             $('#inputModalAddress').keypress(function(event) {
