@@ -48,4 +48,6 @@ interface CustomerService
      * @return Collection
      */
     public function getPassiveCustomer($numberOfPeriod = 1, $period = "months");
+
+    public function searchCustomer($keyword);
 }

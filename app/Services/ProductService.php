@@ -12,4 +12,6 @@ interface ProductService
      * @return Collection unfinished products
      */
     public function getUnfinisheProduct();
+
+    public function searchProduct($keyword);
 }

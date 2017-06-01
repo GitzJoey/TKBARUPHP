@@ -85,4 +85,9 @@ class PaymentServiceImpl implements PaymentService {
 
         return Payment::create($paymentParam);
     }
+
+    public function searchPayment($keyword)
+    {
+
+    }
 }

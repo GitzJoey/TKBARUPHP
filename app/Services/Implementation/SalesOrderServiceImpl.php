@@ -478,4 +478,9 @@ class SalesOrderServiceImpl implements SalesOrderService
     {
         return SalesOrder::where('status', '=', 'SOSTATUS.WCC')->get();
     }
+
+    public function searchSO($keyword)
+    {
+
+    }
 }

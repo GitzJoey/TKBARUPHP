@@ -335,4 +335,9 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
 
         return $purchaseOrders;
     }
+
+    public function searchPO($keyword)
+    {
+
+    }
 }
