@@ -50,7 +50,7 @@
                                     <div class="col-sm-10">
                                         <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('supplier.field.name')"
                                                 v-validate="'required'" data-vv-as="{{ trans('supplier.field.name') }}" data-vv-scope="tab_supplier">
-                                        <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
+                                        <span v-show="errors.has('tab_supplier.name')" class="help-block" v-cloak>@{{ errors.first('tab_supplier.name') }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">

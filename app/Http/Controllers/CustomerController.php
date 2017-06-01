@@ -95,7 +95,10 @@ class CustomerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
+            return response()->json([
+                'result' => 'failed',
+                'data' => $validator
+            ]);
         } else {
             DB::transaction(function() use ($data) {
 
@@ -153,7 +156,9 @@ class CustomerController extends Controller
                 }
             });
 
-            return redirect(route('db.master.customer'));
+            return response()->json([
+                'result' => 'success'
+            ]);
         }
     }
 

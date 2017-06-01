@@ -35,29 +35,18 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('customer.edit.header.title')</h3>
-        </div>
-        {!! Form::model($customer, ['id' => 'customerForm', 'method' => 'PATCH', 'route' => ['db.master.customer.edit', $customer->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+    <div id="customerVue">
+        <form id="customerForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
-            <div id="customerVue">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('customer.edit.header.title')</h3>
+                </div>
                 <div class="box-body">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab_customer" data-toggle="tab">@lang('customer.edit.tab.customer')&nbsp;<span id="custDataTabError" class="parsley-asterisk hidden">*</span></a></li>
-                            <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li class="active"><a href="#tab_customer" data-toggle="tab">@lang('customer.edit.tab.customer')&nbsp;<span id="custDataTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_customer')?false:true }">*</span></a></li>
+                            <li><a href="#tab_pic" data-toggle="tab">@lang('customer.edit.tab.pic')&nbsp;<span id="picTabError" v-bind:class="{ 'parsley-asterisk':true, 'hidden':errors.any('tab_pic')?false:true }">*</span></a></li>
                             <li><a href="#tab_bank_account" data-toggle="tab">@lang('customer.edit.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_expenses" data-toggle="tab">@lang('customer.edit.tab.expenses')&nbsp;<span id="expensesTabError" class="parsley-asterisk hidden">*</span></a></li>
                             <li><a href="#tab_settings" data-toggle="tab">@lang('customer.edit.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
@@ -166,39 +155,39 @@
                                                         <div class="col-sm-10">
                                                             <table class="table table-bordered">
                                                                 <thead>
-                                                                    <tr>
-                                                                        <th>@lang('customer.edit.table_phone.header.provider')</th>
-                                                                        <th>@lang('customer.edit.table_phone.header.number')</th>
-                                                                        <th>@lang('customer.edit.table_phone.header.remarks')</th>
-                                                                        <th class="text-center">@lang('labels.ACTION')</th>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <th>@lang('customer.edit.table_phone.header.provider')</th>
+                                                                    <th>@lang('customer.edit.table_phone.header.number')</th>
+                                                                    <th>@lang('customer.edit.table_phone.header.remarks')</th>
+                                                                    <th class="text-center">@lang('labels.ACTION')</th>
+                                                                </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr v-for="(ph, phIdx) in profile.phone_numbers">
-                                                                        <td>
-                                                                            <input type="hidden" v-bind:name="'profile_' + profileIdx + '_phone_number_id[]'" v-bind:value="ph.id">
-                                                                            <select v-bind:name="'profile_' + profileIdx + '_phone_provider[]'" class="form-control"
-                                                                                    v-model="ph.phone_provider_id"
-                                                                                    data-parsley-required="true" data-parsley-group="tab_pic">
-                                                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                                                <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }})</option>
-                                                                            </select>
-                                                                        </td>
-                                                                        <td><input type="text" v-bind:name="'profile_' + profileIdx + '_phone_number[]'" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
-                                                                        <td><input type="text" class="form-control" v-bind:name="'profile_' + profileIdx + '_remarks[]'" v-model="ph.remarks"></td>
-                                                                        <td class="text-center">
-                                                                            <button type="button" class="btn btn-xs btn-danger" v-bind:data="phIdx" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
-                                                                                <span class="fa fa-close fa-fw"></span>
-                                                                            </button>
-                                                                        </td>
-                                                                    </tr>
+                                                                <tr v-for="(ph, phIdx) in profile.phone_numbers">
+                                                                    <td>
+                                                                        <input type="hidden" v-bind:name="'profile_' + profileIdx + '_phone_number_id[]'" v-bind:value="ph.id">
+                                                                        <select v-bind:name="'profile_' + profileIdx + '_phone_provider[]'" class="form-control"
+                                                                                v-model="ph.phone_provider_id"
+                                                                                data-parsley-required="true" data-parsley-group="tab_pic">
+                                                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                                            <option v-for="p in providerDDL" v-bind:value="p.id">@{{ p.name }} (@{{ p.short_name }})</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input type="text" v-bind:name="'profile_' + profileIdx + '_phone_number[]'" class="form-control" v-model="ph.number" data-parsley-required="true" data-parsley-group="tab_pic"></td>
+                                                                    <td><input type="text" class="form-control" v-bind:name="'profile_' + profileIdx + '_remarks[]'" v-model="ph.remarks"></td>
+                                                                    <td class="text-center">
+                                                                        <button type="button" class="btn btn-xs btn-danger" v-bind:data="phIdx" v-on:click="removeSelectedPhone(profileIdx, phIdx)">
+                                                                            <span class="fa fa-close fa-fw"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
                                                                 </tbody>
                                                                 <tfoot>
-                                                                    <tr>
-                                                                        <td colspan="4">
-                                                                            <button type="button" class="btn btn-xs btn-default" v-on:click="addNewPhone(profileIdx)">@lang('buttons.create_new_button')</button>
-                                                                        </td>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <button type="button" class="btn btn-xs btn-default" v-on:click="addNewPhone(profileIdx)">@lang('buttons.create_new_button')</button>
+                                                                    </td>
+                                                                </tr>
                                                                 </tfoot>
                                                             </table>
                                                         </div>
@@ -212,39 +201,39 @@
                             <div class="tab-pane" id="tab_bank_account">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
-                                            <th class="text-center">@lang('customer.create.table_bank.header.account_name')</th>
-                                            <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
-                                            <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
-                                            <th class="text-center">@lang('labels.ACTION')</th>
-                                        </tr>
+                                    <tr>
+                                        <th class="text-center">@lang('customer.create.table_bank.header.bank')</th>
+                                        <th class="text-center">@lang('customer.create.table_bank.header.account_name')</th>
+                                        <th class="text-center">@lang('customer.create.table_bank.header.account_number')</th>
+                                        <th class="text-center">@lang('customer.create.table_bank.header.remarks')</th>
+                                        <th class="text-center">@lang('labels.ACTION')</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(bank, bankIdx) in banks">
-                                            <td>
-                                                <input type="hidden" name="bank_account_id[]" v-bind:value="bank.id">
-                                                <select class="form-control"
-                                                        name="bank[]"
-                                                        v-model="bank.bank_id"
-                                                        data-parsley-required="true" data-parsley-group="tab_bank">
-                                                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ bankIdx }}" v-on:click="removeSelectedBank(bankIdx)"><span class="fa fa-close fa-fw"></span></button>
-                                            </td>
-                                        </tr>
+                                    <tr v-for="(bank, bankIdx) in banks">
+                                        <td>
+                                            <input type="hidden" name="bank_account_id[]" v-bind:value="bank.id">
+                                            <select class="form-control"
+                                                    name="bank[]"
+                                                    v-model="bank.bank_id"
+                                                    data-parsley-required="true" data-parsley-group="tab_bank">
+                                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                                <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name" data-parsley-required="true" data-parsley-group="tab_bank">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number" data-parsley-required="true" data-parsley-group="tab_bank">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ bankIdx }}" v-on:click="removeSelectedBank(bankIdx)"><span class="fa fa-close fa-fw"></span></button>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <button class="btn btn-xs btn-default" type="button" v-on:click="addNewBank()">@lang('buttons.create_new_button')</button>
@@ -266,37 +255,37 @@
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th class="text-center">@lang('customer.create.table_expense.header.name')</th>
-                                            <th class="text-center">@lang('customer.create.table_expense.header.type')</th>
-                                            <th class="text-center">@lang('customer.create.table_expense.header.amount')</th>
-                                            <th class="text-center">@lang('customer.create.table_expense.header.internal_expense')</th>
-                                            <th class="text-center">@lang('customer.create.table_expense.header.remarks')</th>
-                                            <th class="text-center">&nbsp;</th>
-                                        </tr>
+                                    <tr>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.name')</th>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.type')</th>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.amount')</th>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.internal_expense')</th>
+                                        <th class="text-center">@lang('customer.create.table_expense.header.remarks')</th>
+                                        <th class="text-center">&nbsp;</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(expense, expenseIdx) in expenses">
-                                            <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
-                                            <td class="text-center valign-middle">
-                                                @{{ expense.name }}
-                                            </td>
-                                            <td class="text-center valign-middle">
-                                                @{{ expense.type }}
-                                            </td>
-                                            <td class="text-center valign-middle">
-                                                @{{ expense.amount }}
-                                            </td>
-                                            <td class="text-center valign-middle">
-                                                @{{ expense.is_internal_expense }}
-                                            </td>
-                                            <td class="valign-middle">
-                                                @{{ expense.remarks }}
-                                            </td>
-                                            <td class="text-center valign-middle">
-                                                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense(expenseIdx)"><span class="fa fa-close fa-fw"></span></button>
-                                            </td>
-                                        </tr>
+                                    <tr v-for="(expense, expenseIdx) in expenses">
+                                        <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
+                                        <td class="text-center valign-middle">
+                                            @{{ expense.name }}
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            @{{ expense.type }}
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            @{{ expense.amount }}
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            @{{ expense.is_internal_expense }}
+                                        </td>
+                                        <td class="valign-middle">
+                                            @{{ expense.remarks }}
+                                        </td>
+                                        <td class="text-center valign-middle">
+                                            <button type="button" class="btn btn-xs btn-danger" v-on:click="removeSelectedExpense(expenseIdx)"><span class="fa fa-close fa-fw"></span></button>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -329,7 +318,7 @@
                 </div>
                 <div class="box-footer"></div>
             </div>
-        {!! Form::close() !!}
+        </form>
     </div>
 
     <div class="modal fade" id="myModal" role="dialog">
@@ -387,7 +376,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('custom_js')

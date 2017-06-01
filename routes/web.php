@@ -342,9 +342,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'CustomerController@index')->name('db.master.customer');
                 Route::get('show/{id}', 'CustomerController@show')->name('db.master.customer.show');
                 Route::get('create', 'CustomerController@create')->name('db.master.customer.create');
-                Route::post('create', 'CustomerController@store');
                 Route::get('edit/{id}', 'CustomerController@edit')->name('db.master.customer.edit');
-                Route::patch('edit/{id}', 'CustomerController@update');
                 Route::delete('edit/{id}', 'CustomerController@delete')->name('db.master.customer.delete');
             });
 

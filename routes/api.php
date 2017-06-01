@@ -50,6 +50,9 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
         });
 
         Route::group(['prefix' => 'customer'], function () {
+            Route::post('create', 'CustomerController@store')->name('api.post.db.master.customer.create');
+            Route::post('edit/{id}', 'CustomerController@update')->name('api.post.db.master.customer.edit');
+
             Route::group(['prefix' => 'confirmation'], function() {
                 Route::post('confirm/{id}', 'CustomerController@storeConfirmationSalesOrder')->name('api.post.db.customer.confirmation.confirm');
             });

@@ -119,7 +119,7 @@ return [
         'status' => 'Status',
         'first_name' => 'Nama Depan',
         'last_name' => 'Nama Belakang',
-        'ic_num' => 'NPWP',
+        'ic_num' => 'KTP',
         'phone_number' => 'Telepon',
         'price_level' => 'Tingkatan Harga',
         'payment_due_day' => 'Tenggat Pembayaran',
