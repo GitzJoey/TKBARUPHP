@@ -71,5 +71,4 @@ class TaxInvoiceOutputController extends Controller
 
         return view('tax.invoice.output.revise', compact('tax'));
     }
-
 }
