@@ -2,6 +2,8 @@ const { mix } = require('laravel-mix');
 
 mix.disableNotifications();
 
+mix.copy('node_modules/vue-numeric/src/vue-numeric.vue', 'resources/assets/js/components');
+
 mix.styles([
         './node_modules/bootstrap/dist/css/bootstrap.min.css',
         './node_modules/font-awesome/css/font-awesome.min.css',
@@ -66,5 +68,5 @@ mix.styles([
     .copy('node_modules/bootstrap-fileinput/css/fileinput.css', 'public/adminlte/fileinput')
     .copy('resources/assets/css/frontweb.css', 'public/frontweb/css');
 
-mix.copy('node_modules/vue-numeric/src/vue-numeric.vue', 'resources/assets/js/components')
-    .js('resources/assets/js/app.js', 'public/adminlte/js')
+
+mix.js('resources/assets/js/app.js', 'public/adminlte/js');
