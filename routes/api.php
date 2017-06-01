@@ -74,14 +74,19 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
         });
 
         Route::group(['prefix' => 'master'], function () {
-            Route::group(['prefix' => 'warehouse'], function () {
-                Route::post('create', 'WarehouseController@store')->name('api.post.db.master.warehouse.create');
-                Route::post('edit/{id}', 'WarehouseController@update')->name('api.post.db.master.warehouse.edit');
-            });
-
             Route::group(['prefix' => 'supplier'], function () {
                 Route::post('create', 'SupplierController@store')->name('api.post.db.master.supplier.create');
                 Route::post('edit/{id}', 'SupplierController@update')->name('api.post.db.master.supplier.edit');
+            });
+
+            Route::group(['prefix' => 'supplier'], function () {
+                Route::post('create', 'ProductController@store')->name('api.post.db.master.product.create');
+                Route::post('edit/{id}', 'ProductController@update')->name('api.post.db.master.product.edit');
+            });
+
+            Route::group(['prefix' => 'warehouse'], function () {
+                Route::post('create', 'WarehouseController@store')->name('api.post.db.master.warehouse.create');
+                Route::post('edit/{id}', 'WarehouseController@update')->name('api.post.db.master.warehouse.edit');
             });
         });
 

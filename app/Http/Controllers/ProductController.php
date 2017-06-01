@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Exception;
 use Validator;
 use App\Http\Requests;
 use LaravelLocalization;
@@ -40,7 +41,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
         $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
@@ -56,7 +57,9 @@ class ProductController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
+            return response()->json([
+                'result' => 'failed'
+            ]);
         } else {
             if (count($data['unit_id']) == 0) {
                 $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
@@ -80,9 +83,9 @@ class ProductController extends Controller
                 for ($i = 0; $i < count($data['unit_id']); $i++) {
                     $punit = new ProductUnit();
                     $punit->unit_id = $data['unit_id'][$i];
-                    $punit->is_base = $data['is_base'][$i] == 'true' ? true:false;
+                    $punit->is_base = $data['is_base'][$i] === 'true' ? true:false;
                     $punit->conversion_value = $data['conversion_value'][$i];
-                    $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
+                    $punit->remarks = empty($data['unit_remarks'][$i]) ? '' : $data['unit_remarks'][$i];
 
                     $product->productUnits()->save($punit);
                 }
@@ -99,7 +102,9 @@ class ProductController extends Controller
                 }
             });
 
-            return redirect(route('db.master.product'));
+            return response()->json([
+                'result' => 'success'
+            ]);
         }
     }
 
@@ -107,7 +112,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $prodtypeDdL = ProductType::get()->pluck('name', 'id');
         $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
@@ -135,7 +140,9 @@ class ProductController extends Controller
             return redirect(route('db.master.product.create'))->withInput()->withErrors($validator);
         }
 
-        DB::transaction(function() use ($id, $data) {
+        DB::beginTransaction();
+
+        try {
             $product = Product::find($id);
 
             $product->productUnits->each(function($pu) { $pu->delete(); });
@@ -144,9 +151,9 @@ class ProductController extends Controller
             for ($i = 0; $i < count($data['unit_id']); $i++) {
                 $punit = new ProductUnit();
                 $punit->unit_id = $data['unit_id'][$i];
-                $punit->is_base = $data['is_base'][$i] == 'true' ? true:false;
+                $punit->is_base = $data['is_base'][$i] === 'true' ? true:false;
                 $punit->conversion_value = $data['conversion_value'][$i];
-                $punit->remarks = empty($data['remarks'][$i]) ? '' : $data['remarks'][$i];
+                $punit->remarks = empty($data['unit_remarks'][$i]) ? '' : $data['unit_remarks'][$i];
 
                 array_push($pu, $punit);
             }
@@ -179,9 +186,15 @@ class ProductController extends Controller
                 'barcode' => $data['barcode'],
                 'minimal_in_stock' => $data['minimal_in_stock'],
             ]);
-        });
 
-        return redirect(route('db.master.product'));
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+
+        return response()->json([
+           'result' => 'success'
+        ]);
     }
 
     public function delete($id)
