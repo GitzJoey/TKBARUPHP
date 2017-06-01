@@ -512,7 +512,7 @@ Breadcrumbs::register('show_tax_invoice_output', function($breadcrumbs, $id){
 
 Breadcrumbs::register('edit_tax_invoice_output', function($breadcrumbs, $id){
     $breadcrumbs->parent('tax_invoice_output');
-    $breadcrumbs->push(trans('breadcrumb.tax.invoice.output.edit'), route('db.tax.invoice.output.edit', $id));
+    $breadcrumbs->push(trans('breadcrumb.tax.invoice.output.edit'), route('db.tax.invoice.output.revise', $id));
 });
 
 Breadcrumbs::register('tax_invoice_input', function($breadcrumbs){
