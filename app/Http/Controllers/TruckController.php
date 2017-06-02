@@ -45,7 +45,7 @@ class TruckController extends Controller
 
         return view('truck.create', compact('statusDDL', 'truckTypeDDL'));
     }
-    
+
     public function store(Request $data)
     {
         $validator = Validator::make($data->all(), [
@@ -55,6 +55,7 @@ class TruckController extends Controller
             'status' => 'required',
         ]);
 
+       
         Truck::create([
             'store_id' => Auth::user()->store->id,
             'type' => $data['truck_type'],
@@ -90,12 +91,11 @@ class TruckController extends Controller
             'status' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.master.truck.edit'))->withInput()->withErrors($validator);
-        } else {
-            Truck::find($id)->update($req->all());
-            return redirect(route('db.master.truck'));
-        }
+        Truck::find($id)->update($req->all());
+
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
 
     public function delete($id)
