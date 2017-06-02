@@ -389,17 +389,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::patch('edit/{id}', 'BankController@update');
                 Route::delete('edit/{id}', 'BankController@delete')->name('db.master.bank.delete');
             });
-
+            
             Route::group(['prefix' => 'truck'], function () {
                 Route::get('', 'TruckController@index')->name('db.master.truck');
                 Route::get('show/{id}', 'TruckController@show')->name('db.master.truck.show');
                 Route::get('create', 'TruckController@create')->name('db.master.truck.create');
-                Route::post('create/', 'TruckController@store');
                 Route::get('edit/{id}', 'TruckController@edit')->name('db.master.truck.edit');
-                Route::patch('edit/{id}', 'TruckController@update');
                 Route::delete('edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
             });
-
+            
             Route::group(['prefix' => 'vendor'], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
