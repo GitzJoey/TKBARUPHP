@@ -99,6 +99,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('create', 'StoreController@store')->name('api.post.db.admin.store.create');
                 Route::post('edit/{id}', 'StoreController@update')->name('api.post.db.admin.store.edit');
             });
+            
+            Route::group(['prefix' => 'unit'], function () {
+                Route::post('create', 'UnitController@store')->name('api.post.db.admin.unit.create');
+                Route::post('edit/{id}', 'UnitController@update')->name('api.post.db.admin.unit.edit');
+            });
         });
 
         Route::group(['prefix' => 'tax'], function() {
