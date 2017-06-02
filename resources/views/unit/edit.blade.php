@@ -17,57 +17,101 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('unit.edit.header.title')</h3>
-        </div>
-        {!! Form::model($unit, ['method' => 'PATCH', 'route' => ['db.admin.unit.edit', $unit->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="inputUnitName" class="col-sm-2 control-label">@lang('unit.field.name')</label>
-                    <div class="col-sm-10">
-                        <input id="inputUnitName" name="name" type="text" class="form-control" value="{{ $unit->name }}" placeholder="Name" data-parsley-required="true">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputSymbol" class="col-sm-2 control-label">@lang('unit.field.symbol')</label>
-                    <div class="col-sm-10">
-                        <input id="inputSymbol" class="form-control" name="symbol" type="text" value="{{ $unit->symbol }}" placeholder="Symbol">
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <label for="inputStatus" class="col-sm-2 control-label">@lang('unit.field.status')</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, $unit->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('unit.field.remarks')</label>
-                    <div class="col-sm-10">
-                        <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $unit->remarks }}" placeholder="Remarks">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputButton" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                        <a href="{{ route('db.admin.unit') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                    </div>
-                </div>
+    <div id="unitVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
             </div>
-            <div class="box-footer"></div>
-        {!! Form::close() !!}
+        </div>
+
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">@lang('unit.edit.header.title')</h3>
+            </div>
+            {!! Form::model($unit, ['method' => 'PATCH', 'route' => ['db.admin.unit.edit', $unit->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+                <div class="box-body">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
+                        <label for="inputName" class="col-sm-2 control-label">@lang('unit.field.name')</label>
+                        <div class="col-sm-10">
+                            <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('unit.field.name')"
+                                v-model="unit.name" v-validate="'required'" data-vv-as="{{ trans('unit.field.name') }}">
+                            <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('symbol') }">
+                        <label for="inputSymbol" class="col-sm-2 control-label">@lang('unit.field.symbol')</label>
+                        <div class="col-sm-10">
+                            <input id="inputSymbol" name="symbol" type="text" class="form-control" placeholder="@lang('unit.field.symbol')"
+                                v-model="unit.symbol" v-validate="'required'" data-vv-as="{{ trans('unit.field.symbol') }}">
+                            <span v-show="errors.has('symbol')" class="help-block" v-cloak>@{{ errors.first('symbol') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('unit.field.status')</label>
+                        <div class="col-sm-10">
+                            <select class="form-control"
+                                    name="status"
+                                    v-model="unit.status"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('unit.field.status') }}">
+                                <option v-bind:value="defaultStatus">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in statusDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('unit.field.remarks')</label>
+                        <div class="col-sm-10">
+                            <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $unit->remarks }}" placeholder="Remarks">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputButton" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="{{ route('db.admin.unit') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer"></div>
+            {!! Form::close() !!}
+        </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        var app = new Vue({
+            el: '#unitVue',
+            data: {
+                unit: {
+                    name:'{{ $unit->name }}',
+                    symbol:'{{ $unit->symbol }}',
+                    status: '{{ $unit->status }}'
+                },
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}')
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateAll().then(function(isValid) {
+                        axios.post('{{ route('api.post.db.admin.unit.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#unitForm')[0]))
+                            .then(function(response) {
+                                if (response.data.result == 'success') { window.location.href = '{{ route('db.admin.unit') }}'; }
+                            });
+                    })
+                },
+            },
+            computed: {
+                defaultStatus: function() {
+                    return '';
+                }
+            }
+        });
+    </script>
 @endsection
