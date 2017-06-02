@@ -33,11 +33,18 @@
             </div>
             <form id="truckForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
                 <div class="box-body">
-                    <div class="form-group {{ $errors->has('truck_type') ? 'has-error' : '' }}">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('truck_type') }">
                         <label for="inputTruckType" class="col-sm-2 control-label">@lang('truck.field.truck_type')</label>
                         <div class="col-sm-10">
-                            {{ Form::select('truck_type', $truckTypeDDL, $truck->type, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                            <span class="help-block">{{ $errors->has('truck_type') ? $errors->first('truck_type') : '' }}</span>
+                            <select class="form-control"
+                                    name="type"
+                                    v-model="truck.truck_type"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('truck.field.truck_type') }}">
+                                <option v-bind:value="defaultTruckType">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in truckTypeDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('truck_type')" class="help-block" v-cloak>@{{ errors.first('truck_type') }}</span>
                         </div>
                     </div>
                     <div v-bind:class="{'form-group':true, 'has-error':errors.has('plate_number') }">
@@ -139,23 +146,33 @@
             el: '#truckVue',
             data: {
                 truck: {
+                    truck_type: '{{ $truck->type }}',
                     plate_number: '{{ $truck->plate_number }}',
                     driver: '{{ $truck->driver }}',
                     status: '{{ $truck->status }}',
                     inspection_date: '{{ $truck->inspection_date }}'
                 },
+                truckTypeDDL: JSON.parse('{!! htmlspecialchars_decode($truckTypeDDL) !!}'),
                 statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}')
             },
             methods: {
                 validateBeforeSubmit: function() {
                     this.$validator.validateAll().then(function(result) {
                         $('#loader-container').fadeIn('fast');
-                        axios.post('{{ route('api.post.db.master.truck.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#truckForm')[0]))
+                        axios.post('{{ route('api.post.db.master.truck.edit', $truck->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#truckForm')[0]))
                             .then(function(response) {
                                 if (response.data.result == 'success') { window.location.href = '{{ route('db.master.truck') }}'; }
                             });
                     });
                 },
+            },
+            computed: {
+                defaultStatus: function() {
+                    return '';
+                },
+                defaultTruckType: function() {
+                    return '';
+                }
             }
         });
     </script>
