@@ -31,7 +31,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('unit.edit.header.title')</h3>
             </div>
-            {!! Form::model($unit, ['method' => 'PATCH', 'route' => ['db.admin.unit.edit', $unit->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+            <form id="unitForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
                 <div class="box-body">
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
                         <label for="inputName" class="col-sm-2 control-label">@lang('unit.field.name')</label>
@@ -100,7 +100,7 @@
             methods: {
                 validateBeforeSubmit: function() {
                     this.$validator.validateAll().then(function(isValid) {
-                        axios.post('{{ route('api.post.db.admin.unit.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#unitForm')[0]))
+                        axios.post('{{ route('api.post.db.admin.unit.edit', $unit->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#unitForm')[0]))
                             .then(function(response) {
                                 if (response.data.result == 'success') { window.location.href = '{{ route('db.admin.unit') }}'; }
                             });
