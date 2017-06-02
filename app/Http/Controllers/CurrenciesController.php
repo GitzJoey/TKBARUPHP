@@ -35,18 +35,16 @@ class CurrenciesController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.admin.currencies.create'))->withInput()->withErrors($validator);
-        } else {
-            Currencies::create([
-                'name' => $req['name'],
-                'symbol' => $req['symbol'],
-                'status' => $req['status'],
-                'remarks' => $req['remarks'],
-            ]);
+        Currencies::create([
+            'name' => $req['name'],
+            'symbol' => $req['symbol'],
+            'status' => $req['status'],
+            'remarks' => $req['remarks'],
+        ]);
 
-            return redirect(route('db.admin.currencies'));
-        }
+        return response()->json([
+            'result' => 'success'
+        ]);
 	}
     public function show($id)
     {
@@ -66,12 +64,12 @@ class CurrenciesController extends Controller
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255'
         ]);
-        if($validator->fails()){
-            return redirect(route('db.admin.currencies.edit'))->withInput()->withErrors($validator);
-        }else{
-            Currencies::find($id)->update($req->all());
-            return redirect(route('db.admin.currencies'));
-        }
+	    
+        Currencies::find($id)->update($req->all());
+
+        return response()->json([
+            'result' => 'success'
+        ]);
     }
     public function delete($id)
     {
