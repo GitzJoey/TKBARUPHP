@@ -452,9 +452,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'UnitController@index')->name('db.admin.unit');
                 Route::get('show/{id}', 'UnitController@show')->name('db.admin.unit.show');
                 Route::get('create', 'UnitController@create')->name('db.admin.unit.create');
-                Route::post('create', 'UnitController@store');
                 Route::get('edit/{id}', 'UnitController@edit')->name('db.admin.unit.edit');
-                Route::patch('edit/{id}', 'UnitController@update');
                 Route::delete('edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
             });
 
