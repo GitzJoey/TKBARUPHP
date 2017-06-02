@@ -104,6 +104,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('create', 'UnitController@store')->name('api.post.db.admin.unit.create');
                 Route::post('edit/{id}', 'UnitController@update')->name('api.post.db.admin.unit.edit');
             });
+            
+            Route::group(['prefix' => 'currencies'], function () {
+                Route::post('create', 'CurrenciesController@store')->name('api.post.db.admin.currencies.create');
+                Route::post('edit/{id}', 'CurrenciesController@update')->name('api.post.db.admin.currencies.edit');
+            });
         });
 
         Route::group(['prefix' => 'tax'], function() {
