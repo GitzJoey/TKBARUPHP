@@ -71,11 +71,18 @@
 
                         </div>
                     </div>
-                    <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('truck.field.status')</label>
                         <div class="col-sm-10">
-                            {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                            <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
+                            <select class="form-control"
+                                    name="status"
+                                    v-model="truck.status"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('truck.field.status') }}">
+                                <option v-bind:value="defaultStatus">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in statusDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
@@ -140,14 +147,10 @@
             el: '#truckVue',
             data: {
                 truck: {
-                    name:'',
-                    sections: [{
-                        'plate_number': '',
-                        'inspection_date': '',
-                        'driver': '',
-                    }],
+                    plate_number:'',
                     status: ''
-                }
+                },
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}')
             },
             methods: {
                 validateBeforeSubmit: function() {
@@ -157,13 +160,6 @@
                                 if (response.data.result == 'success') { window.location.href = '{{ route('db.master.truck') }}'; }
                             });
                     })
-                },
-                addNew: function () {
-                    this.truck.sections.push({
-                        'plate_number': '',
-                        'inspection_date': '',
-                        'driver': '',
-                    });
                 },
             },
             computed: {
