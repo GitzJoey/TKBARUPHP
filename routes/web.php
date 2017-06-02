@@ -455,14 +455,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('edit/{id}', 'UnitController@edit')->name('db.admin.unit.edit');
                 Route::delete('edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
             });
-
+            
             Route::group(['prefix' => 'currencies', 'middleware' => ['permission:create-currencies|read-currencies|update-currencies|delete-currencies|menu-currencies']], function(){
                 Route::get('', 'CurrenciesController@index')->name('db.admin.currencies');
                 Route::get('show/{id}', 'CurrenciesController@show')->name('db.admin.currencies.show');
                 Route::get('create', 'CurrenciesController@create')->name('db.admin.currencies.create');
-                Route::post('create', 'CurrenciesController@store');
                 Route::get('edit/{id}', 'CurrenciesController@edit')->name('db.admin.currencies.edit');
-                Route::patch('edit/{id}', 'CurrenciesController@update');
                 Route::delete('edit/{id}', 'CurrenciesController@delete')->name('db.admin.currencies.delete');
             });
 
