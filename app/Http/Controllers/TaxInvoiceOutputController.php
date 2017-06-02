@@ -63,12 +63,12 @@ class TaxInvoiceOutputController extends Controller
         return view('tax.invoice.output.show')->with('store', $store);
     }
 
-    public function revise($id)
+    public function edit($id)
     {
         Log::info('[TaxInvoiceOutputController@revise]');
 
-        $tax = $this->taxInvoiceOutputService->editTax($id);
+        $tax = $this->taxInvoiceOutputService->getTaxByID($id);
 
-        return view('tax.invoice.output.revise', compact('tax'));
+        return view('tax.invoice.output.edit', compact('tax'));
     }
 }

@@ -17,6 +17,7 @@ class TaxItem extends Model
     protected $fillable = [
         'tax_id',
         'name',
+        'is_gst_included',
         'price',
         'discount',
         'qty',

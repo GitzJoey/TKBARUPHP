@@ -279,7 +279,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                     Route::get('show/{id}', 'TaxInvoiceOutputController@show')->name('db.tax.invoice.output.show');
                     Route::get('create', 'TaxInvoiceOutputController@create')->name('db.tax.invoice.output.create');
                     Route::post('create/', 'TaxInvoiceOutputController@store');
-                    Route::get('edit/{id}', 'TaxInvoiceOutputController@revise')->name('db.tax.invoice.output.revise');
+                    Route::get('edit/{id}', 'TaxInvoiceOutputController@edit')->name('db.tax.invoice.output.edit');
                     Route::patch('edit/{id}', 'TaxInvoiceOutputController@update');
                     Route::delete('edit/{id}', 'TaxInvoiceOutputController@delete')->name('db.tax.invoice.output.delete');
                 });
