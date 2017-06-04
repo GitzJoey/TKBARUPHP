@@ -31,7 +31,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('truck.create.header.title')</h3>
             </div>
-            <form id="truckForm" class="form-horizontal" action="{{ route('db.master.truck.create') }}" method="post" v-on:submit.prevent="validateBeforeSubmit()">
+            <form id="truckForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
                 {{ csrf_field() }}
                 <div class="box-body">
                     <div class="form-group {{ $errors->has('truck_type') ? 'has-error' : '' }}">
