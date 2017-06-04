@@ -26,7 +26,6 @@
                 </ul>
             </div>
         </div>
-
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('truck.edit.header.title')</h3>
@@ -107,7 +106,7 @@
                     </div>
                 </div>
                 <div class="box-footer"></div>
-            {!! Form::close() !!}
+            </form>
         </div>
     </div>
 @endsection
