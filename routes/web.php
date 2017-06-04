@@ -432,9 +432,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'RolesController@index')->name('db.admin.roles');
                 Route::get('show/{id}', 'RolesController@show')->name('db.admin.roles.show');
                 Route::get('create', 'RolesController@create')->name('db.admin.roles.create');
-                Route::post('create', 'RolesController@store');
                 Route::get('edit/{id}', 'RolesController@edit')->name('db.admin.roles.edit');
-                Route::patch('edit/{id}', 'RolesController@update');
                 Route::delete('edit/{id}', 'RolesController@delete')->name('db.admin.roles.delete');
             });
 
