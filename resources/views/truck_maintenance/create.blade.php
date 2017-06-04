@@ -17,97 +17,173 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="truckMtcVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('truckmtc.create.header.title')</h3>
-        </div>
-        <form class="form-horizontal" action="{{ route('db.truck.maintenance.create') }}" method="post" data-parsley-validate="parsley">
-            {{ csrf_field() }}
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="inputMaintenanceDate" class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_date')</label>
-                    <div class="col-sm-10">
-                        <div class="input-group date">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">@lang('truckmtc.create.header.title')</h3>
+            </div>
+            <form id="truckMtcForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
+                {{ csrf_field() }}
+                <div class="box-body">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('maintenance_date') }">
+                        <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_date')</label>
+                        <div class="col-sm-9">
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <vue-datetimepicker name="maintenance_date" value="" v-model="maintenanceTruck.maintenance_date" v-validate="'required'" format="DD-MM-YYYY hh:mm A"></vue-datetimepicker>
+                                <span v-show="errors.has('maintenance_date')" class="help-block" v-cloak>@{{ errors.first('maintenance_date') }}</span>
                             </div>
-                            <input type="text" class="form-control" id="inputMaintenanceDate" name="maintenance_date" data-parsley-required="true">
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('plate_number') }">
+                        <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truckmtc.field.plate_number')</label>
+                        <div class="col-sm-10">
+                            <select class="form-control"
+                                    name="plate_number"
+                                    v-model="maintenanceTruck.plate_number"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('truckmtc.field.plate_number') }}">
+                                <option v-bind:value="defaultPlateNumber">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in plateNumberDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('plate_number')" class="help-block" v-cloak>@{{ errors.first('plate_number') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('maintenance_type') }">
+                        <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_type')</label>
+                        <div class="col-sm-10">
+                            <select class="form-control"
+                                    name="maintenance_type"
+                                    v-model="maintenanceTruck.maintenance_type"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('truckmtc.field.maintenance_type') }}">
+                                <option v-bind:value="defaultMtcType">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in mtctypeDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('maintenance_type')" class="help-block" v-cloak>@{{ errors.first('maintenance_type') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('cost') }">
+                        <label for="inputCost" class="col-sm-2 control-label">@lang('truckmtc.field.cost')</label>
+                        <div class="col-sm-10">
+                            <input id="inputCost" name="cost" type="text" class="form-control" placeholder="@lang('truckmtc.field.cost')"
+                                v-model="maintenanceTruck.cost" v-validate="'required'" data-vv-as="{{ trans('truckmtc.field.cost') }}">
+                            <span v-show="errors.has('cost')" class="help-block" v-cloak>@{{ errors.first('cost') }}</span>
+
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('odometer') }">
+                        <label for="inputOdometer" class="col-sm-2 control-label">@lang('truckmtc.field.odometer')</label>
+                        <div class="col-sm-10">
+                            <input id="inputOdometer" name="odometer" type="text" class="form-control" placeholder="@lang('truckmtc.field.odometer')"
+                                v-model="maintenanceTruck.odometer" v-validate="'required'" data-vv-as="{{ trans('truckmtc.field.odometer') }}">
+                            <span v-show="errors.has('odometer')" class="help-block" v-cloak>@{{ errors.first('odometer') }}</span>
+
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
+                        <label class="col-sm-2 control-label">@lang('truckmtc.field.remarks')</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('truckmtc.field.remarks')" value="{{ old('remarks') }}">
+                            <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="{{ route('db.truck.maintenance') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                         </div>
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('plate_number') ? 'has-error' : '' }}">
-                    <label class="col-sm-2 control-label">@lang('truckmtc.field.plate_number')</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('plate_number', $trucklist, old('plate_number'), array('class' => 'form-control', 'placeholder' => trans('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('plate_number') ? $errors->first('plate_number') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('maintenance_type') ? 'has-error' : '' }}">
-                    <label class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_type')</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="maintenance_type" data-parsley-required="true">
-                            <option value>@lang('labels.PLEASE_SELECT')</option>
-                            @foreach($mtctypeDDL as $t)
-                                <option value="{{$t}}" {{(old('maintenance_type')==$t)?'selected':''}}>@lang('lookup.'.$t)</option>
-                            @endforeach
-                        </select>
-                        <span class="help-block">{{ $errors->has('maintenance_type') ? $errors->first('maintenance_type') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('cost') ? 'has-error' : '' }}">
-                    <label class="col-sm-2 control-label">@lang('truckmtc.field.cost')</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="cost" name="cost" placeholder="@lang('truckmtc.field.cost')" value="{{ old('cost') }}" data-parsley-required="true" data-parsley-type="number">
-                        <span class="help-block">{{ $errors->has('cost') ? $errors->first('cost') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('odometer') ? 'has-error' : '' }}">
-                    <label class="col-sm-2 control-label">@lang('truckmtc.field.odometer')</label>
-                    <div class="col-sm-10">
-                        <input id="odometer" name="odometer" type="text" class="form-control" placeholder="@lang('truckmtc.field.odometer')" value="{{ old('odometer') }}" data-parsley-required="true" data-parsley-type="number">
-                        <span class="help-block">{{ $errors->has('odometer') ? $errors->first('odometer') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
-                    <label class="col-sm-2 control-label">@lang('truckmtc.field.remarks')</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('truckmtc.field.remarks')" value="{{ old('remarks') }}">
-                        <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                        <a href="{{ route('db.truck.maintenance') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                    </div>
-                </div>
-            </div>
-            <div class="box-footer"></div>
-        </form>
+                <div class="box-footer"></div>
+            </form>
+        </div>
     </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function() {
-            $('#inputMaintenanceDate').datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment().toDate(),
-                showTodayButton: true,
-                showClose: true
-            });
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined || this.value == NaN) this.value = '';
+                if (this.format == undefined || this.format == NaN) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined || this.readonly == NaN) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
+        var app = new Vue({
+            el: '#truckMtcVue',
+            data: {
+                maintenanceTruck: {
+                    plate_number:'',
+                    maintenance_type: '',
+                    cost: '',
+                    odometer: ''
+                },
+                plateNumberDDL: JSON.parse('{!! htmlspecialchars_decode($trucklist) !!}'),
+                mtctypeDDL: JSON.parse('{!! htmlspecialchars_decode($mtctypeDDL) !!}')
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    var vm = this;
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.maintenance.truck.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#truckMtcForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db.admin.roles') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.address.length > 0) {
+                                    for (var i=0; i < e.response.data.address.length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                    }
+                                } else {
+                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
+                        });
+                    });
+                }
+            },
+            computed: {
+                defaultPlateNumber: function() {
+                    return '';
+                },
+                defaultMtcType: function() {
+                    return '';
+                },
+            }
         });
     </script>
 @endsection
