@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 interface TaxInvoiceOutputService
 {
     public function createInvoice(Request $request);
+
+    public function getTaxByID($id);
 }

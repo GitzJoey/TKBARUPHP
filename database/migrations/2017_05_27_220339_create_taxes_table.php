@@ -46,6 +46,7 @@ class CreateTaxesTable extends Migration
             $table->integer('itemable_id')->unsigned()->index();
             $table->string('itemable_type')->nullable();
             $table->string('name');
+            $table->boolean('is_gst_included');
             $table->bigInteger('price');
             $table->bigInteger('discount');
             $table->bigInteger('qty');
