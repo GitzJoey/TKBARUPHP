@@ -20,6 +20,7 @@ use App\Repos\LookupRepo;
 use App\Services\WarehouseService;
 
 use Auth;
+use Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,7 @@ class WarehouseController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get()->pluck('unit_name', 'id');
 
         return view('warehouse.create', compact('statusDDL', 'unitDDL'));
@@ -56,10 +57,20 @@ class WarehouseController extends Controller
 
     public function store(Request $data)
     {
-        $this->validate($data, [
+        $validator = $this->validate($data, [
             'name' => 'required|string|max:255',
             'status' => 'required',
         ]);
+
+        if (count($data['section_name']) == 0) {
+            $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 Lot.":"Harap isi paling tidak 1 lot");
+        }
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
 
         $warehouse = new Warehouse();
 
@@ -84,16 +95,14 @@ class WarehouseController extends Controller
             $warehouse->sections()->save($ws);
         }
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function edit($id)
     {
         $warehouse = Warehouse::with('sections')->find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $unitDDL = Unit::whereStatus('STATUS.ACTIVE')->get(['id', 'name', 'symbol']);
 
         return view('warehouse.edit', compact('warehouse', 'statusDDL', 'unitDDL'));
@@ -127,9 +136,7 @@ class WarehouseController extends Controller
 
         $warehouse->save();
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function delete($id)

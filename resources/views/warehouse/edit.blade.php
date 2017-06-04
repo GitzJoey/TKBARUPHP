@@ -157,12 +157,22 @@
             },
             methods: {
                 validateBeforeSubmit: function() {
+                    var vm = this;
                     this.$validator.validateAll().then(function(result) {
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.master.warehouse.edit', $warehouse->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#warehouseForm')[0]))
                             .then(function(response) {
-                                if (response.data.result == 'success') { window.location.href = '{{ route('db.master.warehouse') }}'; }
-                            });
+                                window.location.href = '{{ route('db.master.warehouse') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.address.length > 0) {
+                                    for (var i = 0; i < e.response.data.address.length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                    }
+                                } else {
+                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
+                        });
                     });
                 },
                 addNew: function () {
