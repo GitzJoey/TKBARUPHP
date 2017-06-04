@@ -91,6 +91,12 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             
             Route::group(['prefix' => 'truck'], function() {
                 Route::post('create', 'TruckController@store')->name('api.post.db.master.truck.create');
+                Route::post('edit/{id}', 'TruckController@update')->name('api.post.db.master.truck.edit');
+
+                Route::group(['prefix' => 'maintenance'], function() {
+                    Route::post('create', 'TruckMaintenanceController@store')->name('api.post.db.maintenance.truck.create');
+                    Route::post('edit/{id}', 'TruckMaintenanceController@update')->name('api.post.db.maintenance.truck.edit');
+                });
             });
             
             Route::group(['prefix' => 'producttype'], function() {
