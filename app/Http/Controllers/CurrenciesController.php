@@ -34,6 +34,12 @@ class CurrenciesController extends Controller
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
+		
+	if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
 
         Currencies::create([
             'name' => $req['name'],
@@ -42,9 +48,7 @@ class CurrenciesController extends Controller
             'remarks' => $req['remarks'],
         ]);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
 	}
     public function show($id)
     {
@@ -65,11 +69,15 @@ class CurrenciesController extends Controller
             'status' => 'required|string|max:255'
         ]);
 	    
+		if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
+	    
         Currencies::find($id)->update($req->all());
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
     public function delete($id)
     {
