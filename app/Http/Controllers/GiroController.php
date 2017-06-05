@@ -54,21 +54,24 @@ class GiroController extends Controller
             'serial_number' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.bank.giro.create'))->withInput()->withErrors($validator);
-        } else {
-            Giro::create([
-                'store_id' => Auth::user()->store->id,
-                'bank_id' => $data['bank'],
-                'serial_number' => $data['serial_number'],
-                'effective_date' => date('Y-m-d', strtotime($data->input('effective_date'))),
-                'amount' => floatval(str_replace(',', '', $data['amount'])),
-                'printed_name' => $data['printed_name'],
-                'status' => 'GIROSTATUS.N',
-                'remarks' => $data['remarks']
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
             ]);
-            return redirect(route('db.bank.giro'));
         }
+
+        Giro::create([
+            'store_id' => Auth::user()->store->id,
+            'bank_id' => $data['bank'],
+            'serial_number' => $data['serial_number'],
+            'effective_date' => date('Y-m-d', strtotime($data->input('effective_date'))),
+            'amount' => floatval(str_replace(',', '', $data['amount'])),
+            'printed_name' => $data['printed_name'],
+            'status' => 'GIROSTATUS.N',
+            'remarks' => $data['remarks']
+        ]);
+
+        return response()->json();
     }
 
     public function edit($id)
@@ -87,21 +90,23 @@ class GiroController extends Controller
             'effective_date' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.bank.giro.edit', $id))->withInput()->withErrors($validator);
-        } else {
-            $giro = Giro::find($id);
-
-            $giro->bank_id = $req['bank'];
-            $giro->serial_number = $req['serial_number'];
-            $giro->effective_date = date('Y-m-d', strtotime($req['effective_date']));
-            $giro->amount = floatval(str_replace(',', '', $req['amount']));
-            $giro->remarks = $req['remarks'];
-
-            $giro->save();
-
-            return redirect(route('db.bank.giro'));
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
         }
+
+        $giro = Giro::find($id);
+
+        $giro->bank_id = $req['bank'];
+        $giro->serial_number = $req['serial_number'];
+        $giro->effective_date = date('Y-m-d', strtotime($req['effective_date']));
+        $giro->amount = floatval(str_replace(',', '', $req['amount']));
+        $giro->remarks = $req['remarks'];
+
+        $giro->save();
+
+        return response()->json();
     }
 
     public function delete($id)
