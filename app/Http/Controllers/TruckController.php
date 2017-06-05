@@ -54,7 +54,12 @@ class TruckController extends Controller
             'driver' => 'required|string|max:255',
             'status' => 'required',
         ]);
-
+        
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
        
         Truck::create([
             'store_id' => Auth::user()->store->id,
@@ -66,9 +71,7 @@ class TruckController extends Controller
             'remarks' => $data['remarks']
         ]);
         
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
             
     }
 
@@ -90,12 +93,16 @@ class TruckController extends Controller
             'driver' => 'required|string|max:255',
             'status' => 'required',
         ]);
+        
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
 
         Truck::find($id)->update($req->all());
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function delete($id)
