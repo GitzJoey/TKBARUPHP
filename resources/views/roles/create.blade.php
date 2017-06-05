@@ -31,7 +31,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('role.create.header.title')</h3>
             </div>
-            <form id="rolesForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
+            <form id="rolesForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
                 {{ csrf_field() }}
                 <div class="box-body">
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
