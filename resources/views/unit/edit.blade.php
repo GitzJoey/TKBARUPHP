@@ -31,7 +31,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('unit.edit.header.title')</h3>
             </div>
-            <form id="unitForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
+            <form id="unitForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
                 <div class="box-body">
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
                         <label for="inputName" class="col-sm-2 control-label">@lang('unit.field.name')</label>
