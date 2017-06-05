@@ -208,9 +208,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'GiroController@index')->name('db.bank.giro');
                 Route::get('show/{id}', 'GiroController@show')->name('db.bank.giro.show');
                 Route::get('create', 'GiroController@create')->name('db.bank.giro.create');
-                Route::post('create', 'GiroController@store');
                 Route::get('edit/{id}', 'GiroController@edit')->name('db.bank.giro.edit');
-                Route::patch('edit/{id}', 'GiroController@update');
                 Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
                 route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
             });
