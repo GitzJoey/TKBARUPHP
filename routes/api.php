@@ -155,6 +155,11 @@ Route::group(['prefix' => 'get'], function () {
         Route::group(['prefix' => 'upload'], function () {
             Route::get('last', 'BankController@getLastBankUpload')->name('api.bank.upload.last');
         });
+        
+        Route::group(['prefix' => 'giro'], function() {
+            Route::post('create', 'GiroController@store')->name('api.post.db.bank.giro.create');
+            Route::post('edit/{id}', 'GiroController@update')->name('api.post.db.bank.giro.edit');
+        });
     });
 
     Route::group(['prefix' => 'giro'], function () {
