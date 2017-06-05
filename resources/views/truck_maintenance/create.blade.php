@@ -31,7 +31,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('truckmtc.create.header.title')</h3>
             </div>
-            <form id="truckMtcForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
+            <form id="truckMtcForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
                 {{ csrf_field() }}
                 <div class="box-body">
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('maintenance_date') }">
