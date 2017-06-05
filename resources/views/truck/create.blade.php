@@ -26,7 +26,6 @@
                 </ul>
             </div>
         </div>
-
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">@lang('truck.create.header.title')</h3>
@@ -34,11 +33,18 @@
             <form id="truckForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
                 {{ csrf_field() }}
                 <div class="box-body">
-                    <div class="form-group {{ $errors->has('truck_type') ? 'has-error' : '' }}">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('truck_type') }">
                         <label for="inputTruckType" class="col-sm-2 control-label">@lang('truck.field.truck_type')</label>
                         <div class="col-sm-10">
-                            {{ Form::select('truck_type', $truckTypeDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                            <span class="help-block">{{ $errors->has('truck_type') ? $errors->first('truck_type') : '' }}</span>
+                            <select class="form-control"
+                                    name="type"
+                                    v-model="truck.truck_type"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('truck.field.truck_type') }}">
+                                <option v-bind:value="defaultTruckType">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in truckTypeDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('truck_type')" class="help-block" v-cloak>@{{ errors.first('truck_type') }}</span>
                         </div>
                     </div>
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('plate_number') }">
@@ -108,13 +114,6 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $('#inputInspectionDate').datetimepicker({
-            format: 'DD-MM-YYYY',
-            defaultDate: moment().toDate(),
-            showTodayButton: true,
-            showClose: true
-        });
-
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
         Vue.component('vue-datetimepicker', {
@@ -147,23 +146,41 @@
             el: '#truckVue',
             data: {
                 truck: {
-                    plate_number:'',
-                    status: ''
+                    truck_type: '',
+                    plate_number: '',
+                    driver: '',
+                    status: '',
+                    inspection_date: ''
                 },
-                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}')
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}'),
+                truckTypeDDL: JSON.parse('{!! htmlspecialchars_decode($truckTypeDDL) !!}')
             },
             methods: {
                 validateBeforeSubmit: function() {
-                    this.$validator.validateAll().then(function(isValid) {
+                    var vm = this;
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.master.truck.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#truckForm')[0]))
                             .then(function(response) {
-                                if (response.data.result == 'success') { window.location.href = '{{ route('db.master.truck') }}'; }
-                            });
-                    })
-                },
+                                window.location.href = '{{ route('db.master.truck') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.address.length > 0) {
+                                    for (var i=0; i < e.response.data.address.length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                    }
+                                } else {
+                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
+                        });
+                    });
+                }
             },
             computed: {
                 defaultStatus: function() {
+                    return '';
+                },
+                defaultTruckType: function() {
                     return '';
                 }
             }
