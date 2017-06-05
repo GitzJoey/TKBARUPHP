@@ -49,6 +49,12 @@ class UnitController extends Controller
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
+        
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
 
         Unit::create([
             'name' => $data['name'],
@@ -57,9 +63,7 @@ class UnitController extends Controller
             'remarks' => $data['remarks'],
         ]);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function edit($id)
@@ -78,12 +82,16 @@ class UnitController extends Controller
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
+        
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
 
         Unit::find($id)->update($req->all());
         
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function delete($id)
