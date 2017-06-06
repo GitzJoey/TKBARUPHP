@@ -378,9 +378,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'BankController@index')->name('db.master.bank');
                 Route::get('show/{id}', 'BankController@show')->name('db.master.bank.show');
                 Route::get('create', 'BankController@create')->name('db.master.bank.create');
-                Route::post('create', 'BankController@store');
                 Route::get('edit/{id}', 'BankController@edit')->name('db.master.bank.edit');
-                Route::patch('edit/{id}', 'BankController@update');
                 Route::delete('edit/{id}', 'BankController@delete')->name('db.master.bank.delete');
             });
             
