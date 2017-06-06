@@ -28,6 +28,7 @@
         </div>
 
         <form id="bankForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('bank.create.header.title')</h3>
