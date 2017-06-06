@@ -108,6 +108,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('trucking/create', 'VendorTruckingController@store')->name('api.post.db.master.vendor.trucking.create');
                 Route::post('trucking/edit/{id}', 'VendorTruckingController@update')->name('api.post.db.master.vendor.trucking.edit');
             });
+            
+            Route::group(['prefix' => 'expense_template'], function() {
+                Route::post('create', 'ExpenseTemplateController@store')->name('api.post.db.master.expense_template.create');
+                Route::post('edit/{id}', 'ExpenseTemplateController@update')->name('api.post.db.master.expense_template.edit');
+            });
         });
 
         Route::group(['prefix' => 'admin'], function () {
