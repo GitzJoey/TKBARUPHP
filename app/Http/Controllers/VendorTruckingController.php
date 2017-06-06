@@ -43,12 +43,18 @@ class VendorTruckingController extends Controller
 
     public function store(Request $data)
     {
-        $this->validate($data, [
+        $validator = $this->validate($data, [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'tax_id' => 'required|string|max:255',
             'status' => 'required',
         ]);
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
 
         VendorTrucking::create([
             'store_id' => Auth::user()->store->id,
@@ -59,7 +65,7 @@ class VendorTruckingController extends Controller
             'remarks' => $data['remarks']
         ]);
 
-        return redirect(route('db.master.vendor.trucking'));
+        return response()->json();
     }
 
     public function edit($id)
@@ -73,8 +79,22 @@ class VendorTruckingController extends Controller
 
     public function update($id, Request $req)
     {
+        $validator = $this->validate($req, [
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'tax_id' => 'required|string|max:255',
+            'status' => 'required',
+        ]);
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
+
         VendorTrucking::find($id)->update($req->all());
-        return redirect(route('db.master.vendor.trucking'));
+
+        return response()->json();
     }
 
     public function delete($id)
