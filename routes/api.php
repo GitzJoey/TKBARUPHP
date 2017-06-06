@@ -113,6 +113,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('create', 'ExpenseTemplateController@store')->name('api.post.db.master.expense_template.create');
                 Route::post('edit/{id}', 'ExpenseTemplateController@update')->name('api.post.db.master.expense_template.edit');
             });
+            
+            Route::group(['prefix' => 'bank'], function() {
+                Route::post('create', 'BankController@store')->name('api.post.db.master.bank.create');
+                Route::post('edit/{id}', 'BankController@update')->name('api.post.db.master.bank.edit');
+            });
         });
 
         Route::group(['prefix' => 'admin'], function () {
