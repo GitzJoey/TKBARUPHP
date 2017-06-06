@@ -13,93 +13,127 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="expTemplateVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('expense_template.edit.header.title')</h3>
-        </div>
-        {!! Form::model($expenseTemplate, ['method' => 'PATCH', 'route' => ['db.master.expense_template.edit', $expenseTemplate->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
-        <div ng-app="expenseTemplateModule" ng-controller="expenseTemplateController">
-            <div class="box-body">
-                <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <label for="inputName" class="col-sm-2 control-label">@lang('expense_template.field.name')</label>
-                    <div class="col-sm-8">
-                        <input id="inputName" name="name" type="text" class="form-control"
-                               placeholder="@lang('expense_template.field.name')"
-                               data-parsley-required="true" value="{{ $expenseTemplate->name }}">
-                        <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
-                    </div>
+        <form id="expTemplateForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('expense_template.edit.header.title')</h3>
                 </div>
-                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                    <label for="inputType" class="col-sm-2 control-label">@lang('expense_template.field.type')</label>
-                    <div class="col-sm-8">
-                        {{ Form::select('type', $expenseTypes, $expenseTemplate->type , array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
+                <div class="box-body">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
+                        <label for="inputName" class="col-sm-2 control-label">@lang('expense_template.field.name')</label>
+                        <div class="col-sm-8">
+                            <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('expense_template.field.name')"
+                                v-model="expense_template.name" v-validate="'required'" data-vv-as="{{ trans('expense_template.field.name') }}">
+                            <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
-                    <label for="inputAmount"
-                           class="col-sm-2 control-label">@lang('expense_template.field.amount')</label>
-                    <div class="col-sm-8">
-                        <input id="inputAmount" name="amount" type="text" class="form-control"
-                               placeholder="@lang('expense_template.field.amount')"
-                               data-parsley-required="true" data-parsley-pattern="/^\d+(,\d+)*$/"
-                               autonumeric data-a-sep="," data-a-dec=".">
-                        <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('type') }">
+                        <label for="inputType" class="col-sm-2 control-label">@lang('expense_template.field.type')</label>
+                        <div class="col-sm-8">
+                            <select class="form-control"
+                                    name="type"
+                                    v-model="expense_template.type"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('expense_template.field.type') }}">
+                                <option v-bind:value="defaultType">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in expenseTypes" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('type')" class="help-block" v-cloak>@{{ errors.first('type') }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
-                    <label for="inputRemarks"
-                           class="col-sm-2 control-label">@lang('expense_template.field.remarks')</label>
-                    <div class="col-sm-8">
-                        <input id="inputRemarks" name="remarks" type="text" class="form-control"
-                               placeholder="@lang('expense_template.field.remarks')"
-                               data-parsley-required="true" value="{{ $expenseTemplate->remarks }}">
-                        <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('amount') }">
+                        <label for="inputAmount" class="col-sm-2 control-label">@lang('expense_template.field.amount')</label>
+                        <div class="col-sm-8">
+                            <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('expense_template.field.amount')"
+                                v-model="expense_template.amount" v-validate="'required|numeric:2'" data-vv-as="{{ trans('expense_template.field.amount') }}">
+                            <span v-show="errors.has('amount')" class="help-block" v-cloak>@{{ errors.first('amount') }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputInternalExpense" class="col-sm-2 control-label">@lang('expense_template.field.internal_expense')</label>
-                    <div class="col-sm-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox" name="is_internal_expense" value="{{ $expenseTemplate->is_internal_expense }}">
-                            </label>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('remarks') }">
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('expense_template.field.remarks')</label>
+                        <div class="col-sm-8">
+                            <input id="inputRemarks" name="remarks" type="text" class="form-control" placeholder="@lang('expense_template.field.remarks')"
+                                v-model="expense_template.remarks" v-validate="'required'" data-vv-as="{{ trans('expense_template.field.remarks') }}">
+                            <span v-show="errors.has('remarks')" class="help-block" v-cloak>@{{ errors.first('remarks') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputInternalExpense" class="col-sm-2 control-label">@lang('expense_template.field.internal_expense')</label>
+                        <div class="col-sm-8">
+                            <div class="checkbox icheck">
+                                <label>
+                                    {{ Form::checkbox('is_internal_expense', $expenseTemplate->is_internal_expense, $expenseTemplate->is_internal_expense) }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputButton" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-8">
+                            <a href="{{ route('db.master.expense_template') }}"
+                               class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputButton" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-8">
-                        <a href="{{ route('db.master.expense_template') }}"
-                           class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                    </div>
-                </div>
+                <div class="box-footer"></div>
             </div>
-            <div class="box-footer"></div>
-        </div>
-        {!! Form::close() !!}
+        </form>
     </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function () {
-            $('input[type="checkbox"], input[type="radio"]').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue'
-            });
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        var app = new Vue({
+            el: '#expTemplateVue',
+            data: {
+                expense_template: {
+                    name:'{{ $expenseTemplate->name }}',
+                    type:'{{ $expenseTemplate->type }}',
+                    amount:'{{ $expenseTemplate->amount }}',
+                    remarks:'{{ $expenseTemplate->remarks }}'
+                },
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}')
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    var vm = this;
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.master.expense_template.edit', $expenseTemplate->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#expTemplateForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db.master.expense_template') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.address.length > 0) {
+                                    for (var i=0; i < e.response.data.address.length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                    }
+                                } else {
+                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
+                        });
+                    });
+                },
+            },
+            computed: {
+                defaultType : function() {
+                    return '';
+                }
+            }
         });
     </script>
 @endsection

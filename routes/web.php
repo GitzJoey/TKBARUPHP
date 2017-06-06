@@ -378,9 +378,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'BankController@index')->name('db.master.bank');
                 Route::get('show/{id}', 'BankController@show')->name('db.master.bank.show');
                 Route::get('create', 'BankController@create')->name('db.master.bank.create');
-                Route::post('create', 'BankController@store');
                 Route::get('edit/{id}', 'BankController@edit')->name('db.master.bank.edit');
-                Route::patch('edit/{id}', 'BankController@update');
                 Route::delete('edit/{id}', 'BankController@delete')->name('db.master.bank.delete');
             });
             
@@ -396,9 +394,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
                 Route::get('trucking/create', 'VendorTruckingController@create')->name('db.master.vendor.trucking.create');
-                Route::post('trucking/create', 'VendorTruckingController@store');
                 Route::get('trucking/edit/{id}', 'VendorTruckingController@edit')->name('db.master.vendor.trucking.edit');
-                Route::patch('trucking/edit/{id}', 'VendorTruckingController@update');
                 Route::delete('trucking/edit/{id}', 'VendorTruckingController@delete')->name('db.master.vendor.trucking.delete');
             });
 
@@ -406,9 +402,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'ExpenseTemplateController@index')->name('db.master.expense_template');
                 Route::get('show/{id}', 'ExpenseTemplateController@show')->name('db.master.expense_template.show');
                 Route::get('create', 'ExpenseTemplateController@create')->name('db.master.expense_template.create');
-                Route::post('create/', 'ExpenseTemplateController@store');
                 Route::get('edit/{id}', 'ExpenseTemplateController@edit')->name('db.master.expense_template.edit');
-                Route::patch('edit/{id}', 'ExpenseTemplateController@update');
                 Route::delete('edit/{id}', 'ExpenseTemplateController@delete')->name('db.master.expense_template.delete');
             });
         });

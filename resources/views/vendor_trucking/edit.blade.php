@@ -17,72 +17,129 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('vendor_trucking.edit.header.title')</h3>
-        </div>
-        {!! Form::model($vt, ['method' => 'PATCH', 'route' => ['db.master.vendor.trucking.edit', $vt->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
-            <div class="box-body">
-                <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <label for="inputStoreName" class="col-sm-2 control-label">@lang('vendor_trucking.field.name')</label>
-                    <div class="col-sm-10">
-                        <input id="inputStoreName" name="store_name" type="text" class="form-control" value="{{ $vt->name }}" placeholder="Name" data-parsley-required="true">
-                        <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
-                    <label for="inputAddress" class="col-sm-2 control-label">@lang('vendor_trucking.field.address')</label>
-                    <div class="col-sm-10">
-                        <textarea id="inputAddress" class="form-control" rows="5" name="store_address">{{ $vt->address }}</textarea>
-                        <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('phone_num') ? 'has-error' : '' }}">
-                    <label for="inputPhone" class="col-sm-2 control-label">@lang('vendor_trucking.field.phone')</label>
-                    <div class="col-sm-10">
-                        <input id="inputPhone" name="phone_num" type="text" class="form-control" value="{{ $vt->phone_num }}" placeholder="Phone">
-                        <span class="help-block">{{ $errors->has('phone_num') ? $errors->first('phone_num') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputTax" class="col-sm-2 control-label">@lang('vendor_trucking.field.tax_id')</label>
-                    <div class="col-sm-10">
-                        <input id="inputTax" name="tax_id" type="text" class="form-control" value="{{ $vt->tax_id }}" placeholder="Tax ID" data-parsley-required="true">
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <label for="inputStatus" class="col-sm-2 control-label">@lang('vendor_trucking.field.status')</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, $vt->status, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('vendor_trucking.field.remarks')</label>
-                    <div class="col-sm-10">
-                        <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $vt->remarks }}" placeholder="Remarks">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputButton" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                        <a href="{{ route('db.master.vendor.trucking') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                    </div>
-                </div>
+    <div id="vTruckingVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
             </div>
-            <div class="box-footer"></div>
-        {!! Form::close() !!}
+        </div>
+
+        <form id="vTruckingForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('vendor_trucking.edit.header.title')</h3>
+                </div>
+                <div class="box-body">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
+                        <label for="inputName" class="col-sm-2 control-label">@lang('vendor_trucking.field.name')</label>
+                        <div class="col-sm-10">
+                            <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('vendor_trucking.field.name')"
+                                v-model="vendor_trucking.name" v-validate="'required'" data-vv-as="{{ trans('vendor_trucking.field.name') }}">
+                            <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('address') }">
+                        <label for="inputAddress" class="col-sm-2 control-label">@lang('vendor_trucking.field.address')</label>
+                        <div class="col-sm-10">
+                            <textarea id="inputAddress" name="address" class="form-control" placeholder="@lang('vendor_trucking.field.address')"
+                                v-model="vendor_trucking.address" v-validate="'required'" data-vv-as="{{ trans('vendor_trucking.field.address') }}" rows="5"></textarea>
+                            <span v-show="errors.has('address')" class="help-block" v-cloak>@{{ errors.first('address') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('phone_num') ? 'has-error' : '' }}">
+                        <label for="inputPhone" class="col-sm-2 control-label">@lang('vendor_trucking.field.phone')</label>
+                        <div class="col-sm-10">
+                            <input id="inputPhone" name="phone_num" type="text" class="form-control" value="{{ $vt->phone_num }}" placeholder="Phone">
+                            <span class="help-block">{{ $errors->has('phone_num') ? $errors->first('phone_num') : '' }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tax_id') }">
+                        <label for="inputTax" class="col-sm-2 control-label">@lang('vendor_trucking.field.tax_id')</label>
+                        <div class="col-sm-10">
+                            <input id="inputName" name="tax_id" type="text" class="form-control" placeholder="@lang('vendor_trucking.field.tax_id')"
+                                v-model="vendor_trucking.tax_id" v-validate="'required'" data-vv-as="{{ trans('vendor_trucking.field.tax_id') }}" placeholder="Tax ID">
+                            <span v-show="errors.has('tax_id')" class="help-block" v-cloak>@{{ errors.first('tax_id') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('vendor_trucking.field.status')</label>
+                        <div class="col-sm-10">
+                            <select class="form-control"
+                                    name="status"
+                                    v-model="vendor_trucking.status"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('vendor_trucking.field.status') }}">
+                                <option v-bind:value="defaultStatus">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in statusDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('vendor_trucking.field.remarks')</label>
+                        <div class="col-sm-10">
+                            <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $vt->remarks }}" placeholder="Remarks">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputButton" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="{{ route('db.master.vendor.trucking') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer"></div>
+            </div>
+        </form>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        var app = new Vue({
+            el: '#vTruckingVue',
+            data: {
+                vendor_trucking: {
+                    name:'{{ $vt->name }}',
+                    address:'{{ $vt->address }}',
+                    tax_id:'{{ $vt->tax_id }}',
+                    status:'{{ $vt->status }}'
+                },
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}')
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    var vm = this;
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.master.vendor.trucking.edit', $vt->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#vTruckingForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db.master.vendor.trucking') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.address.length > 0) {
+                                    for (var i=0; i < e.response.data.address.length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                    }
+                                } else {
+                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
+                        });
+                    });
+                },
+            },
+            computed: {
+                defaultStatus : function() {
+                    return '';
+                }
+            }
+        });
+    </script>
 @endsection

@@ -60,21 +60,23 @@ class BankController extends Controller
 
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.master.bank.create'))->withInput()->withErrors($validator);
-        } else {
-
-            Bank::create([
-                'store_id' => Auth::user()->store->id,
-                'name' => $data['name'],
-                'short_name' => $data['short_name'],
-                'branch' => $data['branch'],
-                'branch_code' => $data['branch_code'],
-                'status' => $data['status'],
-                'remarks' => $data['remarks']
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
             ]);
-            return redirect(route('db.master.bank'));
         }
+
+         Bank::create([
+            'store_id' => Auth::user()->store->id,
+            'name' => $data['name'],
+            'short_name' => $data['short_name'],
+            'branch' => $data['branch'],
+            'branch_code' => $data['branch_code'],
+            'status' => $data['status'],
+            'remarks' => $data['remarks']
+        ]);
+        
+         return response()->json();
     }
 
     public function edit($id)
@@ -87,8 +89,25 @@ class BankController extends Controller
 
     public function update($id, Request $req)
     {
+        $validator = Validator::make($req->all(), [
+            'name' => 'required|string|max:255',
+            'short_name' => 'required|string|max:255',
+            'branch' => 'required|string|max:255',
+            'branch_code' => 'required|string|max:255',
+            'status' => 'required',
+            'remarks' => 'required|string|max:255',
+
+        ]);
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
+
         Bank::find($id)->update($req->all());
-        return redirect(route('db.master.bank'));
+
+        return response()->json();
     }
 
     public function delete($id)
