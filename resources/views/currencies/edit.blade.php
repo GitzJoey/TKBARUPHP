@@ -27,11 +27,12 @@
             </div>
         </div>
 
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">@lang('currencies.edit.header.title')</h3>
-            </div>
-            <form id="currenciesForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+        <form id="currenciesForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('currencies.edit.header.title')</h3>
+                </div>
                 <div class="box-body">
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
                         <label for="inputName" class="col-sm-2 control-label">@lang('currencies.field.name')</label>
@@ -78,8 +79,8 @@
                     </div>
                 </div>
                 <div class="box-footer"></div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 @endsection
 

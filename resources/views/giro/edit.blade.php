@@ -23,11 +23,12 @@
             </div>
         </div>
 
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">@lang('giro.edit.header.title')</h3>
-            </div>
-            <form id="giroForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+        <form id="giroForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_token() }}
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('giro.edit.header.title')</h3>
+                </div>
                 <div class="box-body">
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('bank') }">
                         <label for="inputBank" class="col-sm-2 control-label">@lang('giro.field.bank')</label>
@@ -104,8 +105,8 @@
                     </div>
                 </div>
                 <div class="box-footer"></div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 @endsection
 
