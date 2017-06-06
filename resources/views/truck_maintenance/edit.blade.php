@@ -27,12 +27,12 @@
             </div>
         </div>
 
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">@lang('truckmtc.edit.header.title')</h3>
-            </div>
-            <form id="truckMtcForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
-                {{ csrf_field() }}
+        <form id="truckMtcForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('truckmtc.edit.header.title')</h3>
+                </div>
                 <div class="box-body">
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('maintenance_date') }">
                         <label for="inputInspectionDate" class="col-sm-2 control-label">@lang('truckmtc.field.maintenance_date')</label>
@@ -109,8 +109,8 @@
                     </div>
                 </div>
                 <div class="box-footer"></div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 @endsection
 
