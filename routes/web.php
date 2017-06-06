@@ -404,9 +404,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'ExpenseTemplateController@index')->name('db.master.expense_template');
                 Route::get('show/{id}', 'ExpenseTemplateController@show')->name('db.master.expense_template.show');
                 Route::get('create', 'ExpenseTemplateController@create')->name('db.master.expense_template.create');
-                Route::post('create/', 'ExpenseTemplateController@store');
                 Route::get('edit/{id}', 'ExpenseTemplateController@edit')->name('db.master.expense_template.edit');
-                Route::patch('edit/{id}', 'ExpenseTemplateController@update');
                 Route::delete('edit/{id}', 'ExpenseTemplateController@delete')->name('db.master.expense_template.delete');
             });
         });
