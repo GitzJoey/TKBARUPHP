@@ -54,21 +54,25 @@ class TruckController extends Controller
             'driver' => 'required|string|max:255',
             'status' => 'required',
         ]);
-
-        if ($validator->fails()) {
-            return redirect(route('db.master.truck.create'))->withInput()->withErrors($validator);
-        } else {
-            Truck::create([
-                'store_id' => Auth::user()->store->id,
-                'type' => $data['truck_type'],
-                'plate_number' => $data['plate_number'],
-                'inspection_date' => date('Y-m-d', strtotime($data->input('inspection_date '))),
-                'driver' => $data['driver'],
-                'status' => $data['status'],
-                'remarks' => $data['remarks']
+        
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
             ]);
-            return redirect(route('db.master.truck'));
         }
+       
+        Truck::create([
+            'store_id' => Auth::user()->store->id,
+            'type' => $data['truck_type'],
+            'plate_number' => $data['plate_number'],
+            'inspection_date' => date('Y-m-d', strtotime($data->input('inspection_date '))),
+            'driver' => $data['driver'],
+            'status' => $data['status'],
+            'remarks' => $data['remarks']
+        ]);
+        
+        return response()->json();
+            
     }
 
     public function edit($id)
@@ -89,13 +93,16 @@ class TruckController extends Controller
             'driver' => 'required|string|max:255',
             'status' => 'required',
         ]);
-
-        if ($validator->fails()) {
-            return redirect(route('db.master.truck.edit'))->withInput()->withErrors($validator);
-        } else {
-            Truck::find($id)->update($req->all());
-            return redirect(route('db.master.truck'));
+        
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
         }
+
+        Truck::find($id)->update($req->all());
+
+        return response()->json();
     }
 
     public function delete($id)

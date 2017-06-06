@@ -49,19 +49,21 @@ class UnitController extends Controller
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
-
-        if ($validator->fails()) {
-            return redirect(route('db.admin.unit.create'))->withInput()->withErrors($validator);
-        } else {
-            Unit::create([
-                'name' => $data['name'],
-                'symbol' => $data['symbol'],
-                'status' => $data['status'],
-                'remarks' => $data['remarks'],
+        
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
             ]);
-
-            return redirect(route('db.admin.unit'));
         }
+
+        Unit::create([
+            'name' => $data['name'],
+            'symbol' => $data['symbol'],
+            'status' => $data['status'],
+            'remarks' => $data['remarks'],
+        ]);
+
+        return response()->json();
     }
 
     public function edit($id)
@@ -80,13 +82,16 @@ class UnitController extends Controller
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
-
-        if ($validator->fails()) {
-            return redirect(route('db.admin.unit.edit'))->withInput()->withErrors($validator);
-        } else {
-            Unit::find($id)->update($req->all());
-            return redirect(route('db.admin.unit'));
+        
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
         }
+
+        Unit::find($id)->update($req->all());
+        
+        return response()->json();
     }
 
     public function delete($id)

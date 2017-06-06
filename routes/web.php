@@ -208,9 +208,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'GiroController@index')->name('db.bank.giro');
                 Route::get('show/{id}', 'GiroController@show')->name('db.bank.giro.show');
                 Route::get('create', 'GiroController@create')->name('db.bank.giro.create');
-                Route::post('create', 'GiroController@store');
                 Route::get('edit/{id}', 'GiroController@edit')->name('db.bank.giro.edit');
-                Route::patch('edit/{id}', 'GiroController@update');
                 Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
                 route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
             });
@@ -246,9 +244,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('maintenance', 'TruckMaintenanceController@index')->name('db.truck.maintenance');
             Route::get('maintenance/show/{id}', 'TruckMaintenanceController@show')->name('db.truck.maintenance.show');
             Route::get('maintenance/create', 'TruckMaintenanceController@create')->name('db.truck.maintenance.create');
-            Route::post('maintenance/create', 'TruckMaintenanceController@store');
             Route::get('maintenance/edit/{id}', 'TruckMaintenanceController@edit')->name('db.truck.maintenance.edit');
-            Route::patch('maintenance/edit/{id}', 'TruckMaintenanceController@update');
         });
 
         Route::group(['prefix' => 'employee', 'middleware' => ['permission:create-employee|read-employee|update-employee|delete-employee|menu-employee']], function () {
@@ -366,9 +362,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'ProductTypeController@index')->name('db.master.producttype');
                 Route::get('show/{id}', 'ProductTypeController@show')->name('db.master.producttype.show');
                 Route::get('create', 'ProductTypeController@create')->name('db.master.producttype.create');
-                Route::post('create', 'ProductTypeController@store');
                 Route::get('edit/{id}', 'ProductTypeController@edit')->name('db.master.producttype.edit');
-                Route::patch('edit/{id}', 'ProductTypeController@update');
                 Route::delete('edit/{id}', 'ProductTypeController@delete')->name('db.master.producttype.delete');
             });
 
@@ -389,17 +383,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::patch('edit/{id}', 'BankController@update');
                 Route::delete('edit/{id}', 'BankController@delete')->name('db.master.bank.delete');
             });
-
+            
             Route::group(['prefix' => 'truck'], function () {
                 Route::get('', 'TruckController@index')->name('db.master.truck');
                 Route::get('show/{id}', 'TruckController@show')->name('db.master.truck.show');
                 Route::get('create', 'TruckController@create')->name('db.master.truck.create');
-                Route::post('create/', 'TruckController@store');
                 Route::get('edit/{id}', 'TruckController@edit')->name('db.master.truck.edit');
-                Route::patch('edit/{id}', 'TruckController@update');
                 Route::delete('edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
             });
-
+            
             Route::group(['prefix' => 'vendor'], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
@@ -436,9 +428,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'RolesController@index')->name('db.admin.roles');
                 Route::get('show/{id}', 'RolesController@show')->name('db.admin.roles.show');
                 Route::get('create', 'RolesController@create')->name('db.admin.roles.create');
-                Route::post('create', 'RolesController@store');
                 Route::get('edit/{id}', 'RolesController@edit')->name('db.admin.roles.edit');
-                Route::patch('edit/{id}', 'RolesController@update');
                 Route::delete('edit/{id}', 'RolesController@delete')->name('db.admin.roles.delete');
             });
 
@@ -454,19 +444,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'UnitController@index')->name('db.admin.unit');
                 Route::get('show/{id}', 'UnitController@show')->name('db.admin.unit.show');
                 Route::get('create', 'UnitController@create')->name('db.admin.unit.create');
-                Route::post('create', 'UnitController@store');
                 Route::get('edit/{id}', 'UnitController@edit')->name('db.admin.unit.edit');
-                Route::patch('edit/{id}', 'UnitController@update');
                 Route::delete('edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
             });
-
+            
             Route::group(['prefix' => 'currencies', 'middleware' => ['permission:create-currencies|read-currencies|update-currencies|delete-currencies|menu-currencies']], function(){
                 Route::get('', 'CurrenciesController@index')->name('db.admin.currencies');
                 Route::get('show/{id}', 'CurrenciesController@show')->name('db.admin.currencies.show');
                 Route::get('create', 'CurrenciesController@create')->name('db.admin.currencies.create');
-                Route::post('create', 'CurrenciesController@store');
                 Route::get('edit/{id}', 'CurrenciesController@edit')->name('db.admin.currencies.edit');
-                Route::patch('edit/{id}', 'CurrenciesController@update');
                 Route::delete('edit/{id}', 'CurrenciesController@delete')->name('db.admin.currencies.delete');
             });
 
