@@ -213,6 +213,11 @@ Route::group(['prefix' => 'get'], function () {
             return \App\Util\SOCodeGenerator::generateCode();
         })->name('api.get.so.code');
     });
+    
+    Route::group(['prefix' => 'employee'], function() {
+        Route::post('create', 'EmployeeController@store')->name('api.employee.create');
+        Route::post('edit/{id}', 'EmployeeController@update')->name('api.employee.update');
+    });
 
     Route::group(['prefix' => 'stock'], function() {
         Route::get('current_stocks/{wId?}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
