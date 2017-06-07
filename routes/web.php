@@ -46,9 +46,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'Accounting\CashAccountController@index')->name('db.acc.cash');
                 Route::get('show/{id}', 'Accounting\CashAccountController@show')->name('db.acc.cash.show');
                 Route::get('create', 'Accounting\CashAccountController@create')->name('db.acc.cash.create');
-                Route::post('create', 'Accounting\CashAccountController@store');
                 Route::get('edit/{id}', 'Accounting\CashAccountController@edit')->name('db.acc.cash.edit');
-                Route::patch('edit/{id}', 'Accounting\CashAccountController@update');
                 Route::delete('edit/{id}', 'Accounting\CashAccountController@delete')->name('db.acc.cash.delete');
             });
 
