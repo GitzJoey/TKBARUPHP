@@ -46,9 +46,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'Accounting\CashAccountController@index')->name('db.acc.cash');
                 Route::get('show/{id}', 'Accounting\CashAccountController@show')->name('db.acc.cash.show');
                 Route::get('create', 'Accounting\CashAccountController@create')->name('db.acc.cash.create');
-                Route::post('create', 'Accounting\CashAccountController@store');
                 Route::get('edit/{id}', 'Accounting\CashAccountController@edit')->name('db.acc.cash.edit');
-                Route::patch('edit/{id}', 'Accounting\CashAccountController@update');
                 Route::delete('edit/{id}', 'Accounting\CashAccountController@delete')->name('db.acc.cash.delete');
             });
 
@@ -251,9 +249,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('', 'EmployeeController@index')->name('db.employee.employee');
             Route::get('show/{id}', 'EmployeeController@show')->name('db.employee.employee.show');
             Route::get('create', 'EmployeeController@create')->name('db.employee.employee.create');
-            Route::post('create/', 'EmployeeController@store');
             Route::get('edit/{id}', 'EmployeeController@edit')->name('db.employee.employee.edit');
-            Route::patch('edit/{id}', 'EmployeeController@update');
             Route::delete('edit/{id}', 'EmployeeController@delete')->name('db.employee.employee.delete');
 
             Route::group(['prefix' => 'salary', 'middleware' => ['permission:create-employeesalary|read-employeesalary|update-employeesalary|delete-employeesalary|menu-employeesalary']], function () {

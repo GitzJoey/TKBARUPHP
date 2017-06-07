@@ -36,6 +36,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('{code}/edit/{id}', 'PurchaseOrderCopyController@update')->name('api.post.db.po.copy.edit');
             });
         });
+        
+        Route::group(['prefix' => 'acc'], function() {
+            Route::post('create', 'Accounting\CashAccountController@store')->name('api.post.db.acc.cash.create');
+            Route::post('edit/{id}', 'Accounting\CashAccountController@update')->name('api.post.db.acc.cash.edit');
+        });
 
         Route::group(['prefix' => 'so'], function () {
             Route::post('create', 'SalesOrderController@store')->name('api.post.db.so.create');
@@ -212,6 +217,11 @@ Route::group(['prefix' => 'get'], function () {
         Route::get('code', function () {
             return \App\Util\SOCodeGenerator::generateCode();
         })->name('api.get.so.code');
+    });
+    
+    Route::group(['prefix' => 'employee'], function() {
+        Route::post('create', 'EmployeeController@store')->name('api.employee.create');
+        Route::post('edit/{id}', 'EmployeeController@update')->name('api.employee.update');
     });
 
     Route::group(['prefix' => 'stock'], function() {
