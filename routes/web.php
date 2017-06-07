@@ -251,9 +251,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('', 'EmployeeController@index')->name('db.employee.employee');
             Route::get('show/{id}', 'EmployeeController@show')->name('db.employee.employee.show');
             Route::get('create', 'EmployeeController@create')->name('db.employee.employee.create');
-            Route::post('create/', 'EmployeeController@store');
             Route::get('edit/{id}', 'EmployeeController@edit')->name('db.employee.employee.edit');
-            Route::patch('edit/{id}', 'EmployeeController@update');
             Route::delete('edit/{id}', 'EmployeeController@delete')->name('db.employee.employee.delete');
 
             Route::group(['prefix' => 'salary', 'middleware' => ['permission:create-employeesalary|read-employeesalary|update-employeesalary|delete-employeesalary|menu-employeesalary']], function () {
