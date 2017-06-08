@@ -44,7 +44,7 @@ class BankController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         return view('bank.create', compact('statusDDL'));
     }
 
@@ -81,7 +81,7 @@ class BankController extends Controller
 
     public function edit($id)
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bank = Bank::find($id);
 
         return view('bank.edit', compact('bank', 'statusDDL'));

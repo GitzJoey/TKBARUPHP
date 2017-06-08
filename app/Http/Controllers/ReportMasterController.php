@@ -36,7 +36,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $customerName = $request->input('name');
@@ -92,7 +92,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $supplierName = $request->input('name');
@@ -148,7 +148,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $productName = $request->input('name');
@@ -196,7 +196,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $productTypeName = $request->input('name');
@@ -243,7 +243,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $bankName = $request->input('name');
@@ -297,7 +297,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $warehouseName = $request->input('name');
@@ -339,7 +339,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('description', 'code');
 
         //Parameters
@@ -431,7 +431,7 @@ class ReportMasterController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $vendorTruckingName = $request->input('name');

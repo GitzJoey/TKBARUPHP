@@ -36,7 +36,7 @@ class VendorTruckingController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('vendor_trucking.create', compact('statusDDL'));
     }
@@ -72,7 +72,7 @@ class VendorTruckingController extends Controller
     {
         $vt = VendorTrucking::find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('vendor_trucking.edit', compact('vt', 'statusDDL'));
     }

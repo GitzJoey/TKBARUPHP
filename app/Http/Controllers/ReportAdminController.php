@@ -159,7 +159,7 @@ class ReportAdminController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $storeName = $request->input('name');
@@ -205,7 +205,7 @@ class ReportAdminController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $unitName = $request->input('name');
@@ -251,7 +251,7 @@ class ReportAdminController extends Controller
         $currentUser = Auth::user()->name;
         $reportDate = Carbon::now();
         $showParameter = true;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         //Parameters
         $phoneProviderName = $request->input('name');

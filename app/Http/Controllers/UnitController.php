@@ -37,7 +37,7 @@ class UnitController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('unit.create', compact('statusDDL'));
     }
@@ -70,7 +70,7 @@ class UnitController extends Controller
     {
         $unit = Unit::find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('unit.edit', compact('unit', 'statusDDL'));
     }

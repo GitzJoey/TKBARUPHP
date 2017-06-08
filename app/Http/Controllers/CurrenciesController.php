@@ -24,7 +24,7 @@ class CurrenciesController extends Controller
 	}
 	public function create()
 	{
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 		return view('currencies.create' , compact('statusDDL'));
 	}
 	public function store(Request $req)

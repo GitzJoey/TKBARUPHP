@@ -44,7 +44,7 @@ class ReportController extends Controller
 
     public function report_admin()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $rolesDDL = Role::get()->pluck('display_name', 'name');
 
         return view('report.admin', compact('statusDDL', 'rolesDDL'));

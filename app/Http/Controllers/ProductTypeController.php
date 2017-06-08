@@ -36,7 +36,7 @@ class ProductTypeController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('product_type.create', compact('statusDDL'));
     }
@@ -71,7 +71,7 @@ class ProductTypeController extends Controller
     {
         $prodtype = ProductType::find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('product_type.edit', compact('prodtype', 'statusDDL'));
     }
