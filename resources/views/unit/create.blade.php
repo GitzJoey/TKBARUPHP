@@ -28,7 +28,7 @@
         </div>
 
         <form id="unitForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
-        {   { csrf_field() }}
+            {{ csrf_field() }}
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('unit.create.header.title')</h3>
