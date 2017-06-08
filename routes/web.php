@@ -41,7 +41,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('', 'DashboardController@index')->name('db');
 
-        Route::group(['prefix' => 'acc'], function() {
+        Route::group(['prefix' => 'acc', 'middleware' => 'role:owner|admin'], function() {
             Route::group(['prefix' => 'cash'], function() {
                 Route::get('', 'Accounting\CashAccountController@index')->name('db.acc.cash');
                 Route::get('show/{id}', 'Accounting\CashAccountController@show')->name('db.acc.cash.show');
