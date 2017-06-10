@@ -446,9 +446,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('provider', 'PhoneProviderController@index')->name('db.admin.phone_provider');
                 Route::get('provider/show/{id}', 'PhoneProviderController@show')->name('db.admin.phone_provider.show');
                 Route::get('provider/create', 'PhoneProviderController@create')->name('db.admin.phone_provider.create');
-                Route::post('provider/create', 'PhoneProviderController@store');
                 Route::get('provider/edit/{id}', 'PhoneProviderController@edit')->name('db.admin.phone_provider.edit');
-                Route::patch('provider/edit/{id}', 'PhoneProviderController@update');
                 Route::delete('provider/edit/{id}', 'PhoneProviderController@delete')->name('db.admin.phone_provider.delete');
             });
 
