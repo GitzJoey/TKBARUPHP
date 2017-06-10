@@ -152,6 +152,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('create', 'RolesController@store')->name('api.post.db.admin.roles.create');
                 Route::post('edit/{id}', 'RolesController@update')->name('api.post.db.admin.roles.edit');
             });
+            
+            Route::group(['prefix' => 'user'], function () {
+                Route::post('create', 'UserController@store')->name('api.post.db.admin.user.create');
+                Route::post('edit/{id}', 'UserController@update')->name('api.post.db.admin.user.edit');
+            });
         });
 
         Route::group(['prefix' => 'tax'], function() {
