@@ -157,6 +157,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('create', 'UserController@store')->name('api.post.db.admin.user.create');
                 Route::post('edit/{id}', 'UserController@update')->name('api.post.db.admin.user.edit');
             });
+            
+            Route::group(['prefix' => 'phone'], function() {
+                Route::post('provider/create', 'PhoneProviderController@store')->name('api.post.db.admin.phone_provider.create');
+                Route::post('provider/edit/{id}', 'PhoneProviderController@update')->name('api.post.db.admin.phone_provider.edit');
+            });
         });
 
         Route::group(['prefix' => 'tax'], function() {
