@@ -34,6 +34,7 @@
                             <label for="inputType" class="col-sm-2 control-label">@lang('price_level.field.type')</label>
                             <div class="col-sm-10">
                                 <select class="form-control"
+                                        name="type"
                                         id="priceLevelSelect"
                                         v-model="price_level.type"
                                         v-validate="'required'"
