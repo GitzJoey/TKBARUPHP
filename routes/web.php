@@ -166,9 +166,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'PriceLevelController@index')->name('db.price.price_level');
                 Route::get('show/{id}', 'PriceLevelController@show')->name('db.price.price_level.show');
                 Route::get('create', 'PriceLevelController@create')->name('db.price.price_level.create');
-                Route::post('create', 'PriceLevelController@store');
                 Route::get('edit/{id}', 'PriceLevelController@edit')->name('db.price.price_level.edit');
-                Route::patch('edit/{id}', 'PriceLevelController@update');
                 Route::delete('edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
             });
         });
