@@ -172,6 +172,13 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::post('edit/{id}', 'EmployeeController@update')->name('api.post.db.employee.edit');
         });
         
+        Route::group(['prefix' => 'price'], function() {
+            Route::group(['prefix' => 'price_level'], function() {
+                Route::post('create', 'PriceLevelController@store')->name('api.post.db.price.level.create');
+                Route::post('edit/{id}', 'PriceLevelController@update')->name('api.post.db.price.level.edit');;
+            });
+        });
+        
     });
 });
 
