@@ -124,6 +124,13 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('edit/{id}', 'BankController@update')->name('api.post.db.master.bank.edit');
             });
         });
+        
+        Route::group(['prefix' => 'bank'], function() {
+            Route::group(['prefix' => 'giro'], function() {
+                Route::post('create', 'GiroController@store')->name('api.post.db.bank.giro.create');
+                Route::post('edit/{id}', 'GiroController@update')->name('api.post.db.bank.giro.edit');
+            });
+        });
 
         Route::group(['prefix' => 'admin'], function () {
             Route::group(['prefix' => 'store'], function () {
@@ -154,6 +161,12 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 });
             });
         });
+        
+        Route::group(['prefix' => 'employee'], function() {
+            Route::post('create', 'EmployeeController@store')->name('api.post.db.employee.create');
+            Route::post('edit/{id}', 'EmployeeController@update')->name('api.post.db.employee.edit');
+        });
+        
     });
 });
 
@@ -173,11 +186,6 @@ Route::group(['prefix' => 'get'], function () {
     Route::group(['prefix' => 'bank'], function () {
         Route::group(['prefix' => 'upload'], function () {
             Route::get('last', 'BankController@getLastBankUpload')->name('api.bank.upload.last');
-        });
-        
-        Route::group(['prefix' => 'giro'], function() {
-            Route::post('create', 'GiroController@store')->name('api.post.db.bank.giro.create');
-            Route::post('edit/{id}', 'GiroController@update')->name('api.post.db.bank.giro.edit');
         });
     });
 
@@ -219,11 +227,6 @@ Route::group(['prefix' => 'get'], function () {
         })->name('api.get.so.code');
     });
     
-    Route::group(['prefix' => 'employee'], function() {
-        Route::post('create', 'EmployeeController@store')->name('api.employee.create');
-        Route::post('edit/{id}', 'EmployeeController@update')->name('api.employee.update');
-    });
-
     Route::group(['prefix' => 'stock'], function() {
         Route::get('current_stocks/{wId?}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
     });
