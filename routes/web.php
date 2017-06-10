@@ -408,9 +408,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'UserController@index')->name('db.admin.user');
                 Route::get('show/{id}', 'UserController@show')->name('db.admin.user.show');
                 Route::get('create', 'UserController@create')->name('db.admin.user.create');
-                Route::post('create', 'UserController@store');
                 Route::get('edit/{id}', 'UserController@edit')->name('db.admin.user.edit');
-                Route::patch('edit/{id}', 'UserController@update');
                 Route::delete('edit/{id}', 'UserController@delete')->name('db.admin.user.delete');
             });
 

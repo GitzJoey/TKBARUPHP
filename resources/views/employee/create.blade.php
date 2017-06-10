@@ -180,7 +180,7 @@
                     var vm = this;
                     this.$validator.validateAll().then(function(result) {
                         $('#loader-container').fadeIn('fast');
-                        axios.post('{{ route('api.employee.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#employeeForm')[0]))
+                        axios.post('{{ route('api.post.db.employee.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#employeeForm')[0]))
                             .then(function(response) {
                                 window.location.href = '{{ route('db.employee.employee') }}';
                             }).catch(function(e) {

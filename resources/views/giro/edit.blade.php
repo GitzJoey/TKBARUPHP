@@ -146,7 +146,7 @@
                 giro: {
                     serial_number:'{{ $giro->serial_number }}',
                     printed_name:'{{ $giro->printed_name }}',
-                    bank:'{{ $giro->bank }}',
+                    bank:'{{ $giro->bank_id }}',
                     effective_date:'{{ $giro->effective_date }}'
                 },
                 bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}')
