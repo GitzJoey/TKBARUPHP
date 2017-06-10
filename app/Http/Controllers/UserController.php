@@ -65,35 +65,34 @@ class UserController extends Controller
             'store' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.admin.user.create'))->withInput()->withErrors($validator);
-        } else {
-            DB::transaction(function() use ($data) {
-                $usr = new User();
-                $usr->name = $data['name'];
-                $usr->email = $data['email'];
-                $usr->password = bcrypt($data['password']);
-                $usr->store_id = $data['store'];
-
-                $usr->api_token = str_random(60);
-
-                $ud = new UserDetail();
-                $ud->type = $data['type'];
-                $ud->allow_login = boolval($data['allow_login']);
-
-                $usr->save();
-                $usr->roles()->attach(Role::whereName($data['roles'])->get());
-                if (!empty($data['link_profile'])) {
-                    $usr->profile()->save(Profile::whereId($data['link_profile'])->first());
-                }
-                $usr->userDetail()->save($ud);
-            });
-
-
-            Session::flash('success', 'New User Created');
-
-            return redirect(route('db.admin.user'));
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
         }
+
+        DB::transaction(function() use ($data) {
+            $usr = new User();
+            $usr->name = $data['name'];
+            $usr->email = $data['email'];
+            $usr->password = bcrypt($data['password']);
+            $usr->store_id = $data['store'];
+
+            $usr->api_token = str_random(60);
+
+            $ud = new UserDetail();
+            $ud->type = $data['user_type'];
+            $ud->allow_login = boolval($data['allow_login']);
+
+            $usr->save();
+            $usr->roles()->attach(Role::whereName($data['roles'])->get());
+            if (!empty($data['link_profile'])) {
+                $usr->profile()->save(Profile::whereId($data['link_profile'])->first());
+            }
+            $usr->userDetail()->save($ud);
+        });
+
+        return response()->json();
     }
 
     public function edit($id)
@@ -110,12 +109,18 @@ class UserController extends Controller
 
     public function update($id, Request $req)
     {
-        $this->validate($req, [
+        $validator = $this->validate($req, [
             'name' => 'required|max:255',
             'roles' => 'required',
             'password' => 'required|min:6|confirmed',
             'store' => 'required',
         ]);
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
 
         DB::transaction(function() use ($id, $req) {
             $usr = User::find($id);
@@ -148,12 +153,12 @@ class UserController extends Controller
                 $usr->profile()->save($p);
             }
 
-            $usr->userDetail->type = $req['type'];
+            $usr->userDetail->type = $req['user_type'];
             $usr->userDetail->allow_login = boolval($req['allow_login']);
             $usr->userDetail->save();
         });
 
-        return redirect(route('db.admin.user'));
+        return response()->json();
     }
 
     public function delete($id)
