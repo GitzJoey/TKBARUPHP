@@ -368,7 +368,8 @@
                 so: {
                     customer: currentSo.customer ? _.cloneDeep(currentSo.customer) : {id: ''},
                     items: [],
-                }
+                },
+                soIndex: 0
             },
             methods: {
                 grandTotal: function () {

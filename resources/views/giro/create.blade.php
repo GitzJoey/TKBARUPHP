@@ -72,8 +72,7 @@
                                    type="text"
                                    class="form-control"
                                    placeholder="@lang('giro.field.amount')"
-                                   data-parsley-required="true"
-                                   autonumeric data-a-sep="," data-a-dec=".">
+                                   v-validate="'required:numeric:2'">
                             <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                         </div>
                     </div>

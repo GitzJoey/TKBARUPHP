@@ -83,7 +83,9 @@
                                             <select class="form-control"
                                                     name="section_capacity_unit[]"
                                                     v-model="c.capacity_unit_id"
-                                                    data-parsley-required="true">
+                                                    v-validate="'required'"
+                                                    v-bind:data-vv-as="'{{ trans('warehouse.edit.table.header.capacity_unit') }} ' + (cI + 1)"
+                                                    v-bind:data-vv-name="'seccapunit_' + cI">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="u in unitDDL" v-bind:value="u.id">@{{ u.name }} (@{{ u.symbol }})</option>
                                             </select>

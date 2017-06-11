@@ -46,7 +46,7 @@
                         <label for="inputAddress" class="col-sm-2 control-label">@lang('employee.field.address')</label>
                         <div class="col-sm-10">
                             <input id="inputAddress" name="address" type="text" class="form-control"
-                                   placeholder="@lang('employee.field.address')" value="{{ $employee->address }}" data-parsley-required="true">
+                                   placeholder="@lang('employee.field.address')" value="{{ $employee->address }}">
                             <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                         </div>
                     </div>

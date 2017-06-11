@@ -68,9 +68,7 @@
                         <label for="inputAmount" class="col-sm-2 control-label">@lang('giro.field.amount')</label>
                         <div class="col-sm-10">
                             <input id="inputAmount" name="amount" type="text" class="form-control" value="{{ $giro->amount }}" placeholder="@lang('giro.field.amount')"
-                                   data-parsley-required="true"
-                                   data-parsley-pattern="/^\d+(,\d+)*$/"
-                                   autonumeric data-a-sep="," data-a-dec=".">
+                                   v-validate="'required|numeric:2'">
                             <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                         </div>
                     </div>

@@ -73,8 +73,7 @@
                         <label for="inputBaseSalary" class="col-sm-2 control-label">@lang('employee.field.base_salary')</label>
                         <div class="col-sm-5">
                             <input id="inputBaseSalary" name="base_salary" type="text" class="form-control"
-                                   placeholder="@lang('employee.field.base_salary')" data-parsley-required="true"
-                                   autonumeric readonly>
+                                   placeholder="@lang('employee.field.base_salary')" readonly>
                         </div>
                     </div>
                     <div class="form-group">
