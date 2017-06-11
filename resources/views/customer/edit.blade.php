@@ -416,145 +416,103 @@
 @section('custom_js')
     <script async defer src="https://maps.googleapis.com/maps/api/js?callback=mapsCallback&libraries=places&key={{ $mapsAPIKey }}"></script>
     <script type="application/javascript">
+        var app = new Vue({
+            el: '#customerVue',
+            data: {
+                banks: JSON.parse('{!! empty(htmlspecialchars_decode($customer->bankAccounts)) ? '[]':htmlspecialchars_decode($customer->bankAccounts) !!}'),
+                profiles: JSON.parse('{!! empty(htmlspecialchars_decode($customer->profiles)) ? '[]':htmlspecialchars_decode($customer->profiles) !!}'),
+                expenses: JSON.parse('{!! empty(htmlspecialchars_decode($customer->expenseTemplates)) ? '[]':htmlspecialchars_decode($customer->expenseTemplates) !!}'),
+                bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
+                providerDDL: JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}'),
+                pricelevelDDL: JSON.parse('{!! htmlspecialchars_decode($priceLevelDDL) !!}'),
+                expenseTemplates: JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}'),
+                selectedExpense: ''
+            },
+            methods: {
+                addNewBank: function() {
+                    this.banks.push({
+                        'bank_id': '',
+                        'account_name': '',
+                        'account_number': '',
+                        'remarks': ''
+                    });
+                },
+                removeSelectedBank: function(idx) {
+                    this.banks.splice(idx, 1);
+                },
+                addNewProfile: function() {
+                    this.profiles.push({
+                        'first_name': '',
+                        'last_name': '',
+                        'address': '',
+                        'ic_num': '',
+                        'image_filename': '',
+                        'phone_numbers':[{
+                            'phone_provider_id': '',
+                            'number': '',
+                            'remarks': ''
+                        }]
+                    });
+                },
+                removeSelectedProfile: function(idx) {
+                    this.profiles.splice(idx, 1);
+                },
+                addNewPhone: function(parentIndex) {
+                    this.profiles[parentIndex].phone_numbers.push({
+                        'phone_provider_id': '',
+                        'number': '',
+                        'remarks': ''
+                    });
+                },
+                removeSelectedPhone: function(parentIndex, idx) {
+                    this.profiles[parentIndex].phone_numbers.splice(idx, 1);
+                },
+                addExpense: function(selectedExpense) {
+                    this.expenses.push({
+                        id: selectedExpense.id,
+                        name: selectedExpense.name,
+                        type: selectedExpense.type,
+                        amount: numeral(selectedExpense.amount).format('0,0'),
+                        is_internal_expense: selectedExpense.is_internal_expense,
+                        remarks: selectedExpense.remarks
+                    });
+                },
+                removeSelectedExpense: function(idx) {
+                    this.expenses.splice(idx, 1);
+                }
+            },
+            mounted: function() {
+                _.forEach(this.expenses, function (expense, index) {
+                    if(expense.is_internal_expense){
+                        expense.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
+                    }
+                    else{
+                        expense.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
+                    }
+                });
 
-        function mapsCallback()
-        {
+                _.forEach(this.expenseTemplates, function (expenseTemplate, index) {
+                    if(expenseTemplate.is_internal_expense){
+                        expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
+                    }
+                    else{
+                        expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
+                    }
+                });
+            }
+        });
+
+        function mapsCallback() {
             $('#btnChooseLocation').show();
         }
 
         $(document).ready(function() {
-
             var location;
             var map;
             var markers = [];
 
-            var app = new Vue({
-                el: '#customerVue',
-                data: {
-                    banks: JSON.parse('{!! empty(htmlspecialchars_decode($customer->bankAccounts)) ? '[]':htmlspecialchars_decode($customer->bankAccounts) !!}'),
-                    profiles: JSON.parse('{!! empty(htmlspecialchars_decode($customer->profiles)) ? '[]':htmlspecialchars_decode($customer->profiles) !!}'),
-                    expenses: JSON.parse('{!! empty(htmlspecialchars_decode($customer->expenseTemplates)) ? '[]':htmlspecialchars_decode($customer->expenseTemplates) !!}'),
-                    bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
-                    providerDDL: JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}'),
-                    pricelevelDDL: JSON.parse('{!! htmlspecialchars_decode($priceLevelDDL) !!}'),
-                    expenseTemplates: JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}'),
-                    selectedExpense: ''
-                },
-                methods: {
-                    addNewBank: function() {
-                        this.banks.push({
-                            'bank_id': '',
-                            'account_name': '',
-                            'account_number': '',
-                            'remarks': ''
-                        });
-                    },
-                    removeSelectedBank: function(idx) {
-                        this.banks.splice(idx, 1);
-                    },
-                    addNewProfile: function() {
-                        this.profiles.push({
-                            'first_name': '',
-                            'last_name': '',
-                            'address': '',
-                            'ic_num': '',
-                            'image_filename': '',
-                            'phone_numbers':[{
-                                'phone_provider_id': '',
-                                'number': '',
-                                'remarks': ''
-                            }]
-                        });
-                    },
-                    removeSelectedProfile: function(idx) {
-                        this.profiles.splice(idx, 1);
-                    },
-                    addNewPhone: function(parentIndex) {
-                        this.profiles[parentIndex].phone_numbers.push({
-                            'phone_provider_id': '',
-                            'number': '',
-                            'remarks': ''
-                        });
-                    },
-                    removeSelectedPhone: function(parentIndex, idx) {
-                        this.profiles[parentIndex].phone_numbers.splice(idx, 1);
-                    },
-                    addExpense: function(selectedExpense) {
-                        this.expenses.push({
-                            id: selectedExpense.id,
-                            name: selectedExpense.name,
-                            type: selectedExpense.type,
-                            amount: numeral(selectedExpense.amount).format('0,0'),
-                            is_internal_expense: selectedExpense.is_internal_expense,
-                            remarks: selectedExpense.remarks
-                        });
-                    },
-                    removeSelectedExpense: function(idx) {
-                        this.expenses.splice(idx, 1);
-                    }
-                },
-                mounted: function() {
-                    _.forEach(this.expenses, function (expense, index) {
-                        if(expense.is_internal_expense){
-                            expense.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
-                        }
-                        else{
-                            expense.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
-                        }
-                    });
-
-                    _.forEach(this.expenseTemplates, function (expenseTemplate, index) {
-                        if(expenseTemplate.is_internal_expense){
-                            expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.YES')";
-                        }
-                        else{
-                            expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
-                        }
-                    });
-                }
-            });
-
-            $('#customerForm').parsley().on('field:validate', function() {
-                validateFront();
-            });
-
-            var validateFront = function () {
-                if (true === $('#customerForm').parsley().isValid("tab_cust", false)) {
-                    $('#custDataTabError').addClass('hidden');
-                } else {
-                    $('#custDataTabError').removeClass('hidden');
-                }
-
-                if (true === $('#customerForm').parsley().isValid("tab_pic", false)) {
-                    $('#picTabError').addClass('hidden');
-                } else {
-                    $('#picTabError').removeClass('hidden');
-                }
-
-                if (true === $('#customerForm').parsley().isValid("tab_bank", false)) {
-                    $('#bankAccountTabError').addClass('hidden');
-                } else {
-                    $('#bankAccountTabError').removeClass('hidden');
-                }
-
-                if (true === $('#customerForm').parsley().isValid("tab_setting", false)) {
-                    $('#settingsTabError').addClass('hidden');
-                } else {
-                    $('#settingsTabError').removeClass('hidden');
-                }
-
-                if (true === $('#customerForm').parsley().isValid("tab_expense", false)) {
-                    $('#expensesTabError').addClass('hidden');
-                } else {
-                    $('#expensesTabError').removeClass('hidden');
-                }
-            };
-
             function init() {
-
-                map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 16
-                });
+                map = new google.maps.Map(document.getElementById('map'), { zoom: 16 });
 
                 var input = document.getElementById('inputModalAddress');
                 var address = input.value;
@@ -569,13 +527,11 @@
                 });
 
                 google.maps.event.addListener(autocomplete, "place_changed", function() {
-
                     var place = autocomplete.getPlace();
 
                     location = place;
 
                     if(place.geometry != undefined) {
-
                         if (place.geometry.viewport) {
                             map.fitBounds(place.geometry.viewport);
                         } else {
@@ -592,11 +548,9 @@
                         setDraggableMarker(markers);
                         getDistanceMatrix(place.geometry.location);
                     }
-
                 });
 
                 if(address.length === 0) {
-
                     navigator.geolocation.getCurrentPosition(function (position) {
                         // Do stuff with the geo data...
                         var lat = position.coords.latitude;
@@ -634,8 +588,7 @@
                     }, function(error) {
                         alert(error.code + ": " + error.message);
                     });
-                }
-                else {
+                } else {
                     locateByAddress(address);
                 }
 
@@ -644,16 +597,13 @@
                     $('#inputModalLng').val(event.latLng.lng());
                     marker.setPosition(event.latLng);
                 });
-
             }
 
             $('#myModal').on('shown.bs.modal', function() {
-
                 if($('#inputAddress').val() === '') {
                     $('#inputModalLat').val($('#inputLatitude').val());
                     $('#inputModalLng').val($('#inputLongitude').val());
-                }
-                else {
+                } else {
                     $('#inputModalAddress').val($('#inputAddress').val());
                 }
 
@@ -661,7 +611,6 @@
             });
 
             $('#location-ok-btn').click(function() {
-
                 if(location != undefined) {
                     $('#inputLatitude').val(location.geometry.location.lat());
                     $('#inputLongitude').val(location.geometry.location.lng());
@@ -673,7 +622,6 @@
             });
 
             function locateByAddress(address) {
-
                 var geocoder = new google.maps.Geocoder();
 
                 geocoder.geocode({
@@ -702,12 +650,11 @@
                             google.maps.event.trigger(map, 'resize');
                             map.setCenter(results[0].geometry.location);
                         }
-                    });
-
+                    }
+                );
             }
 
             function locateByCoordinate(lat, lng) {
-
                 deleteMarkers();
 
                 var latLong = new google.maps.LatLng(lat, lng);
@@ -767,8 +714,7 @@
                 markers = [];
             }
 
-            function getDistanceMatrix(destination)
-            {
+            function getDistanceMatrix(destination) {
                 var service = new google.maps.DistanceMatrixService;
 
                 var lat = '{{ empty($store->latitude) ? 0:$store->latitude }}';
@@ -800,7 +746,7 @@
                 })
             }
 
-            function setDraggableMarker(markers){
+            function setDraggableMarker(markers) {
                 markers.forEach(function(marker) {
                     google.maps.event.addListener(marker, 'dragend', function(event) {
                         $('#inputModalLat').val(event.latLng.lat());
