@@ -38,7 +38,6 @@
                                         id="priceLevelSelect"
                                         v-model="price_level.type"
                                         v-validate="'required'"
-                                        v-on:change="priceLevelType"
                                         data-vv-as="{{ trans('price_level.field.type') }}">
                                     <option v-bind:value="defaultType">@lang('labels.PLEASE_SELECT')</option>
                                     <option v-for="(value, key) in plTypeDDL" v-bind:value="key">@{{ value }}</option>
@@ -82,24 +81,20 @@
                                 <input id="inputDescription" name="description" type="text" class="form-control" value="{{ $pricelevel->description }}" placeholder="Description">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('increment_value') }">
                             <label for="inputIncVal" class="col-sm-2 control-label">@lang('price_level.field.incval')</label>
                             <div class="col-sm-10">
-                                @if ($pricelevel->type == 'PRICELEVELTYPE.INC')
-                                    <input id="inputIncVal" name="increment_value" type="text" class="form-control" value="{{ $pricelevel->increment_value }}" placeholder="Increment Value">
-                                @else
-                                    <input id="inputIncVal" name="increment_value" type="text" class="form-control" value="{{ $pricelevel->increment_value }}" placeholder="Increment Value" readonly>
-                                @endif
+                                <input id="inputIncVal" name="increment_value" type="text" class="form-control" v-bind:value="setIncValue(price_level.type)" placeholder="Increment Value" v-model="price_level.inc_val"
+                                       v-bind:readonly="setIncReadOnly(price_level.type)" v-validate="setIncReadOnly(price_level.type) ? '':'required:numeric:2'" data-vv-as="{{ trans('price_level.field.incval') }}">
+                                <span v-show="errors.has('increment_value')" class="help-block" v-cloak>@{{ errors.first('increment_value') }}</span>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('percentage_value') }">
                             <label for="inputPctVal" class="col-sm-2 control-label">@lang('price_level.field.pctval')</label>
                             <div class="col-sm-10">
-                                @if ($pricelevel->type == 'PRICELEVELTYPE.PCT')
-                                    <input id="inputPctVal" name="percentage_value" type="text" class="form-control" value="{{ $pricelevel->percentage_value }}" placeholder="Percentage Value">
-                                @else
-                                    <input id="inputPctVal" name="percentage_value" type="text" class="form-control" value="{{ $pricelevel->percentage_value }}" placeholder="Percentage Value" readonly>
-                                @endif
+                                <input id="inputPctVal" name="percentage_value" type="text" class="form-control" v-bind:value="setPctValue(price_level.type)" placeholder="Percentage Value" v-model="price_level.pct_val"
+                                       v-bind:readonly="setPctReadOnly(price_level.type)" v-validate="setPctReadOnly(price_level.type) ? '':'required:numeric:2'" data-vv-as="{{ trans('price_level.field.pctval') }}">
+                                <span v-show="errors.has('percentage_value')" class="help-block" v-cloak>@{{ errors.first('percentage_value') }}</span>
                             </div>
                         </div>
                         <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
@@ -139,22 +134,50 @@
             el: '#priceLevelVue',
             data: {
                 price_level: {
-                    type:'{{ $pricelevel->type }}',
-                    weight:'{{ $pricelevel->weight }}',
-                    name:'{{ $pricelevel->name }}',
-                    status:'{{ $pricelevel->status }}'
+                    type: '{{ $pricelevel->type }}',
+                    weight: '{{ $pricelevel->weight }}',
+                    name: '{{ $pricelevel->name }}',
+                    status: '{{ $pricelevel->status }}',
+                    inc_val: '{{ $pricelevel->increment_value }}',
+                    pct_val: '{{ $pricelevel->percentage_value }}'
                 },
                 plTypeDDL: JSON.parse('{!! htmlspecialchars_decode($plTypeDDL) !!}'),
                 statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}')
             },
+            mounted: function() {
+
+            },
             methods: {
-                priceLevelType: function() {
-                    if($('#priceLevelSelect').val() == 'PRICELEVELTYPE.INC') {
-                        $('#inputIncVal').prop('readonly', false);
-                        $('#inputPctVal').val('0').prop('readonly', true); 
+                setIncReadOnly: function(type) {
+                    if (type == '') return false;
+
+                    if (type == 'PRICELEVELTYPE.INC') {
+                        return false;
                     } else {
-                        $('#inputIncVal').val('0').prop('readonly', true);
-                        $('#inputPctVal').prop('readonly', false);
+                        return true;
+                    }
+                },
+                setIncValue: function(type) {
+                    if (type == 'PRICELEVELTYPE.INC') {
+                        return '';
+                    } else {
+                        return '0';
+                    }
+                },
+                setPctReadOnly: function(type) {
+                    if (type == '') return false;
+
+                    if (type == 'PRICELEVELTYPE.PCT') {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
+                setPctValue: function(type) {
+                    if (type == 'PRICELEVELTYPE.PCT') {
+                        return '';
+                    } else {
+                        return '0';
                     }
                 },
                 validateBeforeSubmit: function() {
