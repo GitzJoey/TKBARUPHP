@@ -36,7 +36,7 @@ class CashAccountController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
         return view('accounting.cash.create', compact('statusDDL', 'typeDDL'));
@@ -71,7 +71,7 @@ class CashAccountController extends Controller
     {
         $acccash = CashAccount::find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
         return view('accounting.cash.edit', compact('acccash', 'statusDDL', 'typeDDL'));

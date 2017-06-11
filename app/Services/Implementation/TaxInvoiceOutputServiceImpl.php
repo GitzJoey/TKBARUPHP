@@ -18,7 +18,6 @@ class TaxInvoiceOutputServiceImpl implements TaxInvoiceOutputService
 {
     public function createInvoice(Request $request) {
 
-
         DB::beginTransaction();
 
         try {
@@ -50,6 +49,7 @@ class TaxInvoiceOutputServiceImpl implements TaxInvoiceOutputService
             for($i = 0; $i < count($request->input('tran_name')); $i++){
                 $taxItem = new TaxItem();
                 $taxItem->name = $request->input("tran_name.$i");
+                $taxItem->is_gst_included = boolval($request->input("tran_is_gst_included.$i"));
                 $taxItem->price = $request->input("tran_price.$i");
                 $taxItem->discount = $request->input("tran_discount.$i");
                 $taxItem->qty = $request->input("tran_qty.$i");
@@ -66,5 +66,10 @@ class TaxInvoiceOutputServiceImpl implements TaxInvoiceOutputService
             DB::rollBack();
             return null;
         }
+    }
+
+    public function getTaxByID($id)
+    {
+        return Tax::find($id);
     }
 }

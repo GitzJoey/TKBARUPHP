@@ -39,7 +39,7 @@ class PhoneProviderController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('phone_provider.create', compact('statusDDL'));
     }
@@ -85,6 +85,7 @@ class PhoneProviderController extends Controller
         $phonePrefix = PhonePrefix::wherePhoneProviderId($id)->get(); 
 
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+
 
         return view('phone_provider.edit', compact('phoneProvider', 'statusDDL', 'phonePrefix'));
     }

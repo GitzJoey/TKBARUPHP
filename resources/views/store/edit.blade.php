@@ -273,7 +273,7 @@
                                 <div class="form-group {{ $errors->has('time_format') ? 'has-error' : '' }}">
                                     <label for="inputTimeFormat" class="col-sm-2 control-label">@lang('store.field.time_format')</label>
                                     <div class="col-sm-4">
-                                        <select name="date_format" class="form-control">
+                                        <select name="time_format" class="form-control">
                                             <option value="hh:mm A" {{ $store->time_format == 'hh:mm A' ? 'selected':'' }}>{{ date('h:m a') }} (default)</option>
                                             <option value="hh:mm:ss" {{ $store->time_format == 'hh:mm:ss' ? 'selected':'' }}>{{ date('h:m:s') }}</option>
                                         </select>

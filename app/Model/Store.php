@@ -130,7 +130,7 @@ class Store extends Model
             $decimalDigit = '00';
         } else {
             for ($i = 0; $i < $this->attributes['decimal_digit']; $i++) {
-                $decimalDigit += '0';
+                $decimalDigit .= '0';
             }
         }
 

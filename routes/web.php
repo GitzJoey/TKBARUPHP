@@ -41,7 +41,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('', 'DashboardController@index')->name('db');
 
-        Route::group(['prefix' => 'acc'], function() {
+        Route::group(['prefix' => 'acc', 'middleware' => 'role:owner|admin'], function() {
             Route::group(['prefix' => 'cash'], function() {
                 Route::get('', 'Accounting\CashAccountController@index')->name('db.acc.cash');
                 Route::get('show/{id}', 'Accounting\CashAccountController@show')->name('db.acc.cash.show');
@@ -269,7 +269,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                     Route::get('show/{id}', 'TaxInvoiceOutputController@show')->name('db.tax.invoice.output.show');
                     Route::get('create', 'TaxInvoiceOutputController@create')->name('db.tax.invoice.output.create');
                     Route::post('create/', 'TaxInvoiceOutputController@store');
-                    Route::get('edit/{id}', 'TaxInvoiceOutputController@revise')->name('db.tax.invoice.output.revise');
+                    Route::get('edit/{id}', 'TaxInvoiceOutputController@edit')->name('db.tax.invoice.output.edit');
                     Route::patch('edit/{id}', 'TaxInvoiceOutputController@update');
                     Route::delete('edit/{id}', 'TaxInvoiceOutputController@delete')->name('db.tax.invoice.output.delete');
                 });

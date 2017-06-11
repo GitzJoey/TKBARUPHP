@@ -206,8 +206,7 @@
                             <div class="form-group">
                                 <label for="inputDecimalDigit" class="col-sm-2 control-label">@lang('store.field.decimal_digit')</label>
                                 <div class="col-sm-10">
-                                    <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="{{ $store->decimal_digit }}" placeholder="Decimal Digit"
-                                           data-parsley-required="true" data-parsley-type="number" data-parsley-max="4" data-parsley-group="tab_settings" readonly>
+                                    <input id="inputDecimalDigit" name="decimal_digit" type="text" class="form-control" value="{{ $store->decimal_digit }}" placeholder="Decimal Digit" readonly>
                                 </div>
                             </div>
                             <div class="form-group">

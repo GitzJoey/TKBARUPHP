@@ -176,7 +176,7 @@
                                                 <span class="control-label-normal">@{{ tran.formattedQty }}</span>
                                             </td>
                                             <td class="valign-middle text-right">
-                                                <span class="control-label-normal">@{{ tran.formattedPrice }}</span>
+                                                <span class="control-label-normal">@{{ tran.formattedTaxBase }}</span>
                                             </td>
                                             <td class="valign-middle text-right">
                                                 <span class="control-label-normal">@{{ tran.formattedGST }}</span>
@@ -185,8 +185,15 @@
                                                 <span class="control-label-normal">@{{ tran.formattedLuxuryTax }}</span>
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal" v-on:click="editTran(tran)"><span class="fa fa-pencil"></span></button>
-                                                <button type="button" class="btn btn-danger btn-md" v-on:click="removeTran(tran)"><span class="fa fa-minus"></span></button>
+                                                <input type="hidden" name="tran_name[]" v-bind:value="tran.name">
+                                                <input type="hidden" name="tran_is_gst_included[]" v-bind:value="tran.isGSTIncluded">
+                                                <input type="hidden" name="tran_price[]" v-bind:value="tran.price">
+                                                <input type="hidden" name="tran_discount[]" v-bind:value="tran.discount">
+                                                <input type="hidden" name="tran_qty[]" v-bind:value="tran.qty">
+                                                <input type="hidden" name="tran_gst[]" v-bind:value="tran.gst">
+                                                <input type="hidden" name="tran_luxury_tax[]" v-bind:value="tran.luxuryTax">
+                                                <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal" v-on:click="editTran(tran, tranIndex)"><span class="fa fa-pencil"></span></button>
+                                                <button type="button" class="btn btn-danger btn-md" v-on:click="removeTran(tranIndex)"><span class="fa fa-minus"></span></button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -254,17 +261,22 @@
                                     <label for="modalName">Name:</label>
                                     <input type="text" class="form-control" name="modalName" v-model="newTran.name">
                                 </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="isGSTIncluded" type="checkbox" v-model="newTran.isGSTIncluded" v-on:change="calcOnModalGST"> Termasuk PPN
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="modalPrice">Harga Satuan (Rp):</label>
-                                    <input type="text" class="form-control" name="modalPrice" v-model="newTran.price" v-on:blur="calcGST">
+                                    <input type="text" class="form-control" name="modalPrice" v-model="newTran.price" v-on:blur="calcOnModalGST">
                                 </div>
                                 <div class="form-group">
                                     <label for="modalQty">Jumlah Barang:</label>
-                                    <input type="text" class="form-control" name="modalQty" v-model="newTran.qty" v-on:blur="calcGST">
+                                    <input type="text" class="form-control" name="modalQty" v-model="newTran.qty" v-on:blur="calcOnModalGST">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -274,7 +286,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="modalDiscount">Diskon (Rp):</label>
-                                    <input type="text" class="form-control" name="modalDiscount" v-model="newTran.discount" v-on:blur="calcGST">
+                                    <input type="text" class="form-control" name="modalDiscount" v-model="newTran.discount" v-on:blur="calcOnModalGST">
                                 </div>
                             </div>
                         </div>
@@ -292,11 +304,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="modalPercentageLuxuryTax">Tarif PPnBM:</label>
-                                    <input type="text" class="form-control" name="modalPercentageLuxuryTax" v-model="newTran.luxuryTaxPercentage" v-on:blur="calcOnBlurLuxuryTaxPercentage">
+                                    <input type="text" class="form-control" name="modalPercentageLuxuryTax" v-model="newTran.luxuryTaxPercentage" v-on:blur="calcOnModalBlurLuxuryTaxPercentage">
                                 </div>
                                 <div class="form-group">
                                     <label for="modalLuxuryTax">Pajak Penjualan Atas Barang Mewah (PPnBM):</label>
-                                    <input type="text" class="form-control" name="modalLuxuryTax" v-model="newTran.luxuryTax" v-on:blur="calcOnBlurLuxuryTax">
+                                    <input type="text" class="form-control" name="modalLuxuryTax" v-model="newTran.luxuryTax" v-on:blur="calcOnModalBlurLuxuryTax">
                                 </div>
                             </div>
                         </div>
@@ -392,7 +404,9 @@
                 },
                 insertTran: function() {
                     this.newTran = {
+                        index: -1,
                         name: '',
+                        isGSTIncluded: false,
                         qty: 0,
                         price: 0,
                         totalPrice: 0,
@@ -405,14 +419,18 @@
                 },
                 saveTran: function() {
                     this.newTran.formattedQty = numeral(this.newTran.qty).format();
-                    this.newTran.formattedPrice = numeral(this.newTran.price).format();
+                    this.newTran.formattedTaxBase = numeral(this.newTran.taxBase).format();
                     this.newTran.formattedGST = numeral(this.newTran.gst).format();
                     this.newTran.formattedLuxuryTax = numeral(this.newTran.luxuryTax).format();
-                    this.taxOutput.transactions.push(this.newTran);
+                    if(this.newTran.index == -1)
+                        this.taxOutput.transactions.push(this.newTran);
+                    else
+                        this.taxOutput.transactions[this.newTran.index] = this.newTran;
                     this.calcTax();
                 },
-                editTran: function(tran) {
+                editTran: function(tran, index) {
                     this.newTran = tran;
+                    this.newTran.index = index;
                     this.calcTax();
                 },
                 removeTran: function (index) {
@@ -425,10 +443,11 @@
                     var totalTaxBase = 0;
                     var totalGST = 0;
                     var totalLuxuryTax = 0;
+
                     this.taxOutput.transactions.forEach(function(tran) {
-                        totalGST += tran.gst * tran.qty;
-                        totalTaxBase += tran.price * tran.qty;
-                        totalLuxuryTax += tran.luxuryTax * tran.qty;
+                        totalGST += tran.gst;
+                        totalTaxBase += tran.taxBase;
+                        totalLuxuryTax += tran.luxuryTax;
                     });
                     this.taxOutput.totalTaxBase = totalTaxBase;
                     this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
@@ -439,7 +458,12 @@
                 },
                 calcOnModalGST: function() {
                     this.newTran.totalPrice = this.newTran.qty * this.newTran.price;
-                    this.newTran.taxBase = this.newTran.totalPrice - (this.newTran.qty * this.newTran.discount);
+                    if(this.newTran.isGSTIncluded) {
+                        this.newTran.taxBase = 90 / 100 * this.newTran.totalPrice - (this.newTran.qty * this.newTran.discount);
+                    }
+                    else {
+                        this.newTran.taxBase = this.newTran.totalPrice - (this.newTran.qty * this.newTran.discount);
+                    }
                     this.newTran.gst = 10 / 100 * this.newTran.taxBase;
                 },
                 calcOnModalBlurLuxuryTaxPercentage: function() {
@@ -447,6 +471,9 @@
                 },
                 calcOnModalBlurLuxuryTax: function() {
                     this.newTran.luxuryTaxPercentage =  this.newTran.luxuryTax / this.newTran.taxBase * 100;
+                },
+                checkTaxInclude: function() {
+                    calcTax();
                 }
             },
             computed: {
