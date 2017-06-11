@@ -17,52 +17,56 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="phoneProviderVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('phone_provider.edit.header.title')</h3>
-        </div>
-        {!! Form::model($phoneProvider, ['method' => 'PATCH', 'route' => ['db.admin.phone_provider.edit', $phoneProvider->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'true']) !!}
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="inputPlateNumber" class="col-sm-2 control-label">@lang('phone_provider.field.name')</label>
-                    <div class="col-sm-10">
-                        <input id="inputName" name="name" type="text" class="form-control" value="{{ $phoneProvider->name }}" placeholder="@lang('phone_provider.field.name')" data-parsley-required="true">
-                        <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>&nbsp;
-                    </div>
+        <form id="phoneProviderForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
+            {{ csrf_field() }}
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('phone_provider.edit.header.title')</h3>
                 </div>
-                <div class="form-group">
-                    <label for="inputShort_name" class="col-sm-2 control-label">@lang('phone_provider.field.short_name')</label>
-                    <div class="col-sm-10">
-                        <input id="inputShort_name" class="form-control" rows="5" name="short_name"value="{{ $phoneProvider->short_name }}" placeholder="@lang('phone_provider.field.short_name')">
-                        <span class="help-block">{{ $errors->has('short_name') ? $errors->first('short_name') : '' }}</span>&nbsp;
+                <div class="box-body">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
+                        <label for="inputName" class="col-sm-2 control-label">@lang('phone_provider.field.name')</label>
+                        <div class="col-sm-10">
+                            <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('phone_provider.field.name')"
+                                v-model="phone_provider.name" v-validate="'required'" data-vv-as="{{ trans('phone_provider.field.name') }}">
+                            <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPrefix" class="col-sm-2 control-label">@lang('phone_provider.field.prefix')</label>
-                    <div class="col-sm-5">
-                        <div id="phVue">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('short_name') }">
+                        <label for="inputShortName" class="col-sm-2 control-label">@lang('phone_provider.field.short_name')</label>
+                        <div class="col-sm-10">
+                            <input id="inputShortName" name="short_name" type="text" class="form-control" placeholder="@lang('phone_provider.field.short_name')"
+                                v-model="phone_provider.short_name" v-validate="'required'" data-vv-as="{{ trans('phone_provider.field.short_name') }}">
+                            <span v-show="errors.has('short_name')" class="help-block" v-cloak>@{{ errors.first('short_name') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPrefix" class="col-sm-2 control-label">@lang('phone_provider.field.prefix')</label>
+                        <div class="col-sm-5">
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>@lang('phone_provider.edit.table.header.prefix')</th>
+                                        <th>@lang('phone_provider.create.table.header.prefix')</th>
                                         <th class="text-center">@lang('labels.ACTION')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="p in prefixes">
-                                        <td>
-                                            <input type="text" class="form-control" v-model="p.prefix" name="prefixes[]" data-parsley-required="true"/>
+                                    <tr v-for="(p, pIdx) in prefixes">
+                                        <td v-bind:class="{ 'has-error':errors.has('prefixes' + pIdx) }">
+                                            <input type="hidden" name="level[]" v-bind:value="pIdx">
+                                            <input type="text" class="form-control"    v-model="p.prefix" name="prefixes[]"
+                                                v-validate="'required'" v-bind:data-vv-as="'{{ trans('phone_provider.field.prefix') }} ' + (pIdx + 1)"
+                                                v-bind:data-vv-name="'prefixes' + pIdx">
                                         </td>
                                         <td class="text-center valign-middle">
                                             <button type="button" class="btn btn-xs btn-danger" v-show="prefixes.length" v-on:click="remove()">@lang('buttons.remove_button')</button>
@@ -73,49 +77,88 @@
                             <button type="button" class="btn btn-xs btn-primary" v-on:click="addNew()">@lang('buttons.create_new_button')</button>
                         </div>
                     </div>
-                </div>
-                <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                    <label for="inputStatus" class="col-sm-2 control-label">@lang('phone_provider.field.status')</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('status', $statusDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
+                        <label for="inputStatus" class="col-sm-2 control-label">@lang('phone_provider.field.status')</label>
+                        <div class="col-sm-10">
+                            <select class="form-control"
+                                    name="status"
+                                    v-model="phone_provider.status"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('phone_provider.field.status') }}">
+                                <option v-bind:value="defaultStatus">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in statusDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputRemarks" class="col-sm-2 control-label">@lang('phone_provider.field.remarks')</label>
-                    <div class="col-sm-10">
-                        <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $phoneProvider->remarks }}" placeholder="@lang('phone_provider.field.remarks')">
-                        <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>&nbsp;
+                    <div class="form-group">
+                        <label for="inputRemarks" class="col-sm-2 control-label">@lang('phone_provider.field.remarks')</label>
+                        <div class="col-sm-10">
+                            <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $phoneProvider->remarks }}" placeholder="@lang('phone_provider.field.remarks')">
+                            <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>&nbsp;
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputButton" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                        <a href="{{ route('db.admin.phone_provider') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                    <div class="form-group">
+                        <label for="inputButton" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="{{ route('db.admin.phone_provider') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        </form>
     </div>
 @endsection
 
 @section('custom_js')
     <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
         var app = new Vue({
-            el: '#phVue',
+            el: '#phoneProviderVue',
             data: {
-                prefixes: JSON.parse('{!! htmlspecialchars_decode($phoneProvider->prefixes) !!}'),
+                phone_provider: {
+                    name:'{{ $phoneProvider->name }}',
+                    short_name:'{{ $phoneProvider->short_name }}',
+                    status:'{{ $phoneProvider->status }}'
+                },
+                prefixes: JSON.parse('{!! htmlspecialchars_decode($phonePrefix) !!}'),
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}')
             },
             methods: {
                 addNew: function () {
                     this.prefixes.push({
                         'phone_provider_id': '',
                         'prefix': ''
-                    })
+                    });
                 },
                 remove: function (idx) {
                     this.prefixes.splice(idx, 1);
+                },
+                validateBeforeSubmit: function() {
+                    var vm = this;
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.admin.phone_provider.edit', $phoneProvider->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#phoneProviderForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db.admin.phone_provider') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.address.length > 0) {
+                                    for (var i=0; i < e.response.data.address.length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                    }
+                                } else {
+                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
+                        });
+                    });
+                }
+            },
+            computed: {
+                defaultStatus: function() {
+                    return '';
                 }
             }
         });

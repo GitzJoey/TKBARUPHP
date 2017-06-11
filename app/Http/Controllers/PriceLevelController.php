@@ -52,22 +52,24 @@ class PriceLevelController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.price.price_level.create'))->withInput()->withErrors($validator);
-        } else {
-            PriceLevel::create([
-                'store_id' => Auth::user()->store->id,
-                'type' => $data['type'],
-                'weight' => $data['weight'],
-                'name' => $data['name'],
-                'description' => $data['description'],
-                'increment_value' => $data['increment_value'],
-                'percentage_value' => $data['[percentage_value'],
-                'status' => $data['status'],
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
             ]);
-
-            return redirect(route('db.price.price_level'));
         }
+
+        PriceLevel::create([
+            'store_id' => Auth::user()->store->id,
+            'type' => $data['type'],
+            'weight' => $data['weight'],
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'increment_value' => $data['increment_value'],
+            'percentage_value' => $data['percentage_value'],
+            'status' => $data['status'],
+        ]);
+
+        return response()->json();
     }
 
     public function edit($id)
@@ -83,7 +85,7 @@ class PriceLevelController extends Controller
     public function update($id, Request $req)
     {
         PriceLevel::find($id)->update($req->all());
-        return redirect(route('db.price.price_level'));
+        return response()->json();
     }
 
     public function delete($id)

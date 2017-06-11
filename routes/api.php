@@ -157,6 +157,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('create', 'UserController@store')->name('api.post.db.admin.user.create');
                 Route::post('edit/{id}', 'UserController@update')->name('api.post.db.admin.user.edit');
             });
+            
+            Route::group(['prefix' => 'phone'], function() {
+                Route::post('provider/create', 'PhoneProviderController@store')->name('api.post.db.admin.phone_provider.create');
+                Route::post('provider/edit/{id}', 'PhoneProviderController@update')->name('api.post.db.admin.phone_provider.edit');
+            });
         });
 
         Route::group(['prefix' => 'tax'], function() {
@@ -170,6 +175,13 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
         Route::group(['prefix' => 'employee'], function() {
             Route::post('create', 'EmployeeController@store')->name('api.post.db.employee.create');
             Route::post('edit/{id}', 'EmployeeController@update')->name('api.post.db.employee.edit');
+        });
+        
+        Route::group(['prefix' => 'price'], function() {
+            Route::group(['prefix' => 'price_level'], function() {
+                Route::post('create', 'PriceLevelController@store')->name('api.post.db.price.level.create');
+                Route::post('edit/{id}', 'PriceLevelController@update')->name('api.post.db.price.level.edit');;
+            });
         });
         
     });

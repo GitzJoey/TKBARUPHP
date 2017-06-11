@@ -166,9 +166,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'PriceLevelController@index')->name('db.price.price_level');
                 Route::get('show/{id}', 'PriceLevelController@show')->name('db.price.price_level.show');
                 Route::get('create', 'PriceLevelController@create')->name('db.price.price_level.create');
-                Route::post('create', 'PriceLevelController@store');
                 Route::get('edit/{id}', 'PriceLevelController@edit')->name('db.price.price_level.edit');
-                Route::patch('edit/{id}', 'PriceLevelController@update');
                 Route::delete('edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
             });
         });
@@ -448,9 +446,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('provider', 'PhoneProviderController@index')->name('db.admin.phone_provider');
                 Route::get('provider/show/{id}', 'PhoneProviderController@show')->name('db.admin.phone_provider.show');
                 Route::get('provider/create', 'PhoneProviderController@create')->name('db.admin.phone_provider.create');
-                Route::post('provider/create', 'PhoneProviderController@store');
                 Route::get('provider/edit/{id}', 'PhoneProviderController@edit')->name('db.admin.phone_provider.edit');
-                Route::patch('provider/edit/{id}', 'PhoneProviderController@update');
                 Route::delete('provider/edit/{id}', 'PhoneProviderController@delete')->name('db.admin.phone_provider.delete');
             });
 
