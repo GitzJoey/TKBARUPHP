@@ -74,6 +74,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read mixed $numeral_format
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereLatitude($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereLongitude($value)
+ * @property-read mixed $date_time_format
  */
 class Store extends Model
 {
