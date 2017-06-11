@@ -77,23 +77,22 @@ class SalesOrderCopyController extends Controller
 
         $soCopy = $this->salesOrderCopyService->createSOCopy($request, $soCode);
 
-        return redirect(route('db.so.copy.index', $soCode));
+        return response()->json();
     }
 
     public function edit($soCode, $id)
     {
         $currentSOCopy = $this->salesOrderCopyService->getSOCopyForEdit($id);
         $productDDL = Product::with('productUnits.unit')->get();
-        $stocksDDL = $this->stockService->getStocksForSO();
 
-        return view('sales_order.copy.edit', compact('soCode', 'currentSOCopy', 'productDDL', 'stocksDDL'));
+        return view('sales_order.copy.edit', compact('soCode', 'currentSOCopy', 'productDDL'));
     }
 
     public function update(Request $request, $soCode, $id)
     {
         $editedSOCopy = $this->salesOrderCopyService->editSOCopy($request, $id);
 
-        return redirect(route('db.so.copy.index', $soCode));
+        return response()->json();
     }
 
     public function delete($soCode, $id)

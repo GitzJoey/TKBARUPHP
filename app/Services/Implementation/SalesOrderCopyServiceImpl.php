@@ -72,10 +72,7 @@ class SalesOrderCopyServiceImpl implements SalesOrderCopyService
                 $item->store_id =  $soToBeCopied->store_id;
                 $item->selected_unit_id = $request->input("selected_unit_id.$i");
                 $item->base_unit_id = $request->input("base_unit_id.$i");
-                $item->conversion_value = ProductUnit::where([
-                    'product_id' => $item->product_id,
-                    'unit_id' => $item->selected_unit_id
-                ])->first()->conversion_value;
+                $item->conversion_value = ProductUnit::whereId($item->selected_unit_id)->first()->conversion_value;
                 $item->quantity = $request->input("quantity.$i");
                 $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;
@@ -133,10 +130,7 @@ class SalesOrderCopyServiceImpl implements SalesOrderCopyService
                 $item->store_id = Auth::user()->store_id;
                 $item->selected_unit_id = $request->input("selected_unit_id.$i");
                 $item->base_unit_id = $request->input("base_unit_id.$i");
-                $item->conversion_value = ProductUnit::where([
-                    'product_id' => $item->product_id,
-                    'unit_id' => $item->selected_unit_id
-                ])->first()->conversion_value;
+                $item->conversion_value = ProductUnit::whereId($item->selected_unit_id)->first()->conversion_value;
                 $item->quantity = $request->input("quantity.$i");
                 $item->price = floatval(str_replace(',', '', $request->input("price.$i")));
                 $item->to_base_quantity = $item->quantity * $item->conversion_value;

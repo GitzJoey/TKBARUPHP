@@ -200,29 +200,30 @@
                                                 <th width="20%"
                                                     class="text-right">@lang('sales_order.copy.create.table.item.header.total_price')</th>
                                             </tr>
-                                            </thead>
-                                            <tbody>
+                                        </thead>
+                                        <tbody>
                                             <tr v-for="(item, itemIndex) in so.items">
                                                 <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
                                                 <input type="hidden" name="base_unit_id[]" v-bind:value="item.base_unit.unit.id">
                                                 <td class="valign-middle">@{{ item.product.name }}</td>
-                                                <td>
+                                                <td v-bind:class="{ 'has-error':errors.has('qty_' + itemIndex) }">
                                                     <input type="text" class="form-control text-right" name="quantity[]"
-                                                           v-model="item.quantity" data-parsley-required="true"
-                                                           data-parsley-type="number">
+                                                           v-model="item.quantity" v-validate="'required|numeric:2'" v-bind:data-vv-name="'qty_' + itemIndex" v-bind:data-vv-as="'{{ trans('sales_order.copy.create.table.item.header.quantity') }} ' + (itemIndex + 1)">
                                                 </td>
-                                                <td>
-                                                    <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
-                                                    <select data-parsley-required="true"
+                                                <td v-bind:class="{ 'has-error':errors.has('unit_' + itemIndex) }">
+                                                    <select name="selected_unit_id[]"
                                                             class="form-control"
-                                                            v-model="item.selected_unit">
-                                                        <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                        <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
+                                                            v-model="item.selected_unit.id"
+                                                            v-validate="'required'"
+                                                            v-bind:data-vv-name="'unit_' + itemIndex"
+                                                            v-bind:data-vv-as="'{{ trans('sales_order.copy.create.table.item.header.unit') }} ' + (itemIndex + 1)">
+                                                        <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit.id">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
                                                     </select>
                                                 </td>
-                                                <td>
+                                                <td v-bind:class="{ 'has-error':errors.has('price_' + itemIndex) }">
                                                     <input type="text" class="form-control text-right" name="price[]"
-                                                           v-model="item.price" data-parsley-required="true">
+                                                           v-model="item.price" v-validate="'required|numeric:2'" v-bind:data-vv-name="'price_' + itemIndex" v-bind:data-vv-as="'{{ trans('sales_order.copy.create.table.item.header.price_unit') }} ' + (itemIndex + 1)">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md"
@@ -302,8 +303,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <textarea id="inputSoCopyRemarks" name="remarks" class="form-control"
-                                                      rows="5"></textarea>
+                                            <textarea id="inputSoCopyRemarks" name="remarks" class="form-control" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -371,7 +371,6 @@
                 currentSo: JSON.parse('{!! htmlspecialchars_decode($soToBeCopied->toJson()) !!}'),
                 productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                 so: {
-                    stock: {id: ''},
                     product: {id: ''},
                     customer: { },
                     items: [],
@@ -386,9 +385,6 @@
 
                 for (var i = 0; i < vm.currentSo.items.length; i++) {
                     vm.so.items.push({
-                        stock: {
-                            id: vm.currentSo.items[i].stock_id
-                        },
                         id: vm.currentSo.items[i].id,
                         product: _.cloneDeep(vm.currentSo.items[i].product),
                         base_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
@@ -430,9 +426,9 @@
                     if(product.id != ''){
                         var vm = this;
                         vm.so.items.push({
-                            stock_id: 0,
                             product: _.cloneDeep(product),
                             selected_unit: {
+                                id: '',
                                 unit: {
                                     id: ''
                                 },
@@ -447,6 +443,13 @@
                 removeItem: function (index) {
                     this.so.items.splice(index, 1);
                 }
+            },
+            computed: {
+                defaultProductUnit: function () {
+                    return {
+                        id: ''
+                    };
+                },
             }
         });
     </script>
