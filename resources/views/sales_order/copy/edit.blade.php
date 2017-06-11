@@ -16,22 +16,20 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div id="soCopyVue">
-        {!! Form::model($currentSOCopy, ['method' => 'PATCH', 'route' => ['db.so.copy.edit', $soCode, $currentSOCopy->hId()], 'class' => 'form-horizontal', 'data-parsley-validate' => 'parsley']) !!}
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="soCopyForm" class="form-horizontal" @submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-6">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('sales_order.copy.edit.box.customer')</h3>
@@ -39,8 +37,8 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputCustomerType"
-                                       class="col-sm-4 control-label">@lang('sales_order.copy.edit.field.customer_type')</label>
-                                <div class="col-sm-6">
+                                       class="col-sm-2 control-label">@lang('sales_order.copy.edit.field.customer_type')</label>
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control" readonly
                                            value="@lang('lookup.'.$currentSOCopy->customer_type)">
                                 </div>
@@ -48,15 +46,15 @@
                             @if($currentSOCopy->customer_type == 'CUSTOMERTYPE.R')
                                 <div class="form-group">
                                     <label for="inputCustomerId"
-                                           class="col-sm-4 control-label">@lang('sales_order.copy.edit.field.customer_name')</label>
-                                    <div class="col-sm-6">
+                                           class="col-sm-2 control-label">@lang('sales_order.copy.edit.field.customer_name')</label>
+                                    <div class="col-sm-8">
                                         <input type="text" class="form-control" readonly
                                                value="{{ $currentSOCopy->customer->name }}">
                                     </div>
                                     <div class="col-sm-1">
                                         <button id="customerDetailButton" type="button"
                                                 class="btn btn-primary btn-sm"
-                                                data-toggle="modal" data-target="#customerDetailModal"><span
+                                                data-toggle="modal" data-target="#customerDetailModal_0"><span
                                                     class="fa fa-info-circle fa-lg"></span></button>
                                     </div>
                                 </div>
@@ -65,23 +63,20 @@
                                     <label for="inputCustomerName"
                                            class="col-sm-4 control-label">@lang('sales_order.copy.edit.field.customer_name')</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" readonly
-                                               value="{{ $currentSOCopy->walk_in_cust }}">
+                                        <input type="text" class="form-control" readonly value="{{ $currentSOCopy->walk_in_cust }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputCustomerDetails"
-                                           class="col-sm-4 control-label">@lang('sales_order.copy.edit.field.customer_details')</label>
+                                    <label for="inputCustomerDetails" class="col-sm-4 control-label">@lang('sales_order.copy.edit.field.customer_details')</label>
                                     <div class="col-sm-8">
-                                                    <textarea class="form-control" rows="5" readonly>{{ $currentSOCopy->walk_in_cust_detail }}
-                                                    </textarea>
+                                        <textarea class="form-control" rows="5" readonly>{{ $currentSOCopy->walk_in_cust_detail }}</textarea>
                                     </div>
                                 </div>
                             @endif
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('sales_order.copy.edit.box.sales_order_detail')</h3>
@@ -91,23 +86,20 @@
                                 <label for="inputSoCode"
                                        class="col-sm-3 control-label">@lang('sales_order.copy.edit.field.so_code')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" readonly
-                                           value="{{ $currentSOCopy->main_so_code }}">
+                                    <input type="text" class="form-control" value="{{ $currentSOCopy->main_so_code }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputSoCopyCode"
-                                       class="col-sm-3 control-label">@lang('sales_order.copy.edit.field.so_copy_code')</label>
+                                <label for="inputSoCopyCode" class="col-sm-3 control-label">@lang('sales_order.copy.edit.field.so_copy_code')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" readonly name="code" value="{{ $currentSOCopy->code }}">
+                                    <input type="text" class="form-control" name="code" value="{{ $currentSOCopy->code }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputSoType"
                                        class="col-sm-3 control-label">@lang('sales_order.copy.edit.field.so_type')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" readonly
-                                           value="@lang('lookup.'.$currentSOCopy->so_type)">
+                                    <input type="text" class="form-control" readonly value="@lang('lookup.'.$currentSOCopy->so_type)">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -118,8 +110,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" readonly
-                                               value="{{ $currentSOCopy->so_created->format('d-m-Y') }}">
+                                        <vue-datetimepicker id="inputSoDate" name="so_created" value="" v-model="so.so_created" format="DD-MM-YYYY hh:mm A" readonly="true"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -136,30 +127,28 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="inputShippingDate"
-                                       class="col-sm-3 control-label">@lang('sales_order.copy.edit.field.shipping_date')</label>
-                                <div class="col-sm-9">
+                                       class="col-sm-2 control-label">@lang('sales_order.copy.edit.field.shipping_date')</label>
+                                <div class="col-sm-5">
                                     <div class="input-group date">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" readonly name="shipping_date"
-                                               value="{{ $currentSOCopy->shipping_date->format('d-m-Y') }}"
-                                               data-parsley-required="true">
+                                        <vue-datetimepicker id="inputShippingDate" name="shipping_date" value="" v-model="so.shipping_date" format="DD-MM-YYYY hh:mm A" readonly="true"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputWarehouse"
-                                       class="col-sm-3 control-label">@lang('sales_order.copy.edit.field.warehouse')</label>
-                                <div class="col-sm-9">
+                                       class="col-sm-2 control-label">@lang('sales_order.copy.edit.field.warehouse')</label>
+                                <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly
                                            value="{{ $currentSOCopy->warehouse->name }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputVendorTrucking"
-                                       class="col-sm-3 control-label">@lang('sales_order.copy.edit.field.vendor_trucking')</label>
-                                <div class="col-sm-9">
+                                       class="col-sm-2 control-label">@lang('sales_order.copy.edit.field.vendor_trucking')</label>
+                                <div class="col-sm-10">
                                     <input type="text" class="form-control" readonly
                                            value="{{ empty($currentSOCopy->vendorTrucking->name) ? '':$currentSOCopy->vendorTrucking->name }}">
                                 </div>
@@ -176,89 +165,65 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                                @if($currentSOCopy->so_type == 'SOTYPE.SVC')
-                                    <div class="col-md-11">
-                                        <select id="inputProduct"
-                                                class="form-control"
-                                                v-model="so.product">
-                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="button" class="btn btn-primary btn-md"
-                                                v-on:click="insertProduct(so.product)"><span class="fa fa-plus"/>
-                                        </button>
-                                    </div>
-                                @else
-                                    <div class="col-md-11">
-                                        <select id="inputStock"
-                                                class="form-control"
-                                                v-model="so.stock">
-                                            <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="stock in stocksDDL" v-bind:value="stock"></option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="button" class="btn btn-primary btn-md"
-                                                v-on:click="insertStock(so.stock)"><span class="fa fa-plus"/>
-                                        </button>
-                                    </div>
-                                @endif
+                                <div class="col-md-11">
+                                    <select id="inputProduct"
+                                            class="form-control"
+                                            v-model="so.product">
+                                        <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-primary btn-md" v-on:click="insertProduct(so.product)"><span class="fa fa-plus"/>
+                                    </button>
+                                </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
                                     <table id="itemsListTable" class="table table-bordered table-hover">
                                         <thead>
-                                        <tr>
-                                            <th width="30%">@lang('sales_order.copy.edit.table.item.header.product_name')</th>
-                                            <th width="15%">@lang('sales_order.copy.edit.table.item.header.quantity')</th>
-                                            <th width="15%"
-                                                class="text-right">@lang('sales_order.copy.edit.table.item.header.unit')</th>
-                                            <th width="15%"
-                                                class="text-right">@lang('sales_order.copy.edit.table.item.header.price_unit')</th>
-                                            <th width="5%">&nbsp;</th>
-                                            <th width="20%"
-                                                class="text-right">@lang('sales_order.copy.edit.table.item.header.total_price')</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-for="(item, itemIndex) in so.items">
-                                            <input type="hidden" name="item_id[]" v-bind:value="item.id">
-                                            <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
-                                            <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
-                                            <input type="hidden" name="base_unit_id[]"
-                                                   v-bind:value="item.base_unit.unit.id">
-                                            <td class="valign-middle">@{{ item.product.name }}</td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="quantity[]"
-                                                       v-model="item.quantity" data-parsley-required="true"
-                                                       data-parsley-type="number">
-                                            </td>
-                                            <td>
-                                                <input type="hidden" name="selected_unit_id[]" v-bind:value="item.selected_unit.unit.id">
-                                                <select class="form-control"
-                                                        v-model="item.selected_unit"
-                                                        data-parsley-required="true">
-                                                    <option v-bind:value="{unit: {id: ''}, conversion_value: 1}">@lang('labels.PLEASE_SELECT')</option>
-                                                    <option v-for="product_unit in item.product.product_units" v-bind:value="product_unit">@{{ product_unit.unit.name + ' (' + product_unit.unit.symbol + ')' }}</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control text-right" name="price[]"
-                                                       v-model="item.price" data-parsley-required="true">
-                                            </td>
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-danger btn-md"
-                                                        v-on:click="removeItem(itemIndex)"><span
-                                                            class="fa fa-minus"></span>
-                                                </button>
-                                            </td>
-                                            <td class="text-right valign-middle">
-                                                @{{ item.selected_unit.conversion_value * item.quantity * item.price }}
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <th width="30%">@lang('sales_order.copy.edit.table.item.header.product_name')</th>
+                                                <th width="15%">@lang('sales_order.copy.edit.table.item.header.quantity')</th>
+                                                <th width="15%"
+                                                    class="text-right">@lang('sales_order.copy.edit.table.item.header.unit')</th>
+                                                <th width="15%"
+                                                    class="text-right">@lang('sales_order.copy.edit.table.item.header.price_unit')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-right">@lang('sales_order.copy.edit.table.item.header.total_price')</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="(item, itemIndex) in so.items">
+                                                <input type="hidden" name="item_id[]" v-bind:value="item.id">
+                                                <input type="hidden" name="product_id[]" v-bind:value="item.product.id">
+                                                <input type="hidden" name="stock_id[]" v-bind:value="item.stock.id">
+                                                <input type="hidden" name="base_unit_id[]"
+                                                       v-bind:value="item.base_unit.unit.id">
+                                                <td class="valign-middle">@{{ item.product.name }}</td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="quantity[]"
+                                                           v-model="item.quantity" data-parsley-required="true"
+                                                           data-parsley-type="number">
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control text-right" name="price[]"
+                                                           v-model="item.price" data-parsley-required="true">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md"
+                                                            v-on:click="removeItem(itemIndex)"><span
+                                                                class="fa fa-minus"></span>
+                                                    </button>
+                                                </td>
+                                                <td class="text-right valign-middle">
+
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -351,7 +316,7 @@
                     </div>
                 </div>
             </div>
-        {!! Form::close() !!}
+        </form>
 
         @include('sales_order.customer_details_partial')
     </div>
@@ -359,24 +324,96 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        var currentSo = JSON.parse('{!! htmlspecialchars_decode($currentSOCopy->toJson()) !!}');
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            updated: function() {
+                $(this.$el).datetimepicker().data("DateTimePicker").date(this.value);
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
+
         var soCopyApp = new Vue({
             el: '#soCopyVue',
             data: {
+                currentSo: JSON.parse('{!! htmlspecialchars_decode($currentSOCopy->toJson()) !!}'),
                 productDDL: JSON.parse('{!! htmlspecialchars_decode($productDDL) !!}'),
                 stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 so: {
-                    customer: currentSo.customer ? _.cloneDeep(currentSo.customer) : {id: ''},
+                    so_created: '',
+                    customer: { },
                     items: [],
                 },
                 soIndex: 0
             },
+            mounted: function() {
+                var vm = this;
+
+                vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                vm.so.so_created = vm.currentSo.so_created;
+
+                for (var i = 0; i < vm.currentSo.items.length; i++) {
+                    vm.so.items.push({
+                        stock: {
+                            id: vm.currentSo.items[i].stock_id
+                        },
+                        id: vm.currentSo.items[i].id,
+                        product: _.cloneDeep(vm.currentSo.items[i].product),
+                        base_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(unit) { return unit.is_base == 1; })),
+                        selected_unit: _.cloneDeep(_.find(vm.currentSo.items[i].product.product_units, function(punit) { return punit.id == vm.currentSo.items[i].selected_unit_id; })),
+                        quantity: vm.currentSo.items[i].quantity % 1 != 0 ? parseFloat(vm.currentSo.items[i].quantity).toFixed(1) : parseFloat(vm.currentSo.items[i].quantity).toFixed(0),
+                        price: parseFloat(vm.currentSo.items[i].price).toFixed(0)
+                    });
+                }
+            },
             methods: {
+                validateBeforeSubmit: function() {
+                    var vm = this;
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.so.copy.edit', [$soCode, $currentSOCopy->hId()]) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soCopyForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db.so.copy.index', $soCode) }}';
+                            }).catch(function(e) {
+                            $('#loader-container').fadeOut('fast');
+                            if (e.response.data.address.length > 0) {
+                                for (var i=0; i < e.response.data.address.length; i++) {
+                                    vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                }
+                            } else {
+                                vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                            }
+                        });
+                    });
+                },
                 grandTotal: function () {
                     var vm = this;
                     var result = 0;
                     _.forEach(vm.so.items, function (item, key) {
-                        result += (item.selected_unit.conversion_value * item.quantity * item.price);
+
                     });
                     return result;
                 },
@@ -386,6 +423,7 @@
                             stock_id: 0,
                             product: _.cloneDeep(product),
                             selected_unit: {
+                                id: '',
                                 unit: {
                                     id: ''
                                 },
@@ -397,67 +435,17 @@
                         });
                     }
                 },
-                insertStock: function (stock) {
-                    if(stock.id != ''){
-                        var vm = this;
-                        var stock_price = _.find(stock.today_prices, function (price) {
-                            return price.price_level_id === vm.so.customer.price_level_id;
-                        });
-
-                        vm.so.items.push({
-                            stock_id: stock.id,
-                            product: _.cloneDeep(stock.product),
-                            selected_unit: {
-                                unit: {
-                                    id: ''
-                                },
-                                conversion_value: 1
-                            },
-                            base_unit: _.cloneDeep(_.find(stock.product.product_units, isBase)),
-                            quantity: 0,
-                            price: stock_price ? stock_price : 0
-                        });
-                    }
-                },
                 removeItem: function (index) {
                     this.so.items.splice(index, 1);
                 }
+            },
+            computed: {
+                defaultProductUnit: function() {
+                    return {
+                        id: ''
+                    };
+                }
             }
-        });
-
-        for (var i = 0; i < currentSo.items.length; i++) {
-            soCopyApp.so.items.push({
-                id: currentSo.items[i].id,
-                stock: {
-                    id: currentSo.items[i].stock_id
-                },
-                product: _.cloneDeep(currentSo.items[i].product),
-                base_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, isBase)),
-                selected_unit: _.cloneDeep(_.find(currentSo.items[i].product.product_units, getSelectedUnit(currentSo.items[i].selected_unit_id))),
-                quantity: currentSo.items[i].quantity % 1 != 0 ? parseFloat(currentSo.items[i].quantity).toFixed(1) : parseFloat(currentSo.items[i].quantity).toFixed(0),
-                price: parseFloat(currentSo.items[i].price).toFixed(0)
-            });
-        }
-
-        function getSelectedUnit(selectedUnitId) {
-            return function (element) {
-                return element.unit_id == selectedUnitId;
-            }
-        }
-
-        function isBase(unit) {
-            return unit.is_base == 1;
-        }
-
-        $(function () {
-            $("#inputSoDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
-            $("#inputShippingDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
         });
     </script>
 @endsection
