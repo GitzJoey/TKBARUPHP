@@ -481,6 +481,14 @@ class SalesOrderServiceImpl implements SalesOrderService
 
     public function searchSO($keyword)
     {
+        $salesOrders = SalesOrder::with('customer.profiles')
+            ->where('code', 'like', '%'.$keyword.'%')
+            ->orWhere('walk_in_cust', 'like', '%'.$keyword.'%')
+            ->orWhereHas('customer.profiles', function($query) use ($keyword) {
+                $query->where('first_name', 'like', '%'.$keyword.'%')
+                    ->where('last_name', 'like', '%'.$keyword.'%');
+            });
 
+        return $salesOrders;
     }
 }

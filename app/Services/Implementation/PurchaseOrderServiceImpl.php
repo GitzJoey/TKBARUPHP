@@ -299,9 +299,9 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
     public function getDuePO($daysToDue = 1)
     {
         $poWaitingForPayment = PurchaseOrder::with('receipts', 'supplier')
-        ->where('status', '=', 'POSTATUS.WP')
-        ->whereHas('supplier', function($query){
-            $query->where('payment_due_day', '>', 0);
+            ->where('status', '=', 'POSTATUS.WP')
+            ->whereHas('supplier', function($query){
+                $query->where('payment_due_day', '>', 0);
         })->get();
 
         $today = Carbon::today();
@@ -324,9 +324,9 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
     public function getUnreceivedPO($threshold = 3)
     {
         $purchaseOrders = PurchaseOrder::with('supplier')
-        ->where('status', '=', 'POSTATUS.WA')
-        ->where('shipping_date', '<', Carbon::today()->addDays(-$threshold))
-        ->doesntHave('receipts')->get();
+            ->where('status', '=', 'POSTATUS.WA')
+            ->where('shipping_date', '<', Carbon::today()->addDays(-$threshold))
+            ->doesntHave('receipts')->get();
 
         foreach($purchaseOrders AS $purchaseOrder)
         {
@@ -338,6 +338,13 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
 
     public function searchPO($keyword)
     {
+        $purchaseOrders = PurchaseOrder::with('supplier.profiles')
+            ->where('code', 'like', '%'.$keyword.'%')
+            ->orWhereHas('supplier.profiles', function($query) use ($keyword) {
+                $query->where('first_name', 'like', '%'.$keyword.'%')
+                    ->where('last_name', 'like', '%'.$keyword.'%');
+            });
 
+        return $purchaseOrders;
     }
 }
