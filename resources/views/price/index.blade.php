@@ -52,58 +52,58 @@
             <div class="box-body">
                 <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <th class="text-center">@lang('price.index.table.header.stock_name')</th>
-                        <th class="text-center">@lang('price.index.table.header.input_date')</th>
-                        @foreach($priceLevels as $priceLevelKey => $priceLevel)
-                            <th class="text-center">{{ $priceLevel->name }}</th>
-                        @endforeach
-                        <th class="text-center">@lang('labels.ACTION')</th>
-                    </tr>
+                        <tr>
+                            <th class="text-center">@lang('price.index.table.header.stock_name')</th>
+                            <th class="text-center">@lang('price.index.table.header.input_date')</th>
+                            @foreach($priceLevels as $priceLevelKey => $priceLevel)
+                                <th class="text-center">{{ $priceLevel->name }}</th>
+                            @endforeach
+                            <th class="text-center">@lang('labels.ACTION')</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach($productCategory->stocks as $stockKey => $stock)
-                        @if(count($stock->latestPrices()) == 0)
-                            <tr>
-                                <td>
-                                    {{ $stock->product->name }}
-                                    <span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history" class="tooltips">
-                                        <button type="button" class="btn btn-xs btn-info pull-right"><span class="fa fa-info-circle fa-fw"></span></button>
-                                    </span>
-                                </td>
-                                <td class="text-center">-</td>
-                                @foreach($priceLevels as $priceLevelKey => $priceLevel)
-                                    <td class="text-center">0</td>
-                                @endforeach
-                                <td class="text-center">
-                                    <a class="btn btn-xs btn-primary"
-                                       href="{{ route('db.price.stock', $stock->hId()) }}">@lang('buttons.update_button')</a>
-                                </td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td>
-                                    {{ $stock->product->name }}
-                                    <span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history" class="tooltips">
-                                        <button type="button" class="btn btn-xs btn-info pull-right"><span class="fa fa-info-circle fa-fw"></span></button>
-                                    </span>
-                                </td>
-                                <td class="text-center">{{ $stock->latestPrices()->first()->input_date }}</td>
-                                @foreach($priceLevels as $priceLevelKey => $priceLevel)
-                                    <td class="text-center">{{
-                                                number_format($stock->latestPrices()->first(function ($price) use($priceLevel){
-                                                    return $price->price_level_id === $priceLevel->id;
-                                                })->price)
-                                            }}
+                        @foreach($productCategory->stocks as $stockKey => $stock)
+                            @if(count($stock->latestPrices()) == 0)
+                                <tr>
+                                    <td>
+                                        {{ $stock->product->name }}
+                                        <span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history" class="tooltips">
+                                            <button type="button" class="btn btn-xs btn-info pull-right"><span class="fa fa-info-circle fa-fw"></span></button>
+                                        </span>
                                     </td>
-                                @endforeach
-                                <td class="text-center">
-                                    <a class="btn btn-xs btn-primary"
-                                       href="{{ route('db.price.stock', $stock->hId()) }}">@lang('buttons.update_button')</a>
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
+                                    <td class="text-center">-</td>
+                                    @foreach($priceLevels as $priceLevelKey => $priceLevel)
+                                        <td class="text-center">0</td>
+                                    @endforeach
+                                    <td class="text-center">
+                                        <a class="btn btn-xs btn-primary"
+                                           href="{{ route('db.price.stock', $stock->hId()) }}">@lang('buttons.update_button')</a>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td>
+                                        {{ $stock->product->name }}
+                                        <span data-tooltip-content="#category_{{ $categoryKey }}_stock_{{ $stockKey }}_history" class="tooltips">
+                                            <button type="button" class="btn btn-xs btn-info pull-right"><span class="fa fa-info-circle fa-fw"></span></button>
+                                        </span>
+                                    </td>
+                                    <td class="text-center">{{ $stock->latestPrices()->first()->input_date }}</td>
+                                    @foreach($priceLevels as $priceLevelKey => $priceLevel)
+                                        <td class="text-center">{{
+                                                    number_format($stock->latestPrices()->first(function ($price) use($priceLevel){
+                                                        return $price->price_level_id === $priceLevel->id;
+                                                    })->price)
+                                                }}
+                                        </td>
+                                    @endforeach
+                                    <td class="text-center">
+                                        <a class="btn btn-xs btn-primary"
+                                           href="{{ route('db.price.stock', $stock->hId()) }}">@lang('buttons.update_button')</a>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
 
