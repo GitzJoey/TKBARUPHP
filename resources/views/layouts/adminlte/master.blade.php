@@ -70,8 +70,6 @@
                 });
                 container.delay(350).fadeOut("slow");
 
-                window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
-
                 $('#goTop').goTop();
 
                 var sessionTimeout = parseInt('{{ Config::get('session.lifetime') }}') * 60;

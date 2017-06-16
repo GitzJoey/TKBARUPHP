@@ -53,9 +53,17 @@
     </div>
 
     <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/parsley.config.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/parsley.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/id.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/id.extra.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/en.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/en.extra.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
+            window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
+
             $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
