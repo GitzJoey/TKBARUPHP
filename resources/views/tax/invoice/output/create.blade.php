@@ -39,8 +39,9 @@
                         <div class="box-body">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <input type="hidden" name="gst_transaction_type" v-model="taxOutput.GSTTransactionType">
                                     <label for="inputGSTTranType" class="control-label">Jenis Transaksi PPN</label>
-                                    <select id="inputGSTTranType" name="gst_transaction_type" class="form-control" disabled="true" v-model="taxOutput.GSTTransactionType">
+                                    <select id="inputGSTTranType" class="form-control" disabled="true" v-model="taxOutput.GSTTransactionType">
                                         <option v-bind:value="defaultGSTTranType.code">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="vtt of gstTranTypeDDL" v-bind:value="vtt.code">@{{ vtt.description }}</option>
                                     </select>
@@ -240,7 +241,7 @@
                 <div class="col-md-7 col-offset-md-5">
                     <div class="btn-toolbar">
                         <button id="submitButton" type="button" class="btn btn-primary pull-right" v-on:click="validateBeforeSubmit('submit')">@lang('buttons.submit_button')</button>
-                        <button id="cancelButton" type="button" class="cancelButton btn btn-primary pull-right" href="{{ route('db.tax.invoice.output.index') }}">@lang('buttons.cancel_button')</button>
+                        <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.tax.invoice.output.index') }}">@lang('buttons.cancel_button')</a>
                     </div>
                 </div>
             </div>
@@ -266,6 +267,7 @@
                                         <input name="isGSTIncluded" type="checkbox" v-model="newTran.isGSTIncluded" v-on:change="calcOnModalGST"> Termasuk PPN
                                     </label>
                                 </div>
+                                <p style="margin:20px 0 20px">Harga Sebelum PPN = @{{ newTran.beforeGSTPriceText }}, Harga Sesudah PPN = @{{ newTran.afterGSTPriceText }}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -393,7 +395,7 @@
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.tax.invoice.output.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#taxForm')[0]))
                             .then(function(response) {
-                                window.location.href = '{{ route('db.tax.invoice.output.index') }}';
+                                //window.location.href = '{{ route('db.tax.invoice.output.index') }}';
                             });
                     }).catch(function() {
 
@@ -449,6 +451,7 @@
                         totalTaxBase += tran.taxBase;
                         totalLuxuryTax += tran.luxuryTax;
                     });
+
                     this.taxOutput.totalTaxBase = totalTaxBase;
                     this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
                     this.taxOutput.totalGST = totalGST;
@@ -457,23 +460,27 @@
                     this.taxOutput.totalLuxuryTaxText = numeral(totalLuxuryTax).format();
                 },
                 calcOnModalGST: function() {
+
                     this.newTran.totalPrice = this.newTran.qty * this.newTran.price;
+
                     if(this.newTran.isGSTIncluded) {
                         this.newTran.taxBase = 90 / 100 * this.newTran.totalPrice - (this.newTran.qty * this.newTran.discount);
+                        this.newTran.beforeGSTPriceText = numeral(90 / 100 * this.newTran.price).format();
+                        this.newTran.afterGSTPriceText = numeral(this.newTran.price).format();
                     }
                     else {
                         this.newTran.taxBase = this.newTran.totalPrice - (this.newTran.qty * this.newTran.discount);
+                        this.newTran.beforeGSTPriceText = numeral(this.newTran.price).format();
+                        this.newTran.afterGSTPriceText = numeral(110 / 100 * this.newTran.price).format();
                     }
                     this.newTran.gst = 10 / 100 * this.newTran.taxBase;
+
                 },
                 calcOnModalBlurLuxuryTaxPercentage: function() {
                     this.newTran.luxuryTax =  this.newTran.luxuryTaxPercentage / 100 * this.newTran.taxBase;
                 },
                 calcOnModalBlurLuxuryTax: function() {
                     this.newTran.luxuryTaxPercentage =  this.newTran.luxuryTax / this.newTran.taxBase * 100;
-                },
-                checkTaxInclude: function() {
-                    calcTax();
                 }
             },
             computed: {
