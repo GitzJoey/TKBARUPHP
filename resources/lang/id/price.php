@@ -8,12 +8,7 @@ return [
         'table' => [
             'header' => [
                 'stock_name' => 'Nama Stok',
-                'input_date' => 'Berlaku Sejak',
-                'price_level' => [
-                    'RETAIL' => 'Retail',
-                    'WHOLESALE 1' => 'Wholesale 1',
-                    'WHOLESALE 2' => 'Wholesale 2',
-                ],
+                'input_date' => 'Berlaku Sejak'
             ],
         ],
         'price_history' => [
