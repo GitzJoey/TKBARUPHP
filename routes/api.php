@@ -191,7 +191,6 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('edit/{id}', 'PriceLevelController@update')->name('api.post.db.price.level.edit');;
             });
         });
-        
     });
 });
 
