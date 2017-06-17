@@ -79,6 +79,15 @@ class PriceLevel extends Model
         'deleted_at',
     ];
 
+    protected $appends = [
+        'i18nType',
+    ];
+
+    public function getI18nTypeAttribute()
+    {
+        return trans('lookup.' . $this->attributes['type']);
+    }
+
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);

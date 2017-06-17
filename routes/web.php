@@ -156,9 +156,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::group(['prefix' => 'price'], function () {
             Route::get('today', 'PriceController@index')->name('db.price.today');
             Route::get('category/{id}', 'PriceController@editCategoryPrice')->name('db.price.category');
-            Route::post('category/{id}', 'PriceController@updateCategoryPrice');
             Route::get('stock/{id}', 'PriceController@editStockPrice')->name('db.price.stock');
-            Route::post('stock/{id}', 'PriceController@updateStockPrice');
 
             Route::group(['prefix' => 'price_level'], function () {
                 Route::get('', 'PriceLevelController@index')->name('db.price.price_level');

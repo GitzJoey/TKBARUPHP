@@ -89,7 +89,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('edit/{id}', 'SupplierController@update')->name('api.post.db.master.supplier.edit');
             });
 
-            Route::group(['prefix' => 'supplier'], function () {
+            Route::group(['prefix' => 'product'], function () {
                 Route::post('create', 'ProductController@store')->name('api.post.db.master.product.create');
                 Route::post('edit/{id}', 'ProductController@update')->name('api.post.db.master.product.edit');
             });
@@ -183,6 +183,9 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
         });
         
         Route::group(['prefix' => 'price'], function() {
+            Route::post('category/{id}', 'PriceController@updateCategoryPrice')->name('api.post.db.price.category.update');
+            Route::post('stock/{id}', 'PriceController@updateStockPrice')->name('api.post.db.price.stock.update');
+
             Route::group(['prefix' => 'price_level'], function() {
                 Route::post('create', 'PriceLevelController@store')->name('api.post.db.price.level.create');
                 Route::post('edit/{id}', 'PriceLevelController@update')->name('api.post.db.price.level.edit');;

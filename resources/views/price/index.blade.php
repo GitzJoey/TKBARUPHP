@@ -90,11 +90,8 @@
                                     </td>
                                     <td class="text-center">{{ $stock->latestPrices()->first()->input_date }}</td>
                                     @foreach($priceLevels as $priceLevelKey => $priceLevel)
-                                        <td class="text-center">{{
-                                                    number_format($stock->latestPrices()->first(function ($price) use($priceLevel){
-                                                        return $price->price_level_id === $priceLevel->id;
-                                                    })->price)
-                                                }}
+                                        <td class="text-center">
+                                            {{ number_format($stock->latestPrices()->first(function ($price) use($priceLevel) { return $price->price_level_id === $priceLevel->id;})->price) }}
                                         </td>
                                     @endforeach
                                     <td class="text-center">
