@@ -36,6 +36,16 @@ return [
                     ],
                 ],
             ],
+            'show' => [
+                'title' => '',
+                'page_title' => '',
+                'page_title_desc' => '',
+            ],
+            'edit' => [
+                'title' => 'Edit Faktur',
+                'page_title' => 'Edit Faktur',
+                'page_title_desc' => '',
+            ],
         ],
     ],
 ];

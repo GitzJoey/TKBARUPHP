@@ -62,6 +62,7 @@ class TaxItem extends Model
     ];
 
     protected $hidden = [
+        'transactionable_type',
         'created_by',
         'created_at',
         'updated_by',
@@ -98,7 +99,7 @@ class TaxItem extends Model
         });
     }
 
-    public function itemable()
+    public function transactionable()
     {
         // Tax
         return $this->morphTo();

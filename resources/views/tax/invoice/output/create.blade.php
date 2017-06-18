@@ -395,7 +395,7 @@
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.tax.invoice.output.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#taxForm')[0]))
                             .then(function(response) {
-                                //window.location.href = '{{ route('db.tax.invoice.output.index') }}';
+                                window.location.href = '{{ route('db.tax.invoice.output.index') }}';
                             });
                     }).catch(function() {
 

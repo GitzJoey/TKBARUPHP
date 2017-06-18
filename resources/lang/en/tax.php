@@ -36,6 +36,16 @@ return [
                     ],
                 ],
             ],
+            'show' => [
+                'title' => '',
+                'page_title' => '',
+                'page_title_desc' => '',
+            ],
+            'edit' => [
+                'title' => 'Edit Invoice',
+                'page_title' => 'Edit Invoice',
+                'page_title_desc' => '',
+            ],
         ],
     ],
 ];
