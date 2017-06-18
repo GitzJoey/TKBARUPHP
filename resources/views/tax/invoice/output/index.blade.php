@@ -43,7 +43,7 @@
                     </thead>
                     <tbody>
                         @foreach ($taxes as $key => $tax)
-                            <tr>
+                        <tr>
                             <td class="text-center">{{ $tax->invoice_date }}</td>
                             <td class="text-center">{{ $tax->invoice_no }}</td>
                             <td class="text-left">{{ $tax->opponent_name }}</td>
@@ -79,17 +79,6 @@
             },
             methods: {
             },
-            computed: {
-                formattedTaxes: function(val) {
-                    this.taxes.forEach(function(tax) {
-                        tax.grandTotal = numeral(tax.tax_base + tax.gst).format();
-                        tax.tax_base = numeral(tax.tax_base).format();
-                        tax.gst = numeral(tax.gst).format();
-
-                    });
-                    return this.taxes;
-                }
-            }
         });
     </script>
 @endsection

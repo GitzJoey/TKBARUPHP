@@ -78,8 +78,8 @@ class Tax extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function items()
+    public function transactions()
     {
-        return $this->morphMany(TaxItem::class, 'itemable');
+        return $this->morphMany(TaxItem::class, 'transactionable');
     }
 }

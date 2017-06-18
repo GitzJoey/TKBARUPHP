@@ -15,4 +15,6 @@ interface TaxInvoiceOutputService
     public function createInvoice(Request $request);
 
     public function getTaxByID($id);
+
+    public function editInvoice(Request $request, $invoiceId);
 }

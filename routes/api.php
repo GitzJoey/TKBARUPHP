@@ -93,6 +93,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::group(['prefix' => 'invoice'], function () {
                 Route::group(['prefix' => 'output'], function () {
                     Route::post('create', 'TaxInvoiceOutputController@store')->name('api.post.db.tax.invoice.output.create');
+                    Route::post('edit/{id}', 'TaxInvoiceOutputController@saveEdit')->name('api.post.db.tax.invoice.output.edit');
                 });
             });
         });

@@ -57,18 +57,49 @@ class TaxInvoiceOutputController extends Controller
     public function show($id)
     {
         Log::info('[TaxInvoiceOutputController@show] $id: ' . $id);
+        $currentStore = new Store();
+        $currentStore = $currentStore->find(Auth::user()->store_id);
+        $tax = $this->taxInvoiceOutputService->getTaxByID($id);
 
-        $store = Tax::find($id);
+        $gstTranTypeDDL = LookupRepo::findByCategory('GSTTRANSACTIONTYPEOUTPUT');
+        $tranDocDDL = LookupRepo::findByCategory('TRANSACTIONDOCOUTPUT');
+        $tranDetailDDL = LookupRepo::findByCategory('TRANSACTIONDETAILOUTPUT');
 
-        return view('tax.invoice.output.show')->with('store', $store);
+        return view('tax.invoice.output.show', compact('tax', 'currentStore', 'gstTranTypeDDL', 'tranDocDDL', 'tranDetailDDL'));
     }
 
     public function edit($id)
     {
         Log::info('[TaxInvoiceOutputController@revise]');
-
+        $currentStore = new Store();
+        $currentStore = $currentStore->find(Auth::user()->store_id);
         $tax = $this->taxInvoiceOutputService->getTaxByID($id);
 
-        return view('tax.invoice.output.edit', compact('tax'));
+        $gstTranTypeDDL = LookupRepo::findByCategory('GSTTRANSACTIONTYPEOUTPUT');
+        $tranDocDDL = LookupRepo::findByCategory('TRANSACTIONDOCOUTPUT');
+        $tranDetailDDL = LookupRepo::findByCategory('TRANSACTIONDETAILOUTPUT');
+
+        return view('tax.invoice.output.edit', compact('tax', 'currentStore', 'gstTranTypeDDL', 'tranDocDDL', 'tranDetailDDL'));
+    }
+
+    public function saveEdit(Request $request, $id)
+    {
+        $this->taxInvoiceOutputService->editInvoice($request, $id);
+
+        return response()->json([
+            'result' => 'success',
+            'message' => ''
+        ]);
+    }
+
+    public function delete($id)
+    {
+        Log::info('[TaxInvoiceOutputController@delete] $id:' . $id);
+
+        $tax = Tax::find($id);
+        $tax->transactions->each(function($ba) { $ba->delete(); });
+        $tax->delete();
+
+        return redirect(route('db.tax.invoice.output.index'));
     }
 }
