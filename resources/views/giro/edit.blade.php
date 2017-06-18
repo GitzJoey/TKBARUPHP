@@ -156,16 +156,18 @@
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.bank.giro.edit', $giro->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#giroForm')[0]))
                             .then(function(response) {
-                                window.location.href = '{{ route('db.bank.giro') }}';
-                            }).catch(function(e) {
-                                $('#loader-container').fadeOut('fast');
-                                if (e.response.data.address.length > 0) {
-                                    for (var i=0; i < e.response.data.address.length; i++) {
-                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                            window.location.href = '{{ route('db.bank.giro') }}';
+                        }).catch(function(e) {
+                            $('#loader-container').fadeOut('fast');
+                            if (Object.keys(e.response.data).length > 0) {
+                                for (var key in e.response.data) {
+                                    for (var i = 0; i < e.response.data[key].length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data[key][i], 'server', '__global__');
                                     }
-                                } else {
-                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
                                 }
+                            } else {
+                                vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                            }
                         });
                     });
                 },
