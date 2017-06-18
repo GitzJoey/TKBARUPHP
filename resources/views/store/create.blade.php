@@ -56,19 +56,19 @@
                 <div class="box-body">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab_store" data-toggle="tab">@lang('store.create.tab.store')&nbsp;<span id="storeDataTabError" class="parsley-asterisk hidden">*</span></a></li>
-                            <li><a href="#tab_bank_account" data-toggle="tab">@lang('store.create.tab.bank_account')&nbsp;<span id="bankAccountTabError" class="parsley-asterisk hidden">*</span></a></li>
-                            <li><a href="#tab_currencies" data-toggle="tab">@lang('store.create.tab.currencies')&nbsp;<span id="currenciesTabError" class="parsley-asterisk hidden">*</span></a></li>
-                            <li><a href="#tab_settings" data-toggle="tab">@lang('store.create.tab.settings')&nbsp;<span id="settingsTabError" class="parsley-asterisk hidden">*</span></a></li>
+                            <li class="active"><a href="#tab_store" data-toggle="tab">@lang('store.create.tab.store')&nbsp;<span id="storeDataTabError" v-bind:class="{'red-asterisk':true, 'hidden':errors.any('tab_store')?false:true}">*</span></a></li>
+                            <li><a href="#tab_bank_account" data-toggle="tab">@lang('store.create.tab.bank_account')&nbsp;<span id="bankAccountTabError" v-bind:class="{'red-asterisk':true, 'hidden':errors.any('tab_bank')?false:true}">*</span></a></li>
+                            <li><a href="#tab_currencies" data-toggle="tab">@lang('store.create.tab.currencies')&nbsp;<span id="currenciesTabError" v-bind:class="{'red-asterisk':true, 'hidden':errors.any('tab_currencies')?false:true}">*</span></a></li>
+                            <li><a href="#tab_settings" data-toggle="tab">@lang('store.create.tab.settings')&nbsp;<span id="settingsTabError" v-bind:class="{'red-asterisk':true, 'hidden':errors.any('tab_settings')?false:true}">*</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_store">
-                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tab_store.name') }">
                                     <label for="inputStoreName" class="col-sm-2 control-label">@lang('store.field.name')</label>
                                     <div class="col-sm-10">
                                         <input id="inputStoreName" name="name" type="text" class="form-control" value="{{ old('name') }}" placeholder="Name"
-                                               v-validate="'required'" data-vv-as="{{ trans('store.field.name') }}">
-                                        <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
+                                               v-validate="'required'" data-vv-as="{{ trans('store.field.name') }}" data-vv-scope="tab_store">
+                                        <span v-show="errors.has('tab_store.name')" class="help-block" v-cloak>@{{ errors.first('tab_store.name') }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -100,52 +100,56 @@
                                         <input id="inputFax" name="fax_num" type="text" class="form-control" value="{{ old('fax_num') }}" placeholder="Fax">
                                     </div>
                                 </div>
-                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tax_id') }">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tab_store.tax_id') }">
                                     <label for="inputTax" class="col-sm-2 control-label">@lang('store.field.tax_id')</label>
                                     <div class="col-sm-10">
-                                        <input id="inputTax" name="tax_id" type="text" class="form-control" value="{{ old('tax_id') }}" placeholder="Tax ID" v-validate="'required'" data-vv-as="{{ trans('store.field.tax_id') }}">
-                                        <span v-show="errors.has('tax_id')" class="help-block" v-cloak>@{{ errors.first('tax_id') }}</span>
+                                        <input id="inputTax" name="tax_id" type="text" class="form-control" value="{{ old('tax_id') }}" placeholder="Tax ID"
+                                               v-validate="'required'" data-vv-as="{{ trans('store.field.tax_id') }}" data-vv-scope="tab_store">
+                                        <span v-show="errors.has('tab_store.tax_id')" class="help-block" v-cloak>@{{ errors.first('tab_store.tax_id') }}</span>
                                     </div>
                                 </div>
-                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tab_store.status') }">
                                     <label for="inputStatus" class="col-sm-2 control-label">@lang('warehouse.field.status')</label>
                                     <div class="col-sm-10">
                                         <select class="form-control"
                                                 name="status"
                                                 v-model="status"
                                                 v-validate="'required|checkactive'"
-                                                data-vv-as="{{ trans('store.field.status') }}">
+                                                data-vv-as="{{ trans('store.field.status') }}"
+                                                data-vv-scope="tab_store">
                                             <option v-bind:value="defaultStatus">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="(value, key) in statusDDL" v-bind:value="key">@{{ value }}</option>
                                         </select>
-                                        <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
+                                        <span v-show="errors.has('tab_store.status')" class="help-block" v-cloak>@{{ errors.first('tab_store.status') }}</span>
                                     </div>
                                 </div>
-                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('is_default') }">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tab_store.is_default') }">
                                     <label for="inputIsDefault" class="col-sm-2 control-label">@lang('store.field.default')</label>
                                     <div class="col-sm-10">
                                         <select class="form-control"
                                                 name="is_default"
                                                 v-model="is_default"
                                                 v-validate="'required'"
-                                                data-vv-as="{{ trans('store.field.default') }}">
+                                                data-vv-as="{{ trans('store.field.default') }}"
+                                                data-vv-scope="tab_store">
                                             <option v-bind:value="defaultYesNo">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="(value, key) in yesnoDDL" v-bind:value="key">@{{ value }}</option>
                                         </select>
-                                        <span v-show="errors.has('is_default')" class="help-block" v-cloak>@{{ errors.first('is_default') }}</span>
+                                        <span v-show="errors.has('tab_store.is_default')" class="help-block" v-cloak>@{{ errors.first('tab_store.is_default') }}</span>
                                     </div>
                                 </div>
-                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('frontweb') }">
+                                <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tab_store.frontweb') }">
                                     <label for="inputFrontWeb" class="col-sm-2 control-label">@lang('store.field.frontweb')</label>
                                     <div class="col-sm-10">
                                         <select class="form-control"
                                                 name="frontweb"
                                                 v-validate="'required'"
-                                                data-vv-as="{{ trans('store.field.frontweb') }}">
+                                                data-vv-as="{{ trans('store.field.frontweb') }}"
+                                                data-vv-scope="tab_store">
                                             <option v-bind:value="defaultYesNo">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="(value, key) in yesnoDDL" v-bind:value="key">@{{ value }}</option>
                                         </select>
-                                        <span v-show="errors.has('frontweb')" class="help-block" v-cloak>@{{ errors.first('frontweb') }}</span>
+                                        <span v-show="errors.has('tab_store.frontweb')" class="help-block" v-cloak>@{{ errors.first('tab_store.frontweb') }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -168,26 +172,27 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(bank, bankIdx) in banks">
-                                            <td v-bind:class="{ 'has-error':errors.has('bank_' + bankIdx) }">
+                                            <td v-bind:class="{ 'has-error':errors.has('tab_bank.bank_' + bankIdx) }">
                                                 <select class="form-control"
                                                         name="bank[]"
                                                         v-model="bank.bank_id"
                                                         v-validate="'required'"
                                                         v-bind:data-vv-as="'{{ trans('store.create.table_bank.header.bank') }} ' + (bankIdx + 1)"
-                                                        v-bind:data-vv-name="'bank_' + bankIdx">
+                                                        v-bind:data-vv-name="'bank_' + bankIdx"
+                                                        data-vv-scope="tab_bank">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="b in bankDDL" v-bind:value="b.id">@{{ b.name }} (@{{ b.short_name }})</option>
                                                 </select>
                                             </td>
-                                            <td v-bind:class="{ 'has-error':errors.has('account_name_' + bankIdx) }">
+                                            <td v-bind:class="{ 'has-error':errors.has('tab_bank.account_name_' + bankIdx) }">
                                                 <input type="text" class="form-control" name="account_name[]" v-model="bank.account_name"
                                                        v-validate="'required'" v-bind:data-vv-as="'{{ trans('store.create.table_bank.header.account_name') }} ' + (bankIdx + 1)"
-                                                       v-bind:data-vv-name="'account_name_' + bankIdx">
+                                                       v-bind:data-vv-name="'account_name_' + bankIdx" data-vv-scope="tab_bank">
                                             </td>
-                                            <td v-bind:class="{ 'has-error':errors.has('account_number_' + bankIdx) }">
+                                            <td v-bind:class="{ 'has-error':errors.has('tab_bank.account_number_' + bankIdx) }">
                                                 <input type="text" class="form-control" name="account_number[]" v-model="bank.account_number"
-                                                       v-validate="'required'" v-bind:data-vv-as="'{{ trans('store.create.table_bank.header.account_number') }} ' + (bankIdx + 1)"
-                                                       v-bind:data-vv-name="'account_number_' + bankIdx">
+                                                       v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('store.create.table_bank.header.account_number') }} ' + (bankIdx + 1)"
+                                                       v-bind:data-vv-name="'account_number_' + bankIdx" data-vv-scope="tab_bank">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
@@ -213,12 +218,13 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item, idx) in currencies">
-                                            <td v-bind:class="{ 'has-error':errors.has('currencies_' + idx) }">
+                                            <td v-bind:class="{ 'has-error':errors.has('tab_currencies.currencies_' + idx) }">
                                                 <select class="form-control"
                                                         name="currencies[]"
                                                         v-model="item.currencies_id"
                                                         v-validate="'required'" v-bind:data-vv-as="'{{ trans('store.create.table_currencies.header.currencies') }} ' + (idx + 1)"
-                                                        v-bind:data-vv-name="'currencies_' + idx">
+                                                        v-bind:data-vv-name="'currencies_' + idx"
+                                                        data-vv-scope="tab_currencies">
                                                     <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                     <option v-for="c in currenciesDDL" v-bind:value="c.id">@{{ c.name }} (@{{ c.symbol }})</option>
                                                 </select>
@@ -227,10 +233,10 @@
                                                 <vue-icheck v-model="item.is_base" v-on:click="selectedBaseCurrencies(idx)"></vue-icheck>
                                                 <input type="hidden" name="base_currencies[]" v-model="item.is_base">
                                             </td>
-                                            <td v-bind:class="{ 'has-error':errors.has('currencies_conv_val_' + idx) }">
+                                            <td v-bind:class="{ 'has-error':errors.has('tab_currencies.currencies_conv_val_' + idx) }">
                                                 <input type="text" class="form-control" name="currencies_conversion_value[]" v-model="item.conversion_value" v-bind:readonly="(item.is_base != 0)"
                                                        v-validate="'required'" v-bind:data-vv-as="'{{ trans('store.create.table_currencies.header.conversion_value') }} ' + (idx + 1)"
-                                                       v-bind:data-vv-name="'currencies_conv_val_' + idx">
+                                                       v-bind:data-vv-name="'currencies_conv_val_' + idx" data-vv-scope="tab_currencies">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" name="currencies_remarks[]" v-model="item.remarks">
@@ -258,7 +264,7 @@
                                 <div class="form-group {{ $errors->has('time_format') ? 'has-error' : '' }}">
                                     <label for="inputTimeFormat" class="col-sm-2 control-label">@lang('store.field.time_format')</label>
                                     <div class="col-sm-4">
-                                        <select name="date_format" class="form-control">
+                                        <select name="time_format" class="form-control">
                                             <option value="hh:mm A" selected>{{ date('h:m a') }} (default)</option>
                                             <option value="hh:mm:ss">{{ date('h:m:s') }}</option>
                                         </select>
@@ -509,12 +515,10 @@
                         return result;
                     }
                 });
-
-
             },
             methods: {
                 validateBeforeSubmit: function() {
-                    this.$validator.validateAll().then(function(result) {
+                    this.$validator.validateScopes().then(function(result) {
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.admin.store.create') }}' + '?api_token=' + $('#secapi').val()
                             , new FormData($('#storeForm')[0])
@@ -666,7 +670,6 @@
                     $('#inputModalLng').val(event.latLng.lng());
                     marker.setPosition(event.latLng);
                 });
-
             }
 
             $('#myModal').on('shown.bs.modal', function() {
@@ -750,7 +753,6 @@
                         }
                     }
                 });
-
             }
 
             $('#inputModalAddress').keypress(function(event) {
@@ -788,7 +790,6 @@
                     });
                 });
             }
-
         });
     </script>
 @endsection

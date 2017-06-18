@@ -36,7 +36,7 @@ class CashAccountController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
         return view('accounting.cash.create', compact('statusDDL', 'typeDDL'));
@@ -49,27 +49,29 @@ class CashAccountController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.acc.cash.create'))->withInput()->withErrors($validator);
-        } else {
-            CashAccount::create([
-                'store_id' => Auth::user()->store->id,
-                'type' => $data['type'],
-                'name' => $data['name'],
-                'code' => $data['code'],
-                'status' => $data['status'],
-                'is_default' => $data['is_default'] == 'on' ? true:false,
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
             ]);
-
-            return redirect(route('db.acc.cash'));
         }
+
+        CashAccount::create([
+            'store_id' => Auth::user()->store->id,
+            'type' => $data['type'],
+            'name' => $data['name'],
+            'code' => $data['code'],
+            'status' => $data['status'],
+            'is_default' => $data['is_default'] == 'on' ? true:false,
+        ]);
+
+        return response()->json();
     }
 
     public function edit($id)
     {
         $acccash = CashAccount::find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $typeDDL = LookupRepo::findByCategory('ACCCASH')->pluck('i18nDescription', 'code');
 
         return view('accounting.cash.edit', compact('acccash', 'statusDDL', 'typeDDL'));
@@ -82,20 +84,22 @@ class CashAccountController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.acc.cash.edit'))->withInput()->withErrors($validator);
-        } else {
-            $acc = CashAccount::find($id);
-            $acc->type = $req['type'];
-            $acc->code = $req['code'];
-            $acc->name = $req['name'];
-            $acc->is_default = $req['is_default'] == 'on' ? true:false;
-            $acc->status = $req['status'];
-
-            $acc->save();
-
-            return redirect(route('db.acc.cash'));
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
         }
+
+        $acc = CashAccount::find($id);
+        $acc->type = $req['type'];
+        $acc->code = $req['code'];
+        $acc->name = $req['name'];
+        $acc->is_default = $req['is_default'] == 'on' ? true:false;
+        $acc->status = $req['status'];
+
+        $acc->save();
+
+        return response()->json();
     }
 
     public function delete($id)

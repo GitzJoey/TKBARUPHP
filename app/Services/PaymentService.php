@@ -39,4 +39,6 @@ interface PaymentService
      * @return Payment created giro payment.
      */
     public function createGiroPayment(Request $request, Giro $giro);
+
+    public function searchPayment($keyword);
 }

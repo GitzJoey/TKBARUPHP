@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Model\Price;
+use App\Model\Stock;
 use App\Model\PriceLevel;
 use App\Model\ProductType;
-use App\Model\Stock;
 
+use DB;
+use Exception;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,23 +85,24 @@ class PriceController extends Controller
 
     public function updateStockPrice(Request $request, $id)
     {
-        $priceLevels = PriceLevel::all(['id', 'increment_value']);
+        DB::beginTransaction();
 
-        $prices = collect([]);
+        try {
+            for ($i = 0; $i < count($request['stock_id']); $i++) {
+                $p = new Price();
+                $p->store_id = Auth::user()->store_id;
+                $p->stock_id = $request['stock_id'][$i];
+                $p->price_level_id = $request['price_level_id'][$i];
+                $p->input_date = date('Y-m-d H:i:s', strtotime($request['input_date'][$i]));
+                $p->market_price = floatval(str_replace(',', '', $request['market_price'][$i]));
+                $p->price = floatval(str_replace(',', '', $request['price'][$i]));
 
-        $priceLevels->each(function ($priceLevel, $key) use ($prices, $request, $id){
-            $prices->push([
-                'store_id'          => Auth::user()->store_id,
-                'stock_id'          => $id,
-                'price_level_id'    => $priceLevel->id,
-                'input_date'        => date('Y-m-d H:i', strtotime($request->input('input_date'))),
-                'market_price'      => floatval(str_replace(',', '', $request->input('market_price'))),
-                'price'             => floatval(str_replace(',', '', $request->input("price.$key"))),
-            ]);
-        });
-
-        Price::saveAll($prices);
-
-        return redirect(route('db.price.today'));
+                $p->save();
+            }
+            DB::commit();
+            return response()->json();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
 }

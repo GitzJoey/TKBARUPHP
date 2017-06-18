@@ -22,4 +22,9 @@ class ProductServiceImpl implements ProductService
             ->orWhereNull('image_path')
             ->get();
     }
+
+    public function searchProduct($keyword)
+    {
+
+    }
 }

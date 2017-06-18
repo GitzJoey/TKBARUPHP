@@ -16,6 +16,7 @@ return [
         'roles' => 'Role',
         'password' => 'Password',
         'retype_password' => 'Retype Password',
+        'password_confirmation' => 'Retype Password',
         'user_type' => 'User Type',
         'allow_login' => 'Allow Login',
         'link_profile' => 'Link Profile',

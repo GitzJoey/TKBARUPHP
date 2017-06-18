@@ -34,6 +34,19 @@ class ExpenseTemplateController extends Controller
     {
         Log::info($request);
 
+        $validator = $this->validate($request, [
+            'name' => 'required|max:255',
+            'type' => 'required|max:255',
+            'amount' => 'required|max:255',
+            'remarks' => 'required',
+        ]);
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
+
         ExpenseTemplate::create([
             'name' => $request->input('name'),
             'type' => $request->input('type'),
@@ -42,7 +55,7 @@ class ExpenseTemplateController extends Controller
             'is_internal_expense' => $request->has('is_internal_expense') ? true : false
         ]);
 
-        return redirect(route('db.master.expense_template'));
+        return response()->json();
     }
 
     public function show($id)
@@ -63,6 +76,19 @@ class ExpenseTemplateController extends Controller
 
     public function update($id, Request $request)
     {
+        $validator = $this->validate($request, [
+            'name' => 'required|max:255',
+            'type' => 'required|max:255',
+            'amount' => 'required|max:255',
+            'remarks' => 'required',
+        ]);
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
+
         $expenseTemplate = ExpenseTemplate::find($id);
 
         $expenseTemplate->name = $request->input('name');
@@ -72,8 +98,8 @@ class ExpenseTemplateController extends Controller
         $expenseTemplate->is_internal_expense = $request->has('is_internal_expense') ? true : false;
 
         $expenseTemplate->save();
-
-        return redirect(route('db.master.expense_template'));
+        
+        return response()->json();
     }
 
     public function delete($id)

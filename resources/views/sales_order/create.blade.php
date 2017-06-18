@@ -39,7 +39,7 @@
                                         @{{ so.customer_type.code == 'CUSTOMERTYPE.R' ? so.customer.name || (defaultTabLabel + " " + (soIndex + 1))
                                         : so.customer_type.code == 'CUSTOMERTYPE.WI' ? so.walk_in_cust || (defaultTabLabel + " " + (soIndex + 1))
                                         : (defaultTabLabel + " " + (soIndex + 1)) }}
-                                        <span v-show="errors.any('tab_' + soIndex)" class="parsley-asterisk">*</span>
+                                        <span v-show="errors.any('tab_' + soIndex)" class="red-asterisk">*</span>
                                     </div>
                                 </a>
                             </li>

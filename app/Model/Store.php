@@ -74,6 +74,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read mixed $numeral_format
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereLatitude($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereLongitude($value)
+ * @property-read mixed $date_time_format
  */
 class Store extends Model
 {
@@ -130,7 +131,7 @@ class Store extends Model
             $decimalDigit = '00';
         } else {
             for ($i = 0; $i < $this->attributes['decimal_digit']; $i++) {
-                $decimalDigit += '0';
+                $decimalDigit .= '0';
             }
         }
 

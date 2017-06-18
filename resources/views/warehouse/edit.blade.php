@@ -83,7 +83,9 @@
                                             <select class="form-control"
                                                     name="section_capacity_unit[]"
                                                     v-model="c.capacity_unit_id"
-                                                    data-parsley-required="true">
+                                                    v-validate="'required'"
+                                                    v-bind:data-vv-as="'{{ trans('warehouse.edit.table.header.capacity_unit') }} ' + (cI + 1)"
+                                                    v-bind:data-vv-name="'seccapunit_' + cI">
                                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
                                                 <option v-for="u in unitDDL" v-bind:value="u.id">@{{ u.name }} (@{{ u.symbol }})</option>
                                             </select>
@@ -157,12 +159,22 @@
             },
             methods: {
                 validateBeforeSubmit: function() {
+                    var vm = this;
                     this.$validator.validateAll().then(function(result) {
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.master.warehouse.edit', $warehouse->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#warehouseForm')[0]))
                             .then(function(response) {
-                                if (response.data.result == 'success') { window.location.href = '{{ route('db.master.warehouse') }}'; }
-                            });
+                                window.location.href = '{{ route('db.master.warehouse') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.address.length > 0) {
+                                    for (var i = 0; i < e.response.data.address.length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                    }
+                                } else {
+                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
+                        });
                     });
                 },
                 addNew: function () {

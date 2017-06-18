@@ -38,7 +38,7 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('employee.create', compact('statusDDL'));
     }
@@ -59,33 +59,47 @@ class EmployeeController extends Controller
             Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
         }
 
-        if ($validator->fails()) {
-            return redirect(route('db.employee.employee.create'))->withInput()->withErrors($validator);
-        } else {
-            Employee::create([
-                'name' => $data['name'],
-                'address' => $data['address'],
-                'start_date' => date('Y-m-d', strtotime($data->input('start_date'))),
-                'freelance' => !empty($data['freelance']) ? true:false,
-                'base_salary'=> floatval(str_replace(',', '', $data['base_salary'])),
-                'ic_number' => $data['ic_number'],
-                'status' => $data['status'],
-                'image_path' => $imageName
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
             ]);
-            return redirect(route('db.employee.employee'));
         }
-    }
+        
+        Employee::create([
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'start_date' => date('Y-m-d', strtotime($data->input('start_date'))),
+            'freelance' => !empty($data['freelance']) ? true:false,
+            'base_salary'=> floatval(str_replace(',', '', $data['base_salary'])),
+            'ic_number' => $data['ic_number'],
+            'status' => $data['status'],
+            'image_path' => $imageName
+        ]);
 
+        return response()->json();
+    }
+    
     public function edit($id)
     {
         $employee = Employee::find($id);
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return View('employee.edit', compact('employee', 'statusDDL'));
     }
 
     public function update($id, Request $data)
     {
+        $validator = Validator::make($data->all(), [
+            'name' => 'required|string|max:255',
+            'ic_number' => 'required|string|max:255',
+        ]);
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
+        
         $employee = Employee::find($id);
 
         $imageName = '';
@@ -105,8 +119,8 @@ class EmployeeController extends Controller
         $employee->ic_number = $data['ic_number'];
         $employee->image_path = $imageName;
         $employee->save();
-
-        return redirect(route('db.employee.employee'));
+        
+        return response()->json();
     }
 
 

@@ -45,25 +45,25 @@ class RolesController extends Controller
             'description' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return redirect(route('db.admin.roles.create'))->withInput()->withErrors($validator);
-        } else {
-            DB::transaction(function() use ($data) {
-                $role = new Role;
-                $role->name = $data['name'];
-                $role->display_name = $data['display_name'];
-                $role->description = $data['description'];
-                $role->save();
-
-                foreach ($data['permission'] as $pl) {
-                    $role->permissions()->attach($pl);
-                }
-            });
-
-            Session::flash('success', 'New User Created');
-
-            return redirect(route('db.admin.roles'));
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
         }
+
+        DB::transaction(function() use ($data) {
+            $role = new Role;
+            $role->name = $data['name'];
+            $role->display_name = $data['display_name'];
+            $role->description = $data['description'];
+            $role->save();
+
+            foreach ($data['permission'] as $pl) {
+                $role->permissions()->attach($pl);
+            }
+        });
+
+        return response()->json();
     }
 
     public function edit($id)
@@ -77,11 +77,17 @@ class RolesController extends Controller
 
     public function update($id, Request $req)
     {
-        $this->validate($req, [
+        $validator = $this->validate($req, [
             'name' => 'required|max:255',
             'display_name' => 'required|max:255',
             'description' => 'required',
         ]);
+
+        if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
+        }
 
         DB::transaction(function() use ($req, $id) {
             $role = Role::with('permissions')->where('id', '=', $id)->first();
@@ -95,8 +101,8 @@ class RolesController extends Controller
                 'description' => $req['description'],
             ]);
         });
-        
-        return redirect(route('db.admin.roles'));
+
+        return response()->json();
     }
 
     public function delete($id)

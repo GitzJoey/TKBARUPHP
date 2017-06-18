@@ -93,11 +93,17 @@ class RegisterController extends Controller
 
         $usr->save();
 
-        $usr->roles()->attach(Role::where('name', 'user')->get());
+        if (!empty($data['store_name'])) {
+            $usr->roles()->attach(Role::where('name', 'admin')->get());
+        } else {
+            $usr->roles()->attach(Role::where('name', 'user')->get());
+        }
+
 
         $userdetail = new UserDetail();
         $userdetail->allow_login = true;
-        $userdetail->type = Lookup::whereCode('USERTYPE.U')->first()->code;
+        $userdetail->type = !empty($data['store_name']) ?
+            Lookup::whereCode('USERTYPE.A')->first()->code : Lookup::whereCode('USERTYPE.U')->first()->code;
         $usr->userDetail()->save($userdetail);
 
         return $usr;

@@ -43,4 +43,9 @@ class SupplierServiceImpl implements SupplierService
     {
         return count(getUnfinishedSupplier()) > 0;
     }
+
+    public function searchSupplier($keyword)
+    {
+
+    }
 }

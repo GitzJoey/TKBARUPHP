@@ -36,6 +36,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('{code}/edit/{id}', 'PurchaseOrderCopyController@update')->name('api.post.db.po.copy.edit');
             });
         });
+        
+        Route::group(['prefix' => 'acc'], function() {
+            Route::post('create', 'Accounting\CashAccountController@store')->name('api.post.db.acc.cash.create');
+            Route::post('edit/{id}', 'Accounting\CashAccountController@update')->name('api.post.db.acc.cash.edit');
+        });
 
         Route::group(['prefix' => 'so'], function () {
             Route::post('create', 'SalesOrderController@store')->name('api.post.db.so.create');
@@ -47,9 +52,17 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('{id}/transfer', 'SalesOrderPaymentController@saveTransferPayment')->name('api.post.db.so.payment.transfer');;
                 Route::post('{id}/giro', 'SalesOrderPaymentController@saveGiroPayment')->name('api.post.db.so.payment.giro');;
             });
+
+            Route::group(['prefix' => 'copy'], function () {
+                Route::post('{code}/create', 'SalesOrderCopyController@store')->name('api.post.db.so.copy.create');
+                Route::post('{code}/edit/{id}', 'SalesOrderCopyController@update')->name('api.post.db.so.copy.edit');
+            });
         });
 
         Route::group(['prefix' => 'customer'], function () {
+            Route::post('create', 'CustomerController@store')->name('api.post.db.master.customer.create');
+            Route::post('edit/{id}', 'CustomerController@update')->name('api.post.db.master.customer.edit');
+
             Route::group(['prefix' => 'confirmation'], function() {
                 Route::post('confirm/{id}', 'CustomerController@storeConfirmationSalesOrder')->name('api.post.db.customer.confirmation.confirm');
             });
@@ -71,14 +84,56 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
         });
 
         Route::group(['prefix' => 'master'], function () {
+            Route::group(['prefix' => 'supplier'], function () {
+                Route::post('create', 'SupplierController@store')->name('api.post.db.master.supplier.create');
+                Route::post('edit/{id}', 'SupplierController@update')->name('api.post.db.master.supplier.edit');
+            });
+
+            Route::group(['prefix' => 'product'], function () {
+                Route::post('create', 'ProductController@store')->name('api.post.db.master.product.create');
+                Route::post('edit/{id}', 'ProductController@update')->name('api.post.db.master.product.edit');
+            });
+
             Route::group(['prefix' => 'warehouse'], function () {
                 Route::post('create', 'WarehouseController@store')->name('api.post.db.master.warehouse.create');
                 Route::post('edit/{id}', 'WarehouseController@update')->name('api.post.db.master.warehouse.edit');
             });
+            
+            Route::group(['prefix' => 'truck'], function() {
+                Route::post('create', 'TruckController@store')->name('api.post.db.master.truck.create');
+                Route::post('edit/{id}', 'TruckController@update')->name('api.post.db.master.truck.edit');
 
-            Route::group(['prefix' => 'supplier'], function () {
-                Route::post('create', 'SupplierController@store')->name('api.post.db.master.supplier.create');
-                Route::post('edit/{id}', 'SupplierController@update')->name('api.post.db.master.supplier.edit');
+                Route::group(['prefix' => 'maintenance'], function() {
+                    Route::post('create', 'TruckMaintenanceController@store')->name('api.post.db.maintenance.truck.create');
+                    Route::post('edit/{id}', 'TruckMaintenanceController@update')->name('api.post.db.maintenance.truck.edit');
+                });
+            });
+            
+            Route::group(['prefix' => 'producttype'], function() {
+                Route::post('create', 'ProductTypeController@store')->name('api.post.db.master.producttype.create');
+                Route::post('edit/{id}', 'ProductTypeController@update')->name('api.post.db.master.producttype.edit');
+            });
+            
+            Route::group(['prefix' => 'vendor'], function() {
+                Route::post('trucking/create', 'VendorTruckingController@store')->name('api.post.db.master.vendor.trucking.create');
+                Route::post('trucking/edit/{id}', 'VendorTruckingController@update')->name('api.post.db.master.vendor.trucking.edit');
+            });
+            
+            Route::group(['prefix' => 'expense_template'], function() {
+                Route::post('create', 'ExpenseTemplateController@store')->name('api.post.db.master.expense_template.create');
+                Route::post('edit/{id}', 'ExpenseTemplateController@update')->name('api.post.db.master.expense_template.edit');
+            });
+            
+            Route::group(['prefix' => 'bank'], function() {
+                Route::post('create', 'BankController@store')->name('api.post.db.master.bank.create');
+                Route::post('edit/{id}', 'BankController@update')->name('api.post.db.master.bank.edit');
+            });
+        });
+        
+        Route::group(['prefix' => 'bank'], function() {
+            Route::group(['prefix' => 'giro'], function() {
+                Route::post('create', 'GiroController@store')->name('api.post.db.bank.giro.create');
+                Route::post('edit/{id}', 'GiroController@update')->name('api.post.db.bank.giro.edit');
             });
         });
 
@@ -86,6 +141,31 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::group(['prefix' => 'store'], function () {
                 Route::post('create', 'StoreController@store')->name('api.post.db.admin.store.create');
                 Route::post('edit/{id}', 'StoreController@update')->name('api.post.db.admin.store.edit');
+            });
+            
+            Route::group(['prefix' => 'unit'], function () {
+                Route::post('create', 'UnitController@store')->name('api.post.db.admin.unit.create');
+                Route::post('edit/{id}', 'UnitController@update')->name('api.post.db.admin.unit.edit');
+            });
+            
+            Route::group(['prefix' => 'currencies'], function () {
+                Route::post('create', 'CurrenciesController@store')->name('api.post.db.admin.currencies.create');
+                Route::post('edit/{id}', 'CurrenciesController@update')->name('api.post.db.admin.currencies.edit');
+            });
+            
+            Route::group(['prefix' => 'roles'], function () {
+                Route::post('create', 'RolesController@store')->name('api.post.db.admin.roles.create');
+                Route::post('edit/{id}', 'RolesController@update')->name('api.post.db.admin.roles.edit');
+            });
+            
+            Route::group(['prefix' => 'user'], function () {
+                Route::post('create', 'UserController@store')->name('api.post.db.admin.user.create');
+                Route::post('edit/{id}', 'UserController@update')->name('api.post.db.admin.user.edit');
+            });
+            
+            Route::group(['prefix' => 'phone'], function() {
+                Route::post('provider/create', 'PhoneProviderController@store')->name('api.post.db.admin.phone_provider.create');
+                Route::post('provider/edit/{id}', 'PhoneProviderController@update')->name('api.post.db.admin.phone_provider.edit');
             });
         });
 
@@ -95,6 +175,21 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                     Route::post('create', 'TaxInvoiceOutputController@store')->name('api.post.db.tax.invoice.output.create');
                     Route::post('edit/{id}', 'TaxInvoiceOutputController@saveEdit')->name('api.post.db.tax.invoice.output.edit');
                 });
+            });
+        });
+        
+        Route::group(['prefix' => 'employee'], function() {
+            Route::post('create', 'EmployeeController@store')->name('api.post.db.employee.create');
+            Route::post('edit/{id}', 'EmployeeController@update')->name('api.post.db.employee.edit');
+        });
+        
+        Route::group(['prefix' => 'price'], function() {
+            Route::post('category/{id}', 'PriceController@updateCategoryPrice')->name('api.post.db.price.category.update');
+            Route::post('stock/{id}', 'PriceController@updateStockPrice')->name('api.post.db.price.stock.update');
+
+            Route::group(['prefix' => 'price_level'], function() {
+                Route::post('create', 'PriceLevelController@store')->name('api.post.db.price.level.create');
+                Route::post('edit/{id}', 'PriceLevelController@update')->name('api.post.db.price.level.edit');;
             });
         });
     });
@@ -156,7 +251,7 @@ Route::group(['prefix' => 'get'], function () {
             return \App\Util\SOCodeGenerator::generateCode();
         })->name('api.get.so.code');
     });
-
+    
     Route::group(['prefix' => 'stock'], function() {
         Route::get('current_stocks/{wId?}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
     });

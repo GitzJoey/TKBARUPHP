@@ -41,14 +41,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::group(['prefix' => 'dashboard'], function () {
         Route::get('', 'DashboardController@index')->name('db');
 
-        Route::group(['prefix' => 'acc'], function() {
+        Route::group(['prefix' => 'acc', 'middleware' => 'role:owner|admin'], function() {
             Route::group(['prefix' => 'cash'], function() {
                 Route::get('', 'Accounting\CashAccountController@index')->name('db.acc.cash');
                 Route::get('show/{id}', 'Accounting\CashAccountController@show')->name('db.acc.cash.show');
                 Route::get('create', 'Accounting\CashAccountController@create')->name('db.acc.cash.create');
-                Route::post('create', 'Accounting\CashAccountController@store');
                 Route::get('edit/{id}', 'Accounting\CashAccountController@edit')->name('db.acc.cash.edit');
-                Route::patch('edit/{id}', 'Accounting\CashAccountController@update');
                 Route::delete('edit/{id}', 'Accounting\CashAccountController@delete')->name('db.acc.cash.delete');
             });
 
@@ -150,9 +148,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'SalesOrderCopyController@search')->name('db.so.copy');
                 Route::get('{code?}', 'SalesOrderCopyController@index')->name('db.so.copy.index');
                 Route::get('{code}/create', 'SalesOrderCopyController@create')->name('db.so.copy.create');
-                Route::post('{code}/create', 'SalesOrderCopyController@store');
                 Route::get('{code}/edit/{id}', 'SalesOrderCopyController@edit')->name('db.so.copy.edit');
-                Route::patch('{code}/edit/{id}', 'SalesOrderCopyController@update');
                 Route::delete('{code}/delete/{id}', 'SalesOrderCopyController@delete')->name('db.so.copy.delete');
             });
         });
@@ -160,17 +156,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::group(['prefix' => 'price'], function () {
             Route::get('today', 'PriceController@index')->name('db.price.today');
             Route::get('category/{id}', 'PriceController@editCategoryPrice')->name('db.price.category');
-            Route::post('category/{id}', 'PriceController@updateCategoryPrice');
             Route::get('stock/{id}', 'PriceController@editStockPrice')->name('db.price.stock');
-            Route::post('stock/{id}', 'PriceController@updateStockPrice');
 
             Route::group(['prefix' => 'price_level'], function () {
                 Route::get('', 'PriceLevelController@index')->name('db.price.price_level');
                 Route::get('show/{id}', 'PriceLevelController@show')->name('db.price.price_level.show');
                 Route::get('create', 'PriceLevelController@create')->name('db.price.price_level.create');
-                Route::post('create', 'PriceLevelController@store');
                 Route::get('edit/{id}', 'PriceLevelController@edit')->name('db.price.price_level.edit');
-                Route::patch('edit/{id}', 'PriceLevelController@update');
                 Route::delete('edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
             });
         });
@@ -208,9 +200,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'GiroController@index')->name('db.bank.giro');
                 Route::get('show/{id}', 'GiroController@show')->name('db.bank.giro.show');
                 Route::get('create', 'GiroController@create')->name('db.bank.giro.create');
-                Route::post('create', 'GiroController@store');
                 Route::get('edit/{id}', 'GiroController@edit')->name('db.bank.giro.edit');
-                Route::patch('edit/{id}', 'GiroController@update');
                 Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
                 route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
             });
@@ -246,18 +236,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('maintenance', 'TruckMaintenanceController@index')->name('db.truck.maintenance');
             Route::get('maintenance/show/{id}', 'TruckMaintenanceController@show')->name('db.truck.maintenance.show');
             Route::get('maintenance/create', 'TruckMaintenanceController@create')->name('db.truck.maintenance.create');
-            Route::post('maintenance/create', 'TruckMaintenanceController@store');
             Route::get('maintenance/edit/{id}', 'TruckMaintenanceController@edit')->name('db.truck.maintenance.edit');
-            Route::patch('maintenance/edit/{id}', 'TruckMaintenanceController@update');
         });
 
         Route::group(['prefix' => 'employee', 'middleware' => ['permission:create-employee|read-employee|update-employee|delete-employee|menu-employee']], function () {
             Route::get('', 'EmployeeController@index')->name('db.employee.employee');
             Route::get('show/{id}', 'EmployeeController@show')->name('db.employee.employee.show');
             Route::get('create', 'EmployeeController@create')->name('db.employee.employee.create');
-            Route::post('create/', 'EmployeeController@store');
             Route::get('edit/{id}', 'EmployeeController@edit')->name('db.employee.employee.edit');
-            Route::patch('edit/{id}', 'EmployeeController@update');
             Route::delete('edit/{id}', 'EmployeeController@delete')->name('db.employee.employee.delete');
 
             Route::group(['prefix' => 'salary', 'middleware' => ['permission:create-employeesalary|read-employeesalary|update-employeesalary|delete-employeesalary|menu-employeesalary']], function () {
@@ -342,9 +328,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'CustomerController@index')->name('db.master.customer');
                 Route::get('show/{id}', 'CustomerController@show')->name('db.master.customer.show');
                 Route::get('create', 'CustomerController@create')->name('db.master.customer.create');
-                Route::post('create', 'CustomerController@store');
                 Route::get('edit/{id}', 'CustomerController@edit')->name('db.master.customer.edit');
-                Route::patch('edit/{id}', 'CustomerController@update');
                 Route::delete('edit/{id}', 'CustomerController@delete')->name('db.master.customer.delete');
             });
 
@@ -360,9 +344,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'ProductController@index')->name('db.master.product');
                 Route::get('show/{id}', 'ProductController@show')->name('db.master.product.show');
                 Route::get('create', 'ProductController@create')->name('db.master.product.create');
-                Route::post('create', 'ProductController@store');
                 Route::get('edit/{id}', 'ProductController@edit')->name('db.master.product.edit');
-                Route::patch('edit/{id}', 'ProductController@update');
                 Route::delete('edit/{id}', 'ProductController@delete')->name('db.master.product.delete');
             });
 
@@ -370,9 +352,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'ProductTypeController@index')->name('db.master.producttype');
                 Route::get('show/{id}', 'ProductTypeController@show')->name('db.master.producttype.show');
                 Route::get('create', 'ProductTypeController@create')->name('db.master.producttype.create');
-                Route::post('create', 'ProductTypeController@store');
                 Route::get('edit/{id}', 'ProductTypeController@edit')->name('db.master.producttype.edit');
-                Route::patch('edit/{id}', 'ProductTypeController@update');
                 Route::delete('edit/{id}', 'ProductTypeController@delete')->name('db.master.producttype.delete');
             });
 
@@ -388,29 +368,23 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'BankController@index')->name('db.master.bank');
                 Route::get('show/{id}', 'BankController@show')->name('db.master.bank.show');
                 Route::get('create', 'BankController@create')->name('db.master.bank.create');
-                Route::post('create', 'BankController@store');
                 Route::get('edit/{id}', 'BankController@edit')->name('db.master.bank.edit');
-                Route::patch('edit/{id}', 'BankController@update');
                 Route::delete('edit/{id}', 'BankController@delete')->name('db.master.bank.delete');
             });
-
+            
             Route::group(['prefix' => 'truck'], function () {
                 Route::get('', 'TruckController@index')->name('db.master.truck');
                 Route::get('show/{id}', 'TruckController@show')->name('db.master.truck.show');
                 Route::get('create', 'TruckController@create')->name('db.master.truck.create');
-                Route::post('create/', 'TruckController@store');
                 Route::get('edit/{id}', 'TruckController@edit')->name('db.master.truck.edit');
-                Route::patch('edit/{id}', 'TruckController@update');
                 Route::delete('edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
             });
-
+            
             Route::group(['prefix' => 'vendor'], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
                 Route::get('trucking/create', 'VendorTruckingController@create')->name('db.master.vendor.trucking.create');
-                Route::post('trucking/create', 'VendorTruckingController@store');
                 Route::get('trucking/edit/{id}', 'VendorTruckingController@edit')->name('db.master.vendor.trucking.edit');
-                Route::patch('trucking/edit/{id}', 'VendorTruckingController@update');
                 Route::delete('trucking/edit/{id}', 'VendorTruckingController@delete')->name('db.master.vendor.trucking.delete');
             });
 
@@ -418,9 +392,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'ExpenseTemplateController@index')->name('db.master.expense_template');
                 Route::get('show/{id}', 'ExpenseTemplateController@show')->name('db.master.expense_template.show');
                 Route::get('create', 'ExpenseTemplateController@create')->name('db.master.expense_template.create');
-                Route::post('create/', 'ExpenseTemplateController@store');
                 Route::get('edit/{id}', 'ExpenseTemplateController@edit')->name('db.master.expense_template.edit');
-                Route::patch('edit/{id}', 'ExpenseTemplateController@update');
                 Route::delete('edit/{id}', 'ExpenseTemplateController@delete')->name('db.master.expense_template.delete');
             });
         });
@@ -430,9 +402,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'UserController@index')->name('db.admin.user');
                 Route::get('show/{id}', 'UserController@show')->name('db.admin.user.show');
                 Route::get('create', 'UserController@create')->name('db.admin.user.create');
-                Route::post('create', 'UserController@store');
                 Route::get('edit/{id}', 'UserController@edit')->name('db.admin.user.edit');
-                Route::patch('edit/{id}', 'UserController@update');
                 Route::delete('edit/{id}', 'UserController@delete')->name('db.admin.user.delete');
             });
 
@@ -440,9 +410,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'RolesController@index')->name('db.admin.roles');
                 Route::get('show/{id}', 'RolesController@show')->name('db.admin.roles.show');
                 Route::get('create', 'RolesController@create')->name('db.admin.roles.create');
-                Route::post('create', 'RolesController@store');
                 Route::get('edit/{id}', 'RolesController@edit')->name('db.admin.roles.edit');
-                Route::patch('edit/{id}', 'RolesController@update');
                 Route::delete('edit/{id}', 'RolesController@delete')->name('db.admin.roles.delete');
             });
 
@@ -458,19 +426,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'UnitController@index')->name('db.admin.unit');
                 Route::get('show/{id}', 'UnitController@show')->name('db.admin.unit.show');
                 Route::get('create', 'UnitController@create')->name('db.admin.unit.create');
-                Route::post('create', 'UnitController@store');
                 Route::get('edit/{id}', 'UnitController@edit')->name('db.admin.unit.edit');
-                Route::patch('edit/{id}', 'UnitController@update');
                 Route::delete('edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
             });
-
+            
             Route::group(['prefix' => 'currencies', 'middleware' => ['permission:create-currencies|read-currencies|update-currencies|delete-currencies|menu-currencies']], function(){
                 Route::get('', 'CurrenciesController@index')->name('db.admin.currencies');
                 Route::get('show/{id}', 'CurrenciesController@show')->name('db.admin.currencies.show');
                 Route::get('create', 'CurrenciesController@create')->name('db.admin.currencies.create');
-                Route::post('create', 'CurrenciesController@store');
                 Route::get('edit/{id}', 'CurrenciesController@edit')->name('db.admin.currencies.edit');
-                Route::patch('edit/{id}', 'CurrenciesController@update');
                 Route::delete('edit/{id}', 'CurrenciesController@delete')->name('db.admin.currencies.delete');
             });
 
@@ -478,9 +442,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('provider', 'PhoneProviderController@index')->name('db.admin.phone_provider');
                 Route::get('provider/show/{id}', 'PhoneProviderController@show')->name('db.admin.phone_provider.show');
                 Route::get('provider/create', 'PhoneProviderController@create')->name('db.admin.phone_provider.create');
-                Route::post('provider/create', 'PhoneProviderController@store');
                 Route::get('provider/edit/{id}', 'PhoneProviderController@edit')->name('db.admin.phone_provider.edit');
-                Route::patch('provider/edit/{id}', 'PhoneProviderController@update');
                 Route::delete('provider/edit/{id}', 'PhoneProviderController@delete')->name('db.admin.phone_provider.delete');
             });
 

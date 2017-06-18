@@ -35,7 +35,7 @@ class CashFlowController extends Controller
 
     public function create()
     {
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $dest_acc = CashAccount::get()->pluck('codeAndName', 'id');
         $source_acc = CashAccount::get()->pluck('codeAndName', 'id');
 
@@ -65,7 +65,7 @@ class CashFlowController extends Controller
         $cashflow = CashAccount::find($id);
         $dest_acc = CashAccount::get()->pluck('codeAndName', 'id');
         $source_acc = CashAccount::get()->pluck('codeAndName', 'id');
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 
         return view('accounting.cash_flow.edit', compact('cashflow', 'dest_acc', 'source_acc', 'statusDDL'));
     }

@@ -67,7 +67,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank', 'expenseTemplates')->find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
 
@@ -78,7 +78,7 @@ class CustomerController extends Controller
     {
         $mapsAPIKey = env('MAPS_API_KEY');
         $store = Auth::user()->store;
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
@@ -95,7 +95,10 @@ class CustomerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect(route('db.master.customer.create'))->withInput()->withErrors($validator);
+            return response()->json([
+                'result' => 'failed',
+                'data' => $validator
+            ]);
         } else {
             DB::transaction(function() use ($data) {
 
@@ -153,7 +156,9 @@ class CustomerController extends Controller
                 }
             });
 
-            return redirect(route('db.master.customer'));
+            return response()->json([
+                'result' => 'success'
+            ]);
         }
     }
 
@@ -162,7 +167,7 @@ class CustomerController extends Controller
         $mapsAPIKey = env('MAPS_API_KEY');
         $store = Auth::user()->store;
         $customer = Customer::with('profiles.phoneNumbers', 'bankAccounts.bank', 'expenseTemplates')->find($id);
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);

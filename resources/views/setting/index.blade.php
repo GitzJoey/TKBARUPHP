@@ -29,7 +29,7 @@
         </div>
         <div class="box-body">
             <div id="settingsVue">
-                <form id="settingsForm" class="form-horizontal" action="{{ route('db.admin.settings.update') }}" method="post" data-parsley-validate="parsley">
+                <form id="settingsForm" class="form-horizontal" action="{{ route('db.admin.settings.update') }}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="inputForUserEmail" class="col-sm-3 control-label">@lang('settings.field.for_user_email')</label>
@@ -64,7 +64,9 @@
                         <div class="col-sm-9">
                             <select name="so_warehouse" class="form-control" v-model="user.fav.so_warehouse_id">
                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                <option v-for="w in warehouseDDL" v-bind:value="w.id">@{{ w.name }} @{{ w.address }}</option>
+                                @foreach ($warehouseDDL as $w)
+                                    <option value="{{ $w.id }}">{{ $w.name }} - {{ $w.address }}</option>
+                                @endforeach
                             </select>
                             <span class="help-block"></span>
                         </div>
@@ -76,7 +78,6 @@
                             <button class="btn btn-block btn-default" type="submit">@lang('buttons.update_button')</button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -88,23 +89,7 @@
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
-            var app = new Vue({
-                el: '#settingsVue',
-                data: {
-                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                    user: {
-                        fav: {
-                            po_warehouse_id: '',
-                            so_warehouse_id: ''
-                        }
-                    }
-                },
-                methods: {
-                    loadSettings: function(userId) {
 
-                    }
-                }
-            });
         });
     </script>
 @endsection

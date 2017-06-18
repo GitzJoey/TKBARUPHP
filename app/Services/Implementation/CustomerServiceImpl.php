@@ -136,4 +136,9 @@ class CustomerServiceImpl implements CustomerService
 
         return response()->json($passiveCustomers);
     }
+
+    public function searchCustomer($keyword)
+    {
+
+    }
 }

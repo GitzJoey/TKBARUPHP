@@ -104,4 +104,6 @@ interface PurchaseOrderService
      * @return Collection
      */
     public function getUnreceivedPO($threshold = 3);
+
+    public function searchPO($keyword);
 }

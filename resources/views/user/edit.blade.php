@@ -17,171 +17,229 @@
 @endsection
 
 @section('content')
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div id="userVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
         </div>
-    @endif
 
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">@lang('user.edit.header.title')</h3>
-        </div>
-        <form class="form-horizontal" action="{{ route('db.admin.user.edit', $user->hId()) }}" method="post" accept-charset="UTF-8" data-parsley-validate="parsley">
-            <input name="_method" type="hidden" value="PATCH"/>
+        <form id="userForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
-            <div class="box-body">
-                <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-                    <div class="col-sm-10">
-                        <input id="inputName" name="name" value="{{ $user->name }}" type="text" class="form-control" placeholder="Name" data-parsley-required="true">
-                        <span class="help-block">{{ $errors->has('name') ? $errors->first('name') : '' }}</span>
-                    </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@lang('user.edit.header.title')</h3>
                 </div>
-                <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" name="email" value="{{ $user->email }}" placeholder="Email" data-parsley-required="true" readonly>
-                        <span class="help-block">{{ $errors->has('email') ? $errors->first('email') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('store') ? 'has-error' : '' }}">
-                    <label for="inputStore" class="col-sm-2 control-label">Store</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('store', $storeDDL, $user->store->id, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('store') ? $errors->first('store') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
-                    <label for="inputRoles" class="col-sm-2 control-label">Roles</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('roles', $rolesDDL, $user->roles->first()->name, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true')) }}
-                        <span class="help-block">{{ $errors->has('roles') ? $errors->first('roles') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
-                        <span class="help-block">{{ $errors->has('password') ? $errors->first('password') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                    <label for="inputPasswordConfirmation" class="col-sm-2 control-label">Retype Password</label>
-                    <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword" name="password_confirmation" placeholder="Password">
-                        <span class="help-block">{{ $errors->has('password_confirmation') ? $errors->first('password_confirmation') : '' }}</span>
-                    </div>
-                </div>
-                <hr>
-                <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-                    <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
-                    <div class="col-sm-10">
-                        {{ Form::select('type', $usertypeDDL, $user->userDetail()->pluck('type')->first(), array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'), 'data-parsley-required' => 'true', 'id' => 'userTypeDDL')) }}
-                        <span class="help-block">{{ $errors->has('type') ? $errors->first('type') : '' }}</span>
-                    </div>
-                </div>
-                <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
-                    <label for="inputAllowLogin" class="col-sm-2 control-label">@lang('user.field.allow_login')</label>
-                    <div class="col-sm-10">
-                        <div class="checkbox icheck">
-                            <label>
-                                @if (empty(old('allow_login')))
-                                    @if (boolval($user->userDetail()->pluck('allow_login')->first()))
-                                        <input type="checkbox" class="is_icheck" name="allow_login" checked>&nbsp;
-                                    @else
-                                        <input type="checkbox" class="is_icheck" name="allow_login">&nbsp;
-                                    @endif
-                                @else
-                                    @if (old('allow_login') == 'on')
-                                        <input type="checkbox" name="allow_login" checked class="is_icheck">&nbsp;
-                                    @else
-                                        <input type="checkbox" name="allow_login" class="is_icheck">&nbsp;
-                                    @endif
-                                @endif
-                            </label>
+                <div class="box-body">
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('name') }">
+                        <label for="inputName" class="col-sm-2 control-label">@lang('user.field.name')</label>
+                        <div class="col-sm-10">
+                            <input id="inputName" name="name" type="text" class="form-control" placeholder="@lang('user.field.name')"
+                                v-model="user.name" v-validate="'required'" data-vv-as="{{ trans('user.field.name') }}">
+                            <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
-                    <div class="col-sm-10">
-                        <select id="profileDDL" name="link_profile" class="form-control">
-                            <option value="">@lang('labels.PLEASE_SELECT')</option>
-                            @if (empty(old('link_profile')))
-                                @if (!is_null($user->profile))
-                                    @foreach ($profiles as $p)
-                                        @if ($p->owner_type == 'App\Model\Supplier')
-                                            @if ($user->profile->id == $p->id)
-                                                <option value="{{ $p->id }}" selected>[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
-                                            @else
-                                                <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
-                                            @endif
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('email') }">
+                        <label for="inputEmail" class="col-sm-2 control-label">@lang('user.field.email')</label>
+                        <div class="col-sm-10">
+                            <input id="inputEmail" name="email" type="text" class="form-control" placeholder="@lang('user.field.email')"
+                                v-model="user.email" v-validate="'required|email'" data-vv-as="{{ trans('user.field.email') }}">
+                            <span v-show="errors.has('email')" class="help-block" v-cloak>@{{ errors.first('email') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('store') }">
+                        <label for="inputStore" class="col-sm-2 control-label">@lang('user.field.store')</label>
+                        <div class="col-sm-10">
+                            <select class="form-control"
+                                    name="store"
+                                    v-model="user.store"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('user.field.store') }}">
+                                <option v-bind:value="defaultStore">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in storeDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('store')" class="help-block" v-cloak>@{{ errors.first('store') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('roles') }">
+                        <label for="inputRoles" class="col-sm-2 control-label">@lang('user.field.roles')</label>
+                        <div class="col-sm-10">
+                            <select class="form-control"
+                                    name="roles"
+                                    v-model="user.roles"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('user.field.roles') }}">
+                                <option v-bind:value="defaultRoles">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in rolesDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('roles')" class="help-block" v-cloak>@{{ errors.first('roles') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('password') }">
+                        <label for="inputPassword" class="col-sm-2 control-label">@lang('user.field.password')</label>
+                        <div class="col-sm-10">
+                            <input id="inputEmail" name="password" type="password" class="form-control" placeholder="@lang('user.field.password')"
+                                v-model="user.password" v-validate="'required'" data-vv-as="{{ trans('user.field.password') }}">
+                            <span v-show="errors.has('password')" class="help-block" v-cloak>@{{ errors.first('password') }}</span>
+                        </div>
+                    </div>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('password_confirmation') }">
+                        <label for="inputPasswordConfirmation" class="col-sm-2 control-label">@lang('user.field.retype_password')</label>
+                        <div class="col-sm-10">
+                            <input id="inputEmail" name="password_confirmation" type="password" class="form-control" placeholder="@lang('user.field.retype_password')"
+                                v-model="user.password_confirmation" v-validate="'required|confirmed:password'" data-vv-as="{{ trans('user.field.password_confirmation') }}">
+                            <span v-show="errors.has('password_confirmation')" class="help-block" v-cloak>@{{ errors.first('password_confirmation') }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('user_type') }">
+                        <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
+                        <div class="col-sm-10">
+                            <select class="form-control"
+                                    name="user_type"
+                                    v-model="user.user_type"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ trans('user.field.user_type') }}">
+                                <option v-bind:value="defaultUserType">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="(value, key) in usertypeDDL" v-bind:value="key">@{{ value }}</option>
+                            </select>
+                            <span v-show="errors.has('user_type')" class="help-block" v-cloak>@{{ errors.first('user_type') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
+                        <label for="inputAllowLogin" class="col-sm-2 control-label">@lang('user.field.allow_login')</label>
+                        <div class="col-sm-10">
+                            <div class="checkbox icheck">
+                                <label>
+                                    @if (empty(old('allow_login')))
+                                        @if (boolval($user->userDetail()->pluck('allow_login')->first()))
+                                            <input type="checkbox" class="is_icheck" name="allow_login" checked>&nbsp;
                                         @else
-                                            @if ($user->profile->id == $p->id)
-                                                <option value="{{ $p->id }}" selected>[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            <input type="checkbox" class="is_icheck" name="allow_login">&nbsp;
+                                        @endif
+                                    @else
+                                        @if (old('allow_login') == 'on')
+                                            <input type="checkbox" name="allow_login" checked class="is_icheck">&nbsp;
+                                        @else
+                                            <input type="checkbox" name="allow_login" class="is_icheck">&nbsp;
+                                        @endif
+                                    @endif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputLinkProfiles" class="col-sm-2 control-label">@lang('user.field.link_profile')</label>
+                        <div class="col-sm-10">
+                            <select id="profileDDL" name="link_profile" class="form-control">
+                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                @if (empty(old('link_profile')))
+                                    @if (!is_null($user->profile))
+                                        @foreach ($profiles as $p)
+                                            @if ($p->owner_type == 'App\Model\Supplier')
+                                                @if ($user->profile->id == $p->id)
+                                                    <option value="{{ $p->id }}" selected>[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                                @else
+                                                    <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                                @endif
+                                            @else
+                                                @if ($user->profile->id == $p->id)
+                                                    <option value="{{ $p->id }}" selected>[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                                @else
+                                                    <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @foreach ($profiles as $p)
+                                            @if ($p->owner_type == 'App\Model\Supplier')
+                                                <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                             @else
                                                 <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                             @endif
-                                        @endif
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 @else
                                     @foreach ($profiles as $p)
                                         @if ($p->owner_type == 'App\Model\Supplier')
-                                            <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            <option value="{{ $p->id }}" {{ old('link_profile') == $p->id ? 'selected':'' }}>[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                         @else
-                                            <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
+                                            <option value="{{ $p->id }}" {{ old('link_profile') == $p->id ? 'selected':'' }}>[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                         @endif
                                     @endforeach
                                 @endif
-                            @else
-                                @foreach ($profiles as $p)
-                                    @if ($p->owner_type == 'App\Model\Supplier')
-                                        <option value="{{ $p->id }}" {{ old('link_profile') == $p->id ? 'selected':'' }}>[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
-                                    @else
-                                        <option value="{{ $p->id }}" {{ old('link_profile') == $p->id ? 'selected':'' }}>[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </select>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputButton" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <a href="{{ route('db.admin.user') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputButton" class="col-sm-2 control-label"></label>
-                    <div class="col-sm-10">
-                        <a href="{{ route('db.admin.user') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                        <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
-                    </div>
-                </div>
+                <div class="box-footer"></div>
             </div>
-            <div class="box-footer"></div>
         </form>
     </div>
 @endsection
 
 @section('custom_js')
-    <script type="text/javascript">
-        $(function () {
-            $('input.is_icheck').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%'
-            });
+    <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
-            $('#profileDDL').change(function(val) {
-                if ($('#profileDDL option:selected').text().indexOf('[Supplier]') != -1) {
-                    $('#userTypeDDL').val('USERTYPE.S');
-                } else if ($('#profileDDL option:selected').text().indexOf('[Customer]') != -1) {
-                    $('#userTypeDDL').val('USERTYPE.C');
-                } else {
-                    $('#userTypeDDL').val('');
+        var app = new Vue({
+            el: '#userVue',
+            data: {
+                user: {
+                    name:'{{ $user->name }}',
+                    email:'{{ $user->email }}',
+                    store:'{{ $user->store_id }}',
+                    roles:'{{ $user->roles->first()->name }}',
+                    password:'',
+                    password_confirmation:'',
+                    user_type:"{{ $user->userDetail()->pluck('type')->first() }}",
+                },
+                storeDDL: JSON.parse('{!! htmlspecialchars_decode($storeDDL) !!}'),
+                rolesDDL: JSON.parse('{!! htmlspecialchars_decode($rolesDDL) !!}'),
+                usertypeDDL: JSON.parse('{!! htmlspecialchars_decode($usertypeDDL) !!}')
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    var vm = this;
+                    this.$validator.validateAll().then(function(result) {
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.admin.user.edit', $user->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#userForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db.admin.user') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.address.length > 0) {
+                                    for (var i=0; i < e.response.data.address.length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data.address[i], 'server', '__global__');
+                                    }
+                                } else {
+                                    vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
+                        });
+                    });
                 }
-            });
+            },
+            computed: {
+                defaultStore: function() {
+                    return '';
+                },
+                defaultRoles: function() {
+                    return '';
+                },
+                defaultUserType: function() {
+                    return '';
+                }
+            }
         });
     </script>
 @endsection

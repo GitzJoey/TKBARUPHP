@@ -131,4 +131,6 @@ interface SalesOrderService
      * @return Collection
      */
     public function getUncorfirmedSO();
+
+    public function searchSO($keyword);
 }

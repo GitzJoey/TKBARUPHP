@@ -120,7 +120,7 @@
                                                 <input type="hidden" name="base_unit_id[]" v-bind:value="receipt.item.base_unit_id">
                                                 <td class="valign-middle">@{{ receipt.item.product.name }}</td>
                                                 <td v-bind:class="{ 'has-error':errors.has('unit_' + receiptIdx) }">
-                                                    <select name="selected_unit_id[]" data-parsley-required="true"
+                                                    <select name="selected_unit_id[]"
                                                             class="form-control"
                                                             v-model="receipt.selected_unit"
                                                             v-validate="'required'"
@@ -246,6 +246,7 @@
                         var result = false;
                         var itemIdx = args[0];
 
+                        console.log(Number(app.inflow.receipts[itemIdx].netto) + Number(app.inflow.receipts[itemIdx].tare));
                         if (Number(app.inflow.receipts[itemIdx].brutto) ==
                             Number(app.inflow.receipts[itemIdx].netto) + Number(app.inflow.receipts[itemIdx].tare)) {
                             result = true;

@@ -33,4 +33,6 @@ interface SupplierService
      * @return bool
      */
     public function isUnfinishedSupplierExist();
+
+    public function searchSupplier($keyword);
 }

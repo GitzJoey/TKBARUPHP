@@ -42,7 +42,7 @@ class SupplierController extends Controller
         $supplier = Supplier::with('profiles.phoneNumbers.provider', 'bankAccounts.bank',
             'expenseTemplates')->find($id);
 
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $productList = Product::whereStatus('STATUS.ACTIVE')->get();

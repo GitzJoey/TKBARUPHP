@@ -126,6 +126,7 @@ class Product extends Model
                 'selected' => false,
                 'unit_id' => (string)$produnit->unit_id,
                 'is_base' => empty($produnit->is_base) ? false : true,
+                'is_base_val' => empty($produnit->is_base) ? false : true,
                 'conversion_value' => $produnit->conversion_value,
                 'remarks' => $produnit->remarks,
             ));

@@ -16,6 +16,7 @@ return [
         'roles' => 'Peran',
         'password' => 'Password',
         'retype_password' => 'Ulangi Password',
+        'password_confirmation' => 'Ulangi Password',
         'user_type' => 'Tipe User',
         'allow_login' => 'Boleh Login',
         'link_profile' => 'Sambung Ke Profil',

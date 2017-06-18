@@ -24,7 +24,7 @@ class CurrenciesController extends Controller
 	}
 	public function create()
 	{
-        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('description', 'code');
+        $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
 		return view('currencies.create' , compact('statusDDL'));
 	}
 	public function store(Request $req)
@@ -34,19 +34,21 @@ class CurrenciesController extends Controller
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
         ]);
-
-        if ($validator->fails()) {
-            return redirect(route('db.admin.currencies.create'))->withInput()->withErrors($validator);
-        } else {
-            Currencies::create([
-                'name' => $req['name'],
-                'symbol' => $req['symbol'],
-                'status' => $req['status'],
-                'remarks' => $req['remarks'],
+		
+	if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
             ]);
-
-            return redirect(route('db.admin.currencies'));
         }
+
+        Currencies::create([
+            'name' => $req['name'],
+            'symbol' => $req['symbol'],
+            'status' => $req['status'],
+            'remarks' => $req['remarks'],
+        ]);
+
+        return response()->json();
 	}
     public function show($id)
     {
@@ -66,12 +68,16 @@ class CurrenciesController extends Controller
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255'
         ]);
-        if($validator->fails()){
-            return redirect(route('db.admin.currencies.edit'))->withInput()->withErrors($validator);
-        }else{
-            Currencies::find($id)->update($req->all());
-            return redirect(route('db.admin.currencies'));
+	    
+		if (!is_null($validator) && $validator->fails()) {
+            return response()->json([
+                'errors'=>$validator->errors()
+            ]);
         }
+	    
+        Currencies::find($id)->update($req->all());
+
+        return response()->json();
     }
     public function delete($id)
     {

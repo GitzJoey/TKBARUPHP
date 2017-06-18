@@ -66,4 +66,9 @@ class StockServiceImpl implements StockService
 
         return $stocks;
     }
+
+    public function searchStock($keyword)
+    {
+
+    }
 }
