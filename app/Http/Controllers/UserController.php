@@ -110,17 +110,11 @@ class UserController extends Controller
     public function update($id, Request $req)
     {
         $validator = $this->validate($req, [
-            'name' => 'required|max:255',
+            'name' => 'required|min:255',
             'roles' => 'required',
             'password' => 'required|min:6|confirmed',
             'store' => 'required',
         ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
 
         DB::transaction(function() use ($id, $req) {
             $usr = User::find($id);

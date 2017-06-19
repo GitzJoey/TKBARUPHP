@@ -41,12 +41,6 @@ class ExpenseTemplateController extends Controller
             'remarks' => 'required',
         ]);
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-
         ExpenseTemplate::create([
             'name' => $request->input('name'),
             'type' => $request->input('type'),

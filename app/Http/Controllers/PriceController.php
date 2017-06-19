@@ -93,7 +93,7 @@ class PriceController extends Controller
                 $p->store_id = Auth::user()->store_id;
                 $p->stock_id = $request['stock_id'][$i];
                 $p->price_level_id = $request['price_level_id'][$i];
-                $p->input_date = date('Y-m-d H:i', strtotime($request['input_date'][$i]));
+                $p->input_date = date('Y-m-d H:i:s', strtotime($request['input_date'][$i]));
                 $p->market_price = floatval(str_replace(',', '', $request['market_price'][$i]));
                 $p->price = floatval(str_replace(',', '', $request['price'][$i]));
 

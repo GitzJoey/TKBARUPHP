@@ -50,12 +50,6 @@ class ProductTypeController extends Controller
             'status' => 'required',
         ]);
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-
         ProductType::create([
             'store_id' => Auth::user()->store->id,
             'name' => $data['name'],
