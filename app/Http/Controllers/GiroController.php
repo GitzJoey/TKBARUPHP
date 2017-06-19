@@ -52,13 +52,7 @@ class GiroController extends Controller
             'bank' => 'required|string|max:255',
             'effective_date' => 'required|string|max:255',
             'serial_number' => 'required|string|max:255',
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         Giro::create([
             'store_id' => Auth::user()->store->id,
@@ -88,13 +82,7 @@ class GiroController extends Controller
         $validator = Validator::make($req->all(), [
             'serial_number' => 'required|string|max:255',
             'effective_date' => 'required|string|max:255',
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         $giro = Giro::find($id);
 

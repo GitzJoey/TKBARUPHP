@@ -55,14 +55,8 @@ class TruckMaintenanceController extends Controller
             'maintenance_type' => 'required',
             'cost' => 'required|numeric',
             'odometer' => 'required|numeric',
-        ]);
+        ])->validate();
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-        
         TruckMaintenance::create([
             'store_id' => Auth::user()->store->id,
             'truck_id' => $data['plate_number'],
@@ -94,14 +88,8 @@ class TruckMaintenanceController extends Controller
             'cost' => 'required|numeric',
             'odometer' => 'required|numeric',
             'remarks' => 'required',
-        ]);
+        ])->validate();
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-        
         unset($req['plate_number']);
         TruckMaintenance::find($id)->update($req->all());
 

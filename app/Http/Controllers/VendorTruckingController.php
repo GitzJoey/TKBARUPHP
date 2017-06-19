@@ -50,12 +50,6 @@ class VendorTruckingController extends Controller
             'status' => 'required',
         ]);
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-
         VendorTrucking::create([
             'store_id' => Auth::user()->store->id,
             'name' => $data['name'],
@@ -85,12 +79,6 @@ class VendorTruckingController extends Controller
             'tax_id' => 'required|string|max:255',
             'status' => 'required',
         ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
 
         VendorTrucking::find($id)->update($req->all());
 

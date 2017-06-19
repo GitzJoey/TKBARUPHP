@@ -58,13 +58,7 @@ class BankController extends Controller
             'status' => 'required',
             'remarks' => 'required|string|max:255',
 
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
          Bank::create([
             'store_id' => Auth::user()->store->id,
@@ -97,13 +91,7 @@ class BankController extends Controller
             'status' => 'required',
             'remarks' => 'required|string|max:255',
 
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         Bank::find($id)->update($req->all());
 

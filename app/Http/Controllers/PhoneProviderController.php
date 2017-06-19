@@ -50,13 +50,7 @@ class PhoneProviderController extends Controller
             'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
             'status' => 'required',
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         DB::transaction(function() use ($data) {
             $ph = new PhoneProvider();
@@ -96,13 +90,7 @@ class PhoneProviderController extends Controller
             'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
             'status' => 'required',
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         DB::transaction(function() use ($id, $data) {
             $ph = PhoneProvider::find($id);

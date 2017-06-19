@@ -53,14 +53,8 @@ class TruckController extends Controller
             'inspection_date' => 'required|string|max:255',
             'driver' => 'required|string|max:255',
             'status' => 'required',
-        ]);
+        ])->validate();
         
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-       
         Truck::create([
             'store_id' => Auth::user()->store->id,
             'type' => $data['truck_type'],
@@ -92,14 +86,8 @@ class TruckController extends Controller
             'inspection_date' => 'required|string|max:255',
             'driver' => 'required|string|max:255',
             'status' => 'required',
-        ]);
+        ])->validate();
         
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-
         Truck::find($id)->update($req->all());
 
         return response()->json();

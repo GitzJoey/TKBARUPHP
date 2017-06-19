@@ -63,13 +63,7 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
             'roles' => 'required',
             'store' => 'required',
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         DB::transaction(function() use ($data) {
             $usr = new User();
