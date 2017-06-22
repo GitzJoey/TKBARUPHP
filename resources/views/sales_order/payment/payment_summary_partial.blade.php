@@ -203,7 +203,7 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                            <h3 class="box-title">@lang('purchase_order.create.box.discount_per_item')</h3>
+                <h3 class="box-title">@lang('purchase_order.create.box.discount_per_item')</h3>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -355,7 +355,7 @@
                                     <td width="80%"
                                         class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                     <td width="20%" class="text-right">
-                                        <span class="control-label-normal">@{{ expenseTotal() }}</span>
+                                        <span class="control-label-normal">@{{ numeral(expenseTotal()).format() }}</span>
                                     </td>
                                 </tr>
                             </tbody>
