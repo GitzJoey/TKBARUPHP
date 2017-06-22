@@ -30,12 +30,8 @@ return [
             'input_date' => 'Input Date',
             'market_price' => 'Market Price',
             'price' => 'Price',
-        ],
-        'price_level' => [
-            'RETAIL' => '',
-            'WHOLESALE 1' => '',
-            'WHOLESALE 2' => '',
-        ],
+            'affected_stocks' => 'Affected Stocks'
+        ]
     ],
     'stock' => [
         'title' => 'Stock Price',

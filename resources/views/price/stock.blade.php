@@ -45,14 +45,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div v-bind:class="{ 'form-group': true, 'has-error':errors.has('market_price') }">
+                        <div v-bind:class="{ 'form-group': true, 'has-error':errors.has('inputed_market_price') }">
                             <label for="inputMarketPrice"
                                    class="col-sm-2 control-label">@lang('price.stock.field.market_price')</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control text-right" name="inputed_market_price" v-model="market_price"
                                        v-validate="'required|numeric:2'" v-on:keyup="updateMarketPrice(market_price)" data-vv-as="{{ trans('price.stock.field.market_price') }}">
                             </div>
-                            <span v-show="errors.has('market_price')" class="help-block" v-cloak>@{{ errors.first('market_price') }}</span>
+                            <span v-show="errors.has('inputed_market_price')" class="help-block" v-cloak>@{{ errors.first('inputed_market_price') }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -183,7 +183,8 @@
                         } else {
                             price = parseFloat(priceLevel.percentage_value) * parseFloat(marketPrice) + parseFloat(marketPrice);
                         }
-                        vm.price[i].price = price;
+
+                        vm.price[i].price = isNaN(price ) ? '':price;
                         vm.price[i].market_price = marketPrice;
                     }
                 },

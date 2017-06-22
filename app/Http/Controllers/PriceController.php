@@ -41,33 +41,32 @@ class PriceController extends Controller
     {
         $currentProductType = ProductType::find($id);
         $priceLevels = PriceLevel::all();
+        $stocks = Stock::whereHas('product', function ($query) use ($id){
+            $query->where('product_type_id', '=', $id);
+        })->where('current_quantity', '>', 0)->get();
 
-        return view('price.category', compact('currentProductType', 'priceLevels'));
+        return view('price.category', compact('currentProductType', 'priceLevels', 'stocks'));
     }
 
     public function updateCategoryPrice(Request $request, $id)
     {
         $stocks = Stock::whereHas('product', function ($query) use ($id){
             $query->where('product_type_id', '=', $id);
-        })
-        ->where('current_quantity', '>', 0)
-        ->get();
-
-        $priceLevels = PriceLevel::all(['id', 'increment_value']);
+        })->where('current_quantity', '>', 0)->get();
 
         $prices = collect([]);
 
-        $stocks->each(function ($stock) use($prices, $priceLevels, $request){
-            $priceLevels->each(function ($priceLevel, $key) use($prices, $stock, $request){
+        $stocks->each(function ($stock) use($prices, $request) {
+            for ($i = 0; $i < count($request['price_level_id']); $i++) {
                 $prices->push([
                     'store_id'          => Auth::user()->store_id,
                     'stock_id'          => $stock->id,
-                    'price_level_id'    => $priceLevel->id,
-                    'input_date'        => date('Y-m-d H:i', strtotime($request->input('input_date'))),
-                    'market_price'      => floatval(str_replace(',', '', $request->input('market_price'))),
-                    'price'             => floatval(str_replace(',', '', $request->input("price.$key"))),
+                    'price_level_id'    => $request['price_level_id'][$i],
+                    'input_date'        => date('Y-m-d H:i:s', strtotime($request['inputed_date'])),
+                    'market_price'      => floatval(str_replace(',', '', $request['inputed_market_price'])),
+                    'price'             => floatval(str_replace(',', '', $request['price'][$i])),
                 ]);
-            });
+            }
         });
 
         Price::saveAll($prices);
