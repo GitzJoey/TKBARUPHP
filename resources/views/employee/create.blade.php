@@ -77,11 +77,7 @@
                     <div class="form-group {{ $errors->has('freelance') ? 'has-error' : '' }}">
                         <label for="inputFreelance" class="col-sm-2 control-label">@lang('employee.field.freelance')</label>
                         <div class="col-sm-5">
-                            <div class="checkbox icheck">
-                                <label>
-                                    <input type="checkbox" name="freelance" class="is_icheck">&nbsp;
-                                </label>
-                            </div>
+                            <vue-iCheck name="freelance" v-model="employee.freelance"></vue-iCheck>
                             <span class="help-block">{{ $errors->has('freelance') ? $errors->first('freelance') : '' }}</span>
                         </div>
                     </div>
@@ -137,6 +133,27 @@
 <script type="application/javascript">
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
+        Vue.component('vue-icheck', {
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            props: ['id', 'name', 'disabled', 'value'],
+            mounted: function() {
+                $(this.$el).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                }).on('ifChecked', function(event) {
+                    this.value = true;
+                }).on('ifUnchecked', function(event) {
+                    this.value = false;
+                });
+
+                if (this.value) { $(this.$el).iCheck('check'); }
+                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+            },
+            destroyed: function() {
+                $(this.$el).iCheck('destroy');
+            }
+        });
+
         Vue.component('vue-datetimepicker', {
             template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
             props: ['id', 'name', 'value', 'format', 'readonly'],
@@ -170,6 +187,7 @@
                     name:'',
                     ic_number:'',
                     start_date:'',
+                    freelance: '',
                     base_salary:'',
                     status:''
                 },
