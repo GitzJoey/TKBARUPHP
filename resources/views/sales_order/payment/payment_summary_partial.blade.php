@@ -77,7 +77,7 @@
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input type="text" class="form-control" readonly
-                                   value="{{ $currentSo->so_created->format('d-m-Y') }}">
+                                   value="{{ $currentSo->so_created->format('d-m-Y H:i A') }}">
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input type="text" class="form-control" name="shipping_date" readonly
-                                   value="{{ $currentSo->shipping_date->format('d-m-Y') }}">
+                                   value="{{ $currentSo->shipping_date->format('d-m-Y H:i A') }}">
                         </div>
                     </div>
                 </div>

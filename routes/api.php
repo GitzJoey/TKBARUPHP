@@ -27,8 +27,8 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
 
             Route::group(['prefix' => 'payment'], function () {
                 Route::post('{id}/cash', 'PurchaseOrderPaymentController@saveCashPayment')->name('api.post.db.po.payment.cash');
-                Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment')->name('api.post.db.po.payment.transfer');;
-                Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment')->name('api.post.db.po.payment.giro');;
+                Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment')->name('api.post.db.po.payment.transfer');
+                Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment')->name('api.post.db.po.payment.giro');
             });
 
             Route::group(['prefix' => 'copy'], function () {
@@ -51,6 +51,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('{id}/cash', 'SalesOrderPaymentController@saveCashPayment')->name('api.post.db.so.payment.cash');
                 Route::post('{id}/transfer', 'SalesOrderPaymentController@saveTransferPayment')->name('api.post.db.so.payment.transfer');;
                 Route::post('{id}/giro', 'SalesOrderPaymentController@saveGiroPayment')->name('api.post.db.so.payment.giro');;
+                Route::post('{id}/bf', 'SalesOrderPaymentController@saveBroughtForwardPayment')->name('api.post.db.so.payment.bf');
             });
 
             Route::group(['prefix' => 'copy'], function () {

@@ -141,7 +141,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('{id}/transfer', 'SalesOrderPaymentController@createTransferPayment')->name('db.so.payment.transfer');
                 Route::get('{id}/giro', 'SalesOrderPaymentController@createGiroPayment')->name('db.so.payment.giro');
                 Route::get('{id}/bf', 'SalesOrderPaymentController@createBroughtForwardPayment')->name('db.so.payment.bf');
-                Route::post('{id}/bf', 'SalesOrderPaymentController@saveBroughtForwardPayment');
             });
 
             Route::group(['prefix' => 'copy'], function () {

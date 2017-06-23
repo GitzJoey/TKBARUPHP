@@ -135,17 +135,15 @@ return [
         'broughtforward' => [
             'title' => 'Forward Invoice',
             'page_title' => 'Forward Invoice',
-            'page_title_desc' => 'Close & forward invoice balance to new invoice',
+            'page_title_desc' => '',
             'header' => [
                 'title' => 'Forward Invoice',
             ],
             'invoice' => [
-                'current' => 'Current Invoice',
-                'next' => 'New Invoice',
+                'next' => 'Merge Invoice',
                 'so_code' => 'Sales Code',
-                'customer' => 'Customer',
-                'created' => 'Created Date',
-                'total_amount' => 'Total Amount',
+                'name' => 'Name',
+                'remarks' => 'Remarks',
             ],
         ],
     ],
