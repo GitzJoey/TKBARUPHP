@@ -81,7 +81,7 @@ class CustomerController extends Controller
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
+        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['type', 'name', 'description', 'weight', 'id']);
         $expenseTemplates = ExpenseTemplate::all();
 
         return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates', 'mapsAPIKey', 'store'));
@@ -170,7 +170,7 @@ class CustomerController extends Controller
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
+        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['type', 'name', 'description', 'weight', 'id']);
         $expenseTemplates = ExpenseTemplate::all();
 
         return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates', 'mapsAPIKey', 'store'));
