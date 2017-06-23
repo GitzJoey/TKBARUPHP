@@ -16,6 +16,10 @@
     {!! Breadcrumbs::render('employee.employee_edit', $employee->hId()) !!}
 @endsection
 
+@section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/fileinput/fileinput.css') }}">
+@endsection
+
 @section('content')
     <div id="employeeVue">
         <div v-show="errors.count() > 0" v-cloak>
@@ -89,11 +93,14 @@
                                class="col-sm-2 control-label">@lang('employee.field.image_path')</label>
                         <div class="col-sm-10">
                             @if(!empty($employee->image_path))
-                                <img src="{{ asset('images/'.$employee->image_path) }}" class="img-responsive img-circle"
-                                     style="max-width: 150px; max-height: 150px;"/>
+                                <input id="inputEmployeeImage" name="image_path" type="file" class="file form-control" value="{{ old('image_path') }}"
+                                       data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'
+                                       data-initial-preview='["<img src="{{ asset('images/'.$employee->image_path) }}" />"]'>
+                            @else
+                                <input id="inputEmployeeImage" name="image_path" type="file" class="file form-control"
+                                       data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'
+                                       value="{{ old('image_path') }}">
                             @endif
-                            <input id="inputEmployeeImage" name="image_path" type="file" class="form-control"
-                                   value="{{ old('image_path') }}">
                             <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
                         </div>
                     </div>
