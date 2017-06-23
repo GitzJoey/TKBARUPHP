@@ -444,9 +444,20 @@
                         if (!isValid) return;
                         axios.post('{{ route('api.post.db.master.customer.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#customerForm')[0]))
                             .then(function(response) {
-                                if (response.data.result == 'success') { window.location.href = '{{ route('db.master.customer') }}'; }
-                            });
-                    })
+                            if (response.data.result == 'success') { window.location.href = '{{ route('db.master.customer') }}'; }
+                        }).catch(function(e) {
+                            $('#loader-container').fadeOut('fast');
+                            if (Object.keys(e.response.data).length > 0) {
+                                for (var key in e.response.data) {
+                                    for (var i = 0; i < e.response.data[key].length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data[key][i], 'server', '__global__');
+                                    }
+                                }
+                            } else {
+                                vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                            }
+                        });
+                    });
                 },
                 addNewBank: function() {
                     this.banks.push({
