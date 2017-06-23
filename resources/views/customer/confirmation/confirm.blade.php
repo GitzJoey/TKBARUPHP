@@ -196,6 +196,7 @@
                 validateBeforeSubmit: function() {
                     console.log(this.$validator.validateAll());
                     this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.customer.confirmation.confirm', $so->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#custConfirmForm')[0]))
                             .then(function(response) {

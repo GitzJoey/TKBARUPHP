@@ -519,6 +519,7 @@
             methods: {
                 validateBeforeSubmit: function() {
                     this.$validator.validateScopes().then(function(result) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.admin.store.create') }}' + '?api_token=' + $('#secapi').val()
                             , new FormData($('#storeForm')[0])

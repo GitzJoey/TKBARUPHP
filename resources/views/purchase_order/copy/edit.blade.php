@@ -405,7 +405,8 @@
             },
             methods: {
                 validateBeforeSubmit: function() {
-                    this.$validator.validateAll().then(function(result) {
+                    this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.po.copy.edit', [$poCode, $currentPOCopy->hId()]) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poCopyForm')[0]))
                             .then(function(response) {

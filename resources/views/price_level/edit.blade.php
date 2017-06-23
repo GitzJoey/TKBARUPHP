@@ -182,7 +182,8 @@
                 },
                 validateBeforeSubmit: function() {
                     var vm = this;
-                    this.$validator.validateAll().then(function(result) {
+                    this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.price.level.edit', $pricelevel->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#priceLevelForm')[0]))
                             .then(function(response) {

@@ -146,6 +146,7 @@
                 validateBeforeSubmit: function() {
                     var vm = this;
                     this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.price.category.update', $currentProductType->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#categoryPriceForm')[0]))
                             .then(function(response) {

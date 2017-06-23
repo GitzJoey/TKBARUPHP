@@ -197,6 +197,7 @@
                 },
                 validateBeforeSubmit: function() {
                     this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.customer.payment.cash', $currentSo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#custCashPaymentForm')[0]))
                             .then(function(response) {

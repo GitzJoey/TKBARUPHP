@@ -255,6 +255,7 @@
             methods: {
                 validateBeforeSubmit: function() {
                     this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.master.product.create') }}' + '?api_token=' + $('#secapi').val()
                             , new FormData($('#productForm')[0])

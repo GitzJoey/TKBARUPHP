@@ -110,7 +110,8 @@
             methods: {
                 validateBeforeSubmit: function() {
                     var vm = this;
-                    this.$validator.validateAll().then(function(result) {
+                    this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.master.expense_template.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#expTemplateForm')[0]))
                             .then(function(response) {

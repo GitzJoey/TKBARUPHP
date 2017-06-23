@@ -265,6 +265,7 @@
                 },
                 validateBeforeSubmit: function() {
                     this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                     });
                 },

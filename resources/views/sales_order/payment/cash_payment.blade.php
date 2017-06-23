@@ -198,6 +198,7 @@
             methods: {
                 validateBeforeSubmit: function() {
                     this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.so.payment.cash', $currentSo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soPaymentForm')[0]))
                             .then(function(response) {
