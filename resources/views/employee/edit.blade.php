@@ -70,23 +70,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group {{ $errors->has('freelance') ? 'has-error' : '' }}">
+                    <div class="form-group">
                         <label for="inputFreelance" class="col-sm-2 control-label">@lang('employee.field.freelance')</label>
                         <div class="col-sm-5">
-                            @if (boolval($employee->freelance))
-                                <div class="checkbox icheck">
-                                    <label>
-                                        <input type="checkbox" name="freelance" class="is_icheck" checked>&nbsp;
-                                    </label>
-                                </div>
-                            @else
-                                <div class="checkbox icheck">
-                                    <label>
-                                        <input type="checkbox" name="freelance" class="is_icheck">&nbsp;
-                                    </label>
-                                </div>
-                            @endif
-                            <span class="help-block">{{ $errors->has('freelance') ? $errors->first('freelance') : '' }}</span>
+                            <vue-iCheck name="freelance" v-model="employee.freelance"></vue-iCheck>
                         </div>
                     </div>
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('base_salary') }">
@@ -146,6 +133,29 @@
 <script type="application/javascript">
         Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
 
+        Vue.component('vue-icheck', {
+            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
+            props: ['id', 'name', 'disabled', 'value'],
+            mounted: function() {
+                $(this.$el).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                }).on('ifChecked', function(event) {
+                    this.value = true;
+                }).on('ifUnchecked', function(event) {
+                    this.value = false;
+                });
+
+                if (this.value === 1) { $(this.$el).iCheck('check'); }
+                else { $(this.$el).iCheck('uncheck'); }
+
+                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
+            },
+            destroyed: function() {
+                $(this.$el).iCheck('destroy');
+            }
+        });
+
         Vue.component('vue-datetimepicker', {
             template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
             props: ['id', 'name', 'value', 'format', 'readonly'],
@@ -179,6 +189,7 @@
                     name:'{{ $employee->name }}',
                     ic_number:'{{ $employee->ic_number }}',
                     start_date:'{{ $employee->start_date }}',
+                    freelance: '{{ $employee->freelance }}',
                     base_salary:'{{ $employee->base_salary }}',
                     status:'{{ $employee->status }}'
                 },

@@ -167,8 +167,6 @@
                     }
                 });
 
-                $('input[autonumeric]').autoNumeric('init');
-
                 $('#applySettingsButton').click(function() {
                     var response = $.ajax({
                         type: "POST",
