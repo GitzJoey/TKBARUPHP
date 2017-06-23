@@ -503,7 +503,7 @@
             },
             methods: {
                 validateBeforeSubmit: function() {
-                    this.$validator.validateAll().then(function(isValid) {
+                    this.$validator.validateScopes().then(function(isValid) {
                         if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.admin.store.edit', $store->hId()) }}' + '?api_token=' + $('#secapi').val()
