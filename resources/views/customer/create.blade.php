@@ -441,10 +441,11 @@
             methods: {
                 validateBeforeSubmit: function() {
                     this.$validator.validateScopes().then(function(isValid) {
+                        var vm = this;
                         if (!isValid) return;
                         axios.post('{{ route('api.post.db.master.customer.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#customerForm')[0]))
                             .then(function(response) {
-                            if (response.data.result == 'success') { window.location.href = '{{ route('db.master.customer') }}'; }
+                            window.location.href = '{{ route('db.master.customer') }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
                             if (Object.keys(e.response.data).length > 0) {

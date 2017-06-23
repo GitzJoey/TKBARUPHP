@@ -249,11 +249,11 @@ class CustomerController extends Controller
 
             $customer->name = $data['name'];
             $customer->address = $data['address'];
-            $customer->latitude = $data['latitude'];
-            $customer->longitude = $data['longitude'];
-            $customer->distance = $data['distance'];
+            $customer->latitude = empty($data['latitude']) ? 0:$data['latitude'];
+            $customer->longitude = empty($data['longitude']) ? 0:$data['longitude'];
+            $customer->distance = empty($data['distance']) ? 0:$data['distance'];
             $customer->distance_text = $data['distance_text'];
-            $customer->duration = $data['duration'];
+            $customer->duration = empty($data['duration']) ? 0:$data['duration'];
             $customer->duration_text = $data['duration_text'];
             $customer->city = $data['city'];
             $customer->phone_number = $data['phone'];

@@ -677,15 +677,25 @@
             },
             methods: {
                 validateBeforeSubmit: function() {
+                    var vm = this;
                     this.$validator.validateAll().then(function(isValid) {
                         if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.po.revise', $currentPo->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#poForm')[0]))
                             .then(function(response) {
-                                window.location.href = '{{ route('db') }}';
-                            });
-                    }).catch(function() {
-
+                            window.location.href = '{{ route('db') }}';
+                        }).catch(function(e) {
+                            $('#loader-container').fadeOut('fast');
+                            if (Object.keys(e.response.data).length > 0) {
+                                for (var key in e.response.data) {
+                                    for (var i = 0; i < e.response.data[key].length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data[key][i], 'server', '__global__');
+                                    }
+                                }
+                            } else {
+                                vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                            }
+                        });
                     });
                 },
                 onChangeWarehouse: function() {
