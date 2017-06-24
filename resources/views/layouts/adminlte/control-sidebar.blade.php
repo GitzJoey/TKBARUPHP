@@ -7,7 +7,7 @@
     <div class="tab-content">
         <div class="tab-pane active" id="control-sidebar-activity-tab">
             <h4 class="control-sidebar-heading">@lang('control_sidebar.tab.notepad')</h4>
-            <textarea id="notepadArea" rows="12">{{ session('notepad', '') }}</textarea>
+            <textarea id="notepadArea" rows="12" maxlength="500">{{ session('notepad', '') }}</textarea>
             <btn id="notepadButton" class="btn btn-xs btn-default">@lang('buttons.submit_button')</btn>
             <br/>
             <h4 class="control-sidebar-heading">@lang('control_sidebar.tab.recent_activity')</h4>
