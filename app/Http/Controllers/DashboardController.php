@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -29,7 +30,10 @@ class DashboardController extends Controller
 
     public function saveNotepad(Request $req)
     {
-        $req->session()->put('notepad', $req->data);
+        Session::setId($req->sessionId);
+        Session::start();
+        Session::put('notepad', $req->data);
+        Session::save();
 
         return response()->json();
     }
