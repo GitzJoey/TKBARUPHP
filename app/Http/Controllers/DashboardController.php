@@ -30,7 +30,7 @@ class DashboardController extends Controller
 
     public function saveNotepad(Request $req)
     {
-        Session::setId($req->sessionId);
+        Session::setId(decrypt($req->sessionId));
         Session::start();
         Session::put('notepad', $req->data);
         Session::save();

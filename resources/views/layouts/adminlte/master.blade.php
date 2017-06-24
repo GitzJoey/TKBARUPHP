@@ -195,7 +195,7 @@
                         type: "POST",
                         url: '{{ route('api.post.user.notepad.save') }}' + '?api_token=' + $('#secapi').val(),
                         data: {
-                            sessionId: '{{ Session::getId() }}',
+                            sessionId: '{{ encrypt(Session::getId()) }}',
                             data: $('#notepadArea').val()
                         },
                         dataType: 'application/json',
