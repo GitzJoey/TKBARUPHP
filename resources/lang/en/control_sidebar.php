@@ -3,6 +3,7 @@
 return [
     'tab' => [
         'recent_activity' => 'Recent Activity',
+        'notepad' => 'Notepad',
         'general_settings' => 'General Settings',
         'layout_options' => 'Layout Options',
     ],

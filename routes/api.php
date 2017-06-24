@@ -19,6 +19,7 @@ Route::get('user', function (Request $request) {
 
 Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
     Route::post('user/set_settings', 'StoreController@applySettings')->name('api.user.apply_settings');
+    Route::post('user/notepad/save', 'DashboardController@saveNotepad')->name('api.post.user.notepad.save');
 
     Route::group(['prefix' => 'dashboard'], function () {
         Route::group(['prefix' => 'po'], function () {

@@ -8,8 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -26,5 +25,12 @@ class DashboardController extends Controller
     public function contributors()
     {
         return "Building.....";
+    }
+
+    public function saveNotepad(Request $req)
+    {
+        $req->session()->put('notepad', $req->data);
+
+        return response()->json();
     }
 }
