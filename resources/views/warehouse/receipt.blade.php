@@ -118,7 +118,9 @@
                                                 <input type="hidden" name="item_id[]" v-bind:value="receipt.item.id">
                                                 <input type="hidden" name="product_id[]" v-bind:value="receipt.item.product_id">
                                                 <input type="hidden" name="base_unit_id[]" v-bind:value="receipt.item.base_unit_id">
-                                                <td class="valign-middle">@{{ receipt.item.product.name }}</td>
+                                                <td class="valign-middle">
+                                                    <span v-bind:title="receipt.item.quantity">@{{ receipt.item.product.name }}</span>
+                                                </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('unit_' + receiptIdx) }">
                                                     <select name="selected_unit_id[]"
                                                             class="form-control"

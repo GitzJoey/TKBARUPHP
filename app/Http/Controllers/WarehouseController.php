@@ -149,7 +149,7 @@ class WarehouseController extends Controller
     public function stockopname()
     {
         Log::info('[WarehouseController@stockopname]');
-        $stocks = Stock::paginate(10);
+        $stocks = Stock::with('stockOpnames')->paginate(10);
 
         return view('warehouse.stockopname.index', compact('stocks'));
     }
