@@ -80,6 +80,10 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::group(['prefix' => 'inflow'], function () {
                 Route::post('deliver/{id?}', 'WarehouseOutflowController@saveDeliver')->name('api.post.db.warehouse.outflow.deliver');
             });
+
+            Route::group(['prefix' => 'trf/stock'], function() {
+                Route::post('transfer', 'WarehouseTransferStockController@saveTransfer')->name('api.post.db.warehouse.transfer_stock.transfer');
+            });
         });
 
         Route::group(['prefix' => 'master'], function () {

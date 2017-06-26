@@ -187,7 +187,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'WarehouseTransferStockController@index')->name('db.warehouse.transfer_stock.index');
                 Route::get('show/{id}', 'WarehouseTransferStockController@show')->name('db.warehouse.transfer_stock.show');
                 Route::get('transfer', 'WarehouseTransferStockController@transfer')->name('db.warehouse.transfer_stock.transfer');
-                Route::post('transfer', 'WarehouseTransferStockController@saveTransfer');
             });
         });
 
