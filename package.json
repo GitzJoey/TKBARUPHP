@@ -17,7 +17,7 @@
     "laravel-mix": "^0.10.0",
     "lodash": "^4.14.0",
     "vue": "^2.1.8",
-    "vue-template-compiler": "^2.1.8"
+    "vue-template-compiler": "^2.4.1"
   },
   "dependencies": {
     "admin-lte": "^2.3.6",
