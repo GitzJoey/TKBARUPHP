@@ -18,7 +18,16 @@
 
 @section('content')
     <div id="tsVue">
-        <form class="form-horizontal" action="{{ route('db.warehouse.transfer_stock.transfer') }}" method="post">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="tsForm" class="form-horizontal" method="post" @submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-12">
@@ -28,7 +37,7 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                                <label for="inputDestinationWarehouse" class="col-md-2">
+                                <label for="inputTransferDate" class="col-md-2">
                                     @lang('warehouse.transfer_stock.field.transfer_date')
                                 </label>
                                 <div class="col-md-10">
@@ -36,15 +45,13 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control" id="inputTransferDate"
-                                               name="transfer_date"
-                                               data-parsley-required="true">
+                                        <vue-datetimepicker id="inputTransferDate" name="transfer_date" v-model="ts.transfer_date" format="YYYY-MM-DD hh:mm A"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="inputDestinationWarehouse">
+                                    <label for="inputRemarks">
                                         @lang('warehouse.transfer_stock.field.remarks')
                                     </label>
                                 </div>
@@ -52,8 +59,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <input type="hidden" name="remarks" v-bind:value="ts.remarks">
-                                    <textarea id="inputRemarks" name="remarks" class="form-control" rows="5"
-                                              v-model="ts.remarks"></textarea>
+                                    <textarea id="inputRemarks" name="remarks" class="form-control" rows="5" v-model="ts.remarks"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -67,20 +73,22 @@
                             <h3 class="box-title">@lang('warehouse.transfer_stock.create.header.title.stock_location')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="form-group">
-                                <label for="inputsource_Warehouse" class="col-sm-3 control-label">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('source_warehouse_id') }">
+                                <label for="inputSourceWarehouse" class="col-sm-3 control-label">
                                     @lang('warehouse.transfer_stock.field.source_warehouse')
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="hidden" name="source_warehouse_id" v-bind:value="ts.source_warehouse.id">
                                     <input type="hidden" name="product_id" v-bind:value="ts.product.id">
                                     <input type="hidden" name="stock_id" v-bind:value="ts.stock.id">
-                                    <select id="inputSourceWarehouse" data-parsley-required="true"
+                                    <select id="inputSourceWarehouse"
+                                            name="source_warehouse_id"
                                             class="form-control"
-                                            v-model="ts.source_warehouse"
-                                            v-on:change="showSourceStocks(ts.source_warehouse.id)">
-                                        <option v-bind:value="defaultWarehouse">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="source_warehouse of warehouseDDL" v-bind:value="source_warehouse">@{{ source_warehouse.name }}</option>
+                                            v-model="ts.source_warehouse.id"
+                                            v-validate="'required'"
+                                            v-on:change="showSourceStocks(ts.source_warehouse.id)"
+                                            data-vv-as="{{ trans('warehouse.transfer_stock.field.source_warehouse') }}">
+                                        <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="source_warehouse of warehouseDDL" v-bind:value="source_warehouse.id">@{{ source_warehouse.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -93,20 +101,22 @@
                             <h3 class="box-title">@lang('warehouse.transfer_stock.create.header.title.transferred_to')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="form-group">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('destination_warehouse_id') }">
                                 <label for="inputDestinationWarehouse" class="col-sm-3 control-label">
                                     @lang('warehouse.transfer_stock.field.destination_warehouse')
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="hidden" name="destination_warehouse_id" v-bind:value="ts.destination_warehouse.id">
                                     <select id="inputDestinationWarehouse"
-                                            data-parsley-required="true"
+                                            name="destination_warehouse_id"
+                                            v-validate="'required'"
                                             class="form-control"
-                                            v-model="ts.destination_warehouse"
-                                            v-on:change="showDestinationStocks(ts.destination_warehouse.id)">
+                                            v-model="ts.destination_warehouse.id"
+                                            v-on:change="showDestinationStocks(ts.destination_warehouse.id)"
+                                            data-vv-as="{{ trans('warehouse.transfer_stock.field.destination_warehouse') }}">
+                                        <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-if="destination_warehouse.id != ts.source_warehouse.id"
                                                 v-for="destination_warehouse of warehouseDDL"
-                                                v-bind:value="destination_warehouse">@{{ destination_warehouse.name }}</option>
+                                                v-bind:value="destination_warehouse.id">@{{ destination_warehouse.name }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -126,22 +136,22 @@
                                     <input type="hidden" name="po_id" v-bind:value="ts.po.id" >
                                     <table class="table table-bordered">
                                         <thead>
-                                        <tr>
-                                            <th class="text-center" width="10%">@lang('warehouse.transfer_stock.create.table.header.select')</th>
-                                            <th class="text-center" width="60%">@lang('warehouse.transfer_stock.create.table.header.product')</th>
-                                            <th class="text-center" width="30%">@lang('warehouse.transfer_stock.create.table.header.current_qty')</th>
-                                        </tr>
+                                            <tr>
+                                                <th class="text-center" width="10%">@lang('warehouse.transfer_stock.create.table.header.select')</th>
+                                                <th class="text-center" width="60%">@lang('warehouse.transfer_stock.create.table.header.product')</th>
+                                                <th class="text-center" width="30%">@lang('warehouse.transfer_stock.create.table.header.current_qty')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(s, sIdx) in source_stocks" v-cloak>
-                                            <td>
-                                                <label v-on:click="selectProduct(s)">
-                                                    <input type="radio" class="radio-button" v-bind:value="s" v-model="ts.stock">
-                                                </label>
-                                            </td>
-                                            <td>@{{ s.product.name }}</td>
-                                            <td>@{{ s.current_quantity }}</td>
-                                        </tr>
+                                            <tr v-for="(s, sIdx) in source_stocks" v-cloak>
+                                                <td class="text-center">
+                                                    <label v-on:click="selectProduct(s)">
+                                                        <input type="radio" class="radio-button" v-bind:value="s" v-model="ts.stock">
+                                                    </label>
+                                                </td>
+                                                <td>@{{ s.product.name }}</td>
+                                                <td>@{{ s.current_quantity }}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -166,16 +176,20 @@
                                 <div class="col-md-12">
                                     <table class="table table-bordered">
                                         <thead>
-                                        <tr>
-                                            <th class="text-center" width="60%">@lang('warehouse.transfer_stock.create.table.header.product')</th>
-                                            <th class="text-center" width="30%">@lang('warehouse.transfer_stock.create.table.header.qty_to_transfer')</th>
-                                        </tr>
+                                            <tr>
+                                                <th class="text-center" width="60%">@lang('warehouse.transfer_stock.create.table.header.product')</th>
+                                                <th class="text-center" width="30%">@lang('warehouse.transfer_stock.create.table.header.qty_to_transfer')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>@{{ ts.product.name }}</td>
-                                            <td><input type="text" class="form-control text-right" name="quantity" v-model="ts.quantity" data-parsley-required="true" data-parsley-type="number"></td>
-                                        </tr>
+                                            <tr>
+                                                <td>@{{ ts.product.name }}</td>
+                                                <td>
+                                                    <input type="text" v-bind:class="{ 'form-control':true, 'text-right':true, 'has-error':errors.has('quantity') }" name="quantity"
+                                                           v-model="ts.quantity"
+                                                           v-validate="'required|numeric:2|min_value:0'" data-vv-as="{{ trans('warehouse.transfer_stock.create.table.header.qty_to_transfer') }}">
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -184,20 +198,20 @@
                                 <div class="col-md-12">
                                     <table class="table table-bordered">
                                         <thead>
-                                        <tr>
-                                            <th class="text-center" width="10%">@lang('warehouse.transfer_stock.create.table.header.select')</th>
-                                            <th class="text-center" width="60%">@lang('warehouse.transfer_stock.create.table.header.product')</th>
-                                            <th class="text-center" width="30%">@lang('warehouse.transfer_stock.create.table.header.qty_to_transfer')</th>
-                                        </tr>
+                                            <tr>
+                                                <th class="text-center" width="10%">@lang('warehouse.transfer_stock.create.table.header.select')</th>
+                                                <th class="text-center" width="60%">@lang('warehouse.transfer_stock.create.table.header.product')</th>
+                                                <th class="text-center" width="30%">@lang('warehouse.transfer_stock.create.table.header.qty_to_transfer')</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr v-for="(s, sIdx) in destination_stocks" v-cloak>
-                                            <td>
-                                                <input type="radio" name="destination-stocks" class="radio-button" v-bind:value="s" v-model="ts.stock">
-                                            </td>
-                                            <td>@{{ s.product.name }}</td>
-                                            <td><input type="text"></td>
-                                        </tr>
+                                            <tr v-for="(s, sIdx) in destination_stocks" v-cloak>
+                                                <td>
+                                                    <input type="radio" name="destination-stocks" class="radio-button" v-bind:value="s" v-model="ts.stock">
+                                                </td>
+                                                <td>@{{ s.product.name }}</td>
+                                                <td><input type="text"></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -210,11 +224,9 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="btn-toolbar">
-                        <button id="transferButton" type="submit"
-                                class="btn btn-primary pull-right" name="transfer"
-                                value="transfer">@lang('buttons.transfer')</button>
+                        <button id="transferButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.transfer')</button>
                         <a id="cancelButton" class="btn btn-primary pull-right"
-                           href="{{ route('db') }}">@lang('buttons.cancel_button')</a>
+                           href="{{ route('db.warehouse.transfer_stock.index') }}">@lang('buttons.cancel_button')</a>
                     </div>
                 </div>
             </div>
@@ -224,75 +236,119 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        $(document).ready(function () {
-            var tsApp = new Vue({
-                el: '#tsVue',
-                data: {
-                    warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
-                    ts: {
-                        store: {
-                            id: ''
-                        },
-                        source_warehouse: {
-                            id: '',
-                            name: ''
-                        },
-                        destination_warehouse: {
-                            id: '',
-                            name: ''
-                        },
-                        product: {
-                            id: '',
-                            name: ''
-                        },
-                        stock: {
-                            id: ''
-                        },
-                        po: {
-                            id: ''
-                        },
-                        remarks: '',
-                        quantity: 0,
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
+        Vue.component('vue-datetimepicker', {
+            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
+            props: ['id', 'name', 'value', 'format', 'readonly'],
+            mounted: function() {
+                var vm = this;
+
+                if (this.value == undefined) this.value = '';
+                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
+                if (this.readonly == undefined) this.readonly = 'false';
+
+                $(this.$el).datetimepicker({
+                    format: this.format,
+                    defaultDate: this.value == '' ? moment():moment(this.value),
+                    showTodayButton: true,
+                    showClose: true
+                }).on("dp.change", function(e) {
+                    vm.$emit('input', this.value);
+                });
+
+                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
+            },
+            destroyed: function() {
+                $(this.$el).data("DateTimePicker").destroy();
+            }
+        });
+
+        var tsApp = new Vue({
+            el: '#tsVue',
+            data: {
+                warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
+                ts: {
+                    store: {
+                        id: ''
                     },
-                    source_stocks: [],
-                    destination_stocks: [],
-                    newOrExistingStock: 'newStock'
+                    source_warehouse: {
+                        id: '',
+                        name: ''
+                    },
+                    destination_warehouse: {
+                        id: '',
+                        name: ''
+                    },
+                    product: {
+                        id: '',
+                        name: ''
+                    },
+                    stock: {
+                        id: ''
+                    },
+                    po: {
+                        id: ''
+                    },
+                    transfer_date: '',
+                    remarks: '',
+                    quantity: '',
                 },
-                methods: {
-                    showSourceStocks: function(warehouseId) {
-                        this.source_stocks = 0;
-                        axios.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.source_warehouse.id).then(function(data) {
-                            this.source_stocks = data.data;
+                source_stocks: [],
+                destination_stocks: [],
+                newOrExistingStock: 'newStock'
+            },
+            methods: {
+                validateBeforeSubmit: function() {
+                    var vm = this;
+                    this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
+                        $('#loader-container').fadeIn('fast');
+                        axios.post('{{ route('api.post.db.warehouse.transfer_stock.transfer') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#tsForm')[0]))
+                            .then(function(response) {
+                                window.location.href = '{{ route('db.warehouse.transfer_stock.transfer') }}';
+                        }).catch(function(e) {
+                            $('#loader-container').fadeOut('fast');
+                            if (Object.keys(e.response.data).length > 0) {
+                                for (var key in e.response.data) {
+                                    for (var i = 0; i < e.response.data[key].length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data[key][i], 'server', '__global__');
+                                    }
+                                }
+                            } else {
+                                vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                            }
                         });
-                    },
-                    showDestinationStocks: function(warehouseId, productId) {
-                        this.destination_stocks = 0;
-                        axios.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.destination_warehouse.id).then(function(data) {
-                            this.destination_stocks = data.data;
-                        });
-                    },
-                    selectProduct: function(stock) {
-
-                        this.ts.product.id = stock.product_id;
-                        this.ts.product.name = stock.product.name;
-                        this.ts.po.id = stock.po_id;
-
-                    }
+                    });
                 },
-                computed: {
-                    defaultWarehouse: function() {
-                        return {
-                            id: ''
-                        }
-                    }
+                showSourceStocks: function(warehouseId) {
+                    var vm = this;
+                    this.source_stocks = 0;
+                    axios.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.source_warehouse.id).then(function(data) {
+                        vm.source_stocks = data.data;
+                    });
                 },
-                updated: function () { }
-            });
+                showDestinationStocks: function(warehouseId, productId) {
+                    var vm = this;
+                    this.destination_stocks = 0;
+                    axios.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.destination_warehouse.id).then(function(data) {
+                        vm.destination_stocks = data.data;
+                    });
+                },
+                selectProduct: function(stock) {
+                    this.ts.product.id = stock.product_id;
+                    this.ts.product.name = stock.product.name;
+                    this.ts.po.id = stock.po_id;
 
-            $("#inputTransferDate").datetimepicker({
-                format: "DD-MM-YYYY hh:mm A",
-                defaultDate: moment()
-            });
+                }
+            },
+            computed: {
+                defaultWarehouse: function() {
+                    return {
+                        id: ''
+                    }
+                }
+            }
         });
     </script>
 @endsection

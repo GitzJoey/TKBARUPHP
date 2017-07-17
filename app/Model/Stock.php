@@ -88,6 +88,11 @@ class Stock extends Model
         return $this->hasMany('App\Model\Price');
     }
 
+    public function stockOpnames()
+    {
+        return $this->hasMany('App\Model\StockOpname');
+    }
+
     public function warehouse()
     {
         return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');

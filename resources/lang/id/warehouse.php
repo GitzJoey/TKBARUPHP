@@ -137,7 +137,7 @@ return [
                 'warehouse' => 'Gudang',
                 'so_code' => 'Kode Penjualan',
                 'shipping_date' => 'Tgl Kirim',
-                'deliver_date' => 'Tgl Terima',
+                'deliver_date' => 'Tgl Terkirim',
                 'vendor_trucking' => 'Layanan Angkutan',
                 'license_plate' => 'Plat Nomor',
             ],

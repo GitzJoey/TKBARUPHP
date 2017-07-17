@@ -371,6 +371,7 @@
             methods: {
                 validateBeforeSubmit: function() {
                     this.$validator.validateScopes().then(function(isValid) {
+                        if (!isValid) return;
                         axios.post('{{ route('api.post.db.master.supplier.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#supplierForm')[0]))
                             .then(function(response) {
                                 if (response.data.result == 'success') { window.location.href = '{{ route('db.master.supplier') }}'; }

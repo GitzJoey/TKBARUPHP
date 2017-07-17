@@ -50,13 +50,7 @@ class PriceLevelController extends Controller
             'weight' => 'required',
             'name' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         PriceLevel::create([
             'store_id' => Auth::user()->store->id,

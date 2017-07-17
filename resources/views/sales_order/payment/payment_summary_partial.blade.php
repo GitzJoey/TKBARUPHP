@@ -77,7 +77,7 @@
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input type="text" class="form-control" readonly
-                                   value="{{ $currentSo->so_created->format('d-m-Y') }}">
+                                   value="{{ $currentSo->so_created->format('d-m-Y H:i A') }}">
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                                 <i class="fa fa-calendar"></i>
                             </div>
                             <input type="text" class="form-control" name="shipping_date" readonly
-                                   value="{{ $currentSo->shipping_date->format('d-m-Y') }}">
+                                   value="{{ $currentSo->shipping_date->format('d-m-Y H:i A') }}">
                         </div>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
     <div class="col-md-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                            <h3 class="box-title">@lang('purchase_order.create.box.discount_per_item')</h3>
+                <h3 class="box-title">@lang('purchase_order.create.box.discount_per_item')</h3>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -355,7 +355,7 @@
                                     <td width="80%"
                                         class="text-right">@lang('purchase_order.create.table.total.body.total')</td>
                                     <td width="20%" class="text-right">
-                                        <span class="control-label-normal">@{{ expenseTotal() }}</span>
+                                        <span class="control-label-normal">@{{ numeral(expenseTotal()).format() }}</span>
                                     </td>
                                 </tr>
                             </tbody>

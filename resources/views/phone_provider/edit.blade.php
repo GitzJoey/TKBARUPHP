@@ -138,7 +138,8 @@
                 },
                 validateBeforeSubmit: function() {
                     var vm = this;
-                    this.$validator.validateAll().then(function(result) {
+                    this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.admin.phone_provider.edit', $phoneProvider->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#phoneProviderForm')[0]))
                             .then(function(response) {

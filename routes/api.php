@@ -19,6 +19,7 @@ Route::get('user', function (Request $request) {
 
 Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
     Route::post('user/set_settings', 'StoreController@applySettings')->name('api.user.apply_settings');
+    Route::post('user/notepad/save', 'DashboardController@saveNotepad')->name('api.post.user.notepad.save');
 
     Route::group(['prefix' => 'dashboard'], function () {
         Route::group(['prefix' => 'po'], function () {
@@ -27,8 +28,8 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
 
             Route::group(['prefix' => 'payment'], function () {
                 Route::post('{id}/cash', 'PurchaseOrderPaymentController@saveCashPayment')->name('api.post.db.po.payment.cash');
-                Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment')->name('api.post.db.po.payment.transfer');;
-                Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment')->name('api.post.db.po.payment.giro');;
+                Route::post('{id}/transfer', 'PurchaseOrderPaymentController@saveTransferPayment')->name('api.post.db.po.payment.transfer');
+                Route::post('{id}/giro', 'PurchaseOrderPaymentController@saveGiroPayment')->name('api.post.db.po.payment.giro');
             });
 
             Route::group(['prefix' => 'copy'], function () {
@@ -51,6 +52,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
                 Route::post('{id}/cash', 'SalesOrderPaymentController@saveCashPayment')->name('api.post.db.so.payment.cash');
                 Route::post('{id}/transfer', 'SalesOrderPaymentController@saveTransferPayment')->name('api.post.db.so.payment.transfer');;
                 Route::post('{id}/giro', 'SalesOrderPaymentController@saveGiroPayment')->name('api.post.db.so.payment.giro');;
+                Route::post('{id}/bf', 'SalesOrderPaymentController@saveBroughtForwardPayment')->name('api.post.db.so.payment.bf');
             });
 
             Route::group(['prefix' => 'copy'], function () {
@@ -60,9 +62,6 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
         });
 
         Route::group(['prefix' => 'customer'], function () {
-            Route::post('create', 'CustomerController@store')->name('api.post.db.master.customer.create');
-            Route::post('edit/{id}', 'CustomerController@update')->name('api.post.db.master.customer.edit');
-
             Route::group(['prefix' => 'confirmation'], function() {
                 Route::post('confirm/{id}', 'CustomerController@storeConfirmationSalesOrder')->name('api.post.db.customer.confirmation.confirm');
             });
@@ -81,12 +80,21 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::group(['prefix' => 'inflow'], function () {
                 Route::post('deliver/{id?}', 'WarehouseOutflowController@saveDeliver')->name('api.post.db.warehouse.outflow.deliver');
             });
+
+            Route::group(['prefix' => 'trf/stock'], function() {
+                Route::post('transfer', 'WarehouseTransferStockController@saveTransfer')->name('api.post.db.warehouse.transfer_stock.transfer');
+            });
         });
 
         Route::group(['prefix' => 'master'], function () {
             Route::group(['prefix' => 'supplier'], function () {
                 Route::post('create', 'SupplierController@store')->name('api.post.db.master.supplier.create');
                 Route::post('edit/{id}', 'SupplierController@update')->name('api.post.db.master.supplier.edit');
+            });
+
+            Route::group(['prefix' => 'customer'], function () {
+                Route::post('create', 'CustomerController@store')->name('api.post.db.master.customer.create');
+                Route::post('edit/{id}', 'CustomerController@update')->name('api.post.db.master.customer.edit');
             });
 
             Route::group(['prefix' => 'product'], function () {

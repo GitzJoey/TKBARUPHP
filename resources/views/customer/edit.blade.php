@@ -36,6 +36,15 @@
 
 @section('content')
     <div id="customerVue">
+        <div v-show="errors.count() > 0" v-cloak>
+            <div class="alert alert-danger">
+                <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+                <ul v-for="(e, eIdx) in errors.all()">
+                    <li>@{{ e }}</li>
+                </ul>
+            </div>
+        </div>
+
         <form id="customerForm" class="form-horizontal" v-on:submit.prevent="validateBeforeSubmit()">
             {{ csrf_field() }}
             <div class="box box-info">
@@ -100,6 +109,7 @@
                                         <select id="inputStatus"
                                                 class="form-control"
                                                 name="status"
+                                                v-model="status"
                                                 v-validate="'required'"
                                                 data-vv-as="{{ trans('customer.field.status') }}"
                                                 data-vv-scope="tab_customer">
@@ -326,7 +336,7 @@
                                 <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tab_settings.price_level') }">
                                     <label for="inputPriceLevel" class="col-sm-2 control-label">@lang('customer.field.price_level')</label>
                                     <div class="col-sm-10">
-                                        <select name="price_level" class="form-control"
+                                        <select name="price_level" v-model="price_level" class="form-control"
                                                 v-validate="'required'" data-vv-as="{{ trans('customer.field.price_level') }}" data-vv-scope="tab_settings">
                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="pp in pricelevelDDL" v-bind:value="pp.id">@{{ pp.name }} (@{{ pp.description }})
@@ -416,6 +426,8 @@
 @section('custom_js')
     <script async defer src="https://maps.googleapis.com/maps/api/js?callback=mapsCallback&libraries=places&key={{ $mapsAPIKey }}"></script>
     <script type="application/javascript">
+        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
+
         var app = new Vue({
             el: '#customerVue',
             data: {
@@ -425,10 +437,34 @@
                 bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}'),
                 providerDDL: JSON.parse('{!! htmlspecialchars_decode($providerDDL) !!}'),
                 pricelevelDDL: JSON.parse('{!! htmlspecialchars_decode($priceLevelDDL) !!}'),
+                price_level: '{!! htmlspecialchars_decode($customer->priceLevel->id) !!}',
+                statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}'),
+                status: '{!! htmlspecialchars_decode($customer->status) !!}',
                 expenseTemplates: JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}'),
                 selectedExpense: ''
             },
             methods: {
+                validateBeforeSubmit: function() {
+                    this.$validator.validateScopes().then(function(isValid) {
+                        var vm = this;
+                        if (!isValid) return;
+                        axios.post('{{ route('api.post.db.master.customer.edit', $customer->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#customerForm')[0]))
+                            .then(function(response) {
+                            window.location.href = '{{ route('db.master.customer') }}';
+                        }).catch(function(e) {
+                            $('#loader-container').fadeOut('fast');
+                            if (Object.keys(e.response.data).length > 0) {
+                                for (var key in e.response.data) {
+                                    for (var i = 0; i < e.response.data[key].length; i++) {
+                                        vm.$validator.errorBag.add('', e.response.data[key][i], 'server', '__global__');
+                                    }
+                                }
+                            } else {
+                                vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                            }
+                        });
+                    });
+                },
                 addNewBank: function() {
                     this.banks.push({
                         'bank_id': '',
@@ -499,6 +535,13 @@
                         expenseTemplate.is_internal_expense = "@lang('lookup.YESNOSELECT.NO')";
                     }
                 });
+            },
+            computed: {
+                defaultStatus: function() {
+                    return {
+                        code: ''
+                    };
+                }
             }
         });
 

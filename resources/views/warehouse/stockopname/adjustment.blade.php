@@ -80,7 +80,7 @@
                         <div class="col-sm-8">
                             <input id="inputAdjustedQuantity" name="adjusted_quantity" type="text" class="form-control"
                                    placeholder="@lang('warehouse.stockopname.adjust.field.adjusted_quantity')"
-                                   data-parsley-required="true" data-parsley-pattern="\d+">
+                                   data-parsley-required="true" data-parsley-type="numeric">
                             <span class="help-block">{{ $errors->has('adjusted_quantity') ? $errors->first('adjusted_quantity') : '' }}</span>
                         </div>
                     </div>
@@ -107,8 +107,17 @@
 @endsection
 
 @section('custom_js')
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/parsley.config.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/parsley.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/id.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/id.extra.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/en.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('adminlte/parsley/en.extra.js') }}"></script>
+
     <script type="application/javascript">
         $(document).ready(function () {
+            window.Parsley.setLocale('{!! LaravelLocalization::getCurrentLocale() !!}');
+
             $('input.is_icheck').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
@@ -117,8 +126,8 @@
 
             $('input.is_icheck').on('ifChanged', function(c){
                 if (c.target.checked) {
-                    $('#inputAdjustedQuantity').val(0).attr('readonly', 'readonly');
-                    $('#inputReason').val('').attr('readonly', 'readonly');
+                    $('#inputAdjustedQuantity').val($('#inputCurrentQuantity').val()).attr('readonly', 'readonly');
+                    $('#inputReason').val('Update ' + moment().format('DD-MM-YYYY hh:mm A')).attr('readonly', 'readonly');
                 } else {
                     $('#inputAdjustedQuantity').val('').removeAttr('readonly');
                     $('#inputReason').val('').removeAttr('readonly');

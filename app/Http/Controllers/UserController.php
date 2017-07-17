@@ -63,13 +63,7 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
             'roles' => 'required',
             'store' => 'required',
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         DB::transaction(function() use ($data) {
             $usr = new User();
@@ -126,9 +120,7 @@ class UserController extends Controller
                 $usr->password = bcrypt($req['password']);
             }
 
-            if (empty($usr->api_token)) {
-                $usr->api_token = str_random(60);
-            }
+            $usr->api_token = str_random(60);
 
             $usr->save();
 

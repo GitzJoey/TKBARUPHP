@@ -48,14 +48,8 @@ class UnitController extends Controller
             'name' => 'required|string|max:255',
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-        ]);
+        ])->validate();
         
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-
         Unit::create([
             'name' => $data['name'],
             'symbol' => $data['symbol'],
@@ -81,14 +75,8 @@ class UnitController extends Controller
             'name' => 'required|string|max:255',
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-        ]);
+        ])->validate();
         
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-
         Unit::find($id)->update($req->all());
         
         return response()->json();

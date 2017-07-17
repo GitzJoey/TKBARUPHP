@@ -117,7 +117,8 @@
             methods: {
                 validateBeforeSubmit: function() {
                     var vm = this;
-                    this.$validator.validateAll().then(function(result) {
+                    this.$validator.validateAll().then(function(isValid) {
+                        if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.master.vendor.trucking.edit', $vt->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#vTruckingForm')[0]))
                             .then(function(response) {

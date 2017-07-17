@@ -62,6 +62,11 @@ class StockOpname extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function stock()
+    {
+        return $this->belongsTo('App\Model\Stock');
+    }
+
     public function stockIn()
     {
         return $this->hasOne('App\Model\StockIn');

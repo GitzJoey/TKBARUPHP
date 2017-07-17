@@ -21,8 +21,9 @@ use App\Services\WarehouseService;
 
 use Auth;
 use Validator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class WarehouseController extends Controller
 {
@@ -63,13 +64,10 @@ class WarehouseController extends Controller
         ]);
 
         if (count($data['section_name']) == 0) {
-            $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 Lot.":"Harap isi paling tidak 1 lot");
-        }
+            $rules = ['section_name' => 'required'];
+            $messages = ['section_name.required' => LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 Lot.":"Harap isi paling tidak 1 lot"];
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
+            Validator::make($data->all(), $rules, $messages)->validate();
         }
 
         $warehouse = new Warehouse();
@@ -151,7 +149,7 @@ class WarehouseController extends Controller
     public function stockopname()
     {
         Log::info('[WarehouseController@stockopname]');
-        $stocks = Stock::paginate(10);
+        $stocks = Stock::with('stockOpnames')->paginate(10);
 
         return view('warehouse.stockopname.index', compact('stocks'));
     }

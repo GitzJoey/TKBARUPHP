@@ -81,7 +81,7 @@ class CustomerController extends Controller
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
+        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['type', 'name', 'description', 'weight', 'id']);
         $expenseTemplates = ExpenseTemplate::all();
 
         return view('customer.create', compact('statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates', 'mapsAPIKey', 'store'));
@@ -170,7 +170,7 @@ class CustomerController extends Controller
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
-        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['name', 'description', 'weight', 'id']);
+        $priceLevelDDL = PriceLevel::whereStatus('STATUS.ACTIVE')->get(['type', 'name', 'description', 'weight', 'id']);
         $expenseTemplates = ExpenseTemplate::all();
 
         return view('customer.edit', compact('customer', 'statusDDL', 'bankDDL', 'providerDDL', 'priceLevelDDL', 'expenseTemplates', 'mapsAPIKey', 'store'));
@@ -249,11 +249,11 @@ class CustomerController extends Controller
 
             $customer->name = $data['name'];
             $customer->address = $data['address'];
-            $customer->latitude = $data['latitude'];
-            $customer->longitude = $data['longitude'];
-            $customer->distance = $data['distance'];
+            $customer->latitude = empty($data['latitude']) ? 0:$data['latitude'];
+            $customer->longitude = empty($data['longitude']) ? 0:$data['longitude'];
+            $customer->distance = empty($data['distance']) ? 0:$data['distance'];
             $customer->distance_text = $data['distance_text'];
-            $customer->duration = $data['duration'];
+            $customer->duration = empty($data['duration']) ? 0:$data['duration'];
             $customer->duration_text = $data['duration_text'];
             $customer->city = $data['city'];
             $customer->phone_number = $data['phone'];

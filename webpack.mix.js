@@ -27,7 +27,6 @@ mix.styles([
         './node_modules/moment/min/moment.min.js',
         './node_modules/moment-duration-format/lib/moment-duration-format.js',
         './node_modules/icheck/icheck.min.js',
-        './node_modules/autonumeric/autoNumeric-min.js',
         './node_modules/select2/dist/js/select2.full.min.js',
         './node_modules/jquery-slimscroll/jquery.slimscroll.js',
         './node_modules/admin-lte/dist/js/app.min.js',
@@ -66,6 +65,7 @@ mix.styles([
     .copy('node_modules/parsleyjs/dist/i18n/id.js', 'public/adminlte/parsley')
     .copy('node_modules/parsleyjs/dist/i18n/en.extra.js', 'public/adminlte/parsley')
     .copy('node_modules/parsleyjs/dist/i18n/id.extra.js', 'public/adminlte/parsley')
+    .copy('node_modules/autonumeric/autoNumeric-min.js', 'public/adminlte/js')
     .copy('resources/assets/css/frontweb.css', 'public/frontweb/css');
 
 mix.js('resources/assets/js/app.js', 'public/adminlte/js');

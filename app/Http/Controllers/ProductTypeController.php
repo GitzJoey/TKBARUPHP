@@ -79,12 +79,6 @@ class ProductTypeController extends Controller
             'status' => 'required',
         ]);
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-
         ProductType::find($id)->update($req->all());
 
         return response()->json();

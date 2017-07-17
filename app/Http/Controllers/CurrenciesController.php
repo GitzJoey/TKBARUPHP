@@ -33,13 +33,7 @@ class CurrenciesController extends Controller
             'name' => 'required|string|max:255',
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-        ]);
-		
-	if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         Currencies::create([
             'name' => $req['name'],
@@ -67,13 +61,7 @@ class CurrenciesController extends Controller
             'name' => 'required|string|max:255',
             'symbol' => 'required|string|max:255',
             'status' => 'required|string|max:255'
-        ]);
-	    
-		if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 	    
         Currencies::find($id)->update($req->all());
 

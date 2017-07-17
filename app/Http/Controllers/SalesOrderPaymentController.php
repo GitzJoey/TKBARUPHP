@@ -180,17 +180,20 @@ class SalesOrderPaymentController extends Controller
 
         $currentSo = SalesOrder::with('payments', 'items.product', 'items.selectedUnit.unit',
             'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank',
-            'vendorTrucking', 'warehouse', 'expenses')->find($id)->to_text();
+            'vendorTrucking', 'warehouse', 'expenses')->find($id);
 
-        $nextSo    = SalesOrder::with('payments', 'items.product', 'items.selectedUnit.unit',
+        $nextSo = SalesOrder::with('payments', 'items.product', 'items.selectedUnit.unit',
             'customer.profiles.phoneNumbers.provider', 'customer.bankAccounts.bank',
             'vendorTrucking', 'warehouse', 'expenses')->where('id', '>', $currentSo->id)->get();
+
+        $paymentStatusDDL = Lookup::whereIn('category', ['CASHPAYMENTSTATUS', 'TRFPAYMENTSTATUS', 'GIROPAYMENTSTATUS'])
+            ->get()->pluck('description', 'code');
 
         if($nextSo)
             foreach($nextSo as $next)
                 $next->to_text();
 
-        return view('sales_order.payment.broughtforward_payment', compact('currentSo','nextSo'));
+        return view('sales_order.payment.broughtforward_payment', compact('currentSo','nextSo', 'paymentStatusDDL'));
     }
 
     public function saveBroughtForwardPayment(Request $request, $id)
@@ -200,21 +203,23 @@ class SalesOrderPaymentController extends Controller
         $currentSo = SalesOrder::find($id);
 
         $this->validate($request, [
-            'next_code'                 => 'required|string|max:255',
+            'next_code'     => 'required|string|max:255',
+            'next_name'     => 'required|string|max:255',
+            'next_remarks'  => 'required|string|max:255',
         ]);
 
-        $nextSo   = SalesOrder::find($request->input('next_code'));
+        $nextSo = SalesOrder::find($request->input('next_code'));
         $expense = new Expense();
-        $expense->name = $request->input("expense_name");
+        $expense->name = $request->input("next_name");
         $expense->type = 'EXPENSETYPE.ADD';
         $expense->is_internal_expense = 1;
-        $expense->amount = $request->input("expense_amount");
-        $expense->remarks = $request->input("expense_remarks");
+        $expense->amount = $nextSo->totalAmount();
+        $expense->remarks = $request->input("next_remarks");
         $nextSo->expenses()->save($expense);
 
-        $currentSo->status = 'SOSTATUS.RJT';
+        $currentSo->status = 'SOSTATUS.C';
         $currentSo->save();
 
-        return redirect(route('db.so.payment.index'));
+        return response()->json();
     }
 }

@@ -3,6 +3,7 @@
 return [
     'tab' => [
         'recent_activity' => 'Aktifitas Terbaru',
+        'notepad' => 'Catatan',
         'general_settings' => 'Pengaturan',
         'layout_options' => 'Opsi Layout',
     ],

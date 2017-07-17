@@ -43,13 +43,7 @@ class RolesController extends Controller
             'name' => 'required|max:255',
             'display_name' => 'required|max:255',
             'description' => 'required',
-        ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
+        ])->validate();
 
         DB::transaction(function() use ($data) {
             $role = new Role;
@@ -82,12 +76,6 @@ class RolesController extends Controller
             'display_name' => 'required|max:255',
             'description' => 'required',
         ]);
-
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
 
         DB::transaction(function() use ($req, $id) {
             $role = Role::with('permissions')->where('id', '=', $id)->first();

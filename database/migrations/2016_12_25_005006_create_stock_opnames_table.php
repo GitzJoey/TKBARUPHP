@@ -20,7 +20,7 @@ class CreateStockOpnamesTable extends Migration
             $table->boolean('is_match')->nullable();
             $table->decimal('previous_quantity', 19, 2)->default(0);
             $table->decimal('adjusted_quantity', 19, 2)->default(0);
-            $table->string('reason', 25)->nullable();;
+            $table->string('reason')->nullable();;
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);
             $table->unsignedBigInteger('deleted_by')->default(0);

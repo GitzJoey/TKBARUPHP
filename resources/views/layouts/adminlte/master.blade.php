@@ -167,8 +167,6 @@
                     }
                 });
 
-                $('input[autonumeric]').autoNumeric('init');
-
                 $('#applySettingsButton').click(function() {
                     var response = $.ajax({
                         type: "POST",
@@ -184,6 +182,26 @@
                         complete: function() {
                             noty({
                                 text: 'Settings updated.',
+                                type: 'success',
+                                timeout: 3000,
+                                progressBar: true
+                            });
+                        }
+                    });
+                });
+
+                $('#notepadButton').click(function() {
+                    var response = $.ajax({
+                        type: "POST",
+                        url: '{{ route('api.post.user.notepad.save') }}' + '?api_token=' + $('#secapi').val(),
+                        data: {
+                            sessionId: '{{ encrypt(Session::getId()) }}',
+                            data: $('#notepadArea').val()
+                        },
+                        dataType: 'application/json',
+                        complete: function() {
+                            noty({
+                                text: 'Notepad updated.',
                                 type: 'success',
                                 timeout: 3000,
                                 progressBar: true

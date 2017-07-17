@@ -48,7 +48,7 @@ class EmployeeController extends Controller
         $validator = Validator::make($data->all(), [
             'name' => 'required|string|max:255',
             'ic_number' => 'required|string|max:255',
-        ]);
+        ])->validate();
 
         $imageName = '';
 
@@ -59,12 +59,6 @@ class EmployeeController extends Controller
             Image::make($data->image_path->getRealPath())->resize(160, 160)->save($path);
         }
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-        
         Employee::create([
             'name' => $data['name'],
             'address' => $data['address'],
@@ -92,14 +86,8 @@ class EmployeeController extends Controller
         $validator = Validator::make($data->all(), [
             'name' => 'required|string|max:255',
             'ic_number' => 'required|string|max:255',
-        ]);
+        ])->validate();
 
-        if (!is_null($validator) && $validator->fails()) {
-            return response()->json([
-                'errors'=>$validator->errors()
-            ]);
-        }
-        
         $employee = Employee::find($id);
 
         $imageName = '';
