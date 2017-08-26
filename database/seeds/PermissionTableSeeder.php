@@ -527,9 +527,9 @@ class PermissionTableSeeder extends Seeder
             [   'name' => 'menu-report_monitoring',
                 'display_name' => '[Report Monitoring] Show Menu Report Monitoring',
                 'description' => 'Allowed To See Menu Report Monitoring In Sidebar' ],
-            [   'name' => 'menu-report_monitoring_stockhist',
-                'display_name' => '[Report Monitoring] Show Menu Report Monitoring Tab Stock History',
-                'description' => 'Allowed To See Menu Report Monitoring Tab Stock History' ],
+            [   'name' => 'report_monitoring-stockhist',
+                'display_name' => '[Report Monitoring] Show Tab Stock History',
+                'description' => 'Allowed To See Stock History' ],
             // Report -> Tax
             [   'name' => 'menu-report_tax',
                 'display_name' => '[Report Tax] Show Menu Report Tax',

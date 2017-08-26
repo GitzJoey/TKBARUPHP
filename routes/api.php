@@ -259,7 +259,15 @@ Route::group(['prefix' => 'get'], function () {
             return \App\Util\SOCodeGenerator::generateCode();
         })->name('api.get.so.code');
     });
-    
+
+    Route::group(['prefix' => 'report'], function() {
+        Route::group(['prefix' => 'mon'], function() {
+            Route::group(['prefix' => 'stockhistory'], function () {
+                Route::get('/', 'StockHistoryController@stockTypeIndex')->name('api.report.mon.stockhistory.type.index');
+            });
+        });
+    });
+
     Route::group(['prefix' => 'stock'], function() {
         Route::get('current_stocks/{wId?}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
     });

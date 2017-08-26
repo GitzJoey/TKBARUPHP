@@ -458,10 +458,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::post('calendar/save', 'CalendarController@storeEvent')->name('db.user.calendar.store');
         });
 
-        Route::group(['prefix' => 'stockhistory'], function () {
-            Route::get('/', 'StockHistoryController@stockTypeIndex')->name('db.stockhistory.type.index');
-        });
-
         Route::get('logs', ['middleware' => ['role:admin'], 'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index'])->name('db.logs');
 
         Route::get('search', 'SearchController@search')->name('db.search');
