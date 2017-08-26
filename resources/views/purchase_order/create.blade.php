@@ -512,9 +512,35 @@
                             <h3 class="box-title">@lang('purchase_order.create.box.transaction_summary')</h3>
                         </div>
                         <div class="box-body">
-                            @for ($i = 0; $i < 25; $i++)
-                                <br/>
-                            @endfor
+                            <dl class="dl-horizontal">
+                                <dt>@lang('purchase_order.create.box.supplier')</dt>
+                                <dd>@{{ po.supplier.name }}</dd>
+                                <dd>@{{ po.supplier.address }}</dd>
+
+                                <dt>@lang('purchase_order.create.field.po_code')</dt>
+                                <dd>{{ $poCode }}</dd>
+
+                                <dt>@lang('purchase_order.create.field.po_date')</dt>
+                                <dd>@{{ po.po_created }}</dd>
+
+                                <dt>@lang('purchase_order.create.field.shipping_date')</dt>
+                                <dd>@{{ po.shipping_date }}</dd>
+
+                                <dt>@lang('purchase_order.create.field.warehouse')</dt>
+                                <dd>@{{ po.warehouse.name }}</dd>
+
+                                <dt>@lang('purchase_order.create.box.transactions')</dt>
+                                <dd>@{{ numeral(grandTotal()).format() }}</dd>
+
+                                <dt>@lang('purchase_order.create.table.total.body.total_discount')</dt>
+                                <dd>@{{ numeral(discountTotal()).format() }}</dd>
+
+                                <dt>@lang('purchase_order.create.box.expenses')</dt>
+                                <dd>@{{ numeral(expenseTotal()).format() }}</dd>
+
+                                <dt>@lang('purchase_order.create.table.total.body.total_transaction')</dt>
+                                <dd>@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</dd>
+                            </dl>
                         </div>
                     </div>
                 </div>
@@ -667,7 +693,8 @@
                         code: ''
                     },
                     supplier: {
-                        id: ''
+                        id: '',
+                        show: false
                     },
                     warehouse: {
                         id: ''
@@ -702,18 +729,20 @@
                 onChangeSupplier: function() {
                     if (!this.po.supplier.id) {
                         this.removeAllExpense();
-                        this.po.supplier = { id: '' };
+                        this.po.supplier = { id: '', show: false };
                     } else {
                         var supp = _.find(this.supplierDDL, {id: this.po.supplier.id});
                         this.insertDefaultExpense(supp);
+                        this.po.supplier.show = true;
                         _.merge(this.po.supplier, supp);
                     }
                 },
                 onChangeWarehouse: function() {
                     if(!this.po.warehouse.id) {
-                        this.po.warehouse = { id: '' };
+                        this.po.warehouse = { id: '', show: false };
                     } else {
                         var wh = _.find(this.warehouseDDL, { id: this.po.warehouse.id });
+                        this.po.warehouse.show = true;
                         _.merge(this.po.warehouse, wh);
                     }
                 },
