@@ -355,7 +355,7 @@
                         @endif
                         @if(Laratrust::can('menu-report_admin'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.report.admin')) }}">
-                                <a href="{{ route('db.report.admin') }}"><i class="glyphicon glyphicon-cog"></i>&nbsp;@lang('menu.item.rpt_rptadmin')</a>
+                                <a href="{{ route('db.report.admin') }}"><i class="fa fa-viacoin fa-flip-vertical fa-fw"></i>&nbsp;@lang('menu.item.rpt_rptadmin')</a>
                             </li>
                         @endif
                     </ul>
@@ -453,7 +453,7 @@
             @endif
             @if(Laratrust::hasRole('admin'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.admin.*')) }}">
-                    <a href="#"><i class="glyphicon glyphicon-cog"></i><span>&nbsp;@lang('menu.item.adm')</span>
+                    <a href="#"><i class="fa fa-viacoin fa-flip-vertical fa-fw"></i><span>&nbsp;@lang('menu.item.adm')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>

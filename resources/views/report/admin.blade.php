@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_title')
-    <span class="glyphicon glyphicon-cog"></span>&nbsp;@lang('report.admin.page_title')
+    <span class="fa fa-viacoin fa-flip-vertical fa-fw"></span>&nbsp;@lang('report.admin.page_title')
 @endsection
 
 @section('page_title_desc')
