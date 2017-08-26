@@ -11,8 +11,7 @@ class StockHistoryController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('auth');
-		$this->middleware('permission:report.stock-history', ['only' => ['stockTypeIndex']]);
+
 	}
     public function stockTypeIndex(Request $request){
 
