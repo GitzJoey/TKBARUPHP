@@ -520,8 +520,12 @@
                             <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
                                 <div class="box">
                                     <div class="box-header text-center">
+                                        @if($currentPo->supplier_type == 'SUPPLIERTYPE.R')
                                         <h4>{{ $currentPo->supplier->name }}</h4>
                                         <h5>{{ $currentPo->supplier->address }}</h5>
+                                        @else
+                                        <h4>{{ $currentPo->walk_in_supplier }}</h4>
+                                        @endif
                                     </div>
                                     <div class="box-body table-responsive">
                                         <table class="table">
