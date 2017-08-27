@@ -520,17 +520,43 @@
                                     </div>
                                     <div class="box-body table-responsive">
                                         <table class="table">
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.po_date')</td>
+                                                <td class="text-right">@{{ po.po_created }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.shipping_date')</td>
+                                                <td class="text-right">@{{ po.shipping_date }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.po_code')</td>
+                                                <td class="text-right">{{ $poCode }}</td>
+                                            </tr>
+                                        </table>
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                    <th>@lang('purchase_order.create.table.item.header.quantity')</th>
+                                                    <th>@lang('purchase_order.create.table.item.header.price_unit')</th>
+                                                    <th>@lang('purchase_order.create.table.item.header.total_price')</th>
+                                                </tr>
+                                            </thead>
                                             <tbody>
                                                 <template v-for="(item, itemIndex) in po.items">
                                                     <tr>
                                                         <td>*@{{ item.product.name }}</td>
                                                         <td>@{{ item.quantity }}</td>
                                                         <td>@{{ numeral(item.price).format() }}</td>
-                                                        <td>@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                        <td class="text-right">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                     </tr>
                                                     <template v-for="discount in item.discounts">
                                                     <tr v-if="discount.disc_value != 0">
-                                                        <td>Disc. -@{{ discount.disc_value }}</td>
+                                                        <td>Disc. @{{ discount.disc_percent }}%</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-right">-@{{ discount.disc_value }}</td>
                                                     </tr>
                                                     </template>
                                                 </template>
@@ -541,36 +567,21 @@
                                             <tbody>
                                                 <tr>
                                                     <td>@lang('purchase_order.create.table.item.header.total_price')</td>
-                                                    <td>@{{ numeral(grandTotal()).format() }}</td>
+                                                    <td class="text-right">@{{ numeral(grandTotal()).format() }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>@lang('purchase_order.create.table.total.body.total_discount')</td>
-                                                    <td>@{{ numeral(discountTotal()).format() }}</td>
+                                                    <td class="text-right">@{{ numeral(discountTotal()).format() }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>@lang('purchase_order.create.box.expenses')</td>
-                                                    <td>@{{ numeral(expenseTotal()).format() }}</td>
+                                                    <td class="text-right">@{{ numeral(expenseTotal()).format() }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>@lang('purchase_order.create.table.total.body.total_transaction')</td>
-                                                    <td>@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
+                                                    <td class="text-right">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
                                                 </tr>
                                             </tbody>
-                                        </table>
-
-                                        <table class="table">
-                                            <tr>
-                                                <td>@lang('purchase_order.create.field.po_date')</td>
-                                                <td>@{{ po.po_created }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>@lang('purchase_order.create.field.shipping_date')</td>
-                                                <td>@{{ po.shipping_date }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>@lang('purchase_order.create.field.po_code')</td>
-                                                <td>{{ $poCode }}</td>
-                                            </tr>
                                         </table>
                                     </div>
                                 </div>
