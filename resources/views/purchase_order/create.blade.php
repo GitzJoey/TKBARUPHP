@@ -512,35 +512,69 @@
                             <h3 class="box-title">@lang('purchase_order.create.box.transaction_summary')</h3>
                         </div>
                         <div class="box-body">
-                            <dl class="dl-horizontal">
-                                <dt>@lang('purchase_order.create.box.supplier')</dt>
-                                <dd>@{{ po.supplier.name }}</dd>
-                                <dd>@{{ po.supplier.address }}</dd>
+                            <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+                                <div class="box">
+                                    <div class="box-header text-center">
+                                        <h4>@{{ po.supplier.name }}</h4>
+                                        <h5>@{{ po.supplier.address }}</h5>
+                                    </div>
+                                    <div class="box-body table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <template v-for="(item, itemIndex) in po.items">
+                                                    <tr>
+                                                        <td>*@{{ item.product.name }}</td>
+                                                        <td>@{{ item.quantity }}</td>
+                                                        <td>@{{ numeral(item.price).format() }}</td>
+                                                        <td>@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                    </tr>
+                                                    <template v-for="discount in item.discounts">
+                                                    <tr v-if="discount.disc_value != 0">
+                                                        <td>Disc. -@{{ discount.disc_value }}</td>
+                                                    </tr>
+                                                    </template>
+                                                </template>
+                                            </tbody>
+                                        </table>
 
-                                <dt>@lang('purchase_order.create.field.po_code')</dt>
-                                <dd>{{ $poCode }}</dd>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.table.item.header.total_price')</td>
+                                                    <td>@{{ numeral(grandTotal()).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                                    <td>@{{ numeral(discountTotal()).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.box.expenses')</td>
+                                                    <td>@{{ numeral(expenseTotal()).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.table.total.body.total_transaction')</td>
+                                                    <td>@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
 
-                                <dt>@lang('purchase_order.create.field.po_date')</dt>
-                                <dd>@{{ po.po_created }}</dd>
-
-                                <dt>@lang('purchase_order.create.field.shipping_date')</dt>
-                                <dd>@{{ po.shipping_date }}</dd>
-
-                                <dt>@lang('purchase_order.create.field.warehouse')</dt>
-                                <dd>@{{ po.warehouse.name }}</dd>
-
-                                <dt>@lang('purchase_order.create.box.transactions')</dt>
-                                <dd>@{{ numeral(grandTotal()).format() }}</dd>
-
-                                <dt>@lang('purchase_order.create.table.total.body.total_discount')</dt>
-                                <dd>@{{ numeral(discountTotal()).format() }}</dd>
-
-                                <dt>@lang('purchase_order.create.box.expenses')</dt>
-                                <dd>@{{ numeral(expenseTotal()).format() }}</dd>
-
-                                <dt>@lang('purchase_order.create.table.total.body.total_transaction')</dt>
-                                <dd>@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</dd>
-                            </dl>
+                                        <table class="table">
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.po_date')</td>
+                                                <td>@{{ po.po_created }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.shipping_date')</td>
+                                                <td>@{{ po.shipping_date }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.po_code')</td>
+                                                <td>{{ $poCode }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
