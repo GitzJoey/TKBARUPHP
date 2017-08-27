@@ -556,7 +556,7 @@
                                                         <td>Disc. @{{ discount.disc_percent }}%</td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td class="text-right">-@{{ discount.disc_value }}</td>
+                                                        <td class="text-right">-@{{ numeral(discount.disc_value).format() }}</td>
                                                     </tr>
                                                     </template>
                                                 </template>

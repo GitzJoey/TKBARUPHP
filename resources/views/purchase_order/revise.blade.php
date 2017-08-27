@@ -517,9 +517,80 @@
                             <h3 class="box-title">@lang('purchase_order.revise.box.transaction_summary')</h3>
                         </div>
                         <div class="box-body">
-                            @for ($i = 0; $i < 25; $i++)
-                                <br/>
-                            @endfor
+                            <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+                                <div class="box">
+                                    <div class="box-header text-center">
+                                        <h4>{{ $currentPo->supplier->name }}</h4>
+                                        <h5>{{ $currentPo->supplier->address }}</h5>
+                                    </div>
+                                    <div class="box-body table-responsive">
+                                        <table class="table">
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.po_date')</td>
+                                                <td class="text-right">{{ $currentPo->po_created->format('d-m-Y') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.shipping_date')</td>
+                                                <td class="text-right">@{{ po.shipping_date }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@lang('purchase_order.create.field.po_code')</td>
+                                                <td class="text-right">{{ $currentPo->code }}</td>
+                                            </tr>
+                                        </table>
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>@lang('purchase_order.create.table.item.header.product_name')</th>
+                                                    <th>@lang('purchase_order.create.table.item.header.quantity')</th>
+                                                    <th>@lang('purchase_order.create.table.item.header.price_unit')</th>
+                                                    <th>@lang('purchase_order.create.table.item.header.total_price')</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template v-for="(item, itemIndex) in po.items">
+                                                    <tr>
+                                                        <td>*@{{ item.product.name }}</td>
+                                                        <td>@{{ item.quantity }}</td>
+                                                        <td>@{{ numeral(item.price).format() }}</td>
+                                                        <td class="text-right">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                    </tr>
+                                                    <template v-for="discount in item.discounts">
+                                                    <tr v-if="discount.disc_value != 0">
+                                                        <td>Disc. @{{ discount.disc_percent }}%</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-right">-@{{ numeral(discount.disc_value).format() }}</td>
+                                                    </tr>
+                                                    </template>
+                                                </template>
+                                            </tbody>
+                                        </table>
+
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.table.item.header.total_price')</td>
+                                                    <td class="text-right">@{{ numeral(grandTotal()).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                                    <td class="text-right">@{{ numeral(discountTotal()).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.box.expenses')</td>
+                                                    <td class="text-right">@{{ numeral(expenseTotal()).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.table.total.body.total_transaction')</td>
+                                                    <td class="text-right">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
