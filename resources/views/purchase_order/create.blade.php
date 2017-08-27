@@ -515,8 +515,14 @@
                             <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
                                 <div class="box">
                                     <div class="box-header text-center">
+                                        <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
                                         <h4>@{{ po.supplier.name }}</h4>
                                         <h5>@{{ po.supplier.address }}</h5>
+                                        </template>
+
+                                        <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.WI'">
+                                        <h4>@{{ po.supplier_name }}</h4>
+                                        </template>
                                     </div>
                                     <div class="box-body table-responsive">
                                         <table class="table">
