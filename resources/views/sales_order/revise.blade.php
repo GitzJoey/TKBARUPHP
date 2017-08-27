@@ -519,9 +519,84 @@
                             <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                         </div>
                         <div class="box-body">
-                            @for ($i = 0; $i < 23; $i++)
-                                <br/>
-                            @endfor
+                            <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+                                <div class="box">
+                                    <div class="box-header text-center">
+                                        @if($currentSo->customer_type == 'CUSTOMERTYPE.R')
+                                        <h4>{{ $currentSo->customer->name }}</h4>
+                                        @else
+                                        <h4>{{ $currentSo->walk_in_cust }}</h4>
+                                        @endif
+                                    </div>
+
+                                    <div class="box-body table-responsive">
+                                        <table class="table">
+                                            <tr>
+                                                <td>@lang('sales_order.create.so_date')</td>
+                                                <td class="text-right">{{ $currentSo->so_created->format('d-m-Y') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@lang('sales_order.create.field.shipping_date')</td>
+                                                <td class="text-right">{{ $currentSo->shipping_date->format('d-m-Y') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@lang('sales_order.create.so_code')</td>
+                                                <td class="text-right">{{ $currentSo->code }}</td>
+                                            </tr>
+                                        </table>
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>@lang('sales_order.create.table.item.header.product_name')</th>
+                                                    <th>@lang('sales_order.create.table.item.header.quantity')</th>
+                                                    <th>@lang('sales_order.create.table.item.header.price_unit')</th>
+                                                    <th>@lang('sales_order.create.table.item.header.total_price')</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template v-for="(item, itemIndex) in so.items">
+                                                    <tr>
+                                                        <td>*@{{ item.product.name }}</td>
+                                                        <td>@{{ item.quantity }}</td>
+                                                        <td>@{{ numeral(item.price).format() }}</td>
+                                                        <td class="text-right">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                    </tr>
+                                                    <template v-for="discount in item.discounts">
+                                                    <tr v-if="discount.disc_value != 0">
+                                                        <td>Disc. @{{ discount.disc_percent }}%</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-right">-@{{ numeral(discount.disc_value).format() }}</td>
+                                                    </tr>
+                                                    </template>
+                                                </template>
+                                            </tbody>
+                                        </table>
+
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>@lang('sales_order.create.table.item.header.total_price')</td>
+                                                    <td class="text-right">@{{ numeral(grandTotal(soIndex)).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                                    <td class="text-right">@{{ numeral(discountTotal(soIndex)).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('sales_order.create.box.expenses')</td>
+                                                    <td class="text-right">@{{ numeral(expenseTotal(soIndex)).format() }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>@lang('purchase_order.create.table.total.body.total_transaction')</td>
+                                                    <td class="text-right">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -809,19 +884,19 @@
                 },
                 discountTotalPercentToNominal: function(){
                     var vm = this;
-                    
+
                     var grandTotal = 0;
                     _.forEach(vm.so.items, function (item, key) {
                         grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
                     });
-                    
+
                     var discountTotal = 0;
                     _.forEach(vm.so.items, function (item, key) {
                         _.forEach(item.discounts, function (discount) {
                             discountTotal += parseFloat(discount.disc_value);
                         });
                     });
-                    
+
                     var expenseTotal = 0;
                     _.forEach(vm.so.expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
@@ -829,7 +904,7 @@
                         else
                             expenseTotal -= parseInt(numeral().unformat(expense.amount));
                     });
-                    
+
                     var disc_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.so.disc_percent / 100 );
                     if( disc_value % 1 !== 0 )
                         disc_value = disc_value.toFixed(2);
@@ -837,19 +912,19 @@
                 },
                 discountTotalNominalToPercent: function(){
                     var vm = this;
-                    
+
                     var grandTotal = 0;
                     _.forEach(vm.so.items, function (item, key) {
                         grandTotal += (item.selected_unit.conversion_value * item.quantity * item.price);
                     });
-                    
+
                     var discountTotal = 0;
                     _.forEach(vm.so.items, function (item, key) {
                         _.forEach(item.discounts, function (discount) {
                             discountTotal += parseFloat(discount.disc_value);
                         });
                     });
-                    
+
                     var expenseTotal = 0;
                     _.forEach(vm.so.expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
@@ -857,7 +932,7 @@
                         else
                             expenseTotal -= parseInt(numeral().unformat(expense.amount));
                     });
-                    
+
                     var disc_percent = vm.so.disc_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
                     if( disc_percent % 1 !== 0 )
                         disc_percent = disc_percent.toFixed(2);
