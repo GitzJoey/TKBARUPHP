@@ -586,6 +586,10 @@
                                                     <td class="text-right">@{{ numeral(expenseTotal()).format() }}</td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="text-right"><b>@lang('purchase_order.create.box.discount_transaction')</b></td>
+                                                    <td class="text-right">@{{ numeral(po.disc_total_value).format() }}</td>
+                                                </tr>
+                                                <tr>
                                                     <td class="text-right"><b>@lang('purchase_order.create.table.total.body.total_transaction')</b></td>
                                                     <td class="text-right">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
                                                 </tr>
