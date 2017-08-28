@@ -627,6 +627,10 @@
                                                                         <td class="text-right">@{{ numeral(expenseTotal(soIndex)).format() }}</td>
                                                                     </tr>
                                                                     <tr>
+                                                                        <td class="text-right"><b>@lang('purchase_order.create.box.discount_transaction')</b></td>
+                                                                        <td class="text-right">@{{ numeral(so.disc_value).format() }}</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td class="text-right"><b>@lang('purchase_order.create.table.total.body.total_transaction')</b></td>
                                                                         <td class="text-right">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
                                                                     </tr>
