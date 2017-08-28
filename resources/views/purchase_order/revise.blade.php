@@ -543,6 +543,8 @@
                                             </tr>
                                         </table>
 
+                                        <hr>
+
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
@@ -575,19 +577,19 @@
                                         <table class="table">
                                             <tbody>
                                                 <tr>
-                                                    <td>@lang('purchase_order.create.table.item.header.total_price')</td>
+                                                    <td class="text-right"><b>@lang('purchase_order.create.table.item.header.total_price')</b></td>
                                                     <td class="text-right">@{{ numeral(grandTotal()).format() }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>@lang('purchase_order.create.table.total.body.total_discount')</td>
+                                                    <td class="text-right"><b>@lang('purchase_order.create.table.total.body.total_discount')</b></td>
                                                     <td class="text-right">@{{ numeral(discountTotal()).format() }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>@lang('purchase_order.create.box.expenses')</td>
+                                                    <td class="text-right"><b>@lang('purchase_order.create.box.expenses')</b></td>
                                                     <td class="text-right">@{{ numeral(expenseTotal()).format() }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>@lang('purchase_order.create.table.total.body.total_transaction')</td>
+                                                    <td class="text-right"><b>@lang('purchase_order.create.table.total.body.total_transaction')</b></td>
                                                     <td class="text-right">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - po.disc_total_value ).format() }}</td>
                                                 </tr>
                                             </tbody>
