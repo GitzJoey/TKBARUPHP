@@ -22,7 +22,6 @@ class TaxInput extends Model
         'is_creditable',
         'opponent_tax_id_no',
         'opponent_name',
-        'opponent_address',
         'tax_base',
         'gst',
         'luxury_tax'
