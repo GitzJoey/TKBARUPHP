@@ -300,7 +300,9 @@
             @endif
             @if(Laratrust::can('menu-tax-input') OR
                 Laratrust::can('menu-tax-output'))
-                <li class="treeview {{ active_class(Active::checkRoutePattern('db.tax.invoice.output.') ||
+                <li class="treeview {{ active_class(Active::checkRoutePattern('db.tax.invoice.input.') ||
+                                                    Active::checkRoutePattern('db.tax.invoice.input.*') ||
+                                                    Active::checkRoutePattern('db.tax.invoice.output.') ||
                                                     Active::checkRoutePattern('db.tax.invoice.output.*')) }}">
                     <a href="#"><i class="fa fa-legal fa-fw"></i><span>&nbsp;@lang('menu.item.tax')</span>
                         <span class="pull-right-container">
@@ -309,7 +311,8 @@
                     </a>
 
                     <ul class="treeview-menu">
-                        <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.output.*')) }}">
+                        <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.input.*') ||
+                                                    Active::checkRoutePattern('db.tax.invoice.output.*')) }}">
                             <a href="#"><i class="fa fa-file-o fa-stack"></i>&nbsp;@lang('menu.item.tax.invoice')
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
