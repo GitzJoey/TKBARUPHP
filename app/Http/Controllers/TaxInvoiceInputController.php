@@ -109,6 +109,11 @@ class TaxInvoiceInputController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Log::info('[TaxInvoiceInputController@destroy] $id:' . $id);
+
+        $tax = TaxInput::find($id);
+        $tax->delete();
+
+        return redirect(route('db.tax.invoice.input.index'));
     }
 }
