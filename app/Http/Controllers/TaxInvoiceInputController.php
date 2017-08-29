@@ -75,7 +75,12 @@ class TaxInvoiceInputController extends Controller
      */
     public function show($id)
     {
-        //
+        Log::info('[TaxInvoiceInputController@show] $id: ' . $id);
+        $currentStore = new Store();
+        $currentStore = $currentStore->find(Auth::user()->store_id);
+        $tax = TaxInput::find($id);
+
+        return view('tax.invoice.input.show', compact('tax', 'currentStore'));
     }
 
     /**
