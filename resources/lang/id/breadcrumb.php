@@ -98,7 +98,7 @@ return [
     'tax.invoice.output.show' => 'Tampilkan e-Faktur Keluaran',
     'tax.invoice.output.edit' => 'Ubah e-Faktur Keluaran',
     'tax.invoice.input' => 'e-Faktur Pemasukan',
-    'tax.invoice.input.create' => 'Tambah e-Faktur Pemasukan',
-    'tax.invoice.input.show' => 'Tampilkan e-Faktur Pemasukan',
-    'tax.invoice.input.edit' => 'Ubah e-Faktur Pemasukan',
+    'tax.invoice.input.create' => 'Tambah e-Faktur Masukan',
+    'tax.invoice.input.show' => 'Tampilkan e-Faktur Masukan',
+    'tax.invoice.input.edit' => 'Ubah e-Faktur Masukan',
 ];
