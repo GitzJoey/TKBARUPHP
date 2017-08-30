@@ -42,7 +42,7 @@ class TaxInvoiceInputServiceImpl implements TaxInvoiceInputService
 
     public function getTaxByID($id)
     {
-        // return TaxInput::with('transactions')->find($id);
+        return TaxInput::find($id);
     }
 
     public function editInvoice(Request $request, $id)

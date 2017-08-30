@@ -269,7 +269,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 });
                 Route::group(['middleware' => ['permission:create-tax-input|read-tax-input|update-tax-input|delete-tax-input|menu-tax-input']], function () {
                     Route::resource('input', 'TaxInvoiceInputController', [
-                        'as' => 'db.tax.invoice'
+                        'as' => 'db.tax.invoice',
+                        'parameters' => [
+                            'input' => 'id'
+                        ]
                     ]);
                 });
             });

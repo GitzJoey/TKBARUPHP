@@ -61,9 +61,9 @@
                             <td class="text-right">{{ number_format($tax->luxury_tax) }}</td>
                             <td class="text-right">{{ number_format($tax->tax_base + $tax->gst + $tax->luxury_tax) }}</td>
                             <td class="text-center">
-                                <a class="btn btn-xs btn-info" href="{{ route('db.tax.invoice.input.show', $tax->id) }}"><span class="fa fa-info fa-fw"></span></a>
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.tax.invoice.input.edit', $tax->id) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.tax.invoice.input.destroy', $tax->id], 'style'=>'display:inline'])  !!}
+                                <a class="btn btn-xs btn-info" href="{{ route('db.tax.invoice.input.show', $tax->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" href="{{ route('db.tax.invoice.input.edit', $tax->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.tax.invoice.input.destroy', $tax->hId()], 'style'=>'display:inline'])  !!}
                                 <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
                                 {!! Form::close() !!}
                             </td>

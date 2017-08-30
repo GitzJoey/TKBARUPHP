@@ -78,7 +78,7 @@ class TaxInvoiceInputController extends Controller
         Log::info('[TaxInvoiceInputController@show] $id: ' . $id);
         $currentStore = new Store();
         $currentStore = $currentStore->find(Auth::user()->store_id);
-        $tax = TaxInput::find($id);
+        $tax = $this->taxInvoiceInputService->getTaxByID($id);
 
         return view('tax.invoice.input.show', compact('tax', 'currentStore'));
     }
@@ -94,7 +94,7 @@ class TaxInvoiceInputController extends Controller
         Log::info('[TaxInvoiceInputController@show] $id: ' . $id);
         $currentStore = new Store();
         $currentStore = $currentStore->find(Auth::user()->store_id);
-        $tax = TaxInput::find($id);
+        $tax = $this->taxInvoiceInputService->getTaxByID($id);
 
         return view('tax.invoice.input.edit', compact('tax', 'currentStore'));
     }
