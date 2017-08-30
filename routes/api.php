@@ -181,7 +181,7 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::group(['prefix' => 'invoice'], function () {
                 Route::group(['prefix' => 'input'], function () {
                     Route::post('create', 'TaxInvoiceInputController@store')->name('api.post.db.tax.invoice.input.create');
-                    Route::post('edit/{id}', 'TaxInvoiceInputController@saveEdit')->name('api.post.db.tax.invoice.input.edit');
+                    Route::post('edit/{id}', 'TaxInvoiceInputController@update')->name('api.post.db.tax.invoice.input.edit');
                 });
 
                 Route::group(['prefix' => 'output'], function () {

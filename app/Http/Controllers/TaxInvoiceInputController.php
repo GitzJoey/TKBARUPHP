@@ -91,7 +91,12 @@ class TaxInvoiceInputController extends Controller
      */
     public function edit($id)
     {
-        //
+        Log::info('[TaxInvoiceInputController@show] $id: ' . $id);
+        $currentStore = new Store();
+        $currentStore = $currentStore->find(Auth::user()->store_id);
+        $tax = TaxInput::find($id);
+
+        return view('tax.invoice.input.edit', compact('tax', 'currentStore'));
     }
 
     /**
@@ -103,6 +108,12 @@ class TaxInvoiceInputController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->taxInvoiceInputService->editInvoice($request, $id);
+
+        return response()->json([
+            'result' => 'success',
+            'message' => ''
+        ]);
         //
     }
 
