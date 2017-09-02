@@ -13,52 +13,45 @@
 @endsection
 
 @section('content')
-<div id="taxReport">
-    <div v-show="errors.count() > 0" v-cloak>
-        <div class="alert alert-danger">
-            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
-            <ul v-for="(e, eIdx) in errors.all()">
-                <li>@{{ e }}</li>
-            </ul>
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@lang('report.tax.header.title')</h3>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Report</h3>
-                </div>
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Bulan</label>
-                                <select v-model="report.month" name="bulan" class="form-control">
-                                    @foreach ($months as $k => $m)
-                                    <option value="{{ $k+1 }}" {{ date('n') == $k+1 ? 'selected' : '' }}>{{ $m }}</option>
-                                    @endforeach
-                                </select>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab_tax_masukan" data-toggle="tab">
+                                    Faktur Masukan
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab_tax_keluaran_summary" data-toggle="tab">
+                                    Faktur Keluaran Summary
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab_tax_keluaran_detail" data-toggle="tab">
+                                    Faktur Keluaran Detail
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#tab_tax_arus" data-toggle="tab">
+                                    Arus
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="tab_tax" >
+                            <div class="tab-pane active" id="tab_tax_masukan">
+                                @include('report.tax_components.faktur_masukan')
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label">Tahun</label>
-                                <select v-model="report.year" name="tahun" class="form-control">
-                                    @for ($i = date('Y')-5; $i <= date('Y'); $i++)
-                                    <option value="{{ $i }}" {{ date('Y') == $i ? 'selected' : '' }}>{{ $i }}</option>
-                                    @endfor
-                                </select>
+                            <div class="tab-pane" id="tab_tax_keluaran_summary">
+                                @include('report.tax_components.faktur_keluaran_summary')
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="box-footer">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="btn-toolbar">
-                                <button id="submitButton" type="button" class="btn btn-primary pull-right" v-on:click="generateReport()">Submit</button>
+                            <div class="tab-pane" id="tab_tax_keluaran_detail">
+                                @include('report.tax_components.faktur_keluaran_detail')
                             </div>
                         </div>
                     </div>
