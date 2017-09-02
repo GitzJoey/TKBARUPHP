@@ -271,6 +271,10 @@ Route::group(['prefix' => 'get'], function () {
                 Route::get('/', 'StockHistoryController@stockTypeIndex')->name('api.report.mon.stockhistory.type.index');
             });
         });
+
+        Route::group(['prefix' => 'tax'], function() {
+            Route::get('/', 'ReportTaxController@generateTaxReport')->name('api.report.tax');
+        });
     });
 
     Route::group(['prefix' => 'stock'], function() {
