@@ -267,14 +267,13 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                     Route::patch('edit/{id}', 'TaxInvoiceOutputController@update');
                     Route::delete('edit/{id}', 'TaxInvoiceOutputController@delete')->name('db.tax.invoice.output.delete');
                 });
-                Route::group(['prefix' => 'input', 'middleware' => ['permission:create-tax-input|read-tax-input|update-tax-input|delete-tax-input|menu-tax-input']], function () {
-                    Route::get('', 'TaxController@index')->name('db.tax.invoice.input.index');
-                    Route::get('show/{id}', 'TaxController@show')->name('db.tax.invoice.input.show');
-                    Route::get('create', 'TaxController@create')->name('db.tax.invoice.input.create');
-                    Route::post('create/', 'TaxController@store');
-                    Route::get('edit/{id}', 'TaxController@edit')->name('db.tax.invoice.input.edit');
-                    Route::patch('edit/{id}', 'TaxController@update');
-                    Route::delete('edit/{id}', 'TaxController@delete')->name('db.tax.invoice.input.delete');
+                Route::group(['middleware' => ['permission:create-tax-input|read-tax-input|update-tax-input|delete-tax-input|menu-tax-input']], function () {
+                    Route::resource('input', 'TaxInvoiceInputController', [
+                        'as' => 'db.tax.invoice',
+                        'parameters' => [
+                            'input' => 'id'
+                        ]
+                    ]);
                 });
             });
         });
@@ -369,7 +368,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('edit/{id}', 'BankController@edit')->name('db.master.bank.edit');
                 Route::delete('edit/{id}', 'BankController@delete')->name('db.master.bank.delete');
             });
-            
+
             Route::group(['prefix' => 'truck'], function () {
                 Route::get('', 'TruckController@index')->name('db.master.truck');
                 Route::get('show/{id}', 'TruckController@show')->name('db.master.truck.show');
@@ -377,7 +376,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('edit/{id}', 'TruckController@edit')->name('db.master.truck.edit');
                 Route::delete('edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
             });
-            
+
             Route::group(['prefix' => 'vendor'], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
@@ -427,7 +426,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('edit/{id}', 'UnitController@edit')->name('db.admin.unit.edit');
                 Route::delete('edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
             });
-            
+
             Route::group(['prefix' => 'currencies', 'middleware' => ['permission:create-currencies|read-currencies|update-currencies|delete-currencies|menu-currencies']], function(){
                 Route::get('', 'CurrenciesController@index')->name('db.admin.currencies');
                 Route::get('show/{id}', 'CurrenciesController@show')->name('db.admin.currencies.show');

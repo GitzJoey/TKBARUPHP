@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 return [
     'dashboard' => 'Dashboard',
@@ -97,4 +97,8 @@ return [
     'tax.invoice.output.create' => 'Create e-Invoice Output',
     'tax.invoice.output.show' => 'Show e-Invoice Output',
     'tax.invoice.output.edit' => 'Edit e-Invoice Output',
+    'tax.invoice.input' => 'e-Invoice Input',
+    'tax.invoice.input.create' => 'Create e-Invoice Input',
+    'tax.invoice.input.show' => 'Show e-Invoice Input',
+    'tax.invoice.input.edit' => 'Edit e-Invoice Input',
 ];

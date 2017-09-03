@@ -32,7 +32,24 @@ class ReportController extends Controller
 
     public function report_tax()
     {
-        return view('report.tax');
+        $months = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
+
+        return view('report.tax')->with([
+            'months' => $months
+        ]);
     }
 
     public function report_master()
