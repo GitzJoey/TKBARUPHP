@@ -24,11 +24,11 @@
     "animate.css": "^3.5.2",
     "autonumeric": "^1.9.46",
     "bootstrap": "^3.3.7",
-    "bootstrap-fileinput": "^4.4.2",
+    "bootstrap-fileinput": "^4.4.3",
     "bootstrap-sweetalert": "^1.0.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "^4.7.0",
-    "fullcalendar": "^3.0.1 ",
+    "fullcalendar": "^3.5.1",
     "highcharts": "^5.0.14",
     "icheck": "^1.0.2",
     "ionicons": "^3.0.0",
@@ -40,12 +40,12 @@
     "noty": "^2.4.0",
     "numeral": "^1.5.3",
     "parsleyjs": "^2.5.0",
-    "pdfjs-dist": "^1.9.478",
+    "pdfjs-dist": "^1.9.528",
     "pdfobject": "^2.0.201604172",
     "select2": "^4.0.3",
     "tooltipster": "^4.1.6",
     "urijs": "^1.18.12",
     "vee-validate": "^2.0.0-rc.14",
-    "vue-numeric": "^1.6.1"
+    "vue-numeric": "^1.6.2"
   }
 }
