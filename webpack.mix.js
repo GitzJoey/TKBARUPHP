@@ -68,5 +68,5 @@ mix.styles([
     .copy('node_modules/autonumeric/autoNumeric-min.js', 'public/adminlte/js')
     .copy('resources/assets/css/frontweb.css', 'public/frontweb/css');
 
-mix.js('resources/assets/js/sales_order.js', 'public/adminlte/js');
+mix.js('resources/assets/js/sales_order/create.js', 'public/adminlte/js/sales_order');
 mix.js('resources/assets/js/app.js', 'public/adminlte/js');

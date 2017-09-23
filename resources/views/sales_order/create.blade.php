@@ -740,5 +740,5 @@
           }
         }
     </script>
-    <script src="{{ asset('adminlte/js/sales_order.js') }}" charset="utf-8"></script>
+    <script src="{{ asset('adminlte/js/sales_order/create.js') }}" charset="utf-8"></script>
 @endsection

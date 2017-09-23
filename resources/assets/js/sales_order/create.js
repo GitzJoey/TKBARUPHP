@@ -3,9 +3,9 @@
 
 Vue.use(VeeValidate, { locale: $('html').attr('lang') });
 
-Vue.component('vue-icheck', require('./components/vue-icheck.vue'));
-Vue.component('vue-datetimepicker', require('./components/vue-datetimepicker.vue'));
-Vue.component('select2_customer', require('./components/select2_customer.vue'));
+Vue.component('vue-icheck', require('./../components/vue-icheck.vue'));
+Vue.component('vue-datetimepicker', require('./../components/vue-datetimepicker.vue'));
+Vue.component('select2_customer', require('./../components/select2_customer.vue'));
 
 var soApp = new Vue({
     el: '#soVue',
