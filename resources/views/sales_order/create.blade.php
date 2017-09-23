@@ -480,7 +480,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
-                                                                               v-model="expense.amount" v-validate="'required|deciaml:2'"/>
+                                                                               v-model="expense.amount" v-validate="'required|decimal:2'"/>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
