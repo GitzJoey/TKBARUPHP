@@ -737,10 +737,12 @@
                 stocksDDL: JSON.parse('{!! htmlspecialchars_decode($stocksDDL) !!}'),
                 soTypeDDL: JSON.parse('{!! htmlspecialchars_decode($soTypeDDL) !!}'),
                 SOs: JSON.parse('{!! htmlspecialchars_decode($userSOs) !!}'),
-                defaultTabLabel: '{{ trans('sales_order.create.tab.sales') }}'
+                defaultTabLabel: ''
             },
             mounted: function() {
                 var vm = this;
+
+                this.defaultTabLabel = '{{ trans('sales_order.create.tab.sales') }}';
 
                 if(this.SOs.length == 0) {
                     this.insertTab(this.SOs);
@@ -769,7 +771,7 @@
                     this.$validator.validateAll().then(function(isValid) {
                         if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
-                        axios.post('/api/post/dashboard/so/save/draft' + '?api_token=' + $('#secapi').val(), new FormData($('#soForm')[0]))
+                        axios.post('{{ route('api.post.db.so.create.savedraft') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soForm')[0]))
                             .then(function(response) {
                                 $('#loader-container').fadeOut('slow');
                                 noty({
@@ -788,10 +790,10 @@
                     var vm = this;
                     this.$validator.validateAll('tab_' + soIndex).then(function(isValid) {
                         $('#loader-container').fadeIn('fast');
-                        axios.post('/api/post/dashboard/so/create' + '?api_token=' + $('#secapi').val(), vm.SOs[soIndex])
+                        axios.post('{{ route('api.post.db.so.create') }}' + '?api_token=' + $('#secapi').val(), vm.SOs[soIndex])
                             .then(function(response) {
                                 if (vm.SOs.length == 1) {
-                                    window.location.href = '/dashboard';
+                                    window.location.href = '{{ route('db') }}';
                                 } else {
                                     vm.SOs.splice(soIndex, 1);
                                     $('#loader-container').fadeOut('slow');
@@ -810,7 +812,7 @@
                 },
                 cancelSales: function(soIndex) {
                     if (soIndex == 0) {
-                        window.location.href = '/dashboard';
+                        window.location.href = '{{ route('db') }}';
                     } else {
                         this.SOs.splice(soIndex, 1);
                     }
@@ -831,7 +833,7 @@
                     if(!this.SOs[soIndex].customer.id) {
                         vm.SOs[soIndex].customer = { id: '' };
                     } else {
-                        axios.get('/api/get/customer' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } })
+                        axios.get('{{ route('api.get.customer') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } })
                             .then(function(response) {
                                 _.merge(vm.SOs[soIndex].customer, response.data);
                             });
@@ -877,7 +879,7 @@
                     return result;
                 },
                 setSOCode: function(so){
-                    axios.get('/api/get/so/code').then(function(data){
+                    axios.get('{{ route('api.get.so.code') }}').then(function(data){
                         so.so_code = data.data;
                     });
                 },
