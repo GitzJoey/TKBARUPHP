@@ -139,39 +139,6 @@
 
 @section('custom_js')
     <script type="application/javascript">
-
-        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
-
-        Vue.component('vue-datetimepicker', {
-            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:format='format' v-model='value'>",
-            props: ['id', 'name', 'format'],
-            data: function() {
-                return {
-                    value: ''
-                };
-            },
-            mounted: function() {
-                var vm = this;
-
-                if (this.format == undefined) this.format = 'DD-MM-YYYY';
-                if (this.readonly == undefined) this.readonly = 'false';
-
-                $(this.$el).datetimepicker({
-                    format: this.format,
-                    defaultDate: this.value == '' ? moment():moment(this.value),
-                    showTodayButton: true,
-                    showClose: true
-                })
-                .on('dp.change', function(e) {
-                    vm.$emit('change', e.date);
-                });
-
-            },
-            destroyed: function() {
-                $(this.$el).data("DateTimePicker").destroy();
-            }
-        });
-
         var taxInputApp = new Vue({
             el: '#taxVue',
             data: {

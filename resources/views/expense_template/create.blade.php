@@ -71,11 +71,7 @@
                     <div class="form-group">
                         <label for="inputInternalExpense" class="col-sm-2 control-label">@lang('expense_template.field.internal_expense')</label>
                         <div class="col-sm-8">
-                            <div class="checkbox icheck">
-                                <label>
-                                    <input type="checkbox" name="is_internal_expense" value="">&nbsp;
-                                </label>
-                            </div>
+                            <vue-iCheck name="expense_template.is_internal_expense" v-model="expense_template.is_internal_expense"></vue-iCheck>
                         </div>
                     </div>
                     <div class="form-group">
@@ -94,8 +90,6 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
-
         var app = new Vue({
             el: '#expTemplateVue',
             data: {
@@ -103,7 +97,8 @@
                     name:'',
                     type:'',
                     amount:'',
-                    remarks:''
+                    remarks:'',
+                    is_internal_expense: false
                 },
                 expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}')
             },

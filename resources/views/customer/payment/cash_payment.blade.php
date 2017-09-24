@@ -105,34 +105,6 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
-
-        Vue.component('vue-datetimepicker', {
-            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
-            props: ['id', 'name', 'value', 'format', 'readonly'],
-            mounted: function() {
-                var vm = this;
-
-                if (this.value == undefined) this.value = '';
-                if (this.format == undefined) this.format = 'DD-MM-YYYY hh:mm A';
-                if (this.readonly == undefined) this.readonly = 'false';
-
-                $(this.$el).datetimepicker({
-                    format: this.format,
-                    defaultDate: this.value == '' ? moment():moment(this.value),
-                    showTodayButton: true,
-                    showClose: true
-                }).on("dp.change", function(e) {
-                    vm.$emit('input', this.value);
-                });
-
-                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
-            },
-            destroyed: function() {
-                $(this.$el).data("DateTimePicker").destroy();
-            }
-        });
-
         var app = new Vue({
             el: '#customerCashVue',
             data: {

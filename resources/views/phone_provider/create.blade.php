@@ -113,8 +113,6 @@
 
 @section('custom_js')
     <script type="application/javascript">
-        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
-
         var app = new Vue({
             el: '#phoneProviderVue',
             data: {

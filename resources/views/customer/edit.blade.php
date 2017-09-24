@@ -426,8 +426,6 @@
 @section('custom_js')
     <script async defer src="https://maps.googleapis.com/maps/api/js?callback=mapsCallback&libraries=places&key={{ $mapsAPIKey }}"></script>
     <script type="application/javascript">
-        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
-
         var app = new Vue({
             el: '#customerVue',
             data: {

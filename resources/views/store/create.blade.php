@@ -424,63 +424,6 @@
     <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
 
     <script type="application/javascript">
-        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
-
-        Vue.component('vue-icheck', {
-            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value' v-bind:value='value'>",
-            props: ['id', 'name', 'disabled', 'value'],
-            model: {
-                event: 'click'
-            },
-            mounted: function() {
-                var vm = this;
-
-                $(this.$el).iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue'
-                }).on('ifChecked', function(event) {
-                    vm.onChecked();
-                }).on('ifUnchecked', function(event) {
-                    vm.onUnchecked();
-                });
-
-                if (this.value) { $(this.$el).iCheck('check'); }
-                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
-
-                if (this.value == undefined) { this.value = false; }
-            },
-            methods: {
-                onChecked: function() {
-                    var vm = this;
-                    if (!isNaN(parseFloat(this.value)) && isFinite(this.value)) {
-                        this.value = 1;
-                    } else {
-                        this.value = true;
-                    }
-                    vm.$emit('click', this.value);
-                },
-                onUnchecked: function() {
-                    var vm = this;
-                    if (!isNaN(parseFloat(this.value)) && isFinite(this.value)) {
-                        this.value = 0;
-                    } else {
-                        this.value = false;
-                    }
-                    vm.$emit('click', this.value);
-                }
-            },
-            watch: {
-                value: function(newVal, oldVal) {
-                    var vm = this;
-                    if (this.value) { $(this.$el).prop('checked', true).iCheck('update'); }
-                    else { $(this.$el).prop('checked', false).iCheck('update'); }
-                }
-            },
-            destroyed: function() {
-                $(this.$el).iCheck('destroy');
-            }
-        });
-
         var storeApp = new Vue({
             el: '#storeVue',
             data: {

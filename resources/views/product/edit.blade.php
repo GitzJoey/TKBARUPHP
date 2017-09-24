@@ -235,8 +235,6 @@
     <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
 
     <script type="application/javascript">
-        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
-
         var app = new Vue({
             el: '#productVue',
             data: {
