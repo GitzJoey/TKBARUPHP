@@ -15,6 +15,10 @@ export default {
         window.alert('jQuery undefined');
         return;
       }
+      if (typeof window.$.fn.select2 === 'undefined') {
+        window.alert('select2 undefined');
+        return;
+      }
 
       var vm = this;
       $(this.$el).select2({

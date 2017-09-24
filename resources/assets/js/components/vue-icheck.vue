@@ -15,6 +15,10 @@ export default {
         window.alert('jQuery undefined');
         return;
       }
+      if (typeof window.$.fn.iCheck === 'undefined') {
+        window.alert('iCheck undefined');
+        return;
+      }
 
       $(this.$el).iCheck({
           checkboxClass: 'icheckbox_square-blue',

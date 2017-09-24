@@ -18,6 +18,10 @@ export default {
       window.alert('jQuery undefined');
       return;
     }
+    if (typeof window.$.fn.datetimepicker === 'undefined') {
+      window.alert('datetimepicker undefined');
+      return;
+    }
 
     var vm = this;
 
