@@ -897,7 +897,7 @@
                         supplier: this.currentPo.supplier ? _.cloneDeep(this.currentPo.supplier) : {id: ''},
                         warehouse: _.cloneDeep(this.currentPo.warehouse),
                         vendorTrucking: this.currentPo.vendor_trucking ? _.cloneDeep(this.currentPo.vendor_trucking) : {id: ''},
-                        shipping_date: this.currentPo.shipping_date,
+                        shipping_date: moment(this.currentPo.shipping_date).format('DD-MM-YYYY hh:mm A'),
                         items: [],
                         expenses: [],
                         supplier_type: {

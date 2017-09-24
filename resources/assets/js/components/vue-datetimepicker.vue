@@ -29,16 +29,20 @@ export default {
     if (this.format == undefined || this.format == NaN) this.format = 'DD-MM-YYYY hh:mm A';
     if (this.readonly == undefined || this.readonly == NaN) this.readonly = 'false';
 
+    if (this.value == '') {
+        this.value = moment().format(this.format);
+        vm.$emit('input', moment().format(this.format));
+    }
+
     $(this.$el).datetimepicker({
+        useCurrent: false,
         format: this.format,
-        defaultDate: this.value == '' ? moment():moment(this.value),
+        defaultDate: moment(this.value, this.format),
         showTodayButton: true,
         showClose: true
     }).on("dp.change", function(e) {
         vm.$emit('input', this.value);
     });
-
-    if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
   },
   destroyed: function() {
       $(this.$el).data("DateTimePicker").destroy();
