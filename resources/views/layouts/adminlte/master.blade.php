@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ LaravelLocalization::getCurrentLocale() }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,8 +59,8 @@
 
         <input type="hidden" id="secapi" value="{{ Auth::user()->api_token }}">
 
-        <!--<script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>-->
         <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
+        <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
 
         <script type="application/javascript">
             $(document).ready(function () {

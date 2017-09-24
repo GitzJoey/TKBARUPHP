@@ -481,7 +481,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
-                                                                               v-model="expense.amount" v-validate="'required|deciaml:2'"/>
+                                                                               v-model="expense.amount" v-validate="'required|decimal:2'"/>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -726,96 +726,7 @@
 @endsection
 
 @section('custom_js')
-    <script type="application/javascript">
-        Vue.use(VeeValidate, { locale: '{!! LaravelLocalization::getCurrentLocale() !!}' });
-
-        Vue.component('select2_customer', {
-            template: '<select v-model="value"><option></option></select>',
-            props: ['value'],
-            model: {
-                event: 'select'
-            },
-            mounted: function(){
-                var vm = this;
-                $(this.$el).select2({
-                    ajax: {
-                        url: "{{ route('api.customer.search') }}?q=",
-                        dataType: 'json',
-                        data: function(params){
-                            return {
-                                q: params.term,
-                                page: params.page
-                            }
-                        },
-                        processResults: function (data, params) {
-                            params.page = params.page || 1;
-                            var output = [];
-                            _.map(data, function(d){
-                                output.push({id: d.id, text: d.name});
-                            });
-                            return {
-                                results: output
-                            }
-                        }
-                    },
-                    minimumInputLength: 1
-                }).val(this.value).trigger('change').on('change', function() {
-                    vm.$emit('input', this.value);
-                    vm.$emit('select', this.value);
-                });
-            },
-            destroyed: function(){
-                $(this.$el).off().select2('destroy');
-            }
-        });
-
-        Vue.component('vue-icheck', {
-            template: "<input v-bind:id='id' v-bind:name='name' type='checkbox' v-bind:disabled='disabled' v-model='value'>",
-            props: ['id', 'name', 'disabled', 'value'],
-            mounted: function() {
-                $(this.$el).iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue'
-                }).on('ifChecked', function(event) {
-                    this.value = true;
-                }).on('ifUnchecked', function(event) {
-                    this.value = false;
-                });
-
-                if (this.value) { $(this.$el).iCheck('check'); }
-                if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
-            },
-            destroyed: function() {
-                $(this.$el).iCheck('destroy');
-            }
-        });
-
-        Vue.component('vue-datetimepicker', {
-            template: "<input type='text' v-bind:id='id' v-bind:name='name' class='form-control' v-bind:value='value' v-model='value' v-bind:format='format' v-bind:readonly='readonly'>",
-            props: ['id', 'name', 'value', 'format', 'readonly'],
-            mounted: function() {
-                var vm = this;
-
-                if (this.value == undefined || this.value == NaN) this.value = '';
-                if (this.format == undefined || this.format == NaN) this.format = 'DD-MM-YYYY hh:mm A';
-                if (this.readonly == undefined || this.readonly == NaN) this.readonly = 'false';
-
-                $(this.$el).datetimepicker({
-                    format: this.format,
-                    defaultDate: this.value == '' ? moment():moment(this.value),
-                    showTodayButton: true,
-                    showClose: true
-                }).on("dp.change", function(e) {
-                    vm.$emit('input', this.value);
-                });
-
-                if (this.value == '') { vm.$emit('input', moment().format(this.format)); }
-            },
-            destroyed: function() {
-                $(this.$el).data("DateTimePicker").destroy();
-            }
-        });
-
+    <script type="text/javascript">
         var soApp = new Vue({
             el: '#soVue',
             data: {
