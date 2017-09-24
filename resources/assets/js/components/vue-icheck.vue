@@ -11,6 +11,11 @@
 export default {
   props: ['id', 'name', 'disabled', 'value'],
   mounted: function() {
+      if (typeof window.$ === 'undefined' || typeof window.jQuery === 'undefined') {
+        window.alert('jQuery undefined');
+        return;
+      }
+
       $(this.$el).iCheck({
           checkboxClass: 'icheckbox_square-blue',
           radioClass: 'iradio_square-blue'

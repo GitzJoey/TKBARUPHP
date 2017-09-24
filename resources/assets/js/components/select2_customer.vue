@@ -11,6 +11,11 @@ export default {
       event: 'select'
   },
   mounted: function(){
+      if (typeof window.$ === 'undefined' || typeof window.jQuery === 'undefined') {
+        window.alert('jQuery undefined');
+        return;
+      }
+
       var vm = this;
       $(this.$el).select2({
           ajax: {
