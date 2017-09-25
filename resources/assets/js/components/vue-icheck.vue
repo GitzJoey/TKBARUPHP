@@ -29,7 +29,12 @@ export default {
           this.value = false;
       });
 
-      if (this.value) { $(this.$el).iCheck('check'); }
+      if (this.value == true ||
+          this.value == 'true' ||
+          this.value == 1) { $(this.$el).iCheck('check'); }
+      if (this.value == false ||
+          this.value == 'false' ||
+          this.value == 0) { $(this.$el).iCheck('uncheck'); }
       if (this.disabled == 'true') { $(this.$el).iCheck('disable'); }
   },
   destroyed: function() {

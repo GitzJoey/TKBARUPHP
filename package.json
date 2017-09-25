@@ -20,7 +20,7 @@
     "vue-template-compiler": "^2.4.2"
   },
   "dependencies": {
-    "admin-lte": "^2.3.6",
+    "admin-lte": "~2.3.11",
     "animate.css": "^3.5.2",
     "autonumeric": "^1.9.46",
     "bootstrap": "^3.3.7",
@@ -40,7 +40,7 @@
     "noty": "^2.4.0",
     "numeral": "^1.5.3",
     "parsleyjs": "^2.5.0",
-    "pdfjs-dist": "^1.9.528",
+    "pdfjs-dist": "^1.9.589",
     "pdfobject": "^2.0.201604172",
     "select2": "^4.0.3",
     "tooltipster": "^4.1.6",

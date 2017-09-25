@@ -60,6 +60,7 @@
                                                         v-on:click="saveDraft(soIndex)">
                                                     <span class="fa fa-save fa-fw"></span>&nbsp;Save as Draft
                                                 </button>
+                                                <input type="hidden" name="sId" value="{{ Session::getId() }}">
                                             </div>
                                         </div>
                                     </div>
