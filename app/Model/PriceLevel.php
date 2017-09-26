@@ -48,6 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PriceLevel whereDeletedAt($value)
  * @mixin \Eloquent
+ * @property-read mixed $i18n_type
  */
 class PriceLevel extends Model
 {

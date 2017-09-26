@@ -41,6 +41,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TaxItem whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TaxItem whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @property int $transactionable_id
+ * @property string $transactionable_type
+ * @property bool $is_gst_included
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $transactionable
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TaxItem whereIsGstIncluded($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TaxItem whereTransactionableId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TaxItem whereTransactionableType($value)
  */
 class TaxItem extends Model
 {

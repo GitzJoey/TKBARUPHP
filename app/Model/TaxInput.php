@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Vinkla\Hashids\Facades\Hashids;
 
+/**
+ * App\Model\TaxInput
+ *
+ * @mixin \Eloquent
+ */
 class TaxInput extends Model
 {
     use SoftDeletes;
