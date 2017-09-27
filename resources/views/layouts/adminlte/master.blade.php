@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
     </head>
 
-    <body class="hold-transition skin-blue sidebar-mini {{ !empty(Auth::user()->store->ribbon) ? Auth::user()->store->ribbon:'' }}">
+    <body class="hold-transition {{ !empty(Auth::user()->store->ribbon) ? Auth::user()->store->ribbon:'skin-blue' }} sidebar-mini">
         <div class="wrapper">
             @include('layouts.adminlte.header')
 
