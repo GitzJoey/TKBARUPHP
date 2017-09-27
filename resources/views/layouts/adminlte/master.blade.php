@@ -61,15 +61,12 @@
 
         <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
         <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
-<<<<<<< HEAD
         <script type="text/javascript">
             window.lookup = {!! json_encode(__('lookup')) !!}
         </script>
-=======
         <script>
             $(document).on('expanded.pushMenu', function() { localStorage.setItem('pushMenu', 'expanded'); });
             $(document).on('collapsed.pushMenu', function() { localStorage.setItem('pushMenu', 'collapsed'); });
->>>>>>> 716c0a0a354f5647630094683d0d3d0b587fdb98
 
             $(document).ready(function () {
                 var container = $("#loader-container");
