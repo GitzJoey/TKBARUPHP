@@ -25,7 +25,7 @@
             </div>
         </form>
 
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu" data-widget="tree">
             <li class="treeview {{ active_class(Active::checkRoutePattern('db.acc.*')) }}">
                 <a href="#">
                     <i class="fa fa-table fa-fw"></i> <span>@lang('menu.item.accounting')</span>

@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="{{ LaravelLocalization::getCurrentLocale() }}">
+<html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>@yield('title') | TKBARU</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
 
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
-
-        @yield('custom_css')
     </head>
 
     <body class="hold-transition skin-blue sidebar-mini {{ !empty(Auth::user()->store->ribbon) ? Auth::user()->store->ribbon:'' }}">
@@ -31,7 +28,6 @@
                 <section class="content">
                     @yield('content')
                 </section>
-
                 <br>
                 <br>
                 <br>
@@ -61,14 +57,15 @@
 
         <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
         <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
-
-        <script type="application/javascript">
+        <script>
             $(document).ready(function () {
                 var container = $("#loader-container");
                 container.on('click', function () {
                     $(this).fadeOut("slow");
                 });
                 container.delay(350).fadeOut("slow");
+
+                $('.sidebar-menu').tree()
 
                 $('#goTop').goTop();
 
@@ -87,85 +84,6 @@
                 timeout();
 
                 numeral.defaultFormat('{{ Auth::user()->store->numeralFormat }}');
-
-                var my_skins = [
-                    "skin-blue",
-                    "skin-black",
-                    "skin-red",
-                    "skin-yellow",
-                    "skin-purple",
-                    "skin-green",
-                    "skin-blue-light",
-                    "skin-black-light",
-                    "skin-red-light",
-                    "skin-yellow-light",
-                    "skin-purple-light",
-                    "skin-green-light"
-                ];
-
-                function store(name, val) {
-                    if (typeof (Storage) !== "undefined") {
-                        localStorage.setItem(name, val);
-                    } else {
-                        window.alert('Please use a modern browser to properly view this template!');
-                    }
-                }
-
-                function get(name) {
-                    if (typeof (Storage) !== "undefined") {
-                        return localStorage.getItem(name);
-                    } else {
-                        window.alert('Please use a modern browser to properly view this template!');
-                    }
-                }
-
-                function change_layout(cls) {
-                    $("body").toggleClass(cls);
-                    $.AdminLTE.layout.fixSidebar();
-
-                    if (cls == "layout-boxed")
-                        $.AdminLTE.controlSidebar._fix($(".control-sidebar-bg"));
-                    if ($('body').hasClass('fixed') && cls == 'fixed') {
-                        $.AdminLTE.pushMenu.expandOnHover();
-                        $.AdminLTE.layout.activate();
-                    }
-                    $.AdminLTE.controlSidebar._fix($(".control-sidebar-bg"));
-                    $.AdminLTE.controlSidebar._fix($(".control-sidebar"));
-                }
-
-                $("[data-layout]").on('click', function () {
-                    change_layout($(this).data('layout'));
-                });
-
-                $("[data-controlsidebar]").on('click', function () {
-                    change_layout($(this).data('controlsidebar'));
-                    var slide = !AdminLTE.options.controlSidebarOptions.slide;
-                    AdminLTE.options.controlSidebarOptions.slide = slide;
-                    if (!slide)
-                        $('.control-sidebar').removeClass('control-sidebar-open');
-                });
-
-                $("[data-sidebarskin='toggle']").on('click', function () {
-                    var sidebar = $(".control-sidebar");
-                    if (sidebar.hasClass("control-sidebar-dark")) {
-                        sidebar.removeClass("control-sidebar-dark")
-                        sidebar.addClass("control-sidebar-light")
-                    } else {
-                        sidebar.removeClass("control-sidebar-light")
-                        sidebar.addClass("control-sidebar-dark")
-                    }
-                });
-
-                $("[data-enable='expandOnHover']").on('click', function () {
-                    if ($(this).is(':checked')) {
-                        $(this).attr('disabled', true);
-                        $.AdminLTE.pushMenu.expandOnHover();
-                        if (!$('body').hasClass('sidebar-collapse'))
-                            $("[data-layout='sidebar-collapse']").click();
-                    } else {
-
-                    }
-                });
 
                 $('#applySettingsButton').click(function() {
                     var response = $.ajax({
@@ -209,9 +127,8 @@
                         }
                     });
                 });
-            });
+            })
         </script>
-
         @yield('custom_js')
     </body>
 </html>

@@ -4,8 +4,8 @@
         <span class="logo-lg {{ mt_rand(1, 5) == 1 ? 'animated flip':'' }}"><b>TK</b>BARU</span>
     </a>
 
-    <nav class="navbar navbar-static-top" role="navigation">
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+    <nav class="navbar navbar-static-top">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
 
