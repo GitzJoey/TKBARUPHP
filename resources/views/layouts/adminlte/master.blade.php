@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ LaravelLocalization::getCurrentLocale() }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>@yield('title') | TKBARU</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
 
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
+
         @yield('custom_css')
     </head>
 
@@ -29,9 +31,11 @@
                 <section class="content">
                     @yield('content')
                 </section>
+
                 <br>
                 <br>
                 <br>
+
             </div>
 
             @include('layouts.adminlte.footer')
@@ -136,6 +140,7 @@
                 });
             })
         </script>
+
         @yield('custom_js')
     </body>
 </html>
