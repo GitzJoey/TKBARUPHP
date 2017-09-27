@@ -9,8 +9,18 @@
             <h4 class="control-sidebar-heading">@lang('control_sidebar.tab.notepad')</h4>
             <textarea id="notepadArea" rows="12" maxlength="500">{{ session('notepad', '') }}</textarea>
             <btn id="notepadButton" class="btn btn-xs btn-default">@lang('buttons.submit_button')</btn>
-            <br/>
-            <h4 class="control-sidebar-heading">@lang('control_sidebar.tab.recent_activity')</h4>
+            <br/><br/><br/>
+            <h4 class="control-sidebar-heading">@lang('control_sidebar.tab.server_info')</h4>
+            <b>Server :</b><br/>
+            {{ $_SERVER["SERVER_SOFTWARE"] }}<br/>
+            <b>Enviroment :</b><br/>
+            {{ App::environment() }}<br/>
+            <b>DB Host :</b><br/>
+            {{ env('DB_HOST') }}/{{ env('DB_PORT') }}<br/>
+            <b>DB Name :</b><br/>
+            {{ env('DB_DATABASE') }}<br/>
+            <b>Debug :</b><br/>
+            {{ env('APP_DEBUG') ? 'Enabled': 'Disabled' }}<br/>
         </div>
 
         <div class="tab-pane" id="control-sidebar-theme-options-tab">

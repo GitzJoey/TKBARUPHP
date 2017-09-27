@@ -2,7 +2,7 @@
 
 return [
     'tab' => [
-        'recent_activity' => 'Recent Activity',
+        'server_info' => 'Server Info',
         'notepad' => 'Notepad',
         'general_settings' => 'General Settings',
         'layout_options' => 'Layout Options',

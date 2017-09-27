@@ -7,7 +7,7 @@
 
     <div class="login-box animated slideInUp">
         <div class="login-logo">
-            <a href="#"></a>
+            <img src="{{ asset('/images/loginlogo.png') }}" width="88" height="88"/>
         </div>
 
         <div class="login-box-body">

@@ -2,7 +2,7 @@
 
 return [
     'tab' => [
-        'recent_activity' => 'Aktifitas Terbaru',
+        'server_info' => 'Informasi Server',
         'notepad' => 'Catatan',
         'general_settings' => 'Pengaturan',
         'layout_options' => 'Opsi Layout',
