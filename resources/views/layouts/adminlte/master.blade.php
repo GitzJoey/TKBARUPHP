@@ -61,6 +61,9 @@
 
         <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
         <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
+        <script type="text/javascript">
+            window.lookup = {!! json_encode(__('lookup')) !!}
+        </script>
 
         <script type="application/javascript">
             $(document).ready(function () {

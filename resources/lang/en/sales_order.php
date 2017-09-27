@@ -416,6 +416,7 @@ return [
                 'customer' => 'Customer Data',
                 'pic' => 'Person In Charge',
                 'bank_account' => 'Bank Account',
+                'sales_orders' => 'Sales Orders',
                 'settings' => 'Settings',
             ],
             'field' => [
@@ -444,6 +445,14 @@ return [
                     'bank' => 'Bank',
                     'account_number' => 'Account',
                     'remarks' => 'Remarks',
+                ],
+            ],
+            'table_sales_orders' => [
+                'header' => [
+                    'code' => 'Code',
+                    'so_date' => 'Sales Date',
+                    'shipping_date' => 'Shipping Date',
+                    'status' => 'Status',
                 ],
             ],
         ],

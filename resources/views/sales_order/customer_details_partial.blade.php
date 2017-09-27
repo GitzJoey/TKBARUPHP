@@ -19,6 +19,9 @@
                                         <a href="#tab_bank_account" data-toggle="tab">@lang('sales_order.partial.customer.tab.bank_account')</a>
                                     </li>
                                     <li>
+                                        <a href="#tab_sales_orders" data-toggle="tab">@lang('sales_order.partial.customer.tab.sales_orders')</a>
+                                    </li>
+                                    <li>
                                         <a href="#tab_settings" data-toggle="tab">@lang('sales_order.partial.customer.tab.settings')</a>
                                     </li>
                                 </ul>
@@ -172,6 +175,29 @@
                                                     <td>@{{ bankAccount.bank.name }}</td>
                                                     <td>@{{ bankAccount.account_number }}</td>
                                                     <td>@{{ bankAccount.remarks }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="tab_sales_orders">
+                                        <table class="table table-bordered" v-if="so.customer.sales_orders">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">@lang('sales_order.partial.customer.table_sales_orders.header.code')</th>
+                                                    <th class="text-center">@lang('sales_order.partial.customer.table_sales_orders.header.so_date')</th>
+                                                    <th class="text-center">@lang('sales_order.partial.customer.table_sales_orders.header.shipping_date')</th>
+                                                    <th class="text-center">@lang('sales_order.partial.customer.table_sales_orders.header.status')</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(salesOrder, salesOrderIndex) in so.customer.sales_orders">
+                                                    <td>@{{ salesOrder.code }}</td>
+                                                    <td>@{{ salesOrder.so_created }}</td>
+                                                    <td>@{{ salesOrder.shipping_date }}</td>
+                                                    <td>@{{ lookup[salesOrder.status] }}</td>
+                                                </tr>
+                                                <tr v-if="!so.customer.sales_orders.length">
+                                                    <td colspan="8" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
                                                 </tr>
                                             </tbody>
                                         </table>

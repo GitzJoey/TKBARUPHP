@@ -416,6 +416,7 @@ return [
                 'customer' => 'Data Pelanggan',
                 'pic' => 'Penanggungjawab',
                 'bank_account' => 'Akun Bank',
+                'sales_orders' => 'Penjualan',
                 'settings' => 'Setting',
             ],
             'field' => [
@@ -444,6 +445,14 @@ return [
                     'bank' => 'Bank',
                     'account_number' => 'Nomor Akun',
                     'remarks' => 'Keterangan',
+                ],
+            ],
+            'table_sales_orders' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'so_date' => 'Tgl Penjualan',
+                    'shipping_date' => 'Tgl Kirim',
+                    'status' => 'Status',
                 ],
             ],
         ],

@@ -514,7 +514,7 @@ class CustomerController extends Controller
     public function getCustomer(Request $request)
     {
         $id = $request->id;
-        $customer = Customer::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'expenseTemplates', 'priceLevel')->find($id);
+        $customer = Customer::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'expenseTemplates', 'priceLevel', 'sales_orders')->find($id);
 
         return response()->json($customer);
     }
