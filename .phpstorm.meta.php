@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-06-12.
+    * Generated on 2017-09-26.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -109,7 +109,7 @@ namespace PHPSTORM_META {
             'command.up' instanceof \Illuminate\Foundation\Console\UpCommand,
             'command.view.clear' instanceof \Illuminate\Foundation\Console\ViewClearCommand,
             'command.app.name' instanceof \Illuminate\Foundation\Console\AppNameCommand,
-            'command.auth.make' instanceof \Illuminate\Auth\Console\MakeAuthCommand,
+            'command.auth.make' instanceof \Illuminate\Auth\Console\AuthMakeCommand,
             'command.cache.table' instanceof \Illuminate\Cache\Console\CacheTableCommand,
             'command.console.make' instanceof \Illuminate\Foundation\Console\ConsoleMakeCommand,
             'command.controller.make' instanceof \Illuminate\Routing\Console\ControllerMakeCommand,
@@ -171,6 +171,7 @@ namespace PHPSTORM_META {
             'App\Services\AccountingService' instanceof \App\Services\Implementation\AccountingServiceImpl,
             'App\Services\StockTransferService' instanceof \App\Services\Implementation\StockTransferServiceImpl,
             'App\Services\TaxInvoiceOutputService' instanceof \App\Services\Implementation\TaxInvoiceOutputServiceImpl,
+            'App\Services\TaxInvoiceInputService' instanceof \App\Services\Implementation\TaxInvoiceInputServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -278,7 +279,7 @@ namespace PHPSTORM_META {
             'command.up' instanceof \Illuminate\Foundation\Console\UpCommand,
             'command.view.clear' instanceof \Illuminate\Foundation\Console\ViewClearCommand,
             'command.app.name' instanceof \Illuminate\Foundation\Console\AppNameCommand,
-            'command.auth.make' instanceof \Illuminate\Auth\Console\MakeAuthCommand,
+            'command.auth.make' instanceof \Illuminate\Auth\Console\AuthMakeCommand,
             'command.cache.table' instanceof \Illuminate\Cache\Console\CacheTableCommand,
             'command.console.make' instanceof \Illuminate\Foundation\Console\ConsoleMakeCommand,
             'command.controller.make' instanceof \Illuminate\Routing\Console\ControllerMakeCommand,
@@ -340,6 +341,7 @@ namespace PHPSTORM_META {
             'App\Services\AccountingService' instanceof \App\Services\Implementation\AccountingServiceImpl,
             'App\Services\StockTransferService' instanceof \App\Services\Implementation\StockTransferServiceImpl,
             'App\Services\TaxInvoiceOutputService' instanceof \App\Services\Implementation\TaxInvoiceOutputServiceImpl,
+            'App\Services\TaxInvoiceInputService' instanceof \App\Services\Implementation\TaxInvoiceInputServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -447,7 +449,7 @@ namespace PHPSTORM_META {
             'command.up' instanceof \Illuminate\Foundation\Console\UpCommand,
             'command.view.clear' instanceof \Illuminate\Foundation\Console\ViewClearCommand,
             'command.app.name' instanceof \Illuminate\Foundation\Console\AppNameCommand,
-            'command.auth.make' instanceof \Illuminate\Auth\Console\MakeAuthCommand,
+            'command.auth.make' instanceof \Illuminate\Auth\Console\AuthMakeCommand,
             'command.cache.table' instanceof \Illuminate\Cache\Console\CacheTableCommand,
             'command.console.make' instanceof \Illuminate\Foundation\Console\ConsoleMakeCommand,
             'command.controller.make' instanceof \Illuminate\Routing\Console\ControllerMakeCommand,
@@ -509,6 +511,7 @@ namespace PHPSTORM_META {
             'App\Services\AccountingService' instanceof \App\Services\Implementation\AccountingServiceImpl,
             'App\Services\StockTransferService' instanceof \App\Services\Implementation\StockTransferServiceImpl,
             'App\Services\TaxInvoiceOutputService' instanceof \App\Services\Implementation\TaxInvoiceOutputServiceImpl,
+            'App\Services\TaxInvoiceInputService' instanceof \App\Services\Implementation\TaxInvoiceInputServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
@@ -616,7 +619,7 @@ namespace PHPSTORM_META {
             'command.up' instanceof \Illuminate\Foundation\Console\UpCommand,
             'command.view.clear' instanceof \Illuminate\Foundation\Console\ViewClearCommand,
             'command.app.name' instanceof \Illuminate\Foundation\Console\AppNameCommand,
-            'command.auth.make' instanceof \Illuminate\Auth\Console\MakeAuthCommand,
+            'command.auth.make' instanceof \Illuminate\Auth\Console\AuthMakeCommand,
             'command.cache.table' instanceof \Illuminate\Cache\Console\CacheTableCommand,
             'command.console.make' instanceof \Illuminate\Foundation\Console\ConsoleMakeCommand,
             'command.controller.make' instanceof \Illuminate\Routing\Console\ControllerMakeCommand,
@@ -678,6 +681,7 @@ namespace PHPSTORM_META {
             'App\Services\AccountingService' instanceof \App\Services\Implementation\AccountingServiceImpl,
             'App\Services\StockTransferService' instanceof \App\Services\Implementation\StockTransferServiceImpl,
             'App\Services\TaxInvoiceOutputService' instanceof \App\Services\Implementation\TaxInvoiceOutputServiceImpl,
+            'App\Services\TaxInvoiceInputService' instanceof \App\Services\Implementation\TaxInvoiceInputServiceImpl,
             'command.ide-helper.generate' instanceof \Barryvdh\LaravelIdeHelper\Console\GeneratorCommand,
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,

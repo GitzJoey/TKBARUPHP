@@ -62,6 +62,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Tax whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Tax whereYear($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\TaxItem[] $transactions
  */
 class Tax extends Model
 {

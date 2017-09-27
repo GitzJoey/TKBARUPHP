@@ -4,8 +4,8 @@
         <span class="logo-lg {{ mt_rand(1, 5) == 1 ? 'animated flip':'' }}"><b>TK</b>BARU</span>
     </a>
 
-    <nav class="navbar navbar-static-top" role="navigation">
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+    <nav class="navbar navbar-static-top">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
 
@@ -72,7 +72,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="/logout" class="btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+                    <a href="/logout" class="btn" onclick="event.preventDefault(); if (typeof(Storage) != 'undefined') { localStorage.removeItem('pushMenu'); }; document.getElementById('logout-form').submit();" title="Logout">
                         <span class="glyphicon glyphicon-log-out"></span>
                     </a>
                 </li>

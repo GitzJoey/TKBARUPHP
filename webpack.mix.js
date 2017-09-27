@@ -29,7 +29,7 @@ mix.styles([
         './node_modules/icheck/icheck.min.js',
         './node_modules/select2/dist/js/select2.full.min.js',
         './node_modules/jquery-slimscroll/jquery.slimscroll.js',
-        './node_modules/admin-lte/dist/js/app.min.js',
+        './node_modules/admin-lte/dist/js/adminlte.min.js',
         './node_modules/bootstrap-sweetalert/dist/sweetalert.min.js',
         './node_modules/lodash/lodash.min.js',
         './node_modules/jquery-gotop/src/jquery.gotop.min.js',

@@ -63,8 +63,11 @@ return [
     ],
     'tax' => [
         'title' => 'Laporan Pajak',
-        'page_title' => '',
+        'page_title' => 'Pajak',
         'page_title_desc' => '',
+        'header' => [
+            'title' => 'Laporan Pajak'
+        ],
     ],
     'transaction' => [
         'title' => 'Laporan Transaksi',
