@@ -18,46 +18,52 @@
             <div class="col-md-6">
                 <form action="{{ route('db.report.admin.user') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info animated fadeInUp">
+                    <div class="box box-info collapsed-box animated fadeInUp">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.user')</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="inputUser_User" class="col-sm-2 control-label">@lang('report.admin.field.user')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputUser_User" type="text" name="name" class="form-control" placeholder="@lang('report.admin.field.user')">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputUser_Email" class="col-sm-2 control-label">@lang('report.admin.field.email')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputUser_Email" type="text" name="email" class="form-control" placeholder="@lang('report.admin.field.email')">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputUser_Role" class="col-sm-2 control-label">@lang('report.admin.field.role')</label>
-                                    <div class="col-sm-10">
-                                        {{ Form::select('role_id', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'))) }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputUser_Profile" class="col-sm-2 control-label">@lang('report.admin.field.profile')</label>
-                                    <div class="col-sm-10">
-                                        <input id="inputUser_Profile" type="text" name="profile_name" class="form-control" placeholder="@lang('report.admin.field.profile')">
-                                    </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputUser_User" class="col-sm-2 control-label">@lang('report.admin.field.user')</label>
+                                <div class="col-sm-10">
+                                    <input id="inputUser_User" type="text" name="name" class="form-control" placeholder="@lang('report.admin.field.user')">
                                 </div>
                             </div>
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                            <div class="form-group">
+                                <label for="inputUser_Email" class="col-sm-2 control-label">@lang('report.admin.field.email')</label>
+                                <div class="col-sm-10">
+                                    <input id="inputUser_Email" type="text" name="email" class="form-control" placeholder="@lang('report.admin.field.email')">
+                                </div>
                             </div>
+                            <div class="form-group">
+                                <label for="inputUser_Role" class="col-sm-2 control-label">@lang('report.admin.field.role')</label>
+                                <div class="col-sm-10">
+                                    {{ Form::select('role_id', $rolesDDL, null, array('class' => 'form-control', 'placeholder' => Lang::get('labels.PLEASE_SELECT'))) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputUser_Profile" class="col-sm-2 control-label">@lang('report.admin.field.profile')</label>
+                                <div class="col-sm-10">
+                                    <input id="inputUser_Profile" type="text" name="profile_name" class="form-control" placeholder="@lang('report.admin.field.profile')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
                     </div>
                 </form>
                 <form action="{{ route('db.report.admin.role') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info animated fadeInDownBig">
+                    <div class="box box-info collapsed-box animated fadeInDownBig">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.role')</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
                         <form action="" method="post" class="form-horizontal">
                             <div class="box-body">
@@ -82,9 +88,12 @@
                 </form>
                 <form action="{{ route('db.report.admin.store') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info animated fadeInLeft">
+                    <div class="box box-info collapsed-box animated fadeInLeft">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.store')</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
                         <div class="box-body">
                             <div class="form-group">
@@ -109,9 +118,12 @@
             <div class="col-md-6">
                 <form action="{{ route('db.report.admin.unit') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info animated fadeInUpBig">
+                    <div class="box box-info collapsed-box animated fadeInUpBig">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.unit')</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
                         <div class="box-body">
                             <div class="form-group">
@@ -134,9 +146,12 @@
                 </form>
                 <form action="{{ route('db.report.admin.phone_provider') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info animated fadeInRightBig">
+                    <div class="box box-info collapsed-box animated fadeInRightBig">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.phone_provider')</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
                         <div class="box-body">
                             <div class="form-group">
@@ -159,9 +174,12 @@
                 </form>
                 <form action="{{ route('db.report.admin.settings') }}" method="post" class="form-horizontal">
                     {{ csrf_field() }}
-                    <div class="box box-info animated fadeInRight">
+                    <div class="box box-info collapsed-box animated fadeInRight">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('report.admin.header.settings')</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
                         <div class="box-body">
                             <div class="form-group">
