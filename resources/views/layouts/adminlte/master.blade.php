@@ -9,6 +9,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
 
         <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
+        @yield('custom_css')
     </head>
 
     <body class="hold-transition {{ !empty(Auth::user()->store->ribbon) ? Auth::user()->store->ribbon:'skin-blue' }} sidebar-mini">
@@ -31,7 +32,6 @@
                 <br>
                 <br>
                 <br>
-
             </div>
 
             @include('layouts.adminlte.footer')

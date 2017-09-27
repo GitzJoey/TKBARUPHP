@@ -7,7 +7,7 @@
 
     <div class="register-box animated slideInDown">
         <div class="register-logo">
-            <a href="#"></a>
+            <a href="/front"><img src="{{ asset('/images/loginlogo.png') }}" width="88" height="88"/></a>
         </div>
 
         <div class="register-box-body">
