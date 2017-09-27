@@ -72,7 +72,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="/logout" class="btn" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Logout">
+                    <a href="/logout" class="btn" onclick="event.preventDefault(); if (typeof(Storage) != 'undefined') { localStorage.removeItem('pushMenu'); }; document.getElementById('logout-form').submit();" title="Logout">
                         <span class="glyphicon glyphicon-log-out"></span>
                     </a>
                 </li>
