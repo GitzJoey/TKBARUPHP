@@ -58,12 +58,21 @@
         <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
         <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
         <script>
+            $(document).on('expanded.pushMenu', function() { localStorage.setItem('pushMenu', 'expanded'); });
+            $(document).on('collapsed.pushMenu', function() { localStorage.setItem('pushMenu', 'collapsed'); });
+
             $(document).ready(function () {
                 var container = $("#loader-container");
                 container.on('click', function () {
                     $(this).fadeOut("slow");
                 });
                 container.delay(350).fadeOut("slow");
+
+                if (typeof(Storage) != 'undefined') {
+                    if (localStorage.getItem('pushMenu') == 'collapsed') {
+                        $('body').addClass('sidebar-collapse');
+                    }
+                }
 
                 $('#goTop').goTop();
 
