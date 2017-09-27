@@ -53,6 +53,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Item[] $soItems
  * @property-read mixed $clean_quantity
  * @property-read mixed $clean_current_quantity
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\StockOpname[] $stockOpnames
  */
 class Stock extends Model
 {

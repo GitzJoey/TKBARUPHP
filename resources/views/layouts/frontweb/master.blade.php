@@ -21,7 +21,7 @@
         @yield('content')
     </body>
 
+    <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
     <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
-
     @yield('custom_js')
 </html>

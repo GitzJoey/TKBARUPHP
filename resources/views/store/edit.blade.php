@@ -314,59 +314,59 @@
                                     <label for="inputRibbon" class="col-sm-2 control-label">@lang('store.field.ribbon')</label>
                                     <div class="col-sm-3">
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-none" {{ $store->ribbon == 'store-ribbon-none' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="" {{ $store->ribbon == '' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.none')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-blue" {{ $store->ribbon == 'store-ribbon-blue' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-blue" {{ $store->ribbon == 'skin-blue' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.blue')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-black" {{ $store->ribbon == 'store-ribbon-black' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-black" {{ $store->ribbon == 'skin-black' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.black')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-red" {{ $store->ribbon == 'store-ribbon-red' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-red" {{ $store->ribbon == 'skin-red' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.red')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-yellow" {{ $store->ribbon == 'store-ribbon-yellow' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-yellow" {{ $store->ribbon == 'skin-yellow' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.yellow')</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-purple" {{ $store->ribbon == 'store-ribbon-purple' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-purple" {{ $store->ribbon == 'skin-purple' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.purple')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-green"  {{ $store->ribbon == 'store-ribbon-green' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-green"  {{ $store->ribbon == 'skin-green' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.green')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-blue-light" {{ $store->ribbon == 'store-ribbon-blue-light' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-blue-light" {{ $store->ribbon == 'skin-blue-light' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.blue-light')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-black-light" {{ $store->ribbon == 'store-ribbon-black-light' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-black-light" {{ $store->ribbon == 'skin-black-light' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.black-light')</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-red-light" {{ $store->ribbon == 'store-ribbon-red-light' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-red-light" {{ $store->ribbon == 'skin-red-light' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.red-light')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-yellow-light" {{ $store->ribbon == 'store-ribbon-yellow-light' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-yellow-light" {{ $store->ribbon == 'skin-yellow-light' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.yellow-light')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-purple-light" {{ $store->ribbon == 'store-ribbon-purple-light' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-purple-light" {{ $store->ribbon == 'skin-purple-light' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.purple-light')</label>
                                         </div>
                                         <div class="checkbox icheck">
-                                            <input type="radio" name="ribbon" value="store-ribbon-green-light" {{ $store->ribbon == 'store-ribbon-green-light' ? 'checked':'' }} class="is_icheck">
+                                            <input type="radio" name="ribbon" value="skin-green-light" {{ $store->ribbon == 'skin-green-light' ? 'checked':'' }} class="is_icheck">
                                             <label>&nbsp;@lang('store.field.green-light')</label>
                                         </div>
                                     </div>
