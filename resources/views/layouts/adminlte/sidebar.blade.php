@@ -35,7 +35,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="{{ active_class(Active::checkRoutePattern('db.acc.cash') || Active::checkRoutePattern('db.acc.cash.*')) }}"><a href="{{ route('db.acc.cash') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.cash')</a></li>
-                    <li class="{{ active_class(Active::checkRoutePattern('db.acc.capital.*')) }}">
+                    <li class="treeview {{ active_class(Active::checkRoutePattern('db.acc.capital.*')) }}">
                         <a href="#"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital')
                             <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                         </a>
@@ -44,7 +44,7 @@
                             <li class="{{ active_class(Active::checkRoutePattern('db.acc.capital.withdrawal.*')) }}"><a href="{{ route('db.acc.capital.withdrawal.index') }}"><i class="fa fa-circle-o fa-fw"></i>&nbsp;@lang('menu.item.accounting.capital.withdrawal')</a></li>
                         </ul>
                     </li>
-                    <li class="{{ active_class( Active::checkRoutePattern('db.acc.cost') ||
+                    <li class="treeview {{ active_class( Active::checkRoutePattern('db.acc.cost') ||
                                                 Active::checkRoutePattern('db.acc.cost.create') ||
                                                 Active::checkRoutePattern('db.acc.cost.edit') ||
                                                 Active::checkRoutePattern('db.acc.cost.category') ||
@@ -64,7 +64,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="{{ active_class( Active::checkRoutePattern('db.acc.revenue') ||
+                    <li class="treeview {{ active_class( Active::checkRoutePattern('db.acc.revenue') ||
                                                 Active::checkRoutePattern('db.acc.revenue.create') ||
                                                 Active::checkRoutePattern('db.acc.revenue.edit') ||
                                                 Active::checkRoutePattern('db.acc.revenue.category') ||

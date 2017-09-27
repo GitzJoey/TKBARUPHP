@@ -65,6 +65,9 @@ return [
         'title' => 'Report Management',
         'page_title' => 'Tax Report',
         'page_title_desc' => '',
+        'header' => [
+            'title' => 'Tax Report'
+        ],
     ],
     'transaction' => [
         'title' => 'Report Management',
