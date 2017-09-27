@@ -311,7 +311,7 @@
                     </a>
 
                     <ul class="treeview-menu">
-                        <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.input.*') ||
+                        <li class="treeview {{ active_class(Active::checkRoutePattern('db.tax.invoice.input.*') ||
                                                     Active::checkRoutePattern('db.tax.invoice.output.*')) }}">
                             <a href="#"><i class="fa fa-file-o fa-stack"></i>&nbsp;@lang('menu.item.tax.invoice')
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
