@@ -710,7 +710,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="(item, itemIndex) in so.items">
+                                                        <tr v-for="(item, itemIndex) in so.items" v-bind:class="{ 'danger': (item.latest_price > item.price) }">
                                                             <td>@{{ item.product.name }}</td>
                                                             <td class="text-right">@{{ numeral(item.latest_price).format() }}</td>
                                                         </tr>
