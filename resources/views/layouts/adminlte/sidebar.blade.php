@@ -299,7 +299,9 @@
                 </li>
             @endif
             @if(Laratrust::can('menu-tax-input') OR
-                Laratrust::can('menu-tax-output'))
+                Laratrust::can('menu-tax-output') OR
+                Laratrust::can('menu-tax-generate') OR
+                Laratrust::can('menu-tax-check_report'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.tax.invoice.input.') ||
                                                     Active::checkRoutePattern('db.tax.invoice.input.*') ||
                                                     Active::checkRoutePattern('db.tax.invoice.output.') ||
@@ -313,13 +315,19 @@
                     <ul class="treeview-menu">
                         <li class="treeview {{ active_class(Active::checkRoutePattern('db.tax.invoice.input.*') ||
                                                     Active::checkRoutePattern('db.tax.invoice.output.*')) }}">
-                            <a href="#"><i class="fa fa-file-o fa-stack"></i>&nbsp;@lang('menu.item.tax.invoice')
+                            <a href="#"><i class="fa fa-exchange fa-fw"></i>&nbsp;@lang('menu.item.tax.invoice')
                                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
                             <ul class="treeview-menu">
                                 <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.input.*')) }}"><a href="{{ route('db.tax.invoice.input.index') }}"><i class="fa fa-arrow-left"></i>&nbsp;@lang('menu.item.tax.invoice.input')</a></li>
                                 <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.output.*')) }}"><a href="{{ route('db.tax.invoice.output.index') }}"><i class="fa fa-arrow-right"></i>&nbsp;@lang('menu.item.tax.invoice.output')</a></li>
                             </ul>
+                        </li>
+                        <li class="">
+                            <a href="#"><i class="fa fa-magic fa-fw"></i>&nbsp;@lang('menu.item.tax.generate')</a>
+                        </li>
+                        <li class="">
+                            <a href="#"><i class="fa fa-pied-piper fa-fw"></i>&nbsp;@lang('menu.item.tax.check_report')</a>
                         </li>
                     </ul>
                 </li>

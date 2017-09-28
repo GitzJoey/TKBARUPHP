@@ -20,9 +20,9 @@ return [
     'item.po_copy' => 'PO Copy',
     'item.so' => 'Sales Order',
     'item.so_new' => 'Sales Order',
-    'item.so_revise' => 'Revise SO',
-    'item.so_payment' => 'SO Payment',
-    'item.so_copy' => 'SO Copy',
+    'item.so_revise' => 'Revise Sales',
+    'item.so_payment' => 'Sales Payment',
+    'item.so_copy' => 'Sales Copy',
     'item.price' => 'Price',
     'item.price_todayprice' => 'Today Price',
     'item.price_pricelevel' => 'Price Level',
@@ -74,4 +74,5 @@ return [
     'item.tax.invoice.output' => 'Output',
     'item.tax.invoice.input' => 'Input',
     'item.tax.generate' => 'Generate',
+    'item.tax.check_report' => 'Report Check',
 ];
