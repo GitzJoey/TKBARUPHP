@@ -262,6 +262,7 @@ return [
         'box' => [
             'transaction_summary' => 'Transaksi',
             'open_sales' => 'Penjualan Terbuka',
+            'latest_prices' => 'Harga Terbaru',
             'customer' => 'Pelanggan',
             'sales_order_detail' => 'Detail Penjualan',
             'shipping' => 'Pengiriman',
@@ -323,6 +324,12 @@ return [
                     'so_date' => 'Tgl Penjualan',
                     'status' => 'Status',
                     'amount' => 'Total',
+                ],
+            ],
+            'latest_prices' => [
+                'header' => [
+                    'product_name' => 'Nama Produk',
+                    'latest_price' => 'Harga Terbaru',
                 ],
             ],
         ],

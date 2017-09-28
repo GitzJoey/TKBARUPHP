@@ -37,7 +37,10 @@ class StockServiceImpl implements StockService
 
         //Assign today prices additional attribute
         $stocks = collect($stocks->map(function ($stock){
-            return array_merge(['today_prices' => $stock->todayPrices()], $stock->toArray());
+            return array_merge([
+                'today_prices' => $stock->todayPrices(),
+                'latest_prices' => $stock->latestPrices()
+            ], $stock->toArray());
         })->all());
 
         return $stocks;

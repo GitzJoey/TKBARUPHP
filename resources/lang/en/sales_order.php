@@ -262,6 +262,7 @@ return [
         'box' => [
             'transaction_summary' => 'Transaction Summary',
             'open_sales' => 'Open Sales',
+            'latest_prices' => 'Latest Prices',
             'customer' => 'Customer',
             'sales_order_detail' => 'Sales Order Detail',
             'shipping' => 'Shipping',
@@ -324,6 +325,12 @@ return [
                     'so_date' => 'Sales Date',
                     'status' => 'Status',
                     'amount' => 'Amount',
+                ],
+            ],
+            'latest_prices' => [
+                'header' => [
+                    'product_name' => 'Product Name',
+                    'latest_price' => 'Latest Price',
                 ],
             ],
         ],

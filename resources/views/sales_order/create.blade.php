@@ -672,6 +672,30 @@
                                                     </table>
                                             </div>
                                         </div>
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">@lang('sales_order.create.box.latest_prices')</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table v-bind:id="'latestPricesTable_' + soIndex" class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">@lang('sales_order.create.table.latest_prices.header.product_name')</th>
+                                                            <th class="text-center">@lang('sales_order.create.table.latest_prices.header.latest_price')</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(item, itemIndex) in so.items">
+                                                            <td>@{{ item.product.name }}</td>
+                                                            <td class="text-right">@{{ numeral(item.latest_price).format() }}</td>
+                                                        </tr>
+                                                        <tr v-if="!so.items || !so.items.length">
+                                                            <td colspan="2" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -1061,6 +1085,9 @@
                         var stock_price = _.find(stock.today_prices, function (price) {
                             return price.price_level_id === vm.SOs[index].customer.price_level_id;
                         });
+                        var latest_price = _.find(stock.latest_prices, function (price) {
+                            return price.price_level_id === vm.SOs[index].customer.price_level_id;
+                        });
                         var item_init_discount = [];
                         item_init_discount.push({
                             disc_percent : 0,
@@ -1080,6 +1107,7 @@
                             base_unit: _.cloneDeep(_.find(stock.product.product_units, function(unit) { return unit.is_base == 1 })),
                             quantity: 0,
                             price: stock_price ? stock_price.price : 0,
+                            latest_price: latest_price ? latest_price.price : 0,
                             discounts: item_init_discount,
                         });
                     }
