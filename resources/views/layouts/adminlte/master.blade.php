@@ -65,8 +65,8 @@
             window.lookup = {!! json_encode(__('lookup')) !!}
         </script>
         <script>
-            $(document).on('expanded.pushMenu', function() { localStorage.setItem('pushMenu', 'expanded'); });
-            $(document).on('collapsed.pushMenu', function() { localStorage.setItem('pushMenu', 'collapsed'); });
+            $(document).on('expanded.pushMenu', function() { if (typeof(Storage) != 'undefined') { localStorage.setItem('pushMenu', 'expanded'); }; });
+            $(document).on('collapsed.pushMenu', function() { if (typeof(Storage) != 'undefined') { localStorage.setItem('pushMenu', 'collapsed'); }; });
 
             $(document).ready(function () {
                 var container = $("#loader-container");
@@ -77,7 +77,7 @@
 
                 if (typeof(Storage) != 'undefined') {
                     if (localStorage.getItem('pushMenu') == 'collapsed') {
-                        $('body').addClass('sidebar-collapse');
+                        $('body').addClass('sidebar-collapse').trigger('collapsed.pushMenu');
                     }
                 }
 
