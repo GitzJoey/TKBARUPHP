@@ -261,6 +261,7 @@ return [
     'create' => [
         'box' => [
             'transaction_summary' => 'Transaksi',
+            'last_sale' => 'Penjualan Terakhir',
             'open_sales' => 'Penjualan Terbuka',
             'latest_prices' => 'Harga Terbaru',
             'customer' => 'Pelanggan',

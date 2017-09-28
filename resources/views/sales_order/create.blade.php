@@ -644,6 +644,31 @@
                                         </div>
                                     </div>
                                     <div class="col-md-7">
+                                        <div class="box box-info" v-if="so.customer.last_sale">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">@lang('sales_order.create.box.last_sale')</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td>@lang('sales_order.create.table.open_sales.header.code')</td>
+                                                        <td class="text-right">@{{ so.customer.last_sale.code }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@lang('sales_order.create.table.open_sales.header.so_date')</td>
+                                                        <td class="text-right">@{{ so.customer.last_sale.so_created }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@lang('sales_order.create.table.open_sales.header.status')</td>
+                                                        <td class="text-right">@{{ so.customer.last_sale.status_localized }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@lang('sales_order.create.table.open_sales.header.amount')</td>
+                                                        <td class="text-right">@{{ so.customer.last_sale.total_amount_text }}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
                                         <div class="box box-info">
                                             <div class="box-header with-border">
                                                 <h3 class="box-title">@lang('sales_order.create.box.open_sales')</h3>
@@ -891,10 +916,12 @@
                         axios.get('{{ route('api.get.customer') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } })
                             .then(function(response) {
                                 vm.SOs[soIndex].customer = response.data;
-
+                                return axios.get('{{ route('api.get.customer.last_sale') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } });
+                            }).then(function (response) {
+                                vm.$set(vm.SOs[soIndex].customer, 'last_sale', response.data);
                                 return axios.get('{{ route('api.get.customer.open_sales') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } });
                             }).then(function (response) {
-                                vm.SOs[soIndex].customer = _.extend({}, vm.SOs[soIndex].customer, { 'open_sales': response.data });
+                                vm.$set(vm.SOs[soIndex].customer, 'open_sales', response.data);
                             });
                     }
                 },

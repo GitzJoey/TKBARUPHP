@@ -261,6 +261,7 @@ return [
     'create' => [
         'box' => [
             'transaction_summary' => 'Transaction Summary',
+            'last_sale' => 'Last Sale',
             'open_sales' => 'Open Sales',
             'latest_prices' => 'Latest Prices',
             'customer' => 'Customer',

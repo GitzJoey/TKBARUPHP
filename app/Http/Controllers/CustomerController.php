@@ -41,7 +41,8 @@ class CustomerController extends Controller
                 'searchCustomers',
                 'getPassiveCustomer',
                 'getCustomer',
-                'getOpenSales'
+                'getOpenSales',
+                'getLastSale',
             ]
         ]);
     }
@@ -526,5 +527,13 @@ class CustomerController extends Controller
         $open_sales = Customer::find($id)->sales_orders()->whereNotIn('status', [ 'SOSTATUS.RJT', 'SOSTATUS.C' ])->get();
 
         return response()->json($open_sales);
+    }
+
+    public function getLastSale(Request $request)
+    {
+        $id = $request->id;
+        $last_sale = Customer::find($id)->sales_orders()->latest()->first();
+
+        return response()->json($last_sale);
     }
 }
