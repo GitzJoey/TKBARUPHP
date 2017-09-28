@@ -291,7 +291,7 @@
                                                                     </td>
                                                                     <td v-bind:class="{ 'has-error':errors.has('tab_' + soIndex + '.' + 'so_' + soIndex + '_quantity_' + soIndex) }">
                                                                         <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_quantity[]'"
-                                                                               v-model="item.quantity" v-validate="'required|decimal:2|min_value:1'"
+                                                                               v-model="item.quantity" v-validate="'required|decimal:2|min_value:1|max_value:' + item.current_quantity"
                                                                                v-bind:data-vv-as="'{{ trans('sales_order.create.table.item.header.quantity') }} ' + (soIndex + 1)"
                                                                                v-bind:data-vv-name="'so_' + soIndex + '_quantity_' + soIndex"
                                                                                v-bind:data-vv-scope="'tab_' + soIndex">
@@ -885,6 +885,15 @@
                                         progressBar: true
                                     });
                                 }
+                            }).catch(function (error) {
+                                $('#loader-container').fadeOut('slow');
+                                noty({
+                                    layout: 'topRight',
+                                    text: error.response.data.message,
+                                    type: 'error',
+                                    timeout: 5000,
+                                    progressBar: true
+                                });
                             });
                     }).catch(function() {
 
@@ -1133,6 +1142,7 @@
                             },
                             base_unit: _.cloneDeep(_.find(stock.product.product_units, function(unit) { return unit.is_base == 1 })),
                             quantity: 0,
+                            current_quantity: stock.current_quantity,
                             price: stock_price ? stock_price.price : 0,
                             latest_price: latest_price ? latest_price.price : 0,
                             discounts: item_init_discount,

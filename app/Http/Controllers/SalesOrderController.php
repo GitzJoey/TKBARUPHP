@@ -73,7 +73,16 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@store');
 
-        $this->salesOrderService->createSO($request->json()->all());
+        try {
+            $this->salesOrderService->createSO($request->json()->all());
+        } catch (\Exception $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+            return back();
+        }
 
         return response()->json([
             'result' => 'success'

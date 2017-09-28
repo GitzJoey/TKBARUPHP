@@ -88,6 +88,15 @@ class SalesOrderServiceImpl implements SalesOrderService
             $so = SalesOrder::create($so);
 
             foreach ($soData['items'] as $i) {
+                if (!empty($i['stock_id'])) {
+                    $validator = validator(
+                        [ 'quantity' => $i['quantity'] ],
+                        [ 'quantity' => 'required|numeric|min:1|max:'.Stock::find($i['stock_id'])->current_quantity ]
+                    );
+                    if ($validator->fails()) {
+                        throw new \Exception($validator->errors()->first());
+                    }
+                }
                 $item = new Item();
                 $item->product_id = $i['product']['id'];
                 $item->stock_id = empty($i['stock_id']) ? 0 : $i['stock_id'];
@@ -162,6 +171,8 @@ class SalesOrderServiceImpl implements SalesOrderService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+
+            throw $e;
         }
     }
 
