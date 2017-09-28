@@ -261,6 +261,7 @@ return [
     'create' => [
         'box' => [
             'transaction_summary' => 'Transaksi',
+            'open_sales' => 'Penjualan Terbuka',
             'customer' => 'Pelanggan',
             'sales_order_detail' => 'Detail Penjualan',
             'shipping' => 'Pengiriman',
@@ -314,6 +315,14 @@ return [
                     'percentage' => 'Persentase',
                     'value' => 'Nilai',
                     'total_discount' => 'Diskon',
+                ],
+            ],
+            'open_sales' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'so_date' => 'Tgl Penjualan',
+                    'status' => 'Status',
+                    'amount' => 'Total',
                 ],
             ],
         ],

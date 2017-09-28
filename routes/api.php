@@ -235,6 +235,7 @@ Route::group(['prefix' => 'get'], function () {
         Route::get('', 'CustomerController@getCustomer')->name('api.get.customer');
         Route::get('search_customer', 'CustomerController@searchCustomers')->name('api.customer.search');
         Route::get('passive_customer', 'CustomerController@getPassiveCustomer')->name('api.customer.passive_customer');
+        Route::get('open_sales', 'CustomerController@getOpenSales')->name('api.get.customer.open_sales');
     });
 
     Route::group(['prefix' => 'phone_provider'], function() {
@@ -289,6 +290,3 @@ Route::group(['prefix' => 'get'], function () {
 
     Route::get('currencies/conversion', 'CurrenciesController@conversion')->name('api.currencies.conversion');
 });
-
-
-

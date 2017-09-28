@@ -40,8 +40,9 @@ class CustomerController extends Controller
             'except' => [ 
                 'searchCustomers',
                 'getPassiveCustomer',
-                'getCustomer'
-            ] 
+                'getCustomer',
+                'getOpenSales'
+            ]
         ]);
     }
 
@@ -517,5 +518,13 @@ class CustomerController extends Controller
         $customer = Customer::with('profiles.phoneNumbers.provider', 'bankAccounts.bank', 'expenseTemplates', 'priceLevel', 'sales_orders')->find($id);
 
         return response()->json($customer);
+    }
+
+    public function getOpenSales(Request $request)
+    {
+        $id = $request->id;
+        $open_sales = Customer::find($id)->sales_orders()->whereNotIn('status', [ 'SOSTATUS.RJT', 'SOSTATUS.C' ])->get();
+
+        return response()->json($open_sales);
     }
 }

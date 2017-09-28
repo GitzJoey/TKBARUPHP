@@ -548,13 +548,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-5">
                                         <div class="box box-info">
                                             <div class="box-header with-border">
                                                 <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                                             </div>
                                             <div class="box-body">
-                                                <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+                                                <div class="col-xs-12">
                                                     <div class="box">
                                                         <div class="box-header text-center">
                                                             <template v-if="so.customer_type.code == 'CUSTOMERTYPE.R'">
@@ -640,6 +640,36 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">@lang('sales_order.create.box.open_sales')</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                    <table v-bind:id="'openSalesTable_' + soIndex" class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">@lang('sales_order.create.table.open_sales.header.code')</th>
+                                                                <th class="text-center">@lang('sales_order.create.table.open_sales.header.so_date')</th>
+                                                                <th class="text-center">@lang('sales_order.create.table.open_sales.header.status')</th>
+                                                                <th class="text-center">@lang('sales_order.create.table.open_sales.header.amount')</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="(openSale, openSaleIndex) in so.customer.open_sales">
+                                                                <td>@{{ openSale.code }}</td>
+                                                                <td>@{{ openSale.so_created }}</td>
+                                                                <td>@{{ openSale.status_localized }}</td>
+                                                                <td>@{{ openSale.total_amount_text }}</td>
+                                                            </tr>
+                                                            <tr v-if="!so.customer.open_sales || !so.customer.open_sales.length">
+                                                                <td colspan="8" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                             </div>
                                         </div>
                                     </div>
@@ -836,7 +866,11 @@
                     } else {
                         axios.get('{{ route('api.get.customer') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } })
                             .then(function(response) {
-                                _.merge(vm.SOs[soIndex].customer, response.data);
+                                vm.SOs[soIndex].customer = response.data;
+
+                                return axios.get('{{ route('api.get.customer.open_sales') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } });
+                            }).then(function (response) {
+                                vm.SOs[soIndex].customer = _.extend({}, vm.SOs[soIndex].customer, { 'open_sales': response.data });
                             });
                     }
                 },

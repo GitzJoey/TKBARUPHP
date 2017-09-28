@@ -261,6 +261,7 @@ return [
     'create' => [
         'box' => [
             'transaction_summary' => 'Transaction Summary',
+            'open_sales' => 'Open Sales',
             'customer' => 'Customer',
             'sales_order_detail' => 'Sales Order Detail',
             'shipping' => 'Shipping',
@@ -315,6 +316,14 @@ return [
                     'percentage' => 'Percentage',
                     'value' => 'Value',
                     'total_discount' => 'Discount',
+                ],
+            ],
+            'open_sales' => [
+                'header' => [
+                    'code' => 'Code',
+                    'so_date' => 'Sales Date',
+                    'status' => 'Status',
+                    'amount' => 'Amount',
                 ],
             ],
         ],
