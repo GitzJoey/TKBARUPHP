@@ -56,7 +56,7 @@
                                     <div class="col-md-12">
                                         <div class="box box-info">
                                             <div class="box-body">
-                                                <button id="draftButton" type="button" name="draft" value="@{{ soIndex }}" class="btn btn-xs btn-primary pull-right"
+                                                <button id="draftButton" type="button" name="draft" v-bind:value="soIndex" class="btn btn-xs btn-primary pull-right"
                                                         v-on:click="saveDraft(soIndex)">
                                                     <span class="fa fa-save fa-fw"></span>&nbsp;Save as Draft
                                                 </button>
@@ -688,16 +688,16 @@
                                                                 <td>@{{ openSale.code }}</td>
                                                                 <td>@{{ openSale.so_created }}</td>
                                                                 <td>@{{ openSale.status_localized }}</td>
-                                                                <td>@{{ openSale.total_amount_text }}</td>
+                                                                <td class="text-right">@{{ openSale.total_amount_text }}</td>
                                                             </tr>
                                                             <tr v-if="!so.customer.open_sales || !so.customer.open_sales.length">
-                                                                <td colspan="8" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
+                                                                <td colspan="4" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                             </div>
                                         </div>
-                                        <div class="box box-info">
+                                        <div class="box box-info" v-if="so.sales_type.code === 'SOTYPE.S' || so.sales_type.code === 'SOTYPE.AC'">
                                             <div class="box-header with-border">
                                                 <h3 class="box-title">@lang('sales_order.create.box.latest_prices')</h3>
                                             </div>
