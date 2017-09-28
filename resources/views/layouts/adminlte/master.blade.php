@@ -61,9 +61,6 @@
 
         <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
         <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
-        <script type="text/javascript">
-            window.lookup = {!! json_encode(__('lookup')) !!}
-        </script>
         <script>
             $(document).on('expanded.pushMenu', function() { if (typeof(Storage) != 'undefined') { localStorage.setItem('pushMenu', 'expanded'); }; });
             $(document).on('collapsed.pushMenu', function() { if (typeof(Storage) != 'undefined') { localStorage.setItem('pushMenu', 'collapsed'); }; });
