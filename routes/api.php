@@ -280,6 +280,7 @@ Route::group(['prefix' => 'get'], function () {
     });
 
     Route::group(['prefix' => 'stock'], function() {
+        Route::get('', 'StockController@getStock')->name('api.get.stock');
         Route::get('current_stocks/{wId?}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
     });
 
