@@ -1200,7 +1200,7 @@
                 },
                 removeExpense: function (SOIndex, index) {
                     this.SOs[SOIndex].expenses.splice(index, 1);
-                },
+                }
             },
             computed: {
                 defaultCustomerType: function() {

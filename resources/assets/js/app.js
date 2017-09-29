@@ -15,14 +15,25 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.use(VeeValidate, { locale: $('html').attr('lang') });
+const VueNumeric = require('vue-numeric');
+
+Vue.use(VeeValidate, {
+  delay: 100,
+  locale: $('html').attr('lang')
+});
+Vue.use(VueNumeric);
 
 Vue.component('example', require('./components/Example.vue'));
-Vue.component('vue-numeric', require('./components/vue-numeric.vue'));
 Vue.component('vue-icheck', require('./components/vue-icheck.vue'));
 Vue.component('vue-datetimepicker', require('./components/vue-datetimepicker.vue'));
 Vue.component('select2_customer', require('./components/select2_customer.vue'));
 
-const app = new Vue({
-    el: '#app'
-});
+Vue.mixin({
+  methods: {
+    numeral: require('numeral')
+  }
+})
+
+// const app = new Vue({
+//     el: '#app'
+// });
