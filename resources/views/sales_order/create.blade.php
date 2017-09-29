@@ -706,12 +706,14 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center">@lang('sales_order.create.table.latest_prices.header.product_name')</th>
+                                                            <th class="text-center">@lang('sales_order.create.table.latest_prices.header.market_price')</th>
                                                             <th class="text-center">@lang('sales_order.create.table.latest_prices.header.latest_price')</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr v-for="(item, itemIndex) in so.items" v-bind:class="{ 'danger': (item.latest_price > item.price) }">
+                                                        <tr v-for="(item, itemIndex) in so.items" v-bind:class="{ 'danger': (item.price < item.market_price), 'warning': ((item.market_price <= item.price) * (item.price < item.latest_price)) }">
                                                             <td>@{{ item.product.name }}</td>
+                                                            <td class="text-right">@{{ numeral(item.market_price).format() }}</td>
                                                             <td class="text-right">@{{ numeral(item.latest_price).format() }}</td>
                                                         </tr>
                                                         <tr v-if="!so.items || !so.items.length">
@@ -1145,6 +1147,7 @@
                             current_quantity: stock.current_quantity,
                             price: stock_price ? stock_price.price : 0,
                             latest_price: latest_price ? latest_price.price : 0,
+                            market_price: latest_price ? latest_price.market_price : 0,
                             discounts: item_init_discount,
                         });
                     }

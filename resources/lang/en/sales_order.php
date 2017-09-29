@@ -331,6 +331,7 @@ return [
             'latest_prices' => [
                 'header' => [
                     'product_name' => 'Product Name',
+                    'market_price' => 'Market Price',
                     'latest_price' => 'Latest Price',
                 ],
             ],

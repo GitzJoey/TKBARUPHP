@@ -330,6 +330,7 @@ return [
             'latest_prices' => [
                 'header' => [
                     'product_name' => 'Nama Produk',
+                    'market_price' => 'Harga Pasar',
                     'latest_price' => 'Harga Terbaru',
                 ],
             ],
