@@ -17,8 +17,8 @@
 @endsection
 
 @section('custom_css')
-    <link rel="stylesheet" href="{{ asset('adminlte/css/fullcalendar.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte/css/fullcalendar.print.min.css') }}" media="print">
+    <link rel="stylesheet" href="{{ mix('adminlte/css/fullcalendar.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('adminlte/css/fullcalendar.print.min.css') }}" media="print">
     <style type="text/css">
         .fc-state-highlight {
             background-color: #f8edba
@@ -84,8 +84,8 @@
 @endsection
 
 @section('custom_js')
-    <script src="{{ asset('adminlte/js/fullcalendar.min.js') }}"></script>
-    <script src="{{ asset('adminlte/js/id.js') }}"></script>
+    <script src="{{ mix('adminlte/js/fullcalendar.min.js') }}"></script>
+    <script src="{{ mix('adminlte/js/id.js') }}"></script>
 
     <script type="application/javascript">
         $(document).ready(function() {

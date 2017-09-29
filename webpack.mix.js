@@ -27,3 +27,5 @@ mix.copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
 mix.sass('resources/assets/sass/adminlte.scss', 'public/adminlte/css');
 mix.js('resources/assets/js/adminlte.js', 'public/adminlte/js');
 mix.js('resources/assets/js/app.js', 'public/adminlte/js');
+
+mix.version();

@@ -54,7 +54,7 @@
 @endsection
 
 @section('custom_js')
-    <script type="application/javascript" src="{{ asset('adminlte/js/pdfobject.min.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/pdfobject.min.js') }}"></script>
     <script type="application/javascript">
         PDFObject.embed('{{ asset('storage/reports/' . $fileName . '.pdf') }}', "#pdf-viewer");
     </script>

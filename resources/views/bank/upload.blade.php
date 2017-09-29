@@ -13,7 +13,7 @@
 @endsection
 
 @section('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/fileinput/fileinput.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/fileinput/fileinput.css') }}">
 @endsection
 
 @section('content')
@@ -91,6 +91,6 @@
 @endsection
 
 @section('custom_js')
-    <script type="application/javascript" src="{{ asset('adminlte/fileinput/fileinput.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/fileinput/fileinput.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/fileinput/id.js') }}"></script>
 @endsection

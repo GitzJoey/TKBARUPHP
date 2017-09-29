@@ -725,6 +725,6 @@
 
         });
     </script>
-    <script type="application/javascript" src="{{ asset('adminlte/js/highcharts.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/js/tooltipster.bundle.min.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/highcharts.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/tooltipster.bundle.min.js') }}"></script>
 @endsection

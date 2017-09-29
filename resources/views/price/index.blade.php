@@ -5,8 +5,8 @@
 @endsection
 
 @section('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/tooltipster.bundle.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/tooltipster-sideTip-shadow.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/css/tooltipster.bundle.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/css/tooltipster-sideTip-shadow.min.css') }}">
     <style>
         .price_history {
             display: none;
@@ -202,6 +202,6 @@
         });
     </script>
 
-    <script type="application/javascript" src="{{ asset('adminlte/js/highcharts.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/js/tooltipster.bundle.min.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/highcharts.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/tooltipster.bundle.min.js') }}"></script>
 @endsection
