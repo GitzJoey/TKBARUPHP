@@ -3,7 +3,7 @@
 
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ empty(Auth::user()->profile->image_filename) ? asset('images/def-user.png'):Auth::user()->profile->image_filename }}" class="img-circle" alt="User Image">
+                <img src="{{ empty(Auth::user()->profile->image_filename) ? asset('images/def-user.png'):asset('images/'.Auth::user()->profile->image_filename) }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
