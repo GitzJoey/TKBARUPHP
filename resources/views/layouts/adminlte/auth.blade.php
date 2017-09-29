@@ -9,7 +9,7 @@
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/css/adminlte.css') }}">
 
         @yield('custom_css')
     </head>

@@ -56,7 +56,7 @@
                                     <div class="col-md-12">
                                         <div class="box box-info">
                                             <div class="box-body">
-                                                <button id="draftButton" type="button" name="draft" value="@{{ soIndex }}" class="btn btn-xs btn-primary pull-right"
+                                                <button id="draftButton" type="button" name="draft" v-bind:value="soIndex" class="btn btn-xs btn-primary pull-right"
                                                         v-on:click="saveDraft(soIndex)">
                                                     <span class="fa fa-save fa-fw"></span>&nbsp;Save as Draft
                                                 </button>
@@ -291,7 +291,7 @@
                                                                     </td>
                                                                     <td v-bind:class="{ 'has-error':errors.has('tab_' + soIndex + '.' + 'so_' + soIndex + '_quantity_' + soIndex) }">
                                                                         <input type="text" class="form-control text-right" v-bind:name="'so_' + soIndex + '_quantity[]'"
-                                                                               v-model="item.quantity" v-validate="'required|decimal:2|min_value:1'"
+                                                                               v-model="item.quantity" v-validate="'required|decimal:2|min_value:1|max_value:' + item.current_quantity"
                                                                                v-bind:data-vv-as="'{{ trans('sales_order.create.table.item.header.quantity') }} ' + (soIndex + 1)"
                                                                                v-bind:data-vv-name="'so_' + soIndex + '_quantity_' + soIndex"
                                                                                v-bind:data-vv-scope="'tab_' + soIndex">
@@ -548,13 +548,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-5">
                                         <div class="box box-info">
                                             <div class="box-header with-border">
                                                 <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                                             </div>
                                             <div class="box-body">
-                                                <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+                                                <div class="col-xs-12">
                                                     <div class="box">
                                                         <div class="box-header text-center">
                                                             <template v-if="so.customer_type.code == 'CUSTOMERTYPE.R'">
@@ -640,6 +640,87 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="box box-info" v-if="so.customer.last_sale">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">@lang('sales_order.create.box.last_sale')</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td>@lang('sales_order.create.table.open_sales.header.code')</td>
+                                                        <td class="text-right">@{{ so.customer.last_sale.code }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@lang('sales_order.create.table.open_sales.header.so_date')</td>
+                                                        <td class="text-right">@{{ so.customer.last_sale.so_created }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@lang('sales_order.create.table.open_sales.header.status')</td>
+                                                        <td class="text-right">@{{ so.customer.last_sale.status_localized }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>@lang('sales_order.create.table.open_sales.header.amount')</td>
+                                                        <td class="text-right">@{{ so.customer.last_sale.total_amount_text }}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="box box-info">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">@lang('sales_order.create.box.open_sales')</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                    <table v-bind:id="'openSalesTable_' + soIndex" class="table table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">@lang('sales_order.create.table.open_sales.header.code')</th>
+                                                                <th class="text-center">@lang('sales_order.create.table.open_sales.header.so_date')</th>
+                                                                <th class="text-center">@lang('sales_order.create.table.open_sales.header.status')</th>
+                                                                <th class="text-center">@lang('sales_order.create.table.open_sales.header.amount')</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="(openSale, openSaleIndex) in so.customer.open_sales">
+                                                                <td>@{{ openSale.code }}</td>
+                                                                <td>@{{ openSale.so_created }}</td>
+                                                                <td>@{{ openSale.status_localized }}</td>
+                                                                <td class="text-right">@{{ openSale.total_amount_text }}</td>
+                                                            </tr>
+                                                            <tr v-if="!so.customer.open_sales || !so.customer.open_sales.length">
+                                                                <td colspan="4" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                            </div>
+                                        </div>
+                                        <div class="box box-info" v-if="so.sales_type.code === 'SOTYPE.S' || so.sales_type.code === 'SOTYPE.AC'">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">@lang('sales_order.create.box.latest_prices')</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <table v-bind:id="'latestPricesTable_' + soIndex" class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">@lang('sales_order.create.table.latest_prices.header.product_name')</th>
+                                                            <th class="text-center">@lang('sales_order.create.table.latest_prices.header.market_price')</th>
+                                                            <th class="text-center">@lang('sales_order.create.table.latest_prices.header.latest_price')</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="(item, itemIndex) in so.items" v-bind:class="{ 'danger': (item.price < item.market_price), 'warning': ((item.market_price <= item.price) * (item.price < item.latest_price)) }">
+                                                            <td>@{{ item.product.name }}</td>
+                                                            <td class="text-right">@{{ numeral(item.market_price).format() }}</td>
+                                                            <td class="text-right">@{{ numeral(item.latest_price).format() }}</td>
+                                                        </tr>
+                                                        <tr v-if="!so.items || !so.items.length">
+                                                            <td colspan="2" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -806,6 +887,15 @@
                                         progressBar: true
                                     });
                                 }
+                            }).catch(function (error) {
+                                $('#loader-container').fadeOut('slow');
+                                noty({
+                                    layout: 'topRight',
+                                    text: error.response.data.message,
+                                    type: 'error',
+                                    timeout: 5000,
+                                    progressBar: true
+                                });
                             });
                     }).catch(function() {
 
@@ -836,7 +926,13 @@
                     } else {
                         axios.get('{{ route('api.get.customer') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } })
                             .then(function(response) {
-                                _.merge(vm.SOs[soIndex].customer, response.data);
+                                vm.SOs[soIndex].customer = response.data;
+                                return axios.get('{{ route('api.get.customer.last_sale') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } });
+                            }).then(function (response) {
+                                vm.$set(vm.SOs[soIndex].customer, 'last_sale', response.data);
+                                return axios.get('{{ route('api.get.customer.open_sales') }}' + '?api_token=' + $('#secapi').val(), { params: { id: vm.SOs[soIndex].customer.id } });
+                            }).then(function (response) {
+                                vm.$set(vm.SOs[soIndex].customer, 'open_sales', response.data);
                             });
                     }
                 },
@@ -1027,6 +1123,9 @@
                         var stock_price = _.find(stock.today_prices, function (price) {
                             return price.price_level_id === vm.SOs[index].customer.price_level_id;
                         });
+                        var latest_price = _.find(stock.latest_prices, function (price) {
+                            return price.price_level_id === vm.SOs[index].customer.price_level_id;
+                        });
                         var item_init_discount = [];
                         item_init_discount.push({
                             disc_percent : 0,
@@ -1045,7 +1144,10 @@
                             },
                             base_unit: _.cloneDeep(_.find(stock.product.product_units, function(unit) { return unit.is_base == 1 })),
                             quantity: 0,
+                            current_quantity: stock.current_quantity,
                             price: stock_price ? stock_price.price : 0,
+                            latest_price: latest_price ? latest_price.price : 0,
+                            market_price: latest_price ? latest_price.market_price : 0,
                             discounts: item_init_discount,
                         });
                     }
@@ -1098,7 +1200,7 @@
                 },
                 removeExpense: function (SOIndex, index) {
                     this.SOs[SOIndex].expenses.splice(index, 1);
-                },
+                }
             },
             computed: {
                 defaultCustomerType: function() {

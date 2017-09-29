@@ -9,7 +9,7 @@
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/css/adminlte.css') }}">
 
         @yield('custom_css')
     </head>
@@ -59,8 +59,8 @@
 
         <input type="hidden" id="secapi" value="{{ Auth::user()->api_token }}">
 
-        <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
-        <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
+        <script type="application/javascript" src="{{ mix('adminlte/js/adminlte.js') }}"></script>
+        <script type="application/javascript" src="{{ mix('adminlte/js/app.js') }}"></script>
         <script>
             $(document).on('expanded.pushMenu', function() { if (typeof(Storage) != 'undefined') { localStorage.setItem('pushMenu', 'expanded'); }; });
             $(document).on('collapsed.pushMenu', function() { if (typeof(Storage) != 'undefined') { localStorage.setItem('pushMenu', 'collapsed'); }; });

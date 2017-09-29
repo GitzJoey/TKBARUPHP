@@ -261,6 +261,9 @@ return [
     'create' => [
         'box' => [
             'transaction_summary' => 'Transaction Summary',
+            'last_sale' => 'Last Sale',
+            'open_sales' => 'Open Sales',
+            'latest_prices' => 'Latest Prices',
             'customer' => 'Customer',
             'sales_order_detail' => 'Sales Order Detail',
             'shipping' => 'Shipping',
@@ -315,6 +318,21 @@ return [
                     'percentage' => 'Percentage',
                     'value' => 'Value',
                     'total_discount' => 'Discount',
+                ],
+            ],
+            'open_sales' => [
+                'header' => [
+                    'code' => 'Code',
+                    'so_date' => 'Sales Date',
+                    'status' => 'Status',
+                    'amount' => 'Amount',
+                ],
+            ],
+            'latest_prices' => [
+                'header' => [
+                    'product_name' => 'Product Name',
+                    'market_price' => 'Market Price',
+                    'latest_price' => 'Latest Price',
                 ],
             ],
         ],
@@ -416,6 +434,7 @@ return [
                 'customer' => 'Customer Data',
                 'pic' => 'Person In Charge',
                 'bank_account' => 'Bank Account',
+                'sales_orders' => 'Sales Orders',
                 'settings' => 'Settings',
             ],
             'field' => [
@@ -444,6 +463,14 @@ return [
                     'bank' => 'Bank',
                     'account_number' => 'Account',
                     'remarks' => 'Remarks',
+                ],
+            ],
+            'table_sales_orders' => [
+                'header' => [
+                    'code' => 'Code',
+                    'so_date' => 'Sales Date',
+                    'shipping_date' => 'Shipping Date',
+                    'status' => 'Status',
                 ],
             ],
         ],

@@ -9,8 +9,8 @@
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/css/adminlte.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('frontweb/css/frontweb.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/css/adminlte.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ mix('frontweb/css/frontweb.css') }}">
 
         @yield('custom_css')
     </head>
@@ -21,7 +21,7 @@
         @yield('content')
     </body>
 
-    <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/js/app.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/adminlte.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/app.js') }}"></script>
     @yield('custom_js')
 </html>

@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/adminlte.js') }}"></script>
 
 </body>
 @endsection

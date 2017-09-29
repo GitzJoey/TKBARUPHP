@@ -261,6 +261,9 @@ return [
     'create' => [
         'box' => [
             'transaction_summary' => 'Transaksi',
+            'last_sale' => 'Penjualan Terakhir',
+            'open_sales' => 'Penjualan Terbuka',
+            'latest_prices' => 'Harga Terbaru',
             'customer' => 'Pelanggan',
             'sales_order_detail' => 'Detail Penjualan',
             'shipping' => 'Pengiriman',
@@ -314,6 +317,21 @@ return [
                     'percentage' => 'Persentase',
                     'value' => 'Nilai',
                     'total_discount' => 'Diskon',
+                ],
+            ],
+            'open_sales' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'so_date' => 'Tgl Penjualan',
+                    'status' => 'Status',
+                    'amount' => 'Total',
+                ],
+            ],
+            'latest_prices' => [
+                'header' => [
+                    'product_name' => 'Nama Produk',
+                    'market_price' => 'Harga Pasar',
+                    'latest_price' => 'Harga Terbaru',
                 ],
             ],
         ],
@@ -416,6 +434,7 @@ return [
                 'customer' => 'Data Pelanggan',
                 'pic' => 'Penanggungjawab',
                 'bank_account' => 'Akun Bank',
+                'sales_orders' => 'Penjualan',
                 'settings' => 'Setting',
             ],
             'field' => [
@@ -444,6 +463,14 @@ return [
                     'bank' => 'Bank',
                     'account_number' => 'Nomor Akun',
                     'remarks' => 'Keterangan',
+                ],
+            ],
+            'table_sales_orders' => [
+                'header' => [
+                    'code' => 'Kode',
+                    'so_date' => 'Tgl Penjualan',
+                    'shipping_date' => 'Tgl Kirim',
+                    'status' => 'Status',
                 ],
             ],
         ],

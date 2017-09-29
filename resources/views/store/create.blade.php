@@ -17,7 +17,7 @@
 @endsection
 
 @section('custom_css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/fileinput/fileinput.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/fileinput/fileinput.css') }}">
 
     <style>
         .pac-container {
@@ -420,8 +420,8 @@
 @section('custom_js')
     <script async defer src="https://maps.googleapis.com/maps/api/js?callback=mapsCallback&libraries=places&key={{ $mapsAPIKey }}"></script>
 
-    <script type="application/javascript" src="{{ asset('adminlte/fileinput/fileinput.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/fileinput/id.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/fileinput/fileinput.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/fileinput/id.js') }}"></script>
 
     <script type="application/javascript">
         var storeApp = new Vue({

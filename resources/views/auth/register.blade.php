@@ -107,13 +107,13 @@
         </div>
     </div>
 
-    <script type="application/javascript" src="{{ asset('adminlte/js/adminlte.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/parsley/parsley.config.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/parsley/parsley.min.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/parsley/id.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/parsley/id.extra.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/parsley/en.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('adminlte/parsley/en.extra.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/js/adminlte.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/parsley.config.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/parsley.min.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/id.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/id.extra.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/en.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/en.extra.js') }}"></script>
 
     <script>
         $(document).ready(function () {

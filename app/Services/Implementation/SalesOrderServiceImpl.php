@@ -88,6 +88,29 @@ class SalesOrderServiceImpl implements SalesOrderService
             $so = SalesOrder::create($so);
 
             foreach ($soData['items'] as $i) {
+                $stock = Stock::find($i['stock_id']);
+                $customer = Customer::find($customer_id);
+                if (!empty($i['stock_id'])) {
+                    $validator = validator(
+                        [ 'quantity' => $i['quantity'] ],
+                        [ 'quantity' => 'required|numeric|min:1|max:'.$stock->current_quantity ]
+                    );
+                    if ($validator->fails()) {
+                        throw new \Exception($validator->errors()->first());
+                    }
+                    if ($customer && !in_array(auth()->user()->userDetail->type, [ 'USERTYPE.O', 'USERTYPE.A' ])) {
+                        $latest_price = $stock->latestPrices()->first(function ($value, $key) use ($customer) {
+                            return $value->price_level_id === $customer->price_level_id;
+                        });
+                        $validator = validator(
+                            [ 'price' => $i['price'] ],
+                            [ 'price' => 'required|numeric|min:'.($latest_price ? $latest_price->market_price : 0) ]
+                        );
+                        if ($validator->fails()) {
+                            throw new \Exception($validator->errors()->first());
+                        }
+                    }
+                }
                 $item = new Item();
                 $item->product_id = $i['product']['id'];
                 $item->stock_id = empty($i['stock_id']) ? 0 : $i['stock_id'];
@@ -162,6 +185,8 @@ class SalesOrderServiceImpl implements SalesOrderService
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+
+            throw $e;
         }
     }
 

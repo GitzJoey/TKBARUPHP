@@ -119,6 +119,16 @@ class SalesOrder extends Model
         'deleted_at',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'status_localized',
+        'total_amount_text'
+    ];
+
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
@@ -263,6 +273,26 @@ class SalesOrder extends Model
         $this->id_text                = $this->hId();
 
         return $this;
+    }
+
+    /**
+     * Get the status_localized.
+     *
+     * @return bool
+     */
+    public function getStatusLocalizedAttribute()
+    {
+        return __('lookup.' . $this->attributes['status']);
+    }
+
+    /**
+     * Get the total_amount_text.
+     *
+     * @return bool
+     */
+    public function getTotalAmountTextAttribute()
+    {
+        return number_format($this->totalAmount(), 0);
     }
 
     public static function boot()

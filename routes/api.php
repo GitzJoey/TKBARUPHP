@@ -235,6 +235,8 @@ Route::group(['prefix' => 'get'], function () {
         Route::get('', 'CustomerController@getCustomer')->name('api.get.customer');
         Route::get('search_customer', 'CustomerController@searchCustomers')->name('api.customer.search');
         Route::get('passive_customer', 'CustomerController@getPassiveCustomer')->name('api.customer.passive_customer');
+        Route::get('open_sales', 'CustomerController@getOpenSales')->name('api.get.customer.open_sales');
+        Route::get('last_sale', 'CustomerController@getLastSale')->name('api.get.customer.last_sale');
     });
 
     Route::group(['prefix' => 'phone_provider'], function() {
@@ -278,6 +280,7 @@ Route::group(['prefix' => 'get'], function () {
     });
 
     Route::group(['prefix' => 'stock'], function() {
+        Route::get('', 'StockController@getStock')->name('api.get.stock');
         Route::get('current_stocks/{wId?}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
     });
 
@@ -289,6 +292,3 @@ Route::group(['prefix' => 'get'], function () {
 
     Route::get('currencies/conversion', 'CurrenciesController@conversion')->name('api.currencies.conversion');
 });
-
-
-
