@@ -113,6 +113,9 @@ class PermissionTableSeeder extends Seeder
             [   'name' => 'update-settings',
                 'display_name' => '[Settings] Update Settings',
                 'description' => 'Allowed To Update Settings Data' ],
+            [   'name' => 'menu-settings',
+                'display_name' => '[Settings] Show Menu Settings',
+                'description' => 'Allowed To See Menu Settings In Sidebar' ],
             // Phone Provider
             [   'name' => 'create-phoneprovider',
                 'display_name' => '[Phone Provider] Create Phone Provider',
