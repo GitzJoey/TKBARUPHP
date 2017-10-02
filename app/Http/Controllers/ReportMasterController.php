@@ -14,13 +14,15 @@ use App\Model\TruckMaintenance;
 
 use App\Repos\LookupRepo;
 
+
 use Validator;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Lang;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportMasterController extends Controller

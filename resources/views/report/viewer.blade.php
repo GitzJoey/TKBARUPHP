@@ -43,19 +43,11 @@
         </div>
     </div>
     <hr>
-    <div class="well">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="pdf-viewer" class="res">
-                </div>
-            </div>
-        </div>
-    </div>
+    <embed src="{{ asset('storage/reports/' . $fileName . '.pdf') }}" type="application/pdf" width="100%"></embed>
 @endsection
 
 @section('custom_js')
-    <script type="application/javascript" src="{{ mix('adminlte/js/pdfobject.min.js') }}"></script>
     <script type="application/javascript">
-        PDFObject.embed('{{ asset('storage/reports/' . $fileName . '.pdf') }}', "#pdf-viewer");
+        $('embed').attr('height', ($('.wrapper').css('height')));
     </script>
 @endsection
