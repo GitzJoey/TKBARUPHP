@@ -95,7 +95,6 @@
                         <label for="inputRemarks" class="col-sm-2 control-label">@lang('phone_provider.field.remarks')</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputRemarks" name="remarks" placeholder="@lang('phone_provider.field.remarks')">
-                            <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
                         </div>
                     </div>
                     <div class="form-group">
