@@ -7,11 +7,13 @@ use App\Model\PurchaseOrder;
 
 use App\Repos\LookupRepo;
 
+use Validator;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -59,6 +61,12 @@ class ReportTransactionController extends Controller
                 });
             })
             ->get();
+
+        if (count($purchaseOrders) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -122,6 +130,12 @@ class ReportTransactionController extends Controller
                 });
             })
             ->get();
+
+        if (count($salesOrders) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));

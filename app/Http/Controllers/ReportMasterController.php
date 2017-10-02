@@ -14,6 +14,7 @@ use App\Model\TruckMaintenance;
 
 use App\Repos\LookupRepo;
 
+use Validator;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -59,6 +60,12 @@ class ReportMasterController extends Controller
                 });
             })
             ->get();
+
+        if (count($customers) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -116,6 +123,12 @@ class ReportMasterController extends Controller
             })
             ->get();
 
+        if (count($suppliers) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
+
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
         }
@@ -162,6 +175,12 @@ class ReportMasterController extends Controller
                 return $query->orWhere('short_code', 'like', "%$shortCode%");
             })
             ->get();
+
+        if (count($products) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -210,6 +229,12 @@ class ReportMasterController extends Controller
                 return $query->orWhere('short_code', 'like', "%$shortCode%");
             })
             ->get();
+
+        if (count($productTypes) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -265,6 +290,12 @@ class ReportMasterController extends Controller
             })
             ->get();
 
+        if (count($banks) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
+
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
         }
@@ -306,6 +337,12 @@ class ReportMasterController extends Controller
             ->when(!empty($warehouseName), function ($query) use ($warehouseName){
                 return $query->where('name', 'like', "%$warehouseName%");
             })->get();
+
+        if (count($warehouses) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -349,6 +386,12 @@ class ReportMasterController extends Controller
             ->when(!empty($plateNumber), function ($query) use ($plateNumber){
                 return $query->where('plate_number', 'like', "%$plateNumber%");
             })->get();
+
+        if (count($trucks) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -399,6 +442,12 @@ class ReportMasterController extends Controller
             $plateNumber = $truck->plate_number;
         }
 
+        if (count($truck) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
+
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
         }
@@ -440,6 +489,12 @@ class ReportMasterController extends Controller
             ->when(!empty($vendorTruckingName), function ($query) use ($vendorTruckingName) {
                 return $query->where('name', 'like', "%$vendorTruckingName%");
             })->get();
+
+        if (count($vendorTruckings) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
