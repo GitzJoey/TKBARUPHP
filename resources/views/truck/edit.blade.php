@@ -96,7 +96,6 @@
                         <label for="inputRemarks" class="col-sm-2 control-label">@lang('truck.field.remarks')</label>
                         <div class="col-sm-10">
                             <input id="inputRemarks" name="remarks" type="text" class="form-control" value="{{ $truck->remarks }}" placeholder="@lang('truck.field.remarks')">
-                            <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>&nbsp;
                         </div>
                     </div>
                     <div class="form-group">

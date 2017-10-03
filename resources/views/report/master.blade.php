@@ -13,6 +13,17 @@
 @endsection
 
 @section('content')
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>@lang('labels.GENERAL_ERROR_TITLE')</strong> @lang('labels.GENERAL_ERROR_DESC')<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="well">
         <div class="row">
             <div class="col-md-6">

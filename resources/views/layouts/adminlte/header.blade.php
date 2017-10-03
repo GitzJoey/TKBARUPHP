@@ -41,7 +41,7 @@
                 </li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('images/blank.png') }}" class="user-image" alt="User Image">
+                        <img src="{{ empty(Auth::user()->store->image_filename) ? asset('images/blank.png'):asset('images/'.Auth::user()->store->image_filename) }}" class="user-image" alt="Store Image">
                         <span class="hidden-xs">{{ Auth::user()->store->name }}</span>
                     </a>
                     <ul class="dropdown-menu">

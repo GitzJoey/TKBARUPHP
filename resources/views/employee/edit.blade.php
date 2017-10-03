@@ -46,12 +46,11 @@
                             <span v-show="errors.has('name')" class="help-block" v-cloak>@{{ errors.first('name') }}</span>
                         </div>
                     </div>
-                    <div class="form-group {{ $errors->has('address') ? 'has-error' : '' }}">
+                    <div class="form-group">
                         <label for="inputAddress" class="col-sm-2 control-label">@lang('employee.field.address')</label>
                         <div class="col-sm-10">
                             <input id="inputAddress" name="address" type="text" class="form-control"
                                    placeholder="@lang('employee.field.address')" value="{{ $employee->address }}">
-                            <span class="help-block">{{ $errors->has('address') ? $errors->first('address') : '' }}</span>
                         </div>
                     </div>
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('ic_number') }">
@@ -101,7 +100,6 @@
                                        data-show-upload="false" data-allowed-file-extensions='["jpg","png"]'
                                        value="{{ old('image_path') }}">
                             @endif
-                            <span class="help-block">{{ $errors->has('image_path') ? $errors->first('image_path') : '' }}</span>
                         </div>
                     </div>
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('status') }">

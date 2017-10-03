@@ -54,7 +54,6 @@
                         <div class="col-sm-9">
                             <select name="po_warehouse" class="form-control" v-model="user.fav.po_warehouse_id">
                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                <option v-for="w in warehouseDDL" v-bind:value="w.id">@{{ w.name }} @{{ w.address }}</option>
                             </select>
                             <span class="help-block"></span>
                         </div>
@@ -64,9 +63,6 @@
                         <div class="col-sm-9">
                             <select name="so_warehouse" class="form-control" v-model="user.fav.so_warehouse_id">
                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                @foreach ($warehouseDDL as $w)
-                                    <option value="{{ $w.id }}">{{ $w.name }} - {{ $w.address }}</option>
-                                @endforeach
                             </select>
                             <span class="help-block"></span>
                         </div>

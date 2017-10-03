@@ -50,11 +50,10 @@
                             <span v-show="errors.has('address')" class="help-block" v-cloak>@{{ errors.first('address') }}</span>
                         </div>
                     </div>
-                    <div class="form-group {{ $errors->has('phone_num') ? 'has-error' : '' }}">
+                    <div class="form-group">
                         <label for="inputPhone" class="col-sm-2 control-label">@lang('vendor_trucking.field.phone')</label>
                         <div class="col-sm-10">
                             <input id="inputPhone" name="phone_num" type="text" class="form-control" value="{{ old('phone_num') }}" placeholder="Phone">
-                            <span class="help-block">{{ $errors->has('phone_num') ? $errors->first('phone_num') : '' }}</span>
                         </div>
                     </div>
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('tax_id') }">

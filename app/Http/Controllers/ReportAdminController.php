@@ -16,6 +16,7 @@ use App\Model\PhoneProvider;
 
 use App\Repos\LookupRepo;
 
+use Validator;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -70,6 +71,12 @@ class ReportAdminController extends Controller
                 });
             })
             ->get();
+
+        if (count($users) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         $roleName = '';
 
@@ -127,6 +134,12 @@ class ReportAdminController extends Controller
             })
             ->get();
 
+        if (count($roles) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
+
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
         }
@@ -172,6 +185,12 @@ class ReportAdminController extends Controller
                 return $query->orWhere('tax_id', 'like', "%$taxId%");
             })
             ->get();
+
+        if (count($stores) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
@@ -219,6 +238,12 @@ class ReportAdminController extends Controller
             })
             ->get();
 
+        if (count($units) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
+
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
         }
@@ -264,6 +289,12 @@ class ReportAdminController extends Controller
                 return $query->orWhere('short_name', 'like', "%$shortName%");
             })
             ->get();
+
+        if (count($phoneProviders) == 0) {
+            $rules = ['notFound' => 'required'];
+            $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+            Validator::make($request->all(), $rules, $messages)->validate();
+        }
 
         if (!File::exists(storage_path('app/public/reports'))) {
             File::makeDirectory(storage_path('app/public/reports'));
