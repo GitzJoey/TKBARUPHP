@@ -490,8 +490,9 @@ Breadcrumbs::register('user_settings', function($breadcrumbs, $id){
     $breadcrumbs->push(trans('breadcrumb.user.settings'), route('db.user.settings.show', $id));
 });
 
-Breadcrumbs::register('user_calendar', function($breadcrumbs){
+Breadcrumbs::register('user_calendar', function($breadcrumbs, $id){
     $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.user.profile'), route('db.user.profile.show', $id));
     $breadcrumbs->push(trans('breadcrumb.user.calendar'), route('db.user.calendar.show'));
 });
 

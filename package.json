@@ -24,7 +24,7 @@
     "animate.css": "^3.5.2",
     "autonumeric": "^1.9.46",
     "bootstrap": "^3.3.7",
-    "bootstrap-fileinput": "^4.4.3",
+    "bootstrap-fileinput": "^4.4.5",
     "bootstrap-sweetalert": "^1.0.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "^4.7.0",
@@ -40,10 +40,10 @@
     "noty": "^2.4.1",
     "numeral": "^1.5.6",
     "parsleyjs": "^2.8.0",
-    "pdfjs-dist": "^1.9.611",
-    "select2": "^4.0.3",
+    "pdfjs-dist": "^1.9.628",
+    "select2": "^4.0.4",
     "tooltipster": "^4.2.5",
-    "urijs": "^1.18.12",
+    "urijs": "^1.19.0",
     "vee-validate": "^2.0.0-rc.18",
     "vue-numeric": "^1.6.2"
   }

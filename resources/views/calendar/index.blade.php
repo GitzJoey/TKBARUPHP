@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('user_calendar') !!}
+    {!! Breadcrumbs::render('user_calendar', Auth::user()->id) !!}
 @endsection
 
 @section('custom_css')
@@ -85,53 +85,44 @@
 
 @section('custom_js')
     <script src="{{ mix('adminlte/js/fullcalendar.min.js') }}"></script>
-    <script src="{{ mix('adminlte/js/id.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/parsley.config.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/parsley.min.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/id.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/id.extra.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/en.js') }}"></script>
+    <script type="application/javascript" src="{{ mix('adminlte/parsley/en.extra.js') }}"></script>
 
     <script type="application/javascript">
         $(document).ready(function() {
-            var app = new Vue({
-                el: '#calendarVue',
+            $.ajax({
+                url: '{{ route('api.user.get.calendar') }}',
                 data: {
-                    calendar: []
+                    id: '{{ Auth::user()->id }}'
                 },
-                methods: {
-                    loadEvents: function() {
+                type: 'GET',
+                async: false,
+                success: function(response) {
 
-                        $.ajax({
-                            url: '{{ route('api.user.get.calendar') }}',
-                            data: {
-                                id: '{{ Auth::user()->id }}'
-                            },
-                            type: 'GET',
-                            async: false,
-                            success: function(response) {
-
-                                $('#calendar').fullCalendar({
-                                    header: {
-                                        left: 'prev, next today',
-                                        center: 'title',
-                                        right: 'month, agendaWeek, agendaDay'
-                                    },
-                                    locale: '{!! LaravelLocalization::getCurrentLocale() !!}',
-                                    events: response.userCalendar,
-                                    dayClick: function(date, jsEvent, view) {
-                                        $(".fc-state-highlight").removeClass("fc-state-highlight");
-                                        $("td[data-date=" + date.format('YYYY-MM-DD') + "]").addClass("fc-state-highlight");
-                                        $('#inputStartDate').data('DateTimePicker').date(moment(date));
-                                        $('#inputEndDate').data('DateTimePicker').date(moment(date).add(1, 'd'));
-                                    },
-                                    eventRender: function(event, element) {
-                                        $(element).tooltip({
-                                            title: event.title
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    }
-                },
-                mounted: function() {
-                    this.loadEvents();
+                    $('#calendar').fullCalendar({
+                        header: {
+                            left: 'prev, next today',
+                            center: 'title',
+                            right: 'month, agendaWeek, agendaDay'
+                        },
+                        locale: '{!! LaravelLocalization::getCurrentLocale() !!}',
+                        events: response.userCalendar,
+                        dayClick: function(date, jsEvent, view) {
+                            $(".fc-state-highlight").removeClass("fc-state-highlight");
+                            $("td[data-date=" + date.format('YYYY-MM-DD') + "]").addClass("fc-state-highlight");
+                            $('#inputStartDate').data('DateTimePicker').date(moment(date));
+                            $('#inputEndDate').data('DateTimePicker').date(moment(date).add(1, 'd'));
+                        },
+                        eventRender: function(event, element) {
+                            $(element).tooltip({
+                                title: event.title
+                            });
+                        }
+                    });
                 }
             });
 
