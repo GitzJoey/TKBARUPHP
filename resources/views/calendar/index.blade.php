@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-    {!! Breadcrumbs::render('user_calendar', Auth::user()->id) !!}
+    {!! Breadcrumbs::render('user_calendar', Auth::user()->hId()) !!}
 @endsection
 
 @section('custom_css')
