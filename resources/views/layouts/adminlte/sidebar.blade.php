@@ -300,8 +300,7 @@
             @endif
             @if(Laratrust::can('menu-tax-input') OR
                 Laratrust::can('menu-tax-output') OR
-                Laratrust::can('menu-tax-generate') OR
-                Laratrust::can('menu-tax-check_report'))
+                Laratrust::can('menu-tax-generate'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.tax.invoice.input.') ||
                                                     Active::checkRoutePattern('db.tax.invoice.input.*') ||
                                                     Active::checkRoutePattern('db.tax.invoice.output.') ||
@@ -325,9 +324,6 @@
                         </li>
                         <li class="">
                             <a href="#"><i class="fa fa-magic fa-fw"></i>&nbsp;@lang('menu.item.tax.generate')</a>
-                        </li>
-                        <li class="">
-                            <a href="#"><i class="fa fa-pied-piper fa-fw"></i>&nbsp;@lang('menu.item.tax.check_report')</a>
                         </li>
                     </ul>
                 </li>

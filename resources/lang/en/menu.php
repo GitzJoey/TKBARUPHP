@@ -73,6 +73,5 @@ return [
     'item.tax.invoice' => 'e-Invoice',
     'item.tax.invoice.output' => 'Output',
     'item.tax.invoice.input' => 'Input',
-    'item.tax.generate' => 'Generate',
-    'item.tax.check_report' => 'Report Check',
+    'item.tax.generate' => 'Generate'
 ];

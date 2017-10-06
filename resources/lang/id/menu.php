@@ -73,6 +73,5 @@ return [
     'item.tax.invoice' => 'e-Faktur',
     'item.tax.invoice.output' => 'Keluaran',
     'item.tax.invoice.input' => 'Masukan',
-    'item.tax.generate' => 'Generate',
-    'item.tax.check_report' => 'Cek Laporan',
+    'item.tax.generate' => 'Generate'
 ];
