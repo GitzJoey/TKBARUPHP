@@ -38,6 +38,11 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankBCACSVRecord withoutTrashed()
  */
 class BankBCACSVRecord extends Model
 {

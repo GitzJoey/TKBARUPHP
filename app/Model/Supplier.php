@@ -60,6 +60,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Supplier whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Supplier whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Supplier onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Supplier withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Supplier withoutTrashed()
  */
 class Supplier extends Model
 {

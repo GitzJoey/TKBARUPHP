@@ -51,6 +51,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Model\Accounting\CostCategory $category
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Revenue whereDestinationCashAccountId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Revenue whereRevenueCategoryId($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Revenue onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Revenue withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\Revenue withoutTrashed()
  */
 class Revenue extends Model
 {

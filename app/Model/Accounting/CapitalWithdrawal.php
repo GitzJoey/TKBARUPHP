@@ -46,6 +46,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property int $source_cash_account_id
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CapitalWithdrawal whereSourceCashAccountId($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CapitalWithdrawal onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CapitalWithdrawal withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CapitalWithdrawal withoutTrashed()
  */
 class CapitalWithdrawal extends Model
 {

@@ -44,6 +44,11 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Payment withoutTrashed()
  */
 class Payment extends Model
 {

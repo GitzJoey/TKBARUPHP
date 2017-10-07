@@ -40,6 +40,11 @@ use App\Traits\StoreFilter;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CostCategory whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CostCategory whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CostCategory onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CostCategory withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CostCategory withoutTrashed()
  */
 class CostCategory extends Model
 {

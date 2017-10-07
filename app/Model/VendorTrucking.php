@@ -47,6 +47,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\VendorTrucking withoutTrashed()
  */
 class VendorTrucking extends Model
 {

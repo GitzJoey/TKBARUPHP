@@ -46,6 +46,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Bank withoutTrashed()
  */
 class Bank extends Model
 {

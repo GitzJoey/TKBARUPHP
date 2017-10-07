@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTaxesTable extends Migration
+class CreateTaxOutputsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTaxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taxes', function (Blueprint $table) {
+        Schema::create('tax_outputs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('invoice_no')->unique();
+            $table->string('invoice_no')->nullable();
             $table->string('invoice_date');
             $table->string('gst_transaction_type')->nullable();
             $table->string('transaction_doc')->nullable();
@@ -28,7 +28,6 @@ class CreateTaxesTable extends Migration
             $table->string('opponent_tax_id_no');
             $table->string('opponent_name');
             $table->string('opponent_address');
-            $table->string('gst_type');
             $table->bigInteger('tax_base');
             $table->bigInteger('gst');
             $table->bigInteger('luxury_tax');
@@ -39,26 +38,6 @@ class CreateTaxesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        // Create table for associating roles to users (Many To Many Polymorphic)
-        Schema::create('tax_items', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('transactionable_id')->unsigned()->index();
-            $table->string('transactionable_type')->nullable();
-            $table->string('name');
-            $table->boolean('is_gst_included');
-            $table->bigInteger('price');
-            $table->bigInteger('discount');
-            $table->bigInteger('qty');
-            $table->bigInteger('gst');
-            $table->bigInteger('luxury_tax');
-            $table->unsignedBigInteger('created_by')->default(0);
-            $table->unsignedBigInteger('updated_by')->default(0);
-            $table->unsignedBigInteger('deleted_by')->default(0);
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
     }
 
     /**
@@ -68,7 +47,6 @@ class CreateTaxesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tax_items');
-        Schema::drop('taxes');
+        Schema::drop('tax_outputs');
     }
 }

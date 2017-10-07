@@ -34,6 +34,11 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankConsolidate withoutTrashed()
  */
 class BankConsolidate extends Model
 {

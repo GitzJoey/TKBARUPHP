@@ -8,8 +8,8 @@
 
 namespace App\Services\Implementation;
 
-use App\Model\Tax;
-use App\Model\TaxItem;
+use App\Model\TaxOutput;
+use App\Model\TaxOutputItem;
 use App\Services\TaxInvoiceOutputService;
 use Illuminate\Http\Request;
 use DB;
@@ -37,17 +37,16 @@ class TaxInvoiceOutputServiceImpl implements TaxInvoiceOutputService
                 'opponent_tax_id_no' => $request->input('opponent_tax_id_no'),
                 'opponent_name' => $request->input('opponent_name'),
                 'opponent_address' => $request->input('opponent_address'),
-                'gst_type' => 'KELUARAN',
                 'tax_base' => $request->input('tax_base'),
                 'gst' => $request->input('gst'),
                 'luxury_tax' => $request->input('luxury_tax'),
                 'reference' => $request->input('reference'),
             ];
 
-            $tax = Tax::create($params);
+            $tax = TaxOutput::create($params);
 
             for($i = 0; $i < count($request->input('tran_name')); $i++){
-                $taxItem = new TaxItem();
+                $taxItem = new TaxOutputItem();
                 $taxItem->name = $request->input("tran_name.$i");
                 $taxItem->is_gst_included = boolval($request->input("tran_is_gst_included.$i"));
                 $taxItem->price = $request->input("tran_price.$i");
@@ -70,7 +69,7 @@ class TaxInvoiceOutputServiceImpl implements TaxInvoiceOutputService
 
     public function getTaxByID($id)
     {
-        return Tax::with('transactions')->find($id);
+        return TaxOutput::with('transactions')->find($id);
     }
 
     public function editInvoice(Request $request, $id)
@@ -78,7 +77,7 @@ class TaxInvoiceOutputServiceImpl implements TaxInvoiceOutputService
         DB::transaction(function() use ($id, $request) {
 
             // Get current Invoice
-            $currInv = Tax::with('transactions')->find($id);
+            $currInv = TaxOutput::with('transactions')->find($id);
 
             $invTranId = $currInv->transactions->map(function ($transaction) {
                 return $transaction->id;
@@ -90,7 +89,7 @@ class TaxInvoiceOutputServiceImpl implements TaxInvoiceOutputService
             $invTranToBeDel = array_diff($invTranId, isset($invTranId) ? $inputtedTranId: []);
 
             // Remove the items transactions that removed on the edit page
-            TaxItem::destroy($invTranToBeDel);
+            TaxOutputItem::destroy($invTranToBeDel);
 
             $pieces = explode("/",$request->input('tax_period'));
             $currInv->invoice_no = $request->input('invoice_no');
@@ -106,14 +105,13 @@ class TaxInvoiceOutputServiceImpl implements TaxInvoiceOutputService
             $currInv->opponent_tax_id_no = $request->input('opponent_tax_id_no');
             $currInv->opponent_name = $request->input('opponent_name');
             $currInv->opponent_address = $request->input('opponent_address');
-            $currInv->gst_type = 'KELUARAN';
             $currInv->tax_base = $request->input('tax_base');
             $currInv->gst = $request->input('gst');
             $currInv->luxury_tax = $request->input('luxury_tax');
             $currInv->reference = $request->input('reference');
 
             for($i = 0; $i < count($request->input('tran_id')); $i++){
-                $tran = TaxItem::findOrNew($request->input("tran_id.$i"));
+                $tran = TaxOutputItem::findOrNew($request->input("tran_id.$i"));
                 $tran->name = $request->input("tran_name.$i");
                 $tran->is_gst_included = boolval($request->input("tran_is_gst_included.$i"));
                 $tran->price = $request->input("tran_price.$i");

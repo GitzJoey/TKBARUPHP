@@ -34,6 +34,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Currencies withoutTrashed()
  */
 class Currencies extends Model
 {
