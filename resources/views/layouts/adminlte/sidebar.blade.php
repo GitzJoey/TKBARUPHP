@@ -7,7 +7,7 @@
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
-                <a><i class="fa fa-circle text-success"></i> Type : @lang('lookup.'.Auth::user()->userDetail->type)</a>
+                <a href="{{ route('db.user.profile.show', Auth::user()->hId()) }}"><i class="fa fa-circle text-success"></i> Type : @lang('lookup.'.Auth::user()->userDetail->type)</a>
             </div>
         </div>
 
