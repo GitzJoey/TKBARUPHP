@@ -18,6 +18,13 @@ return [
             'no_data_found' => 'No data found',
         ],
     ],
+    'last_price_update' => [
+        'title' => 'Last Price Update',
+        'label' => [
+            'never' => 'Never',
+            'no_data_found' => 'No data found',
+        ],
+    ],
     'number_of_created_so' => [
         'title' => 'Number of Created Sales Order',
     ],
