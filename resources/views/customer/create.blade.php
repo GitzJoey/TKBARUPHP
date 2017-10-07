@@ -283,7 +283,7 @@
                                                 class="form-control"
                                                 v-model="selectedExpense">
                                             <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                            <option v-for="expense in expenseTemplates" v-bind:value="expense">@{{ expense.name }}</option>
+                                            <option v-for="(value, key) in expenseTypes" v-bind:value="key">@{{ value }}</option>
                                         </select>
                                     </div>
                                     <div class="col-md-1">
@@ -434,6 +434,7 @@
                 pricelevelDDL: JSON.parse('{!! htmlspecialchars_decode($priceLevelDDL) !!}'),
                 expenseTemplates: JSON.parse('{!! htmlspecialchars_decode($expenseTemplates) !!}'),
                 statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}'),
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 selectedExpense: ''
             },
             methods: {
@@ -502,13 +503,14 @@
                     this.profiles[parentIndex].phone_number.splice(idx, 1);
                 },
                 addExpense: function(selectedExpense) {
+                    var se = _.find(this.expenseTemplates, function(et) { return et.Type = selectedExpense });
                     this.expenses.push({
-                        id: selectedExpense.id,
-                        name: selectedExpense.name,
-                        type: selectedExpense.type,
-                        amount: numeral(selectedExpense.amount).format('0,0'),
-                        is_internal_expense: selectedExpense.is_internal_expense,
-                        remarks: selectedExpense.remarks
+                        id: se.id,
+                        name: se.name,
+                        type: this.expenseTypes[selectedExpense],
+                        amount: numeral(se.amount).format('0,0'),
+                        is_internal_expense: se.is_internal_expense,
+                        remarks: se.remarks
                     });
                 },
                 removeSelectedExpense: function(idx) {
