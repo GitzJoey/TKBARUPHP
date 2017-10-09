@@ -95,7 +95,7 @@
                                         </td>
                                         <td><input type="text" class="form-control" v-model="c.remarks" name="section_remarks[]"/></td>
                                         <td class="text-center valign-middle">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ cI }}" v-on:click="removeSelected(cI)">
+                                            <button type="button" class="btn btn-xs btn-danger" v-bind:data="cI" v-on:click="removeSelected(cI)">
                                                 <span class="fa fa-close fa-fw"></span>
                                             </button>
                                         </td>
