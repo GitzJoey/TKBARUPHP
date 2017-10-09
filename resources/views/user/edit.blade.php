@@ -78,22 +78,24 @@
                             <span v-show="errors.has('roles')" class="help-block" v-cloak>@{{ errors.first('roles') }}</span>
                         </div>
                     </div>
-                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('password') }">
-                        <label for="inputPassword" class="col-sm-2 control-label">@lang('user.field.password')</label>
-                        <div class="col-sm-10">
-                            <input id="inputEmail" name="password" type="password" class="form-control" placeholder="@lang('user.field.password')"
-                                v-model="user.password" v-validate="'required'" data-vv-as="{{ trans('user.field.password') }}">
-                            <span v-show="errors.has('password')" class="help-block" v-cloak>@{{ errors.first('password') }}</span>
+                    @if (Auth::user()->id == $user->id)
+                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('password') }">
+                            <label for="inputPassword" class="col-sm-2 control-label">@lang('user.field.password')</label>
+                            <div class="col-sm-10">
+                                <input id="inputEmail" name="password" type="password" class="form-control" placeholder="@lang('user.field.password')"
+                                    v-model="user.password" v-validate="'required'" data-vv-as="{{ trans('user.field.password') }}">
+                                <span v-show="errors.has('password')" class="help-block" v-cloak>@{{ errors.first('password') }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('password_confirmation') }">
-                        <label for="inputPasswordConfirmation" class="col-sm-2 control-label">@lang('user.field.retype_password')</label>
-                        <div class="col-sm-10">
-                            <input id="inputEmail" name="password_confirmation" type="password" class="form-control" placeholder="@lang('user.field.retype_password')"
-                                v-model="user.password_confirmation" v-validate="'required|confirmed:password'" data-vv-as="{{ trans('user.field.password_confirmation') }}">
-                            <span v-show="errors.has('password_confirmation')" class="help-block" v-cloak>@{{ errors.first('password_confirmation') }}</span>
+                        <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('password_confirmation') }">
+                            <label for="inputPasswordConfirmation" class="col-sm-2 control-label">@lang('user.field.retype_password')</label>
+                            <div class="col-sm-10">
+                                <input id="inputEmail" name="password_confirmation" type="password" class="form-control" placeholder="@lang('user.field.retype_password')"
+                                    v-model="user.password_confirmation" v-validate="'required|confirmed:password'" data-vv-as="{{ trans('user.field.password_confirmation') }}">
+                                <span v-show="errors.has('password_confirmation')" class="help-block" v-cloak>@{{ errors.first('password_confirmation') }}</span>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <hr>
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('user_type') }">
                         <label for="inputUserType" class="col-sm-2 control-label">@lang('user.field.user_type')</label>
@@ -217,6 +219,7 @@
                             window.location.href = '{{ route('db.admin.user') }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
+                            console.log(e.response.data);
                             if (Object.keys(e.response.data).length > 0) {
                                 for (var key in e.response.data) {
                                     for (var i = 0; i < e.response.data[key].length; i++) {
