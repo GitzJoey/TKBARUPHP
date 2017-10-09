@@ -112,11 +112,7 @@
                     <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
                         <label for="inputAllowLogin" class="col-sm-2 control-label">@lang('user.field.allow_login')</label>
                         <div class="col-sm-10">
-                            <div class="checkbox icheck">
-                                <label>
-                                    <input type="checkbox" name="allow_login" class="is_icheck">&nbsp;
-                                </label>
-                            </div>
+                            <vue-iCheck name="allow_login" v-model="user.allow_login"></vue-iCheck>
                         </div>
                     </div>
                     <div class="form-group">
@@ -154,13 +150,14 @@
             el: '#userVue',
             data: {
                 user: {
-                    name:'',
-                    email:'',
-                    store:'',
-                    roles:'',
-                    password:'',
-                    password_confirmation:'',
-                    user_type:'',
+                    name: '',
+                    email: '',
+                    store: '',
+                    roles: '',
+                    password: '',
+                    password_confirmation: '',
+                    user_type: '',
+                    allow_login: ''
                 },
                 storeDDL: JSON.parse('{!! htmlspecialchars_decode($storeDDL) !!}'),
                 rolesDDL: JSON.parse('{!! htmlspecialchars_decode($rolesDDL) !!}'),

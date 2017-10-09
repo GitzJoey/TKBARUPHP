@@ -114,23 +114,7 @@
                     <div class="form-group {{ $errors->has('allow_login') ? 'has-error' : '' }}">
                         <label for="inputAllowLogin" class="col-sm-2 control-label">@lang('user.field.allow_login')</label>
                         <div class="col-sm-10">
-                            <div class="checkbox icheck">
-                                <label>
-                                    @if (empty(old('allow_login')))
-                                        @if (boolval($user->userDetail()->pluck('allow_login')->first()))
-                                            <input type="checkbox" class="is_icheck" name="allow_login" checked>&nbsp;
-                                        @else
-                                            <input type="checkbox" class="is_icheck" name="allow_login">&nbsp;
-                                        @endif
-                                    @else
-                                        @if (old('allow_login') == 'on')
-                                            <input type="checkbox" name="allow_login" checked class="is_icheck">&nbsp;
-                                        @else
-                                            <input type="checkbox" name="allow_login" class="is_icheck">&nbsp;
-                                        @endif
-                                    @endif
-                                </label>
-                            </div>
+                            <vue-iCheck name="allow_login" v-model="user.allow_login"></vue-iCheck>
                         </div>
                     </div>
                     <div class="form-group">
@@ -196,13 +180,14 @@
             el: '#userVue',
             data: {
                 user: {
-                    name:'{{ $user->name }}',
-                    email:'{{ $user->email }}',
-                    store:'{{ $user->store_id }}',
-                    roles:'{{ $user->roles->first()->name }}',
-                    password:'',
-                    password_confirmation:'',
-                    user_type:"{{ $user->userDetail()->pluck('type')->first() }}",
+                    name: '{{ $user->name }}',
+                    email: '{{ $user->email }}',
+                    store: '{{ $user->store_id }}',
+                    roles: '{{ $user->roles->first()->name }}',
+                    password: '',
+                    password_confirmation :'',
+                    user_type: '{{ $user->userDetail()->pluck('type')->first() }}',
+                    allow_login: '{{ $user->userDetail()->pluck('allow_login')->first() }}'
                 },
                 storeDDL: JSON.parse('{!! htmlspecialchars_decode($storeDDL) !!}'),
                 rolesDDL: JSON.parse('{!! htmlspecialchars_decode($rolesDDL) !!}'),
