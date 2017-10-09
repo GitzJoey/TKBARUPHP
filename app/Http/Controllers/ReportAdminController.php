@@ -321,4 +321,8 @@ class ReportAdminController extends Controller
         return redirect(route('db.report.view', $fileName));
     }
 
+    public function generateSettingsReport(Request $request, PDF $pdf)
+    {
+        return "Under Constructions";
+    }
 }
