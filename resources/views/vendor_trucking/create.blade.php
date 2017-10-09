@@ -123,10 +123,10 @@
                             window.location.href = '{{ route('db.master.vendor.trucking') }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
-                            if (Object.keys(e.response.data).length > 0) {
-                                for (var key in e.response.data) {
-                                    for (var i = 0; i < e.response.data[key].length; i++) {
-                                        vm.$validator.errors.add('', e.response.data[key][i], 'server', '__global__');
+                            if (Object.keys(e.response.data.errors).length > 0) {
+                                for (var key in e.response.data.errors) {
+                                    for (var i = 0; i < e.response.data.errors[key].length; i++) {
+                                        vm.$validator.errors.add('', e.response.data.errors[key][i], 'server', '__global__');
                                     }
                                 }
                             } else {
