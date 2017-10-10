@@ -15,11 +15,7 @@ class CreateTaxOutputsTable extends Migration
     {
         Schema::create('tax_outputs', function (Blueprint $table) {
             $table->bigIncrements('id');
-<<<<<<< HEAD:database/migrations/2017_05_27_220339_create_taxes_table.php
-            $table->string('invoice_no');
-=======
             $table->string('invoice_no')->nullable();
->>>>>>> dd9b1bb0909e6ab80169f0b655b212352469381a:database/migrations/2017_05_27_220339_create_tax_outputs_table.php
             $table->string('invoice_date');
             $table->string('gst_transaction_type')->nullable();
             $table->string('transaction_doc')->nullable();
