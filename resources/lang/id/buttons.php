@@ -29,5 +29,6 @@ return [
     'calculate_salary' => 'Hitung Gaji',
     'update_button' => 'Perbaharui',
     'yes_button' => 'Ya',
-    'transfer' => 'Transfer'
+    'transfer' => 'Transfer',
+    'ok_button' => 'OK',
 ];

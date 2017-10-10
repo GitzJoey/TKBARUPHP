@@ -468,7 +468,7 @@ return [
                 'address' => 'Address',
                 'city' => 'City',
                 'phone' => 'Phone',
-                'tax_id' => 'Tax ID',
+                'tax_id' => 'TaxOutput ID',
                 'remarks' => 'Remarks',
                 'first_name' => 'First Name',
                 'last_name' => 'Last Name',

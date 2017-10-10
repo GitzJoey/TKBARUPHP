@@ -51,6 +51,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer withoutTrashed()
  */
 class StockTransfer extends Model
 {

@@ -240,8 +240,8 @@
             <div class="row">
                 <div class="col-md-7 col-offset-md-5">
                     <div class="btn-toolbar">
-                        <button id="submitButton" type="button" class="btn btn-primary pull-right" v-on:click="validateBeforeSubmit('submit')">@lang('buttons.submit_button')</button>
-                        <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.tax.invoice.output.index') }}">@lang('buttons.cancel_button')</a>
+                        <button id="submitButton" type="button" class="btn btn-default pull-right" v-on:click="validateBeforeSubmit('submit')">@lang('buttons.submit_button')</button>
+                        <a id="cancelButton" class="btn btn-default pull-right" href="{{ route('db.tax.invoice.output.index') }}">@lang('buttons.cancel_button')</a>
                     </div>
                 </div>
             </div>
@@ -316,8 +316,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="saveTran()">OK</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" v-on:click="saveTran()">@lang('buttons.ok_button')</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" type="button">@lang('buttons.cancel_button')</button>
                     </div>
                 </div>
             </div>

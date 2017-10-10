@@ -75,6 +75,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereLatitude($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Store whereLongitude($value)
  * @property-read mixed $date_time_format
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Store withoutTrashed()
  */
 class Store extends Model
 {

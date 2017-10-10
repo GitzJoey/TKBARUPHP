@@ -40,6 +40,11 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname whereDeletedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Model\Stock $stock
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockOpname withoutTrashed()
  */
 class StockOpname extends Model
 {

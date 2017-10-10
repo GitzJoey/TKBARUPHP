@@ -39,6 +39,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhoneNumber withoutTrashed()
  */
 class PhoneNumber extends Model
 {

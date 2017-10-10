@@ -63,6 +63,11 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrderCopy withoutTrashed()
  */
 class SalesOrderCopy extends Model
 {

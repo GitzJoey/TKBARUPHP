@@ -50,6 +50,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Profile withoutTrashed()
  */
 class Profile extends Model
 {

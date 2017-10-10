@@ -54,6 +54,11 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Receipt withoutTrashed()
  */
 class Receipt extends Model
 {

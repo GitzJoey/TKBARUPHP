@@ -42,6 +42,11 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereStockOpnameId($value)
  * @property int $stock_trf_id
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn whereStockTrfId($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn withoutTrashed()
  */
 class StockIn extends Model
 {

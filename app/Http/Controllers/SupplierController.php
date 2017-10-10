@@ -61,9 +61,10 @@ class SupplierController extends Controller
         $providerDDL = PhoneProvider::whereStatus('STATUS.ACTIVE')->get(['name', 'short_name', 'id']);
         $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get();
         $expenseTemplates = ExpenseTemplate::all();
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('i18nDescription', 'code');
 
         return view('supplier.create',
-            compact('bankDDL', 'statusDDL', 'providerDDL', 'productList', 'expenseTemplates'));
+            compact('bankDDL', 'statusDDL', 'providerDDL', 'productList', 'expenseTemplates', 'expenseTypes'));
     }
 
     public function store(Request $request)
@@ -144,10 +145,11 @@ class SupplierController extends Controller
         $productList = Product::with('type')->where('status', '=', 'STATUS.ACTIVE')->get();
         $productSelected = array_fill_keys($supplier->products()->pluck('products.id')->toArray(), true);
         $expenseTemplates = ExpenseTemplate::all();
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('i18nDescription', 'code');
 
         return view('supplier.edit',
             compact('supplier', 'bankDDL', 'statusDDL', 'providerDDL', 'productList', 'productSelected',
-                'expenseTemplates'));
+                'expenseTemplates', 'expenseTypes'));
     }
 
     public function update($id, Request $request)

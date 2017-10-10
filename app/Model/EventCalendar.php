@@ -45,6 +45,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read mixed $start
  * @property-read mixed $title
  * @property-read mixed $end
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\EventCalendar withoutTrashed()
  */
 class EventCalendar extends Model
 {

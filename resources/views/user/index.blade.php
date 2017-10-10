@@ -64,8 +64,12 @@
                             <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.admin.user.show', $item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.admin.user.edit', $item->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
-                                {!! Form::open(['method' => 'DELETE', 'route' => ['db.admin.user.delete', $item->hId()], 'style'=>'display:inline'])  !!}
-                                    <button type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                {!! Form::open(['id' => 'deleteForm', 'method' => 'DELETE', 'route' => ['db.admin.user.delete', $item->hId()], 'style'=>'display:inline'])  !!}
+                                    @if ($item->userDetail->allow_login)
+                                        <button id="deleteBtn" type="submit" class="btn btn-xs btn-danger"><span class="fa fa-close fa-fw"></span></button>
+                                    @else
+                                        <button id="deleteBtn" type="submit" class="btn btn-xs btn-danger disabled"><span class="fa fa-close fa-fw"></span></button>
+                                    @endif
                                 {!! Form::close() !!}
                             </td>
                         </tr>

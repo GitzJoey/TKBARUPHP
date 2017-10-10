@@ -33,6 +33,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ItemDiscounts whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ItemDiscounts whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ItemDiscounts onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ItemDiscounts withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ItemDiscounts withoutTrashed()
  */
 class ItemDiscounts extends Model
 {

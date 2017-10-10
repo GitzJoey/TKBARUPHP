@@ -44,6 +44,11 @@ use App\Model\ProductUnit;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Unit withoutTrashed()
  */
 class Unit extends Model
 {

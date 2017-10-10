@@ -34,6 +34,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\PhonePrefix withoutTrashed()
  */
 class PhonePrefix extends Model
 {

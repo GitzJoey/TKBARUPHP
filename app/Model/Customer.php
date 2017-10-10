@@ -69,6 +69,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereDurationText($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereLatitude($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer whereLongitude($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Customer withoutTrashed()
  */
 class Customer extends Model
 {

@@ -44,7 +44,7 @@ return [
     'item.rpt' => 'Reports',
     'item.rpt_rpttrx' => 'Transactions',
     'item.rpt_rptmntr' => 'Monitoring',
-    'item.rpt_rpttax' => 'Tax Reports',
+    'item.rpt_rpttax' => 'TaxOutput Reports',
     'item.rpt_rptmaster' => 'Master Data',
     'item.rpt_rptadmin' => 'Admin Data',
     'item.master' => 'Master Data',
@@ -69,10 +69,9 @@ return [
     'item.employee' => 'Employee',
     'item.employee.salary' => 'Employee Salary',
     'item.employee.employee_list' => 'Employee List',
-    'item.tax' => 'Tax',
+    'item.tax' => 'TaxOutput',
     'item.tax.invoice' => 'e-Invoice',
     'item.tax.invoice.output' => 'Output',
     'item.tax.invoice.input' => 'Input',
-    'item.tax.generate' => 'Generate',
-    'item.tax.check_report' => 'Report Check',
+    'item.tax.generate' => 'Generate'
 ];

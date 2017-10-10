@@ -56,6 +56,11 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereBaseSalary($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee whereStatus($value)
  * @property-read mixed $h_id
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Employee withoutTrashed()
  */
 class Employee extends Model
 {

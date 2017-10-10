@@ -35,6 +35,11 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\ExpenseTemplate withoutTrashed()
  */
 class ExpenseTemplate extends Model
 {
