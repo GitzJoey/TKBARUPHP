@@ -64,7 +64,7 @@ return [
         'address' => 'Address',
         'city' => 'City',
         'phone' => 'Phone',
-        'tax_id' => 'Tax ID',
+        'tax_id' => 'TaxOutput ID',
         'status' => 'Status',
         'remarks' => 'Remarks',
         'first_name' => 'First Name',
@@ -144,7 +144,7 @@ return [
             'header' => [
                 'name' => 'Name',
                 'address' => 'Address',
-                'tax_id' => 'Tax ID',
+                'tax_id' => 'TaxOutput ID',
                 'status' => 'Status',
                 'remarks' => 'Remarks',
             ],

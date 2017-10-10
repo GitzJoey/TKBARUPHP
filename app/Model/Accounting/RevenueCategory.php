@@ -39,6 +39,11 @@ use App\Traits\StoreFilter;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\RevenueCategory whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\RevenueCategory whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\RevenueCategory onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\RevenueCategory withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\RevenueCategory withoutTrashed()
  */
 class RevenueCategory extends Model
 {

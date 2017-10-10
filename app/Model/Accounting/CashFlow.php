@@ -46,6 +46,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashFlow withoutTrashed()
  */
 class CashFlow extends Model
 {

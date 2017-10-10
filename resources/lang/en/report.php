@@ -22,7 +22,7 @@ return [
             'profile' => 'Profile',
             'name' => 'Name',
             'permission' => 'Permission',
-            'tax_id' => 'Tax ID',
+            'tax_id' => 'TaxOutput ID',
             'symbol' => 'Symbol',
             'short_name' => 'Short Name',
         ],
@@ -63,10 +63,10 @@ return [
     ],
     'tax' => [
         'title' => 'Report Management',
-        'page_title' => 'Tax Report',
+        'page_title' => 'TaxOutput Report',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Tax Report'
+            'title' => 'TaxOutput Report'
         ],
     ],
     'transaction' => [
@@ -110,7 +110,7 @@ return [
                 'city' => 'City',
                 'phone_number' => 'Phone Number',
                 'fax_num' => 'Fax Number',
-                'tax_id' => 'Tax ID',
+                'tax_id' => 'TaxOutput ID',
                 'payment_due_day' => 'Payment Due Day',
                 'price_level' => 'Price Level',
                 'status' => 'Status',
@@ -144,7 +144,7 @@ return [
                 'city' => 'City',
                 'phone_number' => 'Phone Number',
                 'fax_number' => 'Fax Number',
-                'tax_id' => 'Tax ID',
+                'tax_id' => 'TaxOutput ID',
                 'payment_due_day' => 'Payment Due Day',
                 'status' => 'Status',
                 'remarks' => 'Remarks',
@@ -270,7 +270,7 @@ return [
                 'store' => 'Store',
                 'name' => 'Name',
                 'address' => 'Address',
-                'tax_id' => 'Tax Id',
+                'tax_id' => 'TaxOutput Id',
                 'status' => 'Status',
                 'remarks' => 'Remarks',
             ],
@@ -308,14 +308,14 @@ return [
             'report_name' => 'Store Report',
             'parameter' => [
                 'name' => 'Name',
-                'tax_id' => 'Tax Id',
+                'tax_id' => 'TaxOutput Id',
             ],
             'header' => [
                 'name' => 'Name',
                 'address' => 'Address',
                 'phone_num' => 'Phone Number',
                 'fax_num' => 'Fax Number',
-                'tax_id' => 'Tax ID',
+                'tax_id' => 'TaxOutput ID',
                 'status' => 'Status',
                 'remarks' => 'Remarks',
             ],

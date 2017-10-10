@@ -28,6 +28,11 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankUpload withoutTrashed()
  */
 class BankUpload extends Model
 {

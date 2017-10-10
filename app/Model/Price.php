@@ -42,6 +42,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Price whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Price withoutTrashed()
  */
 class Price extends Model
 {

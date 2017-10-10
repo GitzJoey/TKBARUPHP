@@ -23,8 +23,11 @@
         </div>
         <div class="box-body">
             <div class="row">
-                <div class="col-md-3">
-                    <img src="{{ asset('images/blank.png') }}" class="img-rounded" alt="User Image">
+                <div class="col-md-3 text-center">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <img src="{{ empty(Auth::user()->profile->image_filename) ? asset('images/def-user.png'):asset('images/'.Auth::user()->profile->image_filename) }}" class="img-rounded" alt="User Image">
                 </div>
                 <div class="col-md-7">
                     <table class="table">

@@ -46,7 +46,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            <img src="{{ asset('images/blank.png') }}" class="img-circle" alt="User Image">
+                            <img src="{{ empty(Auth::user()->store->image_filename) ? asset('images/blank.png'):asset('images/'.Auth::user()->store->image_filename) }}" class="img-circle" alt="Store Image">
                             <p>
                                 <strong>{{ Auth::user()->store->name }}</strong>
                                 <small>{{ Auth::user()->store->address }}</small><br/>

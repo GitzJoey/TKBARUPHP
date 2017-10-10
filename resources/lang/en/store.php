@@ -36,7 +36,7 @@ return [
         'address' => 'Address',
         'phone' => 'Phone',
         'fax' => 'Fax',
-        'tax_id' => 'Tax ID',
+        'tax_id' => 'TaxOutput ID',
         'status' => 'Status',
         'default' => 'Default',
         'frontweb' => 'Front Web',
@@ -85,7 +85,7 @@ return [
             'header' => [
                 'name' => 'Name',
                 'address' => 'Address',
-                'tax_id' => 'Tax ID',
+                'tax_id' => 'TaxOutput ID',
                 'default' => 'Default',
                 'frontweb' => 'Front Web',
                 'status' => 'Status',

@@ -25,7 +25,7 @@ class ExpenseTemplateController extends Controller
 
     public function create()
     {
-        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('description', 'code');
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('i18nDescription', 'code');
 
         return view('expense_template.create', compact('expenseTypes'));
     }
@@ -63,7 +63,7 @@ class ExpenseTemplateController extends Controller
     {
         $expenseTemplate = ExpenseTemplate::find($id);
 
-        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('description', 'code');
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE')->pluck('i18nDescription', 'code');
 
         return view('expense_template.edit', compact('expenseTemplate', 'expenseTypes'));
     }

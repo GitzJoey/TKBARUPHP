@@ -59,6 +59,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereMinimalInStock($value)
  * @property int $minimum_in_stock
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Product whereMinimumInStock($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Product withoutTrashed()
  */
 class Product extends Model
 {

@@ -45,25 +45,25 @@
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-yellow">
+            <div class="small-box bg-yellow" id="last-price-update" v-cloak>
                 <div class="inner">
-                    <h3>44</h3>
-                    <p>&nbsp;&nbsp;&nbsp;</p>
+                    <h3>@{{ last_price_update_humanize }}</h3>
+                    <p>@{{ last_price_update }}</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-ios-person-add"></i>
+                    <i class="ion ion-md-trending-up"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">@lang('dashboard.last_price_update.title')</a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-red">
+            <div class="small-box bg-maroon">
                 <div class="inner">
-                    <h3>65</h3>
+                    <h3></h3>
                     <p>&nbsp;&nbsp;&nbsp;</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-ios-pie"></i>
+                    <i class="ion ion-ios-briefcase"></i>
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
@@ -122,10 +122,10 @@
                             <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-wrench"></i></button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders'>@lang('dashboard.due_purchase_orders.options.all')</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(1)'>@lang('dashboard.due_purchase_orders.options.1day')</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(3)'>@lang('dashboard.due_purchase_orders.options.3days')</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDuePurchaseOrders(5)'>@lang('dashboard.due_purchase_orders.options.5days')</a></li>
+                                <li><a v-on:click.capture='fetchDuePurchaseOrders'>@lang('dashboard.due_purchase_orders.options.all')</a></li>
+                                <li><a v-on:click.capture='fetchDuePurchaseOrders(1)'>@lang('dashboard.due_purchase_orders.options.1day')</a></li>
+                                <li><a v-on:click.capture='fetchDuePurchaseOrders(3)'>@lang('dashboard.due_purchase_orders.options.3days')</a></li>
+                                <li><a v-on:click.capture='fetchDuePurchaseOrders(5)'>@lang('dashboard.due_purchase_orders.options.5days')</a></li>
                             </ul>
                         </div>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -166,10 +166,10 @@
                             <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-wrench"></i></button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders'>@lang('dashboard.due_sales_orders.options.all')</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(1)'>@lang('dashboard.due_sales_orders.options.1day')</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(3)'>@lang('dashboard.due_sales_orders.options.3days')</a></li>
-                                <li><a v-link='{name: "home"}' v-on:click.capture='fetchDueSalesOrders(5)'>@lang('dashboard.due_sales_orders.options.5days')</a></li>
+                                <li><a v-on:click.capture='fetchDueSalesOrders'>@lang('dashboard.due_sales_orders.options.all')</a></li>
+                                <li><a v-on:click.capture='fetchDueSalesOrders(1)'>@lang('dashboard.due_sales_orders.options.1day')</a></li>
+                                <li><a v-on:click.capture='fetchDueSalesOrders(3)'>@lang('dashboard.due_sales_orders.options.3days')</a></li>
+                                <li><a v-on:click.capture='fetchDueSalesOrders(5)'>@lang('dashboard.due_sales_orders.options.5days')</a></li>
                             </ul>
                         </div>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -637,6 +637,37 @@
                             this.last_bank_upload = '@lang('dashboard.last_bank_upload.label.no_data_found')';
                         }
                     }, response => {
+                            // error callback
+                        });
+                    }
+                }
+            });
+
+            new Vue({
+                el: '#last-price-update',
+                data: {
+                    last_price_update_humanize: '',
+                    last_price_update: '',
+                },
+                mounted() {
+                    return this.fetchLastPriceUpdate();
+                },
+                methods: {
+                    fetchLastPriceUpdate: function() {
+                        axios.get('{{ route('api.price.last_update') }}').then(response => {
+                            // get body data
+                            this.last_price_update = response.data;
+
+                            if(this.last_price_update.length > 0) {
+                                this.last_price_update_humanize = moment(this.last_price_update[0].created_at).fromNow();
+                                this.last_price_update = moment(this.last_price_update[0].created_at).format('YYYY-MM-DD');
+                            }
+                            else
+                            {
+                                this.last_price_update_humanize = '@lang('dashboard.last_price_update.label.never')';
+                                this.last_price_update = '@lang('dashboard.last_price_update.label.no_data_found')';
+                            }
+                        }, response => {
                             // error callback
                         });
                     }

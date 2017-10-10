@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Tax;
-use App\Model\TaxItem;
+use App\Model\TaxOutput;
+use App\Model\TaxOutputItem;
 use App\Model\TaxInput;
 
 use Illuminate\Http\Request;
@@ -24,7 +24,7 @@ class ReportTaxController extends Controller
             ->where('year', $request->get('year'))
             ->orderBy('invoice_date', 'asc')
             ->get()->toArray();
-        $outputs = Tax::with('transactions')
+        $outputs = TaxOutput::with('transactions')
             ->where('month', $request->get('month'))
             ->where('year', $request->get('year'))
             ->orderBy('invoice_date', 'asc')

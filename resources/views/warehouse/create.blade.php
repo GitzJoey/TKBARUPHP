@@ -95,7 +95,7 @@
                                         </td>
                                         <td><input type="text" class="form-control" v-model="c.remarks" name="section_remarks[]"/></td>
                                         <td class="text-center valign-middle">
-                                            <button type="button" class="btn btn-xs btn-danger" data="@{{ cI }}" v-on:click="removeSelected(cI)">
+                                            <button type="button" class="btn btn-xs btn-danger" v-bind:data="cI" v-on:click="removeSelected(cI)">
                                                 <span class="fa fa-close fa-fw"></span>
                                             </button>
                                         </td>
@@ -176,14 +176,14 @@
                             window.location.href = '{{ route('db.master.warehouse') }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
-                            if (Object.keys(e.response.data).length > 0) {
-                                for (var key in e.response.data) {
-                                    for (var i = 0; i < e.response.data[key].length; i++) {
-                                        vm.$validator.errorBag.add('', e.response.data[key][i], 'server', '__global__');
+                            if (Object.keys(e.response.data.errors).length > 0) {
+                                for (var key in e.response.data.errors) {
+                                    for (var i = 0; i < e.response.data.errors[key].length; i++) {
+                                        vm.$validator.errors.add('', e.response.data.errors[key][i], 'server', '__global__');
                                     }
                                 }
                             } else {
-                                vm.$validator.errorBag.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                vm.$validator.errors.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
                             }
                         });
                     });

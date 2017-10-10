@@ -59,6 +59,11 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Deliver withoutTrashed()
  */
 class Deliver extends Model
 {

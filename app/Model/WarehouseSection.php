@@ -49,6 +49,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\WarehouseSection withoutTrashed()
  */
 class WarehouseSection extends Model
 {

@@ -54,6 +54,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read mixed $clean_quantity
  * @property-read mixed $clean_current_quantity
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\StockOpname[] $stockOpnames
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock withoutTrashed()
  */
 class Stock extends Model
 {

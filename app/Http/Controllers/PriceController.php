@@ -17,7 +17,7 @@ class PriceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', [ 'except' => [ 'getLastUpdate' ] ]);
     }
 
     public function index()
@@ -107,5 +107,10 @@ class PriceController extends Controller
             $messages = ['dbException.required' => $e->getMessage()];
             Validator::make($request->all(), $rules, $messages)->validate();
         }
+    }
+
+    public function getLastUpdate()
+    {
+        return Price::orderBy('input_date', 'desc')->first();
     }
 }

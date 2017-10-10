@@ -42,6 +42,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Model\Store $store
  * @property string $maintenance_date
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TruckMaintenance whereMaintenanceDate($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TruckMaintenance onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TruckMaintenance withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\TruckMaintenance withoutTrashed()
  */
 class TruckMaintenance extends Model
 {

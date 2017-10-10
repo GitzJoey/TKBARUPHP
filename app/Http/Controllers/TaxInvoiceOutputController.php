@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Model\Store;
-use App\Model\Tax;
+use App\Model\TaxOutput;
 use App\Services\TaxInvoiceOutputService;
 use Illuminate\Http\Request;
 use App\Repos\LookupRepo;
@@ -23,7 +23,7 @@ class TaxInvoiceOutputController extends Controller
     public function index()
     {
         Log::info('[TaxInvoiceOutputController@index] ');
-        $taxes = new Tax();
+        $taxes = new TaxOutput();
         $taxes = $taxes->orderBy('invoice_date', 'desc')->get();
         return view('tax.invoice.output.index', compact('taxes'));
     }
@@ -96,7 +96,7 @@ class TaxInvoiceOutputController extends Controller
     {
         Log::info('[TaxInvoiceOutputController@delete] $id:' . $id);
 
-        $tax = Tax::find($id);
+        $tax = TaxOutput::find($id);
         $tax->transactions->each(function($ba) { $ba->delete(); });
         $tax->delete();
 

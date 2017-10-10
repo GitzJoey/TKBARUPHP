@@ -163,7 +163,7 @@ return [
             'header' => [
                 'name' => 'Nama',
                 'address' => 'Alamat',
-                'tax_id' => 'Tax ID',
+                'tax_id' => 'TaxOutput ID',
                 'status' => 'Status',
                 'remarks' => 'Keterangan',
             ],

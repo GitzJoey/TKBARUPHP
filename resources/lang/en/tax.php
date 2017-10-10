@@ -79,7 +79,7 @@ return [
                 ],
                 'table' => [
                     'header' => [
-                        'tin' => 'Tax ID No',
+                        'tin' => 'TaxOutput ID No',
                         'name' => 'Name',
                         'invoice_no' => 'Invoice No',
                         'invoice_date' => 'Invoice Date',
@@ -87,9 +87,9 @@ return [
                         'month' => 'Month',
                         'year' => 'Year',
                         'invoice_status' => 'Invoice Status',
-                        'tax_base' => 'Tax Base',
+                        'tax_base' => 'TaxOutput Base',
                         'vat' => 'VAT',
-                        'luxury_tax' => 'Luxury Tax',
+                        'luxury_tax' => 'Luxury TaxOutput',
                         'approval_status' => 'Approval Status',
                         'approval_date' => 'Approval Date',
                         'description' => 'Description',

@@ -45,6 +45,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Giro withoutTrashed()
  */
 class Giro extends Model
 {

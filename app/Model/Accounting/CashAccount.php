@@ -53,6 +53,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\Cost[] $costs
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Accounting\Revenue[] $revenues
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashAccount whereType($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashAccount onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashAccount withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Accounting\CashAccount withoutTrashed()
  */
 class CashAccount extends Model
 {

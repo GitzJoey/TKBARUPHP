@@ -37,6 +37,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail whereDeletedAt($value)
  * @mixin \Eloquent
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\UserDetail withoutTrashed()
  */
 class UserDetail extends Model
 {

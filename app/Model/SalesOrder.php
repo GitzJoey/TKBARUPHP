@@ -78,6 +78,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $private_remarks
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder whereInternalRemarks($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder wherePrivateRemarks($value)
+ * @property-read bool $status_localized
+ * @property-read bool $total_amount_text
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\SalesOrder withoutTrashed()
  */
 class SalesOrder extends Model
 {

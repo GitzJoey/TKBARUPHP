@@ -18,6 +18,13 @@ return [
             'no_data_found' => 'Tidak ada data ditemukan',
         ],
     ],
+    'last_price_update' => [
+        'title' => 'Perbaharui Harga',
+        'label' => [
+            'never' => 'Belum Pernah',
+            'no_data_found' => 'Tidak ada data ditemukan',
+        ],
+    ],
     'number_of_created_so' => [
         'title' => 'Jumlah Pembuatan Penjualan',
     ],

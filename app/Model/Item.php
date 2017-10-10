@@ -59,6 +59,11 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Item whereDeletedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\ItemDiscounts[] $discounts
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\Item withoutTrashed()
  */
 class Item extends Model
 {

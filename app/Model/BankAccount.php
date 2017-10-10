@@ -45,6 +45,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property string $account_name
  * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount whereAccountName($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\BankAccount withoutTrashed()
  */
 class BankAccount extends Model
 {
