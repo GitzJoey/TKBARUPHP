@@ -54,12 +54,16 @@ class TaxInvoiceInputController extends Controller
     {
         Log::info('[TaxInvoiceInputController@store]');
 
-        if (is_null($this->taxInvoiceInputService->createInvoice($request))) {
-            return response()->json([
-                'result' => 'failed',
-                'message' => ''
-            ]);
-        };
+        try {
+            $this->taxInvoiceInputService->createInvoice($request);
+        } catch (\Exception $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+            return back();
+        }
 
         return response()->json([
             'result' => 'success',
@@ -108,13 +112,23 @@ class TaxInvoiceInputController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->taxInvoiceInputService->editInvoice($request, $id);
+        Log::info('[TaxInvoiceInputController@update]');
+
+        try {
+            $this->taxInvoiceInputService->editInvoice($request, $id);
+        } catch (\Exception $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => $e->getMessage()
+                ], 500);
+            }
+            return back();
+        }
 
         return response()->json([
             'result' => 'success',
             'message' => ''
         ]);
-        //
     }
 
     /**
