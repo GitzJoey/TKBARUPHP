@@ -239,6 +239,10 @@ Route::group(['prefix' => 'get'], function () {
         Route::get('last_sale', 'CustomerController@getLastSale')->name('api.get.customer.last_sale');
     });
 
+    Route::group(['prefix' => 'supplier'], function () {
+        Route::get('search_supplier', 'SupplierController@searchSuppliers')->name('api.supplier.search');
+    });
+
     Route::group(['prefix' => 'phone_provider'], function() {
         Route::get('search/{param?}', 'PhoneProviderController@getPhoneProviderByDigit')->name('api.phone_provider.search');
     });
