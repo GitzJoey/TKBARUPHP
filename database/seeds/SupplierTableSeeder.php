@@ -24,7 +24,7 @@ class SupplierTableSeeder extends Seeder
             $supplier->city = 'Kota Supplier '.$s;
             $supplier->phone_number = '0000000000';
             $supplier->fax_num = '0000000000';
-            $supplier->tax_id = '123-123-123-123-123';
+            $supplier->tax_id = '123-123-123-123-12'.$s;
             $supplier->status = 'STATUS.ACTIVE';
             $supplier->store_id = 1;
 

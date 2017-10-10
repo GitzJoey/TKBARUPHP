@@ -15,7 +15,7 @@ class CreateTaxesTable extends Migration
     {
         Schema::create('taxes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('invoice_no')->unique();
+            $table->string('invoice_no');
             $table->string('invoice_date');
             $table->string('gst_transaction_type')->nullable();
             $table->string('transaction_doc')->nullable();

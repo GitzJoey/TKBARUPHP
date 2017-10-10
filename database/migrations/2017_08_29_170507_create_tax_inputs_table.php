@@ -15,7 +15,7 @@ class CreateTaxInputsTable extends Migration
     {
         Schema::create('tax_inputs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('invoice_no')->unique();
+            $table->string('invoice_no');
             $table->string('invoice_date');
             $table->integer('month');
             $table->integer('year');
