@@ -48,10 +48,7 @@ class TaxInvoiceOutputController extends Controller
             ]);
         };
 
-        return response()->json([
-            'result' => 'success',
-            'message' => '',
-        ]);
+        return response()->json();
     }
 
     public function show($id)
@@ -86,10 +83,7 @@ class TaxInvoiceOutputController extends Controller
     {
         $this->taxInvoiceOutputService->editInvoice($request, $id);
 
-        return response()->json([
-            'result' => 'success',
-            'message' => ''
-        ]);
+        return response()->json();
     }
 
     public function delete($id)

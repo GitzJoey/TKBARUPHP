@@ -46,9 +46,7 @@ class WarehouseInflowController extends Controller
     {
         $this->inflowService->createPOReceipt($request, $id);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function getWarehousePOs($id)

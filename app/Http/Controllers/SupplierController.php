@@ -127,9 +127,7 @@ class SupplierController extends Controller
             }
         });
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function edit($id)
@@ -246,9 +244,7 @@ class SupplierController extends Controller
             }
         });
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function delete($id)

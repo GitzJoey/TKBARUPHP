@@ -159,9 +159,7 @@ class CustomerController extends Controller
                 }
             });
 
-            return response()->json([
-                'result' => 'success'
-            ]);
+            return response()->json();
         }
     }
 
@@ -361,9 +359,7 @@ class CustomerController extends Controller
         $so->status = 'SOSTATUS.WAPPV';
         $so->save();
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function approvalIndex()
@@ -430,9 +426,7 @@ class CustomerController extends Controller
     public function storePaymentCashCustomer($id, Request $request)
     {
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function paymentTransferCustomer($id)
@@ -455,10 +449,7 @@ class CustomerController extends Controller
 
     public function storePaymentTransferCustomer($id, Request $request)
     {
-
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function paymentGiroCustomer($id)
@@ -478,10 +469,7 @@ class CustomerController extends Controller
 
     public function storePaymentGiroCustomer($id, Request $request)
     {
-
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function searchCustomers(Request $request)

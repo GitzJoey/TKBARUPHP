@@ -75,9 +75,7 @@ class PurchaseOrderCopyController extends Controller
 
         $poCopy = $this->purchaseOrderCopyService->createPOCopy($request, $poCode);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function edit($poCode, $id)
@@ -92,9 +90,7 @@ class PurchaseOrderCopyController extends Controller
     {
         $editedPOCopy = $this->purchaseOrderCopyService->editPOCopy($request, $id);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function delete($poCode, $id)

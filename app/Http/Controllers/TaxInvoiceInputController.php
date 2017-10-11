@@ -61,10 +61,7 @@ class TaxInvoiceInputController extends Controller
             ]);
         };
 
-        return response()->json([
-            'result' => 'success',
-            'message' => '',
-        ]);
+        return response()->json();
     }
 
     /**
@@ -110,11 +107,7 @@ class TaxInvoiceInputController extends Controller
     {
         $this->taxInvoiceInputService->editInvoice($request, $id);
 
-        return response()->json([
-            'result' => 'success',
-            'message' => ''
-        ]);
-        //
+        return response()->json();
     }
 
     /**

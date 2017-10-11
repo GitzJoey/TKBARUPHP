@@ -92,10 +92,7 @@ class PurchaseOrderController extends Controller
             ]);
         };
 
-        return response()->json([
-            'result' => 'success',
-            'message' => '',
-        ]);
+        return response()->json();
     }
 
     public function index()
@@ -125,10 +122,7 @@ class PurchaseOrderController extends Controller
     {
         $this->purchaseOrderService->revisePO($request, $id);
 
-        return response()->json([
-            'result' => 'success',
-            'message' => ''
-        ]);
+        return response()->json();
     }
 
     public function delete(Request $request, $id)
