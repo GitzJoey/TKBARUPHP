@@ -59,7 +59,7 @@
         <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-maroon">
                 <div class="inner">
-                    <h3></h3>
+                    <h3>&nbsp;&nbsp;&nbsp;</h3>
                     <p>&nbsp;&nbsp;&nbsp;</p>
                 </div>
                 <div class="icon">
