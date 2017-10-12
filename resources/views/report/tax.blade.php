@@ -13,6 +13,7 @@
 @endsection
 
 @section('content')
+<div id="taxReport">
     <div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">@lang('report.tax.header.title')</h3>
@@ -79,12 +80,25 @@
     var app = new Vue({
         el: '#taxReport',
         data: {
+            taxesInput: [],
             report: {
                 month: new Date().getMonth() + 1,
                 year: new Date().getFullYear()
             }
         },
+        computed: {
+            totalGstInput: function () {
+                return _.sumBy(this.taxesInput, 'gst');
+            },
+            grandTotalInput: function () {
+                return _.sumBy(this.taxesInput, function (taxInput) {
+                    return taxInput.taxBase + taxInput.gst + taxInput.luxuryTax;
+                });
+            }
+        },
         mounted: function() {
+            this.taxesInput = this.camelCasingKey({!! json_encode($taxes_input) !!});
+            console.log(this.taxesInput);
         },
         methods: {
             generateReport: function() {
