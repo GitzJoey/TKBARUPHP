@@ -31,7 +31,22 @@ Vue.component('select2-supplier', require('./components/select2-supplier.vue'));
 
 Vue.mixin({
   methods: {
-    numeral: require('numeral')
+    numeral: require('numeral'),
+    camelCasingKey: function(value) {
+      var object = {};
+      if (_.isArray(value)) {
+        object = _.map(value, function (v) {
+            return this.camelCasingKey(v);
+        }.bind(this));
+      } else if (_.isObject(value)) {
+        _.forEach(value, function(v, k) {
+            object[_.camelCase(k)] = this.camelCasingKey(v);
+        }.bind(this));
+      } else {
+        object = value;
+      }
+      return object;
+    }
   }
 })
 
