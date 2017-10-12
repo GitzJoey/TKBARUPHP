@@ -55,9 +55,9 @@
                     @foreach ($trucklist as $key => $truck)
                         <tr>
                             <td class="text-center">{{ $truck->truck->plate_number }}</td>
-                            <td>{{ \Carbon\Carbon::parse($truck->maintenance_date)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($truck->maintenance_date)->format('d-m-Y') }}</td>
                             <td>@lang('lookup.'.$truck->maintenance_type)</td>
-                            <td class="text-center">{{ $truck->cost }}</td>
+                            <td class="pull-right">{{ number_format($truck->cost, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
                             <td class="text-center">{{ $truck->odometer }}</td>
                             <td>{{ $truck->remarks }}</td>
                             <td class="text-center">

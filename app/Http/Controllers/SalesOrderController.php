@@ -84,9 +84,7 @@ class SalesOrderController extends Controller
             return back();
         }
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function saveDraft(Request $request)
@@ -95,9 +93,7 @@ class SalesOrderController extends Controller
 
         $this->salesOrderService->storeToSession($request);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function index()
@@ -130,9 +126,7 @@ class SalesOrderController extends Controller
     {
         $this->salesOrderService->reviseSO($request, $id);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function delete(Request $request, $id)

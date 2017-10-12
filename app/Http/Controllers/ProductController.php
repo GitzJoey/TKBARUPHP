@@ -121,9 +121,7 @@ class ProductController extends Controller
             DB::rollBack();
         }
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function edit($id)
@@ -229,9 +227,7 @@ class ProductController extends Controller
             DB::rollBack();
         }
 
-        return response()->json([
-           'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function delete($id)

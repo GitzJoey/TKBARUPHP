@@ -65,10 +65,7 @@ class TaxInvoiceInputController extends Controller
             return back();
         }
 
-        return response()->json([
-            'result' => 'success',
-            'message' => '',
-        ]);
+        return response()->json();
     }
 
     /**
@@ -125,10 +122,7 @@ class TaxInvoiceInputController extends Controller
             return back();
         }
 
-        return response()->json([
-            'result' => 'success',
-            'message' => ''
-        ]);
+        return response()->json();
     }
 
     /**

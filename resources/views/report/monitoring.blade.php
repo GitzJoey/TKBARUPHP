@@ -23,19 +23,35 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             @if(Laratrust::can('report_monitoring-stockhistory'))
-                            <li class="active">
-                                <a href="#tab_mon_1" data-toggle="tab">
-                                    @lang('stock_history.page_title')
+                                <li class="active">
+                                    <a href="#tab_mon_1" data-toggle="tab">
+                                        @lang('stock_history.page_title')
+                                    </a>
+                                </li>
+                            @endif
+                            <li>
+                                <a href="#tab_mon_trx_po" data-toggle="tab">
+                                    Purchase Order
                                 </a>
                             </li>
-                            @endif
+                            <li>
+                                <a href="#tab_mon_trx_so" data-toggle="tab">
+                                    Sales Order
+                                </a>
+                            </li>
                         </ul>
-                        <div class="tab-content" id="tab_monitoring" >
+                        <div class="tab-content" id="tab_monitoring">
                             @if(Laratrust::can('report_monitoring-stockhistory'))
                                 <div class="tab-pane active" id="tab_mon_1">
                                     @include('report.monitoring_components.stock_histories')
                                 </div>
                             @endif
+                            <div class="tab-pane" id="tab_mon_trx_po">
+                                @include('report.monitoring_components.po')
+                            </div>
+                            <div class="tab-pane" id="tab_mon_trx_so">
+                                @include('report.monitoring_components.so')
+                            </div>
                         </div>
                     </div>
                 </div>
