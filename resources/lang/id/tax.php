@@ -9,7 +9,8 @@ return [
                 'title' => [
                     'transaction_opponent' => 'Lawan Transaksi',
                     'spt_report' => 'Pelaporan SPT',
-                    'tax_invoice_value' => 'Nilai Faktur Pajak'
+                    'tax_invoice_value' => 'Nilai Faktur Pajak',
+                    'invoice_detail' => 'Uraian Faktur',
                 ],
                 'field' => [
                     'invoice_no' => 'Nomor Faktur',
@@ -19,6 +20,9 @@ return [
                     'opponent_tax_id_no' => 'NPWP Lawan Transaksi',
                     'opponent_name' => 'Nama Lawan Transaksi',
                     'is_creditable' => 'Apakah Faktur Masukan Pajak ini dapat dikreditkan?',
+                    'detail' => 'Uraian',
+                    'unit' => 'Satuan (kg)',
+                    'unit_price' => 'Harga Satuan',
                     'tax_base' => 'Jumlah DPP',
                     'gst' => 'Jumlah PPN',
                     'luxury_tax' => 'Jumlah PPNBM'

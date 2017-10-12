@@ -22,6 +22,9 @@ class CreateTaxInputsTable extends Migration
             $table->boolean('is_creditable')->default(false);
             $table->string('opponent_tax_id_no');
             $table->string('opponent_name');
+            $table->string('detail');
+            $table->integer('unit');
+            $table->integer('unit_price');
             $table->bigInteger('tax_base');
             $table->bigInteger('gst');
             $table->bigInteger('luxury_tax');

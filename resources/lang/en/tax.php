@@ -9,7 +9,8 @@ return [
                 'title' => [
                     'transaction_opponent' => 'Transaction Opponent',
                     'spt_report' => 'SPT Report',
-                    'tax_invoice_value' => 'Tax Invoice Value'
+                    'tax_invoice_value' => 'Tax Invoive Value',
+                    'invoice_detail' => 'Invoice Detail',
                 ],
                 'field' => [
                     'invoice_no' => 'Invoice Number',
@@ -19,6 +20,9 @@ return [
                     'opponent_tax_id_no' => 'Opponent Tax ID',
                     'opponent_name' => 'Opponent Transaction Name',
                     'is_creditable' => 'Is this Tax Invoice Input creditable?',
+                    'detail' => 'Detail',
+                    'unit' => 'Unit (kg)',
+                    'unit_price' => 'Unit Price',
                     'tax_base' => 'Tax Base',
                     'gst' => 'GST',
                     'luxury_tax' => 'PPNBM'

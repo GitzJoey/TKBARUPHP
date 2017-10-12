@@ -124,6 +124,36 @@
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header with-border">
+                            <h3 class="box-title">@lang('tax.invoice.input.create.title.invoice_detail')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="detail" class="control-label">@lang('tax.invoice.input.create.field.detail')</label>
+                                        <input id="detail" name="detail" type="text" class="form-control" v-model="detail" v-validate="'required'" data-vv-as="@lang('tax.invoice.input.create.field.detail')">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="unit" class="control-label">@lang('tax.invoice.input.create.field.unit')</label>
+                                        <input id="unit" name="unit" type="text" class="form-control" v-bind:value="unit" v-on:input="onInputUnit" v-validate="'required|numeric'" data-vv-as="@lang('tax.invoice.input.create.field.unit')">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="unit_price" class="control-label">@lang('tax.invoice.input.create.field.unit_price')</label>
+                                        <input id="unit_price" name="unit_price" type="text" class="form-control" v-bind:value="unitPrice" v-on:input="onInputUnitPrice" v-validate="'required|numeric'" data-vv-as="@lang('tax.invoice.input.create.field.unit_price')">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
                             <h3 class="box-title">@lang('tax.invoice.input.create.title.tax_invoice_value')</h3>
                         </div>
                         <div class="box-body">
@@ -177,6 +207,9 @@
                 opponentTaxIdNo: "{{ $tax->opponent_tax_id_no }}",
                 opponentName: "{{ $tax->opponent_name }}",
                 taxBase: "{{ $tax->tax_base }}",
+                detail: "{{ $tax->detail }}",
+                unit: "{{ $tax->unit }}",
+                unitPrice: "{{ $tax->unit_price }}",
                 gst: "{{ $tax->gst }}",
                 luxuryTax: "{{ $tax->luxury_tax }}",
             },
@@ -206,6 +239,16 @@
                     this.invoiceDate = value;
                     this.month = moment(value, 'DD/MM/YYYY').format('MM');
                     this.year = moment(value, 'DD/MM/YYYY').format('YYYY');
+                },
+                onInputUnit: function (e) {
+                    this.unit = e.target.value;
+                    this.taxBase = this.unit * this.unitPrice;
+                    this.gst = this.taxBase * 10 / 100;
+                },
+                onInputUnitPrice: function (e) {
+                    this.unitPrice = e.target.value;
+                    this.taxBase = this.unit * this.unitPrice;
+                    this.gst = this.taxBase * 10 / 100;
                 },
                 onInputTaxBase: function (e) {
                     this.taxBase = e.target.value;
