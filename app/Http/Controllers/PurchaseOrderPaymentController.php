@@ -81,9 +81,7 @@ class PurchaseOrderPaymentController extends Controller
 
         $this->paymentService->createCashPayment($currentPo, $paymentDate, $paymentAmount);
 
-        return response()->json([
-           'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function createTransferPayment($id)
@@ -114,9 +112,7 @@ class PurchaseOrderPaymentController extends Controller
 
         $currentPo->payments()->save($payment);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function createGiroPayment($id)
@@ -151,8 +147,6 @@ class PurchaseOrderPaymentController extends Controller
 
         $currentPo->payments()->save($payment);
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 }

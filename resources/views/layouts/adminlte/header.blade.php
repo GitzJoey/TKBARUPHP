@@ -14,7 +14,7 @@
                 <li>
                     <a class="disabled" id="timeoutCount" title="Timeout Remaining">0:00:00</a>
                 </li>
-                <li>
+                <li class="hidden-xs">
                     <a href="/front"><span class="fa fa-external-link fa-fw" title="Back To Frontpage"></span></a>
                 </li>
                 <li class="dropdown notifications-menu">

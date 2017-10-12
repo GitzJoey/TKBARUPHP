@@ -69,7 +69,7 @@ return [
     'item.employee' => 'Employee',
     'item.employee.salary' => 'Employee Salary',
     'item.employee.employee_list' => 'Employee List',
-    'item.tax' => 'TaxOutput',
+    'item.tax' => 'Tax',
     'item.tax.invoice' => 'e-Invoice',
     'item.tax.invoice.output' => 'Output',
     'item.tax.invoice.input' => 'Input',

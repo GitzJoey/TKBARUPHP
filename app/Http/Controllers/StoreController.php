@@ -140,9 +140,7 @@ class StoreController extends Controller
             }
         });
 
-        return response()->json([
-           'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function edit($id)
@@ -244,9 +242,7 @@ class StoreController extends Controller
             $store->save();
         });
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function delete($id)

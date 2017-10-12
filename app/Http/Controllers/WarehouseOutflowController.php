@@ -86,9 +86,7 @@ class WarehouseOutflowController extends Controller
         $so->status = 'SOSTATUS.WCC';
         $so->save();
 
-        return response()->json([
-            'result' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function getWarehouseSOs(Request $request, $id)

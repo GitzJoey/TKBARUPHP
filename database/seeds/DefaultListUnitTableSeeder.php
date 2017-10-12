@@ -39,6 +39,18 @@ class DefaultListUnitTableSeeder extends Seeder
                 'status'    => 'STATUS.ACTIVE',
                 'remarks'   => ''
             ],
+            [
+                'name'      => 'Pak',
+                'symbol'    => 'P',
+                'status'    => 'STATUS.ACTIVE',
+                'remarks'   => ''
+            ],
+            [
+                'name'      => 'Kardus',
+                'symbol'    => 'Dus',
+                'status'    => 'STATUS.ACTIVE',
+                'remarks'   => ''
+            ]
         ];
         foreach ($unit as $key => $value) {
             Unit::create($value);

@@ -189,7 +189,7 @@
                         <label for="inputMinimalInStock" class="col-sm-2 control-label">@lang('product.field.minimal_in_stock')</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="inputMinimalInStock" name="minimal_in_stock"
-                                   v-validate="'required|min_value:1|numeric'" placeholder="@lang('product.field.minimal_in_stock')"
+                                   v-validate="'required|min_value:0|numeric'" placeholder="@lang('product.field.minimal_in_stock')"
                                    data-vv-as="{{ trans('product.field.minimal_in_stock') }}">
                             <span v-show="errors.has('minimal_in_stock')" class="help-block" v-cloak>@{{ errors.first('minimal_in_stock') }}</span>
                         </div>
