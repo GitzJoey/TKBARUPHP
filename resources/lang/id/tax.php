@@ -21,7 +21,7 @@ return [
                     'opponent_name' => 'Nama Lawan Transaksi',
                     'is_creditable' => 'Apakah Faktur Masukan Pajak ini dapat dikreditkan?',
                     'detail' => 'Uraian',
-                    'unit' => 'Satuan (kg)',
+                    'qty' => 'Satuan (kg)',
                     'unit_price' => 'Harga Satuan',
                     'tax_base' => 'Jumlah DPP',
                     'gst' => 'Jumlah PPN',

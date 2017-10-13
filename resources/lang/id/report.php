@@ -74,11 +74,11 @@ return [
                     'invoice_date' => 'Tanggal Faktur',
                     'invoice_no' => 'No Faktur',
                     'detail' => 'Uraian',
-                    'unit' => 'Satuan<br>(kg)',
+                    'qty' => 'Satuan (kg)',
                     'unit_price' => 'Harga Satuan',
-                    'tax_base' => 'DPP Beli<br>(Rp)',
-                    'gst' => 'PPN-PM<br>(Rp)',
-                    'grand_total' => 'Total yang dibayar<br>(Rp)'
+                    'tax_base' => 'DPP Beli (Rp)',
+                    'gst' => 'PPN-PM (Rp)',
+                    'grand_total' => 'Total yang dibayar (Rp)'
                 ]
             ]
         ],

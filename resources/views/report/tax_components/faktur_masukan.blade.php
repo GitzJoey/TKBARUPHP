@@ -5,7 +5,7 @@
             <th class="text-center" style="vertical-align:middle">@lang('report.tax.input.table.header.invoice_date')</th>
             <th class="text-center" style="vertical-align:middle">@lang('report.tax.input.table.header.invoice_no')</th>
             <th class="text-center" style="vertical-align:middle">@lang('report.tax.input.table.header.detail')</th>
-            <th class="text-center" style="vertical-align:middle">@lang('report.tax.input.table.header.unit')</th>
+            <th class="text-center" style="vertical-align:middle">@lang('report.tax.input.table.header.qty')</th>
             <th class="text-center" style="vertical-align:middle">@lang('report.tax.input.table.header.unit_price')</th>
             <th class="text-center" style="vertical-align:middle">@lang('report.tax.input.table.header.tax_base')</th>
             <th class="text-center" style="vertical-align:middle">@lang('report.tax.input.table.header.gst')</th>
@@ -17,7 +17,7 @@
             <td class="text-center">@{{ taxInput.invoiceDate }}</td>
             <td class="text-center">@{{ taxInput.invoiceNo }}</td>
             <td class="text-center">@{{ taxInput.detail }}</td>
-            <td class="text-center">@{{ taxInput.unit }}</td>
+            <td class="text-center">@{{ taxInput.qty }}</td>
             <td class="text-right">@{{ numeral(taxInput.unitPrice).format() }}</td>
             <td class="text-right">@{{ numeral(taxInput.taxBase).format() }}</td>
             <td class="text-right">@{{ numeral(taxInput.gst).format() }}</td>

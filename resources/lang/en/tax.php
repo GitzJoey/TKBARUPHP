@@ -21,7 +21,7 @@ return [
                     'opponent_name' => 'Opponent Transaction Name',
                     'is_creditable' => 'Is this Tax Invoice Input creditable?',
                     'detail' => 'Detail',
-                    'unit' => 'Unit (kg)',
+                    'qty' => 'Unit (kg)',
                     'unit_price' => 'Unit Price',
                     'tax_base' => 'Tax Base',
                     'gst' => 'GST',

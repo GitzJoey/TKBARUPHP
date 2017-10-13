@@ -23,7 +23,7 @@ class CreateTaxInputsTable extends Migration
             $table->string('opponent_tax_id_no');
             $table->string('opponent_name');
             $table->string('detail');
-            $table->integer('unit');
+            $table->integer('qty');
             $table->integer('unit_price');
             $table->bigInteger('tax_base');
             $table->bigInteger('gst');

@@ -74,11 +74,11 @@ return [
                     'invoice_date' => 'Invoice Date',
                     'invoice_no' => 'Invoice Number',
                     'detail' => 'Detail',
-                    'unit' => 'Unit<br>(kg)',
+                    'qty' => 'Unit (kg)',
                     'unit_price' => 'Unit Price',
-                    'tax_base' => 'Tax Base<br>(Rp)',
-                    'gst' => 'GST<br>(Rp)',
-                    'grand_total' => 'Total Paid<br>(Rp)'
+                    'tax_base' => 'Tax Base (Rp)',
+                    'gst' => 'GST (Rp)',
+                    'grand_total' => 'Total Paid (Rp)'
                 ]
             ]
         ],

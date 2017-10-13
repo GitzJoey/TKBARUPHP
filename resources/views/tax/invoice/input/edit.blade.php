@@ -134,8 +134,8 @@
                                         <input id="detail" name="detail" type="text" class="form-control" v-model="detail" v-validate="'required'" data-vv-as="@lang('tax.invoice.input.create.field.detail')">
                                     </div>
                                     <div class="form-group">
-                                        <label for="unit" class="control-label">@lang('tax.invoice.input.create.field.unit')</label>
-                                        <input id="unit" name="unit" type="text" class="form-control" v-bind:value="unit" v-on:input="onInputUnit" v-validate="'required|numeric'" data-vv-as="@lang('tax.invoice.input.create.field.unit')">
+                                        <label for="qty" class="control-label">@lang('tax.invoice.input.create.field.qty')</label>
+                                        <input id="qty" name="qty" type="text" class="form-control" v-bind:value="qty" v-on:input="onInputQty" v-validate="'required|numeric'" data-vv-as="@lang('tax.invoice.input.create.field.qty')">
                                     </div>
                                     <div class="form-group">
                                         <label for="unit_price" class="control-label">@lang('tax.invoice.input.create.field.unit_price')</label>
@@ -208,7 +208,7 @@
                 opponentName: "{{ $tax->opponent_name }}",
                 taxBase: "{{ $tax->tax_base }}",
                 detail: "{{ $tax->detail }}",
-                unit: "{{ $tax->unit }}",
+                qty: "{{ $tax->qty }}",
                 unitPrice: "{{ $tax->unit_price }}",
                 gst: "{{ $tax->gst }}",
                 luxuryTax: "{{ $tax->luxury_tax }}",
@@ -240,14 +240,14 @@
                     this.month = moment(value, 'DD/MM/YYYY').format('MM');
                     this.year = moment(value, 'DD/MM/YYYY').format('YYYY');
                 },
-                onInputUnit: function (e) {
-                    this.unit = e.target.value;
-                    this.taxBase = this.unit * this.unitPrice;
+                onInputQty: function (e) {
+                    this.qty = e.target.value;
+                    this.taxBase = this.qty * this.unitPrice;
                     this.gst = this.taxBase * 10 / 100;
                 },
                 onInputUnitPrice: function (e) {
                     this.unitPrice = e.target.value;
-                    this.taxBase = this.unit * this.unitPrice;
+                    this.taxBase = this.qty * this.unitPrice;
                     this.gst = this.taxBase * 10 / 100;
                 },
                 onInputTaxBase: function (e) {
