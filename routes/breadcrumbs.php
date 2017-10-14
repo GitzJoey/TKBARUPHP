@@ -85,6 +85,16 @@ Breadcrumbs::register('outflow', function ($breadcrumbs){
     $breadcrumbs->push(trans('breadcrumb.warehouse.outflow.index'), route('db.warehouse.outflow.index'));
 });
 
+Breadcrumbs::register('stockopname_index', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.warehouse.stockopname.index'), route('db.warehouse.stockopname.index'));
+});
+
+Breadcrumbs::register('stockopname_adjust', function ($breadcrumbs, $stock){
+    $breadcrumbs->parent('stockopname_index');
+    $breadcrumbs->push($stock->product->name, route('db.warehouse.stockopname.index'));
+});
+
 Breadcrumbs::register('deliver', function ($breadcrumbs, $soId){
     $breadcrumbs->parent('outflow');
     $breadcrumbs->push(trans('breadcrumb.warehouse.outflow.deliver'), route('db.warehouse.outflow', $soId));

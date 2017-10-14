@@ -17,6 +17,8 @@ return [
     'warehouse.inflow.receipt' => 'Receipt',
     'warehouse.outflow.index' => 'Warehouse Outflow',
     'warehouse.outflow.deliver' => 'Deliver',
+    'warehouse.stockopname.index' => 'Stock Opname',
+    'warehouse.transferstock' => 'Transfer Stock',
     'so.create' => 'Create Sales Order',
     'so.list' => 'Sales Order Lists',
     'so.revise' => 'Revise Sales Order',

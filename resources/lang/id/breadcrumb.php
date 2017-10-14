@@ -17,6 +17,8 @@ return [
     'warehouse.inflow.receipt' => 'Nota Terima',
     'warehouse.outflow.index' => 'Pengeluaran Gudang',
     'warehouse.outflow.deliver' => 'Nota Kirim',
+    'warehouse.stockopname.index' => 'Stock Opname',
+    'warehouse.transferstock' => 'Pindah Stok',
     'so.create' => 'Penjualan',
     'so.list' => 'Revisi Penjualan',
     'so.revise' => 'Revisi Penjualan',
