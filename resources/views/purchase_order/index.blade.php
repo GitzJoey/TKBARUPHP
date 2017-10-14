@@ -58,7 +58,7 @@
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.po.revise', $po->hId()) }}"
                                     title="Revise"><span class="fa fa-pencil fa-fw"></span></a>
                                     @if($po->status == 'POSTATUS.WA')
-                                        {!! Form::open(['method' => 'DELETE', 'route' => ['db.po.reject', $po->hId()], 'style'=>'display:inline'])  !!}
+                                        {!! Form::open(['id' => 'deleteForm', 'method' => 'DELETE', 'route' => ['db.po.reject', $po->hId()], 'style'=>'display:inline'])  !!}
                                         <button type="submit" class="btn btn-xs btn-danger" title="Reject" id="delete_button" v-on:click.prevent="showAlert">
                                             <span class="fa fa-close fa-fw"></span></button>
                                         {!! Form::close() !!}
@@ -87,7 +87,7 @@
                 methods: {
                     showAlert: function (event) {
                         var buttonId = event.currentTarget.id;
-                        var form = $('#'+buttonId).parents('form');
+
                         swal({
                             title: "@lang('messages.alert.delete.purchase_order.title')",
                             text: "@lang('messages.alert.delete.purchase_order.text')",
@@ -98,7 +98,7 @@
                             cancelButtonText: "@lang('buttons.cancel_button')",
                             closeOnConfirm: false
                         }, function (isConfirm) {
-                            if (isConfirm) form.submit();
+                            if (isConfirm) $('#deleteForm').submit();
                         });
                     }
                 }
