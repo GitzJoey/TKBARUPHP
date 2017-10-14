@@ -242,7 +242,8 @@
                                                         <div class="col-md-11">
                                                             <select v-bind:id="'inputProduct_' + soIndex"
                                                                     class="form-control"
-                                                                    v-model="so.product">
+                                                                    v-model="so.product"
+                                                                    v-on:change="insertProduct(soIndex, so.product)">
                                                                 <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="product in productDDL" v-bind:value="product">@{{ product.name }}</option>
                                                             </select>
@@ -256,7 +257,8 @@
                                                         <div class="col-md-11">
                                                             <select v-bind:id="'inputStock_' + soIndex"
                                                                     class="form-control"
-                                                                    v-model="so.stock">
+                                                                    v-model="so.stock"
+                                                                    v-on:change="insertStock(soIndex, so.stock)">
                                                                 <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
                                                                 <option v-for="stock in stocksDDL" v-bind:value="stock">@{{ stock.product.name }}</option>
                                                             </select>
