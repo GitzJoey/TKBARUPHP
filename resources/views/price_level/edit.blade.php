@@ -37,6 +37,7 @@
                                         name="type"
                                         id="priceLevelSelect"
                                         v-model="price_level.type"
+                                        v-on:change="onPriceLevelSelect"
                                         v-validate="'required'"
                                         data-vv-as="{{ trans('price_level.field.type') }}">
                                     <option v-bind:value="defaultType">@lang('labels.PLEASE_SELECT')</option>
@@ -54,15 +55,7 @@
                                         v-validate="'required'"
                                         data-vv-as="{{ trans('price_level.field.weight') }}">
                                     <option v-bind:value="defaultWeight">@lang('labels.PLEASE_SELECT')</option>
-                                    @for($x =1; $x <= 10; $x++)
-                                        @if($x == 1)
-                                            <option v-bind:value="{{ $x }}">{{ $x }} - Lowest</option>
-                                        @elseif($x == 10)
-                                            <option v-bind:value="{{ $x }}">{{ $x }} - Highest</option>
-                                        @else
-                                            <option v-bind:value="{{ $x }}">{{ $x }}</option>
-                                        @endif
-                                    @endfor
+                                    <option v-for="n in 10" v-bind:value="n">@{{ n }}</option>
                                 </select>
                                 <span v-show="errors.has('weight')" class="help-block" v-cloak>@{{ errors.first('weight') }}</span>
                             </div>
@@ -84,7 +77,7 @@
                         <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('increment_value') }">
                             <label for="inputIncVal" class="col-sm-2 control-label">@lang('price_level.field.incval')</label>
                             <div class="col-sm-10">
-                                <input id="inputIncVal" name="increment_value" type="text" class="form-control" v-bind:value="setIncValue(price_level.type)" placeholder="Increment Value" v-model="price_level.inc_val"
+                                <input id="inputIncVal" name="increment_value" type="text" class="form-control" placeholder="Increment Value" v-model="price_level.inc_val"
                                        v-bind:readonly="setIncReadOnly(price_level.type)" v-validate="setIncReadOnly(price_level.type) ? '':'required:numeric:2'" data-vv-as="{{ trans('price_level.field.incval') }}">
                                 <span v-show="errors.has('increment_value')" class="help-block" v-cloak>@{{ errors.first('increment_value') }}</span>
                             </div>
@@ -92,7 +85,7 @@
                         <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('percentage_value') }">
                             <label for="inputPctVal" class="col-sm-2 control-label">@lang('price_level.field.pctval')</label>
                             <div class="col-sm-10">
-                                <input id="inputPctVal" name="percentage_value" type="text" class="form-control" v-bind:value="setPctValue(price_level.type)" placeholder="Percentage Value" v-model="price_level.pct_val"
+                                <input id="inputPctVal" name="percentage_value" type="text" class="form-control" placeholder="Percentage Value" v-model="price_level.pct_val"
                                        v-bind:readonly="setPctReadOnly(price_level.type)" v-validate="setPctReadOnly(price_level.type) ? '':'required:numeric:2'" data-vv-as="{{ trans('price_level.field.pctval') }}">
                                 <span v-show="errors.has('percentage_value')" class="help-block" v-cloak>@{{ errors.first('percentage_value') }}</span>
                             </div>
@@ -146,6 +139,15 @@
 
             },
             methods: {
+                onPriceLevelSelect: function(type) {
+                    if (this.price_level.type == '') return;
+
+                    if (this.price_level.type == 'PRICELEVELTYPE.INC') {
+                        this.price_level.pct_val = 0;
+                    } else {
+                        this.price_level.inc_val = 0;
+                    }
+                },
                 setIncReadOnly: function(type) {
                     if (type == '') return false;
 
@@ -155,13 +157,6 @@
                         return true;
                     }
                 },
-                setIncValue: function(type) {
-                    if (type == 'PRICELEVELTYPE.INC') {
-                        return '';
-                    } else {
-                        return '0';
-                    }
-                },
                 setPctReadOnly: function(type) {
                     if (type == '') return false;
 
@@ -169,13 +164,6 @@
                         return false;
                     } else {
                         return true;
-                    }
-                },
-                setPctValue: function(type) {
-                    if (type == 'PRICELEVELTYPE.PCT') {
-                        return '';
-                    } else {
-                        return '0';
                     }
                 },
                 validateBeforeSubmit: function() {
