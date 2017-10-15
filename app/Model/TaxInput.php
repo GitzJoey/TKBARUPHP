@@ -68,7 +68,7 @@ class TaxInput extends Model
         'opponent_tax_id_no',
         'opponent_name',
         'detail',
-        'unit',
+        'qty',
         'unit_price',
         'tax_base',
         'gst',

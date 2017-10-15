@@ -62,6 +62,26 @@
     </div>
 
     <div class="row">
+        <div class="col-xs-12">
+            <div class="text-center">
+                <ul class="pagination pagination-sm no-margin">
+                    <li><a href="{{ route('db.report.tax', [ 'year' => $year - 1, 'month' => 12 ]) }}">{{ $year - 1 }}</a></li>
+                    @foreach ($months as $key => $value)
+                    <li class="{{ $month == $key ? 'active' : '' }}">
+                        @if ($loop->first)
+                        <a href="{{ route('db.report.tax', [ 'year' => $year, 'month' => $key ]) }}">{{ $year }} - {{ str_pad($key, 2, '0', STR_PAD_LEFT) }}</a>
+                        @else
+                        <a href="{{ route('db.report.tax', [ 'year' => $year, 'month' => $key ]) }}">{{ str_pad($key, 2, '0', STR_PAD_LEFT) }}</a>
+                        @endif
+                    </li>
+                    @endforeach
+                    <li><a href="{{ route('db.report.tax', [ 'year' => $year + 1, 'month' => 1 ]) }}">{{ $year + 1 }}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12 text-center">
               <a href="{{ route('db.report.tax.excel', [ 'year' => $year, 'month' => $month, 'format' => 'xlsx' ]) }}" class="btn btn-primary">@lang('buttons.download_excel_button')</a>
         </div>
