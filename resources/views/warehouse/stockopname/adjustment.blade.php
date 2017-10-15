@@ -12,6 +12,10 @@
     @lang('warehouse.stockopname.adjust.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('stockopname_adjust', $stock) !!}
+@endsection
+
 @section('content')
     @if (count($errors) > 0)
         <div class="alert alert-danger">

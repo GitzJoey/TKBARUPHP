@@ -38,7 +38,7 @@ class PriceLevelController extends Controller
     public function create()
     {
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
-        $plTypeDDL = LookupRepo::findByCategory('PRICELEVELTYPE')->pluck('description', 'code');
+        $plTypeDDL = LookupRepo::findByCategory('PRICELEVELTYPE')->pluck('i18nDescription', 'code');
 
         return view('price_level.create', compact('statusDDL', 'plTypeDDL'));
     }
@@ -71,7 +71,7 @@ class PriceLevelController extends Controller
         $pricelevel = PriceLevel::find($id);
 
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
-        $plTypeDDL = LookupRepo::findByCategory('PRICELEVELTYPE')->pluck('description', 'code');
+        $plTypeDDL = LookupRepo::findByCategory('PRICELEVELTYPE')->pluck('i18nDescription', 'code');
 
         return view('price_level.edit', compact('pricelevel', 'plTypeDDL', 'statusDDL'));
     }

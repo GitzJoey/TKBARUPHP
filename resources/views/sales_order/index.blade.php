@@ -57,7 +57,7 @@
                                 <td class="text-center" width="10%">
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.revise', $so->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>
                                     @if($so->status == 'SOSTATUS.WD')
-                                    {!! Form::open(['method' => 'DELETE', 'route' => ['db.so.reject', $so->hId()], 'style'=>'display:inline'])  !!}
+                                    {!! Form::open(['id' => 'deleteForm', 'method' => 'DELETE', 'route' => ['db.so.reject', $so->hId()], 'style'=>'display:inline'])  !!}
                                         <button type="submit" class="btn btn-xs btn-danger" title="reject" id="delete_button" v-on:click.prevent="showAlert"><span class="fa fa-close fa-fw"></span></button>
                                     {!! Form::close() !!}
                                     @else
@@ -82,7 +82,7 @@
             methods: {
                 showAlert: function (event) {
                     var buttonId = event.currentTarget.id;
-                    var form = $('#'+buttonId).parents('form');
+
                     swal({
                         title: "@lang('messages.alert.delete.sales_order.title')",
                         text: "@lang('messages.alert.delete.sales_order.text')",
@@ -93,7 +93,7 @@
                         cancelButtonText: "@lang('buttons.cancel_button')",
                         closeOnConfirm: false
                     }, function (isConfirm) {
-                        if (isConfirm) form.submit();
+                        if (isConfirm) $('#deleteForm').submit();
                     });
                 }
             }

@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-
+    {!! Breadcrumbs::render('transferstock_index') !!}
 @endsection
 
 @section('content')
