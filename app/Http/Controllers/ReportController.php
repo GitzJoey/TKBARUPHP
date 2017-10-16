@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-use Excel;
 use App\Model\Role;
 use App\Model\Truck;
 use App\Model\TaxInput;
@@ -16,9 +15,6 @@ use App\Model\TaxOutput;
 
 use App\Repos\LookupRepo;
 use Carbon\Carbon;
-use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
-use Maatwebsite\Excel\Writers\CellWriter;
-use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 
 class ReportController extends Controller
 {
