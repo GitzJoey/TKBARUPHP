@@ -30,20 +30,20 @@ class GiroController extends Controller
     {
         $girolist = Giro::paginate(10);
 
-        return view('giro.index', compact('girolist'));
+        return view('bank.giro.index', compact('girolist'));
     }
 
     public function show($id)
     {
         $giro = Giro::find($id);
-        return view('giro.show')->with('giro', $giro);
+        return view('bank.giro.show')->with('giro', $giro);
     }
 
     public function create()
     {
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->pluck('name', 'id');
 
-        return view('giro.create', compact('bankDDL'));
+        return view('bank.giro.create', compact('bankDDL'));
     }
 
     public function store(Request $data)
@@ -74,7 +74,7 @@ class GiroController extends Controller
 
         $bankDDL = Bank::whereStatus('STATUS.ACTIVE')->pluck('name', 'id');
 
-        return view('giro.edit', compact('giro', 'bankDDL'));
+        return view('bank.giro.edit', compact('giro', 'bankDDL'));
     }
 
     public function update($id, Request $req)

@@ -105,6 +105,36 @@ Breadcrumbs::register('price_level_today_price_update_bycat', function ($breadcr
     $breadcrumbs->push(trans('breadcrumb.price_level.today_price.update.bycat'), route('db.price.category', $id));
 });
 
+Breadcrumbs::register('bank_upload', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.bank.upload'), route('db.bank.upload'));
+});
+
+Breadcrumbs::register('bank_consolidate', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.bank.consolidate'), route('db.bank.upload'));
+});
+
+Breadcrumbs::register('bank_giro_index', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.bank.giro.index'), route('db.bank.giro'));
+});
+
+Breadcrumbs::register('bank_giro_create', function($breadcrumbs){
+    $breadcrumbs->parent('bank_giro_index');
+    $breadcrumbs->push(trans('breadcrumb.bank.giro.create'), route('db.bank.giro.create'));
+});
+
+Breadcrumbs::register('bank_giro_show', function($breadcrumbs, $id){
+    $breadcrumbs->parent('bank_giro_index');
+    $breadcrumbs->push(trans('breadcrumb.bank.giro.show'), route('db.bank.giro.show', $id));
+});
+
+Breadcrumbs::register('bank_giro_edit', function($breadcrumbs, $id){
+    $breadcrumbs->parent('bank_giro_index');
+    $breadcrumbs->push(trans('breadcrumb.bank.giro.edit'), route('db.bank.giro.edit', $id));
+});
+
 Breadcrumbs::register('inflow', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.warehouse.inflow.index'), route('db.warehouse.inflow.index'));

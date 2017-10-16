@@ -13,6 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
+    {!! Breadcrumbs::render('bank_consolidate') !!}
 @endsection
 
 @section('content')

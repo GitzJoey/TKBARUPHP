@@ -1,15 +1,19 @@
 @extends('layouts.adminlte.master')
 
 @section('title')
-    @lang('giro.create.title')
+    @lang('giro.edit.title')
 @endsection
 
 @section('page_title')
-    <span class="fa fa-book fa-fw"></span>&nbsp;@lang('giro.create.page_title')
+    <span class="fa fa-book fa-fw"></span>&nbsp;@lang('giro.edit.page_title')
 @endsection
 
 @section('page_title_desc')
-    @lang('giro.create.page_title_desc')
+    @lang('giro.edit.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('bank_giro_edit', $giro->hId()) !!}
 @endsection
 
 @section('content')
@@ -24,10 +28,10 @@
         </div>
 
         <form id="giroForm" class="form-horizontal" method="post" v-on:submit.prevent="validateBeforeSubmit()">
-            {{ csrf_field() }}
+            {{ csrf_token() }}
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">@lang('giro.create.header.title')</h3>
+                    <h3 class="box-title">@lang('giro.edit.header.title')</h3>
                 </div>
                 <div class="box-body">
                     <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('bank') }">
@@ -67,12 +71,8 @@
                     <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
                         <label for="inputAmount" class="col-sm-2 control-label">@lang('giro.field.amount')</label>
                         <div class="col-sm-10">
-                            <input id="inputAmount"
-                                   name="amount"
-                                   type="text"
-                                   class="form-control"
-                                   placeholder="@lang('giro.field.amount')"
-                                   v-validate="'required:numeric:2'">
+                            <input id="inputAmount" name="amount" type="text" class="form-control" value="{{ $giro->amount }}" placeholder="@lang('giro.field.amount')"
+                                   v-validate="'required|numeric:2'">
                             <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                         </div>
                     </div>
@@ -87,14 +87,14 @@
                     <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                         <label for="inputStatus" class="col-sm-2 control-label">@lang('giro.field.status')</label>
                         <div class="col-sm-10">
-                            <input id="inputStatus" name="status" type="text" class="form-control" value="@lang('lookup.GIROSTATUS.N')" readonly>
+                            <input id="inputStatus" name="status" type="text" class="form-control" value="@lang('lookup.' . $giro->status)" readonly>
                             <span class="help-block">{{ $errors->has('status') ? $errors->first('status') : '' }}</span>
                         </div>
                     </div>
                     <div class="form-group {{ $errors->has('remarks') ? 'has-error' : '' }}">
                         <label for="inputRemarks" class="col-sm-2 control-label">@lang('giro.field.remarks')</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="remarks" name="remarks" placeholder="@lang('giro.field.remarks')">
+                            <input type="text" class="form-control" id="inputRemarks" name="remarks" value="{{ $giro->remarks }}" placeholder="@lang('giro.field.remarks')">
                             <span class="help-block">{{ $errors->has('remarks') ? $errors->first('remarks') : '' }}</span>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
                             <a href="{{ route('db.bank.giro') }}" class="btn btn-default">@lang('buttons.cancel_button')</a>
-                            <button class="btn btn-default" type="submit">@lang('buttons.create_new_button')</button>
+                            <button class="btn btn-default" type="submit">@lang('buttons.submit_button')</button>
                         </div>
                     </div>
                 </div>
@@ -118,10 +118,10 @@
             el: '#giroVue',
             data: {
                 giro: {
-                    serial_number:'',
-                    printed_name:'',
-                    bank:'',
-                    effective_date:''
+                    serial_number:'{{ $giro->serial_number }}',
+                    printed_name:'{{ $giro->printed_name }}',
+                    bank:'{{ $giro->bank_id }}',
+                    effective_date:'{{ $giro->effective_date }}'
                 },
                 bankDDL: JSON.parse('{!! htmlspecialchars_decode($bankDDL) !!}')
             },
@@ -131,7 +131,7 @@
                     this.$validator.validateAll().then(function(isValid) {
                         if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
-                        axios.post('{{ route('api.post.db.bank.giro.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#giroForm')[0]))
+                        axios.post('{{ route('api.post.db.bank.giro.edit', $giro->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#giroForm')[0]))
                             .then(function(response) {
                             window.location.href = '{{ route('db.bank.giro') }}';
                         }).catch(function(e) {
