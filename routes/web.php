@@ -290,7 +290,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
 
             Route::group(['prefix' => 'tax', 'middleware' => ['permission:menu-report_tax']], function () {
-                Route::get('/{year}/{month}/{format}', 'ReportController@reportTaxExcel')->name('db.report.tax.excel');
                 Route::get('/{year?}/{month?}', 'ReportController@report_tax')->name('db.report.tax');
             });
 

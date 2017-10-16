@@ -81,12 +81,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 text-center">
-              <a href="{{ route('db.report.tax.excel', [ 'year' => $year, 'month' => $month, 'format' => 'xlsx' ]) }}" class="btn btn-primary">@lang('buttons.download_excel_button')</a>
-        </div>
-    </div>
-
     {{-- <div class="row">
         <div class="col-md-12">
             <div class="box box-solid">
