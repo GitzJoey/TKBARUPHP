@@ -68,6 +68,20 @@ return [
         'header' => [
             'title' => 'Laporan Pajak'
         ],
+        'input' => [
+            'table' => [
+                'header' => [
+                    'invoice_date' => 'Tanggal Faktur',
+                    'invoice_no' => 'No Faktur',
+                    'detail' => 'Uraian',
+                    'qty' => 'Satuan (kg)',
+                    'unit_price' => 'Harga Satuan',
+                    'tax_base' => 'DPP Beli (Rp)',
+                    'gst' => 'PPN-PM (Rp)',
+                    'grand_total' => 'Total yang dibayar (Rp)'
+                ]
+            ]
+        ],
     ],
     'transaction' => [
         'title' => 'Laporan Transaksi',

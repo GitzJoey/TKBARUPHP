@@ -10,8 +10,11 @@ namespace App\Http\Controllers;
 
 use App\Model\Role;
 use App\Model\Truck;
+use App\Model\TaxInput;
+use App\Model\TaxOutput;
 
 use App\Repos\LookupRepo;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -30,10 +33,24 @@ class ReportController extends Controller
         return view('report.monitoring');
     }
 
-    public function report_tax()
+    public function report_tax($year = null, $month = null)
     {
+        $this->validateWith(validator([
+            'year' => $year,
+            'month' => $month,
+        ], [
+            'year' => 'numeric|nullable',
+            'month' => 'numeric|nullable'
+        ]), request());
+
+        if (is_null($year) || is_null($month)) {
+            $year = !is_null($year) ? $year : Carbon::now()->year;
+            $month = !is_null($month) ? $month : Carbon::now()->month;
+            return response()->redirectTo(route('db.report.tax', [ $year, $month ]));
+        }
+
         $months = [
-            'Januari',
+            1 => 'Januari',
             'Februari',
             'Maret',
             'April',
@@ -47,8 +64,20 @@ class ReportController extends Controller
             'Desember'
         ];
 
+        $taxes_input = TaxInput::where('month', $month)
+            ->where('year', $year)
+            ->orderBy('invoice_date', 'asc')
+            ->get();
+        $taxes_output = TaxOutput::with('transactions')
+            ->where('month', $month)
+            ->where('year', $year)
+            ->orderBy('invoice_date', 'asc')
+            ->get();
+
         return view('report.tax')->with([
-            'months' => $months
+            'year' => $year, 'month' => $month, 'months' => $months,
+            'taxes_input' => $taxes_input,
+            'taxes_output' => $taxes_output
         ]);
     }
 

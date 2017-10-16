@@ -68,6 +68,20 @@ return [
         'header' => [
             'title' => 'TaxOutput Report'
         ],
+        'input' => [
+            'table' => [
+                'header' => [
+                    'invoice_date' => 'Invoice Date',
+                    'invoice_no' => 'Invoice Number',
+                    'detail' => 'Detail',
+                    'qty' => 'Unit (kg)',
+                    'unit_price' => 'Unit Price',
+                    'tax_base' => 'Tax Base (Rp)',
+                    'gst' => 'GST (Rp)',
+                    'grand_total' => 'Total Paid (Rp)'
+                ]
+            ]
+        ],
     ],
     'transaction' => [
         'title' => 'Report Management',

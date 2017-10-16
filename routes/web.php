@@ -200,7 +200,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('create', 'GiroController@create')->name('db.bank.giro.create');
                 Route::get('edit/{id}', 'GiroController@edit')->name('db.bank.giro.edit');
                 Route::delete('edit/{id}', 'GiroController@delete')->name('db.bank.giro.delete');
-                route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
+                Route::post('override_confirm/{id}', 'GiroController@overrideConfirm')->name('db.bank.giro.override_confirm');
             });
 
             Route::group(['prefix' => 'consolidate'], function (){
@@ -290,7 +290,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
 
             Route::group(['prefix' => 'tax', 'middleware' => ['permission:menu-report_tax']], function () {
-                Route::get('', 'ReportController@report_tax')->name('db.report.tax');
+                Route::get('/{year?}/{month?}', 'ReportController@report_tax')->name('db.report.tax');
             });
 
             Route::group(['prefix' => 'master', 'middleware' => ['permission:menu-report_master']], function () {
