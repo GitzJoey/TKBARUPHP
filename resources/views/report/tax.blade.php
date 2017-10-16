@@ -107,6 +107,7 @@
         el: '#taxReport',
         data: {
             taxesInput: [],
+            taxesOutput: [],
             report: {
                 month: new Date().getMonth() + 1,
                 year: new Date().getFullYear()
@@ -120,12 +121,87 @@
                 return _.sumBy(this.taxesInput, function (taxInput) {
                     return taxInput.taxBase + taxInput.gst + taxInput.luxuryTax;
                 });
+            },
+            invoiceDatesOutput: function () {
+                return _.sortedUniq(_.map(this.taxesOutput, function (taxOutput) {
+                    return taxOutput.invoiceDate;
+                }));
+            },
+            transactionNamesOutput: function () {
+                return _.map(_.uniqBy(_.flatMap(this.taxesOutput, function (taxOutput) {
+                    return taxOutput.transactions;
+                }), function (transaction) {
+                    return transaction.name;
+                }), function (transaction) {
+                    return transaction.name;
+                });
+            },
+            taxesOutputPerInvoiceDate: function () {
+                var taxesOutput = {};
+                for (var i = 0; i < this.invoiceDatesOutput.length; i++) {
+                    taxesOutput[this.invoiceDatesOutput[i]] =
+                        _.filter(this.taxesOutput, function (taxOutput) {
+                            return taxOutput.invoiceDate == this.invoiceDatesOutput[i];
+                        }.bind(this)) || [];
+                }
+                return taxesOutput;
+            },
+            totalGstOutputPerInvoiceDateAndName: function () {
+                var totalGstOutput = {};
+                for (var i = 0; i < this.invoiceDatesOutput.length; i++) {
+                    totalGstOutput[this.invoiceDatesOutput[i]] = {};
+                    for (var j = 0; j < this.transactionNamesOutput.length; j++) {
+                        totalGstOutput[this.invoiceDatesOutput[i]][this.transactionNamesOutput[j]] =
+                            _.sumBy(_.flatMap(this.taxesOutputPerInvoiceDate[this.invoiceDatesOutput[i]], function (taxOutput) {
+                                return _.filter(taxOutput.transactions, function (transaction) {
+                                    return transaction.name == this.transactionNamesOutput[j];
+                                }.bind(this));
+                            }.bind(this)), 'gst');
+                    }
+                }
+                return totalGstOutput;
+            },
+            totalQtyOutputPerInvoiceDateAndName: function () {
+                var totalQtyOutput = {};
+                for (var i = 0; i < this.invoiceDatesOutput.length; i++) {
+                    totalQtyOutput[this.invoiceDatesOutput[i]] = {};
+                    for (var j = 0; j < this.transactionNamesOutput.length; j++) {
+                        totalQtyOutput[this.invoiceDatesOutput[i]][this.transactionNamesOutput[j]] =
+                            _.sumBy(_.flatMap(this.taxesOutputPerInvoiceDate[this.invoiceDatesOutput[i]], function (taxOutput) {
+                                return _.filter(taxOutput.transactions, function (transaction) {
+                                    return transaction.name == this.transactionNamesOutput[j];
+                                }.bind(this));
+                            }.bind(this)), 'qty');
+                    }
+                }
+                return totalQtyOutput;
+            },
+            grandTotalOutput: function () {
+                return _.sumBy(this.taxesOutput, function (taxOutput) {
+                    return taxInput.taxBase + taxInput.gst + taxInput.luxuryTax;
+                });
             }
         },
         mounted: function() {
             this.taxesInput = this.camelCasingKey({!! json_encode($taxes_input) !!});
+            this.taxesOutput = this.camelCasingKey({!! json_encode($taxes_output) !!});
         },
         methods: {
+            getTransactionsByInvoiceDate: function(invoiceDate) {
+                return _.flatMap(this.taxesOutputPerInvoiceDate[invoiceDate], function (taxOutput) {
+                    return taxOutput.transactions;
+                }) || [];
+            },
+            getTransactionFromTaxOutputByName: function(taxOutput, name) {
+                return _.find(taxOutput.transactions, function (transaction) {
+                    return transaction.name == name;
+                }) || {};
+            },
+            getPriceByInvoiceDateAndName: function (invoiceDate, name) {
+                return (_.find(this.getTransactionsByInvoiceDate(invoiceDate), function (transaction) {
+                    return transaction.name == name;
+                }) || {}).price || 0;
+            },
             generateReport: function() {
                 $('#loader-container').fadeIn('fast');
                 axios.get('{{ route('api.report.tax') }}', { params: { month: this.report.month, year: this.report.year } })

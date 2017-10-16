@@ -12,6 +12,7 @@ use Excel;
 use App\Model\Role;
 use App\Model\Truck;
 use App\Model\TaxInput;
+use App\Model\TaxOutput;
 
 use App\Repos\LookupRepo;
 use Carbon\Carbon;
@@ -71,7 +72,11 @@ class ReportController extends Controller
             ->where('year', $year)
             ->orderBy('invoice_date', 'asc')
             ->get();
-        $taxes_output = null;
+        $taxes_output = TaxOutput::with('transactions')
+            ->where('month', $month)
+            ->where('year', $year)
+            ->orderBy('invoice_date', 'asc')
+            ->get();
 
         return view('report.tax')->with([
             'year' => $year, 'month' => $month, 'months' => $months,
