@@ -70,6 +70,41 @@ Breadcrumbs::register('purchase_order_copy_edit', function ($breadcrumbs, $poCod
     $breadcrumbs->push(trans('breadcrumb.po.copy.edit'), route('db.po.copy.edit', [$poCode, $poCopyId]));
 });
 
+Breadcrumbs::register('price_level_index', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.price_level.index'), route('db.price.price_level'));
+});
+
+Breadcrumbs::register('price_level_create', function ($breadcrumbs){
+    $breadcrumbs->parent('price_level_index');
+    $breadcrumbs->push(trans('breadcrumb.price_level.create'), route('db.price.price_level.create'));
+});
+
+Breadcrumbs::register('price_level_edit', function ($breadcrumbs, $id){
+    $breadcrumbs->parent('price_level_index');
+    $breadcrumbs->push(trans('breadcrumb.price_level.edit'), route('db.price.price_level.edit', $id));
+});
+
+Breadcrumbs::register('price_level_show', function ($breadcrumbs, $id){
+    $breadcrumbs->parent('price_level_index');
+    $breadcrumbs->push(trans('breadcrumb.price_level.show'), route('db.price.price_level.show', $id));
+});
+
+Breadcrumbs::register('price_level_today_price', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.price_level.today_price'), route('db.price.today'));
+});
+
+Breadcrumbs::register('price_level_today_price_update_byitem', function ($breadcrumbs, $id){
+    $breadcrumbs->parent('price_level_today_price');
+    $breadcrumbs->push(trans('breadcrumb.price_level.today_price.update.byitem'), route('db.price.stock', $id));
+});
+
+Breadcrumbs::register('price_level_today_price_update_bycat', function ($breadcrumbs, $id){
+    $breadcrumbs->parent('price_level_today_price');
+    $breadcrumbs->push(trans('breadcrumb.price_level.today_price.update.bycat'), route('db.price.category', $id));
+});
+
 Breadcrumbs::register('inflow', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.warehouse.inflow.index'), route('db.warehouse.inflow.index'));

@@ -22,6 +22,10 @@
     @lang('price.index.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('price_level_today_price') !!}
+@endsection
+
 @section('content')
     @if ($message = Session::get('success'))
         <div class="alert alert-success">

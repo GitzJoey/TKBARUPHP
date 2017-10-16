@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-table fa-fw"></span>&nbsp;@lang('price_level.edit.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('price_level.edit.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('price_level_edit', $pricelevel->hId()) !!}
 @endsection
 
 @section('content')

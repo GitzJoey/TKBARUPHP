@@ -12,6 +12,10 @@
     @lang('price_level.show.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('price_level_show', $pricelevel->hId()) !!}
+@endsection
+
 @section('content')
     <div class="box box-info">
         <div class="box-header with-border">

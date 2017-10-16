@@ -12,6 +12,10 @@
     @lang('price.category.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('price_level_today_price_update_bycat', $currentProductType->hId()) !!}
+@endsection
+
 @section('content')
     <div id="categoryPriceVue">
         <form id="categoryPriceForm" class="form-horizontal" method="post" @submit.prevent="validateBeforeSubmit()">

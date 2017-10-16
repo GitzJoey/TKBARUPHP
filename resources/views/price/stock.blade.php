@@ -12,6 +12,10 @@
     @lang('price.stock.page_title_desc')
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('price_level_today_price_update_byitem', $currentStock->hId()) !!}
+@endsection
+
 @section('content')
     <div id="stockPriceVue">
         <div v-show="errors.count() > 0" v-cloak>
