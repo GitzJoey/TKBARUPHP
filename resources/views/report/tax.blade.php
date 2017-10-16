@@ -141,20 +141,17 @@
                 }
                 return taxesOutput;
             },
-            totalGstOutputPerInvoiceDateAndName: function () {
-                var totalGstOutput = {};
+            totalPriceOutputPerInvoiceDateAndName: function () {
+                var totalPriceOutput = {};
                 for (var i = 0; i < this.invoiceDatesOutput.length; i++) {
-                    totalGstOutput[this.invoiceDatesOutput[i]] = {};
+                    totalPriceOutput[this.invoiceDatesOutput[i]] = {};
                     for (var j = 0; j < this.transactionNamesOutput.length; j++) {
-                        totalGstOutput[this.invoiceDatesOutput[i]][this.transactionNamesOutput[j]] =
-                            _.sumBy(_.flatMap(this.taxesOutputPerInvoiceDate[this.invoiceDatesOutput[i]], function (taxOutput) {
-                                return _.filter(taxOutput.transactions, function (transaction) {
-                                    return transaction.name == this.transactionNamesOutput[j];
-                                }.bind(this));
-                            }.bind(this)), 'gst');
+                        totalPriceOutput[this.invoiceDatesOutput[i]][this.transactionNamesOutput[j]] =
+                            this.totalQtyOutputPerInvoiceDateAndName[this.invoiceDatesOutput[i]][this.transactionNamesOutput[j]] *
+                            this.getPriceByInvoiceDateAndName(this.invoiceDatesOutput[i], this.transactionNamesOutput[j]) / 1.1;
                     }
                 }
-                return totalGstOutput;
+                return totalPriceOutput;
             },
             totalQtyOutputPerInvoiceDateAndName: function () {
                 var totalQtyOutput = {};
@@ -170,11 +167,6 @@
                     }
                 }
                 return totalQtyOutput;
-            },
-            grandTotalOutput: function () {
-                return _.sumBy(this.taxesOutput, function (taxOutput) {
-                    return taxInput.taxBase + taxInput.gst + taxInput.luxuryTax;
-                });
             }
         },
         mounted: function() {

@@ -14,13 +14,13 @@
                 </template>
             </tr>
             <tr>
-                <th class="text-right" style="vertical-align:middle" v-for="name in [ 'Minyak Goreng', 'Gula', 'Terigu' ]">
+                <th class="text-right" style="vertical-align:middle" v-for="name in transactionNamesOutput">
                     @{{ numeral(getPriceByInvoiceDateAndName(invoiceDate, name)).format() }}
                 </th>
             </tr>
             <tr>
-                <th class="text-right" style="vertical-align:middle" v-for="name in [ 'Minyak Goreng', 'Gula', 'Terigu' ]">
-                    @{{ numeral((getPriceByInvoiceDateAndName(invoiceDate, name)) * 0.9).format() }}
+                <th class="text-right" style="vertical-align:middle" v-for="name in transactionNamesOutput">
+                    @{{ numeral((getPriceByInvoiceDateAndName(invoiceDate, name)) / 1.1).format() }}
                 </th>
             </tr>
         </thead>
@@ -31,7 +31,11 @@
                 <td class="text-left">@{{ taxOutput.opponentName }}</td>
                 <td class="text-left">@{{ taxOutput.opponentAddress }}</td>
                 <template v-for="transactionNameOutput in transactionNamesOutput">
-                    <td class="text-right">@{{ numeral(getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).gst).format() }}</td>
+                    <td class="text-right">
+                        @{{ numeral(
+                          (getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).price || 0) *
+                          (getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).qty || 0) / 1.1).format() }}
+                    </td>
                     <td class="text-right">@{{ numeral(getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).qty).format() }}</td>
                 </template>
             </tr>
@@ -42,7 +46,7 @@
                 <td class="text-center"></td>
                 <td class="text-center"></td>
                 <template v-for="transactionNameOutput in transactionNamesOutput">
-                    <td class="text-right">@{{ numeral(totalGstOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
+                    <td class="text-right">@{{ numeral(totalPriceOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
                     <td class="text-right">@{{ numeral(totalQtyOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
                 </template>
             </tr>
@@ -63,7 +67,7 @@
         </thead>
         <tbody>
             <tr v-if="!taxesOutput.length">
-                <td class="text-center" colspan="8">@lang('labels.DATA_NOT_FOUND')</td>
+                <td class="text-center" colspan="5">@lang('labels.DATA_NOT_FOUND')</td>
             </tr>
         </tbody>
     </table>
