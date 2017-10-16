@@ -68,6 +68,12 @@ return [
         'header' => [
             'title' => 'TaxOutput Report'
         ],
+        'nav_tabs' => [
+            'invoice_input' => 'Invoice Input',
+            'invoice_output_summary' => 'Invoice Output Summary',
+            'invoice_output_detail' => 'Invoice Output Detail',
+            'flow' => 'Flow',
+        ],
         'input' => [
             'table' => [
                 'header' => [
@@ -79,6 +85,31 @@ return [
                     'tax_base' => 'Tax Base (Rp)',
                     'gst' => 'GST (Rp)',
                     'grand_total' => 'Total Paid (Rp)'
+                ]
+            ]
+        ],
+        'output_summary' => [
+            'table' => [
+                'header' => [
+                    'date' => 'Date',
+                    'unit_price' => 'Unit Price',
+                    'qty' => 'Quantity (kg)',
+                    'tax_base' => 'Tax Base',
+                    'gst' => 'GST',
+                    'total_price' => 'Total',
+                    'product' => 'Product'
+                ]
+            ]
+        ],
+        'output' => [
+            'table' => [
+                'header' => [
+                    'date' => 'Date',
+                    'name' => 'Name',
+                    'address' => 'Address',
+                    'unit_price' => 'Unit Price',
+                    'qty' => 'Quantity (kg)',
+                    'product' => 'Product'
                 ]
             ]
         ],

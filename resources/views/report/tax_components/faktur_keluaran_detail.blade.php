@@ -2,15 +2,15 @@
     <table class="table table-bordered" v-for="(taxesOutput, invoiceDate) in taxesOutputPerInvoiceDate">
         <thead>
             <tr>
-                <th class="text-center" style="vertical-align:middle" rowspan="4">Date</th>
-                <th class="text-center" style="vertical-align:middle" rowspan="4">Name</th>
-                <th class="text-center" style="vertical-align:middle" rowspan="4">Address</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="4">@lang('report.tax.output.table.header.date')</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="4">@lang('report.tax.output.table.header.name')</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="4">@lang('report.tax.output.table.header.address')</th>
                 <th class="text-center" style="vertical-align:middle" colspan="2" v-for="transactionNameOutput in transactionNamesOutput">@{{ transactionNameOutput }}</th>
             </tr>
             <tr>
                 <template v-for="transactionNameOutput in transactionNamesOutput">
-                    <th class="text-center" style="vertical-align:middle">Harga</th>
-                    <th class="text-center" style="vertical-align:middle" rowspan="3">Berat</th>
+                    <th class="text-center" style="vertical-align:middle">@lang('report.tax.output.table.header.unit_price')</th>
+                    <th class="text-center" style="vertical-align:middle" rowspan="3">@lang('report.tax.output.table.header.qty')</th>
                 </template>
             </tr>
             <tr>
@@ -55,14 +55,14 @@
     <table class="table table-bordered" v-if="!taxesOutput.length">
         <thead>
             <tr>
-                <th class="text-center" style="vertical-align:middle" rowspan="2">Date</th>
-                <th class="text-center" style="vertical-align:middle" rowspan="2">Name</th>
-                <th class="text-center" style="vertical-align:middle" rowspan="2">Address</th>
-                <th class="text-center" style="vertical-align:middle" colspan="2">Barang</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="2">@lang('report.tax.output.table.header.date')</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="2">@lang('report.tax.output.table.header.name')</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="2">@lang('report.tax.output.table.header.address')</th>
+                <th class="text-center" style="vertical-align:middle" colspan="2">@lang('report.tax.output.table.header.product')</th>
             </tr>
             <tr>
-                <th class="text-center" style="vertical-align:middle">Harga</th>
-                <th class="text-center" style="vertical-align:middle">Berat</th>
+                <th class="text-center" style="vertical-align:middle">@lang('report.tax.output.table.header.unit_price')</th>
+                <th class="text-center" style="vertical-align:middle">@lang('report.tax.output.table.header.qty')</th>
             </tr>
         </thead>
         <tbody>

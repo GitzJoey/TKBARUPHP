@@ -25,22 +25,22 @@
                         <ul class="nav nav-tabs">
                             <li class="active">
                                 <a href="#tab_tax_masukan" data-toggle="tab">
-                                    Faktur Masukan
+                                    @lang('report.tax.nav_tabs.invoice_input')
                                 </a>
                             </li>
                             <li>
                                 <a href="#tab_tax_keluaran_summary" data-toggle="tab">
-                                    Faktur Keluaran Summary
+                                    @lang('report.tax.nav_tabs.invoice_output_summary')
                                 </a>
                             </li>
                             <li>
                                 <a href="#tab_tax_keluaran_detail" data-toggle="tab">
-                                    Faktur Keluaran Detail
+                                    @lang('report.tax.nav_tabs.invoice_output_detail')
                                 </a>
                             </li>
                             <li>
                                 <a href="#tab_tax_arus" data-toggle="tab">
-                                    Arus
+                                    @lang('report.tax.nav_tabs.flow')
                                 </a>
                             </li>
                         </ul>
