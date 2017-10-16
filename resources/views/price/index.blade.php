@@ -44,14 +44,12 @@
     @endif
 
     @foreach($productCategories as $categoryKey => $productCategory)
-        <div class="box box-info">
+        <div class="box box-info collapsed-box">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ $productCategory->name }}</h3>
-                @if(count($productCategory->stocks) != 0)
-                    <a id="updateCategoryPriceButton" class="btn btn-primary pull-right"
-                       href="{{ route('db.price.category', $productCategory->hId()) }}">@lang('buttons.update_button')
-                    </a>
-                @endif
+                <div class="box-tools">
+                    <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-plus"></i></button>
+                </div>
             </div>
             <div class="box-body">
                 <table class="table table-bordered">
@@ -114,6 +112,13 @@
                              style="width:50%; height:300px;"></div>
                     @endforeach
                 </div>
+            </div>
+            <div class="box-footer">
+                @if(count($productCategory->stocks) != 0)
+                    <a id="updateCategoryPriceButton" class="btn btn-primary"
+                       href="{{ route('db.price.category', $productCategory->hId()) }}">@lang('buttons.update_button')
+                    </a>
+                @endif
             </div>
         </div>
     @endforeach

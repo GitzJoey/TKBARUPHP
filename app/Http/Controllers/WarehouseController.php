@@ -20,6 +20,7 @@ use App\Repos\LookupRepo;
 use App\Services\WarehouseService;
 
 use Auth;
+use Hashids;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -146,12 +147,20 @@ class WarehouseController extends Controller
         return redirect(route('db.master.warehouse'));
     }
 
-    public function stockopname()
+    public function stockopname(Request $req)
     {
         Log::info('[WarehouseController@stockopname]');
-        $stocks = Stock::with('stockOpnames')->paginate(10);
+        $stocks = [];
+        $wh = Warehouse::get();
+        $selectedWH = $req->query('w');
 
-        return view('warehouse.stockopname.index', compact('stocks'));
+        if (!empty($selectedWH)) {
+            $stocks = Stock::with('stockOpnames')->where('warehouse_id', Hashids::decode($selectedWH))->paginate(10);
+        } else {
+            $stocks = Stock::with('stockOpnames')->paginate(10);
+        }
+
+        return view('warehouse.stockopname.index', compact('stocks', 'wh', 'selectedWH'));
     }
 
 

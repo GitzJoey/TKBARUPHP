@@ -88,6 +88,10 @@ class Product extends Model
         'remarks'
     ];
 
+    protected $appends = [
+        'baseUnitSymbol'
+    ];
+
     protected $hidden = [
         'created_by',
         'created_at',
@@ -120,6 +124,17 @@ class Product extends Model
     public function productCategories()
     {
         return $this->hasMany('App\Model\ProductCategory');
+    }
+
+    public function getBaseUnitSymbolAttribute()
+    {
+        $ret = '';
+        foreach ($this->productUnits as $produnit) {
+            if ($produnit->is_base) {
+                $ret = $produnit->unit->symbol;
+            }
+        }
+        return $ret;
     }
 
     public function getProductUnitsJSON()

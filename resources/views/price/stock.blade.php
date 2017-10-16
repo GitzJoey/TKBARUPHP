@@ -55,7 +55,7 @@
                             <div class="col-sm-4">
                                 <input type="text" class="form-control text-right" name="inputed_market_price" v-model="market_price"
                                        v-validate="'required|numeric:2'" v-on:keyup="updateMarketPrice(market_price)" data-vv-as="{{ trans('price.stock.field.market_price') }}">
-                            </div>
+                            </div><span>/&nbsp;{{ $currentStock->product->baseUnitSymbol }}</span>
                             <span v-show="errors.has('inputed_market_price')" class="help-block" v-cloak>@{{ errors.first('inputed_market_price') }}</span>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                                 <input type="text" class="form-control text-right" name="price[]"
                                        v-validate="'required|numeric:2'" v-model="p.price" aria-describedby="helpBlock"
                                        v-bind:data-vv-name="'price_' + pIdx" v-bind:data-vv-as="'{{ trans('price.stock.field.price') }} ' + (pIdx + 1)">
-                                <span id="helpBlock" class="help-block" v-bind:title="getPriceLevelType(p.price_level_id) + ' ' + getPriceLevelValue(p.price_level_id)">
+                                <span id="helpBlock" class="help-block" v-bind:title="getPriceLevelType(p.price_level_id) + ' ' + getPriceLevelValue(p.price_level_id)" v-cloak>
                                     @{{ getPriceLevelName(p.price_level_id) }}
                                 </span>
                             </div>
