@@ -25,22 +25,22 @@
                         <ul class="nav nav-tabs">
                             <li class="active">
                                 <a href="#tab_tax_masukan" data-toggle="tab">
-                                    Faktur Masukan
+                                    @lang('report.tax.nav_tabs.invoice_input')
                                 </a>
                             </li>
                             <li>
                                 <a href="#tab_tax_keluaran_summary" data-toggle="tab">
-                                    Faktur Keluaran Summary
+                                    @lang('report.tax.nav_tabs.invoice_output_summary')
                                 </a>
                             </li>
                             <li>
                                 <a href="#tab_tax_keluaran_detail" data-toggle="tab">
-                                    Faktur Keluaran Detail
+                                    @lang('report.tax.nav_tabs.invoice_output_detail')
                                 </a>
                             </li>
                             <li>
                                 <a href="#tab_tax_arus" data-toggle="tab">
-                                    Arus
+                                    @lang('report.tax.nav_tabs.flow')
                                 </a>
                             </li>
                         </ul>
@@ -65,17 +65,17 @@
         <div class="col-xs-12">
             <div class="text-center">
                 <ul class="pagination pagination-sm no-margin">
-                    <li><a href="{{ route('db.report.tax', [ 'year' => $year - 1, 'month' => 12 ]) }}">{{ $year - 1 }}</a></li>
+                    <li><a v-bind:href="'{{ route('db.report.tax', [ 'year' => $year - 1, 'month' => 12 ]) }}' + openedNavTab">{{ $year - 1 }}</a></li>
                     @foreach ($months as $key => $value)
                     <li class="{{ $month == $key ? 'active' : '' }}">
                         @if ($loop->first)
-                        <a href="{{ route('db.report.tax', [ 'year' => $year, 'month' => $key ]) }}">{{ $year }} - {{ str_pad($key, 2, '0', STR_PAD_LEFT) }}</a>
+                        <a v-bind:href="'{{ route('db.report.tax', [ 'year' => $year, 'month' => $key ]) }}' + openedNavTab">{{ $year }} - {{ str_pad($key, 2, '0', STR_PAD_LEFT) }}</a>
                         @else
-                        <a href="{{ route('db.report.tax', [ 'year' => $year, 'month' => $key ]) }}">{{ str_pad($key, 2, '0', STR_PAD_LEFT) }}</a>
+                        <a v-bind:href="'{{ route('db.report.tax', [ 'year' => $year, 'month' => $key ]) }}' + openedNavTab">{{ str_pad($key, 2, '0', STR_PAD_LEFT) }}</a>
                         @endif
                     </li>
                     @endforeach
-                    <li><a href="{{ route('db.report.tax', [ 'year' => $year + 1, 'month' => 1 ]) }}">{{ $year + 1 }}</a></li>
+                    <li><a v-bind:href="'{{ route('db.report.tax', [ 'year' => $year + 1, 'month' => 1 ]) }}' + openedNavTab">{{ $year + 1 }}</a></li>
                 </ul>
             </div>
         </div>
@@ -100,6 +100,7 @@
     var app = new Vue({
         el: '#taxReport',
         data: {
+            openedNavTab: window.location.hash,
             taxesInput: [],
             taxesOutput: [],
             report: {
@@ -140,20 +141,17 @@
                 }
                 return taxesOutput;
             },
-            totalGstOutputPerInvoiceDateAndName: function () {
-                var totalGstOutput = {};
+            totalPriceOutputPerInvoiceDateAndName: function () {
+                var totalPriceOutput = {};
                 for (var i = 0; i < this.invoiceDatesOutput.length; i++) {
-                    totalGstOutput[this.invoiceDatesOutput[i]] = {};
+                    totalPriceOutput[this.invoiceDatesOutput[i]] = {};
                     for (var j = 0; j < this.transactionNamesOutput.length; j++) {
-                        totalGstOutput[this.invoiceDatesOutput[i]][this.transactionNamesOutput[j]] =
-                            _.sumBy(_.flatMap(this.taxesOutputPerInvoiceDate[this.invoiceDatesOutput[i]], function (taxOutput) {
-                                return _.filter(taxOutput.transactions, function (transaction) {
-                                    return transaction.name == this.transactionNamesOutput[j];
-                                }.bind(this));
-                            }.bind(this)), 'gst');
+                        totalPriceOutput[this.invoiceDatesOutput[i]][this.transactionNamesOutput[j]] =
+                            this.totalQtyOutputPerInvoiceDateAndName[this.invoiceDatesOutput[i]][this.transactionNamesOutput[j]] *
+                            this.getPriceByInvoiceDateAndName(this.invoiceDatesOutput[i], this.transactionNamesOutput[j]) / 1.1;
                     }
                 }
-                return totalGstOutput;
+                return totalPriceOutput;
             },
             totalQtyOutputPerInvoiceDateAndName: function () {
                 var totalQtyOutput = {};
@@ -169,16 +167,17 @@
                     }
                 }
                 return totalQtyOutput;
-            },
-            grandTotalOutput: function () {
-                return _.sumBy(this.taxesOutput, function (taxOutput) {
-                    return taxInput.taxBase + taxInput.gst + taxInput.luxuryTax;
-                });
             }
         },
         mounted: function() {
             this.taxesInput = this.camelCasingKey({!! json_encode($taxes_input) !!});
             this.taxesOutput = this.camelCasingKey({!! json_encode($taxes_output) !!});
+
+            $('a[href="' + this.openedNavTab + '"]').click();
+            $('a[data-toggle=tab]').on('show.bs.tab', function (e) {
+                console.log(e.target.hash);
+                this.openedNavTab = e.target.hash;
+            }.bind(this));
         },
         methods: {
             getTransactionsByInvoiceDate: function(invoiceDate) {

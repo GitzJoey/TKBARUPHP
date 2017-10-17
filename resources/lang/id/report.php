@@ -68,6 +68,12 @@ return [
         'header' => [
             'title' => 'Laporan Pajak'
         ],
+        'nav_tabs' => [
+            'invoice_input' => 'Faktur Masukan',
+            'invoice_output_summary' => 'Faktur Keluaran Summary',
+            'invoice_output_detail' => 'Faktur Keluaran Detail',
+            'flow' => 'Arus',
+        ],
         'input' => [
             'table' => [
                 'header' => [
@@ -79,6 +85,31 @@ return [
                     'tax_base' => 'DPP Beli (Rp)',
                     'gst' => 'PPN-PM (Rp)',
                     'grand_total' => 'Total yang dibayar (Rp)'
+                ]
+            ]
+        ],
+        'output_summary' => [
+            'table' => [
+                'header' => [
+                    'date' => 'Tanggal',
+                    'qty' => 'Satuan (kg)',
+                    'unit_price' => 'Harga Satuan',
+                    'tax_base' => 'DPP-Jual (Rp)',
+                    'gst' => 'PPN-PK (Rp)',
+                    'total_price' => 'Total (Rp)',
+                    'product' => 'Barang'
+                ]
+            ]
+        ],
+        'output' => [
+            'table' => [
+                'header' => [
+                    'date' => 'Tanggal',
+                    'name' => 'Nama',
+                    'address' => 'Alamat',
+                    'unit_price' => 'Harga',
+                    'qty' => 'Berat',
+                    'product' => 'Barang'
                 ]
             ]
         ],

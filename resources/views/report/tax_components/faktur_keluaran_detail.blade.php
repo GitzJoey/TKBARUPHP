@@ -2,25 +2,25 @@
     <table class="table table-bordered" v-for="(taxesOutput, invoiceDate) in taxesOutputPerInvoiceDate">
         <thead>
             <tr>
-                <th class="text-center" style="vertical-align:middle" rowspan="4">Date</th>
-                <th class="text-center" style="vertical-align:middle" rowspan="4">Name</th>
-                <th class="text-center" style="vertical-align:middle" rowspan="4">Address</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="4">@lang('report.tax.output.table.header.date')</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="4">@lang('report.tax.output.table.header.name')</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="4">@lang('report.tax.output.table.header.address')</th>
                 <th class="text-center" style="vertical-align:middle" colspan="2" v-for="transactionNameOutput in transactionNamesOutput">@{{ transactionNameOutput }}</th>
             </tr>
             <tr>
                 <template v-for="transactionNameOutput in transactionNamesOutput">
-                    <th class="text-center" style="vertical-align:middle">Harga</th>
-                    <th class="text-center" style="vertical-align:middle" rowspan="3">Berat</th>
+                    <th class="text-center" style="vertical-align:middle">@lang('report.tax.output.table.header.unit_price')</th>
+                    <th class="text-center" style="vertical-align:middle" rowspan="3">@lang('report.tax.output.table.header.qty')</th>
                 </template>
             </tr>
             <tr>
-                <th class="text-right" style="vertical-align:middle" v-for="name in [ 'Minyak Goreng', 'Gula', 'Terigu' ]">
+                <th class="text-right" style="vertical-align:middle" v-for="name in transactionNamesOutput">
                     @{{ numeral(getPriceByInvoiceDateAndName(invoiceDate, name)).format() }}
                 </th>
             </tr>
             <tr>
-                <th class="text-right" style="vertical-align:middle" v-for="name in [ 'Minyak Goreng', 'Gula', 'Terigu' ]">
-                    @{{ numeral((getPriceByInvoiceDateAndName(invoiceDate, name)) * 0.9).format() }}
+                <th class="text-right" style="vertical-align:middle" v-for="name in transactionNamesOutput">
+                    @{{ numeral((getPriceByInvoiceDateAndName(invoiceDate, name)) / 1.1).format() }}
                 </th>
             </tr>
         </thead>
@@ -31,7 +31,11 @@
                 <td class="text-left">@{{ taxOutput.opponentName }}</td>
                 <td class="text-left">@{{ taxOutput.opponentAddress }}</td>
                 <template v-for="transactionNameOutput in transactionNamesOutput">
-                    <td class="text-right">@{{ numeral(getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).gst).format() }}</td>
+                    <td class="text-right">
+                        @{{ numeral(
+                          (getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).price || 0) *
+                          (getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).qty || 0) / 1.1).format() }}
+                    </td>
                     <td class="text-right">@{{ numeral(getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).qty).format() }}</td>
                 </template>
             </tr>
@@ -42,7 +46,7 @@
                 <td class="text-center"></td>
                 <td class="text-center"></td>
                 <template v-for="transactionNameOutput in transactionNamesOutput">
-                    <td class="text-right">@{{ numeral(totalGstOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
+                    <td class="text-right">@{{ numeral(totalPriceOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
                     <td class="text-right">@{{ numeral(totalQtyOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
                 </template>
             </tr>
@@ -51,19 +55,19 @@
     <table class="table table-bordered" v-if="!taxesOutput.length">
         <thead>
             <tr>
-                <th class="text-center" style="vertical-align:middle" rowspan="2">Date</th>
-                <th class="text-center" style="vertical-align:middle" rowspan="2">Name</th>
-                <th class="text-center" style="vertical-align:middle" rowspan="2">Address</th>
-                <th class="text-center" style="vertical-align:middle" colspan="2">Barang</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="2">@lang('report.tax.output.table.header.date')</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="2">@lang('report.tax.output.table.header.name')</th>
+                <th class="text-center" style="vertical-align:middle" rowspan="2">@lang('report.tax.output.table.header.address')</th>
+                <th class="text-center" style="vertical-align:middle" colspan="2">@lang('report.tax.output.table.header.product')</th>
             </tr>
             <tr>
-                <th class="text-center" style="vertical-align:middle">Harga</th>
-                <th class="text-center" style="vertical-align:middle">Berat</th>
+                <th class="text-center" style="vertical-align:middle">@lang('report.tax.output.table.header.unit_price')</th>
+                <th class="text-center" style="vertical-align:middle">@lang('report.tax.output.table.header.qty')</th>
             </tr>
         </thead>
         <tbody>
             <tr v-if="!taxesOutput.length">
-                <td class="text-center" colspan="8">@lang('labels.DATA_NOT_FOUND')</td>
+                <td class="text-center" colspan="5">@lang('labels.DATA_NOT_FOUND')</td>
             </tr>
         </tbody>
     </table>
