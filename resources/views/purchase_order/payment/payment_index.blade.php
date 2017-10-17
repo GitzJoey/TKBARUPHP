@@ -50,27 +50,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($purchaseOrders as $key => $po)
+                    @if(count($purchaseOrders) > 0)
+                        @foreach ($purchaseOrders as $key => $po)
+                            <tr>
+                                <td class="text-center">{{ $po->code }}</td>
+                                <td class="text-center">
+                                    @if($po->supplier_type == 'SUPPLIERTYPE.R')
+                                        {{ $po->supplier->name }}
+                                    @else
+                                        {{ $po->walk_in_supplier }}
+                                    @endif
+                                </td>
+                                <td class="text-center">{{ date('d-m-Y', strtotime($po->po_created)) }}</td>
+                                <td class="text-right">{{ number_format($po->totalAmount(), 0) }}</td>
+                                <td class="text-right">{{ number_format($po->totalAmountPaid(), 0) }}</td>
+                                <td class="text-right">{{ number_format($po->totalAmount() - $po->totalAmountPaid(), 0) }}</td>
+                                <td class="text-center" width="10%">
+                                    <a class="btn btn-xs btn-primary" href="{{ route('db.po.payment.cash', $po->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('db.po.payment.transfer', $po->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>
+                                    <a class="btn btn-xs btn-primary" href="{{ route('db.po.payment.giro', $po->hId()) }}" title="Giro"><span class="fa fa-book fa-fw"></span></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td class="text-center">{{ $po->code }}</td>
-                            <td class="text-center">
-                                @if($po->supplier_type == 'SUPPLIERTYPE.R')
-                                    {{ $po->supplier->name }}
-                                @else
-                                    {{ $po->walk_in_supplier }}
-                                @endif
-                            </td>
-                            <td class="text-center">{{ date('d-m-Y', strtotime($po->po_created)) }}</td>
-                            <td class="text-right">{{ number_format($po->totalAmount(), 0) }}</td>
-                            <td class="text-right">{{ number_format($po->totalAmountPaid(), 0) }}</td>
-                            <td class="text-right">{{ number_format($po->totalAmount() - $po->totalAmountPaid(), 0) }}</td>
-                            <td class="text-center" width="10%">
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.po.payment.cash', $po->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.po.payment.transfer', $po->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>
-                                <a class="btn btn-xs btn-primary" href="{{ route('db.po.payment.giro', $po->hId()) }}" title="Giro"><span class="fa fa-book fa-fw"></span></a>
-                            </td>
+                            <td colspan="7" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
