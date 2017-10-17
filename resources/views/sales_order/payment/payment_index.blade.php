@@ -56,7 +56,7 @@
                                     @if($so->customer_type == 'CUSTOMERTYPE.R')
                                         {{ $so->customer->name }}
                                     @else
-                                        {{ $so->walk_in_customer }}
+                                        {{ $so->walk_in_cust }}
                                     @endif
                                 </td>
                                 <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
@@ -64,12 +64,12 @@
                                 <td class="text-right">{{ number_format($so->totalAmountPaid(), 0) }}</td>
                                 <td class="text-right">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 0) }}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.bf', $so->hId()) }}"><span class="fa fa-arrow-circle-right fa-fw"></span></a>
+                                    <a class="btn btn-xs btn-primary {{ $so->customer_type == 'CUSTOMERTYPE.R' ? '':'disabled' }}" href="{{ route('db.so.payment.bf', $so->hId()) }}"><span class="fa fa-arrow-circle-right fa-fw"></span></a>
                                 </td>
                                 <td class="text-center" width="10%">
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.cash', $so->hId()) }}" title="Cash"><span class="fa fa-money fa-fw"></span></a>
-                                    <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.transfer', $so->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>
-                                    <a class="btn btn-xs btn-primary" href="{{ route('db.so.payment.giro', $so->hId()) }}" title="Giro"><span class="fa fa-book fa-fw"></span></a>
+                                    <a class="btn btn-xs btn-primary {{ $so->customer_type == 'CUSTOMERTYPE.R' ? '':'disabled' }}" href="{{ route('db.so.payment.transfer', $so->hId()) }}" title="Transfer"><span class="fa fa-send fa-fw"></span></a>
+                                    <a class="btn btn-xs btn-primary {{ $so->customer_type == 'CUSTOMERTYPE.R' ? '':'disabled' }}" href="{{ route('db.so.payment.giro', $so->hId()) }}" title="Giro"><span class="fa fa-book fa-fw"></span></a>
                                 </td>
                             </tr>
                         @endforeach
