@@ -81,6 +81,8 @@ class PurchaseOrderPaymentController extends Controller
 
         $this->paymentService->createCashPayment($currentPo, $paymentDate, $paymentAmount);
 
+        $this->purchaseOrderService->updatePOStatus($currentPo, $paymentAmount);
+
         return response()->json();
     }
 
