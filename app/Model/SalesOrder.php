@@ -230,14 +230,6 @@ class SalesOrder extends Model
         return $this->totalAmount() - $this->totalAmountPaid();
     }
 
-    public function updatePaymentStatus()
-    {
-        if($this->totalAmount() === $this->totalAmountPaid())
-            $this->status = "SOSTATUS.C";
-
-        $this->save();
-    }
-
     public function itemTotalAmount()
     {
         $itemAmounts = $this->items->map(function($item){
@@ -329,5 +321,4 @@ class SalesOrder extends Model
             }
         });
     }
-
 }

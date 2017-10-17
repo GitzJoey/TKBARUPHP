@@ -12,6 +12,7 @@ use App\Model\Expense;
 use App\Repos\LookupRepo;
 
 use App\Services\PaymentService;
+use App\Services\SalesOrderService;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,10 +21,12 @@ use Illuminate\Support\Facades\Log;
 class SalesOrderPaymentController extends Controller
 {
     private $paymentService;
+    private $salesOrderService;
 
-    public function __construct(PaymentService $paymentService)
+    public function __construct(PaymentService $paymentService, SalesOrderService $salesOrderService)
     {
         $this->paymentService = $paymentService;
+        $this->salesOrderService = $salesOrderService;
         $this->middleware('auth');
     }
 
@@ -88,7 +91,9 @@ class SalesOrderPaymentController extends Controller
         $paymentAmount = floatval(str_replace(',', '', $request->input('total_amount')));
 
         $this->paymentService->createCashPayment($currentSo, $paymentDate, $paymentAmount);
-        
+
+        $this->salesOrderService->updateSOStatus($currentSo, $paymentAmount);
+
         return response()->json();
     }
 

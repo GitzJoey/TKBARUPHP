@@ -519,4 +519,13 @@ class SalesOrderServiceImpl implements SalesOrderService
 
         return $salesOrders;
     }
+
+    public function updateSOStatus(SalesOrder $soData, $amount)
+    {
+        if ($soData->totalAmountUnpaid() == 0) {
+            $soData->status = 'SOSTATUS.C';
+
+            $soData->save();
+        }
+    }
 }

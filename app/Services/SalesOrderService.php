@@ -133,4 +133,6 @@ interface SalesOrderService
     public function getUncorfirmedSO();
 
     public function searchSO($keyword);
+
+    public function updateSOStatus(SalesOrder $soData, $amount);
 }
