@@ -134,17 +134,17 @@
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('brutto_' + receiptIdx) }">
                                                     <input v-bind:id="'brutto_' + receipt.item.id" type="text" class="form-control text-right" name="brutto[]"
-                                                           v-model="receipt.brutto" v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.brutto') }} ' + (receiptIdx + 1)"
+                                                           v-model="receipt.brutto" v-validate="'required|numeric:2'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.brutto') }} ' + (receiptIdx + 1)"
                                                            v-bind:data-vv-name="'brutto_' + receiptIdx">
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('netto_' + receiptIdx) }">
                                                     <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]"
-                                                           v-model="receipt.netto" v-validate="'required|numeric|checkequal:' + receiptIdx" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.netto') }} ' + (receiptIdx + 1)"
+                                                           v-model="receipt.netto" v-validate="'required|numeric:2|checkequal:' + receiptIdx" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.netto') }} ' + (receiptIdx + 1)"
                                                            v-bind:data-vv-name="'netto_' + receiptIdx">
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('tare_' + receiptIdx) }">
                                                     <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]"
-                                                           v-model="receipt.tare" v-validate="'required|numeric|checkequal:' + receiptIdx" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.tare') }} ' + (receiptIdx + 1)"
+                                                           v-model="receipt.tare" v-validate="'required|numeric:2|checkequal:' + receiptIdx" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.tare') }} ' + (receiptIdx + 1)"
                                                            v-bind:data-vv-name="'tare_' + receiptIdx">
                                                 </td>
                                                 <td class="text-center">
