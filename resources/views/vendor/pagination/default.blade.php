@@ -1,4 +1,4 @@
-@if ($paginator->count() > 1)
+@if ($paginator->count() != 0)
     <ul class="pagination pagination-sm no-margin pull-right">
         <!-- Previous Page Link -->
         @if ($paginator->onFirstPage())

@@ -28,6 +28,15 @@
             <h3 class="box-title">@lang('purchase_order.payment.index.header.title')</h3>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <input id="inputCode" type="text" class="form-control" value="{{ $searchCode }}">
+                </div>
+                <div class="col-md-1">
+                    <button id="btnCode" type="btn" class="btn btn-primary"><i class="fa fa-search fa-fw"></i></button>
+                </div>
+            </div>
+            <br>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -72,5 +81,10 @@
 @endsection
 @section('custom_js')
     <script type="application/javascript">
+        $('#btnCode').click(function() {
+           if ($('#inputCode').length > 0) {
+               window.location.href = '{{ route('db.po.payment.index') }}' + '?c=' + $('#inputCode').val();
+           }
+        });
     </script>
 @endsection

@@ -33,17 +33,19 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@paymentIndex]');
 
-        if(!empty($request->query('pocode'))){
+        $searchCode = '';
+        if(!empty($request->query('c'))){
             $purchaseOrders = PurchaseOrder::with('supplier')
                 ->where('status', '=', 'POSTATUS.WP')
-                ->where('code', '=', $request->query('pocode'))->paginate(10);
+                ->where('code', '=', $request->query('c'))->paginate(10);
+            $searchCode = $request->query('c');
         } else {
             $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')->paginate(10);
         }
 
         $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');
 
-        return view('purchase_order.payment.payment_index', compact('purchaseOrders', 'poStatusDDL'));
+        return view('purchase_order.payment.payment_index', compact('purchaseOrders', 'poStatusDDL', 'searchCode'));
     }
 
     public function paymentHistory($id){
