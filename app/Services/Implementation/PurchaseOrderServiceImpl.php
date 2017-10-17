@@ -350,7 +350,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
 
     public function updatePOStatus(PurchaseOrder $poData, $amount)
     {
-        if ($poData->totalAmount() === $amount) {
+        if (($amount + $poData->totalAmountPaid()) === $poData->totalAmount()) {
             $poData->status = 'POSTATUS.C';
 
             $poData->save();
