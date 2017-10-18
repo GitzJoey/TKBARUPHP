@@ -16,11 +16,20 @@ export default {
   data: function () {
       return {
           value: this.defaultId,
-          suppliers: {}
+          options: {}
       }
   },
   model: {
       event: 'select'
+  },
+  watch: {
+      defaultId: function (val) {
+          if (val == $(this.$el).val() || _.isEmpty(val)) return $(this.$el).val();
+          let option = new Option(this.defaultText, val, true, true);
+          $(this.$el).append(option).trigger('change');
+          this.$emit('input', val);
+          return val;
+      }
   },
   mounted: function(){
       if (typeof window.$ === 'undefined' || typeof window.jQuery === 'undefined') {
@@ -50,8 +59,8 @@ export default {
               },
               processResults: function (data, params) {
                   params.page = params.page || 1;
+                  vm.options = data;
                   var output = [];
-                  vm.suppliers = data;
                   _.map(data, function(d){
                       output.push({id: d[vm.id], text: d[vm.text] });
                   });
@@ -63,11 +72,11 @@ export default {
           minimumInputLength: 1,
           placeholder: vm.placeholder
       }).val(vm.defaultId ? vm.defaultId : '').trigger('change').on('change', function(e) {
-          vm.$emit('input', e.target.value);
-          let supplier = _.find(vm.suppliers, function (supplier) {
-              return supplier[vm.id] == e.target.value;
-          });
-          vm.$emit('select', supplier);
+        vm.$emit('select', e.target.value);
+        let option = _.find(vm.options, function (option) {
+            return option[vm.id] == e.target.value;
+        }) || {};
+        vm.$emit('select-option', option);
       });
   },
   destroyed: function(){

@@ -50,7 +50,7 @@
                                                     v-validate="'required'"
                                                     data-vv-as="@lang('tax.invoice.input.create.field.opponent_tax_id_no')"
                                                     v-model="opponentTaxIdNo"
-                                                    v-on:select="onSelectSupplier"></select2-supplier>
+                                                    v-on:select-option="onSelectSupplier"></select2-supplier>
                                   <span class="input-group-btn">
                                       <a href="{{ route('db.master.customer.create', [ 'redirect' => urlencode(url()->full()) ]) }}" class="btn btn-default btn-default">
                                           <i class="fa fa-plus"></i>
