@@ -23,6 +23,7 @@ use App\Util\SOCodeGenerator;
 use App\Repos\LookupRepo;
 
 use App;
+use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -99,7 +100,12 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@saveDraft');
 
-        $this->salesOrderService->storeToSession($request);
+        $SOs = $this->salesOrderService->storeToSession($request);
+
+        Session::setId($request->input('sId'));
+        Session::start();
+        Session::put(['userSOs' => collect($SOs)]);
+        Session::save();
 
         return response()->json();
     }
