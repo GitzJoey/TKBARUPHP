@@ -261,9 +261,11 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="modalName">Name:</label>
-                                    <select2-product class="form-control" name="modalName"
-                                                     id="name" v-bind:default-id="newTran.name" v-bind:default-text="newTran.name"
-                                                     v-model="newTran.name"></select2-product>
+                                    <select class="form-control" name="modalName" v-model="newTran.name">
+                                        @foreach (App\Model\Product::orderBy('name')->get() as $key => $product)
+                                        <option value="{{ $product->name }}" v-bind:selected="newTran.name == '{{ $product->name }}'">{{ $product->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="checkbox">
                                     <label>

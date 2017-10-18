@@ -130,11 +130,11 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="detail" class="control-label">@lang('tax.invoice.input.create.field.detail')</label>
-                                        <select2-product class="form-control" name="detail"
-                                                         id="name"
-                                                         v-validate="'required'"
-                                                         data-vv-as="@lang('tax.invoice.input.create.field.detail')"
-                                                         v-model="detail"></select2-product>
+                                        <select class="form-control" name="detail" v-model="detail">
+                                            @foreach (App\Model\Product::orderBy('name')->get() as $key => $product)
+                                            <option value="{{ $product->name }}" v-bind:selected="detail == '{{ $product->name }}'">{{ $product->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="qty" class="control-label">@lang('tax.invoice.input.create.field.qty')</label>

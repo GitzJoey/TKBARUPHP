@@ -23,9 +23,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', [
-            'except' => [ 'searchProducts' ]
-        ]);
+        $this->middleware('auth');
     }
 
     public function index()
@@ -241,15 +239,5 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect(route('db.master.product'));
-    }
-
-    public function searchProducts(Request $request)
-    {
-        $param = $request->query('q');
-
-        $products = Product::where('name', 'like', "%$param%")
-            ->limit(10)->get();
-
-        return $products;
     }
 }
