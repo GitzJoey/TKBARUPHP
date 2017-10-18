@@ -131,7 +131,11 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="detail" class="control-label">@lang('tax.invoice.input.create.field.detail')</label>
-                                        <input id="detail" name="detail" type="text" class="form-control" v-model="detail" v-validate="'required'" data-vv-as="@lang('tax.invoice.input.create.field.detail')">
+                                        <select2-product class="form-control" name="detail"
+                                                         id="name" v-bind:default-id="detail" v-bind:default-text="detail"
+                                                         v-validate="'required'"
+                                                         data-vv-as="@lang('tax.invoice.input.create.field.detail')"
+                                                         v-model="detail"></select2-product>
                                     </div>
                                     <div class="form-group">
                                         <label for="qty" class="control-label">@lang('tax.invoice.input.create.field.qty')</label>

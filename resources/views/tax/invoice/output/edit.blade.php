@@ -261,7 +261,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="modalName">Name:</label>
-                                    <input type="text" class="form-control" name="modalName" v-model="newTran.name">
+                                    <select2-product class="form-control" name="modalName"
+                                                     id="name" v-bind:default-id="newTran.name" v-bind:default-text="newTran.name"
+                                                     v-model="newTran.name"></select2-product>
                                 </div>
                                 <div class="checkbox">
                                     <label>
@@ -398,11 +400,11 @@
                     if(this.newTran.index == -1)
                         this.taxOutput.transactions.push(this.newTran);
                     else
-                        this.taxOutput.transactions[this.newTran.index] = this.newTran;
+                        this.$set(this.taxOutput.transactions, this.newTran.index, _.clone(this.newTran));
                     this.calcTax();
                 },
                 editTran: function(tran, index) {
-                    this.newTran = tran;
+                    this.$set(this, 'newTran', _.clone(tran));
                     this.newTran.index = index;
                     this.calcTax();
                 },
