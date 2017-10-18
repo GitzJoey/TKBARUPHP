@@ -260,7 +260,11 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="modalName">Name:</label>
-                                    <input type="text" class="form-control" name="modalName" v-model="newTran.name">
+                                    <select class="form-control" name="modalName" v-model="newTran.name">
+                                        @foreach (App\Model\Product::orderBy('name')->get() as $key => $product)
+                                        <option value="{{ $product->name }}" v-bind:selected="newTran.name == '{{ $product->name }}'">{{ $product->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="checkbox">
                                     <label>
@@ -395,11 +399,11 @@
                     if(this.newTran.index == -1)
                         this.taxOutput.transactions.push(this.newTran);
                     else
-                        this.taxOutput.transactions[this.newTran.index] = this.newTran;
+                        this.$set(this.taxOutput.transactions, this.newTran.index, _.clone(this.newTran));
                     this.calcTax();
                 },
                 editTran: function(tran, index) {
-                    this.newTran = tran;
+                    this.$set(this, 'newTran', _.clone(tran));
                     this.newTran.index = index;
                     this.calcTax();
                 },
