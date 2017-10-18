@@ -49,7 +49,7 @@
                                                     v-validate="'required'"
                                                     data-vv-as="@lang('tax.invoice.input.create.field.opponent_tax_id_no')"
                                                     v-model="opponentTaxIdNo"
-                                                    v-on:select="onSelectSupplier"></select2-supplier>
+                                                    v-on:select-option="onSelectSupplier"></select2-supplier>
                                   <span class="input-group-btn">
                                       <a href="{{ route('db.master.customer.create', [ 'redirect' => urlencode(url()->full()) ]) }}" class="btn btn-default btn-default">
                                           <i class="fa fa-plus"></i>
@@ -130,7 +130,11 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="detail" class="control-label">@lang('tax.invoice.input.create.field.detail')</label>
-                                        <input id="detail" name="detail" type="text" class="form-control" v-model="detail" v-validate="'required'" data-vv-as="@lang('tax.invoice.input.create.field.detail')">
+                                        <select class="form-control" name="detail" v-model="detail">
+                                            @foreach (App\Model\Product::orderBy('name')->get() as $key => $product)
+                                            <option value="{{ $product->name }}" v-bind:selected="detail == '{{ $product->name }}'">{{ $product->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="qty" class="control-label">@lang('tax.invoice.input.create.field.qty')</label>
