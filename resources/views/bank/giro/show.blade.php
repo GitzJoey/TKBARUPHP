@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-book fa-fw"></span>&nbsp;@lang('giro.show.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('giro.show.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('bank_giro_show', $giro->hId()) !!}
 @endsection
 
 @section('content')

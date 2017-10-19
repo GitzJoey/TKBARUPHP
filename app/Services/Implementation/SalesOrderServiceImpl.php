@@ -31,7 +31,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 use App\Services\SalesOrderService;
-use Illuminate\Support\Facades\Session;
 
 class SalesOrderServiceImpl implements SalesOrderService
 {
@@ -387,9 +386,7 @@ class SalesOrderServiceImpl implements SalesOrderService
             ];
         }
 
-        Session::setId($request->input('sId'));
-        Session::put(['userSOs' => collect($SOs)]);
-        Session::save();
+        return $SOs;
     }
 
     /**
@@ -518,5 +515,14 @@ class SalesOrderServiceImpl implements SalesOrderService
             });
 
         return $salesOrders;
+    }
+
+    public function updateSOStatus(SalesOrder $soData, $amount)
+    {
+        if ($soData->totalAmountUnpaid() == 0) {
+            $soData->status = 'SOSTATUS.C';
+
+            $soData->save();
+        }
     }
 }

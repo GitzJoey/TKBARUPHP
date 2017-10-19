@@ -42,7 +42,7 @@ class TruckMaintenanceController extends Controller
 
     public function create()
     {
-        $mtctypeDDL = LookupRepo::findByCategory('TRUCKMTCTYPE')->pluck('description', 'code');
+        $mtctypeDDL = LookupRepo::findByCategory('TRUCKMTCTYPE')->pluck('i18nDescription', 'code');
         $trucklist = Truck::get()->pluck('plate_number', 'id');
 
         return view('truck_maintenance.create', compact('mtctypeDDL', 'trucklist'));
@@ -76,7 +76,7 @@ class TruckMaintenanceController extends Controller
         $truckMtc = TruckMaintenance::find($id);
 
         $trucklist = Truck::get()->pluck('plate_number', 'id');
-        $mtctypeDDL = LookupRepo::findByCategory('TRUCKMTCTYPE')->pluck('description', 'code');
+        $mtctypeDDL = LookupRepo::findByCategory('TRUCKMTCTYPE')->pluck('i18nDescription', 'code');
 
         return view('truck_maintenance.edit', compact('truckMtc', 'trucklist', 'mtctypeDDL'));
     }

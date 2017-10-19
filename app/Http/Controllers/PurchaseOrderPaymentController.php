@@ -33,16 +33,19 @@ class PurchaseOrderPaymentController extends Controller
     {
         Log::info('[PurchaseOrderController@paymentIndex]');
 
-        $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP');
-
-        if(!empty($request->query('pocode'))){
-            $purchaseOrders = $purchaseOrders->where('code', '=', $request->query('pocode'));
+        $searchCode = '';
+        if(!empty($request->query('c'))){
+            $purchaseOrders = PurchaseOrder::with('supplier')
+                ->where('status', '=', 'POSTATUS.WP')
+                ->where('code', '=', $request->query('c'))->paginate(10);
+            $searchCode = $request->query('c');
+        } else {
+            $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')->paginate(10);
         }
 
-        $purchaseOrders = $purchaseOrders->paginate(10);
         $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');
 
-        return view('purchase_order.payment.payment_index', compact('purchaseOrders', 'poStatusDDL'));
+        return view('purchase_order.payment.payment_index', compact('purchaseOrders', 'poStatusDDL', 'searchCode'));
     }
 
     public function paymentHistory($id){
@@ -80,6 +83,8 @@ class PurchaseOrderPaymentController extends Controller
         $paymentAmount = floatval(str_replace(',', '', $request->input('total_amount')));
 
         $this->paymentService->createCashPayment($currentPo, $paymentDate, $paymentAmount);
+
+        $this->purchaseOrderService->updatePOStatus($currentPo, $paymentAmount);
 
         return response()->json();
     }

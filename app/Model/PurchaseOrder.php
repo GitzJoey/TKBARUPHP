@@ -217,14 +217,6 @@ class PurchaseOrder extends Model
         })->sum('total_amount');
     }
 
-    public function updatePaymentStatus()
-    {
-        if($this->totalAmount() === $this->totalAmountPaid())
-            $this->status = "POSTATUS.C";
-
-        $this->save();
-    }
-
     public function expenses()
     {
         return $this->morphMany('App\Model\Expense', 'expensable');

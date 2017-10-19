@@ -16,6 +16,10 @@
     <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/fileinput/fileinput.css') }}">
 @endsection
 
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('bank_upload') !!}
+@endsection
+
 @section('content')
     @if ($message = Session::get('success'))
         <div class="alert alert-success">

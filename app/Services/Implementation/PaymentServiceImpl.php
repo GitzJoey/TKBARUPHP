@@ -26,7 +26,6 @@ class PaymentServiceImpl implements PaymentService {
             $cashPayment->payment()->save($payment);
 
             $payable->payments()->save($payment);
-            $payable->updatePaymentStatus();
 
             return $payment;
         });

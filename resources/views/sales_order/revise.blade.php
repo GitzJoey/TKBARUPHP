@@ -153,7 +153,7 @@
                                         <select id="inputWarehouse" name="warehouse_id"
                                                 class="form-control"
                                                 v-model="so.warehouse.id">
-                                            <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-bind:value="defaultWarehouse">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                                         </select>
                                     @else
@@ -513,13 +513,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-5">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+                            <div class="col-xs-12">
                                 <div class="box">
                                     <div class="box-header text-center">
                                         @if($currentSo->customer_type == 'CUSTOMERTYPE.R')
@@ -559,7 +559,7 @@
                                             <tbody>
                                                 <template v-for="(item, itemIndex) in so.items">
                                                     <tr>
-                                                        <td>*@{{ item.product.name }}</td>
+                                                        <td>@{{ item.product.name }}</td>
                                                         <td>@{{ item.quantity }}</td>
                                                         <td>@{{ numeral(item.price).format() }}</td>
                                                         <td class="text-right">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
@@ -714,7 +714,9 @@
                 vm.so.disc_value = vm.currentSo.disc_value % 1 !== 0 ? vm.currentSo.disc_value : parseFloat(vm.currentSo.disc_value).toFixed(0);
                 vm.so.stock = this.defaultStock;
                 vm.so.product = this.defaultProduct;
-                vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                if (vm.currentSo.sales_type != null) {
+                    vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                }
                 vm.so.warehouse = _.cloneDeep(vm.currentSo.warehouse);
                 vm.so.vendorTrucking = vm.currentSo.vendor_trucking ?  _.cloneDeep(vm.currentSo.vendor_trucking) : vm.defaultVendorTrucking;
 

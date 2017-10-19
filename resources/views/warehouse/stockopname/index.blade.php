@@ -28,6 +28,17 @@
             <h3 class="box-title">@lang('warehouse.stockopname.index.header.title')</h3>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <select id="whSelect" class="form-control">
+                        <option value="">@lang('labels.SHOW_ALL')</option>
+                        @foreach ($wh as $w)
+                            <option value="{{ Hashids::encode($w->id)  }}" {{ Hashids::encode($w->id) == $selectedWH ? "selected":""  }}>{{ $w->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <br>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -46,8 +57,8 @@
                             <td class="text-center">
                                 {{ count($stock->stockOpnames) > 0 ? date('Y-m-d H:i A', strtotime($stock->stockOpnames()->orderBy('id', 'desc')->first(['opname_date'])['opname_date'])) : '' }}
                             </td>
-                            <td>
-                                {{ $stock->current_quantity }}
+                            <td class="text-center">
+                                {{ $stock->current_quantity }}&nbsp;{{ $stock->product->baseUnitSymbol }}
                             </td>
                             <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.warehouse.stockopname.adjust', $stock->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>
@@ -61,4 +72,14 @@
             {!! $stocks->render() !!}
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('#whSelect').change(function() {
+                window.location.href = '{{ route('db.warehouse.stockopname.index') }}' + '?w=' + $('#whSelect').val();
+            }) ;
+        });
+    </script>
 @endsection

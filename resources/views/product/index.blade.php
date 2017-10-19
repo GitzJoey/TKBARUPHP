@@ -43,7 +43,7 @@
                 <tbody>
                     @foreach ($productlist as $key => $product)
                         <tr>
-                            <td width="10%">{{ $product->type->name }}</td>
+                            <td width="10%">{{ empty($product->type) ? '':$product->type->name }}</td>
                             <td width="20%">{{ $product->name }}</td>
                             <td width="10%" class="text-center">{{ $product->short_code }}</td>
                             <td width="20%">{{ $product->description }}</td>

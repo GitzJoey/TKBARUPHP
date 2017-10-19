@@ -45,11 +45,11 @@ return [
         ],
     ],
     'show' => [
-        'title' => '',
-        'page_title' => '',
+        'title' => 'Tingkatan Harga',
+        'page_title' => 'Tingkatan Harga',
         'page_title_desc' => '',
         'header' => [
-            'title' => '',
+            'title' => 'Tingkatan Harga',
         ],
     ],
 ];

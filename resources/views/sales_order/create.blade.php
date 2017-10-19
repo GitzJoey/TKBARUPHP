@@ -889,15 +889,17 @@
                                         progressBar: true
                                     });
                                 }
-                            }).catch(function (error) {
+                            }).catch(function (e) {
                                 $('#loader-container').fadeOut('slow');
-                                noty({
-                                    layout: 'topRight',
-                                    text: error.response.data.message,
-                                    type: 'error',
-                                    timeout: 5000,
-                                    progressBar: true
-                                });
+                                if (Object.keys(e.response.data.errors).length > 0) {
+                                    for (var key in e.response.data.errors) {
+                                        for (var i = 0; i < e.response.data.errors[key].length; i++) {
+                                            vm.$validator.errors.add('', e.response.data.errors[key][i], 'server', '__global__');
+                                        }
+                                    }
+                                } else {
+                                    vm.$validator.errors.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                }
                             });
                     }).catch(function() {
 

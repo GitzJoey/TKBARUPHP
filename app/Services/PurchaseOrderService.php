@@ -106,4 +106,6 @@ interface PurchaseOrderService
     public function getUnreceivedPO($threshold = 3);
 
     public function searchPO($keyword);
+
+    public function updatePOStatus(PurchaseOrder $poData, $amount);
 }

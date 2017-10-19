@@ -23,6 +23,7 @@ use App\Util\SOCodeGenerator;
 use App\Repos\LookupRepo;
 
 use App;
+use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -73,6 +74,14 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@store');
 
+        if ($request['customer_type']['code'] == 'CUSTOMERTYPE.R') {
+            if (empty($soData['customer']['id'])) {
+                $rules = ['notFound' => 'required'];
+                $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
+                Validator::make($request->all(), $rules, $messages)->validate();
+            }
+        }
+
         try {
             $this->salesOrderService->createSO($request->json()->all());
         } catch (\Exception $e) {
@@ -91,7 +100,12 @@ class SalesOrderController extends Controller
     {
         Log::info('SalesOrderController@saveDraft');
 
-        $this->salesOrderService->storeToSession($request);
+        $SOs = $this->salesOrderService->storeToSession($request);
+
+        Session::setId($request->input('sId'));
+        Session::start();
+        Session::put(['userSOs' => collect($SOs)]);
+        Session::save();
 
         return response()->json();
     }
