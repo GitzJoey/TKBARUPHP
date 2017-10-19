@@ -153,7 +153,7 @@
                                         <select id="inputWarehouse" name="warehouse_id"
                                                 class="form-control"
                                                 v-model="so.warehouse.id">
-                                            <option v-bind:value="defaultWarehouse.id">@lang('labels.PLEASE_SELECT')</option>
+                                            <option v-bind:value="defaultWarehouse">@lang('labels.PLEASE_SELECT')</option>
                                             <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
                                         </select>
                                     @else
@@ -714,7 +714,9 @@
                 vm.so.disc_value = vm.currentSo.disc_value % 1 !== 0 ? vm.currentSo.disc_value : parseFloat(vm.currentSo.disc_value).toFixed(0);
                 vm.so.stock = this.defaultStock;
                 vm.so.product = this.defaultProduct;
-                vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                if (vm.currentSo.sales_type != null) {
+                    vm.so.customer = _.cloneDeep(vm.currentSo.customer);
+                }
                 vm.so.warehouse = _.cloneDeep(vm.currentSo.warehouse);
                 vm.so.vendorTrucking = vm.currentSo.vendor_trucking ?  _.cloneDeep(vm.currentSo.vendor_trucking) : vm.defaultVendorTrucking;
 
