@@ -513,13 +513,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-5">
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('sales_order.create.box.transaction_summary')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+                            <div class="col-xs-12">
                                 <div class="box">
                                     <div class="box-header text-center">
                                         @if($currentSo->customer_type == 'CUSTOMERTYPE.R')
