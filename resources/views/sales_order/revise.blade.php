@@ -559,7 +559,7 @@
                                             <tbody>
                                                 <template v-for="(item, itemIndex) in so.items">
                                                     <tr>
-                                                        <td>*@{{ item.product.name }}</td>
+                                                        <td>@{{ item.product.name }}</td>
                                                         <td>@{{ item.quantity }}</td>
                                                         <td>@{{ numeral(item.price).format() }}</td>
                                                         <td class="text-right">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
