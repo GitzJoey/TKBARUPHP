@@ -137,5 +137,25 @@ return [
                 ]
             ]
         ],
+        'import_opponents' => [
+            'table' => [
+                'header' => [
+                    'lt' => 'LT',
+                    'tax_id' => 'TAX_ID',
+                    'name' => 'NAME',
+                    'street' => 'STREET',
+                    'block' => 'BLOCK',
+                    'number' => 'NO',
+                    'rt' => 'RT',
+                    'rw' => 'RW',
+                    'district' => 'DISTRICT',
+                    'village' => 'VILLAGE',
+                    'region' => 'REGION',
+                    'province' => 'PROVINCE',
+                    'postal_code' => 'POSTAL_CODE',
+                    'phone_number' => 'PHONE_NUMBER'
+                ]
+            ]
+        ],
     ]
 ];

@@ -137,5 +137,25 @@ return [
                 ]
             ]
         ],
+        'import_opponents' => [
+            'table' => [
+                'header' => [
+                    'lt' => 'LT',
+                    'tax_id' => 'NPWP',
+                    'name' => 'NAMA',
+                    'street' => 'JALAN',
+                    'block' => 'BLOK',
+                    'number' => 'NO',
+                    'rt' => 'RT',
+                    'rw' => 'RW',
+                    'district' => 'KECAMATAN',
+                    'village' => 'KELURAHAN',
+                    'region' => 'KABUPATEN',
+                    'province' => 'PROVINSI',
+                    'postal_code' => 'KODE_POS',
+                    'phone_number' => 'NOMOR_TELEPON'
+                ]
+            ]
+        ],
     ]
 ];

@@ -53,6 +53,7 @@
                                 @include('tax.generate_components.import_products')
                             </div>
                             <div class="tab-pane" id="tab_import_opponents">
+                                @include('tax.generate_components.import_opponents')
                             </div>
                             <div class="tab-pane" id="tab_import_pk">
                             </div>
