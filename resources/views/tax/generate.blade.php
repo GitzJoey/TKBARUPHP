@@ -58,6 +58,7 @@
                             <div class="tab-pane" id="tab_import_pk">
                             </div>
                             <div class="tab-pane" id="tab_import_pm">
+                                @include('tax.generate_components.import_pm')
                             </div>
                         </div>
                     </div>

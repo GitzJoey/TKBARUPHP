@@ -157,5 +157,25 @@ return [
                 ]
             ]
         ],
+        'import_pm' => [
+            'table' => [
+                'header' => [
+                    'pm' => 'FM',
+                    'transaction_type_code' => 'KD_JENIS_TRANSAKSI',
+                    'fg_replacement' => 'FG_PENGGANTI',
+                    'invoice_no' => 'NOMOR_FAKTUR',
+                    'month' => 'MASA_PAJAK',
+                    'year' => 'TAHUN_PAJAK',
+                    'invoice_date' => 'TANGGAL_FAKTUR',
+                    'tax_id_no' => 'NPWP',
+                    'name' => 'NAMA',
+                    'address' => 'ALAMAT',
+                    'total_tax_base' => 'JUMLAH_DPP',
+                    'total_gst' => 'JUMLAH_PPN',
+                    'total_luxury_tax' => 'JUMLAH_PPNBM',
+                    'is_creditable' => 'IS_CREDITABLE'
+                ]
+            ]
+        ]
     ]
 ];
