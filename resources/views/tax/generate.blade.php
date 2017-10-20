@@ -50,6 +50,7 @@
                         </ul>
                         <div class="tab-content" id="tab_tax" >
                             <div class="tab-pane active" id="tab_import_products">
+                                @include('tax.generate_components.import_products')
                             </div>
                             <div class="tab-pane" id="tab_import_opponents">
                             </div>

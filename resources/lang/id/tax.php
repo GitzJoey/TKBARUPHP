@@ -114,7 +114,7 @@ return [
             ],
         ],
     ],
-];    'generate' => [
+    'generate' => [
         'title' => 'Generate',
         'page_title' => 'Generate',
         'page_title_desc' => 'Halaman Generate',
@@ -126,6 +126,16 @@ return [
             'import_opponents' => 'Import Lawan',
             'import_pk' => 'Import PK',
             'import_pm' => 'Import PM',
+        ],
+        'import_products' => [
+            'table' => [
+                'header' => [
+                    'ob' => 'OB',
+                    'object_code' => 'KODE_OBJEK',
+                    'name' => 'NAMA',
+                    'unit_price' => 'HARGA_SATUAN'
+                ]
+            ]
         ],
     ]
 ];

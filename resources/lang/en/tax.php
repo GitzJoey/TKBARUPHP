@@ -114,7 +114,7 @@ return [
             ],
         ],
     ],
-];    'generate' => [
+    'generate' => [
         'title' => 'Generate',
         'page_title' => 'Generate',
         'page_title_desc' => 'Generate Page',
@@ -126,6 +126,16 @@ return [
             'import_opponents' => 'Import Opponent',
             'import_pk' => 'Import PK',
             'import_pm' => 'Import PM',
+        ],
+        'import_products' => [
+            'table' => [
+                'header' => [
+                    'ob' => 'OB',
+                    'object_code' => 'OBJECT_CODE',
+                    'name' => 'NAME',
+                    'unit_price' => 'UNIT_PRICE'
+                ]
+            ]
         ],
     ]
 ];
