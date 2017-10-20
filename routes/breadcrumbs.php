@@ -621,3 +621,7 @@ Breadcrumbs::register('edit_tax_invoice_input', function($breadcrumbs, $id){
     $breadcrumbs->push(trans('breadcrumb.tax.invoice.input.edit'), route('db.tax.invoice.input.edit', $id));
 });
 
+Breadcrumbs::register('tax_generate', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.tax.generate'), route('db.tax.generate'));
+});

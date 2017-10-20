@@ -276,6 +276,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                     ]);
                 });
             });
+            Route::group(['middleware' => ['permission:read-tax-generate|menu-tax-generate']], function () {
+                Route::get('generate', 'TaxGenerateController')->name('db.tax.generate');
+            });
         });
 
         Route::group(['prefix' => 'report'], function () {

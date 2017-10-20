@@ -114,4 +114,18 @@ return [
             ],
         ],
     ],
+];    'generate' => [
+        'title' => 'Generate',
+        'page_title' => 'Generate',
+        'page_title_desc' => 'Halaman Generate',
+        'header' => [
+            'title' => 'Generate'
+        ],
+        'nav_tabs' => [
+            'import_products' => 'Import Barang',
+            'import_opponents' => 'Import Lawan',
+            'import_pk' => 'Import PK',
+            'import_pm' => 'Import PM',
+        ],
+    ]
 ];
