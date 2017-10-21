@@ -560,9 +560,14 @@ Breadcrumbs::register('customer_confirmation_confirm', function($breadcrumbs, $i
     $breadcrumbs->push(trans('breadcrumb.customer.confirmation.confirm'), route('db.customer.confirmation.confirm', $id));
 });
 
-Breadcrumbs::register('customer.approval', function($breadcrumbs){
+Breadcrumbs::register('customer_approval', function($breadcrumbs){
     $breadcrumbs->parent('dashboard');
-    $breadcrumbs->push(trans('breadcrumb.customer.approval'), route('db.customer.approval'));
+    $breadcrumbs->push(trans('breadcrumb.customer.approval'), route('db.customer.approval.index'));
+});
+
+Breadcrumbs::register('customer_payment', function($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.customer.payment'), route('db.customer.payment.index'));
 });
 
 Breadcrumbs::register('user_profile', function($breadcrumbs, $id){

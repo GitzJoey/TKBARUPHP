@@ -7,8 +7,13 @@
 @section('page_title')
     <span class="fa fa-bell-o fa-fw"></span>&nbsp;@lang('customer.confirmation.approval.page_title')
 @endsection
+
 @section('page_title_desc')
     @lang('customer.confirmation.approval.page_title_desc')
+@endsection
+
+@section('breadcrumbs')
+    {!! Breadcrumbs::render('customer_approval') !!}
 @endsection
 
 @section('content')
