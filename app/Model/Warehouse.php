@@ -83,7 +83,7 @@ class Warehouse extends Model
     ];
 
     protected $appends = [
-        'hid'
+        'hId'
     ];
 
     public function hId()
@@ -91,9 +91,9 @@ class Warehouse extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getHidAttribute()
+    public function getHIdAttribute()
     {
-        return HashIds::encode($this->attributes['id']);
+        return $this->hId();
     }
 
     public function purchaseOrders()

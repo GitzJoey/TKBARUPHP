@@ -28,9 +28,20 @@ class WarehouseOutflowController extends Controller
 
     public function outflow()
     {
-        $warehouseDDL = Warehouse::all(['id', 'name']);
+        $warehouseDDL = Warehouse::all()->toJson();
 
         return view('warehouse.outflow', compact('warehouseDDL'));
+    }
+
+    public function getWarehouseSOs(Request $request, $id)
+    {
+        Log::info("WarehouseOutflowController@getWarehouseSOs");
+
+        $SOs = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WD')->where('warehouse_id', '=', $id)->get();
+
+        Log::info($SOs);
+
+        return $SOs;
     }
 
     public function deliver($id)
@@ -87,16 +98,5 @@ class WarehouseOutflowController extends Controller
         $so->save();
 
         return response()->json();
-    }
-
-    public function getWarehouseSOs(Request $request, $id)
-    {
-        Log::info("WarehouseOutflowController@getWarehouseSOs");
-
-        $SOs = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WD')->where('warehouse_id', '=', $id)->get();
-
-        Log::info($SOs);
-
-        return $SOs;
     }
 }

@@ -132,6 +132,7 @@ class SalesOrder extends Model
      * @var array
      */
     protected $appends = [
+        'hId',
         'status_localized',
         'total_amount_text'
     ];
@@ -139,6 +140,11 @@ class SalesOrder extends Model
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function getHIdAttribute()
+    {
+        return $this->hId();
     }
 
     public function items()

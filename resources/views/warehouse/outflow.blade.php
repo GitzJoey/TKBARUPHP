@@ -34,7 +34,7 @@
                         v-model="selectedWarehouse"
                         v-on:change="getWarehouseSOs(selectedWarehouse)">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
-                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
+                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.hId">@{{ warehouse.name }}</option>
                 </select>
             </div>
         </div>
@@ -60,7 +60,7 @@
                             <td class="text-center">@{{ so.customer_type == 'CUSTOMERTYPE.R' ? so.customer.name:so.walk_in_cust }}</td>
                             <td class="text-center">@{{ so.shipping_date }}</td>
                             <td class="text-center" width="10%">
-                                <a class="btn btn-xs btn-primary" v-bind:href="'{{ route('db.warehouse.outflow') }}/' + so.id" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
+                                <a class="btn btn-xs btn-primary" v-bind:href="'{{ route('db.warehouse.outflow') }}/' + so.hId" title="Deliver"><span class="fa fa-pencil fa-fw"></span></a>
                             </td>
                         </tr>
                         <tr v-show="selectedWarehouse != '' && !SOs.length" v-cloak>
@@ -93,7 +93,7 @@
                 },
                 loadWarehouse: function(w) {
                     if (w == undefined || w == null) return;
-                    this.selectedWarehouse = _.find(this.warehouseDDL, function(wh) { return wh.id == w; }).id;
+                    this.selectedWarehouse = _.find(this.warehouseDDL, function(wh) { return wh.hId == w; }).hId;
                     this.getWarehouseSOs(this.selectedWarehouse);
                 }
             },

@@ -179,6 +179,9 @@ class SalesOrderServiceImpl implements SalesOrderService
                 }
 
                 $this->paymentService->createCashPayment($so, $so->so_created, $so->totalAmount());
+
+                $so->status = "SOSTATUS.C";
+                $so->save();
             }
 
             DB::commit();
