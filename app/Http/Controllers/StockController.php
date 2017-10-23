@@ -18,7 +18,8 @@ class StockController extends Controller
         $this->stockService = $stockService;
         $this->middleware('auth', [
             'except' => [
-                'getCurrentStocks'
+                'getCurrentStocks',
+                'stockTypeIndex'
             ]
         ]);
     }
