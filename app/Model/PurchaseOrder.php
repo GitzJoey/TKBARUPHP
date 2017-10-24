@@ -122,9 +122,18 @@ class PurchaseOrder extends Model
         'deleted_at',
     ];
 
+    protected $appends = [
+        'hId'
+    ];
+
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function getHIdAttribute()
+    {
+        return $this->hId();
     }
 
     public function items()

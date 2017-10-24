@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Truck;
 use App\Model\Warehouse;
 
 use App\Services\InflowService;
@@ -38,8 +39,9 @@ class WarehouseInflowController extends Controller
     public function receipt($id)
     {
         $po = $this->purchaseOrderService->getPOForReceipt($id);
+        $truck = Truck::get()->pluck('plate_number', 'plate_number');
 
-        return view('warehouse.receipt', compact('po'));
+        return view('warehouse.receipt', compact('po', 'truck'));
     }
 
     public function saveReceipt(Request $request, $id)
