@@ -20,7 +20,7 @@ class TaxGenerateController extends Controller
     public function index()
     {
         $taxes_output = TaxOutput::with('transactions')
-            ->orderBy('invoice_date', 'asc')
+            ->orderBy('invoice_date', 'desc')
             ->get();
 
         $gstTranTypeDDL = LookupRepo::findByCategory('GSTTRANSACTIONTYPEOUTPUT');
@@ -40,7 +40,7 @@ class TaxGenerateController extends Controller
     public function indexImportProductsExcel($format = 'xlsx')
     {
         $taxes_output = TaxOutput::with('transactions')
-            ->orderBy('invoice_date', 'asc')
+            ->orderBy('invoice_date', 'desc')
             ->get();
 
         return Excel::create('ImporBarang', function (LaravelExcelWriter $excel) use($taxes_output) {
@@ -62,7 +62,7 @@ class TaxGenerateController extends Controller
     public function indexImportOpponentsExcel($format = 'xlsx')
     {
         $taxes_output = TaxOutput::with('transactions')
-            ->orderBy('invoice_date', 'asc')
+            ->orderBy('invoice_date', 'desc')
             ->get();
 
         return Excel::create('ImporLawan', function (LaravelExcelWriter $excel) use($taxes_output) {
@@ -84,7 +84,7 @@ class TaxGenerateController extends Controller
     public function indexImportPkExcel($format = 'xlsx')
     {
         $taxes_output = TaxOutput::with('transactions')
-            ->orderBy('invoice_date', 'asc')
+            ->orderBy('invoice_date', 'desc')
             ->get();
 
         return Excel::create('ImporPK', function (LaravelExcelWriter $excel) use($taxes_output) {
@@ -106,7 +106,7 @@ class TaxGenerateController extends Controller
     public function indexImportPmExcel($format = 'xlsx')
     {
         $taxes_output = TaxOutput::with('transactions')
-            ->orderBy('invoice_date', 'asc')
+            ->orderBy('invoice_date', 'desc')
             ->get();
 
         return Excel::create('ImporPM', function (LaravelExcelWriter $excel) use($taxes_output) {
