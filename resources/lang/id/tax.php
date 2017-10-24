@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 return [
     'invoice' => [
@@ -122,10 +122,10 @@ return [
             'title' => 'Generate'
         ],
         'nav_tabs' => [
-            'import_products' => 'Import Barang',
-            'import_opponents' => 'Import Lawan',
-            'import_pk' => 'Import PK',
-            'import_pm' => 'Import PM',
+            'import_products' => 'Impor Barang',
+            'import_opponents' => 'Impor Lawan',
+            'import_pk' => 'Impor PK',
+            'import_pm' => 'Impor PM',
         ],
         'import_products' => [
             'table' => [
