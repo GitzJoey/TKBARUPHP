@@ -67,7 +67,7 @@ class LoginController extends Controller
             $usr = User::with('userDetail')->where('email', '=', $value);
             if (count($usr) == 0) return true;
 
-            if ($usr->first()->userDetail->allow_login) return false;
+            if ($usr->first()->userDetail->allow_login) return true;
             else return false;
         });
 
