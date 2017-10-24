@@ -50,4 +50,26 @@ class TaxGenerateController extends Controller
             });
         })->download($format);
     }
+
+    /**
+     * Download Import Opponent Excel
+     *
+     * @param string $format
+     * @return \Illuminate\Http\Response
+     */
+    public function indexImportOpponentsExcel($format = 'xlsx')
+    {
+        $taxes_output = TaxOutput::with('transactions')
+            ->orderBy('invoice_date', 'asc')
+            ->get();
+
+        return Excel::create('ImporLawan', function (LaravelExcelWriter $excel) use($taxes_output) {
+            $excel->setTitle('ImporLawan');
+            $excel->sheet('Sheet 1', function (LaravelExcelWorksheet $sheet) use($taxes_output) {
+                $sheet->loadView('tax.generate_components.import_opponents.excel', [
+                    'taxes_output' => $taxes_output
+                ]);
+            });
+        })->download($format);
+    }
 }

@@ -279,6 +279,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::group(['middleware' => ['permission:read-tax-generate|menu-tax-generate']], function () {
               Route::get('generate', 'TaxGenerateController@index')->name('db.tax.generate');
               Route::get('generate/import_products/{format}', 'TaxGenerateController@indexImportProductsExcel')->name('db.tax.generate.import_products.excel');
+              Route::get('generate/import_opponents/{format}', 'TaxGenerateController@indexImportOpponentsExcel')->name('db.tax.generate.import_opponents.excel');
             });
         });
 
