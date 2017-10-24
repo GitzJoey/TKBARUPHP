@@ -122,40 +122,8 @@ return [
             'title' => 'Generate'
         ],
         'nav_tabs' => [
-            'import_products' => 'Import Product',
-            'import_opponents' => 'Import Opponent',
             'import_pk' => 'Import PK',
             'import_pm' => 'Import PM',
-        ],
-        'import_products' => [
-            'table' => [
-                'header' => [
-                    'ob' => 'OB',
-                    'object_code' => 'OBJECT_CODE',
-                    'name' => 'NAME',
-                    'unit_price' => 'UNIT_PRICE'
-                ]
-            ]
-        ],
-        'import_opponents' => [
-            'table' => [
-                'header' => [
-                    'lt' => 'LT',
-                    'tax_id' => 'TAX_ID',
-                    'name' => 'NAME',
-                    'street' => 'STREET',
-                    'block' => 'BLOCK',
-                    'number' => 'NO',
-                    'rt' => 'RT',
-                    'rw' => 'RW',
-                    'district' => 'DISTRICT',
-                    'village' => 'VILLAGE',
-                    'region' => 'REGION',
-                    'province' => 'PROVINCE',
-                    'postal_code' => 'POSTAL_CODE',
-                    'phone_number' => 'PHONE_NUMBER'
-                ]
-            ]
         ],
         'import_pm' => [
             'table' => [

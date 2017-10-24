@@ -28,16 +28,6 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a href="#tab_import_products" data-toggle="tab">
-                                    @lang('tax.generate.nav_tabs.import_products')
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#tab_import_opponents" data-toggle="tab">
-                                    @lang('tax.generate.nav_tabs.import_opponents')
-                                </a>
-                            </li>
-                            <li>
                                 <a href="#tab_import_pk" data-toggle="tab">
                                     @lang('tax.generate.nav_tabs.import_pk')
                                 </a>
@@ -50,12 +40,6 @@
                         </ul>
                         <div class="tab-content" id="tab_tax" >
                             <div class="tab-pane active" id="tab_import_products">
-                                @include('tax.generate_components.import_products')
-                            </div>
-                            <div class="tab-pane" id="tab_import_opponents">
-                                @include('tax.generate_components.import_opponents')
-                            </div>
-                            <div class="tab-pane" id="tab_import_pk">
                                 @include('tax.generate_components.import_pk')
                             </div>
                             <div class="tab-pane" id="tab_import_pm">
@@ -113,23 +97,6 @@
                 gstTranTypeDDL: []
             },
             computed: {
-                products: function () {
-                    var productsDDL = this.productsDDL;
-                    return _.sortBy(_.uniqBy(_.flatMap(this.taxesOutput, function (taxOutput) {
-                        return taxOutput.transactions;
-                    }), function (transaction) {
-                        return transaction.name;
-                    }), function (transaction) {
-                        return (_.find(productsDDL, function (productDDL) {
-                            return productDDL.name == transaction.name
-                        }) || {}).shortCode;
-                    });
-                },
-                opponents: function () {
-                    return _.uniqBy(this.taxesOutput, function (transaction) {
-                        return transaction.opponentTaxIdNo;
-                    });
-                },
             },
             mounted: function () {
                 var gstTranTypeDDL = this.camelCasingKey({!! json_encode($gstTranTypeDDL) !!});

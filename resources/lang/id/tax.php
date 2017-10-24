@@ -122,38 +122,12 @@ return [
             'title' => 'Generate'
         ],
         'nav_tabs' => [
-            'import_products' => 'Impor Barang',
-            'import_opponents' => 'Impor Lawan',
             'import_pk' => 'Impor PK',
             'import_pm' => 'Impor PM',
         ],
-        'import_products' => [
             'table' => [
                 'header' => [
-                    'ob' => 'OB',
-                    'object_code' => 'KODE_OBJEK',
                     'name' => 'NAMA',
-                    'unit_price' => 'HARGA_SATUAN'
-                ]
-            ]
-        ],
-        'import_opponents' => [
-            'table' => [
-                'header' => [
-                    'lt' => 'LT',
-                    'tax_id' => 'NPWP',
-                    'name' => 'NAMA',
-                    'street' => 'JALAN',
-                    'block' => 'BLOK',
-                    'number' => 'NO',
-                    'rt' => 'RT',
-                    'rw' => 'RW',
-                    'district' => 'KECAMATAN',
-                    'village' => 'KELURAHAN',
-                    'region' => 'KABUPATEN',
-                    'province' => 'PROVINSI',
-                    'postal_code' => 'KODE_POS',
-                    'phone_number' => 'NOMOR_TELEPON'
                 ]
             ]
         ],
