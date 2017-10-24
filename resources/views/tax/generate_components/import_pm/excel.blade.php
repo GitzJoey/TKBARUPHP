@@ -23,7 +23,7 @@
             <tr>
                 <td align="left" valign="center">FM</td>
                 <td align="left" valign="center">{{ explode('.', $tax_output->gst_transaction_type)[1] }}</td>
-                <td align="left" valign="center">-</td>
+                <td align="left" valign="center">0</td>
                 <td align="left" valign="center">{{ $tax_output->invoice_no }}</td>
                 <td align="left" valign="center">{{ $tax_output->month }}</td>
                 <td align="left" valign="center">{{ $tax_output->year }}</td>

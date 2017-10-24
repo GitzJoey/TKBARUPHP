@@ -22,7 +22,7 @@
           <tr v-for="taxOutput in taxesOutput" v-cloak>
             <td class="text-left">FM</td>
             <td class="text-left">@{{ taxOutput.gstTransactionTypeDescription.split(' ')[0] }}</td>
-            <td class="text-left">-</td>
+            <td class="text-left">0</td>
             <td class="text-left">@{{ taxOutput.invoiceNo }}</td>
             <td class="text-left">@{{ taxOutput.month }}</td>
             <td class="text-left">@{{ taxOutput.year }}</td>
