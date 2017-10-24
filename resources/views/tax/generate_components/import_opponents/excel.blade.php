@@ -19,22 +19,22 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($taxes_output as $key => $tax_output)
+            @foreach ($taxes_output->unique('opponent_tax_id_no') as $key => $opponent)
             <tr>
                 <td align="left" valign="center">LT</td>
-                <td align="left" valign="center">{{ $tax_output->opponent_tax_id_no }}</td>
-                <td align="left" valign="center">{{ $tax_output->opponent_name }}</td>
-                <td align="left" valign="center">{{ $tax_output->opponent_address }}</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
-                <td align="left" valign="center">-</td>
+                <td align="left" valign="center">{{ $opponent->opponent_tax_id_no }}</td>
+                <td align="left" valign="center">{{ $opponent->opponent_name }}</td>
+                <td align="left" valign="center">{{ $opponent->opponent_address }}</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
+                <td align="left" valign="center">.</td>
             </tr>
             @endforeach
         </tbody>

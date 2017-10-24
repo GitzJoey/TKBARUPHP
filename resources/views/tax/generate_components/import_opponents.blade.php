@@ -19,21 +19,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr v-for="taxOutput in taxesOutput" v-cloak>
+        <tr v-for="opponent in opponents" v-cloak>
             <td class="text-left">LT</td>
-            <td class="text-left">@{{ taxOutput.opponentTaxIdNo }}</td>
-            <td class="text-left">@{{ taxOutput.opponentName }}</td>
-            <td class="text-left">@{{ taxOutput.opponentAddress }}</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
+            <td class="text-left">@{{ opponent.opponentTaxIdNo }}</td>
+            <td class="text-left">@{{ opponent.opponentName }}</td>
+            <td class="text-left">@{{ opponent.opponentAddress }}</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
+            <td class="text-left">.</td>
         </tr>
         <tr v-if="!products.length">
             <td class="text-center" colspan="14">@lang('labels.DATA_NOT_FOUND')</td>

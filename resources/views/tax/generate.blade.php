@@ -120,6 +120,11 @@
                         return transaction.name;
                     });
                 },
+                opponents: function () {
+                    return _.uniqBy(this.taxesOutput, function (transaction) {
+                        return transaction.opponentTaxIdNo;
+                    });
+                },
             },
             mounted: function () {
                 var gstTranTypeDDL = this.camelCasingKey({!! json_encode($gstTranTypeDDL) !!});
