@@ -27,9 +27,9 @@
             <td class="text-left">@{{ taxOutput.month }}</td>
             <td class="text-left">@{{ taxOutput.year }}</td>
             <td class="text-left">@{{ taxOutput.invoiceDate }}</td>
-            <td class="text-left">@{{ taxOutput.taxIdNo }}</td>
-            <td class="text-left">@{{ taxOutput.name }}</td>
-            <td class="text-left">@{{ taxOutput.address }}</td>
+            <td class="text-left">@{{ taxOutput.opponentTaxIdNo }}</td>
+            <td class="text-left">@{{ taxOutput.opponentName }}</td>
+            <td class="text-left">@{{ taxOutput.opponentAddress }}</td>
             <td class="text-right">@{{ numeral(taxOutput.taxBase).format() }}</td>
             <td class="text-right">@{{ numeral(taxOutput.gst).format() }}</td>
             <td class="text-right">@{{ numeral(taxOutput.luxuryTax).format() }}</td>

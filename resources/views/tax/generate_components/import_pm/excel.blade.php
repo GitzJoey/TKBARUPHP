@@ -28,9 +28,9 @@
                 <td align="left" valign="center">{{ $tax_output->month }}</td>
                 <td align="left" valign="center">{{ $tax_output->year }}</td>
                 <td align="left" valign="center">{{ $tax_output->invoice_date }}</td>
-                <td align="left" valign="center">{{ $tax_output->tax_id_no }}</td>
-                <td align="left" valign="center">{{ $tax_output->name }}</td>
-                <td align="left" valign="center">{{ $tax_output->address }}</td>
+                <td align="left" valign="center">{{ $tax_output->opponent_tax_id_no }}</td>
+                <td align="left" valign="center">{{ $tax_output->opponent_name }}</td>
+                <td align="left" valign="center">{{ $tax_output->opponent_address }}</td>
                 <td align="right" valign="center">{{ $tax_output->tax_base }}</td>
                 <td align="right" valign="center">{{ $tax_output->gst }}</td>
                 <td align="right" valign="center">{{ $tax_output->luxury_tax }}</td>
