@@ -94,4 +94,26 @@ class TaxGenerateController extends Controller
             });
         })->download($format);
     }
+
+    /**
+     * Download Import PM
+     *
+     * @param string $format
+     * @return \Illuminate\Http\Response
+     */
+    public function indexImportPmExcel($format = 'xlsx')
+    {
+        $taxes_output = TaxOutput::with('transactions')
+            ->orderBy('invoice_date', 'asc')
+            ->get();
+
+        return Excel::create('ImporPM', function (LaravelExcelWriter $excel) use($taxes_output) {
+            $excel->setTitle('ImporPM');
+            $excel->sheet('Sheet 1', function (LaravelExcelWorksheet $sheet) use($taxes_output) {
+                $sheet->loadView('tax.generate_components.import_pm.excel', [
+                    'taxes_output' => $taxes_output
+                ]);
+            });
+        })->download($format);
+    }
 }
