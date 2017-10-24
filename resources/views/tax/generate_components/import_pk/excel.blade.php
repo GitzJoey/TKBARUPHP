@@ -37,7 +37,6 @@
                 <td align="left" valign="center">PROPINSI</td>
                 <td align="left" valign="center">KODE_POS</td>
                 <td align="left" valign="center">NOMOR_TELEPON</td>
-                <td colspan="5"></td>
             </tr>
             <tr>
                 <td align="left" valign="center">OF</td>
@@ -51,7 +50,6 @@
                 <td align="left" valign="center">PPN</td>
                 <td align="left" valign="center">TARIF_PPNBM</td>
                 <td align="left" valign="center">PPNBM</td>
-                <td colspan="8"></td>
             </tr>
         </thead>
         <tbody>
@@ -64,49 +62,48 @@
                 <td align="left">{{ $tax_output->month }}</td>
                 <td align="left">{{ $tax_output->year }}</td>
                 <td align="left">{{ $tax_output->invoice_date }}</td>
-                <td align="left">{{ $tax_output->tax_id_no }}</td>
-                <td align="left">{{ $tax_output->name }}</td>
-                <td align="left">{{ $tax_output->address }}</td>
+                <td align="left">{{ $tax_output->opponent_tax_id_no }}</td>
+                <td align="left">{{ $tax_output->opponent_name }}</td>
+                <td align="left">{{ $tax_output->opponent_address }}</td>
                 <td align="right">{{ $tax_output->tax_base }}</td>
                 <td align="right">{{ $tax_output->gst }}</td>
                 <td align="right">{{ $tax_output->luxury_tax }}</td>
-                <td align="left">-</td>
-                <td align="left">-</td>
-                <td align="left">-</td>
-                <td align="left">-</td>
-                <td align="left">-</td>
-                <td align="left">-</td>
+                <td align="left"></td>
+                <td align="left">0</td>
+                <td align="left">0</td>
+                <td align="left">0</td>
+                <td align="left">0</td>
+                <td align="left">{{ $tax_output->reference }}</td>
             </tr>
             <tr>
-                <td class="text-left">FAPR</td>
-                <td class="text-left">{{ $tax_output->opponent_tax_id_no }}</td>
-                <td class="text-left">{{ $tax_output->opponent_name }}</td>
-                <td class="text-left">{{ $tax_output->opponent_address }}</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td colspan="5"></td>
+                <td align="left">FAPR</td>
+                <td align="left">{{ $tax_output->name }}</td>
+                <td align="left">{{ $tax_output->address }}</td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
+                <td align="left"></td>
             </tr>
             @foreach ($tax_output->transactions as $key => $transaction)
             <tr>
-                <td class="text-left">OF</td>
-                <td class="text-left">-</td>
-                <td class="text-left">{{ $transaction->name }}</td>
-                <td class="text-right">{{ $transaction->price }}</td>
-                <td class="text-right">{{ $transaction->qty }}</td>
-                <td class="text-right">{{ $transaction->gst }}</td>
-                <td class="text-right">{{ $transaction->discount }}</td>
-                <td class="text-right">{{ $transaction->gst / $transaction->qty }}</td>
-                <td class="text-right">{{ $transaction->gst / $transaction->qty * 0.1 }}</td>
-                <td class="text-right">0</td>
-                <td class="text-right">{{ $transaction->luxury_tax }}</td>
+                <td align="left">OF</td>
+                <td align="left">{{ App\Model\Product::where('name', $transaction->name)->first()->short_code }}</td>
+                <td align="left">{{ $transaction->name }}</td>
+                <td align="right">{{ $transaction->price }}</td>
+                <td align="right">{{ $transaction->qty }}</td>
+                <td align="right">{{ $transaction->gst }}</td>
+                <td align="right">{{ $transaction->discount }}</td>
+                <td align="right">{{ $transaction->gst / $transaction->qty }}</td>
+                <td align="right">{{ $transaction->gst / $transaction->qty * 0.1 }}</td>
+                <td align="right">0</td>
+                <td align="right">{{ $transaction->luxury_tax }}</td>
             </tr>
             @endforeach
             @endforeach

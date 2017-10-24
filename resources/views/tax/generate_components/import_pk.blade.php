@@ -59,44 +59,44 @@
             <tr>
                 <td class="text-left">FK</td>
                 <td class="text-left">@{{ taxOutput.gstTransactionTypeDescription.split(' ')[0] }}</td>
-                <td class="text-left">-</td>
+                <td class="text-left">0</td>
                 <td class="text-left">@{{ taxOutput.invoiceNo }}</td>
                 <td class="text-left">@{{ taxOutput.month }}</td>
                 <td class="text-left">@{{ taxOutput.year }}</td>
                 <td class="text-left">@{{ taxOutput.invoiceDate }}</td>
-                <td class="text-left">@{{ taxOutput.taxIdNo }}</td>
-                <td class="text-left">@{{ taxOutput.name }}</td>
-                <td class="text-left">@{{ taxOutput.address }}</td>
-                <td class="text-right">@{{ numeral(taxOutput.taxBase).format() }}</td>
-                <td class="text-right">@{{ numeral(taxOutput.gst).format() }}</td>
-                <td class="text-right">@{{ numeral(taxOutput.luxuryTax).format() }}</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-            </tr>
-            <tr>
-                <td class="text-left">FAPR</td>
                 <td class="text-left">@{{ taxOutput.opponentTaxIdNo }}</td>
                 <td class="text-left">@{{ taxOutput.opponentName }}</td>
                 <td class="text-left">@{{ taxOutput.opponentAddress }}</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
-                <td class="text-left">-</td>
+                <td class="text-right">@{{ numeral(taxOutput.taxBase).format() }}</td>
+                <td class="text-right">@{{ numeral(taxOutput.gst).format() }}</td>
+                <td class="text-right">@{{ numeral(taxOutput.luxuryTax).format() }}</td>
+                <td class="text-left"></td>
+                <td class="text-left">0</td>
+                <td class="text-left">0</td>
+                <td class="text-left">0</td>
+                <td class="text-left">0</td>
+                <td class="text-left">@{{ taxOutput.reference }}</td>
+            </tr>
+            <tr>
+                <td class="text-left">FAPR</td>
+                <td class="text-left">@{{ taxOutput.name }}</td>
+                <td class="text-left">@{{ taxOutput.address }}</td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
+                <td class="text-left"></td>
                 <td colspan="5"></td>
             </tr>
             <tr v-for="transaction in taxOutput.transactions">
                 <td class="text-left">OF</td>
-                <td class="text-left">-</td>
+                <td class="text-left">@{{ getProductCode(transaction) }}</td>
                 <td class="text-left">@{{ transaction.name }}</td>
                 <td class="text-right">@{{ numeral(transaction.price).format() }}</td>
                 <td class="text-right">@{{ numeral(transaction.qty).format() }}</td>
