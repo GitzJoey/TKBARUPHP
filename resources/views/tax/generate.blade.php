@@ -109,6 +109,7 @@
             el: '#taxGenerate',
             data:{
                 taxesOutput: [],
+                productsDDL: [],
                 gstTranTypeDDL: []
             },
             computed: {
@@ -122,6 +123,7 @@
             },
             mounted: function () {
                 var gstTranTypeDDL = this.camelCasingKey({!! json_encode($gstTranTypeDDL) !!});
+                var productsDDL = this.camelCasingKey({!! json_encode($productsDDL) !!});
                 var taxesOutput = this.camelCasingKey({!! json_encode($taxes_output) !!});
                 taxesOutput.forEach(function (taxOutput) {
                     taxOutput.gstTransactionTypeDescription = (_.find(gstTranTypeDDL, function (gstTranType) {
@@ -130,9 +132,15 @@
                 });
 
                 this.gstTranTypeDDL = gstTranTypeDDL;
+                this.productsDDL = productsDDL;
                 this.taxesOutput = taxesOutput;
             },
             methods: {
+                getProductCode: function (product) {
+                    return (_.find(this.productsDDL, function (productDDL) {
+                        return productDDL.name == product.name;
+                    }) || {}).shortCode;
+                }
             },
         });
     </script>

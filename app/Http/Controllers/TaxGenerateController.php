@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Product;
 use App\Model\TaxOutput;
 use App\Repos\LookupRepo;
 use Illuminate\Http\Request;
@@ -25,8 +26,9 @@ class TaxGenerateController extends Controller
         $gstTranTypeDDL = LookupRepo::findByCategory('GSTTRANSACTIONTYPEOUTPUT');
         $tranDocDDL = LookupRepo::findByCategory('TRANSACTIONDOCOUTPUT');
         $tranDetailDDL = LookupRepo::findByCategory('TRANSACTIONDETAILOUTPUT');
+        $productsDDL = Product::all();
 
-        return response()->view('tax.generate', compact('taxes_output', 'gstTranTypeDDL', 'tranDocDDL', 'tranDetailDDL'));
+        return response()->view('tax.generate', compact('taxes_output', 'gstTranTypeDDL', 'tranDocDDL', 'tranDetailDDL', 'productsDDL'));
     }
 
     /**

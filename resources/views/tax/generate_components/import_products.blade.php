@@ -11,7 +11,7 @@
     <tbody>
         <tr v-for="product in products" v-cloak>
             <td class="text-left">OB</td>
-            <td class="text-left">-</td>
+            <td class="text-left">@{{ getProductCode(product) }}</td>
             <td class="text-left">@{{ product.name }}</td>
             <td class="text-right">@{{ numeral(product.price).format() }}</td>
         </tr>

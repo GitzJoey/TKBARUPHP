@@ -14,7 +14,7 @@
             })->unique('name') as $key => $product)
             <tr>
                 <td align="left" valign="center">OB</td>
-                <td align="left" valign="center">-</td>
+                <td align="left" valign="center">{{ App\Model\Product::where('name', $product->name)->first()->short_code }}</td>
                 <td align="left" valign="center">{{ $product->name }}</td>
                 <td align="right" valign="center">{{ $product->price }}</td>
             </tr>
