@@ -114,10 +114,15 @@
             },
             computed: {
                 products: function () {
-                    return _.uniqBy(_.flatMap(this.taxesOutput, function (taxOutput) {
+                    var productsDDL = this.productsDDL;
+                    return _.sortBy(_.uniqBy(_.flatMap(this.taxesOutput, function (taxOutput) {
                         return taxOutput.transactions;
                     }), function (transaction) {
                         return transaction.name;
+                    }), function (transaction) {
+                        return (_.find(productsDDL, function (productDDL) {
+                            return productDDL.name == transaction.name
+                        }) || {}).shortCode;
                     });
                 },
                 opponents: function () {
