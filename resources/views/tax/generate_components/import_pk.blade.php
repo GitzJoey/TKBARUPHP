@@ -114,3 +114,8 @@
     </tbody>
   </table>
 </div>
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <a href="{{ route('db.tax.generate.import_pk.excel', [ 'xlsx' ]) }}" class="btn btn-primary">@lang('buttons.download_excel_button')</a>
+  </div>
+</div>
