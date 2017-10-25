@@ -28,21 +28,21 @@
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a href="#tab_import_pk" data-toggle="tab">
-                                    @lang('tax.generate.nav_tabs.import_pk')
-                                </a>
-                            </li>
-                            <li>
                                 <a href="#tab_import_pm" data-toggle="tab">
                                     @lang('tax.generate.nav_tabs.import_pm')
                                 </a>
                             </li>
+                            <li>
+                                <a href="#tab_import_pk" data-toggle="tab">
+                                    @lang('tax.generate.nav_tabs.import_pk')
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content" id="tab_tax" >
-                            <div class="tab-pane active" id="tab_import_products">
+                            <div class="tab-pane" id="tab_import_pk">
                                 @include('tax.generate_components.import_pk')
                             </div>
-                            <div class="tab-pane" id="tab_import_pm">
+                            <div class="tab-pane active" id="tab_import_pm">
                                 @include('tax.generate_components.import_pm')
                             </div>
                         </div>
