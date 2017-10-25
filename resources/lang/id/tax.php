@@ -125,12 +125,6 @@ return [
             'import_pk' => 'Impor PK',
             'import_pm' => 'Impor PM',
         ],
-            'table' => [
-                'header' => [
-                    'name' => 'NAMA',
-                ]
-            ]
-        ],
         'import_pm' => [
             'table' => [
                 'header' => [

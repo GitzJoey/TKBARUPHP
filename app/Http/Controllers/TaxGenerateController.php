@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Product;
+use App\Model\TaxInput;
 use App\Model\TaxOutput;
 use App\Repos\LookupRepo;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class TaxGenerateController extends Controller
      */
     public function index()
     {
+        $taxes_input = TaxInput::orderBy('invoice_date', 'desc')->get();
         $taxes_output = TaxOutput::with('transactions')
             ->orderBy('invoice_date', 'desc')
             ->get();
@@ -28,7 +30,7 @@ class TaxGenerateController extends Controller
         $tranDetailDDL = LookupRepo::findByCategory('TRANSACTIONDETAILOUTPUT');
         $productsDDL = Product::all();
 
-        return response()->view('tax.generate', compact('taxes_output', 'gstTranTypeDDL', 'tranDocDDL', 'tranDetailDDL', 'productsDDL'));
+        return response()->view('tax.generate', compact('taxes_input', 'taxes_output', 'gstTranTypeDDL', 'tranDocDDL', 'tranDetailDDL', 'productsDDL'));
     }
 
     /**
@@ -61,15 +63,13 @@ class TaxGenerateController extends Controller
      */
     public function indexImportPmExcel($format = 'xlsx')
     {
-        $taxes_output = TaxOutput::with('transactions')
-            ->orderBy('invoice_date', 'desc')
-            ->get();
+        $taxes_input = TaxInput::orderBy('invoice_date', 'desc')->get();
 
-        return Excel::create('ImporPM', function (LaravelExcelWriter $excel) use($taxes_output) {
+        return Excel::create('ImporPM', function (LaravelExcelWriter $excel) use($taxes_input) {
             $excel->setTitle('ImporPM');
-            $excel->sheet('Sheet 1', function (LaravelExcelWorksheet $sheet) use($taxes_output) {
+            $excel->sheet('Sheet 1', function (LaravelExcelWorksheet $sheet) use($taxes_input) {
                 $sheet->loadView('tax.generate_components.import_pm.excel', [
-                    'taxes_output' => $taxes_output
+                    'taxes_input' => $taxes_input
                 ]);
             });
         })->download($format);

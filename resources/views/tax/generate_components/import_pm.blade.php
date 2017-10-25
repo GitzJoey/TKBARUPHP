@@ -19,23 +19,23 @@
         </tr>
     </thead>
     <tbody>
-          <tr v-for="taxOutput in taxesOutput" v-cloak>
+          <tr v-for="taxInput in taxesInput" v-cloak>
             <td class="text-left">FM</td>
-            <td class="text-left">@{{ taxOutput.gstTransactionTypeDescription.split(' ')[0] }}</td>
+            <td class="text-left">01</td>
             <td class="text-left">0</td>
-            <td class="text-left">@{{ taxOutput.invoiceNo }}</td>
-            <td class="text-left">@{{ taxOutput.month }}</td>
-            <td class="text-left">@{{ taxOutput.year }}</td>
-            <td class="text-left">@{{ taxOutput.invoiceDate }}</td>
-            <td class="text-left">@{{ taxOutput.opponentTaxIdNo }}</td>
-            <td class="text-left">@{{ taxOutput.opponentName }}</td>
-            <td class="text-left">@{{ taxOutput.opponentAddress }}</td>
-            <td class="text-right">@{{ numeral(taxOutput.taxBase).format() }}</td>
-            <td class="text-right">@{{ numeral(taxOutput.gst).format() }}</td>
-            <td class="text-right">@{{ numeral(taxOutput.luxuryTax).format() }}</td>
-            <td class="text-center">@{{ taxOutput.isCreditable ? 1 : 0 }}</td>
+            <td class="text-left">@{{ taxInput.invoiceNo }}</td>
+            <td class="text-left">@{{ taxInput.month }}</td>
+            <td class="text-left">@{{ taxInput.year }}</td>
+            <td class="text-left">@{{ taxInput.invoiceDate }}</td>
+            <td class="text-left">@{{ taxInput.opponentTaxIdNo }}</td>
+            <td class="text-left">@{{ taxInput.opponentName }}</td>
+            <td class="text-left">@{{ taxInput.opponentAddress }}</td>
+            <td class="text-right">@{{ numeral(taxInput.taxBase).format() }}</td>
+            <td class="text-right">@{{ numeral(taxInput.gst).format() }}</td>
+            <td class="text-right">@{{ numeral(taxInput.luxuryTax).format() }}</td>
+            <td class="text-center">@{{ taxInput.isCreditable ? 1 : 0 }}</td>
         </tr>
-        <tr v-if="!taxesOutput.length">
+        <tr v-if="!taxesInput.length">
             <td class="text-center" colspan="14">@lang('labels.DATA_NOT_FOUND')</td>
         </tr>
     </tbody>

@@ -96,7 +96,7 @@
             </tr>
             <tr v-for="transaction in taxOutput.transactions">
                 <td class="text-left">OF</td>
-                <td class="text-left">@{{ getProductCode(transaction) }}</td>
+                <td class="text-left">@{{ getProductCode(transaction.name) }}</td>
                 <td class="text-left">@{{ transaction.name }}</td>
                 <td class="text-right">@{{ numeral(transaction.price).format() }}</td>
                 <td class="text-right">@{{ numeral(transaction.qty).format() }}</td>

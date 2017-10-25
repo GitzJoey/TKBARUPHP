@@ -92,6 +92,7 @@
         var app = new Vue({
             el: '#taxGenerate',
             data:{
+                taxesInput: [],
                 taxesOutput: [],
                 productsDDL: [],
                 gstTranTypeDDL: []
@@ -101,6 +102,7 @@
             mounted: function () {
                 var gstTranTypeDDL = this.camelCasingKey({!! json_encode($gstTranTypeDDL) !!});
                 var productsDDL = this.camelCasingKey({!! json_encode($productsDDL) !!});
+                var taxesInput = this.camelCasingKey({!! json_encode($taxes_input) !!});
                 var taxesOutput = this.camelCasingKey({!! json_encode($taxes_output) !!});
                 taxesOutput.forEach(function (taxOutput) {
                     taxOutput.gstTransactionTypeDescription = (_.find(gstTranTypeDDL, function (gstTranType) {
@@ -110,12 +112,13 @@
 
                 this.gstTranTypeDDL = gstTranTypeDDL;
                 this.productsDDL = productsDDL;
+                this.taxesInput = taxesInput;
                 this.taxesOutput = taxesOutput;
             },
             methods: {
                 getProductCode: function (product) {
                     return (_.find(this.productsDDL, function (productDDL) {
-                        return productDDL.name == product.name;
+                        return productDDL.name == product;
                     }) || {}).shortCode;
                 }
             },
