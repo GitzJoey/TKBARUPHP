@@ -123,7 +123,7 @@
                             window.location.href = '{{ route('db.master.vendor.trucking') }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
-                            if (Object.keys(e.response.data.errors).length > 0) {
+                            if (e.response.data.errors != undefined && Object.keys(e.response.data.errors).length > 0) {
                                 for (var key in e.response.data.errors) {
                                     for (var i = 0; i < e.response.data.errors[key].length; i++) {
                                         vm.$validator.errors.add('', e.response.data.errors[key][i], 'server', '__global__');
@@ -131,6 +131,7 @@
                                 }
                             } else {
                                 vm.$validator.errors.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                if (e.response.data.message != undefined) { console.log(e.response.data.message); }
                             }
                         });
                     });

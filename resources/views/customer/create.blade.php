@@ -453,10 +453,9 @@
                                         vm.$validator.errors.add('', e.response.data.errors[key][i], 'server', '__global__');
                                     }
                                 }
-                            } else if (e.response.data.message != undefined) {
-                                vm.$validator.errors.add('', e.response.data.message, 'server', '__global__');
                             } else {
                                 vm.$validator.errors.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                if (e.response.data.message != undefined) { console.log(e.response.data.message); }
                             }
                         });
                     });
