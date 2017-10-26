@@ -28,6 +28,7 @@ use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 use App\Services\SalesOrderService;
@@ -52,6 +53,8 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function createSO(Array $soData)
     {
+        Log::info("[SalesOrderServiceImpl@createSO]");
+
         DB::beginTransaction();
         try {
             if ($soData['customer_type']['code'] == 'CUSTOMERTYPE.R') {
@@ -203,6 +206,8 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function cancelSO($index)
     {
+        Log::info("[SalesOrderServiceImpl@cancelSO]");
+
         $userSOs = session('userSOs');
         $userSOs->splice($index, 1);
         session(['userSOs' => $userSOs]);
@@ -216,6 +221,8 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getSOForRevise($id)
     {
+        Log::info("[SalesOrderServiceImpl@getSOForRevise]");
+
         return SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
             'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse', 'expenses')->find($id);
     }
@@ -231,6 +238,8 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function reviseSO(Request $request, $id)
     {
+        Log::info("[SalesOrderServiceImpl@reviseSO]");
+
         DB::transaction(function() use ($id, $request) {
             // Get current SO
             $currentSo = SalesOrder::with('items')->find($id);
@@ -305,6 +314,8 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function rejectSO(Request $request, $id)
     {
+        Log::info("[SalesOrderServiceImpl@rejectSO]");
+
         $so = SalesOrder::find($id);
         $so->status = 'SOSTATUS.RJT';
         $so->save();
@@ -315,7 +326,10 @@ class SalesOrderServiceImpl implements SalesOrderService
      * @param Request $request request which contains values for sales orders
      * @return void
      */
-    public function storeToSession(Request $request){
+    public function storeToSession(Request $request)
+    {
+        Log::info("[SalesOrderServiceImpl@storeToSession]");
+
         $SOs = [];
 
         for($i = 0; $i < count($request->input('so_code')); $i++){
@@ -400,6 +414,8 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getSOForCopy($soCode)
     {
+        Log::info("[SalesOrderServiceImpl@getSOForCopy]");
+
         return SalesOrder::with('items.product.productUnits.unit', 'customer.profiles.phoneNumbers.provider',
             'customer.bankAccounts.bank', 'vendorTrucking', 'warehouse')->where('code', '=', $soCode)->first();
     }
@@ -412,11 +428,13 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getDueSO($daysToDue = 1)
     {
+        Log::info("[SalesOrderServiceImpl@getDueSO]");
+
         $soWaitingForPayment = SalesOrder::with('delivers', 'customer')
-        ->where('status', '=', 'SOSTATUS.WP')
-        ->whereHas('customer', function($query){
-            $query->where('payment_due_day', '>', 0);
-        })->get();
+            ->where('status', '=', 'SOSTATUS.WP')
+            ->whereHas('customer', function($query){
+                $query->where('payment_due_day', '>', 0);
+            })->get();
 
         $today = Carbon::today();
 
@@ -436,6 +454,8 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getSOInOneDay($date)
     {
+        Log::info("[SalesOrderServiceImpl@getSOInOneDay]");
+
        //Defensive copy, because still don't know immutability' 
        $dateCopy = $date->copy();
 
@@ -453,13 +473,15 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getSOTotalAmountInOneDay($date)
     {
-       $soInGivenDate = $this->getSOInOneDay($date);
+        Log::info("[SalesOrderServiceImpl@getSOInOneDay]");
 
-       $soTotalAmount = $soInGivenDate->sum(function($so){
-           return $so->itemTotalAmount();
-       });
+        $soInGivenDate = $this->getSOInOneDay($date);
 
-       return $soTotalAmount;
+        $soTotalAmount = $soInGivenDate->sum(function($so){
+            return $so->itemTotalAmount();
+        });
+
+        return $soTotalAmount;
     }
 
     /**
@@ -471,10 +493,12 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getUndeliveredSO($threshold = 3)
     {
+        Log::info("[SalesOrderServiceImpl@getUndeliveredSO]");
+
         $salesOrders = SalesOrder::with('customer')
-        ->where('status', '=', 'SOSTATUS.WD')
-        ->where('shipping_date', '<', Carbon::today()->addDays(-$threshold))
-        ->doesntHave('delivers')->get();
+            ->where('status', '=', 'SOSTATUS.WD')
+            ->where('shipping_date', '<', Carbon::today()->addDays(-$threshold))
+            ->doesntHave('delivers')->get();
 
         foreach($salesOrders AS $salesOrder)
         {
@@ -492,6 +516,8 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getCreatedSOFromDate($date)
     {
+        Log::info("[SalesOrderServiceImpl@getCreatedSOFromDate]");
+
         $startDate = $date->copy()->startOfDay();
 
         return SalesOrder::where('so_created', '>=', $startDate)->get();
@@ -504,11 +530,15 @@ class SalesOrderServiceImpl implements SalesOrderService
      */
     public function getUncorfirmedSO()
     {
+        Log::info("[SalesOrderServiceImpl@getUncorfirmedSO]");
+
         return SalesOrder::where('status', '=', 'SOSTATUS.WCC')->get();
     }
 
     public function searchSO($keyword)
     {
+        Log::info("[SalesOrderServiceImpl@getUncorfirmedSO]");
+
         $salesOrders = SalesOrder::with('customer.profiles')
             ->where('code', 'like', '%'.$keyword.'%')
             ->orWhere('walk_in_cust', 'like', '%'.$keyword.'%')
@@ -522,6 +552,8 @@ class SalesOrderServiceImpl implements SalesOrderService
 
     public function updateSOStatus(SalesOrder $soData, $amount)
     {
+        Log::info("[SalesOrderServiceImpl@updateSOStatus]");
+
         if ($soData->totalAmountUnpaid() == 0) {
             $soData->status = 'SOSTATUS.C';
 

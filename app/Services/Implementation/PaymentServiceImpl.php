@@ -2,7 +2,6 @@
 namespace App\Services\Implementation;
 
 use App\Model\Giro;
-use App\Model\Lookup;
 use App\Model\Payment;
 use App\Model\CashPayment;
 use App\Model\GiroPayment;
@@ -12,12 +11,15 @@ use App\Services\PaymentService;
 
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentServiceImpl implements PaymentService {
 
     public function createCashPayment($payable, $paymentDate, $paymentAmount)
     {
+        Log::info("[PaymentServiceImpl@createCashPayment]");
+
         DB::transaction(function() use ($payable, $paymentDate, $paymentAmount){
             $payment = $this->createBasicPayment($paymentDate, $paymentAmount, 'CASHPAYMENTSTATUS.C', 'PAYMENTTYPE.C');
 
@@ -33,6 +35,8 @@ class PaymentServiceImpl implements PaymentService {
 
     public function createTransferPayment(Request $request)
     {
+        Log::info("[PaymentServiceImpl@createTransferPayment]");
+
         $paymentParam = [
             'store_id' => Auth::user()->store_id,
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),
@@ -54,6 +58,8 @@ class PaymentServiceImpl implements PaymentService {
 
     public function createGiroPayment(Request $request, Giro $giro)
     {
+        Log::info("[PaymentServiceImpl@createGiroPayment]");
+
         $paymentParam = [
             'store_id' => Auth::user()->store_id,
             'payment_date' => date('Y-m-d', strtotime($request->input('payment_date'))),

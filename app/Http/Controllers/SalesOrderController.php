@@ -112,7 +112,7 @@ class SalesOrderController extends Controller
 
     public function index()
     {
-        Log::info('SalesOrderController@index');
+        Log::info('[SalesOrderController@index]');
 
         $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])
             ->paginate(10);

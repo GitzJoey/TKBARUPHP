@@ -53,6 +53,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Truck withoutTrashed()
+ * @property-read mixed $h_id
  */
 class Truck extends Model
 {

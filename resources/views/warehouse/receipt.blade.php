@@ -96,7 +96,7 @@
                                     </select>
                                     <br>
                                     <input id="inputLicensePlate" type="text" name="license_plate" class="form-control"
-                                           v-model='license_plate'
+                                           v-model="license_plate"
                                            v-validate="'required'"
                                            v-bind:readonly="select_license_plate == '' ? false:true"
                                            v-show="select_license_plate != '' ? false:true"

@@ -82,6 +82,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder withoutTrashed()
+ * @property-read mixed $h_id
  */
 class PurchaseOrder extends Model
 {

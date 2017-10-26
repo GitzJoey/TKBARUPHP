@@ -120,6 +120,8 @@ class PurchaseOrderController extends Controller
 
     public function saveRevision(Request $request, $id)
     {
+        Log::info('[PurchaseOrderController@saveRevision]');
+
         $this->purchaseOrderService->revisePO($request, $id);
 
         return response()->json();
@@ -127,6 +129,8 @@ class PurchaseOrderController extends Controller
 
     public function delete(Request $request, $id)
     {
+        Log::info('[PurchaseOrderController@delete]');
+
         $this->purchaseOrderService->rejectPO($request, $id);
 
         return redirect(route('db.po.revise.index'));

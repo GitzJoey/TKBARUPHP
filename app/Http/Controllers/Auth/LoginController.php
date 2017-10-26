@@ -65,7 +65,7 @@ class LoginController extends Controller
     {
         Validator::extend('is_allowed_login', function($attribute, $value, $parameters, $validator) {
             $usr = User::with('userDetail')->where('email', '=', $value);
-            if (count($usr) == 0) return true;
+            if (count($usr->first()) == 0) return true;
 
             if ($usr->first()->userDetail->allow_login) return true;
             else return false;

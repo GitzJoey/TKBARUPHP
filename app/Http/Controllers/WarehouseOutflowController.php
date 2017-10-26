@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Stock;
+use App\Model\Truck;
 use App\Model\Deliver;
 use App\Model\StockOut;
 use App\Model\Warehouse;
@@ -16,8 +17,8 @@ use App\Model\SalesOrder;
 use App\Model\ProductUnit;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class WarehouseOutflowController extends Controller
 {
@@ -28,6 +29,8 @@ class WarehouseOutflowController extends Controller
 
     public function outflow()
     {
+        Log::info("[WarehouseOutflowController@outflow]");
+
         $warehouseDDL = Warehouse::all()->toJson();
 
         return view('warehouse.outflow', compact('warehouseDDL'));
@@ -35,7 +38,7 @@ class WarehouseOutflowController extends Controller
 
     public function getWarehouseSOs(Request $request, $id)
     {
-        Log::info("WarehouseOutflowController@getWarehouseSOs");
+        Log::info("[WarehouseOutflowController@getWarehouseSOs]");
 
         $SOs = SalesOrder::with('customer')->where('status', '=', 'SOSTATUS.WD')->where('warehouse_id', '=', $id)->get();
 
@@ -46,13 +49,18 @@ class WarehouseOutflowController extends Controller
 
     public function deliver($id)
     {
-        $so = SalesOrder::with('items.product.productUnits.unit')->find($id);
+        Log::info("[WarehouseOutflowController@deliver]");
 
-        return view('warehouse.deliver', compact('so'));
+        $so = SalesOrder::with('items.product.productUnits.unit')->find($id);
+        $truck = Truck::get()->pluck('plate_number', 'plate_number');
+
+        return view('warehouse.deliver', compact('so', 'truck'));
     }
 
     public function saveDeliver(Request $request, $id)
     {
+        Log::info("[WarehouseOutflowController@saveDeliver]");
+
         for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
             $conversionValue = ProductUnit::whereId($request->input("selected_unit_id.$i"))->first()->conversion_value;
 

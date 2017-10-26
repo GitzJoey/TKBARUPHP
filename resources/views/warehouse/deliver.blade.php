@@ -84,7 +84,22 @@
                             <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('license_plate') }">
                                 <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('warehouse.outflow.deliver.field.license_plate')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" v-validate="'required'" data-vv-as="{{ trans('warehouse.outflow.deliver.field.license_plate') }}">
+                                    <select id="selectLicensePlate" class="form-control"
+                                            v-model="select_license_plate"
+                                            v-on:change="onChangeSelectLicensePlate">
+                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                        @foreach($truck as $key => $t)
+                                            <option value="{{ $key }}">{{ $t }}</option>
+                                        @endforeach
+                                        <option value="">@lang('labels.SELECT_OTHER')</option>
+                                    </select>
+                                    <br>
+                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control"
+                                           v-model="license_plate"
+                                           v-validate="'required'"
+                                           v-bind:readonly="select_license_plate == '' ? false:true"
+                                           v-show="select_license_plate != '' ? false:true"
+                                           data-vv-as="{{ trans('warehouse.outflow.deliver.field.license_plate') }}">
                                     <span v-show="errors.has('license_plate')" class="help-block" v-cloak>@{{ errors.first('license_plate') }}</span>
                                 </div>
                             </div>
@@ -166,7 +181,9 @@
                 outflow: {
                     delivers : []
                 },
-                deliver_date: ''
+                deliver_date: '',
+                license_plate: '',
+                select_license_plate: ''
             },
             methods: {
                 validateBeforeSubmit: function() {
@@ -191,6 +208,13 @@
                             }
                         });
                     });
+                },
+                onChangeSelectLicensePlate: function() {
+                    if (this.select_license_plate != '') {
+                        this.license_plate = this.select_license_plate;
+                    } else {
+                        this.license_plate = '';
+                    }
                 },
                 createDeliver: function() {
                     var vm = this;

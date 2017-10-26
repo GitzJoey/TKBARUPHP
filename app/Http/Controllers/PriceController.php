@@ -11,6 +11,7 @@ use DB;
 use Exception;
 use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class PriceController extends Controller
@@ -22,6 +23,8 @@ class PriceController extends Controller
 
     public function index()
     {
+        Log::info("[PriceController@index]");
+
         $productCategories = ProductType::with(
             [
                 'stocks' => function($query){
@@ -39,9 +42,11 @@ class PriceController extends Controller
 
     public function editCategoryPrice($id)
     {
+        Log::info("[PriceController@index]");
+
         $currentProductType = ProductType::find($id);
         $priceLevels = PriceLevel::all();
-        $stocks = Stock::whereHas('product', function ($query) use ($id){
+        $stocks = Stock::whereHas('product', function ($query) use ($id) {
             $query->where('product_type_id', '=', $id);
         })->where('current_quantity', '>', 0)->get();
 
@@ -50,6 +55,8 @@ class PriceController extends Controller
 
     public function updateCategoryPrice(Request $request, $id)
     {
+        Log::info("[PriceController@updateCategoryPrice]");
+
         $stocks = Stock::whereHas('product', function ($query) use ($id){
             $query->where('product_type_id', '=', $id);
         })->where('current_quantity', '>', 0)->get();
@@ -76,6 +83,8 @@ class PriceController extends Controller
 
     public function editStockPrice($id)
     {
+        Log::info("[PriceController@editStockPrice]");
+
         $currentStock = Stock::find($id);
         $priceLevels = PriceLevel::all();
 
@@ -84,6 +93,8 @@ class PriceController extends Controller
 
     public function updateStockPrice(Request $request, $id)
     {
+        Log::info("[PriceController@updateStockPrice]");
+
         DB::beginTransaction();
 
         try {
@@ -111,6 +122,8 @@ class PriceController extends Controller
 
     public function getLastUpdate()
     {
+        Log::info("[PriceController@getLastUpdate]");
+
         return Price::orderBy('input_date', 'desc')->first();
     }
 }
