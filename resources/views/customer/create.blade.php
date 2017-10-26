@@ -304,7 +304,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(expense, expenseIdx) in expenses">
-                                            <input type="hidden" name="expense_template_id[]" value="@{{ expense.id }}">
+                                            <input type="hidden" name="expense_template_id[]" v-bind:value="expense.id">
                                             <td class="text-center valign-middle">
                                                 @{{ expense.name }}
                                             </td>
@@ -439,20 +439,22 @@
             },
             methods: {
                 validateBeforeSubmit: function() {
+                    var vm = this;
                     this.$validator.validateScopes().then(function(isValid) {
-                        var vm = this;
                         if (!isValid) return;
                         axios.post('{{ route('api.post.db.master.customer.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#customerForm')[0]))
                             .then(function(response) {
                             window.location.href = '{{ route('db.master.customer') }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
-                            if (Object.keys(e.response.data.errors).length > 0) {
+                            if (e.response.data.errors != undefined && Object.keys(e.response.data.errors).length > 0) {
                                 for (var key in e.response.data.errors) {
                                     for (var i = 0; i < e.response.data.errors[key].length; i++) {
                                         vm.$validator.errors.add('', e.response.data.errors[key][i], 'server', '__global__');
                                     }
                                 }
+                            } else if (e.response.data.message != undefined) {
+                                vm.$validator.errors.add('', e.response.data.message, 'server', '__global__');
                             } else {
                                 vm.$validator.errors.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
                             }
