@@ -5,8 +5,9 @@
 @endsection
 
 @section('page_title')
-    Page Not Found
+
 @endsection
+
 @section('page_title_desc')
 
 @endsection
@@ -19,8 +20,10 @@
             <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
 
             <p>
-                We could not find the page you were looking for.
-                Meanwhile, you may <a href="/dashboard">return to dashboard</a> or try using the sidebar on the left.
+                We could not find the page you were looking for.<br/>
+                Meanwhile, you may <a href="/dashboard">return to dashboard</a> or try using the sidebar on the left.<br/>
+                <br/>
+                Click here to <a href="#">Contact Support</a>
             </p>
         </div>
     </div>

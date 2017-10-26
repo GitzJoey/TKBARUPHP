@@ -28,6 +28,15 @@
             <h3 class="box-title">@lang('product.index.header.title')</h3>
         </div>
         <div class="box-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <input id="inputSearch" type="text" class="form-control" placeholder="Search" value="{{ Request::query('p') }}">
+                </div>
+                <div class="col-md-8">
+                    <button id="btnSearch" class="btn btn-default"><span class="fa fa-search-plus fa-fw"></span></button>
+                </div>
+            </div>
+            <br>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -66,4 +75,22 @@
             {!! $productlist->render() !!}
        </div>
     </div>
+@endsection
+
+@section('custom_js')
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('#btnSearch').click(function() {
+                window.location.href = '{{ route('db.master.product') }}' + '?p=' + $('#inputSearch').val();
+            });
+
+            $('#inputSearch').focus(function() {
+                $(this).select();
+            }).keyup(function(e) {
+                if (e.keyCode == 13) {
+                    $('#btnSearch').click();
+                }
+            })
+        });
+    </script>
 @endsection

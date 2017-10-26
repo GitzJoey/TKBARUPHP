@@ -26,9 +26,15 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $req)
     {
-        $product = Product::paginate(10);
+        $product = [];
+        if (!empty($req->query('p'))) {
+            $param = $req->query('p');
+            $product = Product::where('name', 'like', "%$param%")->paginate(10);
+        } else {
+            $product = Product::paginate(10);
+        }
 
         return view('product.index')->with('productlist', $product);
     }
