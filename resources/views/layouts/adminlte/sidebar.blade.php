@@ -304,7 +304,8 @@
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.tax.invoice.input.') ||
                                                     Active::checkRoutePattern('db.tax.invoice.input.*') ||
                                                     Active::checkRoutePattern('db.tax.invoice.output.') ||
-                                                    Active::checkRoutePattern('db.tax.invoice.output.*')) }}">
+                                                    Active::checkRoutePattern('db.tax.invoice.output.*') ||
+                                                    Active::checkRoutePattern('db.tax.generate')) }}">
                     <a href="#"><i class="fa fa-legal fa-fw"></i><span>&nbsp;@lang('menu.item.tax')</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -322,8 +323,8 @@
                                 <li class="{{ active_class(Active::checkRoutePattern('db.tax.invoice.output.*')) }}"><a href="{{ route('db.tax.invoice.output.index') }}"><i class="fa fa-arrow-right"></i>&nbsp;@lang('menu.item.tax.invoice.output')</a></li>
                             </ul>
                         </li>
-                        <li class="">
-                            <a href="#"><i class="fa fa-magic fa-fw"></i>&nbsp;@lang('menu.item.tax.generate')</a>
+                        <li class=" {{ active_class(Active::checkRoutePattern('db.tax.generate')) }}">
+                            <a href="{{ route('db.tax.generate') }}"><i class="fa fa-magic fa-fw"></i>&nbsp;@lang('menu.item.tax.generate')</a>
                         </li>
                     </ul>
                 </li>

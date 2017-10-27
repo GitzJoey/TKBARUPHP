@@ -589,6 +589,13 @@ class PermissionTableSeeder extends Seeder
             [   'name' => 'menu-tax-input',
                 'display_name' => '[TaxOutput] Show Menu TaxOutput Input',
                 'description' => 'Allowed To See Menu TaxOutput Input In Sidebar' ],
+            // Tax Generate
+            [   'name' => 'read-tax-generate',
+                'display_name' => '[TaxGenerate] Read TaxGenerate',
+                'description' => 'Allowed To Read TaxGenerate Data' ],
+            [   'name' => 'menu-tax-generate',
+                'display_name' => '[TaxGenerate] Show Menu TaxGenerate',
+                'description' => 'Allowed To See Menu TaxGenerate In Sidebar' ],
         ];
 
         foreach ($permission as $key => $value) {

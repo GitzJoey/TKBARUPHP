@@ -276,6 +276,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                     ]);
                 });
             });
+            Route::group(['middleware' => ['permission:read-tax-generate|menu-tax-generate']], function () {
+              Route::get('generate', 'TaxGenerateController@index')->name('db.tax.generate');
+              Route::get('generate/import_pk/{format}', 'TaxGenerateController@indexImportPkExcel')->name('db.tax.generate.import_pk.excel');
+              Route::get('generate/import_pm/{format}', 'TaxGenerateController@indexImportPmExcel')->name('db.tax.generate.import_pm.excel');
+            });
         });
 
         Route::group(['prefix' => 'report'], function () {

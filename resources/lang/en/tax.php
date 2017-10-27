@@ -114,4 +114,36 @@ return [
             ],
         ],
     ],
+    'generate' => [
+        'title' => 'Generate',
+        'page_title' => 'Generate',
+        'page_title_desc' => 'Generate Page',
+        'header' => [
+            'title' => 'Generate'
+        ],
+        'nav_tabs' => [
+            'import_pk' => 'Import PK',
+            'import_pm' => 'Import PM',
+        ],
+        'import_pm' => [
+            'table' => [
+                'header' => [
+                    'pm' => 'FM',
+                    'transaction_type_code' => 'CD_TRANSACTION_TYPE',
+                    'fg_replacement' => 'FG_REPLACEMENT',
+                    'invoice_no' => 'INVOICE_NO',
+                    'month' => 'MONTH',
+                    'year' => 'YEAR',
+                    'invoice_date' => 'INVOICE_DATE',
+                    'tax_id_no' => 'TAX_ID',
+                    'name' => 'NAME',
+                    'address' => 'ADDRESS',
+                    'total_tax_base' => 'TOTAL_TAX_BASE',
+                    'total_gst' => 'TOTAL_GST',
+                    'total_luxury_tax' => 'TOTAL_LUXURY_TAX',
+                    'is_creditable' => 'IS_CREDITABLE'
+                ]
+            ]
+        ]
+    ]
 ];
