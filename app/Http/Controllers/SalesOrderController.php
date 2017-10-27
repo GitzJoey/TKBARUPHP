@@ -10,7 +10,6 @@ namespace App\Http\Controllers;
 
 use App\Model\Lookup;
 use App\Model\Product;
-use App\Model\Customer;
 use App\Model\Warehouse;
 use App\Model\SalesOrder;
 use App\Model\VendorTrucking;
@@ -27,6 +26,7 @@ use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 
 class SalesOrderController extends Controller
