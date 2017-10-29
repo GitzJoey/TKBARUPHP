@@ -33,7 +33,7 @@ class TruckController extends Controller
     {
         $truck = Truck::find($id);
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
-        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('description', 'code');
+        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('i18nDescription', 'code');
 
         return view('truck.show', compact('statusDDL', 'truckTypeDDL'))->with('truck', $truck);
     }
@@ -41,7 +41,7 @@ class TruckController extends Controller
     public function create()
     {
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
-        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('description', 'code');
+        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('i18nDescription', 'code');
 
         return view('truck.create', compact('statusDDL', 'truckTypeDDL'));
     }
@@ -74,7 +74,7 @@ class TruckController extends Controller
         $truck = Truck::find($id);
 
         $statusDDL = LookupRepo::findByCategory('STATUS')->pluck('i18nDescription', 'code');
-        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('description', 'code');
+        $truckTypeDDL = LookupRepo::findByCategory('TRUCKTYPE')->pluck('i18nDescription', 'code');
 
         return view('truck.edit', compact('truck', 'statusDDL', 'truckTypeDDL'));
     }
