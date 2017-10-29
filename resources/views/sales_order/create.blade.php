@@ -925,7 +925,7 @@
                 },
                 onSelectCustomer: function(soIndex) {
                     var vm = this;
-                    console.log(this.SOs[soIndex].customer.id);
+
                     if(!this.SOs[soIndex].customer.id) {
                         vm.SOs[soIndex].customer = { id: '' };
                     } else {

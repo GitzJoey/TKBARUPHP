@@ -256,7 +256,6 @@
                         var result = false;
                         var itemIdx = args[0];
 
-                        console.log(Number(app.inflow.receipts[itemIdx].netto) + Number(app.inflow.receipts[itemIdx].tare));
                         if (Number(app.inflow.receipts[itemIdx].brutto) ==
                             Number(app.inflow.receipts[itemIdx].netto) + Number(app.inflow.receipts[itemIdx].tare)) {
                             result = true;
