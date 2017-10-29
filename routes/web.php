@@ -19,9 +19,9 @@ Route::get('/', function () {
     return redirect('home');
 });
 
-Route::get('/forgot', function () {
-    Route::get('', 'ForgotPasswordController@test');
-});
+Route::get('forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
+Route::post('forgot/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->middleware('web');
+Route::get('reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 
 Auth::routes();
 
