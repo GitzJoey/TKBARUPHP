@@ -11,7 +11,7 @@
             </div>
 
             <div class="login-box-body">
-                <p class="login-box-msg">@lang('login.forgot.title'){{ $errors }}</p>
+                <p class="login-box-msg">@lang('login.forgot.title')</p>
 
                 <form role="form" method="post" action="{{ url('/password/email') }}">
                     {{ csrf_field() }}
