@@ -20,7 +20,6 @@ Route::get('/', function () {
 });
 
 Route::get('forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
-Route::post('forgot/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->middleware('web');
 Route::get('reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 
 Auth::routes();
