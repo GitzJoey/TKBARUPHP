@@ -75,7 +75,7 @@ class SalesOrderController extends Controller
         Log::info('SalesOrderController@store');
 
         if ($request['customer_type']['code'] == 'CUSTOMERTYPE.R') {
-            if (empty($soData['customer']['id'])) {
+            if (empty($request['customer']['id'])) {
                 $rules = ['notFound' => 'required'];
                 $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
                 Validator::make($request->all(), $rules, $messages)->validate();
