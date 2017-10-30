@@ -71,9 +71,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <div id="number-of-created-po-so-chart-container"></div>
-                    </div>
+                    <div id="number-of-created-po-so-chart-container"></div>
                 </div>
                 <div class="box-footer clearfix"></div>
             </div>
@@ -90,9 +88,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <div id="total-so-amount-chart-container"></div>
-                    </div>
+                    <div id="total-so-amount-chart-container"></div>
                 </div>
                 <div class="box-footer clearfix"></div>
             </div>
@@ -403,6 +399,7 @@
 
             Highcharts.chart('number-of-created-po-so-chart-container', {
                 chart: {
+                    type: 'bar',
                     marginTop: 75,
                     events: {
                         load: function () {
