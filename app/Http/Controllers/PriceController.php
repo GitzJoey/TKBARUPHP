@@ -124,6 +124,6 @@ class PriceController extends Controller
     {
         Log::info("[PriceController@getLastUpdate]");
 
-        return Price::orderBy('input_date', 'desc')->first();
+        return Price::orderBy('input_date', 'desc')->first()->input_date;
     }
 }

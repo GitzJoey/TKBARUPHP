@@ -20,7 +20,7 @@
     <div id="unfinishedSettingsNotice"></div>
 
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4 col-xs-7">
             <div class="small-box bg-aqua" id="last-opname" v-cloak>
                 <div class="inner">
                     <h3>@{{ last_opname_humanize }}</h3>
@@ -32,7 +32,7 @@
                 <a href="{{ route('db.warehouse.stockopname.index') }}" class="small-box-footer">@lang('dashboard.last_opname.title')</a>
             </div>
         </div>
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4 col-xs-7">
             <div class="small-box bg-red" id="last-bank-upload" v-cloak>
                 <div class="inner">
                     <h3>@{{ last_bank_upload_humanize }}</h3>
@@ -44,7 +44,7 @@
                 <a href="{{ route('db.bank.upload') }}" class="small-box-footer">@lang('dashboard.last_bank_upload.title')</a>
             </div>
         </div>
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-4 col-xs-7">
             <div class="small-box bg-yellow" id="last-price-update" v-cloak>
                 <div class="inner">
                     <h3>@{{ last_price_update_humanize }}</h3>
@@ -54,18 +54,6 @@
                     <i class="ion ion-md-trending-up"></i>
                 </div>
                 <a href="#" class="small-box-footer">@lang('dashboard.last_price_update.title')</a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-maroon">
-                <div class="inner">
-                    <h3>&nbsp;&nbsp;&nbsp;</h3>
-                    <p>&nbsp;&nbsp;&nbsp;</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-ios-briefcase"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -658,9 +646,10 @@
                             // get body data
                             this.last_price_update = response.data;
 
-                            if(this.last_price_update.length > 0) {
-                                this.last_price_update_humanize = moment(this.last_price_update[0].created_at).fromNow();
-                                this.last_price_update = moment(this.last_price_update[0].created_at).format('YYYY-MM-DD');
+                            if(this.last_price_update.date) {
+                                moment.locale('{{ LaravelLocalization::getCurrentLocale() }}');
+                                this.last_price_update_humanize = moment(this.last_price_update.date).fromNow();
+                                this.last_price_update = moment(this.last_price_update.date).format('DD-MM-YYYY HH:mm A');
                             }
                             else
                             {
