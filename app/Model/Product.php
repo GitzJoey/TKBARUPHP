@@ -64,6 +64,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Product withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Product withoutTrashed()
+ * @property-read mixed $base_unit_symbol
  */
 class Product extends Model
 {

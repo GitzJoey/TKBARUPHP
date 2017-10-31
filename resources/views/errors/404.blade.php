@@ -1,27 +1,43 @@
-@extends('layouts.adminlte.master')
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Page Not Found | TKBARU</title>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('title')
-    Page Not Found
-@endsection
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}" />
 
-@section('page_title')
-    Page Not Found
-@endsection
-@section('page_title_desc')
+        <link rel="stylesheet" type="text/css" href="{{ mix('adminlte/css/adminlte.css') }}">
+    </head>
 
-@endsection
+    <body style="background-color: #ecf0f5;">
+        <div>
+            <div class="error-page">
+                <h2 class="headline text-yellow"> 404</h2>
 
-@section('content')
-    <div class="error-page">
-        <h2 class="headline text-yellow"> 404</h2>
+                <div class="error-content">
+                    <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
 
-        <div class="error-content">
-            <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
+                    <p>
+                        Sorry...<br/>
+                        We could not find the page you were looking for.<br/>
+                        <a href="#" onclick="window.history.go(-1); return false;">Return to your previous page</a>
+                        <br/>
+                        <br/>
+                        <a href="#">Contact Support</a>
+                    </p>
+                </div>
+            </div>
 
-            <p>
-                We could not find the page you were looking for.
-                Meanwhile, you may <a href="/dashboard">return to dashboard</a> or try using the sidebar on the left.
-            </p>
+            <br>
+            <br>
+            <br>
+
         </div>
-    </div>
-@endsection
+
+        <script type="application/javascript" src="{{ mix('adminlte/js/adminlte.js') }}"></script>
+
+    </body>
+</html>

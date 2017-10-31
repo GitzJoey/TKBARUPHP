@@ -78,9 +78,10 @@
                     },
                     formatDecimal: function(value){
                         value = parseFloat(value);
+
                         if( value % 1 !== 0 )
                             value = value.toFixed(2);
-                        return value.toFixed(0);
+                        return value;
                     },
                     fetchStockHistories: function () {
                         let vm = this;

@@ -25,6 +25,8 @@ class WarehouseTransferStockController extends Controller
 
     public function show($id)
     {
+        Log::info('[WarehouseTransferStockController@show]');
+
         $stock_transfer = StockTransfer::find($id);
 
         return view('warehouse.transferstock.show', compact('stock_transfer'));
@@ -32,7 +34,8 @@ class WarehouseTransferStockController extends Controller
 
     public function index()
     {
-        Log::info('[WarehouseController@stocktransfer]');
+        Log::info('[WarehouseTransferStockController@stocktransfer]');
+
         $stock_transfer = StockTransfer::paginate(10);
 
         return view('warehouse.transferstock.index', compact('stock_transfer'));
@@ -49,7 +52,7 @@ class WarehouseTransferStockController extends Controller
 
     public function saveTransfer(Request $request)
     {
-        Log::info('[WarehouseController@saveTransfer]');
+        Log::info('[WarehouseTransferStockController@saveTransfer]');
 
         $this->stockTransferService->transfer($request);
 

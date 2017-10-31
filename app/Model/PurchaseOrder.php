@@ -82,6 +82,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\PurchaseOrder withoutTrashed()
+ * @property-read mixed $h_id
  */
 class PurchaseOrder extends Model
 {
@@ -122,9 +123,18 @@ class PurchaseOrder extends Model
         'deleted_at',
     ];
 
+    protected $appends = [
+        'hId'
+    ];
+
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function getHIdAttribute()
+    {
+        return $this->hId();
     }
 
     public function items()

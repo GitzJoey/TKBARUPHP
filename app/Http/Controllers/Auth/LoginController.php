@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
+
 use App\Services\DatabaseService;
+
+use Validator;
+use LaravelLocalization;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -53,5 +59,21 @@ class LoginController extends Controller
         }
 
         return view('auth.login');
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        Validator::extend('is_allowed_login', function($attribute, $value, $parameters, $validator) {
+            $usr = User::with('userDetail')->where('email', '=', $value);
+            if (count($usr->first()) == 0) return true;
+
+            if ($usr->first()->userDetail->allow_login) return true;
+            else return false;
+        });
+
+        $this->validate($request, [
+            $this->username() => 'required|string|is_allowed_login',
+            'password' => 'required|string',
+        ], [$this->username().'.is_allowed_login' => LaravelLocalization::getCurrentLocale() == 'en' ? 'Login Not Allowed':'Tidak Diperkenankan Login']);
     }
 }

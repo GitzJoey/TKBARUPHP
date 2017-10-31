@@ -24,6 +24,8 @@
                 You are not authorized to view this page.
                 <br>
                 Meanwhile, you may <a href="/dashboard">return to dashboard</a> or try using the sidebar on the left.
+                <br>
+                Click here to <a href="#">Contact Support</a>
             </p>
         </div>
     </div>

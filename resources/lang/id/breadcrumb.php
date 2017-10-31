@@ -109,6 +109,8 @@ return [
     'user.settings' => 'Pengaturan Pengguna',
     'user.calendar' => 'Kalender Pengguna',
     'customer.confirmation' => 'Konfirmasi',
+    'customer.approval' => 'Persetujuan',
+    'customer.payment' => 'Pembayaran',
     'tax.invoice.output' => 'e-Faktur Keluaran',
     'tax.invoice.output.create' => 'Tambah e-Faktur Keluaran',
     'tax.invoice.output.show' => 'Tampilkan e-Faktur Keluaran',

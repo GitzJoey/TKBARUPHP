@@ -53,6 +53,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Warehouse withoutTrashed()
+ * @property-read mixed $h_id
  */
 class Warehouse extends Model
 {
@@ -83,7 +84,7 @@ class Warehouse extends Model
     ];
 
     protected $appends = [
-        'hid'
+        'hId'
     ];
 
     public function hId()
@@ -91,9 +92,9 @@ class Warehouse extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
-    public function getHidAttribute()
+    public function getHIdAttribute()
     {
-        return HashIds::encode($this->attributes['id']);
+        return $this->hId();
     }
 
     public function purchaseOrders()

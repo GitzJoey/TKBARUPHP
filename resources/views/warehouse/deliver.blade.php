@@ -84,7 +84,22 @@
                             <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('license_plate') }">
                                 <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('warehouse.outflow.deliver.field.license_plate')</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control" v-validate="'required'" data-vv-as="{{ trans('warehouse.outflow.deliver.field.license_plate') }}">
+                                    <select id="selectLicensePlate" class="form-control"
+                                            v-model="select_license_plate"
+                                            v-on:change="onChangeSelectLicensePlate">
+                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                        @foreach($truck as $key => $t)
+                                            <option value="{{ $key }}">{{ $t }}</option>
+                                        @endforeach
+                                        <option value="">@lang('labels.SELECT_OTHER')</option>
+                                    </select>
+                                    <br>
+                                    <input type="text" id="inputLicensePlate" name="license_plate" class="form-control"
+                                           v-model="license_plate"
+                                           v-validate="'required'"
+                                           v-bind:readonly="select_license_plate == '' ? false:true"
+                                           v-show="select_license_plate != '' ? false:true"
+                                           data-vv-as="{{ trans('warehouse.outflow.deliver.field.license_plate') }}">
                                     <span v-show="errors.has('license_plate')" class="help-block" v-cloak>@{{ errors.first('license_plate') }}</span>
                                 </div>
                             </div>
@@ -149,7 +164,7 @@
                     <div class="btn-toolbar">
                         <button id="submitButton" type="submit" class="btn btn-primary pull-right">@lang('buttons.submit_button')</button>&nbsp;&nbsp;&nbsp;
                         <a id="printButton" href="#" target="_blank" class="btn btn-primary pull-right">@lang('buttons.print_preview_button')</a>&nbsp;&nbsp;&nbsp;
-                        <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.outflow.index', array('w' => $so->warehouse->id)) }}" >@lang('buttons.cancel_button')</a>
+                        <a id="cancelButton" class="btn btn-primary pull-right" href="{{ route('db.warehouse.outflow.index', array('w' => Hashids::encode($so->warehouse->id))) }}" >@lang('buttons.cancel_button')</a>
                     </div>
                 </div>
             </div>
@@ -166,7 +181,9 @@
                 outflow: {
                     delivers : []
                 },
-                deliver_date: ''
+                deliver_date: '',
+                license_plate: '',
+                select_license_plate: ''
             },
             methods: {
                 validateBeforeSubmit: function() {
@@ -179,7 +196,7 @@
                             window.location.href = '{{ route('db.warehouse.outflow.index', array('w' => $so->warehouse->id)) }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
-                            if (Object.keys(e.response.data.errors).length > 0) {
+                            if (e.response.data.errors != undefined && Object.keys(e.response.data.errors).length > 0) {
                                 for (var key in e.response.data.errors) {
                                     for (var i = 0; i < e.response.data.errors[key].length; i++) {
                                         vm.$validator.errors.add('', e.response.data.errors[key][i], 'server', '__global__');
@@ -187,9 +204,17 @@
                                 }
                             } else {
                                 vm.$validator.errors.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                if (e.response.data.message != undefined) { console.log(e.response.data.message); }
                             }
                         });
                     });
+                },
+                onChangeSelectLicensePlate: function() {
+                    if (this.select_license_plate != '') {
+                        this.license_plate = this.select_license_plate;
+                    } else {
+                        this.license_plate = '';
+                    }
                 },
                 createDeliver: function() {
                     var vm = this;

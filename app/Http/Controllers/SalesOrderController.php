@@ -10,7 +10,6 @@ namespace App\Http\Controllers;
 
 use App\Model\Lookup;
 use App\Model\Product;
-use App\Model\Customer;
 use App\Model\Warehouse;
 use App\Model\SalesOrder;
 use App\Model\VendorTrucking;
@@ -27,6 +26,7 @@ use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 
 class SalesOrderController extends Controller
@@ -75,7 +75,7 @@ class SalesOrderController extends Controller
         Log::info('SalesOrderController@store');
 
         if ($request['customer_type']['code'] == 'CUSTOMERTYPE.R') {
-            if (empty($soData['customer']['id'])) {
+            if (empty($request['customer']['id'])) {
                 $rules = ['notFound' => 'required'];
                 $messages = ['notFound.required' => Lang::get('labels.DATA_NOT_FOUND')];
                 Validator::make($request->all(), $rules, $messages)->validate();
@@ -112,7 +112,7 @@ class SalesOrderController extends Controller
 
     public function index()
     {
-        Log::info('SalesOrderController@index');
+        Log::info('[SalesOrderController@index]');
 
         $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])
             ->paginate(10);

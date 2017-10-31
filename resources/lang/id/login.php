@@ -26,6 +26,9 @@ return [
         ],
     ],
     'forgot' => [
-        'title' => '',
+        'title' => 'Masukan Alamat Email Anda',
     ],
+    'reset' => [
+        'title' => 'Masukan Password Baru Anda',
+    ]
 ];

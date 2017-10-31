@@ -13,7 +13,7 @@
 @endsection
 
 @section('breadcrumbs')
-
+    {!! Breadcrumbs::render('customer_payment') !!}
 @endsection
 
 @section('content')

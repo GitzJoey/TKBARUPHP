@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Truck;
 use App\Model\Warehouse;
 
 use App\Services\InflowService;
@@ -30,6 +31,8 @@ class WarehouseInflowController extends Controller
 
     public function inflow()
     {
+        Log::info("[WarehouseInflowController@inflow]");
+
         $warehouseDDL = Warehouse::all();
 
         return view('warehouse.inflow', compact('warehouseDDL'));
@@ -37,13 +40,18 @@ class WarehouseInflowController extends Controller
 
     public function receipt($id)
     {
-        $po = $this->purchaseOrderService->getPOForReceipt($id);
+        Log::info("[WarehouseInflowController@receipt]");
 
-        return view('warehouse.receipt', compact('po'));
+        $po = $this->purchaseOrderService->getPOForReceipt($id);
+        $truck = Truck::get()->pluck('plate_number', 'plate_number');
+
+        return view('warehouse.receipt', compact('po', 'truck'));
     }
 
     public function saveReceipt(Request $request, $id)
     {
+        Log::info("[WarehouseInflowController@saveReceipt]");
+
         $this->inflowService->createPOReceipt($request, $id);
 
         return response()->json();
@@ -51,11 +59,11 @@ class WarehouseInflowController extends Controller
 
     public function getWarehousePOs($id)
     {
-        Log::info("WarehouseOutflowController@getWarehousePOs");
+        Log::info("[WarehouseInflowController@getWarehousePOs]");
 
         $POs = $this->purchaseOrderService->getWarehousePO($id);
 
-        Log::info($POs);
+        Log::info("[WarehouseInflowController@getWarehousePOs]".$POs);
 
         return $POs;
     }

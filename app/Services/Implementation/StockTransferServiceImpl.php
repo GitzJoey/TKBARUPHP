@@ -14,11 +14,9 @@ use App\Model\StockIn;
 use App\Model\StockOut;
 use App\Services\StockTransferService;
 
-use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Doctrine\Common\Collections\Collection;
 
 use Illuminate\Support\Facades\Log;
 
@@ -27,11 +25,11 @@ class StockTransferServiceImpl implements StockTransferService
 
     public function transfer(Request $request)
     {
+        Log::info("[StockTransferServiceImpl@transfer]");
+
         DB::transaction(function () use ($request) {
 
             $user = Auth::user();
-
-            Log::info($request);
 
             $stockTransfer = [
                 'store_id' => $user->store_id,

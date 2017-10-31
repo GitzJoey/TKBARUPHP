@@ -9,6 +9,7 @@
 namespace App\Services\Implementation;
 
 use DB;
+use Log;
 use Exception;
 use App\Services\DatabaseService;
 
@@ -20,6 +21,7 @@ class DatabaseServiceImpl implements DatabaseService
             DB::connection()->getPdo();
             return true;
         } catch (Exception $e) {
+            Log::info("[DatabaseService] ".$e->getMessage());
             return false;
         }
     }
