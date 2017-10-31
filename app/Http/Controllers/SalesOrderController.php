@@ -40,12 +40,13 @@ class SalesOrderController extends Controller
     {
         $this->salesOrderService = $salesOrderService;
         $this->stockService = $stockService;
-        $this->middleware('auth', [ 
-            'except' => [ 
-                'getDueSO', 
+        $this->middleware('auth', [
+            'except' => [
+                'getDueSO',
                 'getUndeliveredSO',
                 'getNumberOfCreatedSOPerDay',
-                'getTotalSOAmountPerDay' 
+                'getTotalSOAmountPerDay',
+                'getSOByDate',
             ]
         ]);
     }
@@ -213,5 +214,13 @@ class SalesOrderController extends Controller
         }
 
         return $totalSOAmountPerDay;
+    }
+
+    public function getSOByDate(Request $request)
+    {
+        $this->validate($request, [
+            'date' => 'required|date'
+        ]);
+        return $this->salesOrderService->searchSOByDate($request->query('date'));
     }
 }

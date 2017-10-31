@@ -67,6 +67,9 @@
             var tabStockHistoryVue = new Vue({
                 el: '#tab_monitoring',
                 data: {
+                    lookup: {!! json_encode(__('lookup')) !!},
+                    saleOrderDateFilter: moment().format('YYYY-MM-DD'),
+                    saleOrders: [],
                     stock_histories: {
                         data : [],
                         error : false,
@@ -92,10 +95,26 @@
                             vm.stock_histories.error = true;
                         })
                     },
+                    fetchSaleOrders: function (date) {
+                        let vm = this;
+                        axios.get('{{ route('api.sale_order.sale_order_by_date') }}?date=' + date).then(function (response) {
+                            vm.saleOrders = vm.camelCasingKey(response.data);
+                            vm.saleOrders = _.map(vm.saleOrders, function (saleOrder) {
+                                saleOrder.soCreatedDate = saleOrder.soCreated.split(' ')[0];
+                                return saleOrder;
+                            })
+                        });
+                    }
+                },
+                watch: {
+                    saleOrderDateFilter: function (value) {
+                        this.fetchSaleOrders(value);
+                    }
                 },
                 mounted () {
                     let vm = this;
-                    vm.fetchStockHistories()
+                    vm.fetchStockHistories();
+                    vm.fetchSaleOrders(vm.saleOrderDateFilter);
 
                     //periodly repeat function
                     setInterval(function(){
