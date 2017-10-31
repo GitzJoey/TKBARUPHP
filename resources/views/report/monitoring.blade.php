@@ -69,7 +69,9 @@
                 data: {
                     lookup: {!! json_encode(__('lookup')) !!},
                     saleOrderDateFilter: moment().format('YYYY-MM-DD'),
+                    purchaseOrderDateFilter: moment().format('YYYY-MM-DD'),
                     saleOrders: [],
+                    purchaseOrders: [],
                     stock_histories: {
                         data : [],
                         error : false,
@@ -104,17 +106,31 @@
                                 return saleOrder;
                             })
                         });
+                    },
+                    fetchPurchaseOrders: function (date) {
+                        let vm = this;
+                        axios.get('{{ route('api.purchase_order.purchase_order_by_date') }}?date=' + date).then(function (response) {
+                            vm.purchaseOrders = vm.camelCasingKey(response.data);
+                            vm.purchaseOrders = _.map(vm.purchaseOrders, function (purchaseOrder) {
+                                purchaseOrder.poCreatedDate = purchaseOrder.poCreated.split(' ')[0];
+                                return purchaseOrder;
+                            })
+                        });
                     }
                 },
                 watch: {
                     saleOrderDateFilter: function (value) {
                         this.fetchSaleOrders(value);
+                    },
+                    purchaseOrderDateFilter: function (value) {
+                        this.fetchPurchaseOrders(value);
                     }
                 },
                 mounted () {
                     let vm = this;
                     vm.fetchStockHistories();
                     vm.fetchSaleOrders(vm.saleOrderDateFilter);
+                    vm.fetchPurchaseOrders(vm.purchaseOrderDateFilter);
 
                     //periodly repeat function
                     setInterval(function(){

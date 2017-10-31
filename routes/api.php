@@ -250,6 +250,7 @@ Route::group(['prefix' => 'get'], function () {
     Route::group(['prefix' => 'po'], function() {
         Route::get('due_purchase_order', 'PurchaseOrderController@getDuePO')->name('api.purchase_order.due_purchase_order');
         Route::get('unreceived_purchase_order', 'PurchaseOrderController@getUnreceivedPO')->name('api.purchase_order.unreceived_purchase_order');
+        Route::get('purchase_order_by_date', 'PurchaseOrderController@getPOByDate')->name('api.purchase_order.purchase_order_by_date');
 
         Route::get('code', function () {
             return \App\Util\POCodeGenerator::generateCode();
