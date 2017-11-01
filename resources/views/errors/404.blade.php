@@ -14,6 +14,13 @@
 
     <body style="background-color: #ecf0f5;">
         <div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
             <div class="error-page">
                 <h2 class="headline text-yellow"> 404</h2>
 

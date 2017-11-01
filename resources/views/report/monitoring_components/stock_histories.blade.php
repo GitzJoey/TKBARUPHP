@@ -44,8 +44,8 @@
                                                 <td colspan="8" class="hiddenRow" style="padding-left: 15px; padding-top: 15px;">
                                                     <div class="accordian-body collapse" v-bind:id="'rowstock'+ stock.id">
                                                         <strong>@lang('stock_history.sales_history')</strong> <br/>
-                                                        <p v-if=" !stock.so_items.length ">@lang('stock_history.theres_no_data')</p>
-                                                        <table v-if=" stock.so_items.length " class="table table-bordered">
+                                                        <p v-if="!stock.so_items.length">@lang('stock_history.theres_no_data')</p>
+                                                        <table v-if="stock.so_items.length" class="table table-bordered">
                                                             <thead>
                                                             <tr>
                                                                 <th class="text-center">@lang('stock_history.table.header.date')</th>
