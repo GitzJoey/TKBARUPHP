@@ -20,7 +20,7 @@
     <div id="unfinishedSettingsNotice"></div>
 
     <div class="row">
-        <div class="col-lg-4 col-xs-7">
+        <div class="col-lg-4 col-xs-12">
             <div class="small-box bg-aqua" id="last-opname" v-cloak>
                 <div class="inner">
                     <h3>@{{ last_opname_humanize }}</h3>
@@ -32,7 +32,7 @@
                 <a href="{{ route('db.warehouse.stockopname.index') }}" class="small-box-footer">@lang('dashboard.last_opname.title')</a>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-7">
+        <div class="col-lg-4 col-xs-12">
             <div class="small-box bg-red" id="last-bank-upload" v-cloak>
                 <div class="inner">
                     <h3>@{{ last_bank_upload_humanize }}</h3>
@@ -44,7 +44,7 @@
                 <a href="{{ route('db.bank.upload') }}" class="small-box-footer">@lang('dashboard.last_bank_upload.title')</a>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-7">
+        <div class="col-lg-4 col-xs-12">
             <div class="small-box bg-yellow" id="last-price-update" v-cloak>
                 <div class="inner">
                     <h3>@{{ last_price_update_humanize }}</h3>
@@ -338,6 +338,15 @@
     <script type="application/javascript">
         $(document).ready(function() {
             checkUnfinish();
+
+            @if (LaravelLocalization::getCurrentLocale() == 'id')
+                Highcharts.setOptions({
+                    lang: {
+                        numericSymbols: ['Rb','Jt','G','T','P','E'],
+                        shortMonths: ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des']
+                    }
+                });
+            @endif
 
             Highcharts.chart('total-so-amount-chart-container', {
                 chart: {

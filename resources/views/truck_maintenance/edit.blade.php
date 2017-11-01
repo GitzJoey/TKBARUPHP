@@ -137,7 +137,7 @@
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.maintenance.truck.edit', $truckMtc->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#truckMtcForm')[0]))
                             .then(function(response) {
-                            window.location.href = '{{ route('db.admin.roles') }}';
+                            window.location.href = '{{ route('db.truck.maintenance') }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
                             if (e.response.data.errors != undefined && Object.keys(e.response.data.errors).length > 0) {
