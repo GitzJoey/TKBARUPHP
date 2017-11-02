@@ -552,7 +552,7 @@ class SalesOrderServiceImpl implements SalesOrderService
 
     public function searchSOByDate($date)
     {
-        $saleOrders = SalesOrder::with('customer.profiles')
+        $saleOrders = SalesOrder::with([ 'customer.profiles', 'delivers.item.product', 'delivers.item.selectedUnit.unit' ])
             ->where('so_created', 'like', '%'.$date.'%')->get();
 
         return $saleOrders;
