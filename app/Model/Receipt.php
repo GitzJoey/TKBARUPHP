@@ -103,11 +103,6 @@ class Receipt extends Model
         return $this->belongsTo('App\Model\Item', 'item_id');
     }
 
-    public function selected_unit()
-    {
-        return $this->belongsTo('App\Model\Unit', 'selected_unit_id');
-    }
-
     public static function boot()
     {
         parent::boot();

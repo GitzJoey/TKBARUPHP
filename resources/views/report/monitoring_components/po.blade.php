@@ -53,7 +53,7 @@
                   <tbody>
                     <tr v-for="receipt in purchaseOrder.receipts">
                       <td>@{{ receipt.item.product.name }}</td>
-                      <td>@{{ receipt.selectedUnit.name }} (@{{ receipt.selectedUnit.symbol }})</td>
+                      <td>@{{ receipt.item.selectedUnit.unit.name }} (@{{ receipt.item.selectedUnit.unit.symbol }})</td>
                       <td>@{{ receipt.brutto }}</td>
                       <td>@{{ receipt.netto }}</td>
                       <td>@{{ receipt.tare }}</td>
