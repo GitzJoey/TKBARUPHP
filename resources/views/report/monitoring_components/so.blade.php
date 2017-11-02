@@ -24,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          <template v-for="saleOrder in saleOrders">
+          <template v-for="(saleOrder, index) in saleOrders">
             <tr>
               <td class="text-center">@{{ saleOrder.code }}</td>
               <td class="text-center">@{{ saleOrder.soCreatedDate }}</td>
