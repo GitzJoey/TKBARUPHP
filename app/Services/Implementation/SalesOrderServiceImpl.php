@@ -42,7 +42,7 @@ class SalesOrderServiceImpl implements SalesOrderService
     {
         $this->paymentService = $paymentService;
     }
-    
+
     /**
      * Save(create) a newly sales order. The saved(created) sales order will be returned.
      * Multiple sales orders can be created at once and all of them will be saved to user session as an array by default.
@@ -456,7 +456,7 @@ class SalesOrderServiceImpl implements SalesOrderService
     {
         Log::info("[SalesOrderServiceImpl@getSOInOneDay]");
 
-       //Defensive copy, because still don't know immutability' 
+       //Defensive copy, because still don't know immutability'
        $dateCopy = $date->copy();
 
        $startOfDay = $dateCopy->startOfDay()->toDateTimeString();
@@ -467,7 +467,7 @@ class SalesOrderServiceImpl implements SalesOrderService
 
     /**
      * Get total amount of all sales created on given date
-     * 
+     *
      * @param Carbon $date target date
      * @return float
      */
@@ -485,7 +485,7 @@ class SalesOrderServiceImpl implements SalesOrderService
     }
 
     /**
-     * Get all sales orders that have not been delivered in more than 
+     * Get all sales orders that have not been delivered in more than
      * given threshold days since its shipping date.
      *
      * @param int $threshold threshold in day
@@ -510,7 +510,7 @@ class SalesOrderServiceImpl implements SalesOrderService
 
     /**
      * Get all created sales order from given date.
-     * 
+     *
      * @param Carbon
      * @return Collection
      */
@@ -548,6 +548,14 @@ class SalesOrderServiceImpl implements SalesOrderService
             });
 
         return $salesOrders;
+    }
+
+    public function searchSOByDate($date)
+    {
+        $saleOrders = SalesOrder::with([ 'customer.profiles', 'delivers.item.product', 'delivers.item.selectedUnit.unit' ])
+            ->where('so_created', 'like', '%'.$date.'%')->get();
+
+        return $saleOrders;
     }
 
     public function updateSOStatus(SalesOrder $soData, $amount)
