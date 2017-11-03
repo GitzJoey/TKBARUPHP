@@ -11,28 +11,33 @@
             </div>
 
             <div class="login-box-body">
-                <p class="login-box-msg">@lang('login.forgot.title')</p>
+                @if(!empty(session('status')))
+                    {{ session('status') }}
+                    <hr/>
+                    <a href="/login" class="btn btn-primary btn-block btn-flat">@lang('buttons.back_button')</a>
+                @else
+                    <p class="login-box-msg">@lang('login.forgot.title')</p>
 
-                <form role="form" method="post" action="{{ url('/password/email') }}">
-                    {{ csrf_field() }}
+                    <form role="form" method="post" action="{{ url('/password/email') }}">
+                        {{ csrf_field() }}
 
-                    <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                        <input id="email" name="email" value="{{ old('email') }}" type="email" class="form-control" placeholder="Email">
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                        @if ($errors->has('email'))
-                            <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
-                        @endif
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('buttons.send_button')</button>
+                        <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
+                            <input id="email" name="email" value="{{ old('email') }}" type="email" class="form-control" placeholder="Email">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            @if ($errors->has('email'))
+                                <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
+                            @endif
                         </div>
-                    </div>
-                </form>
-                <hr/>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('buttons.send_button')</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr/>
 
-                <a href="/login" class="text-center">@lang('buttons.back_button')</a>
-
+                    <a href="/login" class="text-center">@lang('buttons.back_button')</a>
+                @endif
             </div>
         </div>
 
