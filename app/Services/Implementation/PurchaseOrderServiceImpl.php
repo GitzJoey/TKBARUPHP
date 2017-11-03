@@ -134,7 +134,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
     public function revisePO(Request $request, $id)
     {
         DB::transaction(function() use ($id, $request) {
-                
+
             // Get current PO
             $currentPo = PurchaseOrder::with('items')->find($id);
 
@@ -315,7 +315,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
     }
 
      /**
-     * Get all purchase orders that have not been received in more than 
+     * Get all purchase orders that have not been received in more than
      * given threshold days since its shipping date.
      *
      * @param int $threshold threshold in day
@@ -344,6 +344,14 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
                 $query->where('first_name', 'like', '%'.$keyword.'%')
                     ->where('last_name', 'like', '%'.$keyword.'%');
             });
+
+        return $purchaseOrders;
+    }
+
+    public function searchPOByDate($date)
+    {
+        $purchaseOrders = PurchaseOrder::with([ 'supplier.profiles', 'receipts.item.product', 'receipts.item.selectedUnit.unit' ])
+            ->where('po_created', 'like', '%'.$date.'%')->get();
 
         return $purchaseOrders;
     }
