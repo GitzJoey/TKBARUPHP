@@ -156,12 +156,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('category/{id}', 'PriceController@editCategoryPrice')->name('db.price.category');
             Route::get('stock/{id}', 'PriceController@editStockPrice')->name('db.price.stock');
 
-            Route::group(['prefix' => 'price_level'], function () {
+            Route::group(['prefix' => 'price_level', 'middleware' => ['permission:create-pricelevel|read-pricelevel|update-pricelevel|delete-pricelevel|menu-pricelevel']], function () {
                 Route::get('', 'PriceLevelController@index')->name('db.price.price_level');
                 Route::get('show/{id}', 'PriceLevelController@show')->name('db.price.price_level.show');
                 Route::get('create', 'PriceLevelController@create')->name('db.price.price_level.create');
                 Route::get('edit/{id}', 'PriceLevelController@edit')->name('db.price.price_level.edit');
-                Route::delete('edit/{id}', 'PriceLevelController@delete')->name('db.price.price_level.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-pricelevel'], 'uses' => 'PriceLevelController@delete'])->name('db.price.price_level.delete');
             });
         });
 
@@ -330,7 +330,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'CustomerController@show')->name('db.master.customer.show');
                 Route::get('create', 'CustomerController@create')->name('db.master.customer.create');
                 Route::get('edit/{id}', 'CustomerController@edit')->name('db.master.customer.edit');
-                Route::delete('edit/{id}', 'CustomerController@delete')->name('db.master.customer.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-customer'], 'uses' => 'CustomerController@delete'])->name('db.master.customer.delete');
             });
 
             Route::group(['prefix' => 'supplier', 'middleware' => ['permission:create-supplier|read-supplier|update-supplier|delete-supplier|menu-supplier']], function () {
@@ -338,7 +338,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'SupplierController@show')->name('db.master.supplier.show');
                 Route::get('create', 'SupplierController@create')->name('db.master.supplier.create');
                 Route::get('edit/{id}', 'SupplierController@edit')->name('db.master.supplier.edit');
-                Route::delete('edit/{id}', 'SupplierController@delete')->name('db.master.supplier.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-supplier'], 'uses' => 'SupplierController@delete'])->name('db.master.supplier.delete');
             });
 
             Route::group(['prefix' => 'product', 'middleware' => ['permission:create-supplier|read-supplier|update-supplier|delete-supplier|menu-supplier']], function () {
@@ -346,7 +346,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'ProductController@show')->name('db.master.product.show');
                 Route::get('create', 'ProductController@create')->name('db.master.product.create');
                 Route::get('edit/{id}', 'ProductController@edit')->name('db.master.product.edit');
-                Route::delete('edit/{id}', 'ProductController@delete')->name('db.master.product.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-product'], 'uses' => 'ProductController@delete'])->name('db.master.product.delete');
             });
 
             Route::group(['prefix' => 'producttype', 'middleware' => ['permission:create-producttype|read-producttype|update-producttype|delete-producttype|menu-producttype']], function () {
@@ -354,7 +354,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'ProductTypeController@show')->name('db.master.producttype.show');
                 Route::get('create', 'ProductTypeController@create')->name('db.master.producttype.create');
                 Route::get('edit/{id}', 'ProductTypeController@edit')->name('db.master.producttype.edit');
-                Route::delete('edit/{id}', 'ProductTypeController@delete')->name('db.master.producttype.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-producttype'], 'uses' => 'ProductTypeController@delete'])->name('db.master.producttype.delete');
             });
 
             Route::group(['prefix' => 'warehouse', 'middleware' => ['permission:create-warehouse|read-warehouse|update-warehouse|delete-warehouse|menu-warehouse']], function () {
@@ -362,39 +362,39 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'WarehouseController@show')->name('db.master.warehouse.show');
                 Route::get('create', 'WarehouseController@create')->name('db.master.warehouse.create');
                 Route::get('edit/{id}', 'WarehouseController@edit')->name('db.master.warehouse.edit');
-                Route::delete('edit/{id}', 'WarehouseController@delete')->name('db.master.warehouse.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-warehouse'], 'uses' => 'WarehouseController@delete'])->name('db.master.warehouse.delete');
             });
 
-            Route::group(['prefix' => 'bank'], function () {
+            Route::group(['prefix' => 'bank', 'middleware' => ['permission:create-bank|read-bank|update-bank|delete-bank|menu-bank']], function () {
                 Route::get('', 'BankController@index')->name('db.master.bank');
                 Route::get('show/{id}', 'BankController@show')->name('db.master.bank.show');
                 Route::get('create', 'BankController@create')->name('db.master.bank.create');
                 Route::get('edit/{id}', 'BankController@edit')->name('db.master.bank.edit');
-                Route::delete('edit/{id}', 'BankController@delete')->name('db.master.bank.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-bank'], 'uses' => 'BankController@delete'])->name('db.master.bank.delete');
             });
 
-            Route::group(['prefix' => 'truck'], function () {
+            Route::group(['prefix' => 'truck', 'middleware' => ['permission:create-truck|read-truck|update-truck|delete-truck|menu-truck']], function () {
                 Route::get('', 'TruckController@index')->name('db.master.truck');
                 Route::get('show/{id}', 'TruckController@show')->name('db.master.truck.show');
                 Route::get('create', 'TruckController@create')->name('db.master.truck.create');
                 Route::get('edit/{id}', 'TruckController@edit')->name('db.master.truck.edit');
-                Route::delete('edit/{id}', 'TruckController@delete')->name('db.master.truck.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-truck'], 'uses' => 'TruckController@delete'])->name('db.master.truck.delete');
             });
 
-            Route::group(['prefix' => 'vendor'], function () {
+            Route::group(['prefix' => 'vendor', 'middleware' => ['permission:create-vendortrucking|read-vendortrucking|update-vendortrucking|delete-vendortrucking|menu-vendortrucking']], function () {
                 Route::get('trucking', 'VendorTruckingController@index')->name('db.master.vendor.trucking');
                 Route::get('trucking/show/{id}', 'VendorTruckingController@show')->name('db.master.vendor.trucking.show');
                 Route::get('trucking/create', 'VendorTruckingController@create')->name('db.master.vendor.trucking.create');
                 Route::get('trucking/edit/{id}', 'VendorTruckingController@edit')->name('db.master.vendor.trucking.edit');
-                Route::delete('trucking/edit/{id}', 'VendorTruckingController@delete')->name('db.master.vendor.trucking.delete');
+                Route::delete('trucking/edit/{id}', ['middleware' => ['permission:delete-vendortrucking'], 'uses' => 'VendorTruckingController@delete'])->name('db.master.vendor.trucking.delete');
             });
 
-            Route::group(['prefix' => 'expense_template'], function () {
+            Route::group(['prefix' => 'expense_template', 'middleware' => ['permission:create-expensetemplate|read-expensetemplate|update-expensetemplate|delete-expensetemplate|menu-expensetemplate']], function () {
                 Route::get('', 'ExpenseTemplateController@index')->name('db.master.expense_template');
                 Route::get('show/{id}', 'ExpenseTemplateController@show')->name('db.master.expense_template.show');
                 Route::get('create', 'ExpenseTemplateController@create')->name('db.master.expense_template.create');
                 Route::get('edit/{id}', 'ExpenseTemplateController@edit')->name('db.master.expense_template.edit');
-                Route::delete('edit/{id}', 'ExpenseTemplateController@delete')->name('db.master.expense_template.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-expensetemplate'], 'uses' => 'ExpenseTemplateController@delete'])->name('db.master.expense_template.delete');
             });
         });
 
@@ -404,7 +404,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'UserController@show')->name('db.admin.user.show');
                 Route::get('create', 'UserController@create')->name('db.admin.user.create');
                 Route::get('edit/{id}', 'UserController@edit')->name('db.admin.user.edit');
-                Route::delete('edit/{id}', 'UserController@delete')->name('db.admin.user.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-user'], 'uses' => 'UserController@delete'])->name('db.admin.user.delete');
             });
 
             Route::group(['prefix' => 'roles', 'middleware' => ['permission:create-role|read-role|update-role|delete-role|menu-role']], function () {
@@ -412,7 +412,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'RolesController@show')->name('db.admin.roles.show');
                 Route::get('create', 'RolesController@create')->name('db.admin.roles.create');
                 Route::get('edit/{id}', 'RolesController@edit')->name('db.admin.roles.edit');
-                Route::delete('edit/{id}', 'RolesController@delete')->name('db.admin.roles.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-role'], 'uses' => 'RolesController@delete'])->name('db.admin.roles.delete');
             });
 
             Route::group(['prefix' => 'store', 'middleware' => ['permission:create-store|read-store|update-store|delete-store|menu-store']], function () {
@@ -420,7 +420,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'StoreController@show')->name('db.admin.store.show');
                 Route::get('create', 'StoreController@create')->name('db.admin.store.create');
                 Route::get('edit/{id}', 'StoreController@edit')->name('db.admin.store.edit');
-                Route::delete('edit/{id}', 'StoreController@delete')->name('db.admin.store.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-store'], 'uses' => 'StoreController@delete'])->name('db.admin.store.delete');
             });
 
             Route::group(['prefix' => 'unit', 'middleware' => ['permission:create-unit|read-unit|update-unit|delete-unit|menu-unit']], function () {
@@ -428,7 +428,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'UnitController@show')->name('db.admin.unit.show');
                 Route::get('create', 'UnitController@create')->name('db.admin.unit.create');
                 Route::get('edit/{id}', 'UnitController@edit')->name('db.admin.unit.edit');
-                Route::delete('edit/{id}', 'UnitController@delete')->name('db.admin.unit.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-unit'], 'uses' => 'UnitController@delete'])->name('db.admin.unit.delete');
             });
 
             Route::group(['prefix' => 'currencies', 'middleware' => ['permission:create-currencies|read-currencies|update-currencies|delete-currencies|menu-currencies']], function(){
@@ -436,7 +436,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'CurrenciesController@show')->name('db.admin.currencies.show');
                 Route::get('create', 'CurrenciesController@create')->name('db.admin.currencies.create');
                 Route::get('edit/{id}', 'CurrenciesController@edit')->name('db.admin.currencies.edit');
-                Route::delete('edit/{id}', 'CurrenciesController@delete')->name('db.admin.currencies.delete');
+                Route::delete('edit/{id}', ['middleware' => ['permission:delete-currencies'], 'uses' => 'CurrenciesController@delete'])->name('db.admin.currencies.delete');
             });
 
             Route::group(['prefix' => 'phone', 'middleware' => ['permission:create-phoneprovider|read-phoneprovider|update-phoneprovider|delete-phoneprovider|menu-phoneprovider']], function () {
@@ -444,7 +444,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('provider/show/{id}', 'PhoneProviderController@show')->name('db.admin.phone_provider.show');
                 Route::get('provider/create', 'PhoneProviderController@create')->name('db.admin.phone_provider.create');
                 Route::get('provider/edit/{id}', 'PhoneProviderController@edit')->name('db.admin.phone_provider.edit');
-                Route::delete('provider/edit/{id}', 'PhoneProviderController@delete')->name('db.admin.phone_provider.delete');
+                Route::delete('provider/edit/{id}', ['middleware' => ['permission:delete-provider'], 'uses' => 'PhoneProviderController@delete'])->name('db.admin.phone_provider.delete');
             });
 
             Route::group(['prefix' => 'settings'], function () {
