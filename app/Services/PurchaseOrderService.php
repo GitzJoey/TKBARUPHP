@@ -108,4 +108,6 @@ interface PurchaseOrderService
     public function searchPO($keyword);
 
     public function updatePOStatus(PurchaseOrder $poData, $amount);
+
+    public function getLastPODates($date = null);
 }

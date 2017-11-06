@@ -34,7 +34,7 @@ class PurchaseOrderController extends Controller
     {
         $this->purchaseOrderService = $purchaseOrderService;
         $this->supplierService = $supplierService;
-        $this->middleware('auth', [ 'except' => [ 'getPOByDate', 'getDuePO', 'getUnreceivedPO' ] ]);
+        $this->middleware('auth', [ 'except' => [ 'getPOByDate', 'getDuePO', 'getUnreceivedPO', 'getListPODates' ] ]);
     }
 
     public function create()
@@ -156,5 +156,10 @@ class PurchaseOrderController extends Controller
             'date' => 'required|date'
         ]);
         return $this->purchaseOrderService->searchPOByDate($request->query('date'));
+    }
+
+    public function getListPODates(Request $request)
+    {
+        return $this->purchaseOrderService->getLastPODates();
     }
 }

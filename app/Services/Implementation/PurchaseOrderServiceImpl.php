@@ -364,4 +364,11 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
             $poData->save();
         }
     }
+
+    public function getLastPODates($date = null)
+    {
+        $po = PurchaseOrder::groupBy('po_date')->take(50)->get()->pluck('po_date');
+
+        return $po;
+    }
 }
