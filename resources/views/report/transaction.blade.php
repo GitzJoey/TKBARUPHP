@@ -43,19 +43,34 @@
                             <div class="form-group">
                                 <label for="inputPODate" class="col-sm-3 control-label">@lang('report.transaction.field.po_date')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="po_date" class="form-control" id="inputPODate" placeholder="PO Date">
+                                    <div class="input-group">
+                                        <input type='text' class="form-control" id="inputPODate" name="po_date"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPOShippingDate" class="col-sm-3 control-label">@lang('report.transaction.field.shipping_date')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="shipping_date" class="form-control" id="inputPOShippingDate" placeholder="Shipping Date">
+                                    <div class="input-group">
+                                        <input type="text" name="shipping_date" class="form-control" id="inputPOShippingDate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputReceiptDate" class="col-sm-3 control-label">@lang('report.transaction.field.receipt_date')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="shipping_date" class="form-control" id="inputReceiptDate" placeholder="Receipt Date">
+                                    <div class="input-group">
+                                        <input type="text" name="shipping_date" class="form-control" id="inputReceiptDate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -88,19 +103,34 @@
                             <div class="form-group">
                                 <label for="inputSODate" class="col-sm-3 control-label">@lang('report.transaction.field.so_date')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="so_date" class="form-control" id="inputSODate" placeholder="SO Date">
+                                    <div class="input-group">
+                                        <input type="text" name="so_date" class="form-control" id="inputSODate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputSOShippingDate" class="col-sm-3 control-label">@lang('report.transaction.field.shipping_date')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="shipping_date" class="form-control" id="inputSOShippingDate" placeholder="Shipping Date">
+                                    <div class="input-group">
+                                        <input type="text" name="shipping_date" class="form-control" id="inputSOShippingDate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputDeliverDate" class="col-sm-3 control-label">@lang('report.transaction.field.deliver_date')</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="deliver_date" class="form-control" id="inputDeliverDate" placeholder="Deliver Date">
+                                    <div class="input-group">
+                                        <input type="text" name="deliver_date" class="form-control" id="inputDeliverDate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -123,7 +153,12 @@
 @section('custom_js')
     <script type="application/javascript">
         $(document).ready(function() {
-
+            $('#inputPODate').datetimepicker().data("DateTimePicker").date(null);
+            $('#inputPOShippingDate').datetimepicker().data("DateTimePicker").date(null);
+            $('#inputReceiptDate').datetimepicker().data("DateTimePicker").date(null);
+            $('#inputSODate').datetimepicker().data("DateTimePicker").date(null);
+            $('#inputSOShippingDate').datetimepicker().data("DateTimePicker").date(null);
+            $('#inputDeliverDate').datetimepicker().data("DateTimePicker").date(null);
         });
     </script>
 @endsection
