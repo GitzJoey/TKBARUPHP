@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8">
+  <div class="col-xs-6 col-sm-4">
     <div class="form-group">
       <div class="input-group">
           <div class="input-group-addon">
