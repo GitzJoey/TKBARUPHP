@@ -260,7 +260,7 @@
                                                                     v-model="so.stock"
                                                                     v-on:change="insertStock(soIndex, so.stock)">
                                                                 <option v-bind:value="{id: ''}">@lang('labels.PLEASE_SELECT')</option>
-                                                                <option v-for="stock in stocksDDL" v-bind:value="stock">@{{ stock.product.name }}</option>
+                                                                <option v-for="stock in validStock(soIndex)" v-bind:value="stock">@{{ stock.product.name }} [@{{ stock.current_quantity }}]</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-1">
@@ -1128,9 +1128,11 @@
                         var stock_price = _.find(stock.today_prices, function (price) {
                             return price.price_level_id === vm.SOs[index].customer.price_level_id;
                         });
+
                         var latest_price = _.find(stock.latest_prices, function (price) {
                             return price.price_level_id === vm.SOs[index].customer.price_level_id;
                         });
+
                         var item_init_discount = [];
                         item_init_discount.push({
                             disc_percent : 0,
@@ -1205,6 +1207,14 @@
                 },
                 removeExpense: function (SOIndex, index) {
                     this.SOs[SOIndex].expenses.splice(index, 1);
+                },
+                validStock: function(soIndex) {
+                    var vm = this;
+
+                    if (vm.stocksDDL.length == 0) return [];
+                    if (vm.SOs[soIndex].warehouse.id == undefined || vm.SOs[soIndex].warehouse.id == '') return [];
+
+                    return _.filter(vm.stocksDDL, function(s) { return s.warehouse_id == vm.SOs[soIndex].warehouse.id });
                 }
             },
             computed: {

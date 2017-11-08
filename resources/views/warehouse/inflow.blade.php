@@ -28,7 +28,7 @@
                         v-model="selectedWarehouse"
                         v-on:change="getWarehousePOs(selectedWarehouse)">
                     <option value="">@lang('labels.PLEASE_SELECT')</option>
-                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.id">@{{ warehouse.name }}</option>
+                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.hId">@{{ warehouse.name }}</option>
                 </select>
             </div>
         </div>
@@ -88,9 +88,9 @@
                 },
                 loadWarehouse: function(w) {
                     if (w == undefined || w == null) return;
-                    var wh = _.find(this.warehouseDDL, function(wh) { return wh.id == w; });
-                    this.selectedWarehouse = wh.id;
-                    this.getWarehousePOs(wh.id);
+                    var wh = _.find(this.warehouseDDL, function(wh) { return wh.hId == w; });
+                    this.selectedWarehouse = wh.hId;
+                    this.getWarehousePOs(wh.hId);
                 }
             },
             mounted: function() {

@@ -208,7 +208,7 @@
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.warehouse.inflow.receipt', $po->hId()) }}' + '?api_token=' + $('#secapi').val(), new FormData($('#receiptForm')[0]))
                             .then(function(response) {
-                            window.location.href = '{{ route('db.warehouse.inflow.index', array('w' => $po->warehouse->id)) }}';
+                            window.location.href = '{{ route('db.warehouse.inflow.index', array('w' => $po->warehouse->hId)) }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
                             if (e.response.data.errors != undefined && Object.keys(e.response.data.errors).length > 0) {

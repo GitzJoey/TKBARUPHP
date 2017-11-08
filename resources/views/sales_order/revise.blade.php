@@ -214,7 +214,7 @@
                                                     class="form-control"
                                                     v-model="so.stock.id">
                                                 <option v-bind:value="defaultStock.id">@lang('labels.PLEASE_SELECT')</option>
-                                                <option v-for="stock in stocksDDL" v-bind:value="stock.id">@{{ stock.product.name }}</option>
+                                                <option v-for="stock in validStock()" v-bind:value="stock.id">@{{ stock.product.name }} [@{{ stock.current_quantity }}]</option>
                                             </select>
                                         </div>
                                         <div class="col-md-1">
@@ -980,6 +980,14 @@
                 },
                 removeExpense: function (index) {
                     this.so.expenses.splice(index, 1);
+                },
+                validStock: function() {
+                    var vm = this;
+
+                    if (vm.stocksDDL.length == 0) return [];
+                    if (vm.so.warehouse.id == undefined || vm.so.warehouse.id == '') return [];
+
+                    return _.filter(vm.stocksDDL, function(s) { return s.warehouse_id == vm.so.warehouse.id });
                 }
             },
             computed: {
