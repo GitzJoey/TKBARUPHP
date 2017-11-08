@@ -533,6 +533,12 @@ class PermissionTableSeeder extends Seeder
             [   'name' => 'report_monitoring-stockhistory',
                 'display_name' => '[Report Monitoring] Show Tab Stock History',
                 'description' => 'Allowed To See Stock History' ],
+            [   'name' => 'report_monitoring-po',
+                'display_name' => '[Report Monitoring] Show Tab PO',
+                'description' => 'Allowed To See Purchase Order' ],
+            [   'name' => 'report_monitoring-so',
+                'display_name' => '[Report Monitoring] Show Tab SO',
+                'description' => 'Allowed To See Sales Order' ],
             // Report -> TaxOutput
             [   'name' => 'menu-report_tax',
                 'display_name' => '[Report TaxOutput] Show Menu Report TaxOutput',

@@ -109,5 +109,5 @@ interface PurchaseOrderService
 
     public function updatePOStatus(PurchaseOrder $poData, $amount);
 
-    public function getLastPODates($date = null);
+    public function getLastPODates($limit);
 }

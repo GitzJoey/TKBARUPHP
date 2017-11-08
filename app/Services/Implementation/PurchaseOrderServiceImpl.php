@@ -365,9 +365,13 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
         }
     }
 
-    public function getLastPODates($date = null)
+    public function getLastPODates($limit = 50)
     {
-        $po = PurchaseOrder::groupBy('po_date')->take(50)->get()->pluck('po_date');
+        $po = PurchaseOrder::all()->groupBy(function ($po) {
+            return $po->po_created->format('d-M-y');
+        })->take($limit)->map(function($item) {
+            return $item->all()[0]->po_created->format('d/m/y');
+        });
 
         return $po;
     }
