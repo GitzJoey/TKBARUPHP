@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\InstallApp::class,
+        Commands\AppHelper::class,
     ];
 
     /**

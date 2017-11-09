@@ -11,6 +11,9 @@ return [
             'no_data_found' => 'Tidak ada data ditemukan',
         ],
     ],
+    'daily_log' => [
+        'button' => 'Catatan Harian'
+    ],
     'last_bank_upload' => [
         'title' => 'Upload Bank Terakhir',
         'label' => [

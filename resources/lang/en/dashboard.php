@@ -11,6 +11,9 @@ return [
             'no_data_found' => 'No data found',
         ],
     ],
+    'daily_log' => [
+        'button' => 'Daily Log'
+    ],
     'last_bank_upload' => [
         'title' => 'Last Bank Upload',
         'label' => [

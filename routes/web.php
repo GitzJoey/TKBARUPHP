@@ -461,6 +461,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::post('calendar/save', 'CalendarController@storeEvent')->name('db.user.calendar.store');
         });
 
+        Route::get('daily_log', ['middleware' => ['permission:daily_log'], 'uses' => 'DailyLogController@index'])->name('db.daily_log');
+
         Route::get('logs', ['middleware' => ['role:admin'], 'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index'])->name('db.logs');
 
         Route::get('search', 'SearchController@search')->name('db.search');

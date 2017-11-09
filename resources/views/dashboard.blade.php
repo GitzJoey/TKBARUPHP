@@ -59,6 +59,28 @@
     </div>
 
     <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="box box-default">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-10">
+                            @lang('labels.DATA_NOT_FOUND')
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-right">
+                                <a href="#" class="btn btn-xs btn-default">@lang('dashboard.daily_log.button')</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress" style="height:5px;">
+                    <div class="progress-bar" style="width: 20%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-lg-6 col-xs-6">
             <div class="box box-info">
                 <div class="box-header with-border">
