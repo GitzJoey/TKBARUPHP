@@ -14,10 +14,10 @@
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^4.0.0",
     "jquery": "^3.2.1",
-    "laravel-mix": "^1.5.0",
+    "laravel-mix": "^1.6.1",
     "lodash": "^4.17.4",
-    "vue": "^2.5.2",
-    "vue-template-compiler": "^2.5.2"
+    "vue": "^2.5.3",
+    "vue-template-compiler": "^2.5.3"
   },
   "dependencies": {
     "admin-lte": "^2.4.2",
@@ -28,7 +28,7 @@
     "bootstrap-sweetalert": "^1.0.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "^4.7.0",
-    "fullcalendar": "^3.6.1",
+    "fullcalendar": "^3.6.2",
     "highcharts": "^5.0.14",
     "icheck": "^1.0.2",
     "ionicons": "^3.0.0",
@@ -40,11 +40,11 @@
     "noty": "^2.4.1",
     "numeral": "^1.5.6",
     "parsleyjs": "^2.8.0",
-    "pdfjs-dist": "^1.9.645",
-    "select2": "^4.0.4",
+    "pdfjs-dist": "^1.10.97",
+    "select2": "^4.0.5",
     "tooltipster": "^4.2.5",
     "urijs": "^1.19.0",
-    "vee-validate": "^2.0.0-rc.19",
+    "vee-validate": "^2.0.0-rc.21",
     "vue-numeric": "^1.6.2"
   }
 }

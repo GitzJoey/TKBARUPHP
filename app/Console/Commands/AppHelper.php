@@ -13,7 +13,9 @@ use App\Model\Payment;
 use App\Model\Stock;
 use App\Model\StockIn;
 use App\Model\StockOut;
-use App\Model\Permission;
+use App\Model\Price;
+use App\Model\Receipt;
+use App\Model\Deliver;
 use App\Model\SalesOrder;
 use App\Model\PurchaseOrder;
 
@@ -60,6 +62,7 @@ class AppHelper extends Command
         $this->info('[1] Update Permission Table');
         $this->info('[2] Truncate All Transactions');
         $this->info('[3] Update Composer And NPM');
+        $this->info('[4] Language Sync');
 
         $choose = $this->ask('Choose Helper');
 
@@ -73,12 +76,15 @@ class AppHelper extends Command
             case 3:
                 $this->updateComposerAndNPM();
                 break;
+            case 3:
+                $this->updateComposerAndNPM();
+                break;
             default:
-                sleep(3);
-                $this->info('Done!');
                 break;
         }
 
+        sleep(3);
+        $this->info('Done!');
     }
 
     private function updatePermission()
@@ -103,46 +109,94 @@ class AppHelper extends Command
         $selective = $this->confirm('Selective Truncate?');
 
         $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $po->getTable())) {
+                PurchaseOrder::truncate();
+            }
+        } else {
+            PurchaseOrder::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $so = new SalesOrder();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $so->getTable())) {
+                SalesOrder::truncate();
+            }
+        } else {
+            SalesOrder::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $item = new Item();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $item->getTable())) {
+                Item::truncate();
+            }
+        } else {
+            Item::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $r = new Receipt();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $r->getTable())) {
+                Receipt::truncate();
+            }
+        } else {
+            Receipt::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $d = new Deliver();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $d->getTable())) {
+                Deliver::truncate();
+            }
+        } else {
+            Deliver::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $payment = new Payment();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $payment->getTable())) {
+                Payment::truncate();
+            }
+        } else {
+            Payment::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $stock = new Stock();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $stock->getTable())) {
+                Stock::truncate();
+            }
+        } else {
+            Stock::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $stockin = new StockIn();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $stockin->getTable())) {
+                StockIn::truncate();
+            }
+        } else {
+            StockIn::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $stockout = new StockOut();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $stockout->getTable())) {
+                StockOut::truncate();
+            }
+        } else {
+            StockOut::truncate();
+        }
 
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
-
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
-
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
-
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
-
-        $po = new PurchaseOrder();
-        $this->info('Starting Truncating Table '. $po->getTable());
+        $pr = new Price();
+        if ($selective) {
+            if ($this->confirm('Starting Truncating Table '. $pr->getTable())) {
+                Price::truncate();
+            }
+        } else {
+            Price::truncate();
+        }
     }
 
     private function updateComposerAndNPM()
@@ -160,5 +214,10 @@ class AppHelper extends Command
         } else {
             exec('npm run dev');
         }
+    }
+
+    private function langSync()
+    {
+        Artisan::call('langman:sync');
     }
 }
