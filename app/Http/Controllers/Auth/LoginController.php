@@ -6,6 +6,7 @@ use App\User;
 
 use App\Services\DatabaseService;
 
+use Carbon\Carbon;
 use Validator;
 use LaravelLocalization;
 use Illuminate\Http\Request;
@@ -75,5 +76,14 @@ class LoginController extends Controller
             $this->username() => 'required|string|is_allowed_login',
             'password' => 'required|string',
         ], [$this->username().'.is_allowed_login' => LaravelLocalization::getCurrentLocale() == 'en' ? 'Login Not Allowed':'Tidak Diperkenankan Login']);
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        if (Carbon::now()->diffInDays($user->updated_at) > 3) {
+            $user->updated_at = Carbon::now();
+            $user->api_token = str_random(60);
+            $user->save();
+        }
     }
 }

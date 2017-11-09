@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Session;
 use Validator;
@@ -74,6 +75,9 @@ class UserController extends Controller
 
             $usr->api_token = str_random(60);
 
+            $usr->created_at = Carbon::now();
+            $usr->updated_at = Carbon::now();
+
             $ud = new UserDetail();
             $ud->type = $data['user_type'];
             $ud->allow_login = boolval($data['allow_login']);
@@ -120,6 +124,8 @@ class UserController extends Controller
             }
 
             $usr->api_token = str_random(60);
+
+            $usr->updated_at = Carbon::now();
 
             $usr->save();
 

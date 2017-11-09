@@ -8,6 +8,7 @@ use App\Model\Role;
 use App\Model\UserDetail;
 
 use App;
+use Carbon\Carbon;
 use File;
 use Artisan;
 use Validator;
@@ -157,7 +158,9 @@ class InstallApp extends Command
             'name' => $userName,
             'email' => $userEmail,
             'password' => bcrypt($userPassword),
-            'api_token' => str_random(60)
+            'api_token' => str_random(60),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         if ($user) {

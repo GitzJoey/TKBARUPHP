@@ -8,6 +8,7 @@ use App\Model\Store;
 use App\Model\Lookup;
 use App\Model\UserDetail;
 
+use Carbon\Carbon;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -78,6 +79,9 @@ class RegisterController extends Controller
         $usr->password = bcrypt($data['password']);
 
         $usr->api_token = str_random(60);
+
+        $usr->created_at = Carbon::now();
+        $usr->updated_at = Carbon::now();
 
         if (!empty($data['store_name'])) {
             $id = $this->storeService->createDefaultStore($data['store_name']);
