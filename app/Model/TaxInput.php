@@ -50,6 +50,12 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\TaxInput whereYear($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TaxInput withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\TaxInput withoutTrashed()
+ * @property string $detail
+ * @property int $qty
+ * @property int $unit_price
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\TaxInput whereDetail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\TaxInput whereQty($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\TaxInput whereUnitPrice($value)
  */
 class TaxInput extends Model
 {
