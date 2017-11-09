@@ -2,6 +2,7 @@
 
 return [
     'dashboard' => 'Dashboard',
+    'daily_log' => 'Catatan Harian',
     'search' => 'Pencarian',
     'po.create' => 'Pembelian',
     'po.list' => 'Revisi Pembelian',

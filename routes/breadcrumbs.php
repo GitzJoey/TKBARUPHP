@@ -10,6 +10,11 @@ Breadcrumbs::register('dashboard', function ($breadcrumbs){
     $breadcrumbs->push(trans('breadcrumb.dashboard'), route('db'));
 });
 
+Breadcrumbs::register('daily_log', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.daily_log'), route('db.daily_log'));
+});
+
 Breadcrumbs::register('search', function ($breadcrumbs){
     $breadcrumbs->parent('dashboard');
     $breadcrumbs->push(trans('breadcrumb.search'), route('db.search'));

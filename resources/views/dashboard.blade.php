@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="text-right">
-                                <a href="#" class="btn btn-xs btn-default">@lang('dashboard.daily_log.button')</a>
+                                <a href="{{ route('db.daily_log') }}" class="btn btn-xs btn-default">@lang('dashboard.daily_log.button')</a>
                             </div>
                         </div>
                     </div>
