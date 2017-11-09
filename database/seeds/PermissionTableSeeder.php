@@ -605,7 +605,7 @@ class PermissionTableSeeder extends Seeder
         ];
 
         foreach ($permission as $key => $value) {
-            if (count(Permission::whereName($value['name'])) == 0) {
+            if (count(Permission::whereName($value['name'])->get()) == 0) {
                 Permission::create($value);
             }
         }
