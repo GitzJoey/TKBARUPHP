@@ -350,7 +350,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
 
     public function searchPOByDate($date)
     {
-        $purchaseOrders = PurchaseOrder::with([ 'supplier.profiles', 'receipts.item.product', 'receipts.item.selectedUnit.unit' ])
+        $purchaseOrders = PurchaseOrder::with([ 'items.product', 'supplier.profiles', 'receipts.item.product', 'receipts.item.selectedUnit.unit' ])
             ->where('po_created', 'like', '%'.$date.'%')->get();
 
         return $purchaseOrders;

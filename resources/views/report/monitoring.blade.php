@@ -93,6 +93,13 @@
                     toggle: function(prefix, index){
                         $( prefix+index ).toggleClass( 'collapse' );
                     },
+                    formatDecimal: function(value){
+                        value = parseFloat(value);
+
+                        if( value % 1 !== 0 )
+                            value = value.toFixed(2);
+                        return value;
+                    },
                     fetchStockHistories: function () {
                         let vm = this;
                         axios.get('{{ route('api.report.mon.stockhistory.type.index') }}', {}).then((res) => {

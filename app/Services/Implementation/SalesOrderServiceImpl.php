@@ -568,4 +568,17 @@ class SalesOrderServiceImpl implements SalesOrderService
             $soData->save();
         }
     }
+
+
+    public function getTop10Customer()
+    {
+        Log::info("[SalesOrderServiceImpl@getTop10Customer]");
+
+
+    }
+
+    public function getTop10WalkInCustomer()
+    {
+        Log::info("[SalesOrderServiceImpl@getTop10WalkInCustomer]");
+    }
 }

@@ -47,6 +47,8 @@ class SalesOrderController extends Controller
                 'getNumberOfCreatedSOPerDay',
                 'getTotalSOAmountPerDay',
                 'getSOByDate',
+                'getTop10Customer',
+                'getTop10WalkInCustomer'
             ]
         ]);
     }
@@ -222,5 +224,15 @@ class SalesOrderController extends Controller
             'date' => 'required|date'
         ]);
         return $this->salesOrderService->searchSOByDate($request->query('date'));
+    }
+
+    public function getTop10Customer()
+    {
+
+    }
+
+    public function getTop10WalkInCustomer()
+    {
+
     }
 }
