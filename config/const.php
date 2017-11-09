@@ -14,7 +14,7 @@ return [
 
     'RANDOMSTRINGRANGE' => [
         'ALPHABET' => ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-        'NUMERIC' => [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        'NUMERIC' => [3,4,7,9],
     ],
 
     'TRXCODE' => [
