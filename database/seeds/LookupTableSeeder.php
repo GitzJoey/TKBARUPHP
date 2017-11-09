@@ -345,16 +345,6 @@ class LookupTableSeeder extends Seeder
                 'category' => 'EMPSALARYACTION',
             ],
             [
-                'code' => 'GSTTYPE.OUTPUT',
-                'description' => 'PPN Keluaran',
-                'category' => 'GSTTYPE',
-            ],
-            [
-                'code' => 'GSTTYPE.INPUT',
-                'description' => 'PPN Masukan',
-                'category' => 'GSTTYPE',
-            ],
-            [
                 'code' => 'GSTTRANSACTIONTYPEOUTPUT.4',
                 'description' => '4 - Ekspor',
                 'category' => 'GSTTRANSACTIONTYPEOUTPUT',
@@ -531,7 +521,9 @@ class LookupTableSeeder extends Seeder
             ],
         ];
         foreach ($lookup as $key => $value) {
-            Lookup::create($value);
+            if (count(Lookup::whereCode($value['code'])->get()) == 0) {
+                Lookup::create($value);
+            }
         }
     }
 }
