@@ -67,7 +67,7 @@
                 <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
                     <label for="inputAmount" class="col-sm-2 control-label">@lang('accounting.cost.field.amount')</label>
                     <div class="col-sm-5">
-                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.cost.field.amount')" data-parsley-required="true" autonumeric>
+                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.cost.field.amount')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>
                 </div>

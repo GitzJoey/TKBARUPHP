@@ -46,7 +46,7 @@
                     <div class="form-group">
                         <label for="inputPagination" class="col-sm-3 control-label">@lang('settings.field.pagination')</label>
                         <div class="col-sm-2">
-                            <input id="inputPagination" name="pagination" type="text" class="form-control" placeholder="@lang('settings.field.pagination')" autonumeric>
+                            <input id="inputPagination" name="pagination" type="text" class="form-control" placeholder="@lang('settings.field.pagination')">
                         </div>
                     </div>
                     <div class="form-group">

@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label for="inputAmount" class="col-sm-2 control-label">@lang('accounting.capital.deposit.field.amount')</label>
                     <div class="col-sm-10">
-                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.capital.deposit.field.amount')" autonumeric>
+                        <input id="inputAmount" name="amount" type="text" class="form-control" placeholder="@lang('accounting.capital.deposit.field.amount')">
                     </div>
                 </div>
                 <div class="form-group">

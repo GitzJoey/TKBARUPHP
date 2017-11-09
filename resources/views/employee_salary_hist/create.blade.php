@@ -53,7 +53,7 @@
                     <label for="inputAddress" class="col-sm-2 control-label">@lang('employee_salary.field.amount')</label>
                     <div class="col-sm-10">
                         <input id="inputAddress" name="amount" type="text" class="form-control"
-                               placeholder="@lang('employee_salary.field.amount')" data-parsley-required="true" autonumeric>
+                               placeholder="@lang('employee_salary.field.amount')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>
                 </div>
@@ -203,7 +203,6 @@
     <script type="application/javascript" src="{{ mix('adminlte/parsley/id.extra.js') }}"></script>
     <script type="application/javascript" src="{{ mix('adminlte/parsley/en.js') }}"></script>
     <script type="application/javascript" src="{{ mix('adminlte/parsley/en.extra.js') }}"></script>
-    <script type="application/javascript" src="{{ mix('adminlte/js/autoNumeric-min.js') }}"></script>
 
     <script type="application/javascript">
         $(document).ready(function() {

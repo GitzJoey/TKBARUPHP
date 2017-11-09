@@ -20,7 +20,6 @@ mix.copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
     .copy('node_modules/parsleyjs/dist/i18n/id.js', 'public/adminlte/parsley')
     .copy('node_modules/parsleyjs/dist/i18n/en.extra.js', 'public/adminlte/parsley')
     .copy('node_modules/parsleyjs/dist/i18n/id.extra.js', 'public/adminlte/parsley')
-    .copy('node_modules/autonumeric/autoNumeric-min.js', 'public/adminlte/js')
     .copy('resources/assets/css/frontweb.css', 'public/frontweb/css');
 
 mix.sass('resources/assets/sass/adminlte.scss', 'public/adminlte/css');
