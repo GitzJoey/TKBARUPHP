@@ -29,7 +29,7 @@ class POCodeGenerator implements StringGenerator
     public static function generateWithLength($length)
     {
         $generatedString = '';
-        $characters = array_merge(Config::get('constants.RANDOMSTRINGRANGE.ALPHABET'), Config::get('constants.RANDOMSTRINGRANGE.NUMERIC'));
+        $characters = array_merge(Config::get('const.RANDOMSTRINGRANGE.ALPHABET'), Config::get('const.RANDOMSTRINGRANGE.NUMERIC'));
         $max = sizeof($characters) - 1;
 
         for ($i = 0; $i < $length; $i++) {
@@ -45,7 +45,7 @@ class POCodeGenerator implements StringGenerator
 
         do
         {
-            $temp_result = self::generateWithLength(Config::get('constants.TRXCODE.LENGTH'));
+            $temp_result = self::generateWithLength(Config::get('const.TRXCODE.LENGTH'));
             $po = PurchaseOrder::whereCode($temp_result);
             if (empty($po->first())) {
                 $result = $temp_result;

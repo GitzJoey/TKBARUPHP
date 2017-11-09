@@ -24,6 +24,7 @@ use App\Model\ProductUnit;
 use App\Services\PaymentService;
 
 use DB;
+use Config;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -208,9 +209,9 @@ class SalesOrderServiceImpl implements SalesOrderService
     {
         Log::info("[SalesOrderServiceImpl@cancelSO]");
 
-        $userSOs = session('userSOs');
+        $userSOs = session(Config::get('const.SESSION.USER_SO_LIST'));
         $userSOs->splice($index, 1);
-        session(['userSOs' => $userSOs]);
+        session([Config::get('const.SESSION.USER_SO_LIST') => $userSOs]);
     }
 
     /**

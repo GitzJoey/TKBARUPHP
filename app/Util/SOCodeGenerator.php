@@ -22,7 +22,7 @@ class SOCodeGenerator implements StringGenerator
     public static function generateWithLength($length)
     {
         $generatedString = '';
-        $characters = array_merge(Config::get('constants.RANDOMSTRINGRANGE.ALPHABET'), Config::get('constants.RANDOMSTRINGRANGE.NUMERIC'));
+        $characters = array_merge(Config::get('const.RANDOMSTRINGRANGE.ALPHABET'), Config::get('const.RANDOMSTRINGRANGE.NUMERIC'));
         $max = sizeof($characters) - 1;
 
         for ($i = 0; $i < $length; $i++) {
@@ -38,7 +38,7 @@ class SOCodeGenerator implements StringGenerator
 
         do
         {
-            $temp_result = self::generateWithLength(Config::get('constants.TRXCODE.LENGTH'));
+            $temp_result = self::generateWithLength(Config::get('const.TRXCODE.LENGTH'));
             $so = SalesOrder::whereCode($temp_result);
             if (empty($so->first())) {
                 $result = $temp_result;

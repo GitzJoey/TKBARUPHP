@@ -22,6 +22,7 @@ use App\Util\SOCodeGenerator;
 use App\Repos\LookupRepo;
 
 use App;
+use Config;
 use Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -67,7 +68,7 @@ class SalesOrderController extends Controller
         $soStatusDraft = Lookup::where('code', '=', 'SOSTATUS.D')->get(['description', 'code']);
         $soCode = SOCodeGenerator::generateCode();
 
-        $userSOs = session('userSOs', collect([]));
+        $userSOs = session(Config::get('const.SESSION.USER_SO_LIST'), collect([]));
 
         return view('sales_order.create', compact('soTypeDDL', 'customerTypeDDL', 'warehouseDDL', 'productDDL',
             'stocksDDL', 'vendorTruckingDDL', 'soCode', 'soStatusDraft', 'userSOs', 'expenseTypes','customerDDL'));
@@ -107,7 +108,7 @@ class SalesOrderController extends Controller
 
         Session::setId($request->input('sId'));
         Session::start();
-        Session::put(['userSOs' => collect($SOs)]);
+        Session::put([Config::get('const.SESSION.USER_SO_LIST') => collect($SOs)]);
         Session::save();
 
         return response()->json();
