@@ -109,12 +109,13 @@
                         },
                         dataType: 'application/json',
                         complete: function() {
-                            noty({
+                            new noty({
                                 text: 'Settings updated.',
                                 type: 'success',
+                                theme: 'relax',
                                 timeout: 3000,
                                 progressBar: true
-                            });
+                            }).show();
                         }
                     });
                 });
@@ -129,12 +130,13 @@
                         },
                         dataType: 'application/json',
                         complete: function() {
-                            noty({
+                            new noty({
                                 text: 'Notepad updated.',
                                 type: 'success',
+                                theme: 'relax',
                                 timeout: 3000,
                                 progressBar: true
-                            });
+                            }).show();
                         }
                     });
                 });

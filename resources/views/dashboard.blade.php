@@ -485,24 +485,28 @@
                     url: '{{ route('api.get.unfinish.store') }}',
                     type: "GET",
                     success: function (response) {
-                        $('#unfinishedSettingsNotice').noty({
+                        new noty({
                             text: 'Unfinish Store Detected',
-                            type: 'warning',
-                            timeout: 30000,
+                            container: '#unfinishedSettingsNotice',
+                            type: 'info',
+                            timeout: 10000,
+                            theme: 'relax',
                             progressBar: true
-                        });
+                        }).show();
                     }
                 });
                 $.ajax({
                     url: '{{ route('api.get.unfinish.warehouse') }}',
                     type: "GET",
                     success: function (response) {
-                        $('#unfinishedSettingsNotice').noty({
+                        new noty({
                             text: 'Unfinish Warehouse Detected',
-                            type: 'warning',
-                            timeout: 30000,
+                            container: '#unfinishedSettingsNotice',
+                            type: 'info',
+                            timeout: 10000,
+                            theme: 'relax',
                             progressBar: true
-                        });
+                        }).show();
                     }
                 });
             }

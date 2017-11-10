@@ -523,12 +523,13 @@
                             url: '{{ route('api.phone_provider.search') }}' + '/' + prefix,
                             type: "GET",
                             success: function (response) {
-                                noty({
+                                new noty({
                                     text: 'Provider: ' + response.provider,
                                     type: 'success',
+                                    theme: 'relax',
                                     timeout: 3000,
                                     progressBar: true
-                                });
+                                }).show();
                             },
                             error: function(err) {
                                 console.log(err);

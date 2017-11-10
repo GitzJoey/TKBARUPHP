@@ -858,13 +858,14 @@
                         axios.post('{{ route('api.post.db.so.create.savedraft') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#soForm')[0]))
                             .then(function(response) {
                                 $('#loader-container').fadeOut('slow');
-                                noty({
+                                new noty({
                                     layout: 'topRight',
                                     text: 'Draft Updated.',
                                     type: 'success',
+                                    theme: 'relax',
                                     timeout: 3000,
                                     progressBar: true
-                                });
+                                }).show();
                             });
                     }).catch(function() {
 
@@ -881,13 +882,14 @@
                                 } else {
                                     vm.SOs.splice(soIndex, 1);
                                     $('#loader-container').fadeOut('slow');
-                                    noty({
+                                    new noty({
                                         layout: 'topRight',
                                         text: 'Sales Order Created.',
                                         type: 'success',
+                                        theme: 'relax',
                                         timeout: 5000,
                                         progressBar: true
-                                    });
+                                    }).show();
                                 }
                             }).catch(function (e) {
                                 $('#loader-container').fadeOut('slow');

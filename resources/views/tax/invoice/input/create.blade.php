@@ -226,13 +226,14 @@
                                 window.location.href = '{{ route('db.tax.invoice.input.index') }}';
                             }).catch(function (error) {
                                 $('#loader-container').fadeOut('slow');
-                                noty({
+                                new noty({
                                     layout: 'topRight',
                                     text: error.response.data.message,
                                     type: 'error',
+                                    theme: 'relax',
                                     timeout: 5000,
                                     progressBar: true
-                                });
+                                }).show();
                             });
                     }).catch(function() {
 
