@@ -486,7 +486,7 @@
                     type: "GET",
                     success: function (response) {
                         new noty({
-                            text: 'Unfinish Store Detected',
+                            text: '<div class=\"text-center\"><strong>Unfinish Store Detected</strong></div>',
                             container: '#unfinishedSettingsNotice',
                             type: 'info',
                             timeout: 10000,
@@ -500,7 +500,7 @@
                     type: "GET",
                     success: function (response) {
                         new noty({
-                            text: 'Unfinish Warehouse Detected',
+                            text: '<div class=\"text-center\"><strong>Unfinish Warehouse Detected</strong></div>',
                             container: '#unfinishedSettingsNotice',
                             type: 'info',
                             timeout: 10000,
