@@ -12,7 +12,6 @@ window.VeeValidate = require('vee-validate');
 require('bootstrap');
 require('eonasdan-bootstrap-datetimepicker');
 require('icheck');
-require('jquery-slimscroll');
 require('jquery-gotop');
 require("moment-duration-format");
 require('select2/dist/js/select2.full');
