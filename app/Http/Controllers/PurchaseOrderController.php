@@ -21,6 +21,7 @@ use App\Services\PurchaseOrderService;
 
 use App\Util\POCodeGenerator;
 
+use Config;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -100,7 +101,7 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@index]');
 
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])
-            ->paginate(10);
+            ->paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('purchase_order.index', compact('purchaseOrders'));
     }

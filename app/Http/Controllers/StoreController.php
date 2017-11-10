@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Config;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use LaravelLocalization;
@@ -41,7 +42,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@index] ');
 
-        $store = Store::paginate(10);
+        $store = Store::paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('store.index', compact('store'));
     }

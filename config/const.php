@@ -21,6 +21,8 @@ return [
         'LENGTH' => 6,
     ],
 
+    'DEFAULT_PAGINATION' => 10,
+
     'LOOKUP_CATEGORY' => [
         'STATUS' => 'STATUS',
         'YESNOSELECT' => 'YESNOSELECT',

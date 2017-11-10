@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Config;
 use Exception;
 use Validator;
 use App\Http\Requests;
@@ -31,9 +32,10 @@ class ProductController extends Controller
         $product = [];
         if (!empty($req->query('p'))) {
             $param = $req->query('p');
-            $product = Product::where('name', 'like', "%$param%")->paginate(10);
+            $product = Product::where('name', 'like', "%$param%")
+                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
         } else {
-            $product = Product::paginate(10);
+            $product = Product::paginate(Config::get('const.DEFAULT_PAGINATION'));
         }
 
         return view('product.index')->with('productlist', $product);

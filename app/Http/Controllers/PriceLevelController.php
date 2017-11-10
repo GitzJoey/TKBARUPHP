@@ -13,6 +13,7 @@ use App\Model\PriceLevel;
 use App\Repos\LookupRepo;
 
 use Auth;
+use Config;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class PriceLevelController extends Controller
 
     public function index()
     {
-        $pricelevel = PriceLevel::paginate(10);
+        $pricelevel = PriceLevel::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('price_level.index')->with('pricelevel', $pricelevel);
     }
 

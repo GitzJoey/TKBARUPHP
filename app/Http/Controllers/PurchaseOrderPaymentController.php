@@ -12,6 +12,7 @@ use App\Services\PurchaseOrderService;
 
 use App\Repos\LookupRepo;
 
+use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -37,10 +38,11 @@ class PurchaseOrderPaymentController extends Controller
         if(!empty($request->query('c'))){
             $purchaseOrders = PurchaseOrder::with('supplier')
                 ->where('status', '=', 'POSTATUS.WP')
-                ->where('code', '=', $request->query('c'))->paginate(10);
+                ->where('code', '=', $request->query('c'))->paginate(Config::get('const.DEFAULT_PAGINATION'));
             $searchCode = $request->query('c');
         } else {
-            $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')->paginate(10);
+            $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')
+                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
         }
 
         $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Config;
 use Validator;
 use Illuminate\Http\Request;
 use App\Repos\LookupRepo;
@@ -19,7 +20,7 @@ class CurrenciesController extends Controller
 	}
 	public function index()
 	{
-		$currencieslist = Currencies::paginate(10);
+		$currencieslist = Currencies::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('currencies.index', compact('currencieslist'));
 	}
 	public function create()

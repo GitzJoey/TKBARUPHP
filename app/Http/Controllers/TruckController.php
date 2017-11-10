@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Config;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class TruckController extends Controller
 
     public function index()
     {
-        $trucklist = Truck::paginate(10);
+        $trucklist = Truck::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('truck.index', compact('trucklist'));
     }
 

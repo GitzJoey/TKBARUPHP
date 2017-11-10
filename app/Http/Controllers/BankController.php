@@ -15,13 +15,13 @@ use App\Model\BankBCACSVRecord;
 use App\Repos\LookupRepo;
 
 use Auth;
+use Config;
 use Storage;
 use Validator;
 use Carbon\Carbon;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Config;
 
 class BankController extends Controller
 {
@@ -32,7 +32,7 @@ class BankController extends Controller
 
     public function index()
     {
-        $bank = Bank::paginate(10);
+        $bank = Bank::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('bank.index')->with('banks', $bank);
     }
 

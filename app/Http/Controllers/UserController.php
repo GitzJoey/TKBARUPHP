@@ -8,17 +8,18 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use DB;
+use Config;
 use Session;
 use Validator;
-use App\Model\UserDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\User;
 use App\Model\Role;
 use App\Model\Store;
 use App\Model\Profile;
+use App\Model\UserDetail;
 use App\Repos\LookupRepo;
 
 class UserController extends Controller
@@ -30,7 +31,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = User::paginate(10);
+        $user = User::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('user.index', compact('user'));
     }
 

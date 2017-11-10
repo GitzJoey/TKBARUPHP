@@ -13,6 +13,7 @@ use App\Model\PhoneProvider;
 use App\Repos\LookupRepo;
 
 use DB;
+use Config;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -25,9 +26,7 @@ class PhoneProviderController extends Controller
 
     public function index()
     {
-        $p = PhonePrefix::get()->where('prefix', '=', '0812');
-
-        $phoneProvider = PhoneProvider::paginate(10);
+        $phoneProvider = PhoneProvider::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('phone_provider.index')->with('phoneProviderList', $phoneProvider);
     }
 

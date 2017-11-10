@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Config;
 use Illuminate\Http\Request;
 
 use App\Model\VendorTrucking;
@@ -24,7 +25,7 @@ class VendorTruckingController extends Controller
 
     public function index()
     {
-        $vt = VendorTrucking::paginate(10);
+        $vt = VendorTrucking::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('vendor_trucking.index', compact('vt'));
     }
 

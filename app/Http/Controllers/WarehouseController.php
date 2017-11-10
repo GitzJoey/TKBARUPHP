@@ -20,6 +20,7 @@ use App\Repos\LookupRepo;
 use App\Services\WarehouseService;
 
 use Auth;
+use Config;
 use Hashids;
 use Validator;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class WarehouseController extends Controller
 
     public function index()
     {
-        $warehouse = Warehouse::paginate(10);
+        $warehouse = Warehouse::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('warehouse.index', compact('warehouse'));
     }
 
@@ -155,9 +156,10 @@ class WarehouseController extends Controller
         $selectedWH = $req->query('w');
 
         if (!empty($selectedWH)) {
-            $stocks = Stock::with('stockOpnames')->where('warehouse_id', Hashids::decode($selectedWH))->paginate(10);
+            $stocks = Stock::with('stockOpnames')->where('warehouse_id', Hashids::decode($selectedWH))
+                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
         } else {
-            $stocks = Stock::with('stockOpnames')->paginate(10);
+            $stocks = Stock::with('stockOpnames')->paginate(Config::get('const.DEFAULT_PAGINATION'));
         }
 
         return view('warehouse.stockopname.index', compact('stocks', 'wh', 'selectedWH'));

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Config;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -28,12 +29,12 @@ class TruckMaintenanceController extends Controller
         $trucklist = [];
 
         if (empty($truckId)) {
-            $trucklist = TruckMaintenance::paginate(10);
+            $trucklist = TruckMaintenance::paginate(Config::get('const.DEFAULT_PAGINATION'));
         } else {
             if ($truckId != 'create') {
                 $trucklist = TruckMaintenance::whereHas('truck', function($t) use($truckId) {
                     $t->whereId(Hashids::decode($truckId));
-                })->paginate(10);
+                })->paginate(Config::get('const.DEFAULT_PAGINATION'));
             }
         }
 

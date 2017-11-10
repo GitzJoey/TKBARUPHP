@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Config;
 use Session;
 use Validator;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class RolesController extends Controller
 {
     public function index()
     {
-        $rolelist = Role::paginate(10);
+        $rolelist = Role::paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('roles.index', compact('rolelist'));
     }

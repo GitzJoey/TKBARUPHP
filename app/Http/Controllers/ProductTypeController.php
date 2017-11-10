@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Config;
 use Illuminate\Http\Request;
 
 use App\Repos\LookupRepo;
@@ -24,7 +25,7 @@ class ProductTypeController extends Controller
 
     public function index()
     {
-        $prodtype = ProductType::paginate(10);
+        $prodtype = ProductType::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('product_type.index', compact('prodtype'));
     }
 

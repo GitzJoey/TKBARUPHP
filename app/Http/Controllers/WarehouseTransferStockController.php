@@ -10,6 +10,7 @@ use App\Model\WarehouseSection;
 use App\Services\StockTransferService;
 
 use Auth;
+use Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class WarehouseTransferStockController extends Controller
     {
         Log::info('[WarehouseTransferStockController@stocktransfer]');
 
-        $stock_transfer = StockTransfer::paginate(10);
+        $stock_transfer = StockTransfer::paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('warehouse.transferstock.index', compact('stock_transfer'));
     }

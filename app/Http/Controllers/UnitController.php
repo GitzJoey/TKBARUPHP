@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Config;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,7 @@ class UnitController extends Controller
 
     public function index()
     {
-        $unitlist = Unit::paginate(10);
+        $unitlist = Unit::paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('unit.index')->with('unitlist', $unitlist);
     }

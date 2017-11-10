@@ -12,6 +12,7 @@ use App\Model\Employee;
 
 use App\Repos\LookupRepo;
 
+use Config;
 use Validator;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -25,7 +26,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $employeelist = Employee::paginate(10);
+        $employeelist = Employee::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('employee.index', compact('employeelist'));
     }
 

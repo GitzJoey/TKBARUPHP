@@ -6,6 +6,7 @@ use App\Model\ExpenseTemplate;
 
 use App\Repos\LookupRepo;
 
+use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -18,7 +19,7 @@ class ExpenseTemplateController extends Controller
 
     public function index()
     {
-        $expenseTemplates = ExpenseTemplate::paginate(10);
+        $expenseTemplates = ExpenseTemplate::paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('expense_template.index', compact('expenseTemplates'));
     }

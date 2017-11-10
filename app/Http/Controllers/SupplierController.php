@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Config;
 use Illuminate\Http\Request;
 
 use App\Model\Bank;
@@ -35,7 +36,7 @@ class SupplierController extends Controller
 
     public function index()
     {
-        $supplier = Supplier::paginate(10);
+        $supplier = Supplier::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('supplier.index', compact('supplier'));
     }
 

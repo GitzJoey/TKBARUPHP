@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Model\BankConsolidate;
+
+use Config;
 use Illuminate\Http\Request;
 
 class BankConsolidateController extends Controller
@@ -14,7 +16,7 @@ class BankConsolidateController extends Controller
 
     public function index()
     {
-        $bankConsolidates = BankConsolidate::paginate(10);
+        $bankConsolidates = BankConsolidate::paginate(Config::get('const.DEFAULT_PAGINATION'));
         return view('bank.consolidate.index', compact('bankConsolidates'));
     }
 }

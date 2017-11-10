@@ -22,6 +22,7 @@ use App\Services\CustomerService;
 
 use DB;
 use Auth;
+use Config;
 use phpDocumentor\Reflection\Types\Integer;
 use Validator;
 use App\Http\Requests;
@@ -57,9 +58,9 @@ class CustomerController extends Controller
                 ->orWhereHas('profiles', function ($query) use ($param) {
                     $query->where('first_name', 'like', "%$param%")
                         ->orWhere('last_name', 'like', "%$param%");
-                })->paginate(10);
+                })->paginate(Config::get('const.DEFAULT_PAGINATION'));
         } else {
-            $customer = Customer::paginate(10);
+            $customer = Customer::paginate(Config::get('const.DEFAULT_PAGINATION'));
         }
 
         return view('customer.index')->with('customer', $customer);
@@ -330,7 +331,7 @@ class CustomerController extends Controller
         $solist = SalesOrder::with('customer', 'items.delivers', 'items.product')
             ->where('customer_id', '=', $id)
             ->where('status', '=', 'SOSTATUS.WCC')
-            ->paginate(10);
+            ->paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('customer.confirmation.index', compact('solist'));
     }
@@ -368,7 +369,9 @@ class CustomerController extends Controller
 
     public function approvalIndex()
     {
-        $solist = SalesOrder::with('customer', 'items.product.productUnits.unit')->whereIn('status', ['SOSTATUS.WCC', 'SOSTATUS.WAPPV'])->paginate(10);
+        $solist = SalesOrder::with('customer', 'items.product.productUnits.unit')
+            ->whereIn('status', ['SOSTATUS.WCC', 'SOSTATUS.WAPPV'])
+            ->paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('customer.confirmation.approval', compact('solist'));
     }

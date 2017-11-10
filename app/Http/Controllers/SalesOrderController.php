@@ -119,7 +119,7 @@ class SalesOrderController extends Controller
         Log::info('[SalesOrderController@index]');
 
         $salesOrders = SalesOrder::with('customer')->whereIn('status', ['SOSTATUS.WD', 'SOSTATUS.WP'])
-            ->paginate(10);
+            ->paginate(Config::get('const.DEFAULT_PAGINATION'));
 
         return view('sales_order.index', compact('salesOrders'));
     }
