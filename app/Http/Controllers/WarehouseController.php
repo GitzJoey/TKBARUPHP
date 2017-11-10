@@ -156,10 +156,14 @@ class WarehouseController extends Controller
         $selectedWH = $req->query('w');
 
         if (!empty($selectedWH)) {
-            $stocks = Stock::with('stockOpnames')->where('warehouse_id', Hashids::decode($selectedWH))
+            $stocks = Stock::with('stockOpnames')
+                ->where('warehouse_id', Hashids::decode($selectedWH))
+                ->where('current_quantity', '>', 0)
                 ->paginate(Config::get('const.DEFAULT_PAGINATION'));
         } else {
-            $stocks = Stock::with('stockOpnames')->paginate(Config::get('const.DEFAULT_PAGINATION'));
+            $stocks = Stock::with('stockOpnames')
+                ->where('current_quantity', '>', 0)
+                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
         }
 
         return view('warehouse.stockopname.index', compact('stocks', 'wh', 'selectedWH'));
