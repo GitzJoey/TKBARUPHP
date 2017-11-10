@@ -122,6 +122,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <br>
                         <div class="form-group">
                             <div class="col-sm-9">
                                 <a href="{{ route('db.employee.employee_salary') }}" class="btn btn-default">@lang('buttons.back_button')</a>

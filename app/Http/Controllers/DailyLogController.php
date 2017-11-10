@@ -8,6 +8,8 @@
 
 namespace App\Http\Controllers;
 
+use Request;
+
 class DailyLogController extends Controller
 {
     public function __construct()
@@ -18,5 +20,15 @@ class DailyLogController extends Controller
     public function index()
     {
         return view('daily_log.index');
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function update(Request $request)
+    {
+
     }
 }

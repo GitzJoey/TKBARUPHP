@@ -22,6 +22,11 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
     Route::post('user/notepad/save', 'DashboardController@saveNotepad')->name('api.post.user.notepad.save');
 
     Route::group(['prefix' => 'dashboard'], function () {
+        Route::group(['prefix' => 'daily_log'], function() {
+            Route::post('create', 'DailyLogController@store')->name('api.post.db.daily_log.create');
+            Route::post('update/{id}', 'DailyLogController@update')->name('api.post.db.daily_log.update');
+        });
+
         Route::group(['prefix' => 'po'], function () {
             Route::post('create', 'PurchaseOrderController@store')->name('api.post.db.po.create');
             Route::post('revise/{id}', 'PurchaseOrderController@saveRevision')->name('api.post.db.po.revise');
