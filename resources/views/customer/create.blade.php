@@ -518,13 +518,13 @@
                     this.expenses.splice(idx, 1);
                 },
                 checkPrefix: function(prefix) {
-                    if (prefix.length > 3) {
+                    if (prefix.length == 4) {
                         $.ajax({
                             url: '{{ route('api.phone_provider.search') }}' + '/' + prefix,
                             type: "GET",
                             success: function (response) {
                                 new noty({
-                                    text: 'Provider: ' + response.provider,
+                                    text: 'Provider: ' + response.data.provider,
                                     type: 'success',
                                     theme: 'relax',
                                     timeout: 3000,

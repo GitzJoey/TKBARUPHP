@@ -124,11 +124,11 @@ class PhoneProviderController extends Controller
 
     public function getPhoneProviderByDigit($digit)
     {
-        $p = PhonePrefix::get();
+        $p = PhonePrefix::with('providers')->where('prefix', '=', $digit)->get()->first();
 
         return response()->json([
             'digit' => $digit,
-            'provider' => count($p) > 0 ? $p:''
+            'provider' => count($p) > 0 ? $p->name:''
         ], 200);
     }
 }
