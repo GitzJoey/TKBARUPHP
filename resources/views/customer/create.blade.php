@@ -200,7 +200,7 @@
                                                                         </td>
                                                                         <td v-bind:class="{ 'has-error':errors.has('tab_pic.number_' + phIdx) }">
                                                                             <input type="text" class="form-control" v-model="ph.number" v-bind:name="'profile_' + profileIdx + '_phone_number[]'"
-                                                                                   v-on:keyup="checkPrefix(ph.number)" v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('customer.create.table_phone.header.number') }} ' + (phIdx + 1)"
+                                                                                   v-on:keypress="checkPrefix(ph.number)" v-validate="'required|numeric'" v-bind:data-vv-as="'{{ trans('customer.create.table_phone.header.number') }} ' + (phIdx + 1)"
                                                                                    v-bind:data-vv-name="'number_' + phIdx" data-vv-scope="tab_pic">
                                                                         </td>
                                                                         <td><input type="text" class="form-control" v-bind:name="'profile_' + profileIdx + '_remarks[]'" v-model="ph.remarks"></td>
@@ -524,7 +524,7 @@
                             type: "GET",
                             success: function (response) {
                                 new noty({
-                                    text: 'Provider: ' + response.data.provider,
+                                    text: 'Provider ' + prefix + ': ' + response.provider,
                                     type: 'success',
                                     theme: 'relax',
                                     timeout: 3000,
@@ -532,7 +532,7 @@
                                 }).show();
                             },
                             error: function(err) {
-                                console.log(err);
+                                
                             }
                         });
                     }

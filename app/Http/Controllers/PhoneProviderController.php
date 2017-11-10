@@ -124,7 +124,9 @@ class PhoneProviderController extends Controller
 
     public function getPhoneProviderByDigit($digit)
     {
-        $p = PhonePrefix::with('providers')->where('prefix', '=', $digit)->get()->first();
+        $p = PhoneProvider::with('prefixes')->whereHas('prefixes', function ($prefix) use ($digit) {
+             $prefix->where('phone_prefixes', '=', $digit);
+        })->first();
 
         return response()->json([
             'digit' => $digit,
