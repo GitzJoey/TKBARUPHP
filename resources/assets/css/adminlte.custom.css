@@ -126,14 +126,6 @@ ol.breadcrumb {
     padding-bottom: 4px;
 }
 
-.control-sidebar-skin-bg-dark {
-    background-color: dimgray;
-}
-
-.control-sidebar-skin-bg-light {
-    background-color: transparent;
-}
-
 .content-header {
     position: relative;
     padding: 15px 15px 0 25px;
