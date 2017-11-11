@@ -20,7 +20,7 @@ class CurrenciesController extends Controller
 	}
 	public function index()
 	{
-		$currencieslist = Currencies::paginate(Config::get('const.DEFAULT_PAGINATION'));
+		$currencieslist = Currencies::paginate(Config::get('const.PAGINATION'));
         return view('currencies.index', compact('currencieslist'));
 	}
 	public function create()

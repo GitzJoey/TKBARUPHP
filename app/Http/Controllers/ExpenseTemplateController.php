@@ -19,7 +19,7 @@ class ExpenseTemplateController extends Controller
 
     public function index()
     {
-        $expenseTemplates = ExpenseTemplate::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $expenseTemplates = ExpenseTemplate::paginate(Config::get('const.PAGINATION'));
 
         return view('expense_template.index', compact('expenseTemplates'));
     }

@@ -26,7 +26,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $employeelist = Employee::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $employeelist = Employee::paginate(Config::get('const.PAGINATION'));
         return view('employee.index', compact('employeelist'));
     }
 

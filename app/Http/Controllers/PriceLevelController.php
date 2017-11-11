@@ -26,7 +26,7 @@ class PriceLevelController extends Controller
 
     public function index()
     {
-        $pricelevel = PriceLevel::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $pricelevel = PriceLevel::paginate(Config::get('const.PAGINATION'));
         return view('price_level.index')->with('pricelevel', $pricelevel);
     }
 

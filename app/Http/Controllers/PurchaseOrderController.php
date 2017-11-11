@@ -101,7 +101,7 @@ class PurchaseOrderController extends Controller
         Log::info('[PurchaseOrderController@index]');
 
         $purchaseOrders = PurchaseOrder::with('supplier')->whereIn('status', ['POSTATUS.WA', 'POSTATUS.WP'])
-            ->paginate(Config::get('const.DEFAULT_PAGINATION'));
+            ->paginate(Config::get('const.PAGINATION'));
 
         return view('purchase_order.index', compact('purchaseOrders'));
     }

@@ -38,11 +38,11 @@ class PurchaseOrderPaymentController extends Controller
         if(!empty($request->query('c'))){
             $purchaseOrders = PurchaseOrder::with('supplier')
                 ->where('status', '=', 'POSTATUS.WP')
-                ->where('code', '=', $request->query('c'))->paginate(Config::get('const.DEFAULT_PAGINATION'));
+                ->where('code', '=', $request->query('c'))->paginate(Config::get('const.PAGINATION'));
             $searchCode = $request->query('c');
         } else {
             $purchaseOrders = PurchaseOrder::with('supplier')->where('status', '=', 'POSTATUS.WP')
-                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
+                ->paginate(Config::get('const.PAGINATION'));
         }
 
         $poStatusDDL = LookupRepo::findByCategory('POSTATUS')->pluck('description', 'code');

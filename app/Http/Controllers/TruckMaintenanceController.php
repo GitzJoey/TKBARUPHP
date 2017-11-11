@@ -29,12 +29,12 @@ class TruckMaintenanceController extends Controller
         $trucklist = [];
 
         if (empty($truckId)) {
-            $trucklist = TruckMaintenance::paginate(Config::get('const.DEFAULT_PAGINATION'));
+            $trucklist = TruckMaintenance::paginate(Config::get('const.PAGINATION'));
         } else {
             if ($truckId != 'create') {
                 $trucklist = TruckMaintenance::whereHas('truck', function($t) use($truckId) {
                     $t->whereId(Hashids::decode($truckId));
-                })->paginate(Config::get('const.DEFAULT_PAGINATION'));
+                })->paginate(Config::get('const.PAGINATION'));
             }
         }
 

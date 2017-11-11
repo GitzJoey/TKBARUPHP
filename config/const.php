@@ -21,7 +21,18 @@ return [
         'LENGTH' => 6,
     ],
 
-    'DEFAULT_PAGINATION' => 10,
+    'DATETIME_FORMAT' => [
+        'DATE' => '',
+        'TIME' => '',
+        'DATETIME' => '',
+        'DATABASE_DATETIME' => '',
+    ],
+        
+    'DIGIT_GROUP_SEPARATOR' => '.',
+
+    'DECIMAL_SEPARATOR' => ',',
+    
+    'PAGINATION' => 10,
 
     'LOOKUP_CATEGORY' => [
         'STATUS' => 'STATUS',

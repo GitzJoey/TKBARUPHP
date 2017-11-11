@@ -31,7 +31,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = User::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $user = User::paginate(Config::get('const.PAGINATION'));
         return view('user.index', compact('user'));
     }
 

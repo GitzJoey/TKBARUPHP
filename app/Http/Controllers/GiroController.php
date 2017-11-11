@@ -30,7 +30,7 @@ class GiroController extends Controller
 
     public function index()
     {
-        $girolist = Giro::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $girolist = Giro::paginate(Config::get('const.PAGINATION'));
 
         return view('bank.giro.index', compact('girolist'));
     }

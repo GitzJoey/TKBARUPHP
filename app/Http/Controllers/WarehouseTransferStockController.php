@@ -37,7 +37,7 @@ class WarehouseTransferStockController extends Controller
     {
         Log::info('[WarehouseTransferStockController@stocktransfer]');
 
-        $stock_transfer = StockTransfer::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $stock_transfer = StockTransfer::paginate(Config::get('const.PAGINATION'));
 
         return view('warehouse.transferstock.index', compact('stock_transfer'));
     }

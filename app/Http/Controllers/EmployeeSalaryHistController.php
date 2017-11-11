@@ -34,7 +34,7 @@ class EmployeeSalaryHistController extends Controller
         $employeelist = Employee::select('employees.*', 'employee_salary_hist.*', 'employees.id as employee_id','employee_id as id')
             ->leftJoin('employee_salary_hist','employee_id','=','employees.id')
             ->whereRaw('is_last=1 or is_last is null')
-            ->paginate(Config::get('const.DEFAULT_PAGINATION'));
+            ->paginate(Config::get('const.PAGINATION'));
 
         $salaryCount = Employee::select('employees.*')
             ->whereRaw("employees.id in (select employee_id from employee_salary_hist 
@@ -51,7 +51,7 @@ class EmployeeSalaryHistController extends Controller
         $employee = Employee::find($id);
         $salaryList = EmployeeSalaryHist::where('employee_id',$employee->id)
                 ->orderBy('id','desc')
-                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
+                ->paginate(Config::get('const.PAGINATION'));
         return view('employee_salary_hist.show',compact('employee','salaryList'));
     }
 
@@ -67,7 +67,7 @@ class EmployeeSalaryHistController extends Controller
             $employee_id = Hashids::decode($r->get('e'))[0];
             $employee = Employee::find($employee_id);
             $salaryList = EmployeeSalaryHist::where('employee_id', $employee_id)->orderBy('id','desc')
-                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
+                ->paginate(Config::get('const.PAGINATION'));
         }
 
         return view('employee_salary_hist.create', compact('statusDDL','employeeList','employee_id','employee', 'salaryList'));

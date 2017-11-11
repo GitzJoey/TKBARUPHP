@@ -25,7 +25,7 @@ class ProductTypeController extends Controller
 
     public function index()
     {
-        $prodtype = ProductType::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $prodtype = ProductType::paginate(Config::get('const.PAGINATION'));
         return view('product_type.index', compact('prodtype'));
     }
 

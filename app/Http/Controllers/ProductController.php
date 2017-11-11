@@ -33,9 +33,9 @@ class ProductController extends Controller
         if (!empty($req->query('p'))) {
             $param = $req->query('p');
             $product = Product::where('name', 'like', "%$param%")
-                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
+                ->paginate(Config::get('const.PAGINATION'));
         } else {
-            $product = Product::paginate(Config::get('const.DEFAULT_PAGINATION'));
+            $product = Product::paginate(Config::get('const.PAGINATION'));
         }
 
         return view('product.index')->with('productlist', $product);

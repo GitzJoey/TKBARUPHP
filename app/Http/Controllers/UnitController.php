@@ -24,7 +24,7 @@ class UnitController extends Controller
 
     public function index()
     {
-        $unitlist = Unit::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $unitlist = Unit::paginate(Config::get('const.PAGINATION'));
 
         return view('unit.index')->with('unitlist', $unitlist);
     }

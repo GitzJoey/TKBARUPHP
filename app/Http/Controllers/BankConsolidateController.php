@@ -16,7 +16,7 @@ class BankConsolidateController extends Controller
 
     public function index()
     {
-        $bankConsolidates = BankConsolidate::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $bankConsolidates = BankConsolidate::paginate(Config::get('const.PAGINATION'));
         return view('bank.consolidate.index', compact('bankConsolidates'));
     }
 }

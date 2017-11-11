@@ -26,7 +26,7 @@ class PhoneProviderController extends Controller
 
     public function index()
     {
-        $phoneProvider = PhoneProvider::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $phoneProvider = PhoneProvider::paginate(Config::get('const.PAGINATION'));
         return view('phone_provider.index')->with('phoneProviderList', $phoneProvider);
     }
 

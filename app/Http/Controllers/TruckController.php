@@ -26,7 +26,7 @@ class TruckController extends Controller
 
     public function index()
     {
-        $trucklist = Truck::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $trucklist = Truck::paginate(Config::get('const.PAGINATION'));
         return view('truck.index', compact('trucklist'));
     }
 

@@ -21,7 +21,7 @@ class RolesController extends Controller
 {
     public function index()
     {
-        $rolelist = Role::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $rolelist = Role::paginate(Config::get('const.PAGINATION'));
 
         return view('roles.index', compact('rolelist'));
     }

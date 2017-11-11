@@ -32,7 +32,7 @@ class BankController extends Controller
 
     public function index()
     {
-        $bank = Bank::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $bank = Bank::paginate(Config::get('const.PAGINATION'));
         return view('bank.index')->with('banks', $bank);
     }
 

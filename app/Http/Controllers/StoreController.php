@@ -42,7 +42,7 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@index] ');
 
-        $store = Store::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $store = Store::paginate(Config::get('const.PAGINATION'));
 
         return view('store.index', compact('store'));
     }

@@ -25,7 +25,7 @@ class VendorTruckingController extends Controller
 
     public function index()
     {
-        $vt = VendorTrucking::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $vt = VendorTrucking::paginate(Config::get('const.PAGINATION'));
         return view('vendor_trucking.index', compact('vt'));
     }
 

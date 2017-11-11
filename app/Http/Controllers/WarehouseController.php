@@ -39,7 +39,7 @@ class WarehouseController extends Controller
 
     public function index()
     {
-        $warehouse = Warehouse::paginate(Config::get('const.DEFAULT_PAGINATION'));
+        $warehouse = Warehouse::paginate(Config::get('const.PAGINATION'));
         return view('warehouse.index', compact('warehouse'));
     }
 
@@ -159,11 +159,11 @@ class WarehouseController extends Controller
             $stocks = Stock::with('stockOpnames')
                 ->where('warehouse_id', Hashids::decode($selectedWH))
                 ->where('current_quantity', '>', 0)
-                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
+                ->paginate(Config::get('const.PAGINATION'));
         } else {
             $stocks = Stock::with('stockOpnames')
                 ->where('current_quantity', '>', 0)
-                ->paginate(Config::get('const.DEFAULT_PAGINATION'));
+                ->paginate(Config::get('const.PAGINATION'));
         }
 
         return view('warehouse.stockopname.index', compact('stocks', 'wh', 'selectedWH'));
