@@ -55,10 +55,10 @@
                     @foreach ($trucklist as $key => $truck)
                         <tr>
                             <td class="text-center">{{ $truck->truck->plate_number }}</td>
-                            <td class="text-center">{{ \Carbon\Carbon::parse($truck->maintenance_date)->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ \Carbon\Carbon::parse($truck->maintenance_date)->format(Auth::user()->store->date_format) }}</td>
                             <td>@lang('lookup.'.$truck->maintenance_type)</td>
-                            <td class="pull-right">{{ number_format($truck->cost, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
-                            <td class="text-center">{{ $truck->odometer }}</td>
+                            <td align="right">{{ number_format($truck->cost, Auth::user()->store->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
+                            <td class="text-center">{{ number_format($truck->odometer, 0, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
                             <td>{{ $truck->remarks }}</td>
                             <td class="text-center">
                                 <a class="btn btn-xs btn-primary" href="{{ route('db.truck.maintenance.edit', $truck->hId()) }}"><span class="fa fa-pencil fa-fw"></span></a>

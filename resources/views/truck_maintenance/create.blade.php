@@ -95,8 +95,11 @@
                         <div class="col-sm-10">
                             <vue-autonumeric id="inputOdometer" name="odometer" type="text" class="form-control" placeholder="@lang('truckmtc.field.odometer')"
                                              value="" v-model="maintenanceTruck.odometer" v-validate="'required'" data-vv-as="{{ trans('truckmtc.field.odometer') }}"
-                                             v-bind:options="{ digitGroupSeparator: ',',
+                                             v-bind:options="{
+                                                digitGroupSeparator: '{{ Auth::user()->store->thousand_separator }}',
+                                                decimalCharacter: '{{ Auth::user()->store->decimal_separator }}',
                                                 decimalPlaces: 0,
+                                                minimumValue: '0',
                                                 emptyInputBehavior: 'null' }"></vue-autonumeric>
                             <span v-show="errors.has('odometer')" class="help-block" v-cloak>@{{ errors.first('odometer') }}</span>
                         </div>
