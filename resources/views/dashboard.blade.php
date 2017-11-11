@@ -618,6 +618,7 @@
                             // get body data
                             this.last_opname = response.data;
                             if(this.last_opname.length > 0) {
+                                moment.locale('{{ LaravelLocalization::getCurrentLocale() }}');
                                 this.last_opname_humanize = moment(this.last_opname[0].opname_date).fromNow();
                                 this.last_opname = moment(this.last_opname[0].opname_date).format('YYYY-MM-DD');
                             }
@@ -648,6 +649,7 @@
                         this.last_bank_upload = response.data;
 
                         if(this.last_bank_upload.length > 0) {
+                            moment.locale('{{ LaravelLocalization::getCurrentLocale() }}');
                             this.last_bank_upload_humanize = moment(this.last_bank_upload[0].created_at).fromNow();
                             this.last_bank_upload = moment(this.last_bank_upload[0].created_at).format('YYYY-MM-DD');
                         }
