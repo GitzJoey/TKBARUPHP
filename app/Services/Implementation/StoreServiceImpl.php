@@ -100,8 +100,8 @@ class StoreServiceImpl implements StoreService
         $store->status = Config::get('lookups.STATUS.ACTIVE');
         $store->is_default = Config::get('lookups.YESNOSELECT.YES');
         $store->frontweb = Config::get('lookups.YESNOSELECT.YES');
-        $store->date_format = Config::get('const.DATETIME_FORMAT.DATE');
-        $store->time_format = Config::get('const.DATETIME_FORMAT.TIME');
+        $store->date_format = Config::get('const.DATETIME_FORMAT.PHP_DATE');
+        $store->time_format = Config::get('const.DATETIME_FORMAT.PHP_TIME');
         $store->thousand_separator = Config::get('const.DIGIT_GROUP_SEPARATOR');
         $store->decimal_separator = Config::get('const.DECIMAL_SEPARATOR');
         $store->decimal_digit = Config::get('const.DECIMAL_DIGIT');
