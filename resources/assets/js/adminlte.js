@@ -9,6 +9,7 @@ window.URI = require('urijs');
 window.Vue = require('vue');
 window.VeeValidate = require('vee-validate');
 
+require('admin-lte');
 require('bootstrap');
 require('eonasdan-bootstrap-datetimepicker');
 require('icheck');
@@ -16,7 +17,6 @@ require('jquery-gotop');
 require("moment-duration-format");
 require('select2/dist/js/select2.full');
 require('vee-validate/dist/locale/id');
-require('autonumeric');
-require('admin-lte');
+require('vue-autonumeric');
 
 require('./adminlte.custom');
