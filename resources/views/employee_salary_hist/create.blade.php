@@ -50,17 +50,17 @@
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
-                    <label for="inputAddress" class="col-sm-2 control-label">@lang('employee_salary.field.amount')</label>
+                    <label for="inputAmount" class="col-sm-2 control-label">@lang('employee_salary.field.amount')</label>
                     <div class="col-sm-10">
-                        <input id="inputAddress" name="amount" type="text" class="form-control"
+                        <input id="inputAmount" name="amount" type="text" class="form-control"
                                placeholder="@lang('employee_salary.field.amount')" data-parsley-required="true">
                         <span class="help-block">{{ $errors->has('amount') ? $errors->first('amount') : '' }}</span>
                     </div>
                 </div>
                 <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                    <label for="inputIcNumber" class="col-sm-2 control-label">@lang('employee_salary.field.description')</label>
+                    <label for="inputDescription" class="col-sm-2 control-label">@lang('employee_salary.field.description')</label>
                     <div class="col-sm-10">
-                    <textarea class="form-control"id="inputIcNumber" name="description" type="text" class="form-control"
+                    <textarea class="form-control"id="inputDescription" name="description" type="text" class="form-control"
                               placeholder="@lang('employee_salary.field.description')"></textarea>
                         <span class="help-block">{{ $errors->has('description') ? $errors->first('description') : '' }}</span>
                     </div>
