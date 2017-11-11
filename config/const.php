@@ -22,16 +22,21 @@ return [
     ],
 
     'DATETIME_FORMAT' => [
-        'DATE' => '',
-        'TIME' => '',
-        'DATETIME' => '',
-        'DATABASE_DATETIME' => '',
+        'PHP_DATE' => 'd M Y',
+        'PHP_TIME' => 'G:H A',
+        'PHP_DATETIME' => 'd M Y G:H A',
+        'JS_DATE' => 'DD MMM YYYY',
+        'JS_TIME' => 'HH:mm A',
+        'JS_DATETIME' => 'DD MMM YYYY HH:mm A',
+        'DATABASE_DATETIME' => 'Y-m-d H:i:s',
     ],
         
-    'DIGIT_GROUP_SEPARATOR' => '.',
+    'DIGIT_GROUP_SEPARATOR' => ',',
 
-    'DECIMAL_SEPARATOR' => ',',
-    
+    'DECIMAL_SEPARATOR' => '.',
+
+    'DECIMAL_DIGIT' => 2,
+
     'PAGINATION' => 10,
 
     'LOOKUP_CATEGORY' => [

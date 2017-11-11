@@ -47,7 +47,7 @@
                             <td class="text-center">{{ $employee->name }}</td>
                             <td class="text-center">{{ $employee->address }}</td>
                             <td class="text-center">{{ $employee->ic_number }}</td>
-                            <td class="text-center">{{ $employee->start_date}}</td>
+                            <td class="text-center">{{ date(Config::get('const.DATETIME_FORMAT.PHP_DATE'), strtotime($employee->start_date)) }}</td>
                             <td class="text-center">
                                 @if($employee->freelace)
                                     <i class="fa fa-check-square-o fa-fw"></i>

@@ -11,6 +11,7 @@ namespace App\Services\Implementation;
 use App\Model\Store;
 use App\Model\Lookup;
 
+use Config;
 use App\Services\StoreService;
 use Illuminate\Support\Facades\Log;
 use Doctrine\Common\Collections\Collection;
@@ -95,8 +96,15 @@ class StoreServiceImpl implements StoreService
     {
         $store = new Store();
         $store->name = $storeName;
-        $store->status = 'STATUS.ACTIVE';
-        $store->is_default = 'YESNOSELECT.YES';
+        $store->tax_id = '0000000000';
+        $store->status = Config::get('lookups.STATUS.ACTIVE');
+        $store->is_default = Config::get('lookups.YESNOSELECT.YES');
+        $store->frontweb = Config::get('lookups.YESNOSELECT.YES');
+        $store->date_format = Config::get('const.DATETIME_FORMAT.DATE');
+        $store->time_format = Config::get('const.DATETIME_FORMAT.TIME');
+        $store->thousand_separator = Config::get('const.DIGIT_GROUP_SEPARATOR');
+        $store->decimal_separator = Config::get('const.DECIMAL_SEPARATOR');
+        $store->decimal_digit = Config::get('const.DECIMAL_DIGIT');
 
         $store->save();
 

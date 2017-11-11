@@ -8,10 +8,11 @@ use App\Model\Role;
 use App\Model\UserDetail;
 
 use App;
-use Carbon\Carbon;
 use File;
+use Config;
 use Artisan;
 use Validator;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class InstallApp extends Command
@@ -140,14 +141,16 @@ class InstallApp extends Command
 
         // create entity
         $store = Store::create([
-            'name'          => $storeName,
-            'address'       => '',
-            'phone_num'     => '',
-            'fax_num'       => '',
-            'tax_id'        => '0000000000',
-            'status'        => 'STATUS.ACTIVE',
-            'is_default'    => 'YESNOSELECT.YES',
-            'remarks'       => ''
+            'name'                  => $storeName,
+            'tax_id'                => '0000000000',
+            'status'                => Config::get('lookups.STATUS.ACTIVE'),
+            'is_default'            => Config::get('lookups.YESNOSELECT.YES'),
+            'frontweb'              => Config::get('lookups.YESNOSELECT.YES'),
+            'date_format'           => Config::get('const.DATETIME_FORMAT.DATE'),
+            'time_format'           => Config::get('const.DATETIME_FORMAT.TIME'),
+            'thousand_separator'    => Config::get('const.DIGIT_GROUP_SEPARATOR'),
+            'decimal_separator'     => Config::get('const.DECIMAL_SEPARATOR'),
+            'decimal_digit'         => Config::get('const.DECIMAL_DIGIT'),
         ]);
 
         if ($store) {

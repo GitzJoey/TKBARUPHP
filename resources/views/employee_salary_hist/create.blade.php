@@ -115,7 +115,7 @@
                                     <label for="inputStartDate" class="col-sm-3 control-label">@lang('employee.field.start_date')</label>
                                     <div class="col-sm-5">
                                         <label class="control-label">
-                                            <span class="control-label-normal">{{ $employee->start_date }}</span>
+                                            <span class="control-label-normal">{{ date(Config::get('const.DATETIME_FORMAT.PHP_DATE'), strtotime($employee->start_date)) }}</span>
                                         </label>
                                     </div>
                                 </div>
