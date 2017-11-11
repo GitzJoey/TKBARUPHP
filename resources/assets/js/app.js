@@ -15,8 +15,6 @@
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const VueNumeric = require('vue-numeric');
-
 Vue.use(VeeValidate, {
     delay: 100,
     locale: $('html').attr('lang')
