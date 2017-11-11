@@ -22,8 +22,6 @@ Vue.use(VeeValidate, {
     locale: $('html').attr('lang')
 });
 
-Vue.use(VueNumeric);
-
 //Vue.component('example', require('./components/Example.vue'));
 Vue.component('vue-icheck', require('./components/vue-icheck.vue'));
 Vue.component('vue-datetimepicker', require('./components/vue-datetimepicker.vue'));

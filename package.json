@@ -20,9 +20,9 @@
     "vue-template-compiler": "^2.5.3"
   },
   "dependencies": {
-    "accounting-js": "^1.1.1",
     "admin-lte": "^2.4.2",
     "animate.css": "^3.5.2",
+    "autonumeric": "^4.1.0-beta.16",
     "bootstrap": "^3.3.7",
     "bootstrap-fileinput": "^4.4.5",
     "bootstrap-sweetalert": "^1.0.1",
@@ -43,6 +43,6 @@
     "tooltipster": "^4.2.5",
     "urijs": "^1.19.0",
     "vee-validate": "^2.0.0-rc.21",
-    "vue-numeric": "^2.2.6"
+    "vue-autonumeric": "^1.0.2"
   }
 }

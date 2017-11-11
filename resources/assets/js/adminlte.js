@@ -16,7 +16,7 @@ require('jquery-gotop');
 require("moment-duration-format");
 require('select2/dist/js/select2.full');
 require('vee-validate/dist/locale/id');
-require('accounting-js');
+require('autonumeric');
 require('admin-lte');
 
 require('./adminlte.custom');
