@@ -58,6 +58,7 @@
         </div>
 
         <input type="hidden" id="secapi" value="{{ Auth::user()->api_token }}">
+        <input type="hidden" id="momentFormat" value="{{ \App\Util\PHP2Moment::convertToMoment(Auth::user()->store->dateTimeFormat) }}">
 
         <script type="application/javascript" src="{{ mix('adminlte/js/adminlte.js') }}"></script>
         <script type="application/javascript" src="{{ mix('adminlte/js/app.js') }}"></script>

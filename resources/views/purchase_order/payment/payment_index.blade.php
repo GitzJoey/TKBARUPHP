@@ -61,7 +61,7 @@
                                         {{ $po->walk_in_supplier }}
                                     @endif
                                 </td>
-                                <td class="text-center">{{ date('d-m-Y', strtotime($po->po_created)) }}</td>
+                                <td class="text-center">{{ date(Auth::user()->store->dateTimeFormat, strtotime($po->po_created)) }}</td>
                                 <td class="text-right">{{ number_format($po->totalAmount(), 0) }}</td>
                                 <td class="text-right">{{ number_format($po->totalAmountPaid(), 0) }}</td>
                                 <td class="text-right">{{ number_format($po->totalAmount() - $po->totalAmountPaid(), 0) }}</td>

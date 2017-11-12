@@ -59,7 +59,7 @@
                                         {{ $so->walk_in_cust }}
                                     @endif
                                 </td>
-                                <td class="text-center">{{ date('d-m-Y', strtotime($so->so_created)) }}</td>
+                                <td class="text-center">{{ date(Auth::user()->store->dateTimeFormat, strtotime($so->so_created)) }}</td>
                                 <td class="text-right">{{ number_format($so->totalAmount(), 0) }}</td>
                                 <td class="text-right">{{ number_format($so->totalAmountPaid(), 0) }}</td>
                                 <td class="text-right">{{ number_format($so->totalAmount() - $so->totalAmountPaid(), 0) }}</td>

@@ -25,9 +25,6 @@ return [
         'PHP_DATE' => 'd M Y',
         'PHP_TIME' => 'G:H A',
         'PHP_DATETIME' => 'd M Y G:H A',
-        'JS_DATE' => 'DD MMM YYYY',
-        'JS_TIME' => 'HH:mm A',
-        'JS_DATETIME' => 'DD MMM YYYY HH:mm A',
         'DATABASE_DATETIME' => 'Y-m-d H:i:s',
     ],
         

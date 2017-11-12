@@ -44,7 +44,7 @@
                         @foreach ($salesOrders as $key => $so)
                             <tr>
                                 <td class="text-center">{{ $so->code }}</td>
-                                <td class="text-center">{{ $so->so_created }}</td>
+                                <td class="text-center">{{ date(Auth::user()->store->dateTimeFormat, strtotime($so->so_created)) }}</td>
                                 <td class="text-center">
                                     @if($so->customer_type == 'CUSTOMERTYPE.R')
                                         {{ $so->customer->name }}
@@ -52,7 +52,7 @@
                                         {{ $so->walk_in_cust }}
                                     @endif
                                 </td>
-                                <td class="text-center">{{ $so->shipping_date }}</td>
+                                <td class="text-center">{{ date(Auth::user()->store->dateTimeFormat, strtotime($so->shipping_date)) }}</td>
                                 <td class="text-center">@lang('lookup.'.$so->status)</td>
                                 <td class="text-center" width="10%">
                                     <a class="btn btn-xs btn-primary" href="{{ route('db.so.revise', $so->hId()) }}" title="revise"><span class="fa fa-pencil fa-fw"></span></a>

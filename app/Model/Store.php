@@ -9,6 +9,7 @@
 namespace App\Model;
 
 use Auth;
+use Config;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -146,7 +147,7 @@ class Store extends Model
     public function getDateFormatAttribute()
     {
         if (is_null($this->attributes['date_format']) || empty($this->attributes['date_format'])) {
-            return 'DD-MM-YYYY';
+            return Config::get('const.DATETIME_FORMAT.PHP_DATE');
         } else {
             return $this->attributes['date_format'];
         }
@@ -155,9 +156,9 @@ class Store extends Model
     public function getTimeFormatAttribute()
     {
         if (is_null($this->attributes['time_format']) || empty($this->attributes['time_format'])) {
-            return 'hh:mm A';
+            return Config::get('const.DATETIME_FORMAT.PHP_TIME');
         } else {
-            return $this->attributes['date_format'];
+            return $this->attributes['time_format'];
         }
     }
 
