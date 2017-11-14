@@ -152,7 +152,7 @@
                     <div class="form-group">
                         <label for="inputButton" class="col-sm-2 control-label"></label>
                         <div class="col-sm-10">
-                            <a href="{{ route('db.master.product') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('db.master.product') }}" class="btn btn-default">@lang('buttons.back_button')</a>
                         </div>
                     </div>
                 </div>

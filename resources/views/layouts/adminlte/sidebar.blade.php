@@ -165,7 +165,7 @@
                     </a>
                     <ul class="treeview-menu">
                         @if(Laratrust::can('menu-todayprice'))
-                            <li><a href="{{ route('db.price.today') }}"><i class="fa fa-barcode fa-fw"></i>&nbsp;@lang('menu.item.price_todayprice')</a></li>
+                            <li class="{{ active_class(Active::checkRoutePattern('db.price.today') || Active::checkRoutePattern('db.price.today.*')) }}"><a href="{{ route('db.price.today') }}"><i class="fa fa-barcode fa-fw"></i>&nbsp;@lang('menu.item.price_todayprice')</a></li>
                         @endif
                         @if(Laratrust::can('menu-pricelevel'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.price.price_level') || Active::checkRoutePattern('db.price.price_level.*')) }}"><a href="{{ route('db.price.price_level') }}"><i class="fa  fa-table fa-fw"></i>&nbsp;@lang('menu.item.price_pricelevel')</a></li>

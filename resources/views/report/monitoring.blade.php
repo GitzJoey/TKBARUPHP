@@ -136,7 +136,9 @@
                             enabledDateLists.push(element);
                         });
 
-                        $('#datetimepicker_po').data('DateTimePicker').enabledDates(enabledDateLists);
+                        enabledDateLists.count > 0 ?
+                            $('#datetimepicker_po').data('DateTimePicker').enabledDates(enabledDateLists):
+                            $('#datetimepicker_po').data("DateTimePicker").minDate(moment()).maxDate(moment()).disabledDates([moment()]);
                     }
                 });
             });
