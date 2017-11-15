@@ -208,7 +208,7 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-md-11">
+                                <div class="col-md-11 col-xs-12">
                                     <select id="inputProduct" class="form-control" v-model="po.product" v-on:change="insertItem(po.product)">
                                         <option v-bind:value="defaultProduct">@lang('labels.PLEASE_SELECT')</option>
                                         <template v-if="po.supplier_type.code == 'SUPPLIERTYPE.R'">
@@ -219,7 +219,7 @@
                                         </template>
                                     </select>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-1 hidden-xs">
                                     <button type="button" class="btn btn-primary btn-md" v-on:click="insertItem(po.product)">
                                         <span class="fa fa-plus"/>
                                     </button>
@@ -228,7 +228,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table id="itemsListTable" class="table table-bordered table-hover">
+                                    <table id="itemsListTable" class="table table-responsive table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th width="25%">@lang('purchase_order.create.table.item.header.product_name')</th>

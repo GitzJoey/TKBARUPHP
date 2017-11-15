@@ -81,7 +81,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-6 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.number_of_created_so.title')</h3>
@@ -98,7 +98,7 @@
                 <div class="box-footer clearfix"></div>
             </div>
         </div>
-        <div class="col-lg-6 col-xs-6">
+        <div class="col-lg-6 col-xs-12">
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.so_total_amount.title')</h3>
@@ -118,7 +118,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6 col-xs-6" id="due-purchase-order" v-cloak>
+        <div class="col-lg-6 col-xs-12" id="due-purchase-order" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.due_purchase_orders.title') - @{{ due_payment_day }}</h3>
@@ -162,7 +162,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-xs-6" id="due-sales-order" v-cloak>
+        <div class="col-lg-6 col-xs-12" id="due-sales-order" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.due_sales_orders.title') - @{{ due_payment_day }}</h3>
@@ -208,7 +208,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4 col-xs-6" id="almost-due-giro" v-cloak>
+        <div class="col-lg-4 col-xs-12" id="almost-due-giro" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.almost_due_giro.title')</h3>
@@ -236,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-6" id="upcoming-events" v-cloak>
+        <div class="col-lg-4 col-xs-12" id="upcoming-events" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.upcoming_events.title')</h3>
@@ -261,7 +261,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-6" id="passive-customers" v-cloak>
+        <div class="col-lg-4 col-xs-12" id="passive-customers" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.passive_customers.title')</h3>
@@ -292,7 +292,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6 col-xs-6" id="unreceived-purchase-orders" v-cloak>
+        <div class="col-lg-6 col-xs-12" id="unreceived-purchase-orders" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.unreceived_po.title')</h3>
@@ -322,7 +322,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-xs-6" id="undelivered-sales-orders" v-cloak>
+        <div class="col-lg-6 col-xs-12" id="undelivered-sales-orders" v-cloak>
             <div class="box box-info">
                 <div class="box-header with-border">
                     <h3 class="box-title">@lang('dashboard.undelivered_so.title')</h3>
