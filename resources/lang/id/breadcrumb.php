@@ -120,4 +120,5 @@ return [
     'tax.invoice.input.create' => 'Tambah e-Faktur Masukan',
     'tax.invoice.input.show' => 'Tampilkan e-Faktur Masukan',
     'tax.invoice.input.edit' => 'Ubah e-Faktur Masukan',
+    'tax.generate' => 'Generate CSV',
 ];

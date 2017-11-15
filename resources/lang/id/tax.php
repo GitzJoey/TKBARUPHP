@@ -117,7 +117,7 @@ return [
     'generate' => [
         'title' => 'Generate',
         'page_title' => 'Generate',
-        'page_title_desc' => 'Halaman Generate',
+        'page_title_desc' => '',
         'header' => [
             'title' => 'Generate'
         ],

@@ -120,4 +120,5 @@ return [
     'tax.invoice.input.create' => 'Create e-Invoice Input',
     'tax.invoice.input.show' => 'Show e-Invoice Input',
     'tax.invoice.input.edit' => 'Edit e-Invoice Input',
+    'tax.generate' => 'Generate CSV',
 ];
