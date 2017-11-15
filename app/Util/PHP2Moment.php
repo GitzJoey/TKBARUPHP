@@ -58,7 +58,44 @@ class PHP2Moment
             'r' => '', // no equivalent
             'U' => 'X',
         ];
+
         $momentFormat = strtr($format, $replacements);
         return $momentFormat;
+    }
+
+    public static function convertToPHPDate($format)
+    {
+        $replacements = [
+            'DD' => 'd',
+            'ddd' => 'D',
+            'D' => 'j',
+            'dddd' => 'l',
+            'E' => 'N',
+            'o' => 'S',
+            'e' => 'w',
+            'DDD' => 'z',
+            'W' => 'W',
+            'MMMM' => 'F',
+            'MM' => 'm',
+            'MMM' => 'M',
+            'M' => 'n',
+            'YYYY' => 'o',
+            'YYYY' => 'Y',
+            'YY' => 'y',
+            'a' => 'a',
+            'A' => 'A',
+            'h' => 'g',
+            'H' => 'G',
+            'hh' => 'h',
+            'HH' => 'H',
+            'mm' => 'i',
+            'ss' => 's',
+            'SSS' => 'u',
+            'zz' => 'e',
+            'X' => 'U',
+        ];
+
+        $phpFormat = strtr($format, $replacements);
+        return $phpFormat;
     }
 }

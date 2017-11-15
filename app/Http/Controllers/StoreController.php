@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Util\PHP2Moment;
 use DB;
 use Auth;
 use Config;
@@ -280,6 +281,16 @@ class StoreController extends Controller
 
     public function applySettings(Request $req)
     {
+        $store = Store::whereId(Auth::user()->store->id)->first();
+
+        $store->date_format = PHP2Moment::convertToPHPDate($req['df']);
+        $store->time_format = PHP2Moment::convertToPHPDate($req['tf']);
+        $store->thousand_separator = $req['ts'];
+        $store->decimal_separator = $req['ds'];
+        $store->decimal_digit = $req['dd'];
+
+        $store->save();
+
         return response()->json([
             'return' => 'success'
         ]);

@@ -37,8 +37,8 @@
                 <div class="form-group">
                     <label class="control-sidebar-subheading">@lang('control_sidebar.settings.field.time_format')</label>
                     <select id="settingTimeFormat" class="form-control">
-                        <option value="hh:mm A" {{ Auth::user()->store->time_format == 'hh:mm A' ? 'selected':'' }}>{{ date('h:m a') }} (default)</option>
-                        <option value="hh:mm:ss" {{ Auth::user()->store->time_format == 'hh:mm:ss' ? 'selected':'' }}>{{ date('h:m:s') }}</option>
+                        <option value="hh:mm A" {{ Auth::user()->store->time_format == 'G:H A' ? 'selected':'' }}>{{ \Carbon\Carbon::now()->format('G:H A') }} (default)</option>
+                        <option value="hh:mm:ss" {{ Auth::user()->store->time_format == 'G:H:s' ? 'selected':'' }}>{{ \Carbon\Carbon::now()->format('G:H:s') }}</option>
                     </select>
                 </div>
                 <div class="form-group">

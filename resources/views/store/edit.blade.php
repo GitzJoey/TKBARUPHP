@@ -274,8 +274,8 @@
                                     <label for="inputTimeFormat" class="col-sm-2 control-label">@lang('store.field.time_format')</label>
                                     <div class="col-sm-4">
                                         <select name="time_format" class="form-control">
-                                            <option value="hh:mm A" {{ $store->time_format == 'hh:mm A' ? 'selected':'' }}>{{ date('h:m a') }} (default)</option>
-                                            <option value="hh:mm:ss" {{ $store->time_format == 'hh:mm:ss' ? 'selected':'' }}>{{ date('h:m:s') }}</option>
+                                            <option value="G:H A" {{ $store->time_format == 'hh:mm A' ? 'selected':'' }}>{{ \Carbon\Carbon::now()->format('G:H A') }} (default)</option>
+                                            <option value="G:H:s" {{ $store->time_format == 'hh:mm:ss' ? 'selected':'' }}>{{ \Carbon\Carbon::now()->format('G:H:s') }}</option>
                                         </select>
                                     </div>
                                     <span class="help-block">{{ $errors->has('time_format') ? $errors->first('time_format') : '' }}</span>
