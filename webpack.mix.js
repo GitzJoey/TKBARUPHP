@@ -1,5 +1,13 @@
 const { mix } = require('laravel-mix');
 
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            AutoNumeric: 'autonumeric/dist/autoNumeric.min',
+        }
+    }
+});
+
 mix.disableNotifications();
 
 mix.copy('node_modules/highcharts/highcharts.js', 'public/adminlte/js')
