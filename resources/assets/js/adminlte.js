@@ -14,6 +14,7 @@ require('bootstrap');
 require('eonasdan-bootstrap-datetimepicker');
 require('icheck');
 require('jquery-gotop');
+require('autonumeric');
 require("moment-duration-format");
 require('select2/dist/js/select2.full');
 require('vee-validate/dist/locale/id');
