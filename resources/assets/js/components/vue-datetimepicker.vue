@@ -5,7 +5,6 @@
     v-model='value'
     v-bind:id='id'
     v-bind:name='name'
-    v-bind:value='value'
     v-bind:format='format'
     v-bind:readonly='readonly'>
 </template>

@@ -1,8 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "install": "npm install",
-    "update": "npm update",
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "cross-env NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
