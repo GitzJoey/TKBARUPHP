@@ -62,7 +62,8 @@ class AppHelper extends Command
         $this->info('[1] Update Permission Table');
         $this->info('[2] Truncate All Transactions');
         $this->info('[3] Update Composer And NPM');
-        $this->info('[4] Language Sync');
+        $this->info('[4] Check Outdated NPM Packages');
+        $this->info('[5] Language Sync');
 
         $choose = $this->ask('Choose Helper');
 
@@ -78,6 +79,9 @@ class AppHelper extends Command
                 break;
             case 3:
                 $this->updateComposerAndNPM();
+                break;
+            case 4:
+                $this->checkOutdated();
                 break;
             default:
                 break;
@@ -214,6 +218,13 @@ class AppHelper extends Command
         } else {
             exec('npm run dev');
         }
+    }
+
+    private function checkOutdated()
+    {
+        $this->info('Start Checking Outdated Packages');
+        exec('npm outdated', $out);
+        print_r($out);
     }
 
     private function langSync()
