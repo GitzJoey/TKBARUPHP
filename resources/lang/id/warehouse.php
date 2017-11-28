@@ -216,7 +216,7 @@ return [
                     'stock_location' => 'Lokasi Stok',
                     'transferred_to' => 'Ditransfer Ke',
                     'stocks' => 'Stok',
-                    'stock_transfer' => 'Transfer Stok'
+                    'stock_transfer' => 'Transfer Stok',
                 ],
             ],
             'table' => [
@@ -227,7 +227,7 @@ return [
                     'detail' => 'Detil',
                     'remarks' => 'Keterangan',
                     'qty_to_transfer' => 'Qty. to Transfer',
-                    'destination' => 'Tujuan'
+                    'destination' => 'Tujuan',
                 ],
             ],
         ],
@@ -265,7 +265,7 @@ return [
                     'stock_location' => 'Lokasi Stok',
                     'transferred_to' => 'Ditransfer Ke',
                     'stocks' => 'Stok',
-                    'stock_transfer' => 'Transfer Stok'
+                    'stock_transfer' => 'Transfer Stok',
                 ],
             ],
             'table' => [
@@ -276,9 +276,37 @@ return [
                     'detail' => 'Detil',
                     'remarks' => 'Keterangan',
                     'qty_to_transfer' => 'Qty. to Transfer',
-                    'destination' => 'Tujuan'
+                    'destination' => 'Tujuan',
                 ],
             ],
+        ],
+    ],
+    'stockmerger' => [
+        'create' => [
+            'title' => 'Tambah Stok Merger',
+            'page_title' => 'Tambah Stok Merger',
+            'page_title_desc' => '',
+        ],
+        'index' => [
+            'title' => 'Stok Merger',
+            'page_title' => 'Stok Merger',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Daftar Stok Merger',
+            ],
+            'table' => [
+                'header' => [
+                    'merge_date' => 'Tanggal',
+                    'merge_type' => 'Tipe',
+                    'product' => 'Produk',
+                    'remarks' => 'Keterangan',
+                ],
+            ],
+        ],
+        'show' => [
+            'title' => 'Stok Merger',
+            'page_title' => '',
+            'page_title_desc' => '',
         ],
     ],
 ];

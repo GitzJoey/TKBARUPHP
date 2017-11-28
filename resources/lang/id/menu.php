@@ -31,6 +31,7 @@ return [
     'item.wh_outflow' => 'Keluar',
     'item.wh_stockopname' => 'Stok Opname',
     'item.wh_transfer' => 'Pindah Stok',
+    'item.wh_stockmerger' => 'Stok Merger',
     'item.bank' => 'Bank',
     'item.bank_upload' => 'Upload',
     'item.bank_consolidate' => 'Konsolidasi',

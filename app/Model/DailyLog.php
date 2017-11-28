@@ -1,7 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gitzj
- * Date: 11/10/2017
- * Time: 1:34 PM
- */
+
+namespace App\Model;
+
+use Illuminate\Database\Eloquent\Model;
+
+class DailyLog extends Model
+{
+    //
+}

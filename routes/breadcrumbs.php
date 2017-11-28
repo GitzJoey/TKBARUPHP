@@ -175,6 +175,21 @@ Breadcrumbs::register('transferstock_create', function ($breadcrumbs){
     $breadcrumbs->push(trans('breadcrumb.warehouse.transferstock.create'), route('db.warehouse.transfer_stock.transfer'));
 });
 
+Breadcrumbs::register('stockmerger_index', function ($breadcrumbs){
+    $breadcrumbs->parent('dashboard');
+    $breadcrumbs->push(trans('breadcrumb.warehouse.stockmerger.index'), route('db.warehouse.stock_merger.index'));
+});
+
+Breadcrumbs::register('stockmerger_create', function ($breadcrumbs){
+    $breadcrumbs->parent('stockmerger_index');
+    $breadcrumbs->push(trans('breadcrumb.warehouse.stockmerger.create'), route('db.warehouse.stock_merger.create'));
+});
+
+Breadcrumbs::register('stockmerger_show', function ($breadcrumbs){
+    $breadcrumbs->parent('stockmerger_index');
+    $breadcrumbs->push(trans('breadcrumb.warehouse.stockmerger.show'), route('db.warehouse.stock_merger.show'));
+});
+
 Breadcrumbs::register('deliver', function ($breadcrumbs, $soId){
     $breadcrumbs->parent('outflow');
     $breadcrumbs->push(trans('breadcrumb.warehouse.outflow.deliver'), route('db.warehouse.outflow', $soId));

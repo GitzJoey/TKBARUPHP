@@ -49,4 +49,17 @@ class StockController extends Controller
         }
         return response()->json($prodtypeDdL->get());
     }
+
+    public function mergerIndex(Request $request)
+    {
+        $stockmerge = Stock::paginate(10);
+
+        return view('warehouse.stockmerger.index')->with('stockmerge', $stockmerge);
+    }
+
+    public function mergerCreate(Request $request)
+    {
+
+        return view('warehouse.stockmerger.create');
+    }
 }

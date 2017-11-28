@@ -476,6 +476,16 @@ class PermissionTableSeeder extends Seeder
             [   'name' => 'menu-warehouse_transferstock',
                 'display_name' => '[Warehouse Transfer Stock] Show Menu Warehouse Transfer Stock',
                 'description' => 'Allowed To See Menu Warehouse Transfer Stock In Sidebar' ],
+            // Warehouse -> Stock Merger
+            [   'name' => 'create-warehouse_stockmerger',
+                'display_name' => '[Warehouse Stock Merger] Create Warehouse Stock Merger',
+                'description' => 'Allowed To Create Warehouse Stock Merger Data' ],
+            [   'name' => 'read-warehouse_stockmerger',
+                'display_name' => '[Warehouse Stock Merger] Read Warehouse Stock Merger',
+                'description' => 'Allowed To Read Warehouse Stock Merger Data' ],
+            [   'name' => 'menu-warehouse_stockmerger',
+                'display_name' => '[Warehouse Stock Merger] Show Menu Warehouse Stock Merger',
+                'description' => 'Allowed To See Menu Warehouse Stock Merger In Sidebar' ],
             // Bank -> Upload
             [   'name' => 'create-bank_upload',
                 'display_name' => '[Bank Upload] Create Bank Upload',

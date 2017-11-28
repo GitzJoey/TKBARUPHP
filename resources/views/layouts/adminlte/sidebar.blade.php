@@ -176,7 +176,8 @@
             @if(Laratrust::can('menu-warehouse_inflow') OR
                 Laratrust::can('menu-warehouse_outflow') OR
                 Laratrust::can('menu-warehouse_stockopname') OR
-                Laratrust::can('menu-warehouse_transferstock'))
+                Laratrust::can('menu-warehouse_transferstock') OR
+                Laratrust::can('menu-warehouse_stockmerger'))
                 <li class="treeview {{ active_class(Active::checkRoutePattern('db.warehouse') || Active::checkRoutePattern('db.warehouse.*')) }}">
                     <a href="#"><i class="fa fa-wrench fa-fw"></i><span>&nbsp;@lang('menu.item.wh')</span>
                         <span class="pull-right-container">
@@ -202,6 +203,11 @@
                         @if(Laratrust::can('menu-warehouse_transferstock'))
                             <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.transfer_stock.*')) }}">
                                 <a href="{{ route('db.warehouse.transfer_stock.index') }}"><i class="fa fa-refresh fa-fw"></i>&nbsp;@lang('menu.item.wh_transfer')</a>
+                            </li>
+                        @endif
+                        @if(Laratrust::can('menu-warehouse_stockmerger'))
+                            <li class="{{ active_class(Active::checkRoutePattern('db.warehouse.stock_merger.*')) }}">
+                                <a href="{{ route('db.warehouse.stock_merger.index') }}"><i class="fa fa-sort-amount-asc fa-fw"></i>&nbsp;@lang('menu.item.wh_stockmerger')</a>
                             </li>
                         @endif
                     </ul>

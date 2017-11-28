@@ -216,7 +216,7 @@ return [
                     'stock_location' => 'Stock Location',
                     'transferred_to' => 'Transferred To',
                     'stocks' => 'Stocks',
-                    'stock_transfer' => 'Stock Transfer'
+                    'stock_transfer' => 'Stock Transfer',
                 ],
             ],
             'table' => [
@@ -227,7 +227,7 @@ return [
                     'detail' => 'Details',
                     'remarks' => 'Remarks',
                     'qty_to_transfer' => 'Qty. to Transfer',
-                    'destination' => 'Destination'
+                    'destination' => 'Destination',
                 ],
             ],
         ],
@@ -265,7 +265,7 @@ return [
                     'stock_location' => 'Stock Location',
                     'transferred_to' => 'Transferred To',
                     'stocks' => 'Stocks',
-                    'stock_transfer' => 'Stock Transfer'
+                    'stock_transfer' => 'Stock Transfer',
                 ],
             ],
             'table' => [
@@ -276,9 +276,37 @@ return [
                     'detail' => 'Details',
                     'remarks' => 'Remarks',
                     'qty_to_transfer' => 'Qty. to Transfer',
-                    'destination' => 'Destination'
+                    'destination' => 'Destination',
                 ],
             ],
+        ],
+    ],
+    'stockmerger' => [
+        'create' => [
+            'title' => 'Create Stock Merger',
+            'page_title' => 'Create Stock Merger',
+            'page_title_desc' => '',
+        ],
+        'index' => [
+            'title' => 'Stock Merger',
+            'page_title' => 'Stock Merger',
+            'page_title_desc' => '',
+            'header' => [
+                'title' => 'Stock Merger Lists',
+            ],
+            'table' => [
+                'header' => [
+                    'merge_date' => 'Date',
+                    'merge_type' => 'Type',
+                    'product' => 'Product',
+                    'remarks' => 'Remarks',
+                ],
+            ],
+        ],
+        'show' => [
+            'title' => 'Show Stock Merger',
+            'page_title' => '',
+            'page_title_desc' => '',
         ],
     ],
 ];

@@ -187,6 +187,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('show/{id}', 'WarehouseTransferStockController@show')->name('db.warehouse.transfer_stock.show');
                 Route::get('transfer', 'WarehouseTransferStockController@transfer')->name('db.warehouse.transfer_stock.transfer');
             });
+
+            Route::group(['prefix' => 'stock/merger', 'middleware' => ['permission:create-warehouse_stockmerger|read-warehouse_stockmerger|menu-warehouse_stockmerger']], function() {
+                Route::get('', 'StockController@mergerIndex')->name('db.warehouse.stock_merger.index');
+                Route::get('create', 'StockController@mergerCreate')->name('db.warehouse.stock_merger.create');
+                Route::get('show', 'StockController@mergerShow')->name('db.warehouse.stock_merger.show');
+            });
         });
 
         Route::group(['prefix' => 'bank', 'middleware' => ['permission:create-bank_upload|read-bank_upload|menu-bank_upload']], function () {

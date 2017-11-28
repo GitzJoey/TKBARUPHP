@@ -31,6 +31,7 @@ return [
     'item.wh_outflow' => 'Outflow',
     'item.wh_stockopname' => 'Stock Opname',
     'item.wh_transfer' => 'Transfer Stock',
+    'item.wh_stockmerger' => 'Stock Merger',
     'item.bank' => 'Bank',
     'item.bank_upload' => 'Upload',
     'item.bank_consolidate' => 'Consolidate',
