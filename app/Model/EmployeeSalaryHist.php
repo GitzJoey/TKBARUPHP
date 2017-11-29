@@ -52,6 +52,7 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\EmployeeSalaryHist withoutTrashed()
+ * @property-read mixed $h_id
  */
 class EmployeeSalaryHist extends Model
 {

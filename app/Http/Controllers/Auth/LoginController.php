@@ -72,10 +72,23 @@ class LoginController extends Controller
             else return false;
         });
 
+        Validator::extend('is_activated', function($attribute, $value, $parameters, $validator) {
+            $usr = User::with('userDetail')->where('email', '=', $value);
+            if (count($usr->first()) == 0) return true;
+
+            if (!env('MAIL_USER_ACTIVATION', false)) return true;
+
+            if ($usr->first()->active) return true;
+            else return false;
+        });
+
         $this->validate($request, [
-            $this->username() => 'required|string|is_allowed_login',
+            $this->username() => 'required|string|is_allowed_login|is_activated',
             'password' => 'required|string',
-        ], [$this->username().'.is_allowed_login' => LaravelLocalization::getCurrentLocale() == 'en' ? 'Login Not Allowed':'Tidak Diperkenankan Login']);
+        ], [
+            $this->username().'.is_allowed_login' => LaravelLocalization::getCurrentLocale() == 'en' ? 'Login Not Allowed':'Tidak Diperkenankan Login',
+            $this->username().'.is_activated' => LaravelLocalization::getCurrentLocale() == 'en' ? 'Email Has Not Been Activated':'Email Belum Di Aktivasi'
+            ]);
     }
 
     protected function authenticated(Request $request, $user)

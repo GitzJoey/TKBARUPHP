@@ -8,13 +8,17 @@ use App\Model\Store;
 use App\Model\Lookup;
 use App\Model\UserDetail;
 
-use Carbon\Carbon;
+use Session;
 use Validator;
+use Carbon\Carbon;
+use LaravelLocalization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 use App\Services\StoreService;
+
+use App\Events\Auth\UserActivationEmail;
 
 class RegisterController extends Controller
 {
@@ -80,6 +84,13 @@ class RegisterController extends Controller
 
         $usr->api_token = str_random(60);
 
+        if (env('MAIL_USER_ACTIVATION', false)) {
+            $usr->active = false;
+            $usr->activation_token = str_random(60);
+        } else {
+            $usr->active = true;
+        }
+
         $usr->created_at = Carbon::now();
         $usr->updated_at = Carbon::now();
 
@@ -102,7 +113,6 @@ class RegisterController extends Controller
         } else {
             $usr->roles()->attach(Role::where('name', 'user')->get());
         }
-
 
         $userdetail = new UserDetail();
         $userdetail->allow_login = true;
@@ -152,5 +162,51 @@ class RegisterController extends Controller
         }
 
         return view('auth.register', compact('store_mode', 'storeDDL', 'store_id', 'store_name'));
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        if (env('MAIL_USER_ACTIVATION', false)) {
+            event(new UserActivationEmail($user));
+
+            $this->guard()->logout();
+
+            return redirect()->route('login')->withSuccess(
+                LaravelLocalization::getCurrentLocale() == 'id' ?
+                    'Harap Cek Email Untuk Aktivasi':
+                    'Please Check Your Email For Activation'
+            );
+        }
+    }
+
+    protected function activate(Request $request, $token)
+    {
+        $usr = User::whereActivationToken($token)->first();
+
+        if (count($usr) > 0) {
+            $usr->active = true;
+            $usr->save();
+
+            Session::flash('success', LaravelLocalization::getCurrentLocale() == 'id' ?
+                'Akun Anda Sudah Diaktifkan':
+                'Your Account Successfully Activated.');
+
+            return view('auth.login');
+        } else {
+            Session::flash('error', LaravelLocalization::getCurrentLocale() == 'id' ?
+                'Kode Aktivasi Salah Atau Tidak Ditemukan':
+                'Activation Code Is Invalid Or Not Found');
+
+            return view('auth.passwords.activate');
+        }
+    }
+
+    protected function activateResend(Request $request)
+    {
+        $usr = User::whereEmail($request->email)->first();
+
+        if (count($usr) > 0) event(new UserActivationEmail($usr));
+
+        return view('auth.login');
     }
 }

@@ -22,6 +22,9 @@ Route::get('/', function () {
 Route::get('forgot', 'Auth\ForgotPasswordController@showLinkRequestForm');
 Route::get('reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 
+Route::get('activate/{token}', 'Auth\RegisterController@activate');
+Route::post('activate/resend', 'Auth\RegisterController@activateResend');
+
 Auth::routes();
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {

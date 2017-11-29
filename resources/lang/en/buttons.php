@@ -31,4 +31,5 @@ return [
     'yes_button' => 'Yes',
     'transfer' => 'Transfer',
     'ok_button' => 'OK',
+    'resend_button' => 'Resend',
 ];

@@ -31,4 +31,5 @@ return [
     'yes_button' => 'Ya',
     'transfer' => 'Transfer',
     'ok_button' => 'OK',
+    'resend_button' => 'Kirim Ulang',
 ];

@@ -10,6 +10,12 @@
             <a href="/front"><img src="{{ asset('/images/loginlogo_notext.png') }}" width="88" height="80"/></a>
         </div>
 
+        @if(session('success'))
+            <div class="alert alert-success text-center">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="login-box-body">
             <p class="login-box-msg">@lang('login.title')</p>
 

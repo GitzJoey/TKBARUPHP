@@ -52,6 +52,7 @@ class UserDetail extends Model
     protected $table = 'user_details';
 
     protected $fillable = [
+        'is_activated',
         'type',
         'allow_login'
     ];

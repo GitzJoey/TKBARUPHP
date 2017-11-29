@@ -46,6 +46,10 @@ use Laratrust\Traits\LaratrustUserTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Model\Permission[] $permissions
  * @method static \Illuminate\Database\Query\Builder|\App\User whereRoleIs($role = '')
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePermissionIs($permission = '')
+ * @property int $active
+ * @property string|null $activation_token
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereActivationToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereActive($value)
  */
 class User extends Authenticatable
 {
@@ -59,7 +63,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'created_at', 'updated_at'
+        'name', 'email', 'password', 'api_token', 'activation_token', 'created_at', 'updated_at'
     ];
 
     /**
