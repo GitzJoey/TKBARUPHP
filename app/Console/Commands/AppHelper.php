@@ -64,6 +64,7 @@ class AppHelper extends Command
         $this->info('[3] Update Composer And NPM');
         $this->info('[4] Check Outdated NPM Packages');
         $this->info('[5] Language Sync');
+        $this->info('[6] Update Lookup Table');
 
         $choose = $this->ask('Choose Helper');
 
@@ -82,6 +83,12 @@ class AppHelper extends Command
                 break;
             case 4:
                 $this->checkOutdated();
+                break;
+            case 5:
+                $this->langSync();
+                break;
+            case 6:
+                $this->updateLookup();
                 break;
             default:
                 break;
@@ -230,5 +237,10 @@ class AppHelper extends Command
     private function langSync()
     {
         Artisan::call('langman:sync');
+    }
+
+    private function updateLookup()
+    {
+        Artisan::call('db:seed', ['--class' => 'LookupTableSeeder',]);
     }
 }
