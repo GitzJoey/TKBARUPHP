@@ -519,6 +519,22 @@ class LookupTableSeeder extends Seeder
                 'description' => '8 - pemberitahuan impor barang (PIB)',
                 'category' => 'TRANSACTIONDOCINPUT',
             ],
+            [
+                'code' => 'STOCKMERGETYPE.FIFO',
+                'description' => 'Stock Merge Type FIFO',
+                'category' => 'STOCKMERGETYPE',
+            ],
+            [
+                'code' => 'STOCKMERGETYPE.LIFO',
+                'description' => 'Stock Merge Type LIFO',
+                'category' => 'STOCKMERGETYPE',
+            ],
+            [
+                'code' => 'STOCKMERGETYPE.AVG',
+                'description' => 'Stock Merge Type AVG',
+                'category' => 'STOCKMERGETYPE',
+            ],
+
         ];
         foreach ($lookup as $key => $value) {
             if (count(Lookup::whereCode($value['code'])->get()) == 0) {

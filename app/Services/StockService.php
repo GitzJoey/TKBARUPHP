@@ -27,4 +27,8 @@ interface StockService
     public function getCurrentStocks($warehouseId);
 
     public function searchStock($keyword);
+
+    public function getStockWithSameProductId();
+
+    public function getStockByProduct($product_id);
 }

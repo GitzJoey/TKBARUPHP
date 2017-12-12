@@ -64,4 +64,7 @@ return [
     'EMPSALARYACTION.BONUS' => 'Bonus',
     'EMPSALARYACTION.REIMBURSE' => 'Reimburse',
     'EMPSALARYACTION.SALARY_PAY_UPFRONT' => 'Salary Payed Upfront',
+    'STOCKMERGETYPE.FIFO' => 'FIFO - First In First Out',
+    'STOCKMERGETYPE.LIFO' => 'LIFO - Last In Last Out',
+    'STOCKMERGETYPE.AVG' => 'AVG - Average',
 ];

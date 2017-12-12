@@ -36,7 +36,7 @@
                             <h3 class="box-title">@lang('warehouse.stockmerger.create.header.title.merger')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="row">
+                            <div class="form-group">
                                 <label for="inputMergerDate" class="col-md-2">
                                     @lang('warehouse.stockmerger.field.merger_date')
                                 </label>
@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('merge_type') }">
                                 <label for="inputMergerType" class="col-md-2">
                                     @lang('warehouse.stockmerger.field.merger_type')
                                 </label>
@@ -62,7 +62,7 @@
                                         <option v-bind:value="defaultMergeType">@lang('labels.PLEASE_SELECT')</option>
                                         <option v-for="(value, key) in mergeTypeDDL" v-bind:value="key">@{{ value }}</option>
                                     </select>
-                                    <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
+                                    <span v-show="errors.has('merge_type')" class="help-block" v-cloak>@{{ errors.first('merge_type') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -76,18 +76,46 @@
                             <h3 class="box-title">@lang('warehouse.stockmerger.create.header.title.stock_lists')</h3>
                         </div>
                         <div class="box-body">
-                            <div class="row">
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('stockLists') }">
                                 <label for="inputStockLists" class="col-md-2">@lang('warehouse.stockmerger.field.stock_lists')</label>
                                 <div class="col-md-10">
                                     <select class="form-control"
                                             name="stockLists"
-                                            v-model="selected_stock"
+                                            v-model="selected_prod_id"
                                             v-validate="'required'"
+                                            v-on:change="retrieveStockByProductId"
                                             data-vv-as="{{ trans('warehouse.stockmerger.field.stock_lists') }}">
                                         <option v-bind:value="defaultStockLists">@lang('labels.PLEASE_SELECT')</option>
-                                        <option v-for="(value, key) in stocksDDL" v-bind:value="key">@{{ value }}</option>
+                                        <option v-for="s in stocksDDL" v-bind:value="s.product_id">@{{ s.name }}</option>
                                     </select>
-                                    <span v-show="errors.has('status')" class="help-block" v-cloak>@{{ errors.first('status') }}</span>
+                                    <span v-show="errors.has('stockLists')" class="help-block" v-cloak>@{{ errors.first('stockLists') }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="stockTable" class="col-md-2"></label>
+                                <div class="col-md-10">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>PO Date</th>
+                                                <th>Stock</th>
+                                                <th>Stock</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(s, sIdx) in stockLists" v-cloak>
+                                                <td>1</td>
+                                                <td>@{{ s }}</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr v-show="stockLoading">
+                                                <td colspan="4"><i class="fa fa-spinner fa-spin"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    @{{ this.stockLists }}
                                 </div>
                             </div>
                         </div>
@@ -133,9 +161,11 @@
                     remarks: '',
                     details: { }
                 },
-                selected_stock: '',
-                stocksDDL: '',
-                mergeTypeDDL: '',
+                selected_prod_id: '',
+                stockLists: [],
+                stockLoading: false,
+                stocksDDL: JSON.parse('{!! $stocks !!}'),
+                mergeTypeDDL: JSON.parse('{!! $stockMergeDDL !!}'),
             },
             methods: {
                 validateBeforeSubmit: function() {
@@ -160,20 +190,31 @@
                             }
                         });
                     });
-                },            },
+                },
+                retrieveStockByProductId: function() {
+                    if (this.selected_prod_id == '') return;
+                    this.stockLoading = true;
+
+                    axios.get('{{ route('api.get.stock.byproduct') }}' + '?api_token=' + $('#secapi').val(), {
+                        params: {
+                            pId: this.selected_prod_id
+                        }
+                    }).then(function (response) {
+                        this.stockLists = response.data;
+                        this.stockLoading = false;
+                    });
+                },
+            },
             mounted: function() {
+
 
             },
             computed: {
                 defaultStockLists: function() {
-                    return {
-                        id: ''
-                    }
+                    return ''
                 },
                 defaultMergeType: function() {
-                    return {
-                        id: ''
-                    }
+                    return ''
                 }
             }
         });

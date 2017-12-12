@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Model\Stock;
 use App\Model\ProductType;
 
+use App\Model\StockMerge;
 use App\Services\StockService;
+
+use App\Repos\LookupRepo;
 
 use Illuminate\Http\Request;
 
@@ -19,7 +22,8 @@ class StockController extends Controller
         $this->middleware('auth', [
             'except' => [
                 'getCurrentStocks',
-                'stockTypeIndex'
+                'stockTypeIndex',
+                'getStocksByProduct',
             ]
         ]);
     }
@@ -52,14 +56,21 @@ class StockController extends Controller
 
     public function mergerIndex(Request $request)
     {
-        $stockmerge = Stock::paginate(10);
+        $stockmerge = StockMerge::paginate(10);
 
-        return view('warehouse.stockmerger.index')->with('stockmerge', $stockmerge);
+        return view('warehouse.stockmerger.index', compact('stockmerge'));
     }
 
     public function mergerCreate(Request $request)
     {
+        $stockMergeDDL = LookupRepo::findByCategory(config('const.LOOKUP_CATEGORY.STOCK_MERGE_TYPE'))->pluck('i18nDescription', 'code');
+        $stocks = $this->stockService->getStockWithSameProductId();
 
-        return view('warehouse.stockmerger.create');
+        return view('warehouse.stockmerger.create', compact('stockMergeDDL','stocks'));
+    }
+
+    public function getStocksByProduct(Request $request)
+    {
+        return $this->stockService->getStockByProduct($request->query('pId'));
     }
 }

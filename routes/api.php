@@ -298,6 +298,7 @@ Route::group(['prefix' => 'get'], function () {
     Route::group(['prefix' => 'stock'], function() {
         Route::get('', 'StockController@getStock')->name('api.get.stock');
         Route::get('current_stocks/{wId?}', 'StockController@getCurrentStocks')->name('api.stock.current_stocks');
+        Route::get('get/by/product', 'StockController@getStocksByProduct')->name('api.get.stock.byproduct');
     });
 
     Route::get('user/get/calendar', 'CalendarController@retrieveEvents')->name('api.user.get.calendar');

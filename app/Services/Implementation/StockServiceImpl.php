@@ -74,4 +74,21 @@ class StockServiceImpl implements StockService
     {
 
     }
+
+    public function getStockWithSameProductId()
+    {
+        $result = Stock::groupBy('product_id')->havingRaw('COUNT(*) > 1')
+            ->select('product_id')->get()->map(function ($stock) {
+                return array_merge(['product_id' => $stock->product_id, 'name' => $stock->product->name]);
+            });
+
+        return $result;
+    }
+
+    public function getStockByProduct($product_id)
+    {
+        $result = Stock::whereProductId($product_id)->get();
+
+        return $result;
+    }
 }

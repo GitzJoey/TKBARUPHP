@@ -58,6 +58,7 @@ return [
         'ACC_CASH' => 'ACCCASH',
         'EXPENSE_TYPE' => 'EXPENSETYPE',
         'EMP_SALARY_ACTION' => 'EMPSALARYACTION',
+        'STOCK_MERGE_TYPE' => 'STOCKMERGETYPE',
     ],
 
     'SETTING_KEY' => [
