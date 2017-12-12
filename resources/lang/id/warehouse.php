@@ -286,6 +286,23 @@ return [
             'title' => 'Tambah Stok Merger',
             'page_title' => 'Tambah Stok Merger',
             'page_title_desc' => '',
+            'header' => [
+                'title' => [
+                    'merger' => 'Info Merger',
+                    'stock_lists' => 'Daftar Stok',
+                    'merger_remarks' => 'Keterangan',
+                ],
+            ],
+            'table' => [
+                'stock' => [
+                    'header' => [
+                        'po_code' => 'Kode',
+                        'po_date' => 'Tanggal',
+                        'shipping_date' => 'Tgl Pengiriman',
+                        'current_quantity' => 'Jumlah',
+                    ],
+                ],
+            ],
         ],
         'index' => [
             'title' => 'Stok Merger',
@@ -307,6 +324,12 @@ return [
             'title' => 'Stok Merger',
             'page_title' => '',
             'page_title_desc' => '',
+        ],
+        'field' => [
+            'merger_date' => 'Tanggal',
+            'merge_type' => 'Tipe',
+            'stock_lists' => 'Daftar Stok',
+            'remarks' => 'Keterangan',
         ],
     ],
 ];

@@ -89,6 +89,10 @@ Route::group(['prefix' => 'post', 'middleware' => 'auth:api'], function () {
             Route::group(['prefix' => 'trf/stock'], function() {
                 Route::post('transfer', 'WarehouseTransferStockController@saveTransfer')->name('api.post.db.warehouse.transfer_stock.transfer');
             });
+
+            Route::group(['prefix' => 'stock'], function() {
+                Route::post('merge', 'StockController@mergeStock')->name('api.post.db.warehouse.merge_stock.create');
+            });
         });
 
         Route::group(['prefix' => 'master'], function () {

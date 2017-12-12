@@ -286,6 +286,23 @@ return [
             'title' => 'Create Stock Merger',
             'page_title' => 'Create Stock Merger',
             'page_title_desc' => '',
+            'header' => [
+                'title' => [
+                    'merger' => 'Merger Info',
+                    'stock_lists' => 'Stock Lists',
+                    'merger_remarks' => 'Remarks',
+                ],
+            ],
+            'table' => [
+                'stock' => [
+                    'header' => [
+                        'po_code' => 'Code',
+                        'po_date' => 'Date',
+                        'shipping_date' => 'Shipping Date',
+                        'current_quantity' => 'Current Quantity',
+                    ],
+                ],
+            ],
         ],
         'index' => [
             'title' => 'Stock Merger',
@@ -307,6 +324,12 @@ return [
             'title' => 'Show Stock Merger',
             'page_title' => '',
             'page_title_desc' => '',
+        ],
+        'field' => [
+            'merger_date' => 'Date',
+            'merge_type' => 'Type',
+            'stock_lists' => 'Stock Lists',
+            'remarks' => 'Remarks',
         ],
     ],
 ];

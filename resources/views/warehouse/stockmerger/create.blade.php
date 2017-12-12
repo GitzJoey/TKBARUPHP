@@ -51,7 +51,7 @@
                             </div>
                             <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('merge_type') }">
                                 <label for="inputMergerType" class="col-md-2">
-                                    @lang('warehouse.stockmerger.field.merger_type')
+                                    @lang('warehouse.stockmerger.field.merge_type')
                                 </label>
                                 <div class="col-md-10">
                                     <select class="form-control"
@@ -94,35 +94,37 @@
                             <div class="form-group">
                                 <label for="stockTable" class="col-md-2"></label>
                                 <div class="col-md-10">
-                                    <table class="table">
+                                    <table class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th>PO Date</th>
-                                                <th>Stock</th>
-                                                <th>Stock</th>
+                                                <th>@lang('warehouse.stockmerger.create.table.stock.header.po_code')</th>
+                                                <th>@lang('warehouse.stockmerger.create.table.stock.header.po_date')</th>
+                                                <th>@lang('warehouse.stockmerger.create.table.stock.header.shipping_date')</th>
+                                                <th>@lang('warehouse.stockmerger.create.table.stock.header.current_quantity')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for="(s, sIdx) in stockLists" v-cloak>
-                                                <td>1</td>
-                                                <td>@{{ s }}</td>
-                                                <td></td>
-                                                <td></td>
+                                                <td class="text-center" width="10%">
+                                                    <input type="checkbox" v-bind:value="s.id" name="selected_merge" v-model="selected_merge">
+                                                </td>
+                                                <td>@{{ s.purchase_order.code }}</td>
+                                                <td>@{{ formatDate(s.purchase_order.po_created) }}</td>
+                                                <td>@{{ formatDate(s.purchase_order.shipping_date) }}</td>
+                                                <td>@{{ s.current_quantity }}</td>
                                             </tr>
                                             <tr v-show="stockLoading">
                                                 <td colspan="4"><i class="fa fa-spinner fa-spin"></i></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    @{{ this.stockLists }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-info">
@@ -164,6 +166,7 @@
                 selected_prod_id: '',
                 stockLists: [],
                 stockLoading: false,
+                selected_merge: [],
                 stocksDDL: JSON.parse('{!! $stocks !!}'),
                 mergeTypeDDL: JSON.parse('{!! $stockMergeDDL !!}'),
             },
@@ -173,9 +176,9 @@
                     this.$validator.validateAll().then(function(isValid) {
                         if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
-                        axios.post('{{ route('api.post.db.warehouse.transfer_stock.transfer') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#tsForm')[0]))
+                        axios.post('{{ route('api.post.db.warehouse.merge_stock.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#tsForm')[0]))
                             .then(function(response) {
-                                window.location.href = '{{ route('db.warehouse.transfer_stock.transfer') }}';
+                                window.location.href = '{{ route('db.warehouse.stock_merger.index') }}';
                             }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
                             if (e.response.data.errors != undefined && Object.keys(e.response.data.errors).length > 0) {
@@ -192,18 +195,25 @@
                     });
                 },
                 retrieveStockByProductId: function() {
+                    var vm = this;
+
+                    vm.stockLists = [];
+
                     if (this.selected_prod_id == '') return;
-                    this.stockLoading = true;
+                    vm.stockLoading = true;
 
                     axios.get('{{ route('api.get.stock.byproduct') }}' + '?api_token=' + $('#secapi').val(), {
                         params: {
                             pId: this.selected_prod_id
                         }
                     }).then(function (response) {
-                        this.stockLists = response.data;
-                        this.stockLoading = false;
+                        vm.stockLists = response.data;
+                        vm.stockLoading = false;
                     });
                 },
+                formatDate: function (date) {
+                    return moment(date).format($('#momentFormat').val());
+                }
             },
             mounted: function() {
 
