@@ -73,4 +73,9 @@ class StockController extends Controller
     {
         return $this->stockService->getStockByProduct($request->query('pId'));
     }
+
+    public function mergeStock(Request $request)
+    {
+        return response()->json();
+    }
 }

@@ -107,7 +107,11 @@
                                         <tbody>
                                             <tr v-for="(s, sIdx) in stockLists" v-cloak>
                                                 <td class="text-center" width="10%">
-                                                    <input type="checkbox" v-bind:value="s.id" name="selected_merge" v-model="selected_merge">
+                                                    <label v-bind:class="{ 'has-error':errors.has('selected_merge') }">
+                                                        <input type="checkbox" name="selected_merge"
+                                                                v-bind:value="s.id"
+                                                                v-model="selected_merge">
+                                                    </label>
                                                 </td>
                                                 <td>@{{ s.purchase_order.code }}</td>
                                                 <td>@{{ formatDate(s.purchase_order.po_created) }}</td>
@@ -145,6 +149,16 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-5 col-sm-2 text-center">
+                    <div class="btn-toolbar">
+                        <button id="submitButton" type="button" class="btn btn-primary pull-right"
+                                v-on:click="validateBeforeSubmit('submit')">@lang('buttons.submit_button')</button>
+                        <a id="cancelButton" class="btn btn-primary"
+                           href="{{ route('db.warehouse.stock_merger.index') }}">@lang('buttons.cancel_button')</a>
                     </div>
                 </div>
             </div>
@@ -216,7 +230,6 @@
                 }
             },
             mounted: function() {
-
 
             },
             computed: {
