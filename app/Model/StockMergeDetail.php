@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * App\Model\StockMergeDetail
  *
  * @property int $id
- * @property int $stock_merger_id
+ * @property int $stock_merge_id
  * @property int $po_id
  * @property float $before_merge_qty
  * @property int $created_by
@@ -30,6 +30,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMergeDetail whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMergeDetail whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @property int|null $merged_price
+ * @property-read \App\Model\StockMerge $stockMerger
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockMergeDetail onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMergeDetail whereMergedPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMergeDetail whereStockMergeId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockMergeDetail withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Model\StockMergeDetail withoutTrashed()
  */
 class StockMergeDetail extends Model
 {
@@ -40,7 +49,7 @@ class StockMergeDetail extends Model
     protected $table = 'stock_merge_details';
 
     protected $fillable = [
-        'stock_merger_id',
+        'stock_merge_id',
         'po_id',
         'before_merge_qty',
         'po_price',
@@ -62,7 +71,7 @@ class StockMergeDetail extends Model
 
     public function stockMerger()
     {
-        return $this->belongsTo('App\Model\StockMerge', 'stock_merger_id');
+        return $this->belongsTo('App\Model\StockMerge', 'stock_merge_id');
     }
 
     public static function boot()

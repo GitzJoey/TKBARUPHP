@@ -15,7 +15,7 @@ class CreateStockMergeDetailsTable extends Migration
     {
         Schema::create('stock_merge_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('stock_merger_id')->default(0);
+            $table->unsignedBigInteger('stock_merge_id')->default(0);
             $table->unsignedBigInteger('po_id')->default(0);
             $table->decimal('before_merge_qty', 19, 2)->default(0);
             $table->decimal('merged_price', 19, 2)->default(0);
