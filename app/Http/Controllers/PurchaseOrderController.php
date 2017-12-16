@@ -80,17 +80,11 @@ class PurchaseOrderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'result' => 'failed',
-                'message' => ''
-            ]);
+            return response()->json($validator->errors(), 500);
         }
 
         if (is_null($this->purchaseOrderService->createPO($request))) {
-            return response()->json([
-                'result' => 'failed',
-                'message' => ''
-            ]);
+            return response()->json(['errors' => 'Failed'], 500);
         };
 
         return response()->json();

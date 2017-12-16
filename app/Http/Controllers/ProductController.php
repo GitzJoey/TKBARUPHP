@@ -66,16 +66,12 @@ class ProductController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'result' => 'failed'
-            ]);
+            return response()->json($validator->errors(), 500);
         }
 
         if (count($data['unit_id']) == 0) {
             $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
-            return response()->json([
-                'result' => 'failed'
-            ]);
+            return response()->json($validator->errors(), 500);
         }
 
         $imageName = '';

@@ -99,10 +99,7 @@ class CustomerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'result' => 'failed',
-                'data' => $validator
-            ]);
+            return response()->json($validator->errors(), 500);
         } else {
             try  {
                 DB::transaction(function() use ($data) {

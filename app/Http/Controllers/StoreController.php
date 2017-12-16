@@ -291,9 +291,7 @@ class StoreController extends Controller
 
         $store->save();
 
-        return response()->json([
-            'return' => 'success'
-        ]);
+        return response()->json();
     }
 
     public function isUnfinishedStoreExist()

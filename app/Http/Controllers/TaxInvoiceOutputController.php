@@ -42,10 +42,7 @@ class TaxInvoiceOutputController extends Controller
         Log::info('[TaxInvoiceOutput@store]');
 
         if (is_null($this->taxInvoiceOutputService->createInvoice($request))) {
-            return response()->json([
-                'result' => 'failed',
-                'message' => ''
-            ]);
+            return response()->json(['errors' => 'Failed to create Invoice'], 500);
         };
 
         return response()->json();
