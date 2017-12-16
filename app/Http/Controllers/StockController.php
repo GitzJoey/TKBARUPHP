@@ -76,6 +76,8 @@ class StockController extends Controller
 
     public function mergeStock(Request $request)
     {
+        $this->stockService->createMergeStock($request);
+
         return response()->json();
     }
 }

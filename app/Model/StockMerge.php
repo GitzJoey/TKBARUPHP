@@ -38,6 +38,11 @@ class StockMerge extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function stockMergeDetails()
+    {
+        return $this->hasMany('App\Model\StockMergeDetail');
+    }
+
     public static function boot()
     {
         parent::boot();

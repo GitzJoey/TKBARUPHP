@@ -91,7 +91,7 @@
                                     <span v-show="errors.has('stockLists')" class="help-block" v-cloak>@{{ errors.first('stockLists') }}</span>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-bind:class="{'form-group':true, 'has-error':errors.has('selected_merge') }">
                                 <label for="stockTable" class="col-md-2"></label>
                                 <div class="col-md-10">
                                     <table class="table table-bordered table-hover">
@@ -108,9 +108,10 @@
                                             <tr v-for="(s, sIdx) in stockLists" v-cloak>
                                                 <td class="text-center" width="10%">
                                                     <label v-bind:class="{ 'has-error':errors.has('selected_merge') }">
-                                                        <input type="checkbox" name="selected_merge"
+                                                        <input type="checkbox" name="selected_merge[]"
                                                                 v-bind:value="s.id"
-                                                                v-model="selected_merge">
+                                                                v-model="selected_merge"
+                                                                v-validate="'checkboxChecked'">
                                                     </label>
                                                 </td>
                                                 <td>@{{ s.purchase_order.code }}</td>
@@ -123,6 +124,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <span v-show="errors.has('selected_merge')" class="help-block" v-cloak>@{{ errors.first('selected_merge') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +192,7 @@
                     this.$validator.validateAll().then(function(isValid) {
                         if (!isValid) return;
                         $('#loader-container').fadeIn('fast');
-                        axios.post('{{ route('api.post.db.warehouse.merge_stock.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#tsForm')[0]))
+                        axios.post('{{ route('api.post.db.warehouse.merge_stock.create') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#smForm')[0]))
                             .then(function(response) {
                                 window.location.href = '{{ route('db.warehouse.stock_merger.index') }}';
                             }).catch(function(e) {
@@ -230,7 +232,20 @@
                 }
             },
             mounted: function() {
+                var vm = this;
+                this.$validator.extend('checkboxChecked', {
+                    messages: {
+                        en: function(field, args) { return 'At Least 2 Stock Checked' },
+                        id: function(field, args) { return 'Minimal 2 Stok Terpilih' }
+                    },
+                    validate: function(value, args) {
+                        var result = false;
 
+                        if (vm.selected_merge.length > 1) { result = true; }
+
+                        return result;
+                    }
+                });
             },
             computed: {
                 defaultStockLists: function() {

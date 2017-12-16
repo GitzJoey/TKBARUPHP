@@ -9,7 +9,13 @@
 namespace App\Services\Implementation;
 
 use App\Model\Stock;
+
+use App\Model\StockMerge;
+use App\Model\StockMergeDetail;
 use App\Services\StockService;
+
+use DB;
+use Illuminate\Http\Request;
 use Doctrine\Common\Collections\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -90,5 +96,40 @@ class StockServiceImpl implements StockService
         $result = Stock::with('product', 'purchaseOrder')->whereProductId($product_id)->get();
 
         return $result;
+    }
+
+    public function createMergeStock(Request $request)
+    {
+        DB::beginTransaction();
+
+        try
+        {
+            $sm = new StockMerge();
+            $sm->merge_date = $request['merge_type'];
+            $sm->merge_type = $request['merge_type'];
+            $sm->remarks = $request['remarks'];
+
+            $sm->save();
+
+            $stocks = Stock::whereIn('id', $request['selected_merge'])->get();
+
+            $smdArr = array();
+
+            foreach ($stocks as $s) {
+                $smd = new StockMergeDetail();
+
+                $smd->po_id = $s->purchaseOrder->id;
+                $smd->before_merge_qty = 0;
+                $smd->merged_price = 0;
+
+                array_push($smdArr, $smd);
+            }
+
+            $sm->stockMergeDetails()->save($smdArr);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
 }

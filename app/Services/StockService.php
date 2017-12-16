@@ -8,6 +8,7 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
 use Doctrine\Common\Collections\Collection;
 
 interface StockService
@@ -31,4 +32,6 @@ interface StockService
     public function getStockWithSameProductId();
 
     public function getStockByProduct($product_id);
+
+    public function createMergeStock(Request $request);
 }
