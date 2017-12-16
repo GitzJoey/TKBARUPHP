@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Auth;
+use Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -36,6 +37,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMerge whereUpdatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockMerge withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockMerge withoutTrashed()
+ * @property int|null $product_id
+ * @property float|null $merged_price
+ * @property-read \App\Model\Product|null $product
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMerge whereMergedPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMerge whereProductId($value)
  */
 class StockMerge extends Model
 {
@@ -68,6 +74,11 @@ class StockMerge extends Model
     public function stockMergeDetails()
     {
         return $this->hasMany('App\Model\StockMergeDetail');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo('App\Model\Product', 'product_id');
     }
 
     public static function boot()

@@ -17,6 +17,8 @@ class CreateStockMergerTable extends Migration
             $table->bigIncrements('id');
             $table->string('merge_type')->nullable();
             $table->dateTime('merge_date')->nullable();
+            $table->unsignedBigInteger('product_id')->default(0);
+            $table->decimal('merged_price', 19, 2)->default(0);
             $table->string('remarks')->nullable();
             $table->unsignedBigInteger('created_by')->default(0);
             $table->unsignedBigInteger('updated_by')->default(0);

@@ -34,4 +34,10 @@ interface StockService
     public function getStockByProduct($product_id);
 
     public function createMergeStock(Request $request);
+
+    public function deleteStock($stock_id);
+
+    public function doStockIn($poId, $productId, $warehouseId, $qty);
+
+    public function doStockOut($soId, $productId, $warehouseId, $stockId, $qty);
 }

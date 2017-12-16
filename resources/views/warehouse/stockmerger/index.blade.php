@@ -46,11 +46,11 @@
                     @else
                         @foreach ($stockmerge as $key => $s)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td width="10%">
+                                <td>{{ \Carbon\Carbon::parse($s->merge_date)->format(Auth::user()->store->date_format) }}</td>
+                                <td>@lang('lookup.'.$s->merge_type)</td>
+                                <td>{{ $s->product->name }}</td>
+                                <td>{{ $s->remarks }}</td>
+                                <td width="10%" class="text-center">
                                     <a class="btn btn-xs btn-info" href="{{ route('db.warehouse.stock_merger.show', $s->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                                 </td>
                             </tr>

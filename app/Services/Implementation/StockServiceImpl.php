@@ -108,6 +108,8 @@ class StockServiceImpl implements StockService
             $sm = new StockMerge();
             $sm->merge_date = date(config('const.DATETIME_FORMAT.DATABASE_DATETIME'), strtotime($request['merge_date']));
             $sm->merge_type = $request['merge_type'];
+            $sm->product_id = $request['product_id'];
+            $sm->merged_price = 0;
             $sm->remarks = $request['remarks'];
 
             $sm->save();
@@ -116,10 +118,14 @@ class StockServiceImpl implements StockService
 
             foreach ($stocks as $s) {
                 $smd = new StockMergeDetail();
-
                 $smd->po_id = $s->purchaseOrder->id;
-                $smd->before_merge_qty = 0;
-                $smd->merged_price = 0;
+                $smd->before_merge_qty = $s->current_quantity;
+
+                foreach ($s->purchaseOrder->items as $i) {
+                    if ($i->product->id = $s->product_id) {
+                        $smd->before_merge_price = $i->price;
+                    }
+                }
 
                 $sm->stockMergeDetails()->save($smd);
             }
@@ -128,5 +134,54 @@ class StockServiceImpl implements StockService
         } catch (Exception $e) {
             DB::rollBack();
         }
+    }
+
+    public function deleteStock($stock_id)
+    {
+        $stock = Stock::whereId($stock_id)->first();
+        $stock->delete();
+    }
+
+    public function doStockIn($poId, $productId, $warehouseId, $qty)
+    {
+        $stockParams = [
+            'store_id' => Auth::user()->store_id,
+            'po_id' => $poId,
+            'product_id' => $productId,
+            'warehouse_id' => $warehouseId,
+            'quantity' => $qty,
+            'current_quantity' => $qty
+        ];
+
+        $stock = Stock::create($stockParams);
+
+        $stockInParams = [
+            'store_id' => Auth::user()->store_id,
+            'po_id' => $poId,
+            'product_id' => $productId,
+            'warehouse_id' => $warehouseId,
+            'stock_id' => $stock->id,
+            'quantity' => $qty
+        ];
+
+        $stockIn = StockIn::create($stockInParams);
+    }
+
+    public function doStockOut($soId, $productId, $warehouseId, $stockId, $qty)
+    {
+        $stockOutParams = [
+            'store_id' => Auth::user()->store_id,
+            'so_id' => $soId,
+            'product_id' => $productId,
+            'warehouse_id' => $warehouseId,
+            'stock_id' => $stockId,
+            'quantity' => $qty
+        ];
+
+        $stockOut = StockOut::create($stockOutParams);
+
+        $stock = Stock::find($stockId);
+        $stock->current_quantity -= $qty;
+        $stock->save();
     }
 }

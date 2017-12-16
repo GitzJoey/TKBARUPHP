@@ -133,8 +133,9 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      */
     public function revisePO(Request $request, $id)
     {
-        DB::transaction(function() use ($id, $request) {
+        DB::beginTransaction();
 
+        try {
             // Get current PO
             $currentPo = PurchaseOrder::with('items')->find($id);
 
@@ -221,8 +222,14 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
 
             $currentPo->save();
 
+            DB::commit();
+
             return $currentPo;
-        });
+        } catch (Exception $exception) {
+            DB::rollBack();
+
+            return null;
+        }
     }
 
     /**

@@ -35,7 +35,8 @@ class InflowServiceImpl implements InflowService
     {
         Log::info("[InflowServiceImpl@createPOReceipt]");
 
-        DB::transaction(function() use ($request, $poId) {
+        DB::beginTransaction();
+        try {
             for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
                 $conversionValue = ProductUnit::where([
                     'product_id' => $request->input("product_id.$i"),
@@ -86,6 +87,9 @@ class InflowServiceImpl implements InflowService
             $po = PurchaseOrder::find($poId);
             $po->status = 'POSTATUS.WP';
             $po->save();
-        });
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
 }

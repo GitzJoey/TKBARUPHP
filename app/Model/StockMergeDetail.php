@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Auth;
+use Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -39,6 +40,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMergeDetail whereStockMergeId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockMergeDetail withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockMergeDetail withoutTrashed()
+ * @property float|null $before_merge_price
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockMergeDetail whereBeforeMergePrice($value)
  */
 class StockMergeDetail extends Model
 {
@@ -51,8 +54,9 @@ class StockMergeDetail extends Model
     protected $fillable = [
         'stock_merge_id',
         'po_id',
+        'item_id',
         'before_merge_qty',
-        'po_price',
+        'before_merge_price',
     ];
 
     protected $hidden = [

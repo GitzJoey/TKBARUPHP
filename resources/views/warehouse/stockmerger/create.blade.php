@@ -80,7 +80,7 @@
                                 <label for="inputStockLists" class="col-md-2">@lang('warehouse.stockmerger.field.stock_lists')</label>
                                 <div class="col-md-10">
                                     <select class="form-control"
-                                            name="stockLists"
+                                            name="product_id"
                                             v-model="selected_prod_id"
                                             v-validate="'required'"
                                             v-on:change="retrieveStockByProductId"
