@@ -79,9 +79,18 @@ class Stock extends Model
         'warehouse_id'
     ];
 
+    protected $hidden = [
+        'isMerge',
+    ];
+
     public function hId()
     {
         return HashIds::encode($this->attributes['id']);
+    }
+
+    public function getIsMergeAttribute()
+    {
+        return $this->attributes['stock_merge_id'] == 0 ? false:true;
     }
 
     public function product()
@@ -102,6 +111,11 @@ class Stock extends Model
     public function warehouse()
     {
         return $this->belongsTo('App\Model\Warehouse', 'warehouse_id');
+    }
+
+    public function stockMerge()
+    {
+        return $this->belongsTo('App\Model\StockMerge', 'stock_merge_id');
     }
 
     public function purchaseOrder()

@@ -102,6 +102,7 @@
                                                 <th>@lang('warehouse.stockmerger.create.table.stock.header.po_date')</th>
                                                 <th>@lang('warehouse.stockmerger.create.table.stock.header.shipping_date')</th>
                                                 <th>@lang('warehouse.stockmerger.create.table.stock.header.current_quantity')</th>
+                                                <th>@lang('warehouse.stockmerger.create.table.stock.header.warehouse')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -118,6 +119,7 @@
                                                 <td>@{{ formatDate(s.purchase_order.po_created) }}</td>
                                                 <td>@{{ formatDate(s.purchase_order.shipping_date) }}</td>
                                                 <td>@{{ s.current_quantity }}</td>
+                                                <td>@{{ s.warehouse.name }}</td>
                                             </tr>
                                             <tr v-show="stockLoading">
                                                 <td colspan="4"><i class="fa fa-spinner fa-spin"></i></td>
@@ -125,6 +127,20 @@
                                         </tbody>
                                     </table>
                                     <span v-show="errors.has('selected_merge')" class="help-block" v-cloak>@{{ errors.first('selected_merge') }}</span>
+                                </div>
+                            </div>
+                            <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('destination_warehouse') }">
+                                <label for="inputDestinationWarehouse" class="col-md-2">@lang('warehouse.stockmerger.field.destination_warehouse')</label>
+                                <div class="col-md-10">
+                                    <select class="form-control"
+                                            name="destination_warehouse"
+                                            v-model="destination_warehouse"
+                                            v-validate="'required'"
+                                            data-vv-as="{{ trans('warehouse.stockmerger.field.destination_warehouse') }}">
+                                        <option v-bind:value="defaultWarehouse">@lang('labels.PLEASE_SELECT')</option>
+                                        <option v-for="w in warehouseDDL" v-bind:value="w.id">@{{ w.name }} - @{{ w.address }}</option>
+                                    </select>
+                                    <span v-show="errors.has('destination_warehouse')" class="help-block" v-cloak>@{{ errors.first('destination_warehouse') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -185,6 +201,8 @@
                 selected_merge: [],
                 stocksDDL: JSON.parse('{!! $stocks !!}'),
                 mergeTypeDDL: JSON.parse('{!! $stockMergeDDL !!}'),
+                destination_warehouse: '',
+                warehouseDDL: JSON.parse('{!! $warehouseDDL !!}')
             },
             methods: {
                 validateBeforeSubmit: function() {

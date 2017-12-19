@@ -194,7 +194,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::group(['prefix' => 'stock/merger', 'middleware' => ['permission:create-warehouse_stockmerger|read-warehouse_stockmerger|menu-warehouse_stockmerger']], function() {
                 Route::get('', 'StockController@mergerIndex')->name('db.warehouse.stock_merger.index');
                 Route::get('create', 'StockController@mergerCreate')->name('db.warehouse.stock_merger.create');
-                Route::get('show', 'StockController@mergerShow')->name('db.warehouse.stock_merger.show');
+                Route::get('show/{id}', 'StockController@mergerShow')->name('db.warehouse.stock_merger.show');
             });
         });
 

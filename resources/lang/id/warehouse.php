@@ -27,6 +27,7 @@ return [
             'box' => [
                 'receipt' => 'Nota Terima',
                 'items' => 'Barang-Barang',
+                'expense' => 'Biaya',
             ],
             'field' => [
                 'warehouse' => 'Gudang',
@@ -46,7 +47,25 @@ return [
                         'tare' => 'Tare',
                     ],
                 ],
+                'expense' => [
+                    'header' => [
+                        'name' => 'Nama',
+                        'type' => 'Tipe',
+                        'internal_expense' => 'Internal',
+                        'remarks' => 'Keterangan',
+                        'amount' => 'Jumlah',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total',
+                    ],
+                ],
             ],
+        ],
+        'field' => [
+            'warehouse' => 'Gudang',
+            'po_code' => 'Kode PO',
         ],
     ],
     'create' => [
@@ -132,6 +151,7 @@ return [
             'box' => [
                 'deliver' => 'Nota Pengiriman',
                 'items' => 'Barang-Barang',
+                'expenses' => 'Biaya',
             ],
             'field' => [
                 'warehouse' => 'Gudang',
@@ -147,6 +167,20 @@ return [
                         'product_name' => 'Nama Produk',
                         'unit' => 'Satuan',
                         'brutto' => 'Bruto',
+                    ],
+                ],
+                'expense' => [
+                    'header' => [
+                        'name' => 'Nama',
+                        'type' => 'Tipe',
+                        'internal_expense' => 'Internal',
+                        'remarks' => 'Keterangan',
+                        'amount' => 'Jumlah',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total',
                     ],
                 ],
             ],
@@ -169,6 +203,10 @@ return [
                     'status' => 'Status',
                 ],
             ],
+        ],
+        'field' => [
+            'warehouse' => 'Gudang',
+            'so_code' => 'Kode Penjualan',
         ],
     ],
     'stockopname' => [
@@ -322,8 +360,25 @@ return [
         ],
         'show' => [
             'title' => 'Stok Merger',
-            'page_title' => '',
+            'page_title' => 'Stok Merger',
             'page_title_desc' => '',
+            'header' => [
+                'title' => [
+                    'merger' => 'Info Merger',
+                    'stock_lists' => 'Daftar Stok',
+                    'merger_remarks' => 'Keterangan',
+                ],
+            ],
+            'table' => [
+                'stock' => [
+                    'header' => [
+                        'po_code' => 'Kode',
+                        'po_date' => 'Tanggal',
+                        'shipping_date' => 'Tgl Pengiriman',
+                        'current_quantity' => 'Jumlah',
+                    ],
+                ],
+            ],
         ],
         'field' => [
             'merger_date' => 'Tanggal',

@@ -67,7 +67,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputDeliverDate" name="deliver_date" v-model="deliver_date" v-validate="'required'" format="YYYY-MM-DD hh:mm A"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputDeliverDate" name="deliver_date" v-model="deliver_date" v-validate="'required'" format="YYYY-MM-DD hh:mm A" v-bind:readonly="readOnly"></vue-datetimepicker>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                 <div class="col-sm-8">
                                     <select id="selectLicensePlate" class="form-control"
                                             v-model="select_license_plate"
-                                            v-on:change="onChangeSelectLicensePlate">
+                                            v-on:change="onChangeSelectLicensePlate" v-bind:disabled="readOnly">
                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
                                         @foreach($truck as $key => $t)
                                             <option value="{{ $key }}">{{ $t }}</option>
@@ -97,7 +97,7 @@
                                     <input type="text" id="inputLicensePlate" name="license_plate" class="form-control"
                                            v-model="license_plate"
                                            v-validate="'required'"
-                                           v-bind:readonly="select_license_plate == '' ? false:true"
+                                           v-bind:readonly="readOnly ? true:select_license_plate == '' ? false:true"
                                            v-show="select_license_plate != '' ? false:true"
                                            data-vv-as="{{ trans('warehouse.outflow.deliver.field.license_plate') }}">
                                     <span v-show="errors.has('license_plate')" class="help-block" v-cloak>@{{ errors.first('license_plate') }}</span>
@@ -136,6 +136,7 @@
                                                     <select name="selected_unit_id[]" v-validate="'required'"
                                                             class="form-control"
                                                             v-model="deliver.selected_unit.id"
+                                                            v-bind:disabled="readOnly"
                                                             v-bind:data-vv-name="'unit_' + deliverIdx"
                                                             v-bind:data-vv-as="'{{ trans('warehouse.outflow.deliver.table.item.header.unit') }} ' + (deliverIdx + 1)">
                                                         <option v-bind:value="defaultProductUnit.id">@lang('labels.PLEASE_SELECT')</option>
@@ -145,10 +146,61 @@
                                                 <td v-bind:class="{ 'has-error':errors.has('brutto_' + deliverIdx) }">
                                                     <input type="text" class="form-control text-right" name="brutto[]"
                                                            v-model="deliver.brutto" v-validate="'required|decimal:2|min_value:1'"
+                                                           v-bind:readonly="readOnly"
                                                            v-bind:data-vv-name="'brutto_' + deliverIdx" v-bind:data-vv-as="'{{ trans('warehouse.outflow.deliver.table.item.header.brutto') }}' + (deliverIdx + 1)">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md" v-on:click="removeDeliver(deliverIdx)" disabled><span class="fa fa-minus"/></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('warehouse.outflow.deliver.box.expenses')</h3>
+                            <button type="button" class="btn btn-primary btn-xs pull-right"><span class="fa fa-plus fa-fw"></span></button>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="expensesListTable" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="20%">@lang('warehouse.outflow.deliver.table.expense.header.name')</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('warehouse.outflow.deliver.table.expense.header.type')</th>
+                                                <th width="10%"
+                                                    class="text-center">@lang('warehouse.outflow.deliver.table.expense.header.internal_expense')</th>
+                                                <th width="25%"
+                                                    class="text-center">@lang('warehouse.outflow.deliver.table.expense.header.remarks')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('warehouse.outflow.deliver.table.expense.header.amount')</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="expensesTotalListTable" class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td width="80%" class="text-right">
+                                                    @lang('warehouse.outflow.deliver.table.total.body.total')
+                                                </td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal"></span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -228,6 +280,14 @@
                 },
                 removeDeliver: function (index) {
                     this.outflow.delivers.splice(index, 1);
+                },
+                readOnly: function () {
+                    var vm = this;
+                    if (vm.SO.status == '{{ config('lookups.SO_STATUS.WAITING_DELIVERY') }}') {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             },
             mounted: function() {

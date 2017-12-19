@@ -185,9 +185,9 @@ Breadcrumbs::register('stockmerger_create', function ($breadcrumbs){
     $breadcrumbs->push(trans('breadcrumb.warehouse.stockmerger.create'), route('db.warehouse.stock_merger.create'));
 });
 
-Breadcrumbs::register('stockmerger_show', function ($breadcrumbs){
+Breadcrumbs::register('stockmerger_show', function ($breadcrumbs, $id){
     $breadcrumbs->parent('stockmerger_index');
-    $breadcrumbs->push(trans('breadcrumb.warehouse.stockmerger.show'), route('db.warehouse.stock_merger.show'));
+    $breadcrumbs->push(trans('breadcrumb.warehouse.stockmerger.show'), route('db.warehouse.stock_merger.show', $id));
 });
 
 Breadcrumbs::register('deliver', function ($breadcrumbs, $soId){

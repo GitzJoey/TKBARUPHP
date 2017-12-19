@@ -23,13 +23,29 @@
                 <h3 class="box-title">@lang('warehouse.inflow.index.header.warehouse')</h3>
             </div>
             <div class="box-body">
-                <select id="inputWarehouse"
-                        class="form-control"
-                        v-model="selectedWarehouse"
-                        v-on:change="getWarehousePOs(selectedWarehouse)">
-                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.hId">@{{ warehouse.name }}</option>
-                </select>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputWarehouse" class="col-sm-2 control-label">@lang('warehouse.inflow.field.warehouse')</label>
+                        <div class="col-sm-10">
+                            <select id="inputWarehouse"
+                                    class="form-control"
+                                    v-model="selectedWarehouse"
+                                    v-on:change="getWarehousePOs(selectedWarehouse)">
+                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.hId">@{{ warehouse.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPOCode" class="col-sm-2 control-label">@lang('warehouse.inflow.field.po_code')</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="inputPOCode" v-model="po_code" placeholder="@lang('warehouse.inflow.field.po_code')">
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="btnSearch" class="btn btn-default" v-on:click="getWarehousePOByCode(po_code)"><span class="fa fa-search-plus fa-fw"></span></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="box box-info">
@@ -74,6 +90,7 @@
             data:{
                 warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
                 selectedWarehouse: '',
+                po_code: '',
                 POs: []
             },
             methods: {
@@ -85,6 +102,14 @@
                             vm.POs = response.data;
                         });
                     }
+                },
+                getWarehousePOByCode: function (code) {
+                    var vm = this;
+                    vm.POs = [];
+
+                    axios.get('{{ route('api.warehouse.inflow.po.bycode') }}/' + code).then(function(response) {
+                        vm.POs = response.data;
+                    });
                 },
                 loadWarehouse: function(w) {
                     if (w == undefined || w == null) return;

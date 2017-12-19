@@ -29,13 +29,29 @@
                 <h3 class="box-title">@lang('warehouse.outflow.index.header.warehouse')</h3>
             </div>
             <div class="box-body">
-                <select id="inputWarehouse"
-                        class="form-control"
-                        v-model="selectedWarehouse"
-                        v-on:change="getWarehouseSOs(selectedWarehouse)">
-                    <option value="">@lang('labels.PLEASE_SELECT')</option>
-                    <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.hId">@{{ warehouse.name }}</option>
-                </select>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputWarehouse" class="col-sm-2 control-label">@lang('warehouse.outflow.field.warehouse')</label>
+                        <div class="col-sm-10">
+                            <select id="inputWarehouse"
+                                    class="form-control"
+                                    v-model="selectedWarehouse"
+                                    v-on:change="getWarehouseSOs(selectedWarehouse)">
+                                <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                <option v-for="warehouse in warehouseDDL" v-bind:value="warehouse.hId">@{{ warehouse.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSOCode" class="col-sm-2 control-label">@lang('warehouse.outflow.field.so_code')</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="inputSOCode" v-model="so_code" placeholder="@lang('warehouse.outflow.field.so_code')">
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="btnSearch" class="btn btn-default" v-on:click="getWarehouseSOByCode(so_code)"><span class="fa fa-search-plus fa-fw"></span></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="box box-info">
@@ -80,6 +96,7 @@
             data: {
                 warehouseDDL: JSON.parse('{!! htmlspecialchars_decode($warehouseDDL) !!}'),
                 selectedWarehouse: '',
+                so_code: '',
                 SOs: []
             },
             methods: {
@@ -89,6 +106,14 @@
                     this.selectedWarehouse = selectedWarehouse;
                     axios.get('{{ route('api.warehouse.outflow.so') }}/' + selectedWarehouse).then(function (data) {
                         vm.SOs = data.data;
+                    });
+                },
+                getWarehouseSOByCode: function (code) {
+                    var vm = this;
+                    vm.SOs = [];
+
+                    axios.get('{{ route('api.warehouse.inflow.so.bycode') }}/' + code).then(function(response) {
+                        vm.SOs = response.data;
                     });
                 },
                 loadWarehouse: function(w) {

@@ -254,7 +254,7 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
      */
     public function getPOForReceipt($poId)
     {
-        return PurchaseOrder::with('items.product.productUnits.unit')->find($poId);
+        return PurchaseOrder::with('items.product.productUnits.unit', 'receipts')->find($poId);
     }
 
     /**
@@ -381,5 +381,30 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
         });
 
         return $po;
+    }
+
+    public function getPOByCode($code)
+    {
+        return PurchaseOrder::with('supplier')
+            ->where('code', '=', $code)
+            ->get();
+    }
+
+    public function addExpenses($poId, $expenseArr)
+    {
+        $currentPo = PurchaseOrder::whereId($poId)->first();
+
+        for($i = 0; $i < count($expenseArr); $i++){
+            $expense = new Expense();
+            $expense->name = $expenseArr["expense_name"];
+            $expense->type = $expenseArr["expense_type"];
+            $expense->is_internal_expense = !empty($expenseArr["is_internal_expense"]);
+            $expense->amount = floatval(str_replace(',', '', $expenseArr["expense_amount.$i"]));
+            $expense->remarks = $expenseArr["expense_remarks"];
+
+            $currentPo->expenses()->save($expense);
+        }
+
+        $currentPo->save();
     }
 }

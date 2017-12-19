@@ -49,7 +49,7 @@ class SalesOrderController extends Controller
                 'getTotalSOAmountPerDay',
                 'getSOByDate',
                 'getTop10Customer',
-                'getTop10WalkInCustomer'
+                'getTop10WalkInCustomer',
             ]
         ]);
     }

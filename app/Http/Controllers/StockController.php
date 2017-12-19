@@ -6,6 +6,7 @@ use App\Model\Stock;
 use App\Model\ProductType;
 
 use App\Model\StockMerge;
+use App\Model\Warehouse;
 use App\Services\StockService;
 
 use App\Repos\LookupRepo;
@@ -65,13 +66,23 @@ class StockController extends Controller
     {
         $stockMergeDDL = LookupRepo::findByCategory(config('const.LOOKUP_CATEGORY.STOCK_MERGE_TYPE'))->pluck('i18nDescription', 'code');
         $stocks = $this->stockService->getStockWithSameProductId();
+        $warehouseDDL = Warehouse::where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name', 'address']);
 
-        return view('warehouse.stockmerger.create', compact('stockMergeDDL','stocks'));
+        return view('warehouse.stockmerger.create', compact('stockMergeDDL','stocks', 'warehouseDDL'));
     }
 
     public function getStocksByProduct(Request $request)
     {
         return $this->stockService->getStockByProduct($request->query('pId'));
+    }
+
+    public function mergerShow($id)
+    {
+        $stockMergeDDL = LookupRepo::findByCategory(config('const.LOOKUP_CATEGORY.STOCK_MERGE_TYPE'))->pluck('i18nDescription', 'code');
+        $stockMerge = StockMerge::with('stockMergeDetails')->whereId($id)->first();
+        $warehouseDDL = Warehouse::where('status', '=', 'STATUS.ACTIVE')->get(['id', 'name', 'address']);
+
+        return view('warehouse.stockmerger.show', compact('stockMerge', 'stockMergeDDL', 'warehouseDDL'));
     }
 
     public function mergeStock(Request $request)

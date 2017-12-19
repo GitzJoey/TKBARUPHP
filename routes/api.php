@@ -221,9 +221,11 @@ Route::group(['prefix' => 'get'], function () {
     Route::group(['prefix' => 'warehouse'], function () {
         Route::group(['prefix' => 'outflow'], function () {
             Route::get('so/{id?}', 'WarehouseOutflowController@getWarehouseSOs')->name('api.warehouse.outflow.so');
+            Route::get('so/bycode/{code?}', 'WarehouseInflowController@getWarehouseSOByCode')->name('api.warehouse.inflow.so.bycode');
         });
         Route::group(['prefix' => 'inflow'], function () {
             Route::get('po/{id?}', 'WarehouseInflowController@getWarehousePOs')->name('api.warehouse.inflow.po');
+            Route::get('po/bycode/{code?}', 'WarehouseInflowController@getWarehousePOByCode')->name('api.warehouse.inflow.po.bycode');
         });
         Route::group(['prefix' => 'stock_opname'], function () {
             Route::get('last', 'WarehouseController@getLastStockOpname')->name('api.warehouse.stock_opname.last');

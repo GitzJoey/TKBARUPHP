@@ -139,4 +139,6 @@ interface SalesOrderService
     public function getTop10Customer();
 
     public function getTop10WalkInCustomer();
+
+    public function getSOByCode($code);
 }

@@ -26,6 +26,7 @@ return [
         'PHP_TIME' => 'G:H A',
         'PHP_DATETIME' => 'd M Y G:H A',
         'DATABASE_DATETIME' => 'Y-m-d H:i:s',
+        'JS_DATETIME' => 'YYYY-MM-DD hh:mm A'
     ],
         
     'DIGIT_GROUP_SEPARATOR' => ',',

@@ -582,4 +582,12 @@ class SalesOrderServiceImpl implements SalesOrderService
     {
         Log::info("[SalesOrderServiceImpl@getTop10WalkInCustomer]");
     }
+
+    public function getSOByCode($code)
+    {
+        $saleOrders = SalesOrder::with([ 'customer.profiles' ])
+            ->where('code', '=', $code)->get();
+
+        return $saleOrders;
+    }
 }

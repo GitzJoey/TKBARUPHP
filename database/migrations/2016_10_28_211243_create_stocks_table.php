@@ -17,6 +17,7 @@ class CreateStocksTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('po_id')->default(0);
+            $table->unsignedBigInteger('stock_merge_id')->default(0);
             $table->unsignedBigInteger('product_id')->default(0);
             $table->unsignedBigInteger('warehouse_id')->default(0);
             $table->decimal('quantity', 19, 2)->default(0);

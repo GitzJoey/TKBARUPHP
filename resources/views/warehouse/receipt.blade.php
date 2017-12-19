@@ -67,7 +67,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <vue-datetimepicker id="inputReceiptDate" name="receipt_date" v-model="receipt_date" v-validate="'required'" format="YYYY-MM-DD hh:mm A"></vue-datetimepicker>
+                                        <vue-datetimepicker id="inputReceiptDate" name="receipt_date" v-model="receipt_date" v-validate="'required'" format="YYYY-MM-DD hh:mm A" v-bind:readonly="readOnly"></vue-datetimepicker>
                                     </div>
                                     <span v-show="errors.has('receipt_date')" class="help-block" v-cloak>@{{ errors.first('receipt_date') }}</span>
                                 </div>
@@ -85,20 +85,22 @@
                             <div v-bind:class="{ 'form-group':true, 'has-error':errors.has('license_plate') }">
                                 <label for="inputLicensePlate" class="col-sm-2 control-label">@lang('warehouse.inflow.receipt.field.license_plate')</label>
                                 <div class="col-sm-8">
-                                    <select id="selectLicensePlate" class="form-control"
-                                            v-model="select_license_plate"
-                                            v-on:change="onChangeSelectLicensePlate">
-                                        <option value="">@lang('labels.PLEASE_SELECT')</option>
-                                        @foreach($truck as $key => $t)
-                                            <option value="{{ $key }}">{{ $t }}</option>
-                                        @endforeach
-                                        <option value="">@lang('labels.SELECT_OTHER')</option>
-                                    </select>
-                                    <br>
+                                    <div v-show="!readOnly">
+                                        <select id="selectLicensePlate" class="form-control"
+                                                v-model="select_license_plate"
+                                                v-on:change="onChangeSelectLicensePlate" v-bind:disabled="readOnly">
+                                            <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                            @foreach($truck as $key => $t)
+                                                <option value="{{ $key }}">{{ $t }}</option>
+                                            @endforeach
+                                            <option value="">@lang('labels.SELECT_OTHER')</option>
+                                        </select>
+                                        <br>
+                                    </div>
                                     <input id="inputLicensePlate" type="text" name="license_plate" class="form-control"
                                            v-model="license_plate"
                                            v-validate="'required'"
-                                           v-bind:readonly="select_license_plate == '' ? false:true"
+                                           v-bind:readonly="readOnly ? true:select_license_plate == '' ? false:true"
                                            v-show="select_license_plate != '' ? false:true"
                                            data-vv-as="{{ trans('warehouse.inflow.receipt.field.license_plate') }}">
                                     <span v-show="errors.has('license_plate')" class="help-block" v-cloak>@{{ errors.first('license_plate') }}</span>
@@ -141,6 +143,7 @@
                                                             class="form-control"
                                                             v-model="receipt.selected_unit"
                                                             v-validate="'required'"
+                                                            v-bind:disabled="readOnly"
                                                             v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.unit') }} ' + (receiptIdx + 1)"
                                                             v-bind:data-vv-name="'unit_' + receiptIdx">
                                                         <option value="">@lang('labels.PLEASE_SELECT')</option>
@@ -149,21 +152,109 @@
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('brutto_' + receiptIdx) }">
                                                     <input v-bind:id="'brutto_' + receipt.item.id" type="text" class="form-control text-right" name="brutto[]"
-                                                           v-model="receipt.brutto" v-validate="'required|numeric:2'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.brutto') }} ' + (receiptIdx + 1)"
+                                                           v-model="receipt.brutto" v-validate="'required|numeric:2'"
+                                                           v-bind:readonly="readOnly"
+                                                           v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.brutto') }} ' + (receiptIdx + 1)"
                                                            v-bind:data-vv-name="'brutto_' + receiptIdx">
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('netto_' + receiptIdx) }">
                                                     <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]"
-                                                           v-model="receipt.netto" v-validate="'required|numeric:2|checkequal:' + receiptIdx" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.netto') }} ' + (receiptIdx + 1)"
+                                                           v-model="receipt.netto" v-validate="'required|numeric:2|checkequal:' + receiptIdx"
+                                                           v-bind:readonly="readOnly"
+                                                           v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.netto') }} ' + (receiptIdx + 1)"
                                                            v-bind:data-vv-name="'netto_' + receiptIdx">
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('tare_' + receiptIdx) }">
                                                     <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]"
-                                                           v-model="receipt.tare" v-validate="'required|numeric:2|checkequal:' + receiptIdx" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.tare') }} ' + (receiptIdx + 1)"
+                                                           v-model="receipt.tare" v-validate="'required|numeric:2|checkequal:' + receiptIdx"
+                                                           v-bind:readonly="readOnly"
+                                                           v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.tare') }} ' + (receiptIdx + 1)"
                                                            v-bind:data-vv-name="'tare_' + receiptIdx">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md" v-on:click="removeReceipt(receiptIdx)" disabled><span class="fa fa-minus"/></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('warehouse.inflow.receipt.box.expense')</h3>
+                            <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertExpense"><span class="fa fa-plus fa-fw"/></button>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="expensesListTable" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="20%">@lang('warehouse.inflow.receipt.table.expense.header.name')</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('warehouse.inflow.receipt.table.expense.header.type')</th>
+                                                <th width="10%"
+                                                    class="text-center">@lang('warehouse.inflow.receipt.table.expense.header.internal_expense')</th>
+                                                <th width="25%"
+                                                    class="text-center">@lang('warehouse.inflow.receipt.table.expense.header.remarks')</th>
+                                                <th width="5%">&nbsp;</th>
+                                                <th width="20%"
+                                                    class="text-center">@lang('warehouse.inflow.receipt.table.expense.header.amount')</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(expense, expenseIndex) in po.expenses">
+                                                <td v-bind:class="{ 'has-error':errors.has('expense_name_' + expenseIndex) }">
+                                                    <input name="expense_name[]" type="text" class="form-control"
+                                                           v-model="expense.name" v-validate="'required'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.expense.header.name') }} ' + (expenseIndex + 1)"
+                                                           v-bind:data-vv-name="'expense_name_' + expenseIndex">
+                                                </td>
+                                                <td v-bind:class="{ 'has-error':errors.has('expense_type_' + expenseIndex) }">
+                                                    <select class="form-control" v-model="expense.type.code" name="expense_type[]"
+                                                            v-validate="'required'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.expense.header.type') }} ' + (expenseIndex + 1)"
+                                                            v-bind:data-vv-name="'expense_type_' + expenseIndex">
+                                                        <option v-bind:value="defaultExpenseType.code">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="expenseType of expenseTypes" v-bind:value="expenseType.code">@{{ expenseType.i18nDescription }}</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-center">
+                                                    <vue-iCheck name="is_internal_expense[]" v-model="expense.is_internal_expense" disabled="disabled"></vue-iCheck>
+                                                </td>
+                                                <td>
+                                                    <input name="expense_remarks[]" type="text" class="form-control" v-model="expense.remarks"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md" v-on:click="removeExpense(expenseIndex)">
+                                                        <span class="fa fa-minus"></span>
+                                                    </button>
+                                                </td>
+                                                <td v-bind:class="{ 'has-error':errors.has('expense_amount_' + expenseIndex) }">
+                                                    <input name="expense_amount[]" type="text"
+                                                           class="form-control text-right"
+                                                           v-model="expense.amount" v-validate="'required|numeric:2|min_value:0'"
+                                                           v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.expense.header.amount') }} ' + (expenseIndex + 1)"
+                                                           v-bind:data-vv-name="'expense_amount_' + expenseIndex"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="expensesTotalListTable" class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td width="80%"
+                                                    class="text-right">@lang('warehouse.inflow.receipt.table.total.body.total')</td>
+                                                <td width="20%" class="text-right">
+                                                    <span class="control-label-normal">@{{ numeral(expenseTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -194,11 +285,15 @@
             data: {
                 PO: JSON.parse('{!! htmlspecialchars_decode($po) !!}'),
                 inflow: {
-                    receipts : []
+                    receipts: []
+                },
+                po: {
+                    expenses: []
                 },
                 receipt_date: '',
                 license_plate: '',
-                select_license_plate: ''
+                select_license_plate: '',
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}')
             },
             methods: {
                 validateBeforeSubmit: function() {
@@ -242,8 +337,65 @@
                         });
                     }
                 },
+                fillReceipt: function() {
+                    var vm = this;
+
+                    if (vm.PO.receipts == undefined) return;
+
+                    vm.receipt_date = moment(vm.PO.receipts[0].receipt_date).format('{{ config('const.DATETIME_FORMAT.JS_DATETIME') }}');
+                    vm.license_plate = vm.PO.receipts[0].license_plate;
+
+                    for (var i = 0; i < vm.inflow.receipts.length; i++) {
+                        for (var j = 0; j < vm.PO.receipts.length; j++) {
+                            if (vm.inflow.receipts[i].item.id == vm.PO.receipts[j].item_id) {
+                                vm.inflow.receipts[i].selected_unit = vm.PO.receipts[j].selected_unit_id;
+                                vm.inflow.receipts[i].brutto = vm.PO.receipts[j].brutto;
+                                vm.inflow.receipts[i].netto = vm.PO.receipts[j].netto;
+                                vm.inflow.receipts[i].tare = vm.PO.receipts[j].tare;
+                            }
+                        }
+                    }
+                },
                 removeReceipt: function (index) {
                     this.inflow.receipts.splice(index, 1);
+                },
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numeral().unformat(expense.amount));
+                        else
+                            result -= parseInt(numeral().unformat(expense.amount));
+                    });
+                    return result;
+                },
+                insertExpense: function () {
+                    var vm = this;
+                    vm.po.expenses.push({
+                        name: '',
+                        type: {
+                            code: ''
+                        },
+                        is_internal_expense: true,
+                        amount: 0,
+                        remarks: ''
+                    });
+                },
+                expenseTotal: function () {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.po.expenses, function (expense, key) {
+                        if (expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numeral().unformat(expense.amount));
+                        else
+                            result -= parseInt(numeral().unformat(expense.amount));
+                    });
+                    return result;
+                },
+                removeExpense: function (index) {
+                    var vm = this;
+                    vm.po.expenses.splice(index, 1);
                 }
             },
             mounted: function() {
@@ -265,6 +417,26 @@
                     }
                 });
                 this.createReceipt();
+                if (this.PO.status == '{{ config('lookups.PO_STATUS.WAITING_PAYMENT') }}' ||
+                    this.PO.status == '{{ config('lookups.PO_STATUS.CLOSED') }}') {
+                    this.fillReceipt();
+                }
+            },
+            computed: {
+                defaultExpenseType: function () {
+                    return {
+                        code: ''
+                    }
+                },
+                readOnly: function () {
+                    var vm = this;
+
+                    if (vm.PO.status == '{{ config('lookups.PO_STATUS.WAITING_ARRIVAL') }}') {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
             }
         });
     </script>

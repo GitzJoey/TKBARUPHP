@@ -110,4 +110,8 @@ interface PurchaseOrderService
     public function updatePOStatus(PurchaseOrder $poData, $amount);
 
     public function getLastPODates($limit);
+
+    public function getPOByCode($code);
+
+    public function addExpenses($poId, $expenseArr);
 }

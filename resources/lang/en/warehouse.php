@@ -27,6 +27,7 @@ return [
             'box' => [
                 'receipt' => 'Receipt',
                 'items' => 'Items',
+                'expense' => 'Expenses',
             ],
             'field' => [
                 'warehouse' => 'Warehouse',
@@ -46,7 +47,25 @@ return [
                         'tare' => 'Tare',
                     ],
                 ],
+                'expense' => [
+                    'header' => [
+                        'name' => 'Name',
+                        'type' => 'Type',
+                        'internal_expense' => 'Internal',
+                        'remarks' => 'Remarks',
+                        'amount' => 'Amount',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total',
+                    ],
+                ],
             ],
+        ],
+        'field' => [
+            'warehouse' => 'Warehouse',
+            'po_code' => 'PO Code',
         ],
     ],
     'outflow' => [
@@ -76,6 +95,7 @@ return [
             'box' => [
                 'deliver' => 'Deliver',
                 'items' => 'Items',
+                'expenses' => 'Expenses',
             ],
             'field' => [
                 'warehouse' => 'Warehouse',
@@ -93,7 +113,25 @@ return [
                         'brutto' => 'Brutto',
                     ],
                 ],
+                'expense' => [
+                    'header' => [
+                        'name' => 'Name',
+                        'type' => 'Type',
+                        'internal_expense' => 'Internal',
+                        'remarks' => 'Remarks',
+                        'amount' => 'Amount',
+                    ],
+                ],
+                'total' => [
+                    'body' => [
+                        'total' => 'Total',
+                    ],
+                ],
             ],
+        ],
+        'field' => [
+            'warehouse' => 'Warehouse',
+            'so_code' => 'Sales Code',
         ],
     ],
     'create' => [
@@ -322,8 +360,25 @@ return [
         ],
         'show' => [
             'title' => 'Show Stock Merger',
-            'page_title' => '',
+            'page_title' => 'Show Stock Merger',
             'page_title_desc' => '',
+            'header' => [
+                'title' => [
+                    'merger' => 'Merger Info',
+                    'stock_lists' => 'Stock Lists',
+                    'merger_remarks' => 'Remarks',
+                ],
+            ],
+            'table' => [
+                'stock' => [
+                    'header' => [
+                        'po_code' => 'Code',
+                        'po_date' => 'Date',
+                        'shipping_date' => 'Shipping Date',
+                        'current_quantity' => 'Current Quantity',
+                    ],
+                ],
+            ],
         ],
         'field' => [
             'merger_date' => 'Date',
