@@ -271,6 +271,9 @@
                 },
                 defaultMergeType: function() {
                     return ''
+                },
+                defaultWarehouse: function() {
+                    return ''
                 }
             }
         });

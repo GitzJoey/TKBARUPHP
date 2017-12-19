@@ -94,7 +94,7 @@ class StockServiceImpl implements StockService
 
     public function getStockByProduct($product_id)
     {
-        $result = Stock::with('product', 'purchaseOrder')->whereProductId($product_id)->get();
+        $result = Stock::with('product', 'purchaseOrder', 'warehouse')->whereProductId($product_id)->get();
 
         return $result;
     }

@@ -338,6 +338,7 @@ return [
                         'po_date' => 'Date',
                         'shipping_date' => 'Shipping Date',
                         'current_quantity' => 'Current Quantity',
+                        'warehouse' => 'Warehouse',
                     ],
                 ],
             ],
@@ -376,6 +377,7 @@ return [
                         'po_date' => 'Date',
                         'shipping_date' => 'Shipping Date',
                         'current_quantity' => 'Current Quantity',
+                        'warehouse' => 'Warehouse',
                     ],
                 ],
             ],
@@ -385,6 +387,7 @@ return [
             'merge_type' => 'Type',
             'stock_lists' => 'Stock Lists',
             'remarks' => 'Remarks',
+            'destination_warehouse' => 'Destination Warehouse',
         ],
     ],
 ];

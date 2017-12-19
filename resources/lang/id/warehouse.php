@@ -338,6 +338,7 @@ return [
                         'po_date' => 'Tanggal',
                         'shipping_date' => 'Tgl Pengiriman',
                         'current_quantity' => 'Jumlah',
+                        'warehouse' => 'Gudang',
                     ],
                 ],
             ],
@@ -376,6 +377,7 @@ return [
                         'po_date' => 'Tanggal',
                         'shipping_date' => 'Tgl Pengiriman',
                         'current_quantity' => 'Jumlah',
+                        'warehouse' => 'Gudang',
                     ],
                 ],
             ],
@@ -385,6 +387,7 @@ return [
             'merge_type' => 'Tipe',
             'stock_lists' => 'Daftar Stok',
             'remarks' => 'Keterangan',
+            'destination_warehouse' => 'Gudang Tujuan',
         ],
     ],
 ];
