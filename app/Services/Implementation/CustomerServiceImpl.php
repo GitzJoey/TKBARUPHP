@@ -80,7 +80,6 @@ class CustomerServiceImpl implements CustomerService
      */
     public function getPassiveCustomer($numberOfPeriod = 1, $period = "months")
     {
-        //TODO : Find another effective algorithm !
         $customers = Customer::all();
         $today = Carbon::today();
 
@@ -97,9 +96,7 @@ class CustomerServiceImpl implements CustomerService
 
             $customerLastSalesOrder = getCustomerLastOrder($customer->id);
 
-            if(is_null($customerLastSalesOrder)){
-
-                // TODO : Change to switch case alike
+            if(is_null($customerLastSalesOrder)) {
                 if($period === "days"){
                     return $today->diffInDays($customer->created_at) >= $numberOfPeriod;
                 }
@@ -112,10 +109,7 @@ class CustomerServiceImpl implements CustomerService
                 else{
                     return $today->diffInYears($customer->created_at) >= $numberOfPeriod;
                 }
-
             } else {
-
-                // TODO : Change to switch case alike
                 if($period === "days"){
                     return $today->diffInDays($customerLastSalesOrder->so_created) >= $numberOfPeriod;
                 }
@@ -128,7 +122,6 @@ class CustomerServiceImpl implements CustomerService
                 else{
                     return $today->diffInYears($customerLastSalesOrder->so_created) >= $numberOfPeriod;
                 }
-
             }
         });
 
