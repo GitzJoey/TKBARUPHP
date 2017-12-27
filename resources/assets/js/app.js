@@ -1,3 +1,7 @@
+//This import always error
+//TypeError: VeeValidate.Validator.addLocale is not a function
+//import ID from 'vee-validate/dist/locale/id';
+
 Vue.use(VeeValidate, {
     delay: 100,
     locale: $('html').attr('lang')
