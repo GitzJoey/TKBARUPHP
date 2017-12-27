@@ -254,6 +254,7 @@ return [
                     'stock_location' => 'Stock Location',
                     'transferred_to' => 'Transferred To',
                     'stocks' => 'Stocks',
+                    'in' => 'In',
                     'stock_transfer' => 'Stock Transfer',
                 ],
             ],
@@ -276,6 +277,8 @@ return [
             'transfer_date' => 'Transfer Date',
             'remarks' => 'Remarks',
             'quantity' => 'Quantity',
+            'newstock' => 'New Stock',
+            'existingstock' => 'Existing Stock',
         ],
         'index' => [
             'title' => 'Transfer Stocks',

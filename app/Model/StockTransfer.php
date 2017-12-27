@@ -68,15 +68,15 @@ class StockTransfer extends Model
     protected $table = 'stock_transfers';
 
     protected $fillable = [
+        'store_id',
+        'stock_id',
+        'product_id',
+        'source_warehouse_id',
+        'destination_warehouse_id',
+        'transfer_date',
         'quantity',
         'cost',
         'reason',
-        'store_id',
-        'po_id',
-        'product_id',
-        'transfer_date',
-        'source_warehouse_id',
-        'destination_warehouse_id'
     ];
 
     public function hId()
@@ -104,9 +104,9 @@ class StockTransfer extends Model
         return $this->belongsTo('App\Model\Warehouse', 'destination_warehouse_id');
     }
 
-    public function purchaseOrder()
+    public function stock()
     {
-        return $this->belongsTo('App\Model\PurchaseOrder', 'po_id');
+        return $this->belongsTo('App\Model\Stock', 'stock_id');
     }
 
     public static function boot()

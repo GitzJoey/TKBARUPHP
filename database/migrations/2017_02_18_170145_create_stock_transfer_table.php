@@ -16,7 +16,7 @@ class CreateStockTransferTable extends Migration
         Schema::create('stock_transfers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('store_id')->default(0);
-            $table->unsignedBigInteger('po_id')->default(0);
+            $table->unsignedBigInteger('stock_id')->default(0);
             $table->unsignedBigInteger('product_id')->default(0);
             $table->dateTime('transfer_date')->nullable();
             $table->unsignedBigInteger('source_warehouse_id')->default(0);

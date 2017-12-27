@@ -254,6 +254,7 @@ return [
                     'stock_location' => 'Lokasi Stok',
                     'transferred_to' => 'Ditransfer Ke',
                     'stocks' => 'Stok',
+                    'in' => 'Di',
                     'stock_transfer' => 'Transfer Stok',
                 ],
             ],
@@ -276,6 +277,8 @@ return [
             'transfer_date' => 'Tanggal Transfer',
             'remarks' => 'Keterangan',
             'quantity' => 'Jumlah',
+            'newstock' => 'Stok Baru',
+            'existingstock' => 'Stok Yang Ada',
         ],
         'index' => [
             'title' => 'Pindah Stok',

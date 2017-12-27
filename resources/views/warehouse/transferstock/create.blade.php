@@ -128,12 +128,12 @@
                 <div class="col-md-6" v-show="ts.source_warehouse.id != ''">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">@lang('warehouse.transfer_stock.create.header.title.stocks') in @{{ ts.source_warehouse.name }}</h3>
+                            <h3 class="box-title">@lang('warehouse.transfer_stock.create.header.title.stocks') @lang('warehouse.transfer_stock.create.header.title.in') @{{ ts.source_warehouse.name }}</h3>
                         </div>
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="hidden" name="po_id" v-bind:value="ts.po.id" >
+                                    <input type="hidden" name="stock_id" v-bind:value="ts.stock.id" >
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
@@ -150,7 +150,7 @@
                                                     </label>
                                                 </td>
                                                 <td>@{{ s.product.name }}</td>
-                                                <td>@{{ s.current_quantity }}</td>
+                                                <td align="right">@{{ s.current_quantity }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -163,13 +163,18 @@
                 <div class="col-md-6" v-show="ts.destination_warehouse.id != '' && ts.product.id != ''">
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">@lang('warehouse.transfer_stock.create.header.title.stocks') in @{{ ts.destination_warehouse.name }}</h3>
+                            <h3 class="box-title">@lang('warehouse.transfer_stock.create.header.title.stocks') @lang('warehouse.transfer_stock.create.header.title.in') @{{ ts.destination_warehouse.name }}</h3>
                         </div>
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label><input type="radio" class="radio-button" value="newStock" v-model="newOrExistingStock"> New Stock</label>
-                                    <label v-show="destination_stocks.length > 0"><input type="radio" class="radio-button" value="existingStock" v-model="newOrExistingStock"> Existing Stock</label>
+                                    <label>
+                                        <input type="radio" class="radio-button" value="newStock" name="newOrExistingStock" v-model="newOrExistingStock">
+                                        &nbsp;@lang('warehouse.transfer_stock.field.newstock')&nbsp;&nbsp;&nbsp;
+                                    </label>
+                                    <label v-show="destination_stocks.length > 0">
+                                        <input type="radio" class="radio-button" value="existingStock" name="newOrExistingStock" v-model="newOrExistingStock">&nbsp;@lang('warehouse.transfer_stock.field.existingstock')
+                                    </label>
                                 </div>
                             </div>
                             <div class="row" v-show="newOrExistingStock == 'newStock'">
@@ -206,8 +211,8 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="(s, sIdx) in destination_stocks" v-cloak>
-                                                <td>
-                                                    <input type="radio" name="destination-stocks" class="radio-button" v-bind:value="s" v-model="ts.stock">
+                                                <td class="text-center">
+                                                    <input type="radio" name="destination-stocks" class="radio-button" v-model="ts.stock.id">
                                                 </td>
                                                 <td>@{{ s.product.name }}</td>
                                                 <td><input type="text"></td>
@@ -278,7 +283,7 @@
                         $('#loader-container').fadeIn('fast');
                         axios.post('{{ route('api.post.db.warehouse.transfer_stock.transfer') }}' + '?api_token=' + $('#secapi').val(), new FormData($('#tsForm')[0]))
                             .then(function(response) {
-                                window.location.href = '{{ route('db.warehouse.transfer_stock.transfer') }}';
+                                window.location.href = '{{ route('db.warehouse.transfer_stock.index') }}';
                         }).catch(function(e) {
                             $('#loader-container').fadeOut('fast');
                             if (e.response.data.errors != undefined && Object.keys(e.response.data.errors).length > 0) {
@@ -300,6 +305,8 @@
                     axios.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.source_warehouse.id).then(function(data) {
                         vm.source_stocks = data.data;
                     });
+
+                    vm.ts.source_warehouse.name = _.find(vm.warehouseDDL, { id: warehouseId }).name;
                 },
                 showDestinationStocks: function(warehouseId, productId) {
                     var vm = this;
@@ -307,6 +314,8 @@
                     axios.get('{{ route('api.stock.current_stocks') }}' + '/' + this.ts.destination_warehouse.id).then(function(data) {
                         vm.destination_stocks = data.data;
                     });
+
+                    vm.ts.destination_warehouse.name = _.find(vm.warehouseDDL, { id: warehouseId }).name;
                 },
                 selectProduct: function(stock) {
                     this.ts.product.id = stock.product_id;

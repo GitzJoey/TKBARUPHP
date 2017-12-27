@@ -57,7 +57,7 @@ class WarehouseTransferStockController extends Controller
 
         $this->stockTransferService->transfer($request);
 
-        return redirect(route('db'));
+        return response()->json();
     }
 
 }

@@ -8,10 +8,11 @@
 
 namespace App\Services\Implementation;
 
-use App\Model\StockTransfer;
 use App\Model\Stock;
 use App\Model\StockIn;
 use App\Model\StockOut;
+use App\Model\StockTransfer;
+
 use App\Services\StockTransferService;
 
 use DB;
@@ -27,13 +28,14 @@ class StockTransferServiceImpl implements StockTransferService
     {
         Log::info("[StockTransferServiceImpl@transfer]");
 
-        DB::transaction(function () use ($request) {
+        DB::beginTransaction();
 
+        try {
             $user = Auth::user();
 
             $stockTransfer = [
                 'store_id' => $user->store_id,
-                'po_id' => $request->input('po_id'),
+                'stock_id' => $request->input('stock_id'),
                 'product_id' => $request->input('product_id'),
                 'transfer_date' => date('Y-m-d H:i:s', strtotime($request->input('transfer_date'))),
                 'source_warehouse_id' => $request->input('source_warehouse_id'),
@@ -41,35 +43,68 @@ class StockTransferServiceImpl implements StockTransferService
                 'quantity' => $request->input('quantity'),
                 'reason' => $request->input('remarks')
             ];
+
             $st = StockTransfer::create($stockTransfer);
 
-            $stock_id = $request->input('stock_id');
-
-            $stockOut = [
-                'store_id' => $user->store_id,
-                'product_id' => $st->product_id,
-                'stock_id' => $stock_id,
-                'warehouse_id' => $st->source_warehouse_id,
-                'quantity' => $st->quantity,
-                'stock_trf_id' => $st->id,
-            ];
-            $sto = StockOut::create($stockOut);
-
-            $stockIn = [
-                'store_id' => $user->store_id,
-                'product_id' => $st->product_id,
-                'stock_id' => $stock_id,
-                'warehouse_id' => $st->destination_warehouse_id,
-                'quantity' => $st->quantity,
-                'stock_trf_id' => $st->id,
-            ];
-            $sti = StockIn::create($stockIn);
-
-            $stock = Stock::find($stock_id);
-            $stock->current_quantity = $stock->current_quantity - $sto->quantity;
+            $stock = Stock::find($request->input('stock_id'));
+            $stock->current_quantity -= $st->quantity;
             $stock->save();
 
+            $stockOutParam = [
+                'store_id' => $user->store_id,
+                'product_id' => $st->product_id,
+                'stock_id' => $stock->id,
+                'warehouse_id' => $st->source_warehouse_id,
+                'stock_trf_id' => $st->id,
+                'quantity' => $st->quantity
+            ];
+
+            StockOut::create($stockOutParam);
+
+            if (strtoupper($request->input('newOrExistingStock')) == 'NEWSTOCK') {
+                $stockParams = [
+                    'store_id' => Auth::user()->store_id,
+                    'po_id' => 0,
+                    'stock_merge_id' => 0,
+                    'product_id' => $st->product_id,
+                    'warehouse_id' => $st->destination_warehouse_id,
+                    'quantity' => $st->quantity,
+                    'current_quantity' => $st->quantity
+                ];
+
+                $stock = Stock::create($stockParams);
+
+                $stockIn = [
+                    'store_id' => $user->store_id,
+                    'product_id' => $st->product_id,
+                    'stock_id' => $stock->id,
+                    'warehouse_id' => $st->destination_warehouse_id,
+                    'quantity' => $st->quantity,
+                    'stock_trf_id' => $st->id,
+                ];
+
+                StockIn::create($stockIn);
+            } else {
+                $dest_stock = Stock::find($request->input('destination-stocks'));
+                $dest_stock->current_quantity += $st->quantity;
+                $dest_stock->save();
+
+                $stockIn = [
+                    'store_id' => $user->store_id,
+                    'product_id' => $st->product_id,
+                    'stock_id' => $dest_stock->id,
+                    'warehouse_id' => $st->destination_warehouse_id,
+                    'quantity' => $st->quantity,
+                    'stock_trf_id' => $st->id,
+                ];
+
+                StockIn::create($stockIn);
+            }
+
+            DB::commit();
             return $st;
-        });
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
     }
 }

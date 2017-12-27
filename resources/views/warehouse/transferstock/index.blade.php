@@ -42,11 +42,11 @@
                 <tbody>
                     @foreach ($stock_transfer as $key => $stock_transfer_item)
                         <tr>
-                            <td>{{ $stock_transfer_item->transfer_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($stock_transfer_item->transfer_date)->format(Auth::user()->store->dateTimeFormat) }}</td>
                             <td>{{ $stock_transfer_item->product->name }}</td>
                             <td>{{ $stock_transfer_item->source_warehouse->name }}</td>
                             <td>{{ $stock_transfer_item->destination_warehouse->name }}</td>
-                            <td>{{ $stock_transfer_item->quantity }}</td>
+                            <td class="text-center">{{ number_format($stock_transfer_item->quantity, Auth::user()->decimal_digit, Auth::user()->store->decimal_separator, Auth::user()->store->thousand_separator) }}</td>
                             <td class="text-center" width="10%">
                                 <a class="btn btn-xs btn-info" href="{{ route('db.warehouse.transfer_stock.show', $stock_transfer_item->hId()) }}"><span class="fa fa-info fa-fw"></span></a>
                             </td>
