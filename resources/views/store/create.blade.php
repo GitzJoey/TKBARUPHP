@@ -438,9 +438,12 @@
             },
             mounted: function() {
                 this.$validator.extend('checkactive', {
-                    messages: {
+                    getMessage: function(field, args) {
+                        return 'Default Store cannot be inactived';
+                        /*
                         en: function(field, args) { return 'Default Store cannot be inactived' },
                         id: function(field, args) { return 'Toko utama tidak bisa dinonaktifkan' }
+                        */
                     },
                     validate: function(value, args) {
                         var result = false;

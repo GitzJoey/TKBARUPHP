@@ -252,9 +252,12 @@
             mounted: function() {
                 var vm = this;
                 this.$validator.extend('checkboxChecked', {
-                    messages: {
+                    getMessage: function(field, args) {
+                        return 'At Least 2 Stock Checked';
+                        /*
                         en: function(field, args) { return 'At Least 2 Stock Checked' },
                         id: function(field, args) { return 'Minimal 2 Stok Terpilih' }
+                        */
                     },
                     validate: function(value, args) {
                         var result = false;

@@ -499,9 +499,12 @@
             },
             mounted: function() {
                 this.$validator.extend('checkactive', {
-                    messages: {
+                    getMessage: function(field, args) {
+                        return 'Default Store cannot be inactived';
+                        /*
                         en: function(field, args) { return 'Default Store cannot be inactived' },
                         id: function(field, args) { return 'Toko utama tidak bisa dinonaktifkan' }
+                        */
                     },
                     validate: function(value, args) {
                         var result = false;
@@ -521,9 +524,12 @@
                 });
 
                 this.$validator.extend('isdefault_switch_no', {
-                    messages: {
+                    getMessage: function(field, args) {
+                        return 'Default Store cannot be switched off, replace other Store as YES instead.'
+                        /*
                         en: function(field, args) { return 'Default Store cannot be switched off, replace other Store as YES instead.' },
                         id: function(field, args) { return 'Toko utama tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu' }
+                        */
                     },
                     validate: function(value, args) {
                         if (value == 'YESNOSELECT.NO') { return false; }
@@ -532,9 +538,12 @@
                 });
 
                 this.$validator.extend('frontweb_switch_no', {
-                    messages: {
+                    getMessage: function(field, args) {
+                        return 'Front Web cannot be inactived, replace other Store as YES instead';
+                        /*
                         en: function(field, args) { return 'Front Web cannot be inactived, replace other Store as YES instead' },
                         id: function(field, args) { return 'Website tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu' }
+                        */
                     },
                     validate: function(value, args) {
                         if (value == 'YESNOSELECT.NO') { return false; }
