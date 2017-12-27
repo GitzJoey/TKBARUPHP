@@ -8,12 +8,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Util\PHP2Moment;
 use DB;
 use Auth;
 use Config;
-use Illuminate\Support\Facades\Input;
 use Validator;
+use Exception;
 use LaravelLocalization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +25,8 @@ use App\Model\Currencies;
 use App\Model\CurrenciesConversion;
 
 use App\Repos\LookupRepo;
+
+use App\Util\PHP2Moment;
 
 use App\Services\StoreService;
 
@@ -82,7 +83,9 @@ class StoreController extends Controller
             'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        DB::transaction(function() use($data) {
+        DB::beginTransaction();
+
+        try {
             $imageName = '';
 
             if (!empty($data->image_path)) {
@@ -140,7 +143,10 @@ class StoreController extends Controller
 
                 $store->currenciesConversions()->save($curConv);
             }
-        });
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        };
 
         return response()->json();
     }
