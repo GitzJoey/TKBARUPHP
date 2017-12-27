@@ -116,6 +116,8 @@ class StockServiceImpl implements StockService
 
             $stocks = Stock::whereIn('id', $request['selected_merge'])->get();
 
+            $qty = 0;
+
             foreach ($stocks as $s) {
                 $smd = new StockMergeDetail();
                 $smd->po_id = $s->purchaseOrder->id;
@@ -128,7 +130,14 @@ class StockServiceImpl implements StockService
                 }
 
                 $sm->stockMergeDetails()->save($smd);
+
+                //delete the stock
+                $this->deleteStock($s->id);
+
+                $qty += $s->current_quantity;
             }
+
+            $this->doStockIn(0, $sm->id, $stocks->first()->product->id, $stocks->first()->warehouse->id, $qty);
 
             DB::commit();
         } catch (Exception $e) {
@@ -142,11 +151,12 @@ class StockServiceImpl implements StockService
         $stock->delete();
     }
 
-    public function doStockIn($poId, $productId, $warehouseId, $qty)
+    public function doStockIn($poId, $stockMergeId, $productId, $warehouseId, $qty)
     {
         $stockParams = [
             'store_id' => Auth::user()->store_id,
             'po_id' => $poId,
+            'stock_merge_id' => $stockMergeId,
             'product_id' => $productId,
             'warehouse_id' => $warehouseId,
             'quantity' => $qty,
@@ -158,6 +168,7 @@ class StockServiceImpl implements StockService
         $stockInParams = [
             'store_id' => Auth::user()->store_id,
             'po_id' => $poId,
+            'stock_merge_id' => $stockMergeId,
             'product_id' => $productId,
             'warehouse_id' => $warehouseId,
             'stock_id' => $stock->id,

@@ -63,7 +63,9 @@ class StockIn extends Model
         'product_id',
         'warehouse_id',
         'stock_id',
-        'stock_opname_id'
+        'stock_merge_id',
+        'stock_opname_id',
+        'stock_trf_id',
     ];
 
     public function hId()

@@ -1,3 +1,5 @@
+
+
 Vue.use(VeeValidate, {
     delay: 100,
     locale: $('html').attr('lang')

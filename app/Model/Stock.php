@@ -79,7 +79,7 @@ class Stock extends Model
         'warehouse_id'
     ];
 
-    protected $hidden = [
+    protected $appends = [
         'isMerge',
     ];
 

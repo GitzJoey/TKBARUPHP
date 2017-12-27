@@ -10,39 +10,39 @@
     "production": "cross-env NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.17.1",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^5.1.1",
     "jquery": "^3.2.1",
-    "laravel-mix": "^1.6.1",
+    "laravel-mix": "^1.7.2",
     "lodash": "^4.17.4",
-    "vue": "^2.5.8",
-    "vue-template-compiler": "^2.5.8"
+    "vue": "^2.5.13",
+    "vue-template-compiler": "^2.5.13"
   },
   "dependencies": {
     "admin-lte": "^2.4.2",
     "animate.css": "^3.5.2",
     "autonumeric": "^4.1.0-beta.16",
     "bootstrap": "^3.3.7",
-    "bootstrap-fileinput": "^4.4.5",
+    "bootstrap-fileinput": "^4.4.6",
     "bootstrap-sweetalert": "^1.0.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "^4.7.0",
-    "fullcalendar": "^3.6.2",
-    "highcharts": "^6.0.2",
+    "fullcalendar": "^3.8.0",
+    "highcharts": "^6.0.4",
     "icheck": "^1.0.2",
     "ionicons": "^3.0.0",
     "jquery-gotop": "^1.1.2",
-    "moment": "^2.19.1",
+    "moment": "^2.20.1",
     "moment-duration-format": "^1.3.0",
-    "noty": "^3.1.3",
+    "noty": "^3.1.4",
     "numeral": "^2.0.6",
     "parsleyjs": "^2.8.0",
-    "pdfjs-dist": "^2.0.106",
+    "pdfjs-dist": "^2.0.220",
     "select2": "^4.0.5",
     "tooltipster": "^4.2.5",
     "urijs": "^1.19.0",
-    "vee-validate": "^2.0.0-rc.21",
-    "vue-autonumeric": "^1.0.2"
+    "vee-validate": "^2.0.0-rc.27",
+    "vue-autonumeric": "^1.0.4"
   }
 }

@@ -37,7 +37,7 @@ interface StockService
 
     public function deleteStock($stock_id);
 
-    public function doStockIn($poId, $productId, $warehouseId, $qty);
+    public function doStockIn($poId, $stockMergeId, $productId, $warehouseId, $qty);
 
     public function doStockOut($soId, $productId, $warehouseId, $stockId, $qty);
 }
