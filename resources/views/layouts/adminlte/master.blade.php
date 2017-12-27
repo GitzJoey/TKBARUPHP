@@ -95,7 +95,7 @@
                 }
                 timeout();
 
-                numeral.defaultFormat('{{ Auth::user()->store->numeralFormat }}');
+                numbro.defaultFormat('{{ Auth::user()->store->numeralFormat }}');
 
                 $('#applySettingsButton').click(function() {
                     var response = $.ajax({

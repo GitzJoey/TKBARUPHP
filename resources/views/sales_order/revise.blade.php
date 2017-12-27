@@ -281,7 +281,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-right valign-middle">
-                                                    @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
+                                                    @{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -296,7 +296,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('sales_order.revise.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
+                                                    <span class="control-label-normal">@{{ numbro(grandTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -328,7 +328,7 @@
                                             <template v-for="(item, itemIndex) in so.items">
                                                 <tr>
                                                     <td width="30%">@{{ item.product.name }}</td>
-                                                    <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                    <td width="30%">@{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                     <td colspan="3" width="40%">
                                                         <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
                                                             <span class="fa fa-plus"/>
@@ -356,7 +356,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                                    <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
+                                                    <td class="text-right" colspan="2"> @{{ numbro(discountItemSubTotal(item.discounts)).format() }}</td>
                                                 </tr>
                                             </template>
                                         </tbody>
@@ -370,7 +370,7 @@
                                             <tr>
                                                 <td width="65%" class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
                                                 <td width="35%" class="text-right">
-                                                    <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
+                                                    <span class="control-label-normal">@{{ numbro(discountTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -461,7 +461,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ numeral(expenseTotal()).format() }}</span>
+                                                    <span class="control-label-normal">@{{ numbro(expenseTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -491,7 +491,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
+                                                <td class="text-right valign-middle">@{{ numbro( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-md-4">
@@ -502,7 +502,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
+                                                <td class="text-right valign-middle">@{{ numbro( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -561,15 +561,15 @@
                                                     <tr>
                                                         <td>@{{ item.product.name }}</td>
                                                         <td>@{{ item.quantity }}</td>
-                                                        <td>@{{ numeral(item.price).format() }}</td>
-                                                        <td class="text-right">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                        <td>@{{ numbro(item.price).format() }}</td>
+                                                        <td class="text-right">@{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                     </tr>
                                                     <template v-for="discount in item.discounts">
                                                     <tr v-if="discount.disc_value != 0">
                                                         <td>Disc. @{{ discount.disc_percent }}%</td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td class="text-right">-@{{ numeral(discount.disc_value).format() }}</td>
+                                                        <td class="text-right">-@{{ numbro(discount.disc_value).format() }}</td>
                                                     </tr>
                                                     </template>
                                                 </template>
@@ -580,23 +580,23 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="text-right"><b>@lang('sales_order.create.table.item.header.total_price')</b></td>
-                                                    <td class="text-right">@{{ numeral(grandTotal(soIndex)).format() }}</td>
+                                                    <td class="text-right">@{{ numbro(grandTotal(soIndex)).format() }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right"><b>@lang('purchase_order.create.table.total.body.total_discount')</b></td>
-                                                    <td class="text-right">@{{ numeral(discountTotal(soIndex)).format() }}</td>
+                                                    <td class="text-right">@{{ numbro(discountTotal(soIndex)).format() }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right"><b>@lang('sales_order.create.box.expenses')</b></td>
-                                                    <td class="text-right">@{{ numeral(expenseTotal(soIndex)).format() }}</td>
+                                                    <td class="text-right">@{{ numbro(expenseTotal(soIndex)).format() }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right"><b>@lang('purchase_order.create.box.discount_transaction')</b></td>
-                                                    <td class="text-right">@{{ numeral(so.disc_value).format() }}</td>
+                                                    <td class="text-right">@{{ numbro(so.disc_value).format() }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-right"><b>@lang('purchase_order.create.table.total.body.total_transaction')</b></td>
-                                                    <td class="text-right">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
+                                                    <td class="text-right">@{{ numbro( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -836,9 +836,9 @@
                     var result = 0;
                     _.forEach(vm.so.expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
-                            result += parseInt(numeral().unformat(expense.amount));
+                            result += parseInt(numbro().unformat(expense.amount));
                         else
-                            result -= parseInt(numeral().unformat(expense.amount));
+                            result -= parseInt(numbro().unformat(expense.amount));
                     });
                     return result;
                 },
@@ -860,9 +860,9 @@
                     var expenseTotal = 0;
                     _.forEach(vm.so.expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
-                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                            expenseTotal += parseInt(numbro().unformat(expense.amount));
                         else
-                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                            expenseTotal -= parseInt(numbro().unformat(expense.amount));
                     });
 
                     var disc_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.so.disc_percent / 100 );
@@ -888,9 +888,9 @@
                     var expenseTotal = 0;
                     _.forEach(vm.so.expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
-                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                            expenseTotal += parseInt(numbro().unformat(expense.amount));
                         else
-                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                            expenseTotal -= parseInt(numbro().unformat(expense.amount));
                     });
 
                     var disc_percent = vm.so.disc_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;

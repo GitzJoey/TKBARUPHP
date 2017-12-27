@@ -17,11 +17,11 @@
             <td class="text-center">@{{ taxInput.invoiceDate }}</td>
             <td class="text-center">@{{ taxInput.invoiceNo }}</td>
             <td class="text-center">@{{ taxInput.detail }}</td>
-            <td class="text-center">@{{ numeral(taxInput.qty).format() }}</td>
-            <td class="text-right">@{{ numeral(taxInput.unitPrice).format() }}</td>
-            <td class="text-right">@{{ numeral(taxInput.taxBase).format() }}</td>
-            <td class="text-right">@{{ numeral(taxInput.gst).format() }}</td>
-            <td class="text-right">@{{ numeral(taxInput.taxBase + taxInput.gst + taxInput.luxuryTax).format() }}</td>
+            <td class="text-center">@{{ numbro(taxInput.qty).format() }}</td>
+            <td class="text-right">@{{ numbro(taxInput.unitPrice).format() }}</td>
+            <td class="text-right">@{{ numbro(taxInput.taxBase).format() }}</td>
+            <td class="text-right">@{{ numbro(taxInput.gst).format() }}</td>
+            <td class="text-right">@{{ numbro(taxInput.taxBase + taxInput.gst + taxInput.luxuryTax).format() }}</td>
         </tr>
         <tr v-if="!taxesInput.length">
             <td class="text-center" colspan="8">@lang('labels.DATA_NOT_FOUND')</td>
@@ -30,8 +30,8 @@
     <tfoot v-cloak>
         <tr v-if="taxesInput.length">
             <td class="text-right" colspan="6">Total</td>
-            <td class="text-right">@{{ numeral(totalGstInput).format() }}</td>
-            <td class="text-right">@{{ numeral(grandTotalInput).format() }}</td>
+            <td class="text-right">@{{ numbro(totalGstInput).format() }}</td>
+            <td class="text-right">@{{ numbro(grandTotalInput).format() }}</td>
         </tr>
     </tfoot>
   </table>

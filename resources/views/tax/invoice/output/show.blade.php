@@ -262,11 +262,11 @@
                         totalLuxuryTax += tran.luxuryTax;
                     });
                     this.taxOutput.totalTaxBase = totalTaxBase;
-                    this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
+                    this.taxOutput.totalTaxBaseText = numbro(totalTaxBase).format();
                     this.taxOutput.totalGST = totalGST;
-                    this.taxOutput.totalGSTText = numeral(totalGST).format();
+                    this.taxOutput.totalGSTText = numbro(totalGST).format();
                     this.taxOutput.totalLuxuryTax = totalLuxuryTax;
-                    this.taxOutput.totalLuxuryTaxText = numeral(totalLuxuryTax).format();
+                    this.taxOutput.totalLuxuryTaxText = numbro(totalLuxuryTax).format();
                 },
                 init: function() {
 
@@ -294,13 +294,13 @@
 
                         if(tran.is_gst_included) {
                             tran.taxBase = 90 / 100 * tran.totalPrice - (tran.qty * tran.discount);
-                            tran.beforeGSTPriceText = numeral(90 / 100 * tran.price).format();
-                            tran.afterGSTPriceText = numeral(tran.price).format();
+                            tran.beforeGSTPriceText = numbro(90 / 100 * tran.price).format();
+                            tran.afterGSTPriceText = numbro(tran.price).format();
                         }
                         else {
                             tran.taxBase = tran.totalPrice - (tran.qty * tran.discount);
-                            tran.beforeGSTPriceText = numeral(tran.price).format();
-                            tran.afterGSTPriceText = numeral(110 / 100 * tran.price).format();
+                            tran.beforeGSTPriceText = numbro(tran.price).format();
+                            tran.afterGSTPriceText = numbro(110 / 100 * tran.price).format();
                         }
                         tran.gst = 10 / 100 * tran.taxBase;
 
@@ -317,10 +317,10 @@
                             discount : tran.discount,
                             gst: tran.gst,
                             luxuryTax: tran.luxury_tax,
-                            formattedQty: numeral(tran.qty).format(),
-                            formattedTaxBase: numeral(tran.taxBase).format(),
-                            formattedGST: numeral(tran.gst).format(),
-                            formattedLuxuryTax: numeral(tran.luxuryTax).format(),
+                            formattedQty: numbro(tran.qty).format(),
+                            formattedTaxBase: numbro(tran.taxBase).format(),
+                            formattedGST: numbro(tran.gst).format(),
+                            formattedLuxuryTax: numbro(tran.luxuryTax).format(),
                             totalPrice: tran.totalPrice,
                             taxBase: tran.taxBase,
                             luxuryTaxPercentage: tran.luxuryTaxPercentage,

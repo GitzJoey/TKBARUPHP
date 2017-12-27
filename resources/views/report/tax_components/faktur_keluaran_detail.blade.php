@@ -15,12 +15,12 @@
             </tr>
             <tr>
                 <th class="text-right" style="vertical-align:middle" v-for="name in transactionNamesOutput">
-                    @{{ numeral(getPriceByInvoiceDateAndName(invoiceDate, name)).format() }}
+                    @{{ numbro(getPriceByInvoiceDateAndName(invoiceDate, name)).format() }}
                 </th>
             </tr>
             <tr>
                 <th class="text-right" style="vertical-align:middle" v-for="name in transactionNamesOutput">
-                    @{{ numeral((getPriceByInvoiceDateAndName(invoiceDate, name)) / 1.1).format() }}
+                    @{{ numbro((getPriceByInvoiceDateAndName(invoiceDate, name)) / 1.1).format() }}
                 </th>
             </tr>
         </thead>
@@ -32,11 +32,11 @@
                 <td class="text-left">@{{ taxOutput.opponentAddress }}</td>
                 <template v-for="transactionNameOutput in transactionNamesOutput">
                     <td class="text-right">
-                        @{{ numeral(
+                        @{{ numbro(
                           (getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).price || 0) *
                           (getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).qty || 0) / 1.1).format() }}
                     </td>
-                    <td class="text-right">@{{ numeral(getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).qty).format() }}</td>
+                    <td class="text-right">@{{ numbro(getTransactionFromTaxOutputByName(taxOutput, transactionNameOutput).qty).format() }}</td>
                 </template>
             </tr>
         </tbody>
@@ -46,8 +46,8 @@
                 <td class="text-center"></td>
                 <td class="text-center"></td>
                 <template v-for="transactionNameOutput in transactionNamesOutput">
-                    <td class="text-right">@{{ numeral(totalPriceOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
-                    <td class="text-right">@{{ numeral(totalQtyOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
+                    <td class="text-right">@{{ numbro(totalPriceOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
+                    <td class="text-right">@{{ numbro(totalQtyOutputPerInvoiceDateAndName[invoiceDate][transactionNameOutput]).format() }}</td>
                 </template>
             </tr>
         </tfoot>

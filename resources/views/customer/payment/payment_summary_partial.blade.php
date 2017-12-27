@@ -173,7 +173,7 @@
                                     <td class="text-center">
                                     </td>
                                     <td class="text-right valign-middle">
-                                        @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
+                                        @{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -188,7 +188,7 @@
                                     <td width="80%"
                                         class="text-right">@lang('sales_order.payment.summary.table.total.body.total')</td>
                                     <td width="20%" class="text-right">
-                                        <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
+                                        <span class="control-label-normal">@{{ numbro(grandTotal()).format() }}</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -220,7 +220,7 @@
                                 <template v-for="(item, itemIndex) in so.items">
                                     <tr>
                                         <td width="30%">@{{ item.product.name }}</td>
-                                        <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                        <td width="30%">@{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                         <td colspan="3" width="40%"></td>
                                     </tr>
                                     <tr>
@@ -241,7 +241,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                        <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
+                                        <td class="text-right" colspan="2"> @{{ numbro(discountItemSubTotal(item.discounts)).format() }}</td>
                                     </tr>
                                 </template>
                             </tbody>
@@ -256,7 +256,7 @@
                                     <td width="65%"
                                         class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
                                     <td width="35%" class="text-right">
-                                        <span class="control-label-normal">@{{ numeral(discountTotal()).format() }}</span>
+                                        <span class="control-label-normal">@{{ numbro(discountTotal()).format() }}</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -286,7 +286,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
+                                    <td class="text-right valign-middle">@{{ numbro( ( grandTotal() - discountTotal() ) + expenseTotal() ).format() }}</td>
                                     <td>
                                         <div class="row">
                                             <div class="col-md-3">
@@ -297,7 +297,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal() - discountTotal() ) + expenseTotal() - so.disc_value ).format()}}</td>
+                                    <td class="text-right valign-middle">@{{ numbro( ( grandTotal() - discountTotal() ) + expenseTotal() - so.disc_value ).format()}}</td>
                                 </tr>
                             </tbody>
                         </table>

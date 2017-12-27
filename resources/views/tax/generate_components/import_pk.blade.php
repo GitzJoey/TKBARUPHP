@@ -67,9 +67,9 @@
                 <td class="text-left">@{{ taxOutput.opponentTaxIdNo }}</td>
                 <td class="text-left">@{{ taxOutput.opponentName }}</td>
                 <td class="text-left">@{{ taxOutput.opponentAddress }}</td>
-                <td class="text-right">@{{ numeral(taxOutput.taxBase).format() }}</td>
-                <td class="text-right">@{{ numeral(taxOutput.gst).format() }}</td>
-                <td class="text-right">@{{ numeral(taxOutput.luxuryTax).format() }}</td>
+                <td class="text-right">@{{ numbro(taxOutput.taxBase).format() }}</td>
+                <td class="text-right">@{{ numbro(taxOutput.gst).format() }}</td>
+                <td class="text-right">@{{ numbro(taxOutput.luxuryTax).format() }}</td>
                 <td class="text-left"></td>
                 <td class="text-left">0</td>
                 <td class="text-left">0</td>
@@ -98,14 +98,14 @@
                 <td class="text-left">OF</td>
                 <td class="text-left">@{{ getProductCode(transaction.name) }}</td>
                 <td class="text-left">@{{ transaction.name }}</td>
-                <td class="text-right">@{{ numeral(transaction.price).format() }}</td>
-                <td class="text-right">@{{ numeral(transaction.qty).format() }}</td>
-                <td class="text-right">@{{ numeral(transaction.gst).format() }}</td>
-                <td class="text-right">@{{ numeral(transaction.discount).format() }}</td>
-                <td class="text-right">@{{ numeral(transaction.gst / transaction.qty).format() }}</td>
-                <td class="text-right">@{{ numeral(transaction.gst / transaction.qty * 0.1).format() }}</td>
-                <td class="text-right">@{{ numeral(0).format() }}</td>
-                <td class="text-right">@{{ numeral(transaction.luxuryTax).format() }}</td>
+                <td class="text-right">@{{ numbro(transaction.price).format() }}</td>
+                <td class="text-right">@{{ numbro(transaction.qty).format() }}</td>
+                <td class="text-right">@{{ numbro(transaction.gst).format() }}</td>
+                <td class="text-right">@{{ numbro(transaction.discount).format() }}</td>
+                <td class="text-right">@{{ numbro(transaction.gst / transaction.qty).format() }}</td>
+                <td class="text-right">@{{ numbro(transaction.gst / transaction.qty * 0.1).format() }}</td>
+                <td class="text-right">@{{ numbro(0).format() }}</td>
+                <td class="text-right">@{{ numbro(transaction.luxuryTax).format() }}</td>
             </tr>
         </template>
         <tr v-if="!taxesOutput.length">

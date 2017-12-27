@@ -392,10 +392,10 @@
                     };
                 },
                 saveTran: function() {
-                    this.newTran.formattedQty = numeral(this.newTran.qty).format();
-                    this.newTran.formattedTaxBase = numeral(this.newTran.taxBase).format();
-                    this.newTran.formattedGST = numeral(this.newTran.gst).format();
-                    this.newTran.formattedLuxuryTax = numeral(this.newTran.luxuryTax).format();
+                    this.newTran.formattedQty = numbro(this.newTran.qty).format();
+                    this.newTran.formattedTaxBase = numbro(this.newTran.taxBase).format();
+                    this.newTran.formattedGST = numbro(this.newTran.gst).format();
+                    this.newTran.formattedLuxuryTax = numbro(this.newTran.luxuryTax).format();
                     if(this.newTran.index == -1)
                         this.taxOutput.transactions.push(this.newTran);
                     else
@@ -425,11 +425,11 @@
                     });
 
                     this.taxOutput.totalTaxBase = totalTaxBase;
-                    this.taxOutput.totalTaxBaseText = numeral(totalTaxBase).format();
+                    this.taxOutput.totalTaxBaseText = numbro(totalTaxBase).format();
                     this.taxOutput.totalGST = totalGST;
-                    this.taxOutput.totalGSTText = numeral(totalGST).format();
+                    this.taxOutput.totalGSTText = numbro(totalGST).format();
                     this.taxOutput.totalLuxuryTax = totalLuxuryTax;
-                    this.taxOutput.totalLuxuryTaxText = numeral(totalLuxuryTax).format();
+                    this.taxOutput.totalLuxuryTaxText = numbro(totalLuxuryTax).format();
                 },
                 calcOnModalGST: function() {
 
@@ -437,13 +437,13 @@
 
                     if(this.newTran.isGSTIncluded) {
                         this.newTran.taxBase = 90 / 100 * this.newTran.totalPrice - (this.newTran.qty * this.newTran.discount);
-                        this.newTran.beforeGSTPriceText = numeral(90 / 100 * this.newTran.price).format();
-                        this.newTran.afterGSTPriceText = numeral(this.newTran.price).format();
+                        this.newTran.beforeGSTPriceText = numbro(90 / 100 * this.newTran.price).format();
+                        this.newTran.afterGSTPriceText = numbro(this.newTran.price).format();
                     }
                     else {
                         this.newTran.taxBase = this.newTran.totalPrice - (this.newTran.qty * this.newTran.discount);
-                        this.newTran.beforeGSTPriceText = numeral(this.newTran.price).format();
-                        this.newTran.afterGSTPriceText = numeral(110 / 100 * this.newTran.price).format();
+                        this.newTran.beforeGSTPriceText = numbro(this.newTran.price).format();
+                        this.newTran.afterGSTPriceText = numbro(110 / 100 * this.newTran.price).format();
                     }
                     this.newTran.gst = 10 / 100 * this.newTran.taxBase;
 

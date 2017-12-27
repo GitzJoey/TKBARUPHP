@@ -421,7 +421,7 @@
                         id: se.id,
                         name: se.name,
                         type: this.expenseTypes[selectedExpense],
-                        amount: numeral(se.amount).format('0,0'),
+                        amount: numbro(se.amount).format('0,0'),
                         is_internal_expense: se.is_internal_expense,
                         remarks: se.remarks
                     });

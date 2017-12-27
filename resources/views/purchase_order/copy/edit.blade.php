@@ -239,7 +239,7 @@
                                                 </button>
                                             </td>
                                             <td class="text-right valign-middle">
-                                                @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
+                                                @{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                             </td>
                                         </tr>
                                         </tbody>
@@ -254,7 +254,7 @@
                                             <td width="80%"
                                                 class="text-right">@lang('purchase_order.copy.edit.table.total.body.total')</td>
                                             <td width="20%" class="text-right">
-                                                <span class="control-label-normal">@{{ numeral(grandTotal()).format() }}</span>
+                                                <span class="control-label-normal">@{{ numbro(grandTotal()).format() }}</span>
                                             </td>
                                         </tr>
                                         </tbody>

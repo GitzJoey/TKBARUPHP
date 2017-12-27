@@ -10,7 +10,7 @@ Vue.component('select2-supplier', require('./components/select2-supplier.vue'));
 
 Vue.mixin({
     methods: {
-        numeral: require('numeral'),
+        numbro: require('numbro'),
         camelCasingKey: function(value) {
             var object = {};
 

@@ -78,7 +78,7 @@
                         <label for="inputCost" class="col-sm-2 control-label">@lang('truckmtc.field.cost')</label>
                         <div class="col-sm-10">
                             <vue-autonumeric id="inputCost" type="text" name="cost" class="form-control"
-                                             v-bind:placeholder="@lang('truckmtc.field.cost')"
+                                             placeholder="@lang('truckmtc.field.cost')"
                                              v-model="maintenanceTruck.cost"
                                              v-validate="'required'" data-vv-as="{{ trans('truckmtc.field.cost') }}"
                                              v-bind:options="{

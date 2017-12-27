@@ -324,7 +324,7 @@
                                                                         </button>
                                                                     </td>
                                                                     <td class="text-right valign-middle">
-                                                                        @{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
+                                                                        @{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -338,7 +338,7 @@
                                                                 <tr>
                                                                     <td width="80%" class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                     <td width="20%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ numeral(grandTotal(soIndex)).format() }}</span>
+                                                                        <span class="control-label-normal">@{{ numbro(grandTotal(soIndex)).format() }}</span>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -370,7 +370,7 @@
                                                                 <template v-for="(item, itemIndex) in so.items">
                                                                     <tr>
                                                                         <td width="30%">@{{ item.product.name }}</td>
-                                                                        <td width="30%">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                                        <td width="30%">@{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                                         <td colspan="3" width="40%">
                                                                             <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertDiscount(item)">
                                                                                 <span class="fa fa-plus"/>
@@ -402,7 +402,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="text-right" colspan="3">@lang('purchase_order.create.table.total.body.sub_total_discount')</td>
-                                                                        <td class="text-right" colspan="2"> @{{ numeral(discountItemSubTotal(item.discounts)).format() }}</td>
+                                                                        <td class="text-right" colspan="2"> @{{ numbro(discountItemSubTotal(item.discounts)).format() }}</td>
                                                                     </tr>
                                                                 </template>
                                                             </tbody>
@@ -417,7 +417,7 @@
                                                                     <td width="65%"
                                                                         class="text-right">@lang('purchase_order.create.table.total.body.total_discount')</td>
                                                                     <td width="35%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ numeral(discountTotal(soIndex)).format() }}</span>
+                                                                        <span class="control-label-normal">@{{ numbro(discountTotal(soIndex)).format() }}</span>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -498,7 +498,7 @@
                                                                     <td width="80%"
                                                                         class="text-right">@lang('sales_order.create.table.total.body.total')</td>
                                                                     <td width="20%" class="text-right">
-                                                                        <span class="control-label-normal">@{{ numeral(expenseTotal(soIndex)).format() }}</span>
+                                                                        <span class="control-label-normal">@{{ numbro(expenseTotal(soIndex)).format() }}</span>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -528,7 +528,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) ).format() }}</td>
+                                                                    <td class="text-right valign-middle">@{{ numbro( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) ).format() }}</td>
                                                                     <td>
                                                                         <div class="row">
                                                                             <div class="col-md-4">
@@ -539,7 +539,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </td>
-                                                                    <td class="text-right valign-middle">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
+                                                                    <td class="text-right valign-middle">@{{ numbro( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -600,15 +600,15 @@
                                                                         <tr>
                                                                             <td>*@{{ item.product.name }}</td>
                                                                             <td>@{{ item.quantity }}</td>
-                                                                            <td>@{{ numeral(item.price).format() }}</td>
-                                                                            <td class="text-right">@{{ numeral(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
+                                                                            <td>@{{ numbro(item.price).format() }}</td>
+                                                                            <td class="text-right">@{{ numbro(item.selected_unit.conversion_value * item.quantity * item.price).format() }}</td>
                                                                         </tr>
                                                                         <template v-for="discount in item.discounts">
                                                                         <tr v-if="discount.disc_value != 0">
                                                                             <td>Disc. @{{ discount.disc_percent }}%</td>
                                                                             <td></td>
                                                                             <td></td>
-                                                                            <td class="text-right">-@{{ numeral(discount.disc_value).format() }}</td>
+                                                                            <td class="text-right">-@{{ numbro(discount.disc_value).format() }}</td>
                                                                         </tr>
                                                                         </template>
                                                                     </template>
@@ -619,23 +619,23 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td class="text-right"><b>@lang('sales_order.create.table.item.header.total_price')</b></td>
-                                                                        <td class="text-right">@{{ numeral(grandTotal(soIndex)).format() }}</td>
+                                                                        <td class="text-right">@{{ numbro(grandTotal(soIndex)).format() }}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="text-right"><b>@lang('purchase_order.create.table.total.body.total_discount')</b></td>
-                                                                        <td class="text-right">@{{ numeral(discountTotal(soIndex)).format() }}</td>
+                                                                        <td class="text-right">@{{ numbro(discountTotal(soIndex)).format() }}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="text-right"><b>@lang('sales_order.create.box.expenses')</b></td>
-                                                                        <td class="text-right">@{{ numeral(expenseTotal(soIndex)).format() }}</td>
+                                                                        <td class="text-right">@{{ numbro(expenseTotal(soIndex)).format() }}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="text-right"><b>@lang('purchase_order.create.box.discount_transaction')</b></td>
-                                                                        <td class="text-right">@{{ numeral(so.disc_value).format() }}</td>
+                                                                        <td class="text-right">@{{ numbro(so.disc_value).format() }}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td class="text-right"><b>@lang('purchase_order.create.table.total.body.total_transaction')</b></td>
-                                                                        <td class="text-right">@{{ numeral( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
+                                                                        <td class="text-right">@{{ numbro( ( grandTotal(soIndex) - discountTotal(soIndex) ) + expenseTotal(soIndex) - so.disc_value ).format() }}</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -715,8 +715,8 @@
                                                     <tbody>
                                                         <tr v-for="(item, itemIndex) in so.items" v-bind:class="{ 'danger': (item.price < item.market_price), 'warning': ((item.market_price <= item.price) * (item.price < item.latest_price)) }">
                                                             <td>@{{ item.product.name }}</td>
-                                                            <td class="text-right">@{{ numeral(item.market_price).format() }}</td>
-                                                            <td class="text-right">@{{ numeral(item.latest_price).format() }}</td>
+                                                            <td class="text-right">@{{ numbro(item.market_price).format() }}</td>
+                                                            <td class="text-right">@{{ numbro(item.latest_price).format() }}</td>
                                                         </tr>
                                                         <tr v-if="!so.items || !so.items.length">
                                                             <td colspan="2" class="text-center">@lang('labels.DATA_NOT_FOUND')</td>
@@ -1035,9 +1035,9 @@
                     var result = 0;
                     _.forEach(vm.SOs[index].expenses, function (expense, key) {
                         if(expense.type.code === 'EXPENSETYPE.ADD')
-                            result += parseInt(numeral().unformat(expense.amount));
+                            result += parseInt(numbro().unformat(expense.amount));
                         else
-                            result -= parseInt(numeral().unformat(expense.amount));
+                            result -= parseInt(numbro().unformat(expense.amount));
                     });
                     return result;
                 },
@@ -1059,9 +1059,9 @@
                     var expenseTotal = 0;
                     _.forEach(vm.SOs[index].expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
-                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                            expenseTotal += parseInt(numbro().unformat(expense.amount));
                         else
-                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                            expenseTotal -= parseInt(numbro().unformat(expense.amount));
                     });
 
                     var disc_value = ( ( grandTotal - discountTotal ) + expenseTotal ) * ( vm.SOs[index].disc_percent / 100 );
@@ -1087,9 +1087,9 @@
                     var expenseTotal = 0;
                     _.forEach(vm.SOs[index].expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
-                            expenseTotal += parseInt(numeral().unformat(expense.amount));
+                            expenseTotal += parseInt(numbro().unformat(expense.amount));
                         else
-                            expenseTotal -= parseInt(numeral().unformat(expense.amount));
+                            expenseTotal -= parseInt(numbro().unformat(expense.amount));
                     });
 
                     var disc_percent = vm.SOs[index].disc_value / ( ( grandTotal - discountTotal ) + expenseTotal ) * 100 ;
@@ -1186,7 +1186,7 @@
                                     description: _.find(expenseTypes, function(expenseType){ return expenseType.code === customer.expense_templates[i].type})
                                 },
                                 is_internal_expense: customer.expense_templates[i].is_internal_expense == 1,
-                                amount: numeral(customer.expense_templates[i].amount).format('0,0'),
+                                amount: numbro(customer.expense_templates[i].amount).format('0,0'),
                                 remarks: customer.expense_templates[i].remarks
                             });
                         }

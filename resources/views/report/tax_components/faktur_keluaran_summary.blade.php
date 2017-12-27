@@ -22,13 +22,13 @@
             <tr v-for="(taxOutput, invoiceDate) in taxesOutputPerInvoiceDate">
                 <td>@{{ invoiceDate }}</td>
                 <template v-for="name in transactionNamesOutput">
-                    <td>@{{ numeral(totalQtyOutputPerInvoiceDateAndName[invoiceDate][name]).format() }}</td>
-                    <td>@{{ numeral(getPriceByInvoiceDateAndName(invoiceDate, name)).format() }}</td>
+                    <td>@{{ numbro(totalQtyOutputPerInvoiceDateAndName[invoiceDate][name]).format() }}</td>
+                    <td>@{{ numbro(getPriceByInvoiceDateAndName(invoiceDate, name)).format() }}</td>
                 </template>
                 <template v-for="name in transactionNamesOutput">
-                    <td>@{{ numeral(totalPriceOutputPerInvoiceDateAndName[invoiceDate][name] / 1.1).format() }}</td>
-                    <td>@{{ numeral(totalPriceOutputPerInvoiceDateAndName[invoiceDate][name] * 0.1).format() }}</td>
-                    <td>@{{ numeral(totalPriceOutputPerInvoiceDateAndName[invoiceDate][name]).format() }}</td>
+                    <td>@{{ numbro(totalPriceOutputPerInvoiceDateAndName[invoiceDate][name] / 1.1).format() }}</td>
+                    <td>@{{ numbro(totalPriceOutputPerInvoiceDateAndName[invoiceDate][name] * 0.1).format() }}</td>
+                    <td>@{{ numbro(totalPriceOutputPerInvoiceDateAndName[invoiceDate][name]).format() }}</td>
                 </template>
             </tr>
         </tbody>

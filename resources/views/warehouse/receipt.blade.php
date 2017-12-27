@@ -254,7 +254,7 @@
                                                 <td width="80%"
                                                     class="text-right">@lang('warehouse.inflow.receipt.table.total.body.total')</td>
                                                 <td width="20%" class="text-right">
-                                                    <span class="control-label-normal">@{{ numeral(expenseTotal()).format() }}</span>
+                                                    <span class="control-label-normal">@{{ numbro(expenseTotal()).format() }}</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -364,9 +364,9 @@
                     var result = 0;
                     _.forEach(vm.po.expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
-                            result += parseInt(numeral().unformat(expense.amount));
+                            result += parseInt(numbro().unformat(expense.amount));
                         else
-                            result -= parseInt(numeral().unformat(expense.amount));
+                            result -= parseInt(numbro().unformat(expense.amount));
                     });
                     return result;
                 },
@@ -387,9 +387,9 @@
                     var result = 0;
                     _.forEach(vm.po.expenses, function (expense, key) {
                         if (expense.type.code === 'EXPENSETYPE.ADD')
-                            result += parseInt(numeral().unformat(expense.amount));
+                            result += parseInt(numbro().unformat(expense.amount));
                         else
-                            result -= parseInt(numeral().unformat(expense.amount));
+                            result -= parseInt(numbro().unformat(expense.amount));
                     });
                     return result;
                 },

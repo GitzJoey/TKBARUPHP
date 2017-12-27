@@ -30,9 +30,9 @@
             <td class="text-left">@{{ taxInput.opponentTaxIdNo }}</td>
             <td class="text-left">@{{ taxInput.opponentName }}</td>
             <td class="text-left">@{{ taxInput.opponentAddress }}</td>
-            <td class="text-right">@{{ numeral(taxInput.taxBase).format() }}</td>
-            <td class="text-right">@{{ numeral(taxInput.gst).format() }}</td>
-            <td class="text-right">@{{ numeral(taxInput.luxuryTax).format() }}</td>
+            <td class="text-right">@{{ numbro(taxInput.taxBase).format() }}</td>
+            <td class="text-right">@{{ numbro(taxInput.gst).format() }}</td>
+            <td class="text-right">@{{ numbro(taxInput.luxuryTax).format() }}</td>
             <td class="text-center">@{{ taxInput.isCreditable ? 1 : 0 }}</td>
         </tr>
         <tr v-if="!taxesInput.length">
