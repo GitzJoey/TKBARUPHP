@@ -47,6 +47,8 @@ use Vinkla\Hashids\Facades\Hashids;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockIn withoutTrashed()
+ * @property int $stock_merge_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockIn whereStockMergeId($value)
  */
 class StockIn extends Model
 {

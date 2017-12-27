@@ -56,6 +56,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\StockTransfer withoutTrashed()
+ * @property int $stock_id
+ * @property-read \App\Model\Stock $stock
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\StockTransfer whereStockId($value)
  */
 class StockTransfer extends Model
 {

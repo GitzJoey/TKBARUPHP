@@ -59,6 +59,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Stock withoutTrashed()
+ * @property int $stock_merge_id
+ * @property-read mixed $is_merge
+ * @property-read \App\Model\StockMerge $stockMerge
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Stock whereStockMergeId($value)
  */
 class Stock extends Model
 {
