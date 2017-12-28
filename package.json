@@ -38,11 +38,11 @@
     "noty": "^3.1.4",
     "numbro": "^1.11.1",
     "parsleyjs": "^2.8.0",
-    "pdfjs-dist": "^2.0.226",
+    "pdfjs-dist": "^2.0.230",
     "select2": "^4.0.5",
     "tooltipster": "^4.2.5",
     "urijs": "^1.19.0",
-    "vee-validate": "^2.0.0-rc.27",
+    "vee-validate": "^2.0.0",
     "vue-autonumeric": "^1.0.4",
     "vue-i18n": "^7.3.3"
   }

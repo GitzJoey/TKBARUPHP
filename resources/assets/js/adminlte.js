@@ -7,6 +7,7 @@ window.swal = require('bootstrap-sweetalert');
 window.URI = require('urijs');
 window.Vue = require('vue');
 window.VeeValidate = require('vee-validate');
+window.VeeValidateID = require('vee-validate/dist/locale/id');
 window.numbro = require('numbro');
 
 require('admin-lte');
