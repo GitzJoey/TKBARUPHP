@@ -69,22 +69,20 @@ class WarehouseInflowController extends Controller
             $this->inflowService->createPOReceipt($request, $id);
         }
 
-        /*
         $expenseArr = array();
         for($i = 0; $i < count($request->input('expense_id')); $i++){
             if ($request->input('expense_id'.$i) != 0) continue;
 
             array_push($expenseArr, array (
-                'name' => $request->input("expense_name.$i"),
-                'type' => $request->input("expense_type.$i"),
-                'is_internal_expense' => !empty($request->input("is_internal_expense.$i")),
-                'amount' => floatval(str_replace(',', '', $request->input("expense_amount.$i"))),
-                'remarks' => $request->input("expense_remarks.$i")
+                'expense_name' => $request->input("expense_name.$i"),
+                'expense_type' => $request->input("expense_type.$i"),
+                'is_internal_expense' => true,
+                'expense_amount' => floatval(str_replace(',', '', $request->input("expense_amount.$i"))),
+                'expense_remarks' => $request->input("expense_remarks.$i")
             ));
         }
 
         $this->purchaseOrderService->addExpenses($id, $expenseArr);
-        */
 
         return response()->json();
     }

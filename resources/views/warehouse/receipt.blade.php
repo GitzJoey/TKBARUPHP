@@ -152,24 +152,27 @@
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('brutto_' + receiptIdx) }">
                                                     <input v-bind:id="'brutto_' + receipt.item.id" type="text" class="form-control text-right" name="brutto[]"
-                                                           v-model="receipt.brutto" v-validate="'required|numeric:2'"
+                                                           v-model="receipt.brutto" v-validate="readOnly ? '':'required|numeric:2'"
                                                            v-bind:readonly="readOnly"
                                                            v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.brutto') }} ' + (receiptIdx + 1)"
-                                                           v-bind:data-vv-name="'brutto_' + receiptIdx">
+                                                           v-bind:data-vv-name="'brutto_' + receiptIdx"
+                                                           v-on:change="reValidate('brutto', receiptIdx)">
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('netto_' + receiptIdx) }">
                                                     <input v-bind:id="'netto_' + receipt.item.id" type="text" class="form-control text-right" name="netto[]"
-                                                           v-model="receipt.netto" v-validate="'required|numeric:2|checkequal:' + receiptIdx"
+                                                           v-model="receipt.netto" v-validate="readOnly ? '':'required|numeric:2|checkequal:' + receiptIdx"
                                                            v-bind:readonly="readOnly"
                                                            v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.netto') }} ' + (receiptIdx + 1)"
-                                                           v-bind:data-vv-name="'netto_' + receiptIdx">
+                                                           v-bind:data-vv-name="'netto_' + receiptIdx"
+                                                           v-on:change="reValidate('netto', receiptIdx)">
                                                 </td>
                                                 <td v-bind:class="{ 'has-error':errors.has('tare_' + receiptIdx) }">
                                                     <input v-bind:id="'tare_' + receipt.item.id" type="text" class="form-control text-right" name="tare[]"
-                                                           v-model="receipt.tare" v-validate="'required|numeric:2|checkequal:' + receiptIdx"
+                                                           v-model="receipt.tare" v-validate="readOnly ? '':'required|numeric:2|checkequal:' + receiptIdx"
                                                            v-bind:readonly="readOnly"
                                                            v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.item.header.tare') }} ' + (receiptIdx + 1)"
-                                                           v-bind:data-vv-name="'tare_' + receiptIdx">
+                                                           v-bind:data-vv-name="'tare_' + receiptIdx"
+                                                           v-on:change="reValidate('tare', receiptIdx)">
                                                 </td>
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-danger btn-md" v-on:click="removeReceipt(receiptIdx)" disabled><span class="fa fa-minus"/></button>
@@ -211,6 +214,7 @@
                                         <tbody>
                                             <tr v-for="(expense, expenseIndex) in po.expenses">
                                                 <td v-bind:class="{ 'has-error':errors.has('expense_name_' + expenseIndex) }">
+                                                    <input type="hidden" v-bind:id="'expense_id' + expenseIndex" name="expense_id[]" value="0">
                                                     <input name="expense_name[]" type="text" class="form-control"
                                                            v-model="expense.name" v-validate="'required'" v-bind:data-vv-as="'{{ trans('warehouse.inflow.receipt.table.expense.header.name') }} ' + (expenseIndex + 1)"
                                                            v-bind:data-vv-name="'expense_name_' + expenseIndex">
@@ -396,6 +400,18 @@
                 removeExpense: function (index) {
                     var vm = this;
                     vm.po.expenses.splice(index, 1);
+                },
+                reValidate: function(field, idx) {
+                    if (field == 'brutto') {
+                        this.$validator.validate('netto_' + idx);
+                        this.$validator.validate('tare_' + idx);
+                    } else if (field == 'netto') {
+                        this.$validator.validate('brutto_' + idx);
+                        this.$validator.validate('tare_' + idx);
+                    } else {
+                        this.$validator.validate('brutto_' + idx);
+                        this.$validator.validate('netto_' + idx);
+                    }
                 }
             },
             mounted: function() {

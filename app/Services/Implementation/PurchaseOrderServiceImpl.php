@@ -396,11 +396,11 @@ class PurchaseOrderServiceImpl implements PurchaseOrderService
 
         for($i = 0; $i < count($expenseArr); $i++){
             $expense = new Expense();
-            $expense->name = $expenseArr["expense_name"];
-            $expense->type = $expenseArr["expense_type"];
-            $expense->is_internal_expense = !empty($expenseArr["is_internal_expense"]);
-            $expense->amount = floatval(str_replace(',', '', $expenseArr["expense_amount.$i"]));
-            $expense->remarks = $expenseArr["expense_remarks"];
+            $expense->name = $expenseArr[$i]["expense_name"];
+            $expense->type = $expenseArr[$i]["expense_type"];
+            $expense->is_internal_expense = !empty($expenseArr[$i]["is_internal_expense"]);
+            $expense->amount = floatval(str_replace(',', '', $expenseArr[$i]["expense_amount"]));
+            $expense->remarks = $expenseArr[$i]["expense_remarks"];
 
             $currentPo->expenses()->save($expense);
         }

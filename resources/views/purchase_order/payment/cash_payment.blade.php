@@ -210,7 +210,7 @@
 
                     for (var i = 0; i < this.currentPo.expenses.length; i++) {
                         var type = _.find(vm.expenseTypes, function (type) {
-                            return type.code === this.currentPo.expenses[i].type;
+                            return type.code === vm.currentPo.expenses[i].type;
                         });
 
                         vm.po.expenses.push({
