@@ -437,13 +437,11 @@
                 status: ''
             },
             mounted: function() {
+                var vm = this;
                 this.$validator.extend('checkactive', {
                     getMessage: function(field, args) {
-                        return 'Default Store cannot be inactived';
-                        /*
-                        en: function(field, args) { return 'Default Store cannot be inactived' },
-                        id: function(field, args) { return 'Toko utama tidak bisa dinonaktifkan' }
-                        */
+                        return vm.$validator.locale == 'id' ?
+                            'Default Store cannot be inactived':'Default Store cannot be inactived';
                     },
                     validate: function(value, args) {
                         var result = false;

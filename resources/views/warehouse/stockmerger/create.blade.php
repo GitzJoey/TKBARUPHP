@@ -253,11 +253,8 @@
                 var vm = this;
                 this.$validator.extend('checkboxChecked', {
                     getMessage: function(field, args) {
-                        return 'At Least 2 Stock Checked';
-                        /*
-                        en: function(field, args) { return 'At Least 2 Stock Checked' },
-                        id: function(field, args) { return 'Minimal 2 Stok Terpilih' }
-                        */
+                        return vm.$validator.locale == 'id' ?
+                            'Minimal 2 Stok Terpilih':'At Least 2 Stock Checked';
                     },
                     validate: function(value, args) {
                         var result = false;

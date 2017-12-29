@@ -498,13 +498,11 @@
                 }
             },
             mounted: function() {
+                var vm = this;
                 this.$validator.extend('checkactive', {
                     getMessage: function(field, args) {
-                        return 'Default Store cannot be inactived';
-                        /*
-                        en: function(field, args) { return 'Default Store cannot be inactived' },
-                        id: function(field, args) { return 'Toko utama tidak bisa dinonaktifkan' }
-                        */
+                        return vm.$validator.locale == 'id' ?
+                            'Toko utama tidak bisa dinonaktifkan':'Default Store cannot be inactived';
                     },
                     validate: function(value, args) {
                         var result = false;
@@ -525,11 +523,9 @@
 
                 this.$validator.extend('isdefault_switch_no', {
                     getMessage: function(field, args) {
-                        return 'Default Store cannot be switched off, replace other Store as YES instead.'
-                        /*
-                        en: function(field, args) { return 'Default Store cannot be switched off, replace other Store as YES instead.' },
-                        id: function(field, args) { return 'Toko utama tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu' }
-                        */
+                        return vm.$validator.locale == 'id' ?
+                            'Toko utama tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu':
+                            'Default Store cannot be switched off, replace other Store as YES instead.';
                     },
                     validate: function(value, args) {
                         if (value == 'YESNOSELECT.NO') { return false; }

@@ -399,13 +399,11 @@
                 }
             },
             mounted: function() {
+                var vm = this;
                 this.$validator.extend('checkequal', {
                     getMessage: function(field, args) {
-                        return 'Netto and Tare value not equal with Bruto';
-                        /*
-                        en: function(field, args) { return 'Netto and Tare value not equal with Bruto' },
-                        id: function(field, args) { return 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor' }
-                        */
+                        return vm.$validator.locale == 'id' ?
+                            'Nilai bersih dan Tara tidak sama dengan Nilai Kotor':'Netto and Tare value not equal with Bruto';
                     },
                     validate: function(value, args) {
                         var result = false;

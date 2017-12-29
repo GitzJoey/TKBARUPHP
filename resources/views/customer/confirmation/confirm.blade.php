@@ -183,13 +183,12 @@
                 }
             },
             mounted: function() {
+                var vm = this;
                 this.$validator.extend('checkequal', {
                     getMessage: function(field, args) {
-                        return 'Netto and Tare value are higher than the Bruto value';
-                        /*
-                        en: function(field, args) { return 'Netto and Tare value are higher than the Bruto value' },
-                        id: function(field, args) { return 'Nilai bersih dan Tara lebih tinggi dari Nilai Kotor' }
-                        */
+                        return vm.$validator.locale == 'id' ?
+                            'Nilai bersih dan Tara lebih tinggi dari Nilai Kotor':
+                            'Netto and Tare value are higher than the Bruto value';
                     },
                     validate: function(value, args) {
                         var result = false;
