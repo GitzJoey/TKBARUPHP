@@ -8,7 +8,7 @@
 
 namespace App\Model;
 
-use Laratrust\LaratrustRole;
+use Laratrust\Models\LaratrustRole;
 use Vinkla\Hashids\Facades\Hashids;
 
 /**

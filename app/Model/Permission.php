@@ -8,7 +8,7 @@
 
 namespace App\Model;
 
-use Laratrust\LaratrustPermission;
+use Laratrust\Models\LaratrustPermission;
 
 /**
  * App\Model\Permission
