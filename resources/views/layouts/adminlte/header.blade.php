@@ -71,6 +71,9 @@
                         </li>
                     </ul>
                 </li>
+                <li class="hidden-xs">
+                    <a href="/dashboard/start/tour"><span class="fa fa-question fa-fw" title="Help/Tour"></span></a>
+                </li>
                 <li>
                     <a href="/logout" class="btn" onclick="event.preventDefault(); if (typeof(Storage) != 'undefined') { localStorage.removeItem('pushMenu'); }; document.getElementById('logout-form').submit();" title="Logout">
                         <span class="glyphicon glyphicon-log-out"></span>
