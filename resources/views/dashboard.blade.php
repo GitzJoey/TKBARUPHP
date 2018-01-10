@@ -137,7 +137,7 @@
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <div class="box-body" style="display: block;">
+                <div class="box-body">
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -157,7 +157,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="box-footer clearfix" style="display: block;">
+                <div class="box-footer clearfix">
                     <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">@lang('dashboard.due_purchase_orders.button.view_all_purchase_orders')</a>
                 </div>
             </div>
@@ -181,7 +181,7 @@
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <div class="box-body" style="display: block;">
+                <div class="box-body">
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -201,7 +201,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="box-footer clearfix" style="display: block;">
+                <div class="box-footer clearfix">
                     <a href="{{ route('db.po.payment.index') }}" class="btn btn-sm btn-default btn-flat pull-right">@lang('dashboard.due_sales_orders.button.view_all_sales_orders')</a>
                 </div>
             </div>
@@ -270,7 +270,7 @@
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
-                <div class="box-body" style="display: block;">
+                <div class="box-body">
                     <div class="table-responsive">
                         <table class="table no-margin">
                             <thead>
@@ -286,7 +286,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="box-footer clearfix" style="display: block;">
+                <div class="box-footer clearfix">
                 </div>
             </div>
         </div>
