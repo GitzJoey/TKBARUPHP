@@ -48,7 +48,12 @@ class StockController extends Controller
         $to_json = trim($request->get('to_json'));
         $to_json = !empty($to_json)? true : false;
 
-        $prodtypeDdL = ProductType::with('stocks.soItems.itemable.customer', 'stocks.soItems.selectedUnit.unit', 'stocks.product', 'stocks.purchaseOrder');
+        $prodtypeDdL = ProductType::with([
+            'stocks.soItems.itemable.customer',
+            'stocks.soItems.selectedUnit' => function($q) { $q->with('unit')->withTrashed(); },
+            'stocks.product',
+            'stocks.purchaseOrder'
+        ]);
         if (!is_null($type_ids)){
             $prodtypeDdL = $prodtypeDdL->whereIn('id', $type_ids);
         }
