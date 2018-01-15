@@ -208,7 +208,7 @@
                                                 <input type="text" class="form-control" name="bank_remarks[]" v-model="bank.remarks">
                                             </td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-xs btn-danger" data="@{{ $index }}" v-on:click="removeSelectedBank($index)"><span class="fa fa-close fa-fw"></span></button>
+                                                <button type="button" class="btn btn-xs btn-danger" data="bankIdx" v-on:click="removeSelectedBank(bankIdx)"><span class="fa fa-close fa-fw"></span></button>
                                             </td>
                                         </tr>
                                     </tbody>
