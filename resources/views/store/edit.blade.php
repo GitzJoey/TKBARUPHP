@@ -535,11 +535,9 @@
 
                 this.$validator.extend('frontweb_switch_no', {
                     getMessage: function(field, args) {
-                        return 'Front Web cannot be inactived, replace other Store as YES instead';
-                        /*
-                        en: function(field, args) { return 'Front Web cannot be inactived, replace other Store as YES instead' },
-                        id: function(field, args) { return 'Website tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu' }
-                        */
+                        return vm.$validator.locale == 'id' ?
+                            'Website tidak bisa dinonaktifkan, pilih Toko lain sebagai pengganti terlebih dahulu':
+                            'Front Web cannot be inactived, replace other Store as YES instead';
                     },
                     validate: function(value, args) {
                         if (value == 'YESNOSELECT.NO') { return false; }
