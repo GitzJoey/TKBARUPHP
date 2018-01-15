@@ -135,6 +135,8 @@ class StockServiceImpl implements StockService
                 $this->deleteStock($s->id);
 
                 $qty += $s->current_quantity;
+
+                $this->doStockOut(0, $s->product_id, $s->warehouse_id, $s->id, $sm->id, $s->current_quantity);
             }
 
             $this->doStockIn(0, $sm->id, $stocks->first()->product->id, $stocks->first()->warehouse->id, $qty);
@@ -178,13 +180,14 @@ class StockServiceImpl implements StockService
         $stockIn = StockIn::create($stockInParams);
     }
 
-    public function doStockOut($soId, $productId, $warehouseId, $stockId, $qty)
+    public function doStockOut($soId, $productId, $warehouseId, $stockId, $stockMergeId, $qty)
     {
         $stockOutParams = [
             'store_id' => Auth::user()->store_id,
             'so_id' => $soId,
             'product_id' => $productId,
             'warehouse_id' => $warehouseId,
+            'stock_merge_id' => $stockMergeId,
             'stock_id' => $stockId,
             'quantity' => $qty
         ];
