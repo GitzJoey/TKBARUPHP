@@ -65,6 +65,7 @@ class AppHelper extends Command
         $this->info('[4] Check Outdated NPM Packages');
         $this->info('[5] Language Sync');
         $this->info('[6] Update Lookup Table');
+        $this->info('[7] Clear All Cache');
 
         $choose = $this->ask('Choose Helper');
 
@@ -90,12 +91,26 @@ class AppHelper extends Command
             case 6:
                 $this->updateLookup();
                 break;
+            case 7:
+                $this->clearCache();
+                break;
             default:
                 break;
         }
 
         sleep(3);
         $this->info('Done!');
+    }
+
+    private function clearCache()
+    {
+        Artisan::call('view:clear');
+        Artisan::call('route:clear');
+        Artisan::call('debugbar:clear');
+        Artisan::call('cache:clear');
+        Artisan::call('clear-compiled');
+
+        exec('composer dump-autoload');
     }
 
     private function updatePermission()
