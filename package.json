@@ -22,7 +22,7 @@
   "dependencies": {
     "admin-lte": "^2.4.2",
     "animate.css": "^3.5.2",
-    "autonumeric": "^4.1.0-beta.16",
+    "autonumeric": "^4.1.0-beta.20",
     "bootstrap": "^3.3.7",
     "bootstrap-fileinput": "^4.4.6",
     "bootstrap-sweetalert": "^1.0.1",
@@ -34,16 +34,16 @@
     "ionicons": "^3.0.0",
     "jquery-gotop": "^1.1.2",
     "moment": "^2.20.1",
-    "moment-duration-format": "^2.1.0",
+    "moment-duration-format": "^2.2.0",
     "noty": "^3.1.4",
     "numbro": "^1.11.1",
     "parsleyjs": "^2.8.0",
-    "pdfjs-dist": "^2.0.230",
+    "pdfjs-dist": "^2.0.269",
     "select2": "^4.0.5",
     "tooltipster": "^4.2.5",
     "urijs": "^1.19.0",
-    "vee-validate": "^2.0.0",
+    "vee-validate": "^2.0.3",
     "vue-autonumeric": "^1.0.4",
-    "vue-i18n": "^7.3.3"
+    "vue-i18n": "^7.4.0"
   }
 }
