@@ -389,35 +389,35 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">Choose Location</h4>
+                            <button type="button" class="close" data-dismiss="modal"><span class="sr-only">@lang('buttons.close_button')</span></button>
+                            <h4 class="modal-title">@lang('store.field.dialog.map.title')</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label for="inputModalAddress">Address:</label>
-                                <input type="text" class="form-control" id="inputModalAddress" name="inputModalAddress">
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="inputModalLat">Latitude:</label>
-                                            <input type="text" class="form-control col-sm-6" id="inputModalLat" name="inputModalLat">
-                                        </div>
+                            <div class="form">
+                                <div class="form-group">
+                                    <label for="inputModalAddress" class="col-sm-2 control-label">@lang('store.field.dialog.map.address')</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputModalAddress" name="inputModalAddress">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="inputModalLng">Longitude:</label>
-                                            <input type="text" class="form-control col-sm-6" id="inputModalLng" name="inputModalLng">
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputModalLat" class="col-sm-2 control-label">@lang('store.field.dialog.map.latitude')</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputModalLat" name="inputModalLat">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputModalLng" class="col-sm-2 control-label">@lang('store.field.dialog.map.longitude')</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputModalLng" name="inputModalLng">
                                     </div>
                                 </div>
                             </div>
                             <div id="map" style="width: 870px; height: 400px;"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="location-ok-btn">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="location-ok-btn">@lang('buttons.ok_button')</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" type="button">@lang('buttons.cancel_button')</button>
                         </div>
                     </div>
                 </div>
@@ -442,9 +442,9 @@
                 currenciesDDL: JSON.parse('{!! htmlspecialchars_decode($currenciesDDL) !!}'),
                 statusDDL: JSON.parse('{!! htmlspecialchars_decode($statusDDL) !!}'),
                 yesnoDDL: JSON.parse('{!! htmlspecialchars_decode($yesnoDDL) !!}'),
-                is_default: '{{ $store->is_default }}',
-                status: '{{ $store->status }}',
-                frontweb: '{{ $store->frontweb }}'
+                is_default: '',
+                status: '',
+                frontweb: ''
             },
             methods: {
                 validateBeforeSubmit: function() {
@@ -455,10 +455,20 @@
                             , new FormData($('#storeForm')[0])
                             , { headers: { 'content-type': 'multipart/form-data' } })
                             .then(function(response) {
-                                if (response.data.result == 'success') { window.location.href = '{{ route('db.admin.store') }}'; }
-                            });
-                    }).catch(function(e) {
-
+                                window.location.href = '{{ route('db.admin.store') }}';
+                            }).catch(function(e) {
+                                $('#loader-container').fadeOut('fast');
+                                if (e.response.data.errors != undefined && Object.keys(e.response.data.errors).length > 0) {
+                                    for (var key in e.response.data.errors) {
+                                        for (var i = 0; i < e.response.data.errors[key].length; i++) {
+                                            vm.$validator.errors.add('', e.response.data.errors[key][i], 'server', '__global__');
+                                        }
+                                    }
+                                } else {
+                                    vm.$validator.errors.add('', e.response.status + ' ' + e.response.statusText, 'server', '__global__');
+                                    if (e.response.data.message != undefined) { console.log(e.response.data.message); }
+                                }
+                        });
                     });
                 },
                 addNewBank: function() {
@@ -544,6 +554,10 @@
                         else { return true; }
                     }
                 });
+
+                vm.is_default = '{{ $store->is_default }}';
+                vm.status = '{{ $store->status }}';
+                vm.frontweb = '{{ $store->frontweb }}';
             },
             computed: {
                 defaultStatus: function() {

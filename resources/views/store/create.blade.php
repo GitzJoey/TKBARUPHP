@@ -381,35 +381,35 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Choose Location</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span class="sr-only">@lang('buttons.close_button')</span></button>
+                        <h4 class="modal-title">@lang('store.field.dialog.map.title')</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="inputModalAddress">Address:</label>
-                            <input type="text" class="form-control" id="inputModalAddress" name="inputModalAddress">
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="inputModalLat">Latitude:</label>
-                                        <input type="text" class="form-control col-sm-6" id="inputModalLat" name="inputModalLat" readonly>
-                                    </div>
+                        <div class="form">
+                            <div class="form-group">
+                                <label for="inputModalAddress" class="col-sm-2 control-label">@lang('store.field.dialog.map.address')</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputModalAddress" name="inputModalAddress">
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="inputModalLng">Longitude:</label>
-                                        <input type="text" class="form-control col-sm-6" id="inputModalLng" name="inputModalLng" readonly>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputModalLat" class="col-sm-2 control-label">@lang('store.field.dialog.map.latitude')</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputModalLat" name="inputModalLat">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputModalLng" class="col-sm-2 control-label">@lang('store.field.dialog.map.longitude')</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputModalLng" name="inputModalLng">
                                 </div>
                             </div>
                         </div>
                         <div id="map" style="width: 870px; height: 400px;"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="location-ok-btn">OK</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="location-ok-btn">@lang('buttons.ok_button')</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" type="button">@lang('buttons.cancel_button')</button>
                     </div>
                 </div>
             </div>

@@ -65,6 +65,14 @@ return [
         'ribbon' => 'Pita',
         'latitude' => 'Garis Lintang',
         'longitude' => 'Garis Bujur',
+        'dialog' => [
+            'map' => [
+                'title' => 'Pilih Lokasi',
+                'address' => 'Alamat',
+                'latitude' => 'Latitude',
+                'longitude' => 'Longitude',
+            ],
+        ],
     ],
     'edit' => [
         'title' => 'Toko',

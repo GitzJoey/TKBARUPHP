@@ -65,6 +65,14 @@ return [
         'ribbon' => 'Ribbon',
         'latitude' => 'Latitude',
         'longitude' => 'Longitude',
+        'dialog' => [
+            'map' => [
+                'title' => 'Choose Location',
+                'address' => 'Address',
+                'latitude' => 'Latitude',
+                'longitude' => 'Longitude',
+            ],
+        ],
     ],
     'edit' => [
         'title' => 'Store',

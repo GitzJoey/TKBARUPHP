@@ -171,7 +171,9 @@ class StoreController extends Controller
     {
         Log::info('[StoreController@update] $id:' . $id);
 
-        DB::transaction(function() use ($id, $data) {
+        DB::beginTransaction();
+
+        try {
             $store = Store::find($id);
 
             $imageName = '';
@@ -248,7 +250,11 @@ class StoreController extends Controller
             $store->ribbon = $data['ribbon'];
 
             $store->save();
-        });
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        };
 
         return response()->json();
     }
