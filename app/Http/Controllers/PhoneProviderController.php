@@ -13,7 +13,9 @@ use App\Model\PhoneProvider;
 use App\Repos\LookupRepo;
 
 use DB;
+use Lang;
 use Config;
+use Exception;
 use Validator;
 use Illuminate\Http\Request;
 
@@ -45,13 +47,15 @@ class PhoneProviderController extends Controller
 
     public function store(Request $data)
     {
-        $validator = Validator::make($data->all(), [
+        $this->validate($data, [
             'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
             'status' => 'required',
-        ])->validate();
+        ]);
 
-        DB::transaction(function() use ($data) {
+        DB::beginTransaction();
+
+        try {
             $ph = new PhoneProvider();
             $ph->name = $data['name'];
             $ph->short_name = $data['short_name'];
@@ -66,7 +70,10 @@ class PhoneProviderController extends Controller
 
                 $ph->prefixes()->save($pp);
             }
-        });
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
 
         return response()->json();
     }
@@ -85,13 +92,15 @@ class PhoneProviderController extends Controller
 
     public function update($id, Request $data)
     {
-        $validator = Validator::make($data->all(), [
+        $this->validate($data, [
             'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:255',
             'status' => 'required',
-        ])->validate();
+        ]);
 
-        DB::transaction(function() use ($id, $data) {
+        DB::beginTransaction();
+
+        try {
             $ph = PhoneProvider::find($id);
 
             $ph->name = $data['name'];
@@ -108,7 +117,10 @@ class PhoneProviderController extends Controller
 
                 $ph->prefixes()->save($pp);
             }
-        });
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        };
 
         return response()->json();
     }
