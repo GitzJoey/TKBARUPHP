@@ -150,21 +150,42 @@ class Stock extends Model
         return is_numeric( $this->current_quantity ) && floor( $this->current_quantity ) != $this->current_quantity ? $this->current_quantity : number_format($this->current_quantity, 0) ;
     }
 
-    public function latestPrices()
+    public function latestPrices($priceLevelId = null)
     {
-        return Price::join(DB::raw("
-            (
-                SELECT MAX(input_date) AS input_date	
-                FROM prices 
-                WHERE stock_id = $this->id
-            ) max
-        "), function($join)
-        {
-            $join->on('prices.input_date', '=', 'max.input_date');
-        })
-        ->where('stock_id', '=', $this->id)
-        ->orderBy('price_level_id')
-        ->get();
+        if ($priceLevelId != null) {
+            $listLatestPrices =
+                Price::join(DB::raw("
+                (
+                    SELECT MAX(input_date) AS input_date	
+                    FROM prices 
+                    WHERE stock_id = $this->id
+                ) max
+            "), function($join)
+                {
+                    $join->on('prices.input_date', '=', 'max.input_date');
+                })
+                    ->where('stock_id', '=', $this->id)
+                    ->where('price_level_id', '=', $priceLevelId)
+                    ->orderBy('price_level_id')
+                    ->get();
+        } else {
+            $listLatestPrices =
+                Price::join(DB::raw("
+                (
+                    SELECT MAX(input_date) AS input_date	
+                    FROM prices 
+                    WHERE stock_id = $this->id
+                ) max
+            "), function($join)
+                {
+                    $join->on('prices.input_date', '=', 'max.input_date');
+                })
+                    ->where('stock_id', '=', $this->id)
+                    ->orderBy('price_level_id')
+                    ->get();
+        }
+
+        return $listLatestPrices;
     }
 
     public function todayPrices()

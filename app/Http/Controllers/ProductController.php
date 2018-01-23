@@ -59,19 +59,19 @@ class ProductController extends Controller
 
     public function store(Request $data)
     {
-        $validator = Validator::make($data->all(), [
+        Validator::make($data->all(), [
             'type' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 500);
-        }
+        ])->validate();
 
         if (count($data['unit_id']) == 0) {
-            $validator->getMessageBag()->add('unit', LaravelLocalization::getCurrentLocale() == "en" ? "Please provide at least 1 unit.":"Harap isi paling tidak 1 satuan");
-            return response()->json($validator->errors(), 500);
+            $rules = ['unit' => 'required'];
+            $messages = ['unit.required' =>
+                LaravelLocalization::getCurrentLocale() == "en" ?
+                    "Please provide at least 1 unit.":
+                    "Harap isi paling tidak 1 satuan"];
+            Validator::make($data->all(), $rules, $messages)->validate();
         }
 
         $imageName = '';

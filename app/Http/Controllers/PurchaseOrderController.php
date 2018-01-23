@@ -60,7 +60,7 @@ class PurchaseOrderController extends Controller
     {
         Log::info('[PurchaseOrderController@store]');
 
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'code'                      => 'required|string|max:255',
             'po_type'                   => 'required|string|max:255',
             'po_created'                => 'required|string|max:255',
@@ -77,14 +77,15 @@ class PurchaseOrderController extends Controller
             'item_disc_value.*.*'       => 'numeric',
             'disc_total_percent'        => 'numeric',
             'disc_total_value'          => 'numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 500);
-        }
+        ])->validate();
 
         if (is_null($this->purchaseOrderService->createPO($request))) {
-            return response()->json(['errors' => 'Failed'], 500);
+            $rules = ['po' => 'required'];
+            $messages = ['po.required' =>
+                LaravelLocalization::getCurrentLocale() == "en" ?
+                    "Create PO Failed":
+                    "Penbelian Gagal"];
+            Validator::make($request->all(), $rules, $messages)->validate();
         };
 
         return response()->json();

@@ -23,12 +23,13 @@ use App\Services\CustomerService;
 use DB;
 use Auth;
 use Config;
-use phpDocumentor\Reflection\Types\Integer;
+use Exception;
 use Validator;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Vinkla\Hashids\Facades\Hashids;
+use phpDocumentor\Reflection\Types\Integer;
 
 class CustomerController extends Controller
 {
@@ -93,76 +94,72 @@ class CustomerController extends Controller
 
     public function store(Request $data)
     {
-        $validator = Validator::make($data->all(), [
+        Validator::make($data->all(), [
             'name' => 'required|string|max:255',
             'status' => 'required',
-        ]);
+        ])->validate();
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 500);
-        } else {
-            try  {
-                DB::transaction(function() use ($data) {
+        DB::beginTransaction();
+        try  {
+            $customer = new Customer();
+            $customer->store_id = Auth::user()->store->id;
+            $customer->name = $data['name'];
+            $customer->address = $data['address'];
+            $customer->latitude = empty($data['latitude']) ? 0:$data['latitude'];
+            $customer->longitude = empty($data['longitude']) ? 0:$data['longitude'];
+            $customer->distance = empty($data['distance']) ? 0:$data['distance'];
+            $customer->distance_text = $data['distance_text'];
+            $customer->duration = empty($data['duration']) ? 0:$data['duration'];
+            $customer->duration_text = $data['duration_text'];
+            $customer->city = $data['city'];
+            $customer->phone_number = $data['phone'];
+            $customer->tax_id = $data['tax_id'];
+            $customer->remarks = $data['remarks'];
+            $customer->payment_due_day = empty($data->input('payment_due_day')) ? 0 : $data->input('payment_due_day');
+            $customer->price_level_id = $data['price_level'];
+            $customer->status = $data['status'];
 
-                    $customer = new Customer();
-                    $customer->store_id = Auth::user()->store->id;
-                    $customer->name = $data['name'];
-                    $customer->address = $data['address'];
-                    $customer->latitude = empty($data['latitude']) ? 0:$data['latitude'];
-                    $customer->longitude = empty($data['longitude']) ? 0:$data['longitude'];
-                    $customer->distance = empty($data['distance']) ? 0:$data['distance'];
-                    $customer->distance_text = $data['distance_text'];
-                    $customer->duration = empty($data['duration']) ? 0:$data['duration'];
-                    $customer->duration_text = $data['duration_text'];
-                    $customer->city = $data['city'];
-                    $customer->phone_number = $data['phone'];
-                    $customer->tax_id = $data['tax_id'];
-                    $customer->remarks = $data['remarks'];
-                    $customer->payment_due_day = empty($data->input('payment_due_day')) ? 0 : $data->input('payment_due_day');
-                    $customer->price_level_id = $data['price_level'];
-                    $customer->status = $data['status'];
+            $customer->save();
 
-                    $customer->save();
+            for ($i = 0; $i < count($data['bank']); $i++) {
+                $ba = new BankAccount();
+                $ba->bank_id = $data["bank"][$i];
+                $ba->account_name = $data["account_name"][$i];
+                $ba->account_number = $data["account_number"][$i];
+                $ba->remarks = $data["bank_remarks"][$i];
 
-                    for ($i = 0; $i < count($data['bank']); $i++) {
-                        $ba = new BankAccount();
-                        $ba->bank_id = $data["bank"][$i];
-                        $ba->account_name = $data["account_name"][$i];
-                        $ba->account_number = $data["account_number"][$i];
-                        $ba->remarks = $data["bank_remarks"][$i];
-
-                        $customer->bankAccounts()->save($ba);
-                    }
-
-                    for ($i = 0; $i < count($data['first_name']); $i++) {
-                        $pa = new Profile();
-                        $pa->first_name = $data["first_name"][$i];
-                        $pa->last_name = $data["last_name"][$i];
-                        $pa->address = $data["profile_address"][$i];
-                        $pa->ic_num = $data["ic_num"][$i];
-
-                        $customer->profiles()->save($pa);
-
-                        for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
-                            $ph = new PhoneNumber();
-                            $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
-                            $ph->number = $data['profile_' . $i . '_phone_number'][$j];
-                            $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
-
-                            $pa->phoneNumbers()->save($ph);
-                        }
-                    }
-
-                    if (count($data->input('expense_template_id')) > 0) {
-                        $customer->expenseTemplates()->sync($data->input('expense_template_id'));
-                    }
-                });
-            } catch (Exception $e) {
-                return response()->json($e);
+                $customer->bankAccounts()->save($ba);
             }
 
-            return response()->json();
+            for ($i = 0; $i < count($data['first_name']); $i++) {
+                $pa = new Profile();
+                $pa->first_name = $data["first_name"][$i];
+                $pa->last_name = $data["last_name"][$i];
+                $pa->address = $data["profile_address"][$i];
+                $pa->ic_num = $data["ic_num"][$i];
+
+                $customer->profiles()->save($pa);
+
+                for ($j = 0; $j < count($data['profile_' . $i . '_phone_provider']); $j++) {
+                    $ph = new PhoneNumber();
+                    $ph->phone_provider_id = $data['profile_' . $i . '_phone_provider'][$j];
+                    $ph->number = $data['profile_' . $i . '_phone_number'][$j];
+                    $ph->remarks = $data['profile_' . $i . '_remarks'][$j];
+
+                    $pa->phoneNumbers()->save($ph);
+                }
+            }
+
+            if (count($data->input('expense_template_id')) > 0) {
+                $customer->expenseTemplates()->sync($data->input('expense_template_id'));
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
         }
+
+        return response()->json();
     }
 
     public function edit($id)
@@ -182,7 +179,8 @@ class CustomerController extends Controller
 
     public function update($id, Request $data)
     {
-        DB::transaction(function() use ($id, $data) {
+        DB::beginTransaction();
+        try {
             $customer = Customer::findOrFail($id);
 
             if (!$customer) {
@@ -272,7 +270,10 @@ class CustomerController extends Controller
             if (count($data->input('expense_template_id')) > 0) {
                 $customer->expenseTemplates()->sync($data->input('expense_template_id'));
             }
-        });
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        };
 
         return redirect(route('db.master.customer'));
     }

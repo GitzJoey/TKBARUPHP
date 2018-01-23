@@ -66,7 +66,7 @@ return [
         'page_title' => 'TaxOutput Report',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'TaxOutput Report'
+            'title' => 'TaxOutput Report',
         ],
         'nav_tabs' => [
             'invoice_input' => 'Invoice Input',
@@ -84,9 +84,9 @@ return [
                     'unit_price' => 'Unit Price',
                     'tax_base' => 'Tax Base (Rp)',
                     'gst' => 'GST (Rp)',
-                    'grand_total' => 'Total Paid (Rp)'
-                ]
-            ]
+                    'grand_total' => 'Total Paid (Rp)',
+                ],
+            ],
         ],
         'output_summary' => [
             'table' => [
@@ -97,9 +97,9 @@ return [
                     'tax_base' => 'Tax Base',
                     'gst' => 'GST',
                     'total_price' => 'Total',
-                    'product' => 'Product'
-                ]
-            ]
+                    'product' => 'Product',
+                ],
+            ],
         ],
         'output' => [
             'table' => [
@@ -109,9 +109,9 @@ return [
                     'address' => 'Address',
                     'unit_price' => 'Unit Price',
                     'qty' => 'Quantity (kg)',
-                    'product' => 'Product'
-                ]
-            ]
+                    'product' => 'Product',
+                ],
+            ],
         ],
     ],
     'transaction' => [
@@ -363,6 +363,8 @@ return [
                 'tax_id' => 'TaxOutput ID',
                 'status' => 'Status',
                 'remarks' => 'Remarks',
+                'product_name' => '',
+                'price' => '',
             ],
             'footer' => 'Printed by :user on :date',
         ],
@@ -454,6 +456,14 @@ return [
             ],
             'report_name' => 'Sales Order Report',
             'footer' => 'Printed by :user on :date',
+        ],
+        'today_price' => [
+            'report_name' => 'Price Lists',
+            'header' => [
+                'product_type' => 'Type',
+                'product_name' => 'Name',
+                'price' => 'Price',
+            ],
         ],
     ],
 ];

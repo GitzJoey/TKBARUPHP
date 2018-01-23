@@ -66,7 +66,7 @@ return [
         'page_title' => 'Pajak',
         'page_title_desc' => '',
         'header' => [
-            'title' => 'Laporan Pajak'
+            'title' => 'Laporan Pajak',
         ],
         'nav_tabs' => [
             'invoice_input' => 'Faktur Masukan',
@@ -84,9 +84,9 @@ return [
                     'unit_price' => 'Harga Satuan',
                     'tax_base' => 'DPP Beli (Rp)',
                     'gst' => 'PPN-PM (Rp)',
-                    'grand_total' => 'Total yang dibayar (Rp)'
-                ]
-            ]
+                    'grand_total' => 'Total yang dibayar (Rp)',
+                ],
+            ],
         ],
         'output_summary' => [
             'table' => [
@@ -97,9 +97,9 @@ return [
                     'tax_base' => 'DPP-Jual (Rp)',
                     'gst' => 'PPN-PK (Rp)',
                     'total_price' => 'Total (Rp)',
-                    'product' => 'Barang'
-                ]
-            ]
+                    'product' => 'Barang',
+                ],
+            ],
         ],
         'output' => [
             'table' => [
@@ -109,9 +109,9 @@ return [
                     'address' => 'Alamat',
                     'unit_price' => 'Harga',
                     'qty' => 'Berat',
-                    'product' => 'Barang'
-                ]
-            ]
+                    'product' => 'Barang',
+                ],
+            ],
         ],
     ],
     'transaction' => [
@@ -309,6 +309,8 @@ return [
                 'tax_id' => 'No. NPWP',
                 'status' => 'Status',
                 'remarks' => 'Keterangan',
+                'product_name' => '',
+                'price' => '',
             ],
             'footer' => 'Dicetak oleh :user pada :date',
         ],
@@ -449,6 +451,14 @@ return [
                 'code' => 'Kode',
             ],
             'footer' => 'Dicetak oleh :user pada :date',
+        ],
+        'today_price' => [
+            'report_name' => 'Daftar Harga',
+            'header' => [
+                'product_type' => 'Tipe',
+                'product_name' => 'Nama',
+                'price' => 'Harga',
+            ],
         ],
     ],
     'viewer' => [

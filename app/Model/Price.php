@@ -71,6 +71,11 @@ class Price extends Model
         return HashIds::encode($this->attributes['id']);
     }
 
+    public function priceLevel()
+    {
+        return $this->belongsTo('App\Model\PriceLevel', 'price_level_id');
+    }
+
     /**
      * Bulk save prices
      *
