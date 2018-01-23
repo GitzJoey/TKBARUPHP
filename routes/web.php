@@ -298,6 +298,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('', 'ReportController@report_trx')->name('db.report.transaction');
                 Route::post('purchase_order', 'ReportTransactionController@generatePurchaseOrderReport')->name('db.report.trx.po');
                 Route::post('sales_order', 'ReportTransactionController@generateSalesOrderReport')->name('db.report.trx.so');
+                Route::post('summary/purchase_order', 'ReportTransactionController@generatePurchaseOrderSummaryReport')->name('db.report.trx.po.summary');
+                Route::post('summary/sales_order', 'ReportTransactionController@generateSalesOrderSummaryReport')->name('db.report.trx.so.summary');
             });
 
             Route::group(['prefix' => 'mon', 'middleware' => ['permission:menu-report_monitoring']], function () {

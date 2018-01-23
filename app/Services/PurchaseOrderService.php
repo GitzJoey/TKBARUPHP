@@ -107,6 +107,8 @@ interface PurchaseOrderService
 
     public function searchPO($keyword);
 
+    public function searchPOByDate($date);
+
     public function updatePOStatus(PurchaseOrder $poData, $amount);
 
     public function getLastPODates($limit);

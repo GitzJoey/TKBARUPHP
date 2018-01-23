@@ -134,6 +134,8 @@ interface SalesOrderService
 
     public function searchSO($keyword);
 
+    public function searchSOByDate($date);
+
     public function updateSOStatus(SalesOrder $soData, $amount);
 
     public function getTop10Customer();

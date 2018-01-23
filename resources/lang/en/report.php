@@ -121,6 +121,8 @@ return [
         'header' => [
             'purchase_order' => 'Purchase Order',
             'sales_order' => 'Sales Order',
+            'purchase_order_today_summary' => 'Daily Summary Purchase Order',
+            'sales_order_today_summary' => 'Daily Summary Sales Order',
         ],
         'field' => [
             'po_code' => 'PO Code',
@@ -463,6 +465,26 @@ return [
                 'product_type' => 'Type',
                 'product_name' => 'Name',
                 'price' => 'Price',
+            ],
+        ],
+        'po_summary' => [
+            'report_name' => 'Daily Summary Purchase Order',
+            'header' => [
+                'code' => 'Code',
+                'po_date' => 'Date',
+                'supplier' => 'Supplier',
+                'amount' => 'Amount',
+                'status' => 'Status',
+            ],
+        ],
+        'so_summary' => [
+            'report_name' => 'Daily Summary Sales Order',
+            'header' => [
+                'code' => 'Code',
+                'so_date' => 'Date',
+                'customer' => 'Customer',
+                'amount' => 'Amount',
+                'status' => 'Status',
             ],
         ],
     ],

@@ -121,6 +121,8 @@ return [
         'header' => [
             'purchase_order' => 'Pembelian',
             'sales_order' => 'Penjualan',
+            'purchase_order_today_summary' => 'Rangkuman Pembelian Harian',
+            'sales_order_today_summary' => 'Rangkuman Penjualan Harian',
         ],
         'field' => [
             'po_code' => 'Kode',
@@ -458,6 +460,26 @@ return [
                 'product_type' => 'Tipe',
                 'product_name' => 'Nama',
                 'price' => 'Harga',
+            ],
+        ],
+        'po_summary' => [
+            'report_name' => 'Rangkuman Pembelian Harian',
+            'header' => [
+                'code' => 'Kode',
+                'po_date' => 'Tanggal',
+                'supplier' => 'Supplier',
+                'amount' => 'Jumlah',
+                'status' => 'Status',
+            ],
+        ],
+        'so_summary' => [
+            'report_name' => 'Rangkuman Penjualan Harian',
+            'header' => [
+                'code' => 'Kode',
+                'so_date' => 'Tanggal',
+                'customer' => 'Pelanggan',
+                'amount' => 'Jumlah',
+                'status' => 'Status',
             ],
         ],
     ],

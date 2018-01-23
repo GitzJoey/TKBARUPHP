@@ -148,6 +148,62 @@
             </div>
         </div>
     </div>
+    <div class="well">
+        <div class="row">
+            <div class="col-md-6">
+                <form action="{{ route('db.report.trx.po.summary') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info animated slideInLeft">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.transaction.header.purchase_order_today_summary')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputSummaryPODate" class="col-sm-3 control-label">@lang('report.transaction.field.po_date')</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" name="po_date" class="form-control" id="inputSummaryPODate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form action="{{ route('db.report.trx.so.summary') }}" method="post" class="form-horizontal">
+                    {{ csrf_field() }}
+                    <div class="box box-info animated slideInRight">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">@lang('report.transaction.header.sales_order_today_summary')</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputSummarySODate" class="col-sm-3 control-label">@lang('report.transaction.field.so_date')</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" name="so_date" class="form-control" id="inputSummarySODate">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-default">@lang('buttons.print_preview_button')</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('custom_js')
@@ -159,6 +215,9 @@
             $('#inputSODate').datetimepicker().data("DateTimePicker").date(null);
             $('#inputSOShippingDate').datetimepicker().data("DateTimePicker").date(null);
             $('#inputDeliverDate').datetimepicker().data("DateTimePicker").date(null);
+
+            $('#inputSummaryPODate').datetimepicker({ format: "DD MMM YYYY" }).data("DateTimePicker").date(moment());
+            $('#inputSummarySODate').datetimepicker({ format: "DD MMM YYYY" }).data("DateTimePicker").date(moment());
         });
     </script>
 @endsection

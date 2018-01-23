@@ -553,7 +553,11 @@ class SalesOrderServiceImpl implements SalesOrderService
 
     public function searchSOByDate($date)
     {
-        $saleOrders = SalesOrder::with([ 'customer.profiles', 'delivers.item.product', 'delivers.item.selectedUnit.unit' ])
+        $date = Carbon::parse($date)->format('Y-m-d');
+        
+        $saleOrders = SalesOrder::with([ 'customer.profiles', 'delivers.item.product',
+            'delivers.item.selectedUnit' => function($q) { $q->with('unit')->withTrashed(); }
+        ])
             ->where('so_created', 'like', '%'.$date.'%')->get();
 
         return $saleOrders;
@@ -569,7 +573,6 @@ class SalesOrderServiceImpl implements SalesOrderService
             $soData->save();
         }
     }
-
 
     public function getTop10Customer()
     {

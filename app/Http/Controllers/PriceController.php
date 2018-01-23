@@ -199,7 +199,7 @@ class PriceController extends Controller
 
         $fileName = "Today_Price_" . $reportDate->format('Ymd');
 
-        $pdf->loadView('report_template.pdf.today_price_report',
+        $pdf->loadView('report_template.today_price_report',
             compact('todayPriceReport', 'currentUser', 'reportDate', 'showParameter'))
             ->save(storage_path("app/public/reports/$fileName.pdf"));
 
@@ -208,7 +208,7 @@ class PriceController extends Controller
         use ($todayPriceReport, $currentUser, $reportDate, $showParameter) {
             $excel->sheet('Sheet 1', function ($sheet)
             use ($todayPriceReport, $currentUser, $reportDate, $showParameter) {
-                $sheet->loadView('report_template.excel.today_price_report',
+                $sheet->loadView('report_template.today_price_report',
                     compact('todayPriceReport', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
             });
