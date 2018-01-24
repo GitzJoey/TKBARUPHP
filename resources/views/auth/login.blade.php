@@ -50,12 +50,15 @@
                     </div>
                 </div>
             </form>
-            <hr/>
-
-            <a href="/register" class="text-center">@lang('login.register.new')</a>
-
+            <hr class="strong-line">
+            <div class="btn-group btn-group-justified">
+                <a href="/register" class="btn btn-primary btn-block">@lang('login.register.new')</a>
+            </div>
+            <br>
+            <div class="btn-group btn-group-justified">
+                <a href="/forgot" class="btn btn-xs btn-default btn-block">@lang('login.forgot_pass')</a></div>
+            </div>
         </div>
-        <div class="pull-right"><a href="/forgot">@lang('login.forgot_pass')</a></div>
     </div>
 
     <script type="application/javascript" src="{{ mix('adminlte/js/adminlte.js') }}"></script>

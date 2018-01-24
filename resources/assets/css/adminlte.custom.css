@@ -191,3 +191,8 @@ ol.breadcrumb {
 .table-no-bg {
 	background-color: transparent !important;
 }
+
+.strong-line {
+    border: 1px;
+    border-style: solid;
+}

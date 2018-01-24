@@ -14,12 +14,13 @@
                 <li>
                     <a class="disabled" id="timeoutCount" title="Timeout Remaining">0:00:00</a>
                 </li>
-                <li class="hidden-xs">
-                    <a href="/front"><span class="fa fa-external-link fa-fw" title="Back To Frontpage"></span></a>
-                </li>
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-globe"></i>
+                        @if (App::getLocale() == 'id')
+                            <img src="{{ asset('images/id.png') }}" width="20px" height="20px"/>
+                        @else
+                            <img src="{{ asset('images/us.png') }}" width="20px" height="20px"/>
+                        @endif
                     </a>
                     <ul class="dropdown-menu">
                         <li>
@@ -70,6 +71,9 @@
                             </div>
                         </li>
                     </ul>
+                </li>
+                <li class="hidden-xs">
+                    <a href="/front"><span class="fa fa-external-link fa-fw" title="Back To Frontpage"></span></a>
                 </li>
                 <li class="hidden-xs">
                     <a href="/dashboard/start/tour"><span class="fa fa-question fa-fw" title="Help/Tour"></span></a>
