@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    @include('report_template.excel.style')
+    @include('report_template.pdf.style')
     <table>
         <tr class="title-row">
             <td colspan="5">
@@ -26,7 +26,7 @@
                 <td>{{ $p->po_created }}</td>
                 <td>{{ $p->supplier_type == config('lookups.SUPPLIER_TYPE.WALK_IN') ? $p->walk_in_supplier:$p->supplier->name }}</td>
                 <td></td>
-                <td>@lang('lookup'.$p->status)</td>
+                <td>@lang('lookup.'.$p->status)</td>
             </tr>
         @endforeach
         <tr>

@@ -297,7 +297,7 @@ class ReportTransactionController extends Controller
         use ($soData, $currentUser, $reportDate, $showParameter) {
             $excel->sheet('Sheet 1', function ($sheet)
             use ($soData, $currentUser, $reportDate, $showParameter) {
-                $sheet->loadView('report_template.excel.po_summary_report',
+                $sheet->loadView('report_template.excel.so_summary_report',
                     compact('soData', 'currentUser', 'reportDate', 'showParameter'));
                 $sheet->setPageMargin(0.30);
             });

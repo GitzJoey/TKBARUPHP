@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    @include('report_template.excel.style')
+    @include('report_template.pdf.style')
     <table>
         <tr class="title-row">
             <td colspan="5">
