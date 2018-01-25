@@ -52,11 +52,11 @@
             </form>
             <hr class="strong-line">
             <div class="btn-group btn-group-justified">
-                <a href="/register" class="btn btn-primary btn-block">@lang('login.register.new')</a>
+                <a href="/register" class="btn btn-primary btn-block btn-flat">@lang('login.register.new')</a>
             </div>
             <br>
             <div class="btn-group btn-group-justified">
-                <a href="/forgot" class="btn btn-xs btn-default btn-block">@lang('login.forgot_pass')</a></div>
+                <a href="/forgot" class="btn btn-xs btn-default btn-block btn-flat">@lang('login.forgot_pass')</a></div>
             </div>
         </div>
     </div>
