@@ -134,7 +134,7 @@ class SalesOrderServiceImpl implements SalesOrderService
                 $expense->type = $expense['type']['code'];
                 $expense->is_internal_expense = !empty($expense['is_internal_expense']) ? $expense['is_internal_expense'] : 0;
                 $expense->amount = floatval(str_replace(',', '', $expense['amount']));
-                $expense->remarks = $expense['amount'];
+                $expense->remarks = $expense['remarks'];
                 $so->expenses()->save($expense);
             }
 
@@ -592,5 +592,23 @@ class SalesOrderServiceImpl implements SalesOrderService
             ->where('code', '=', $code)->get();
 
         return $saleOrders;
+    }
+
+    public function addExpense($id, $expenseArr)
+    {
+        $currentSo = SalesOrder::whereId($id)->first();
+
+        for($i = 0; $i < count($expenseArr); $i++){
+            $expense = new Expense();
+            $expense->name = $expenseArr[$i]["expense_name"];
+            $expense->type = $expenseArr[$i]["expense_type"];
+            $expense->is_internal_expense = !empty($expenseArr[$i]["is_internal_expense"]);
+            $expense->amount = floatval(str_replace(',', '', $expenseArr[$i]["expense_amount"]));
+            $expense->remarks = $expenseArr[$i]["expense_remarks"];
+
+            $currentSo->expenses()->save($expense);
+        }
+
+        $currentSo->save();
     }
 }

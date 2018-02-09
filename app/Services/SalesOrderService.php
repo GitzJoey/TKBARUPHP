@@ -143,4 +143,6 @@ interface SalesOrderService
     public function getTop10WalkInCustomer();
 
     public function getSOByCode($code);
+
+    public function addExpense($id, $expenseArr);
 }

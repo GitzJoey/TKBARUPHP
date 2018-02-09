@@ -166,7 +166,7 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">@lang('warehouse.outflow.deliver.box.expenses')</h3>
-                            <button type="button" class="btn btn-primary btn-xs pull-right"><span class="fa fa-plus fa-fw"></span></button>
+                            <button type="button" class="btn btn-primary btn-xs pull-right" v-on:click="insertExpense"><span class="fa fa-plus fa-fw"></span></button>
                         </div>
                         <div class="box-body">
                             <div class="row">
@@ -187,6 +187,36 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <tr v-for="(expense, expenseIndex) in so.expenses">
+                                                <td>
+                                                    <input v-bind:name="'so_' + soIndex + '_expense_name[]'" type="text" class="form-control"
+                                                           v-model="expense.name" v-validate="'required'">
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type[]'" v-bind:value="expense.type.code">
+                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_description[]'" v-bind:value="expense.type.description">
+                                                    <input type="hidden" v-bind:name="'so_' + soIndex + '_expense_type_i18nDescription[]'" v-bind:value="expense.type.i18nDescription">
+                                                    <select class="form-control" v-model="expense.type">
+                                                        <option v-bind:value="defaultExpenseType">@lang('labels.PLEASE_SELECT')</option>
+                                                        <option v-for="expenseType in expenseTypes" v-bind:value="expenseType.code">@{{ expenseType.i18nDescription }}</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-center">
+                                                    <vue-iCheck name="'so_' + soIndex + '_is_internal_expense[]'" v-model="expense.is_internal_expense" disabled="disabled"></vue-iCheck>
+                                                </td>
+                                                <td>
+                                                    <input v-bind:name="'so_' + soIndex + '_expense_remarks[]'" type="text" class="form-control" v-model="expense.remarks"/>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-md"
+                                                            v-on:click="removeExpense(expenseIndex)"><span class="fa fa-minus"/>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <input v-bind:name="'so_' + soIndex + '_expense_amount[]'" type="text" class="form-control text-right"
+                                                           v-model="expense.amount" v-validate="'required|decimal:2'"/>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -233,6 +263,11 @@
                 outflow: {
                     delivers : []
                 },
+                so: {
+                    expenses: []
+                },
+                soIndex: 0,
+                expenseTypes: JSON.parse('{!! htmlspecialchars_decode($expenseTypes) !!}'),
                 deliver_date: '',
                 license_plate: '',
                 select_license_plate: ''
@@ -277,10 +312,43 @@
                             brutto: vm.SO.items[i].quantity % 1 != 0 ? parseFloat(vm.SO.items[i].quantity).toFixed(1) : parseFloat(vm.SO.items[i].quantity).toFixed(0)
                         });
                     }
+
+                },
+                expenseTotal: function (index) {
+                    var vm = this;
+                    var result = 0;
+                    _.forEach(vm.SOs[index].expenses, function (expense, key) {
+                        if(expense.type.code === 'EXPENSETYPE.ADD')
+                            result += parseInt(numbro().unformat(expense.amount));
+                        else
+                            result -= parseInt(numbro().unformat(expense.amount));
+                    });
+                    return result;
+                },
+                insertExpense: function () {
+                    var vm = this;
+                    vm.so.expenses.push({
+                        name: '',
+                        type: {
+                            code: ''
+                        },
+                        is_internal_expense: true,
+                        amount: 0,
+                        remarks: ''
+                    });
                 },
                 removeDeliver: function (index) {
                     this.outflow.delivers.splice(index, 1);
                 },
+                removeExpense: function (index) {
+                    this.so.expenses.splice(index, 1);
+                }
+            },
+            mounted: function() {
+                this.createDeliver();
+                this.insertExpense();
+            },
+            computed: {
                 readOnly: function () {
                     var vm = this;
                     if (vm.SO.status == '{{ config('lookups.SO_STATUS.WAITING_DELIVERY') }}') {
@@ -288,12 +356,7 @@
                     } else {
                         return true;
                     }
-                }
-            },
-            mounted: function() {
-                this.createDeliver();
-            },
-            computed: {
+                },
                 defaultProductUnit: function(){
                     return {
                         id: '',
@@ -301,6 +364,11 @@
                             id: ''
                         },
                         conversion_value: 1
+                    };
+                },
+                defaultExpenseType: function() {
+                    return {
+                        code: ''
                     };
                 }
             }

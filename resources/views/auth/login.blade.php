@@ -46,13 +46,18 @@
                         </div>
                     </div>
                     <div class="col-xs-4">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">@lang('buttons.login_button')</button>
                     </div>
                 </div>
             </form>
             <hr class="strong-line">
             <div class="btn-group btn-group-justified">
-                <a href="/register" class="btn btn-primary btn-block btn-flat">@lang('login.register.new')</a>
+                <a href="/register" class="btn btn-xs btn-primary btn-block btn-flat">@lang('login.register.new')</a>
             </div>
             <br>
             <div class="btn-group btn-group-justified">

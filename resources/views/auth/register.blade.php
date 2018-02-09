@@ -82,8 +82,12 @@
                     </div>
                 </div>
             </form>
-            <hr/>
-            <a href="/login" class="text-center">@lang('login.register.already_member')</a>
+            <hr class="strong-line">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="/login" class="btn btn-xs btn-primary btn-flat">@lang('login.register.already_member')</a>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Expense;
 use App\Model\Stock;
 use App\Model\Truck;
 use App\Model\Deliver;
@@ -16,15 +17,24 @@ use App\Model\Warehouse;
 use App\Model\SalesOrder;
 use App\Model\ProductUnit;
 
+use App\Repos\LookupRepo;
+
+use App\Services\SalesOrderService;
+
+use DB;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class WarehouseOutflowController extends Controller
 {
-    public function __construct()
+    private $salesOrderService;
+
+    public function __construct(SalesOrderService $salesOrderService)
     {
         $this->middleware('auth', [ 'except' => [ 'getWarehouseSOs' ] ]);
+        $this->salesOrderService = $salesOrderService;
     }
 
     public function outflow()
@@ -53,57 +63,79 @@ class WarehouseOutflowController extends Controller
 
         $so = SalesOrder::with('items.product.productUnits.unit')->find($id);
         $truck = Truck::get()->pluck('plate_number', 'plate_number');
+        $expenseTypes = LookupRepo::findByCategory('EXPENSETYPE');
 
-        return view('warehouse.deliver', compact('so', 'truck'));
+        return view('warehouse.deliver', compact('so', 'truck', 'expenseTypes'));
     }
 
     public function saveDeliver(Request $request, $id)
     {
         Log::info("[WarehouseOutflowController@saveDeliver]");
 
-        for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
-            $conversionValue = ProductUnit::whereId($request->input("selected_unit_id.$i"))->first()->conversion_value;
+        DB::beginTransaction();
 
-            $deliverParams = [
-                'deliver_date' => date('Y-m-d', strtotime($request->input('deliver_date'))),
-                'conversion_value' => $conversionValue,
-                'brutto' => $request->input("brutto.$i"),
-                'base_brutto' => $conversionValue * $request->input("brutto.$i"),
-                'netto' => 0,
-                'base_netto' => 0,
-                'tare' => 0,
-                'base_tare' => 0,
-                'license_plate' => $request->input('license_plate'),
-                'item_id' => $request->input("item_id.$i"),
-                'selected_unit_id' => $request->input("selected_unit_id.$i"),
-                'base_unit_id' => $request->input("base_unit_id.$i"),
-                'store_id' => Auth::user()->store_id,
-                'status' => 'CUSTCONFSTATUS.WSC'
-            ];
+        try {
+            for ($i = 0; $i < sizeof($request->input('item_id')); $i++) {
+                $conversionValue = ProductUnit::whereId($request->input("selected_unit_id.$i"))->first()->conversion_value;
 
-            $deliver = Deliver::create($deliverParams);
-
-            if($request->input("stock_id.$i") != 0){
-                $stockOutParams = [
+                $deliverParams = [
+                    'deliver_date' => date('Y-m-d', strtotime($request->input('deliver_date'))),
+                    'conversion_value' => $conversionValue,
+                    'brutto' => $request->input("brutto.$i"),
+                    'base_brutto' => $conversionValue * $request->input("brutto.$i"),
+                    'netto' => 0,
+                    'base_netto' => 0,
+                    'tare' => 0,
+                    'base_tare' => 0,
+                    'license_plate' => $request->input('license_plate'),
+                    'item_id' => $request->input("item_id.$i"),
+                    'selected_unit_id' => $request->input("selected_unit_id.$i"),
+                    'base_unit_id' => $request->input("base_unit_id.$i"),
                     'store_id' => Auth::user()->store_id,
-                    'so_id' => $id,
-                    'product_id' => $request->input("product_id.$i"),
-                    'warehouse_id' => $request->input('warehouse_id'),
-                    'stock_id' => $request->input("stock_id.$i"),
-                    'quantity' => $request->input("brutto.$i")
+                    'status' => 'CUSTCONFSTATUS.WSC'
                 ];
 
-                $stockOut = StockOut::create($stockOutParams);
+                $deliver = Deliver::create($deliverParams);
 
-                $stock = Stock::find($request->input("stock_id.$i"));
-                $stock->current_quantity -= $request->input("brutto.$i");
-                $stock->save();
+                if($request->input("stock_id.$i") != 0){
+                    $stockOutParams = [
+                        'store_id' => Auth::user()->store_id,
+                        'so_id' => $id,
+                        'product_id' => $request->input("product_id.$i"),
+                        'warehouse_id' => $request->input('warehouse_id'),
+                        'stock_id' => $request->input("stock_id.$i"),
+                        'quantity' => $request->input("brutto.$i")
+                    ];
+
+                    $stockOut = StockOut::create($stockOutParams);
+
+                    $stock = Stock::find($request->input("stock_id.$i"));
+                    $stock->current_quantity -= $request->input("brutto.$i");
+                    $stock->save();
+                }
             }
-        }
 
-        $so = SalesOrder::whereId($id)->first();
-        $so->status = 'SOSTATUS.WCC';
-        $so->save();
+            $expenseArr = array();
+            for ($x = 0; $x < sizeof($request->input('so_0_expense_name')); $x++) {
+                array_push($expenseArr, array (
+                    'expense_name' => $request->input("so_0_expense_name")[$x],
+                    'expense_type' => $request->input("so_0_expense_type")[$x],
+                    'is_internal_expense' => true,
+                    'expense_amount' => floatval(str_replace(',', '', $request->input("so_0_expense_amount")[$x])),
+                    'expense_remarks' => $request->input("so_0_expense_remarks")[$x]
+                ));
+            }
+
+            $this->salesOrderService->addExpense($id, $expenseArr);
+
+            $so = SalesOrder::whereId($id)->first();
+            $so->status = 'SOSTATUS.WCC';
+            $so->save();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
 
         return response()->json();
     }
