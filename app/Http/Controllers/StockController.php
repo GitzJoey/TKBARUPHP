@@ -49,6 +49,7 @@ class StockController extends Controller
         $to_json = !empty($to_json)? true : false;
 
         $prodtypeDdL = ProductType::with([
+            'stocks' => function($s) { $s->where('current_quantity', '>', 0); },
             'stocks.soItems.itemable.customer',
             'stocks.soItems.selectedUnit' => function($q) { $q->with('unit')->withTrashed(); },
             'stocks.product',
