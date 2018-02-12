@@ -16,7 +16,7 @@
                         <td colspan="2" class="hiddenRow" style="padding-left: 15px; padding-top: 15px;">
                             <div class="accordian-body collapse" v-bind:id="'row'+prodtype.id ">
                                 <strong>@lang('stock_history.stock_history')</strong> <br/>
-                                <p v-if=" !prodtype.stocks.length ">@lang('stock_history.theres_no_data')</p>
+                                <p v-if="!prodtype.stocks.length ">@lang('stock_history.theres_no_data')</p>
                                 <template v-if=" prodtype.stocks.length " v-for="(stock, stockIndex) in prodtype.stocks">
                                     <table class="table table-striped">
                                         <thead>
