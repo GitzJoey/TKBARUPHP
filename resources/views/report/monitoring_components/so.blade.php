@@ -7,7 +7,11 @@
                 </div>
                 <vue-datetimepicker id="salesOrderDateFilter" v-model="salesOrderDateFilter" format="YYYY-MM-DD"></vue-datetimepicker>
             </div>
+            <span v-show="loading" class="help-block"><i class="fa fa-spinner fa-spin fa-fw"></i></span>
         </div>
+    </div>
+    <div class="col-xs-6 col-sm 8">
+
     </div>
 </div>
 <div class="row">
@@ -16,11 +20,11 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center" width="17%">@lang('sales_order.revise.index.table.header.code')</th>
-                        <th class="text-center" width="17%">@lang('sales_order.revise.index.table.header.so_date')</th>
-                        <th class="text-center" width="27%">@lang('sales_order.revise.index.table.header.customer')</th>
-                        <th class="text-center" width="17%">@lang('sales_order.revise.index.table.header.shipping_date')</th>
-                        <th class="text-center" width="22%">@lang('sales_order.revise.index.table.header.status')</th>
+                        <th class="text-center" width="17%">@lang('report.monitoring.components.so.table.header.code')</th>
+                        <th class="text-center" width="17%">@lang('report.monitoring.components.so.table.header.so_date')</th>
+                        <th class="text-center" width="27%">@lang('report.monitoring.components.so.table.header.customer')</th>
+                        <th class="text-center" width="17%">@lang('report.monitoring.components.so.table.header.shipping_date')</th>
+                        <th class="text-center" width="22%">@lang('report.monitoring.components.so.table.header.status')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,9 +46,9 @@
                                 <table class="table table-bordered table-condensed">
                                     <thead>
                                         <tr>
-                                            <th width="40%" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.product_name')</th>
-                                            <th width="30%" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.unit')</th>
-                                            <th width="30%" class="text-center">@lang('warehouse.outflow.deliver.table.item.header.brutto')</th>
+                                            <th width="40%" class="text-center">@lang('report.monitoring.components.so.table.item.header.product_name')</th>
+                                            <th width="30%" class="text-center">@lang('report.monitoring.components.so.table.item.header.unit')</th>
+                                            <th width="30%" class="text-center">@lang('report.monitoring.components.so.table.item.header.brutto')</th>
                                         </tr>
                                     </thead>
                                     <tbody>

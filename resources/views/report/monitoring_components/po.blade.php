@@ -4,11 +4,11 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center" width="17%">@lang('purchase_order.revise.index.table.header.code')</th>
-                        <th class="text-center" width="17%">@lang('purchase_order.revise.index.table.header.po_date')</th>
-                        <th class="text-center" width="27%">@lang('purchase_order.revise.index.table.header.supplier')</th>
-                        <th class="text-center" width="17%">@lang('purchase_order.revise.index.table.header.shipping_date')</th>
-                        <th class="text-center" width="22%">@lang('purchase_order.revise.index.table.header.status')</th>
+                        <th class="text-center" width="17%">@lang('report.monitoring.components.po.table.header.code')</th>
+                        <th class="text-center" width="17%">@lang('report.monitoring.components.po.table.header.po_date')</th>
+                        <th class="text-center" width="27%">@lang('report.monitoring.components.po.table.header.supplier')</th>
+                        <th class="text-center" width="17%">@lang('report.monitoring.components.po.table.header.shipping_date')</th>
+                        <th class="text-center" width="22%">@lang('report.monitoring.components.po.table.header.status')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,11 +31,11 @@
                                 <table class="table table-bordered table-condensed">
                                     <thead>
                                         <tr>
-                                            <th width="40%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.product_name')</th>
-                                            <th width="15%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.unit')</th>
-                                            <th width="15%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.brutto')</th>
-                                            <th width="15%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.netto')</th>
-                                            <th width="15%" class="text-center">@lang('warehouse.inflow.receipt.table.item.header.tare')</th>
+                                            <th width="40%" class="text-center">@lang('report.monitoring.components.po.table.item.header.product_name')</th>
+                                            <th width="15%" class="text-center">@lang('report.monitoring.components.po.table.item.header.unit')</th>
+                                            <th width="15%" class="text-center">@lang('report.monitoring.components.po.table.item.header.brutto')</th>
+                                            <th width="15%" class="text-center">@lang('report.monitoring.components.po.table.item.header.netto')</th>
+                                            <th width="15%" class="text-center">@lang('report.monitoring.components.po.table.item.header.tare')</th>
                                         </tr>
                                     </thead>
                                     <tbody>

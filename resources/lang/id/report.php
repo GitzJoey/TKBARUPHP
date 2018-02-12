@@ -60,6 +60,54 @@ return [
         'header' => [
             'title' => 'Monitoring',
         ],
+        'componens' => [
+            'po' => [
+                'page_title' => 'Pembelian',
+            ],
+            'so' => [
+                'page_title' => 'Penjualan',
+            ],
+        ],
+        'components' => [
+            'po' => [
+                'table' => [
+                    'header' => [
+                        'code' => 'Kode',
+                        'po_date' => 'Tanggal',
+                        'supplier' => 'Supplier',
+                        'shipping_date' => 'Tgl Kirim',
+                        'status' => 'Status',
+                    ],
+                    'item' => [
+                        'header' => [
+                            'product_name' => 'Produk',
+                            'unit' => 'Unit',
+                            'brutto' => 'Bruto',
+                            'netto' => 'Netto',
+                            'tare' => 'Tare',
+                        ],
+                    ],
+                ],
+            ],
+            'so' => [
+                'table' => [
+                    'header' => [
+                        'code' => 'Kode',
+                        'so_date' => 'Tanggal',
+                        'customer' => 'Pelanggan',
+                        'shipping_date' => 'Tgl Kirim',
+                        'status' => 'Status',
+                    ],
+                    'item' => [
+                        'header' => [
+                            'product_name' => 'Nama Produk',
+                            'unit' => 'Unit',
+                            'brutto' => 'Bruto',
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ],
     'tax' => [
         'title' => 'Laporan Pajak',

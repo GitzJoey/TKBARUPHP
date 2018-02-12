@@ -60,6 +60,54 @@ return [
         'header' => [
             'title' => 'Monitoring',
         ],
+        'componens' => [
+            'po' => [
+                'page_title' => 'Purchase Order',
+            ],
+            'so' => [
+                'page_title' => 'Sales Order',
+            ],
+        ],
+        'components' => [
+            'po' => [
+                'table' => [
+                    'header' => [
+                        'code' => 'Code',
+                        'po_date' => 'Date',
+                        'supplier' => 'Supplier',
+                        'shipping_date' => 'Shipping Date',
+                        'status' => 'Status',
+                    ],
+                    'item' => [
+                        'header' => [
+                            'product_name' => 'Name',
+                            'unit' => 'Unit',
+                            'brutto' => 'Brutto',
+                            'netto' => 'Netto',
+                            'tare' => 'Tare',
+                        ],
+                    ],
+                ],
+            ],
+            'so' => [
+                'table' => [
+                    'header' => [
+                        'code' => 'Code',
+                        'so_date' => 'Date',
+                        'customer' => 'Customer',
+                        'shipping_date' => 'Shipping Date',
+                        'status' => 'Status',
+                    ],
+                    'item' => [
+                        'header' => [
+                            'product_name' => 'Product Name',
+                            'unit' => 'Unit',
+                            'brutto' => 'Brutto',
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ],
     'tax' => [
         'title' => 'Report Management',

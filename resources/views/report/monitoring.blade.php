@@ -39,12 +39,12 @@
                             @endif
                             <li>
                                 <a href="#tab_mon_trx_po" data-toggle="tab">
-                                    Purchase Order
+                                    @lang('report.monitoring.componens.po.page_title')
                                 </a>
                             </li>
                             <li>
                                 <a href="#tab_mon_trx_so" data-toggle="tab">
-                                    Sales Order
+                                    @lang('report.monitoring.componens.so.page_title')
                                 </a>
                             </li>
                         </ul>
@@ -136,7 +136,7 @@
                             enabledDateLists.push(element);
                         });
 
-                        enabledDateLists.count > 0 ?
+                        enabledDateLists.length > 0 ?
                             $('#datetimepicker_po').data('DateTimePicker').enabledDates(enabledDateLists):
                             $('#datetimepicker_po').data("DateTimePicker").minDate(moment()).maxDate(moment()).disabledDates([moment()]);
                     }
@@ -188,7 +188,8 @@
                 data: {
                     lookup: JSON.parse('{!! json_encode(__('lookup')) !!}'),
                     salesOrderDateFilter: moment().format('YYYY-MM-DD'),
-                    salesOrders: []
+                    salesOrders: [],
+                    loading: false
                 },
                 methods: {
                     toggle: function(prefix, index){
@@ -203,12 +204,14 @@
                     },
                     fetchSalesOrders: function (date) {
                         let vm = this;
+                        vm.loading = true;
                         axios.get('{{ route('api.sales_order.sales_order_by_date') }}?date=' + date).then(function (response) {
                             vm.salesOrders = vm.camelCasingKey(response.data);
                             vm.salesOrders = _.map(vm.salesOrders, function (salesOrder) {
                                 salesOrder.soCreatedDate = salesOrder.soCreated.split(' ')[0];
                                 return salesOrder;
-                            })
+                            });
+                            vm.loading = false;
                         });
                     }
                 },
