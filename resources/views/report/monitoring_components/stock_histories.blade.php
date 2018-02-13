@@ -1,4 +1,15 @@
 <div class="row">
+    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-9">
+        <div class="text-right">
+            <a id="btnPreview" href="{{ route('db.report.monitoring.stocks.download') }}" class="btn btn-xs btn-default">@lang('buttons.print_preview_button')</a>
+            <a id="btnPreviewXLS" href="{{ route('db.report.monitoring.stocks.download') }}?f=xls" class="btn btn-xs btn-default">@lang('buttons.download_excel_button')</a>
+            <a id="btnPreviewPDF" href="{{ route('db.report.monitoring.stocks.download') }}?f=pdf" class="btn btn-xs btn-default">@lang('buttons.download_pdf_button')</a>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
     <div class="col-md-12">
         <div class="text-center" v-if="stock_histories.error" id="tab_mon_1_error_msg">
             <p><span>@lang('stock_history.error_data')</span><br/>

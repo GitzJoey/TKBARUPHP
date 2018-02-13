@@ -535,5 +535,14 @@ return [
                 'status' => 'Status',
             ],
         ],
+        'stock_list' => [
+            'report_name' => 'Stock List',
+            'header' => [
+                'warehouse' => 'Warehouse',
+                'product_type' => 'Product Type',
+                'product_name' => 'Product',
+                'quantity' => 'Quantity',
+            ],
+        ],
     ],
 ];

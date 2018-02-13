@@ -530,6 +530,15 @@ return [
                 'status' => 'Status',
             ],
         ],
+        'stock_list' => [
+            'report_name' => 'Daftar Stok',
+            'header' => [
+                'warehouse' => 'Gudang',
+                'product_type' => 'Tipe',
+                'product_name' => 'Produk',
+                'quantity' => 'Jumlah',
+            ],
+        ],
     ],
     'viewer' => [
         'title' => 'Tampilan Laporan',

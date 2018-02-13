@@ -108,6 +108,9 @@
                         }, (error) => {
                             vm.stock_histories.error = true;
                         })
+                    },
+                    download: function() {
+
                     }
                 },
                 mounted () {

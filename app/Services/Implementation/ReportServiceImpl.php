@@ -55,4 +55,22 @@ class ReportServiceImpl implements ReportService
 
         return $result;
     }
+
+    public function getStockList($stockList)
+    {
+        $result = [];
+
+        foreach($stockList as $s) {
+            if ($s['current_quantity'] > 0) {
+                array_push($result, [
+                    'warehouse' => $s['warehouse']['name'],
+                    'product_type' => $s['product']['type']['name'],
+                    'product' => $s['product']['name'],
+                    'quantity' => $s['current_quantity']
+                ]);
+            }
+        }
+
+        return $result;
+    }
 };

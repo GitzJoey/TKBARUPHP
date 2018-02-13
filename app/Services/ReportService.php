@@ -15,4 +15,6 @@ interface ReportService
     //Price Report
     public function getTodayPriceList(
         $productCategories, $priceLevels, $selectedPriceLevel = null, $selectedDate = null);
+
+    public function getStockList($stockList);
 }

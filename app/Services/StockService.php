@@ -25,7 +25,7 @@ interface StockService
      *
      * @return Collection
      */
-    public function getCurrentStocks($warehouseId);
+    public function getCurrentStocks($warehouseId = null);
 
     public function searchStock($keyword);
 

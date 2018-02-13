@@ -59,14 +59,14 @@ class StockServiceImpl implements StockService
      * @param Integer $warehouseId selected warehouse Id, if null or 0 will return from all warehouses.
      * @return Collection
      */
-    public function getCurrentStocks($warehouseId)
+    public function getCurrentStocks($warehouseId = null)
     {
         $stocks = null;
 
         if (is_null($warehouseId) || empty($warehouseId) || $warehouseId == 0) {
-            $stocks = Stock::with('product')->get();
+            $stocks = Stock::with('product.type', 'warehouse')->get();
         } else {
-            $stocks = Stock::with('product')->where('warehouse_id', '=', $warehouseId)->get();
+            $stocks = Stock::with('product.type', 'warehouse')->where('warehouse_id', '=', $warehouseId)->get();
         }
 
         //Assign latest prices additional attribute

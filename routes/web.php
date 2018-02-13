@@ -304,6 +304,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'mon', 'middleware' => ['permission:menu-report_monitoring']], function () {
                 Route::get('', 'ReportController@report_mon')->name('db.report.monitoring');
+                Route::get('stocks/download', 'ReportController@downloadStock')->name('db.report.monitoring.stocks.download');
             });
 
             Route::group(['prefix' => 'tax', 'middleware' => ['permission:menu-report_tax']], function () {

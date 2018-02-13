@@ -41,8 +41,8 @@ class StockController extends Controller
         return response()->json(Stock::find($request->id));
     }
 
-    public function stockTypeIndex(Request $request){
-
+    public function stockTypeIndex(Request $request)
+    {
         /* search */
         $type_ids = !empty($type_ids)? $type_ids : null;
         $to_json = trim($request->get('to_json'));
