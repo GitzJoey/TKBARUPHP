@@ -77,13 +77,15 @@ class PriceController extends Controller
         foreach($stocks as $stock ) {
             $sInputDate = date('Y-m-d H:i:s', strtotime($request['inputed_date']));
 
-            if (Carbon::parse($sInputDate)->diffInSeconds($stock->latestPrices()->first()->input_date) < 60) {
-                $rules = ['inputDateSameDateTime' => 'required'];
-                $messages = ['inputDateSameDateTime.required' =>
-                    LaravelLocalization::getCurrentLocale() == "en" ?
-                        "Please Wait 60 Seconds To Update The Price":
-                        "Harap Tunggu 60 Detik Untuk Mengupdate Harga"];
-                Validator::make($request->all(), $rules, $messages)->validate();
+            if(count($stock->latestPrices()) != 0) {
+                if (Carbon::parse($sInputDate)->diffInSeconds($stock->latestPrices()->first()->input_date) < 60) {
+                    $rules = ['inputDateSameDateTime' => 'required'];
+                    $messages = ['inputDateSameDateTime.required' =>
+                        LaravelLocalization::getCurrentLocale() == "en" ?
+                            "Please Wait 60 Seconds To Update The Price":
+                            "Harap Tunggu 60 Detik Untuk Mengupdate Harga"];
+                    Validator::make($request->all(), $rules, $messages)->validate();
+                }
             }
 
             for ($i = 0; $i < count($request['price_level_id']); $i++) {
@@ -121,15 +123,17 @@ class PriceController extends Controller
             $sId = $request['stock_id'][$i];
             $sInputDate = date('Y-m-d H:i:s', strtotime($request['input_date'][$i]));
 
-            if (Carbon::parse($sInputDate)
-                ->diffInDays(Stock::whereId($sId)->first()->latestPrices()->
-                    first()->input_date) < 60) {
-                $rules = ['inputDateSameDateTime' => 'required'];
-                $messages = ['inputDateSameDateTime.required' =>
-                    LaravelLocalization::getCurrentLocale() == "en" ?
-                        "Please Wait 60 Seconds To Update The Price":
-                        "Harap Tunggu 60 Detik Untuk Mengupdate Harga"];
-                Validator::make($request->all(), $rules, $messages)->validate();
+            if (count(Stock::whereId($sId)->first()->latestPrices()) != 0) {
+                if (Carbon::parse($sInputDate)
+                        ->diffInDays(Stock::whereId($sId)->first()->latestPrices()->
+                        first()->input_date) < 60) {
+                    $rules = ['inputDateSameDateTime' => 'required'];
+                    $messages = ['inputDateSameDateTime.required' =>
+                        LaravelLocalization::getCurrentLocale() == "en" ?
+                            "Please Wait 60 Seconds To Update The Price" :
+                            "Harap Tunggu 60 Detik Untuk Mengupdate Harga"];
+                    Validator::make($request->all(), $rules, $messages)->validate();
+                }
             }
         }
 
