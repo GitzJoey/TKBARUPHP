@@ -15,6 +15,7 @@ class CreateStockOpnamesTable extends Migration
     {
         Schema::create('stock_opnames', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('store_id')->default(0);
             $table->unsignedBigInteger('stock_id')->default(0);
             $table->dateTime('opname_date')->nullable();
             $table->boolean('is_match')->nullable();

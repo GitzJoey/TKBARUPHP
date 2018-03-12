@@ -47,6 +47,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static bool|null restore()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Price withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Model\Price withoutTrashed()
+ * @property-read \App\Model\PriceLevel $priceLevel
  */
 class Price extends Model
 {

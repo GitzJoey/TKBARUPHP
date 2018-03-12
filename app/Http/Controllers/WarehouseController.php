@@ -185,6 +185,7 @@ class WarehouseController extends Controller
 
         $stockOpnameParam = [
             'stock_id'          => $stock->id,
+            'store_id'          => Auth::user()->store->id,
             'opname_date'       => date('Y-m-d H:i:s', strtotime($request->input('opname_date'))),
             'is_match'          => $request->has('is_match') ? true : false,
             'previous_quantity' => $stock->current_quantity,

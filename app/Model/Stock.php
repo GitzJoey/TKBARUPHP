@@ -10,11 +10,12 @@ namespace App\Model;
 
 use Auth;
 use Carbon\Carbon;
-use App\Traits\StoreFilter;
 use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Traits\StoreFilter;
 
 /**
  * App\Model\Stock
