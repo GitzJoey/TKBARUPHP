@@ -120,6 +120,7 @@
                         <div class="col-sm-10">
                             <select id="profileDDL" name="link_profile" class="form-control">
                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                {{--
                                 @foreach($profiles as $p)
                                     @if ($p->owner_type == 'App\Model\Supplier')
                                         <option value="{{ $p->id }}">[Supplier] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
@@ -127,6 +128,7 @@
                                         <option value="{{ $p->id }}">[Customer] Name: {{ $p->owner->name }}, PIC: {{ $p->first_name }} {{ $p->last_name }}</option>
                                     @endif
                                 @endforeach
+                                --}}
                             </select>
                         </div>
                     </div>

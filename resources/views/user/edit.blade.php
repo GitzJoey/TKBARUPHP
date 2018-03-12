@@ -122,6 +122,7 @@
                         <div class="col-sm-10">
                             <select id="profileDDL" name="link_profile" class="form-control">
                                 <option value="">@lang('labels.PLEASE_SELECT')</option>
+                                {{--
                                 @if (empty(old('link_profile')))
                                     @if (!is_null($user->profile))
                                         @foreach ($profiles as $p)
@@ -157,6 +158,7 @@
                                         @endif
                                     @endforeach
                                 @endif
+                                --}}
                             </select>
                         </div>
                     </div>
